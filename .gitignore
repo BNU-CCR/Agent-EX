@@ -1,0 +1,20 @@
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# PDF 文件（通常太大，按需上传）
+*.pdf
+
+# 编译/临时文件
+*.log
+*.tmp
+*.bak
+
+# 环境变量和敏感信息
+.env
+*.env
+credentials.json
+
+# IDE 配置（可选）
+.vscode/
+.idea/
