@@ -23,10 +23,11 @@
 Agent-EX/
 ├── experiment/              # 【主线】实验项目
 │   ├── design/              # 实验设计文档
-│   │   ├── research_design.md
-│   │   ├── todo.md          # 实验任务清单
-│   │   └── review_issues.md # 方案审查问题
-│   ├── meetings/            # 组会汇报
+│   │   ├── research_design.md    # 技术方案（RQ、参数、指标）
+│   │   ├── todo.md               # 待办清单（仅当前/未来任务）
+│   │   ├── decisions_log.md      # 设计决策日志（历史记录）
+│   │   └── advisor_feedback.md   # 导师反馈与决策追踪
+│   ├── meetings/            # 组会汇报材料
 │   └── results/             # 实验结果（未来）
 │
 ├── paper-revision/          # 理论文章修订（已阶段性完成）
