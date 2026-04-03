@@ -27,7 +27,6 @@ Agent-EX/
 │   │   ├── todo.md          # 实验任务清单
 │   │   └── review_issues.md # 方案审查问题
 │   ├── meetings/            # 组会汇报
-│   ├── logs/                # 实验日志
 │   └── results/             # 实验结果（未来）
 │
 ├── paper-revision/          # 理论文章修订（已阶段性完成）
