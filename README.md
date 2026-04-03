@@ -6,22 +6,39 @@
 
 ---
 
+## 项目概述
+
+本仓库包含两个独立项目：
+
+| 项目 | 状态 | 说明 |
+|------|------|------|
+| **实验项目** | 🟢 进行中 | LLM 社会模拟实验（意见动力学、极化现象） |
+| 理论文章修订 | 🟡 已完成 | 已返给出版社终审 |
+
+---
+
 ## 目录结构
 
 ```
 Agent-EX/
-├── logs/              # 每日工作日志（自动保存）
-├── docs/              # 研究文档
-│   ├── research_design.md
-│   ├── paper.md
-│   ├── memo.md
-│   └── reviews/       # 评审反馈
-├── meetings/          # 组会材料
-├── tasks/             # 任务管理
-│   ├── todo.md
-│   └── question list.md
-├── references/        # 参考文献 PDF
-└── article/           # 原有 article 结构
+├── experiment/              # 【主线】实验项目
+│   ├── design/              # 实验设计文档
+│   │   ├── research_design.md
+│   │   ├── todo.md          # 实验任务清单
+│   │   └── review_issues.md # 方案审查问题
+│   ├── meetings/            # 组会汇报
+│   ├── logs/                # 实验日志
+│   └── results/             # 实验结果（未来）
+│
+├── paper-revision/          # 理论文章修订（已阶段性完成）
+│   ├── paper.md             # 论文草稿
+│   ├── memo.md              # 修订备忘录
+│   ├── question list.md     # 问题清单
+│   └── revision-reports/    # 修订反馈
+│
+├── logs/                    # 每日工作日志（跨项目）
+├── references/              # 参考文献 PDF
+└── README.md                # 项目说明
 ```
 
 ---
@@ -79,3 +96,14 @@ git add . && git commit -m "描述本次工作" && git push
 | 日期 | 文件 |
 |------|------|
 | 2026-04-03 | [logs/2026-04-03.md](logs/2026-04-03.md) |
+
+---
+
+## 实验设计速查
+
+| 参数 | 设定值 | 说明 |
+|------|--------|------|
+| 节点数 (N) | 200（正式）/ 20（Phase 0） | 导师建议：真实社会网络规模下限 |
+| 拓扑结构 | BA 无标度网络 | m 值待 Phase 0 确定（候选 2/3） |
+| 交互轮数 | 50 轮 | 视 Phase 0 收敛曲线可调整 |
+| 组别对比 | Instruct vs abliterated | RLHF 安全对齐效应 |
