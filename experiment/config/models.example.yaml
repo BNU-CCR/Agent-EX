@@ -1,0 +1,17 @@
+# Copy this file to models.local.yaml if you want local defaults.
+# Do not store real API keys here. Put keys in environment variables instead.
+
+qwen_api:
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  model: qwen3-8b
+  api_key_env: DASHSCOPE_API_KEY
+
+deepseek:
+  base_url: https://api.deepseek.com/v1
+  model: deepseek-chat
+  api_key_env: DEEPSEEK_API_KEY
+
+vllm_local:
+  base_url: http://localhost:8000/v1
+  model: Qwen/Qwen2.5-7B-Instruct
+  api_key_env: VLLM_API_KEY

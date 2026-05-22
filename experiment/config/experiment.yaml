@@ -1,0 +1,27 @@
+topic: AI取代劳动力
+seed: 42
+
+experiment:
+  n_agents: 20
+  n_rounds: 30
+  n_activated_per_round: 8
+
+network:
+  type: ba
+  m: 2
+
+sampling:
+  alpha: 0.5
+  max_neighbors: 10
+  memory_window: 3
+
+generation:
+  temperature: 0.6
+  max_tokens: 120
+  enable_thinking: false
+  max_retries: 2
+  timeout_seconds: 60
+  concurrency: 3
+
+output:
+  results_dir: results/pilot
