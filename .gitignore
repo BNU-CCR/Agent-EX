@@ -26,3 +26,4 @@ __pycache__/
 # IDE 配置（可选）
 .vscode/
 .idea/
+.claude/
