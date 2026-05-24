@@ -17,7 +17,11 @@ credentials.json
 experiment/config/models.local.yaml
 
 # 实验输出
-experiment/results/
+pilot-1.0/results/
+pilot-2.0/results/
+
+# 参考文献（Notion 统一管理）
+references/
 
 # Python 缓存
 __pycache__/

@@ -18,69 +18,108 @@
 **论文核心 claim（最新版）**：
 > 在以 LLM 作为硅基样本的范式下，RLHF 安全对齐对观点动力学的影响呈现 **"簇内均质化 + 簇间分极"的双层结构**，其内在机制为条件分布锐化所导致的持续角色漂移。
 
+**实验版本说明**：
+- **预实验 1.0**（`pilot-1.0/`）：自研代码框架，基于 OpenAI-compatible API，2026-05-22 完成三轮本地 API 测试（qwen3-8b）。**结论不可外推**，仅验证代码流程。
+- **预实验 2.0**（`pilot-2.0/`）：基于 Piao et al. 2025 (*Emergence of human-like polarization among LLM agents*) 官方实现重构，用于正式实验前的对比验证与代码参考。
+
 ---
 
 ## 目录结构
 
 ```
 Agent-EX/
-├── experiment/              # 【主线】实验项目
-│   ├── design/              # 实验设计文档
-│   │   ├── research_design.md         # 技术方案（RQ、H1-H5、参数、指标）
-│   │   ├── todo.md                    # 待办清单
-│   │   ├── decisions_log.md           # 设计决策日志
-│   │   ├── advisor_feedback.md        # 导师反馈与决策追踪
-│   │   └── methodology_review_2026-05-23.md  # 方法论反思与范式调整（2026-05-23）
-│   ├── src/                 # 核心代码模块
-│   │   ├── agent.py              # Agent 类与 Prompt
-│   │   ├── network.py            # BA 网络构建与采样
-│   │   ├── llm_client.py         # LLM API 客户端
-│   │   ├── simulator.py          # 模拟器主循环
-│   │   ├── metrics.py            # 指标计算
-│   │   └── config.py             # 配置加载
-│   ├── config/              # 配置文件
-│   │   ├── experiment.yaml       # 实验参数
-│   │   └── models.example.yaml   # 模型配置示例
-│   ├── experiments/         # 实验运行脚本
-│   │   └── run_pilot.py          # 预实验入口
-│   ├── analysis/            # 分析脚本
-│   │   └── plot_scores.py        # 结果可视化
-│   ├── meetings/            # 组会汇报材料
-│   ├── results/             # 实验结果（gitignore）
-│   ├── run_pilot.ipynb      # Jupyter Notebook 交互运行
-│   ├── requirements.txt     # Python 依赖
-│   └── pre_experiment_guide.md  # AutoDL 部署指南
+├── design/                    # 【共享】跨版本设计文档
+│   ├── research_design.md         # 技术方案（RQ、H1-H5、参数、指标）
+│   ├── todo.md                    # 待办清单
+│   ├── methodology_review_2026-05-23.md  # 方法论反思与范式调整
+│   ├── decisions_log.md           # 设计决策日志
+│   ├── advisor_feedback.md        # 导师反馈与决策追踪
+│   └── meetings/                  # 组会汇报材料
 │
-├── paper-revision/          # 理论文章修订（已阶段性完成）
-│   ├── paper.md             # 论文草稿
-│   ├── memo.md              # 修订备忘录
-│   ├── question list.md     # 问题清单
-│   └── revision-reports/    # 修订反馈
+├── pilot-1.0/                 # 【预实验1.0】自研代码框架
+│   ├── src/                       # 核心代码模块
+│   │   ├── agent.py               # Agent 类与 Prompt
+│   │   ├── network.py             # BA 网络构建与采样
+│   │   ├── llm_client.py          # LLM API 客户端
+│   │   ├── simulator.py           # 模拟器主循环
+│   │   ├── metrics.py             # 指标计算
+│   │   └── config.py              # 配置加载
+│   ├── config/                    # 配置文件
+│   │   ├── experiment.yaml        # 实验参数
+│   │   └── models.example.yaml    # 模型配置示例
+│   ├── experiments/               # 实验运行脚本
+│   │   └── run_pilot.py           # 预实验入口
+│   ├── analysis/                  # 分析脚本
+│   │   └── plot_scores.py         # 结果可视化
+│   ├── results/                   # 实验结果（gitignore）
+│   │   └── pilot/                 # 三轮预实验结果（2026-05-22）
+│   ├── run_pilot.ipynb            # Jupyter Notebook 交互运行
+│   ├── pre_experiment_guide.md    # AutoDL 部署指南
+│   └── requirements.txt           # Python 依赖
 │
-├── logs/                    # 每日工作日志（跨项目）
-├── references/              # 参考文献 PDF
-└── README.md                # 项目说明
+├── pilot-2.0/                 # 【预实验2.0】Piao et al. 2025 参考实现
+│   ├── src/                       # 核心代码
+│   │   ├── simulate.py            # 主模拟器
+│   │   ├── simulate_debiased.py   # 去偏版本
+│   │   ├── utils.py               # LLM 调用与工具函数
+│   │   └── run.py                 # 运行入口
+│   ├── data/                      # 网络数据
+│   │   └── WS_2000/               # Watts-Strogatz 网络数据
+│   ├── docs/                      # 文档
+│   │   └── LLM4Polarization_experimental_setting.pdf
+│   ├── results/                   # 实验结果（gitignore）
+│   ├── README.md                  # pilot-2.0 说明
+│   └── requirements.txt           # Python 依赖
+│
+├── logs/                        # 每日工作日志（跨项目）
+├── references/                  # 参考文献 PDF
+└── README.md                    # 项目说明（本文件）
 ```
 
 ---
 
 ## 使用指南
 
-### 运行预实验
+### 预实验 1.0（自研框架）
 
-**方式 1：Jupyter Notebook（推荐）**
+**方式 1：Jupyter Notebook**
 ```bash
-cd experiment
+cd pilot-1.0
 jupyter notebook run_pilot.ipynb
 ```
 
 **方式 2：命令行**
 ```bash
-cd experiment
+cd pilot-1.0
 python experiments/run_pilot.py --n-agents 20 --n-rounds 30
 ```
 
-### 每日工作保存
+### 预实验 2.0（Piao et al. 2025 参考实现）
+
+```bash
+cd pilot-2.0
+# 配置 API key 和实验参数（见 pilot-2.0/README.md）
+python src/run.py
+```
+
+---
+
+## 版本演进说明
+
+| 版本 | 时间 | 代码来源 | 模型 | 状态 | 说明 |
+|------|------|---------|------|------|------|
+| 预实验 1.0 | 2026-05-22 | 自研 | qwen3-8b (API) | ✅ 完成 | 验证代码流程，**结论不可外推** |
+| 预实验 2.0 | 2026-05-24~ | Piao et al. 2025 | 待定 | 🔄 准备中 | 对比验证，基于参考实现重构 |
+| 正式实验 | 待定 | 基于 pilot-2.0 重构 | Qwen2.5-7B-Instruct / abliterated (vLLM) | ⏳ 计划中 | 核心研究 |
+
+**关键区别**：
+- **pilot-1.0**：从零自研，简化的 Agent 类 + BA 网络 + 同步更新，用于快速验证想法
+- **pilot-2.0**：基于 Piao et al. 2025 参考实现，更完善的 User 类（profile/message_list/friend_pool）、persuade 机制、多进程并发
+- **正式实验**：在 pilot-2.0 基础上，按研究设计文档（H1-H5、L6 铁律）进行系统性重构
+
+---
+
+## 每日工作保存
 
 对 Claude 说：**"保存今日工作"**
 
@@ -89,7 +128,9 @@ python experiments/run_pilot.py --n-agents 20 --n-rounds 30
 2. 更新 `logs/YYYY-MM-DD.md` 日志
 3. Git 提交并推送到 GitHub
 
-### 版本管理常用命令
+---
+
+## 版本管理常用命令
 
 ```bash
 # 查看当前状态
@@ -134,8 +175,9 @@ git add . && git commit -m "描述本次工作" && git push
 | 2026-03-24 | [2026-03-24.md](logs/2026-03-24.md) | 方案审查 |
 | 2026-03-25 ~ 03-31 | [2026-03-25_to_03-31.md](logs/2026-03-25_to_03-31.md) | 理论文章修订 |
 | 2026-04-03 | [2026-04-03.md](logs/2026-04-03.md) | Git 配置 |
-| 2026-05-22 | [2026-05-22.md](logs/2026-05-22.md) | 实验代码实现 + API 预实验（qwen3-8b） |
-| 2026-05-23 | [methodology_review_2026-05-23.md](experiment/design/methodology_review_2026-05-23.md) | 方法论反思 + 范式调整 + H1-H5 假说 |
+| 2026-05-22 | [2026-05-22.md](logs/2026-05-22.md) | 预实验1.0：代码实现 + 三轮 API 测试 |
+| 2026-05-23 | [methodology_review_2026-05-23.md](design/methodology_review_2026-05-23.md) | 方法论反思 + 范式调整 + H1-H5 假说 |
+| 2026-05-24 | 当前 | 项目结构重构：区分预实验1.0/2.0 |
 
 ---
 
@@ -172,7 +214,6 @@ git add . && git commit -m "描述本次工作" && git push
 | 组别对比 | Instruct vs abliterated | RLHF 安全对齐效应（精确孤立） |
 | 对照组 | persona-free | 2×2 设计（有/无 persona × Instruct/abliterated） |
 | 议题 | 三档敏感度 | 低/中/高 RLHF 敏感度（Phase 0 probe 后确定） |
-| 预实验模型 | qwen3-8b（通义千问 API） | **结论不外推**，仅验证代码流程 |
 | 正式实验模型 | Qwen2.5-7B-Instruct（vLLM） | AutoDL RTX 4090D；线 B 用 Llama-3.1-8B |
 | 评分 | 连续 Likert 1-10 | 强制 `【评分：X】` 格式输出 |
 
@@ -208,19 +249,15 @@ Step 7: LMM + H1-H5 联合检验 + 中介分析
 
 ---
 
-## 预实验说明（2026-05-22，qwen3-8b）
+## 预实验 1.0 说明（2026-05-22，qwen3-8b）
 
-⚠️ **重要**：5-22 预实验仅用于验证代码流程，**结论不可外推到正式实验**。原因：
+⚠️ **重要**：预实验 1.0 仅用于验证代码流程，**结论不可外推到正式实验**。原因：
 1. 模型不一致（qwen3-8b vs Qwen2.5-7B-Instruct）
-2. 抗均质化 trick（固执度 + temperature=0.6 + 强化角色 prompt）与 DV 互相干扰
+2. 代码架构为从零自研的简化版，与正式实验设计存在差距
 3. 未做零交互基线，无法分离 LLM 内禀坍缩与网络动力学贡献
+4. 已移除的设计（固执度属性、强化抗均质化 prompt）与新版方案冲突
 
-### 5-22 预实验原始发现（仅作参考）
-
-1. **观点均质化现象存在**：LLM 介入下观点会互相影响
-2. **但不会完全收敛**：在角色约束下，极端观点（1分/10分）可短期保持
-3. **角色身份保持**：不同角色的 Agent 保持不同的表达风格
-4. **均值缓慢偏移**：整体从 6.1 上升到 7.35
+原始结果保存在 `pilot-1.0/results/pilot/` 下三轮运行记录中。
 
 ---
 
@@ -231,7 +268,7 @@ Step 7: LMM + H1-H5 联合检验 + 中介分析
 | 线 A | 中文 | Qwen2.5-7B-Instruct vs abliterated | 中文 |
 | 线 B | 外文 | Llama-3.1-8B-Instruct vs abliterated | 英文 |
 
-详见 `experiment/design/methodology_review_2026-05-23.md` 第五节。
+详见 `design/methodology_review_2026-05-23.md` 第五节。
 
 ---
 
@@ -239,9 +276,9 @@ Step 7: LMM + H1-H5 联合检验 + 中介分析
 
 | 编号 | 文献 | 在本研究中的角色 |
 |------|------|----------------|
-| L1 | Piao et al. 2025 arXiv:2501.05171 | 族④ 主要先验；网络构建 / W-S vs BA 比较 |
+| L1 | Piao et al. 2025 arXiv:2501.05171 | 族④ 主要先验；预实验 2.0 代码来源 |
 | L2 | Wang et al. 2025 *COLING* "Decoding Echo Chambers" | 族④ 次要先验；统一假说骨架来源 |
-| L6 | Cisneros-Velarde 2025 *NAACL Findings* | 安全对齐机制最直接学理对接；prompt 工程铁律来源 |
+| L6 | Cisneros-Velarde 2025 *NAACL Findings* | 族④ 安全对齐机制；prompt 工程铁律来源 |
 | L14 | Bisbee et al. 2024 *Political Analysis* 32(4) | 族② 主要先验；H1 SD 压缩量化基准（51%） |
 | L30 | Shumailov et al. 2024 *Nature* | 族① 模型坍缩理论基础 |
 | L5 | Xie et al. 2026 *PNAS* | 边际侧统计真实性基准 |
@@ -256,12 +293,12 @@ Step 7: LMM + H1-H5 联合检验 + 中介分析
 2. 真实立场分布映射：二元/三元如何映射到 1-10 分？
 3. CNNIC 画像粒度若不足六维，是否退到三维（年龄×性别×学历）？
 4. abliterated 版本：HuggingFace 现成 vs 自行 FailSpy 生成？
-5. Temperature grid 扫描规模（72 次 Phase 0 跑，是否削减）？
-6. 议题语法位置控制：Phase 0 一并扫，还是只在正式实验做稳健性？
-7. Shumailov "保留 X% 初始立场记忆" 是否作为额外实验组？
-8. persona-free 对照组规模：N=200 全量 vs N=50 缩减？
-9. 是否补充连续 0-100 滑块评分作为子对照？
+5. Temperature grid 扫描规模（64 次或削减）？
+6. 议题语法位置控制：Phase 0 扫还是正式实验做稳健性？
+7. Shumailov "保留 X% 初始立场记忆"是否额外实验组？
+8. persona-free 对照组规模：N=200 vs N=50？
+9. 是否补充连续 0-100 滑块评分？
 
 ---
 
-*README 最后更新：2026-05-23（方法论反思与范式调整后）*
+*README 最后更新：2026-05-24（项目结构重构：区分预实验 1.0 / 2.0）*

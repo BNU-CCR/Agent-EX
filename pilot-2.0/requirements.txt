@@ -1,0 +1,16 @@
+# pilot-2.0 dependencies (Piao et al. 2025 reference implementation)
+# TODO: fill in after testing
+
+# Core
+pandas
+networkx
+tqdm
+
+# LLM API
+openai
+
+# Concurrency
+pebble
+
+# Data processing
+numpy
