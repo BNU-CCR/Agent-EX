@@ -49,7 +49,8 @@ class User:
         self.var_dict = var_dict
         self.target_size = len(self.friend_pool)
 
-        if not self.message_list and random.random() > probability:
+        #if not self.message_list and random.random() > probability:
+        if not self.message_list and (node_id < 16 or random.random() > probability):
             generate_message = initialize_tweet(self.profile, var_dict)
             self.mark_prompt(
                 "initialize_tweet", generate_message, {"profile": self.profile}
@@ -241,7 +242,7 @@ if __name__ == "__main__":
         for j in temp:
             initial_side_dict[j] = i
         node_list = list(set(node_list) - set(temp))
-    with ProcessPool(max_workers=50) as pool:
+    with ProcessPool(max_workers=5) as pool:
         for id in range(num_nodes):
             created_user_pool.append(
                 pool.schedule(
@@ -449,7 +450,7 @@ if __name__ == "__main__":
         updated_user_pool = []
         updating_user = list(set([user_list[i] for i in updating_user_index]))
 
-        with ProcessPool(max_workers=50) as pool:
+        with ProcessPool(max_workers=5) as pool:
             for i in range(len(updating_user)):
                 updated_user_pool.append(
                     pool.schedule(
@@ -492,7 +493,7 @@ if __name__ == "__main__":
             for friend in user.friend_pool:
                 updating_friend_pair.append([user, user_list[friend]])
         updated_user_friend_pair_pool = []
-        with ProcessPool(max_workers=50) as pool:
+        with ProcessPool(max_workers=5) as pool:
             for i in range(len(updating_friend_pair)):
                 updated_user_friend_pair_pool.append(
                     pool.schedule(
@@ -569,7 +570,7 @@ if __name__ == "__main__":
             list(x) for x in set(tuple(x) for x in updating_user_target)
         ]
 
-        with ProcessPool(max_workers=50) as pool:
+        with ProcessPool(max_workers=5) as pool:
             for i in range(len(updating_user_target)):
                 updated_user_target_pool.append(
                     pool.schedule(

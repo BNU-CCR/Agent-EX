@@ -19,6 +19,8 @@ experiment/config/models.local.yaml
 # 实验输出
 pilot-1.0/results/
 pilot-2.0/results/
+pilot-2.0/output_pol/
+pilot-3.0/results/
 
 # 参考文献（Notion 统一管理）
 references/

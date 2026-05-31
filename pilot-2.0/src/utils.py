@@ -2,10 +2,15 @@ import json
 import openai
 import time
 import requests
+import os              # 新增：读 DASHSCOPE_API_KEY 环境变量
+from openai import OpenAI  # 新增：openai≥1.0 新版 SDK
 
 openai.api_key = ""
 llama_port = ""
-
+_client = OpenAI(      # 新增：DashScope client，专供改造后的 _1 使用
+    api_key=os.environ.get("DASHSCOPE_API_KEY", ""),
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+)
 
 def get_completion_0(prompt, model="gpt-3.5-turbo", temperature=0):
     messages = [{"role": "user", "content": prompt}]
@@ -27,15 +32,16 @@ def get_completion_0_llama(prompt):
     return res["choices"][0]["message"]["content"]
 
 
-def get_completion_1(prompt, model="gpt-3.5-turbo", temperature=1):
+def get_completion_1(prompt, model="qwen3-32b", temperature=1):
     messages = [{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
+    response = _client.chat.completions.create(    # 用新加的 _client 走 DashScope
         model=model,
         messages=messages,
         temperature=temperature,
-        timeout=5,
+        timeout=10,                                # 原 5s 太短，DashScope 偶尔慢响应
+        extra_body={"enable_thinking": False},     # Qwen3 必加，否则返回带 <think>...</think>
     )
-    return response.choices[0].message["content"]
+    return response.choices[0].message.content     # 新 SDK 是 .content 属性，不是 ["content"]
 
 
 def get_completion_1_llama(prompt):
@@ -52,7 +58,7 @@ def LLM_persuade(
 ):
     environment = var_dict["environment"]
     topic = var_dict["topic"]
-    max_retries = 1000000
+    max_retries = 10
     for i in range(max_retries):
         try:
             string = f"Assume you are someone who cares about {environment}."
@@ -82,7 +88,7 @@ def LLM_persuade(
                 raise
         except Exception as e:
             if i < max_retries - 1:
-                time.sleep(2)
+                time.sleep(15)
                 print(e)
             else:
                 raise
@@ -93,7 +99,7 @@ def LLM_persuade_debias_sim(
 ):
     environment = var_dict["environment"]
     topic = var_dict["topic"]
-    max_retries = 1000000
+    max_retries = 10
     retry = 0
     for i in range(max_retries):
         try:
@@ -149,7 +155,7 @@ def LLM_persuade_debias_sim(
         except Exception as e:
             if i < max_retries - 1:
                 print(e)
-                time.sleep(2)
+                time.sleep(15)
             else:
                 raise
 
@@ -159,7 +165,7 @@ def LLM_persuade_debias_sim_kol(
 ):
     environment = var_dict["environment"]
     topic = var_dict["topic"]
-    max_retries = 1000000
+    max_retries = 10
     retry = 0
     for i in range(max_retries):
         try:
@@ -236,7 +242,7 @@ def LLM_persuade_debias_sim_kol(
             retry += 1
             if i < max_retries - 1:
                 print(e)
-                time.sleep(2)
+                time.sleep(15)
             else:
                 raise
 
@@ -249,7 +255,7 @@ def LLM_get_reason(profile: dict, message_list: str, var_dict: dict):
     side_b_0 = var_dict["side_b_0"]
     side_e_0 = var_dict["side_e_0"]
 
-    max_retries = 1000000
+    max_retries = 10
     for i in range(max_retries):
         string = f"Assume you are someone who cares about {environment}."
         string += f"Towards {topic}: \n"
@@ -268,7 +274,7 @@ def LLM_get_reason(profile: dict, message_list: str, var_dict: dict):
             return reasons
         except Exception:
             if i < max_retries - 1:
-                time.sleep(2)
+                time.sleep(15)
             else:
                 raise
 
@@ -298,7 +304,7 @@ def initialize_tweet(profile: dict, var_dict: dict):
             f"Please express your opinion on {topic} with around 50 words.\n"
         )
 
-        max_retries = 1000000
+        max_retries = 10
         for i in range(max_retries):
             try:
 
@@ -308,7 +314,7 @@ def initialize_tweet(profile: dict, var_dict: dict):
 
             except Exception:
                 if i < max_retries - 1:
-                    time.sleep(2)
+                    time.sleep(15)
                 else:
                     raise
     except Exception as e:
@@ -318,7 +324,7 @@ def initialize_tweet(profile: dict, var_dict: dict):
 
 def initialize_tweet_debias(profile: dict, var_dict: dict):
     try:
-        max_retries = 1000000
+        max_retries = 10
         message = ""
         retry = 0
         for i in range(max_retries):
@@ -395,14 +401,14 @@ def initialize_tweet_debias(profile: dict, var_dict: dict):
 
                 yes_no = get_completion_1(string)
 
-                if "yes" in yes_no or "Yes" in yes_no or retry >= 1000000:
+                if "yes" in yes_no or "Yes" in yes_no or retry >= 2:
                     return message
                 else:
                     retry += 1
 
             except Exception:
                 if i < max_retries - 1:
-                    time.sleep(2)
+                    time.sleep(15)
                 else:
                     raise
     except Exception as e:
@@ -432,7 +438,7 @@ def LLM_update_profile_5_and_LLM_get_reason(
         S_p1_e = var_dict["S_p1_e"]
         S_p2_e = var_dict["S_p2_e"]
 
-        max_retries = 1000000
+        max_retries = 10
         for i in range(max_retries):
 
             string = f"Assume you are someone who cares about {environment}."
@@ -512,7 +518,7 @@ def LLM_update_profile_5_and_LLM_get_reason(
                 }
             except Exception:
                 if i < max_retries - 1:
-                    time.sleep(2)
+                    time.sleep(15)
                 else:
                     raise
     except Exception as e:
@@ -542,7 +548,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias(
         S_p1_e = var_dict["S_p1_e"]
         S_p2_e = var_dict["S_p2_e"]
 
-        max_retries = 1000000
+        max_retries = 10
 
         retry = 0
         for i in range(max_retries):
@@ -692,7 +698,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias(
             except Exception as e:
                 if i < max_retries - 1:
                     print(e)
-                    time.sleep(2)
+                    time.sleep(15)
                 else:
                     raise
     except Exception as e:
@@ -717,7 +723,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_no_con(
         S_p1_e = var_dict["S_p1_e"]
         S_p2_e = var_dict["S_p2_e"]
 
-        max_retries = 1000000
+        max_retries = 10
 
         retry = 0
         for i in range(max_retries):
@@ -843,7 +849,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_no_con(
             except Exception as e:
                 if i < max_retries - 1:
                     print(e)
-                    time.sleep(2)
+                    time.sleep(15)
 
                 else:
                     raise
@@ -869,7 +875,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_con(
         S_p1_e = var_dict["S_p1_e"]
         S_p2_e = var_dict["S_p2_e"]
 
-        max_retries = 1000000
+        max_retries = 10
 
         retry = 0
         for i in range(max_retries):
@@ -993,7 +999,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_con(
                     retry += 1
             except Exception as e:
                 if i < max_retries - 1:
-                    time.sleep(2)
+                    time.sleep(15)
                     print(e)
                 else:
                     raise
@@ -1019,7 +1025,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_initialize(
         S_p1_e = var_dict["S_p1_e"]
         S_p2_e = var_dict["S_p2_e"]
 
-        max_retries = 1000000
+        max_retries = 10
 
         retry = 0
         for i in range(max_retries):
@@ -1133,7 +1139,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_initialize(
                     string += f"<<<{item[0]}>>> means you think {item[1]}.\n"
 
                 confirm = get_completion_1(string)
-                if "yes" in confirm or "Yes" in confirm or retry >= 100000:
+                if "yes" in confirm or "Yes" in confirm or retry >= 2:
                     return {
                         "side": stand,
                         "reasons": new_side["reasons"],
@@ -1144,7 +1150,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_initialize(
                     retry += 1
             except Exception as e:
                 if i < max_retries - 1:
-                    time.sleep(2)
+                    time.sleep(15)
                     print(e)
                 else:
                     raise
@@ -1154,7 +1160,7 @@ def LLM_update_profile_5_and_LLM_get_reason_debias_initialize(
 
 
 def LLM_reconnect(user: dict, target: dict, var_dict: dict):
-    max_retries = 1000000
+    max_retries = 10
     environment = var_dict["environment"]
     topic = var_dict["topic"]
     S_m2 = var_dict["S_m2"]
@@ -1195,11 +1201,11 @@ def LLM_reconnect(user: dict, target: dict, var_dict: dict):
             )
         else:
             string += f"The person knows nothing about {environment}.\n"
-        if user["patience"] == 1:
+        if user.get("patience", 1) == 1:
             string += "You enjoy discussing with anyone.\n"
-        if user["patience"] == 0:
+        if user.get("patience", 1) == 0:
             string += f"You enjoy sharing with people that have reasonable thoughts about {environment}.\n"
-        if user["patience"] == -1:
+        if user.get("patience", 1) == -1:
             string += "You do not enjoy talking with people with.\n"
 
         string += (
@@ -1220,13 +1226,13 @@ def LLM_reconnect(user: dict, target: dict, var_dict: dict):
 
         except Exception:
             if i < max_retries - 1:
-                time.sleep(2)
+                time.sleep(15)
             else:
                 raise
 
 
 def LLM_reconnect_noex(user: dict, target: dict, var_dict: dict):
-    max_retries = 1000000
+    max_retries = 10
     environment = var_dict["environment"]
     topic = var_dict["topic"]
     S_m2 = var_dict["S_m2"]
@@ -1267,11 +1273,11 @@ def LLM_reconnect_noex(user: dict, target: dict, var_dict: dict):
             )
         else:
             string += f"The person knows nothing about {environment}.\n"
-        if user["patience"] == 1:
+        if user.get("patience", 1) == 1:
             string += "You enjoy discussing with anyone.\n"
-        if user["patience"] == 0:
+        if user.get("patience", 1) == 0:
             string += f"You enjoy sharing with people that have reasonable thoughts about {environment}.\n"
-        if user["patience"] == -1:
+        if user.get("patience", 1) == -1:
             string += "You do not enjoy talking with people with.\n"
 
         string += (
@@ -1292,13 +1298,13 @@ def LLM_reconnect_noex(user: dict, target: dict, var_dict: dict):
                 raise
         except Exception:
             if i < max_retries - 1:
-                time.sleep(2)
+                time.sleep(15)
             else:
                 raise
 
 
 def LLM_persuade_100(profile: dict, target_profile: dict, var_dict: dict):
-    max_retries = 1000000
+    max_retries = 10
     environment = var_dict["environment"]
     topic = var_dict["topic"]
     S_m2 = var_dict["S_m2"]
@@ -1306,7 +1312,7 @@ def LLM_persuade_100(profile: dict, target_profile: dict, var_dict: dict):
     S_0 = var_dict["S_0"]
     S_p1 = var_dict["S_p1"]
     S_p2 = var_dict["S_p2"]
-    max_retries = 1000000
+    max_retries = 10
     for i in range(max_retries):
         try:
             string = f"Assume you are someone who cares about {environment}."
@@ -1336,7 +1342,7 @@ def LLM_persuade_100(profile: dict, target_profile: dict, var_dict: dict):
 
         except Exception as e:
             if i < max_retries - 1:
-                time.sleep(2)
+                time.sleep(15)
                 print(e)
             else:
                 raise
@@ -1345,7 +1351,7 @@ def LLM_persuade_100(profile: dict, target_profile: dict, var_dict: dict):
 def LLM_persuade_100_debias(
     profile: dict, target_profile: dict, var_dict: dict
 ):
-    max_retries = 1000000
+    max_retries = 10
     environment = var_dict["environment"]
     topic = var_dict["topic"]
     S_m2 = var_dict["S_m2"]
@@ -1353,7 +1359,7 @@ def LLM_persuade_100_debias(
     S_0 = var_dict["S_0"]
     S_p1 = var_dict["S_p1"]
     S_p2 = var_dict["S_p2"]
-    max_retries = 1000000
+    max_retries = 10
     retry = 0
     message = ""
     for i in range(max_retries):
@@ -1401,12 +1407,12 @@ def LLM_persuade_100_debias(
                 string += f"<<<{S_p2}>>>"
             string += "? Please respond yes or no only.\n"
             persuasive = get_completion_1(string)
-            if "yes" in persuasive or "Yes" in persuasive or retry >= 10:
+            if "yes" in persuasive or "Yes" in persuasive or retry >= 2:
                 return message
             retry += 1
         except Exception:
             if i < max_retries - 1:
-                time.sleep(2)
+                time.sleep(15)
             else:
                 raise
 
