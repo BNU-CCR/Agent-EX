@@ -31,7 +31,13 @@
   - 已补充结构化协议契约、run/event/attempt 身份模型和运行状态机。
   - 第二轮复审发现旧幂等键表述与新 `event_id` 契约冲突，已统一为 `event_id` 唯一幂等键。
   - 最终独立规格复审结果为 `Approved`。
-  - 待用户书面确认后进入详细实施计划。
+  - 用户确认总体平台规格，并要求按既有研究脉络进一步收束 Paper 1。
+  - 回读 Notion v2.0、Paper 1 收口页、2026-06-12 最新页和本地历次方案，确认主线为 persona 条件化与多轮网络互动下的意见形态。
+  - 新建 Paper 1 聚焦研究规格，明确不把真人网络、动态重连、RLHF 和 N=1000 纳入主实验。
+  - 第一轮独立审阅发现连续性操作重叠、shuffled exposure 不可执行和 primary estimand 未排序三个阻塞项。
+  - 已将 continuity 限定为先前立场/理由/发言的连贯性；明确 cell 内 degree-matched 置换算法；将 primary outcome 收束为 `Δ log(B/W)`，primary estimand 收束为 continuity 对 `WS - shuffled` 的 matched-seed 调节效应。
+  - 第二轮独立复审结果为 `Approved`。
+  - 待用户确认聚焦书面规格后进入 Paper 1 protocol 与逐文件实施计划。
 - 创建/修改的文件：
   - 待审阅后更新设计规格。
 

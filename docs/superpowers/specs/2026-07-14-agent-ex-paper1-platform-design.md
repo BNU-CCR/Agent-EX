@@ -83,6 +83,8 @@ pilot-1.0、pilot-2.0 和 pilot-3.0 原地保留并冻结，暂不移动目录�
 
 ## 5. Paper 1 研究设计原则
 
+Paper 1 的聚焦研究设计以 `docs/superpowers/specs/2026-07-14-paper1-focused-research-design.md` 为准。本节保留平台设计阶段的原则性约束；如有冲突，以聚焦研究设计及后续冻结的 `docs/paper1-protocol.md` 为准。
+
 ### 5.1 可识别性优先
 
 Paper 1 必须明确主要 estimand，不能继续把身份、立场锚定、抗从众和变化幅度限制捆绑为一个“persona 强度”。建议首个可识别设计以两个正交因素为起点：
