@@ -53,6 +53,21 @@
 | pilot-3.0 N 扩展静态审计 | `n_agents=1000` | 创建1000个Agent | 角色池只有20条，无法运行 | 发现阻塞 |
 | 配置传递审计 | `top_p=0.9` | 进入模型请求 | 未进入 `LLMClient.generate` | 发现阻塞 |
 
+### 阶段 4：实施计划
+- **状态：** in_progress
+- 执行的操作：
+  - 按 make-plan 规则完成文档、代码和方法/统计三路 Phase 0 发现。
+  - 确认 `platform/` 尚不存在，当前运行依赖未锁定，pilot-3.0 Notebook 是实际实现。
+  - 写入分阶段、逐模块、测试先行的实施计划。
+  - 第一轮计划审阅发现官方API发现滞后、执行参数库存不全和大规模矩阵编排缺失。
+  - 已增加 Phase 0B 官方API/依赖 gate、完整 unresolved inventory 与 formal-required 校验、registry/worker/矩阵审计/盲态扩样 orchestration 阶段。
+  - 第二轮独立计划审阅结果为 `Approved`。
+  - 代码实施目前仅被 worktree 位置选择阻塞；未修改 pilot 或创建 platform。
+- 创建/修改的文件：
+  - `docs/superpowers/plans/2026-07-14-paper1-platform-implementation-plan.md`
+  - `task_plan.md`
+  - `progress.md`
+
 ## 错误日志
 | 时间戳 | 错误 | 尝试次数 | 解决方案 |
 |--------|------|---------|---------|
