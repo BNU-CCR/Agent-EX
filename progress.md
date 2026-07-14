@@ -37,7 +37,12 @@
   - 第一轮独立审阅发现连续性操作重叠、shuffled exposure 不可执行和 primary estimand 未排序三个阻塞项。
   - 已将 continuity 限定为先前立场/理由/发言的连贯性；明确 cell 内 degree-matched 置换算法；将 primary outcome 收束为 `Δ log(B/W)`，primary estimand 收束为 continuity 对 `WS - shuffled` 的 matched-seed 调节效应。
   - 第二轮独立复审结果为 `Approved`。
-  - 待用户确认聚焦书面规格后进入 Paper 1 protocol 与逐文件实施计划。
+  - 用户确认聚焦设计，并最终确定分级实现与 N=1000 正式主实验。
+  - 将正式规模更新为 N=1000、T=50、12 cells；先10个 matched seeds，再按盲态功效重估扩展至最多20个。
+  - 规模方案复审发现 pooled within-cell variance 不适用于 matched-seed DiD；已改为直接估计每 seed 主对比 `z_s` 的中心化方差，并固定 α、power、MDE、取整、上限和首批数据纳入规则。
+  - 复核三轮 pilot 代码，写入可迁移机制、禁止直接复用部分和测试先行的迁移边界。
+  - 最终规模与迁移方案独立复审结果为 `Approved`。
+  - 用户已确认该方案；下一步进入 Paper 1 protocol 与逐文件实施计划。
 - 创建/修改的文件：
   - 待审阅后更新设计规格。
 

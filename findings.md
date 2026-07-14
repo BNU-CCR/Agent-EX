@@ -34,6 +34,14 @@
 | run manifest 记录代码/协议/模型身份 | 保证可追溯性 |
 | 研究协议与机器配置分层但必须互相校验 | 防止文档参数与实际请求再次分离 |
 
+## Pilot 代码复用结论
+
+- 新 `platform/` 尚未开始实现；当前停留在已审阅研究设计阶段。
+- Pilot-1.0 可借鉴轻量状态对象、NetworkX 生成/抽样、OpenAI-compatible adapter、异步并发骨架和 parser 测试样例。
+- Pilot-2.0 可借鉴消息池、按 epoch 持久化及 opinion/message/reconnect 分层，但其超长工具文件、全局状态和动态重连主循环不直接迁移。
+- Pilot-3.0 是最重要的行为参考：同步快照、统一提交、完整 prompt/exposure/raw response 记录、条件/seed 组织和 run-level 分析应迁移为正式需求。
+- 三个 pilot 都不能直接作为正式平台基底；迁移方式是“先把行为写成测试，再在新 package 中重写”，而不是复制目录。
+
 ## 遇到的问题
 | 问题 | 解决方案 |
 |------|---------|
