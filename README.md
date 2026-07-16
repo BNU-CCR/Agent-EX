@@ -15,17 +15,15 @@
 | **实验项目** | 🟢 进行中 | LLM-agent 介入下的在线意见演化机制研究 |
 | 理论文章修订 | 🟡 已完成 | 已返给出版社终审 |
 
-**当前 Paper 1 定位**（2026-05-31 更新）：
+**当前 Paper 1 定位**（2026-07-14 聚焦规格）：
 
-> **基于探索性 LLM-ABM 实验的机制识别研究**
->
-> 当 LLM-agent 作为新型社交机器人进入在线讨论网络时，意见演化是如何在模型默认生成倾向、persona 条件、网络互动和历史表达之间共同形成的？
+> 模拟 LLM-agent 进入固定在线讨论网络后，在身份信息、身份连续性和社会暴露的正交操纵下，识别多轮意见演化中的组内均质化与组间分化机制。
 
-**核心发现**（pilot-3.0 正式实验，四条件 × 五 seed）：
-- **weak persona** 条件下，agent 更容易向高分端（10分）收敛，最终均值 9.23-10.00，方差降至 0.00-3.48，中间立场基本消失
-- **lifelong strong persona** 条件下，agent 保留更多中间立场（29%-35%）和差异化理由，最终均值 7.28-7.92，方差维持在 2.68-4.10
-- **BA / WS 网络结构**在 N=20 小规模实验中终点效应有限（network 主效应不显著）
-- **"多极化不等于多样性"**：weak 条件下理由高度同质化（"AI将重塑劳动市场""技能转型不可避免"），而 lifelong strong 条件下保留更多基于个人经历的理由
+正式设计为 `identity 2 × continuity 2 × social exposure 3 = 12 cells`，N=1000、T=50，首批10个 matched seeds，并按一次预注册的盲态 nuisance-variance 重估最多扩至20个。唯一 primary estimand 是 continuity 对 `WS - shuffled` 的 matched-seed DiD 调节；完整定义见 [07-14 Paper 1 聚焦研究设计](docs/superpowers/specs/2026-07-14-paper1-focused-research-design.md)。
+
+2026-05 的 weak/lifelong × BA/WS 结果是 N=20 的历史 pilot 证据，只用于提出问题、迁移回归和识别旧实现风险，不是当前 Paper 1 的正式设计或已验证结论。
+
+**当前工作入口**：先读 [AGENTS.md](AGENTS.md) 与 [项目总览](docs/project-overview.md)；Paper 1 人类可读协议见 [paper1-protocol.md](docs/paper1-protocol.md)，未决项见 [research-qa.md](docs/research-qa.md)，已确认选择见 [decisions.md](docs/decisions.md)。
 
 ---
 
@@ -69,7 +67,7 @@ Agent-EX/
 │   ├── preliminary_experiment_report.md  # 预实验2.0结果报告
 │   └── run_piao.bat               # Windows 启动脚本
 │
-├── pilot-3.0/                 # 【正式实验】AI劳动力议题探索性实验（2026-05-30）
+├── pilot-3.0/                 # 【历史 pilot】AI劳动力议题探索性实验（2026-05-30）
 │   ├── src/                       # 核心代码（基于 pilot-1.0 重构）
 │   │   ├── agent.py               # Agent 类与 Prompt（weak / lifelong strong）
 │   │   ├── network.py             # BA / WS 网络构建
@@ -77,15 +75,15 @@ Agent-EX/
 │   │   ├── simulator.py           # 同步更新模拟器
 │   │   ├── metrics.py             # 指标计算
 │   │   └── config.py              # 配置加载
-│   ├── run.ipynb                  # 主实验 notebook（Cell 0-15）
+│   ├── run.ipynb                  # 历史 pilot notebook（Cell 0-15）
 │   └── results/                   # 实验结果（gitignored）
-│       ├── current_experiment/    # 四条件 × 五 seed 正式数据
-│       └── paper_outputs/         # 论文图表与统计表
+│       ├── current_experiment/    # 四条件 × 五 seed 历史 pilot 数据
+│       └── paper_outputs/         # 历史论文图表与统计表
 │
 ├── logs/                        # 工作日志
 │   ├── 2026-05-22.md              # 预实验1.0
 │   ├── notion-2026-05-23.md       # 05-23 交接（RLHF/abliterated 大设计）
-│   └── notion-2026-05-31.md       # 05-31 交接（当前最新状态）
+│   └── notion-2026-05-31.md       # 05-31 历史状态快照（已被当前主线取代）
 ├── references/                  # 参考文献（Notion 统一管理）
 └── README.md                    # 本文件
 ```
@@ -98,70 +96,48 @@ Agent-EX/
 |------|------|---------|------|------|------|---------|
 | **预实验 1.0** | 2026-05-22 | 自研 | AI劳动力（中文） | 20×30 | ✅ 完成 | 弱约束下快速高分端收敛；固执度+角色强化可保留多样性 |
 | **预实验 2.0** | 2026-05-24 | Piao et al. 2025 | Politics（英文） | 80×2 | ✅ 完成 | persona 锚定强度是隐藏 confound；qwen3 存在 progressive bias |
-| **正式实验 (pilot-3.0)** | 2026-05-30 | 基于 pilot-1.0 重构 | AI劳动力（中文） | 20×30×4条件×5seed | ✅ 完成 | weak persona → 高分端饱和；lifelong strong → 保留中间立场与理由多样性 |
+| **历史 pilot (pilot-3.0)** | 2026-05-30 | 基于 pilot-1.0 重构 | AI劳动力（中文） | 20×30×4条件×5seed | ✅ 完成 | weak persona → 高分端饱和；lifelong strong → 保留中间立场与理由多样性 |
 
-**关键转折**（2026-05-28 组会）：
-- 05-23 的 RLHF / abliterated / H1-H5 大设计 **暂缓进入 Paper 1**，移至 **Paper 2 储备**
-- Paper 1 收口为：**探索性 LLM-ABM 机制识别**——聚焦 weak vs lifelong strong persona 在 AI 劳动力议题上的效应
+**关键转折**：
+- 2026-05 的 weak/lifelong × BA/WS 设计保留为历史 pilot，不再提供正式执行参数。
+- 2026-07-14 起，Paper 1 以已批准的 12-cell 聚焦规格为设计权威；RLHF / abliterated、动态重连和多模型全因子移至后续研究。
 
 ---
 
-## 实验设计速查（pilot-3.0 正式实验）
+## 当前 Paper 1 实验设计速查
 
 ### 核心问题
 
-当 LLM-agent 作为新型社交机器人进入在线讨论网络后，意见演化是如何在模型默认生成倾向、persona 条件、网络互动和历史表达之间共同形成的？
+Agent 进入在线舆论网络并多轮互动后，身份信息和跨轮连续性是否改变网络拓扑对组内均质化与组间分化的作用？
 
-### 议题
+### 实验条件（2×2×3）
 
-**AI 是否会取代人类劳动力**（中文）
-
-### 模型
-
-- `qwen3.5-plus`（DashScope / 阿里云百炼）
-- temperature = 0.7, top_p = 0.9, max_tokens = 180
-
-### 实验条件（2×2 设计）
-
-| 条件 | Persona | Network | 预期 |
-|------|---------|---------|------|
-| C1_weak_BA | weak | BA | 向高分端收敛 |
-| C2_lifelong_BA | lifelong strong | BA | 保留中间立场 |
-| C3_weak_WS | weak | WS | 向高分端收敛 |
-| C4_lifelong_WS | lifelong strong | WS | 保留中间立场 |
+| 因素 | 水平 |
+|------|------|
+| identity | 无身份信息 / 有身份信息 |
+| continuity | 无跨轮一致性要求 / 有跨轮一致性要求 |
+| social exposure | self-history only / degree-matched shuffled social / 固定 WS 邻居 |
 
 ### 规模
 
-- N = 20 agents
-- T = 30 rounds
-- 每组条件 5 个随机种子：42, 43, 44, 45, 46
+- N = 1000 agents
+- T = 50 rounds
+- 12 cells 共享 matched seeds；首批10个，盲态规则最多扩至20个
+- N=200/500 只用于有限规模 gate，不进入正式主结论
 
-### 关键指标
+### 主结果与模型路线
 
-| 指标 | 说明 |
-|------|------|
-| 最终均值 | 立场评分均值（1-10 Likert） |
-| 最终方差 | 立场分布方差 |
-| 中间立场比例 | 评分 4-6 的 agent 占比 |
-| 极端比例 | 评分 ≤2 或 ≥9 的 agent 占比 |
-| 方差下降幅度 | 初始方差 - 最终方差 |
-| 收敛轮次 | 方差降至初始 50% 以下所需轮次 |
-
-### ANOVA 核心结果
-
-| 因变量 | Persona p | Network p | 解读 |
-|--------|----------:|----------:|------|
-| 最终均值 | **.001** | .891 | persona 显著影响均值 |
-| 中间立场比例 | **<.001** | .821 | persona 显著保留中间立场 |
-| 极端比例 | **<.001** | .901 | persona 显著降低极端化 |
-| 收敛轮次 | **<.001** | 1.000 | persona 显著延迟收敛 |
-| 最终方差 | .339 | .548 | **不显著**（方差本身不敏感） |
+- 唯一 primary outcome：`Δlog((B+ε)/(W+ε))`，同时报告组间分量 B 与组内分量 W。
+- 主模型：Qwen3-8B BF16、non-thinking、自部署 vLLM；精确 revision 与运行环境须经 Phase 0B smoke 后冻结。
+- API：仅运行预注册核心8 cells 的固定 snapshot 外部稳健性子集，不解释为“API 部署效应”。
 
 ---
 
 ## 使用指南
 
-### 运行正式实验（pilot-3.0）
+### 复现历史 pilot（pilot-3.0）
+
+以下入口仅用于历史 pilot 复现与迁移回归验收，不得作为正式 Paper 1 运行入口；正式运行必须使用冻结协议下的 `platform/`。
 
 ```bash
 cd pilot-3.0
@@ -224,17 +200,11 @@ run_piao.bat
 
 ## 下一步路线图
 
-### 立即：课程论文提交前
-- [ ] 全文参数一致性检查（qwen3.5-plus / N=20 / T=30 / 5 seeds / ws_p=0.1）
-- [ ] 方法部分未计算指标的承诺清理（group within-between ratio / embedding / Self-BLEU）
-- [ ] 术语"极化"改为"高分端集中 / 端点饱和"
-- [ ] 图号、表号、APA 参考文献核对
-
 ### 课程论文后：正式 Paper 1
-- [ ] 扩大 N 至 200-1000，T 至 50，10+ seeds
-- [ ] 补文本指标（embedding 距离 / Self-BLEU / 高频理由分布 / long-tail retention）
-- [ ] 网络结构效应在更大规模下重新检验
-- [ ] 外部效度讨论（真实社交媒体网络验证）
+- [ ] 完成 Phase 0B 模型、API 与运行时 smoke，冻结仍未决的精确版本和生成参数
+- [ ] 搭建 `platform/` 并依次通过 mock、真实模型校准和 N=200/500/1000 有限规模 gate
+- [ ] 运行 N=1000、T=50、12 cells、10→20 matched-seed 正式矩阵
+- [ ] 冻结分析数据后执行预注册主分析与 API 外部稳健性子集
 
 ### Paper 2 储备（05-23 大设计）
 - [ ] 回到 research_design.md (05-23 版)
@@ -257,8 +227,9 @@ run_piao.bat
 | 2026-05-23 | [notion-2026-05-23.md](logs/notion-2026-05-23.md) | 方法论反思 + H1-H5 假说（大设计，历史） |
 | 2026-05-24 | — | 项目结构重构：区分预实验1.0/2.0 |
 | 2026-05-28 | [design/meetings/2026-05-28_组会汇报.md](design/meetings/2026-05-28_组会汇报.md) | 关键：研究收口决策 |
-| 2026-05-30 | — | pilot-3.0 正式实验完成（四条件×五seed） |
-| 2026-05-31 | [notion-2026-05-31.md](logs/notion-2026-05-31.md) | 当前最新状态交接 |
+| 2026-05-30 | — | pilot-3.0 历史 pilot 完成（四条件×五seed） |
+| 2026-05-31 | [notion-2026-05-31.md](logs/notion-2026-05-31.md) | 历史 pilot 状态交接 |
+| 2026-07-14 | [2026-07-14.md](logs/2026-07-14.md) | Paper 1 聚焦规格与正式规模基线 |
 
 ---
 
@@ -274,4 +245,4 @@ run_piao.bat
 
 ---
 
-*README 最后更新：2026-05-31（项目收口：探索性 LLM-ABM 机制识别）*
+*README 最后核对：2026-07-16（Paper 1 以 2026-07-14 聚焦规格为准）*

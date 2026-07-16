@@ -1,0 +1,81 @@
+---
+status: draft; not confirmed or frozen
+authority: human-readable protocol draft derived from the approved focused spec; machine execution is forbidden until unresolved fields are frozen
+supersedes: pilot-3.0 four-condition design for future formal Paper 1 runs; does not supersede pilot evidence
+last-verified: 2026-07-16
+---
+
+# Paper 1 研究协议草案
+
+**Protocol ID:** `P1-LLM-OPINION-DYNAMICS`
+**Protocol version:** `UNRESOLVED[P1_PROTOCOL_VERSION]`
+
+## 1. 研究对象与边界
+
+研究异质初始立场的 LLM-agent 在固定讨论网络中经历多轮局部信息暴露、理由生成与同步立场更新后形成的意见形态。实验不直接估计真实公众或真实平台部署 AI Agent 的平均社会效应，也不研究关系拓扑演化。
+
+Paper 1 主实验排除 RLHF/abliterated、权重微调、真人—AI 混合网络、推荐算法、动态重连、多模型/多语言全因子，以及 pilot 的 weak/lifelong 复合 prompt。
+
+## 2. 因素与稳定 cell IDs
+
+- Identity：`I0=identity_absent`；`I1=identity_present`。
+- Continuity：`C0=continuity_absent`；`C1=continuity_present`。
+- Exposure：`E0=self_history_only`；`E1=shuffled_social`；`E2=ws_neighbors`。
+
+| Cell ID | Identity | Continuity | Exposure |
+|---|---|---|---|
+| P1-I0-C0-E0 | absent | absent | self history only |
+| P1-I0-C0-E1 | absent | absent | shuffled social |
+| P1-I0-C0-E2 | absent | absent | WS neighbors |
+| P1-I0-C1-E0 | absent | present | self history only |
+| P1-I0-C1-E1 | absent | present | shuffled social |
+| P1-I0-C1-E2 | absent | present | WS neighbors |
+| P1-I1-C0-E0 | present | absent | self history only |
+| P1-I1-C0-E1 | present | absent | shuffled social |
+| P1-I1-C0-E2 | present | absent | WS neighbors |
+| P1-I1-C1-E0 | present | present | self history only |
+| P1-I1-C1-E1 | present | present | shuffled social |
+| P1-I1-C1-E2 | present | present | WS neighbors |
+
+Identity 只能增删人口学和议题相关经历块，不能泄露方向性长期立场。Continuity 只能增删历史解释连贯要求，并必须明确允许被有说服力的信息改变。所有条件禁止抗从众、最大步长、“永不改变”和固定方向性价值立场。
+
+## 3. 共享对象与更新合同
+
+同一 matched seed 的12个 cells 共享人口、身份材料、初始立场与理由、WS 图、激活顺序、social exposure 目标数量、模型版本和生成参数。每轮只读取不可变上一轮快照；所有 Agent 完成后同步提交。
+
+`self_history_only` 不接收其他 Agent 信息。`shuffled_social` 从同 seed 的 WS 边表预生成 degree-matched 映射，保持接收数量，禁止自环和真实邻边，并只使用本 cell 上一轮消息。`ws_neighbors` 只读取固定 WS 一阶邻居上一轮消息。所有映射和实际 exposure 必须保存和验证。
+
+## 4. 结果与 estimand
+
+唯一主要结果为预注册终点 `UNRESOLVED[P1_ENDPOINT_TSTAR]` 的：
+
+`S_t = log((B_t + ε)/(W_t + ε))`，`ΔS_T = S_T* - S_0`
+
+其中 `ε=UNRESOLVED[P1_LOG_EPSILON]`；B/W 的精确总体权重和缺组规则见 `UNRESOLVED[P1_BW_FORMULA]`。报告 ΔS 时必须同时展示 B 与 W。
+
+唯一 primary estimand 是 continuity 对 `WS - shuffled` 的 matched-seed DiD 调节；在两个 identity 水平分别计算后等权平均。identity 三阶交互、`WS-self`、完整轨迹、分布形态和文本多样性均为 secondary/exploratory。
+
+## 5. 规模与模型
+
+- 构念/真实模型校准：N=20/50/100。
+- 有限规模 gate：在主对比上运行 N=200/500/1000；具体 cells/seeds 为 `UNRESOLVED[P1_SCALE_GATE_DESIGN]`。
+- 正式主实验：N=1000、T=50、12 cells、首批10 matched seeds；按冻结的盲态规则一次扩至最多20个。
+- 主模型：Qwen3-8B BF16、non-thinking、vLLM 自部署、全矩阵；revision 为 `UNRESOLVED[P1_MODEL_REVISION]`。
+- API：固定 snapshot 的核心8-cell 外部稳健性子集，cells 由 `UNRESOLVED[P1_API_ROBUSTNESS_CELLS]` 冻结；候选枚举为 `P1-I0-C0-E1/E2`、`P1-I0-C1-E1/E2`、`P1-I1-C0-E1/E2`、`P1-I1-C1-E1/E2`，即全部 identity×continuity 下的 shuffled 与 WS。规模暂拟 N=200、T=50、5 matched seeds，仅由 `UNRESOLVED[P1_API_ROBUSTNESS_SCALE_FREEZE]` 冻结。它是模型系统比较，不是 API 部署效应。
+- 主实验不微调权重；量化权重不得与 BF16 主矩阵混跑。
+
+## 6. Gates、失败与停止
+
+Phase 0A 必须证明 identity 只改变身份信息、continuity 提高连贯性但不锁死、四 persona cells 非退化、量表只测单一构念，且议题无不可接受的单向偏置/拒答。
+
+Phase 0B 必须完成 mock N=20/100/1000、真实 N=20/50/100、形态 dry run、吞吐/成本/失败率和 primary matched contrast 方差诊断。有限规模与正式 gate 仍需冻结 `UNRESOLVED[P1_GATE_DELTA_STABILITY]`、`UNRESOLVED[P1_GATE_FAILURE_MAX]`、`UNRESOLVED[P1_GATE_THROUGHPUT_MIN]`、`UNRESOLVED[P1_GATE_MEMORY_MAX]` 和 `UNRESOLVED[P1_GATE_DURATION_MAX]`。
+
+每个预期事件必须进入 succeeded/failed/excluded/imputed/fallback 之一；所有原始 attempt 均保留。默认主分析要求 complete 且 `failed=0, imputed=0, fallback=0`；排除阈值与例外为 `UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]`。未达 gate 即停止，不得用结果方向决定继续、删 seed 或改协议。
+
+## 7. 推断与证据边界
+
+seed/run 是独立重复单位；同 seed 条件采用配对/区组分析。最终推断方法为 `UNRESOLVED[P1_PRIMARY_INFERENCE]`。首10 seeds 的盲态扩样只能读取 primary seed-level 对比的中心化残差，不得输出均值、方向、CI、p 值或 cell 均值；`δ_min=UNRESOLVED[P1_DELTA_MIN]`。
+
+允许的结论限于指定模型、议题、persona 与暴露条件下的 LLM-agent 意见动力学。不得把 persona 当真实身份、把固定网络称为关系网络演化、把单向漂移称为两极化，或把 N=1000 当作外部效度保证。
+
+所有未决项的 owner、候选、推荐和最迟 gate 见 `docs/research-qa.md`。本协议在这些字段及机器协议未冻结前不得启动 formal run。
