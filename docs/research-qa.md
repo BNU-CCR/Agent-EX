@@ -13,7 +13,7 @@ last-verified: 2026-07-16
 
 | ID | 问题 | 候选 / 推荐 | 决策者 | 最迟 gate | Schema paths |
 |---|---|---|---|---|---|
-| P1_TOPIC_PRIMARY | 主议题与单一态度构念 | AI劳动议题；推荐把预测判断与规范支持二选一 | 用户+方法会审 | Phase 0A 前 | topic.id, stance.construct |
+| P1_TOPIC_PRIMARY | 主议题与单一态度构念 | AI劳动议题；推荐把预测判断与规范支持二选一 | 用户+方法会审 | Phase 0A 前 | topic.id, topic.statement, topic.statement_sha256, stance.construct |
 | P1_STANCE_SCALE | 立场量表 | Likert/连续刻度；推荐先做认知访谈式 prompt 校准 | 用户+方法会审 | Phase 0A 前 | stance.scale |
 | P1_INITIAL_GROUP_CUTS | 初始组切点 | 三组/分位组；推荐保证预注册且每组足量 | 方法会审 | Phase 0B 前 | groups.cuts |
 | P1_ENDPOINT_TSTAR | primary 终点 T* | T=50 内预注册终点；不自动等同最后一轮 | 用户+方法会审 | Phase 0B 前 | outcomes.primary.t_star |
@@ -22,7 +22,7 @@ last-verified: 2026-07-16
 | P1_BW_DDOF | 方差 ddof | 0/1；须与公式和 fixture 一致 | 方法会审 | Phase 0B 前 | metrics.ddof |
 | P1_MISSING_GROUP_RULE | 缺组处理 | fail/exclude；推荐运行前 fail | 方法会审 | Phase 0B 前 | metrics.missing_group |
 | P1_DELTA_MIN | 最小重要效应 | 由理论/模拟精度定义，不从正式结果反推 | 用户+方法会审 | formal freeze | sample_size.delta_min |
-| P1_FORMAL_SEEDS | 10+10 seed 列表 | 预生成固定列表；推荐与其他 RNG namespace 分离 | 用户+实现会审 | formal freeze | sampling.formal_seeds |
+| P1_FORMAL_SEEDS | 10+10 seed 列表 | 预生成固定列表；推荐与其他 RNG namespace 分离 | 用户+实现会审 | formal freeze | sampling.formal_seeds, sampling.blind_ssr |
 | P1_SHAPE_THRESHOLDS | 形态阈值 | 均质化/漂移/极化/双层/停滞阈值 | 方法会审 | Phase 0B 前 | shapes.thresholds |
 | P1_SHAPE_WINDOW | 连续窗口 | K轮；用合成轨迹校准 | 方法会审 | Phase 0B 前 | shapes.window |
 | P1_SHAPE_SENSITIVITY | 敏感性区间 | 预注册上下界 | 方法会审 | formal freeze | shapes.sensitivity |
@@ -42,6 +42,7 @@ last-verified: 2026-07-16
 | P1_POPULATION_EXACT_N | 恰好 N 的生成规则 | 配额余数/受控抽样；推荐确定性算法 | 方法+实现会审 | Phase 4 前 | population.exact_n |
 | P1_INITIAL_STANCE_GENERATOR | 初始立场生成 | 固定分布/外部数据/模型生成 | 用户+方法会审 | Phase 4 前 | initialization.stance |
 | P1_INITIAL_REASON_SOURCE | 初始理由来源 | 模板/模型/语料；推荐跨 cell 完全匹配 | 用户+方法会审 | Phase 4 前 | initialization.reason |
+| P1_PERSONA_TEMPLATES | 四个 persona 模板制品 | identity×continuity 四组合；只登记稳定 template ID 与 SHA-256，不在协议中保存自由文本 | 用户+方法会审 | Phase 0A 前 | persona.identity_absent_continuity_absent.template_id, persona.identity_absent_continuity_absent.template_sha256, persona.identity_absent_continuity_present.template_id, persona.identity_absent_continuity_present.template_sha256, persona.identity_present_continuity_absent.template_id, persona.identity_present_continuity_absent.template_sha256, persona.identity_present_continuity_present.template_id, persona.identity_present_continuity_present.template_sha256 |
 | P1_MIN_GROUP_SIZE | 最小组样本 | 绝对数/比例 | 方法会审 | Phase 4 前 | groups.min_size |
 | P1_WS_K | WS 邻居数 k | Phase 0 候选网格；不沿用 pilot 默认 | 方法会审 | Phase 4 前 | network.ws.k |
 | P1_WS_P | WS 重连概率 p | Phase 0 候选网格；不沿用 pilot 冲突值 | 方法会审 | Phase 4 前 | network.ws.p |
@@ -65,7 +66,7 @@ last-verified: 2026-07-16
 | P1_MAX_TOKENS | max tokens | 按结构化理由长度校准 | 方法+成本会审 | Phase 0B 前 | generation.max_tokens |
 | P1_REQUEST_SEED | 模型采样 seed | vLLM 支持性实测；不支持则标记非确定 | 运行时会审 | adapter 实现前 | generation.seed |
 | P1_TIMEOUT_RETRY | timeout/retry | 按错误分类和 Retry-After 冻结 | 运行时会审 | adapter 实现前 | runtime.timeout, runtime.retry |
-| P1_CONCURRENCY_BUDGET | 并发/显存/速率预算 | 由真实 benchmark 冻结 | 运行时+成本会审 | Phase 0B 结束 | runtime.concurrency |
+| P1_CONCURRENCY_BUDGET | 并发/显存/速率预算 | 由真实 benchmark 冻结 | 运行时+成本会审 | Phase 0B 结束 | runtime.concurrency, runtime.rate_budget |
 | P1_API_PROVIDER | API 稳健性提供方 | DashScope/其他；推荐固定 snapshot 可用者 | 用户+方法会审 | 稳健性预注册前 | robustness.api.provider |
 | P1_API_SNAPSHOT | API 精确 snapshot | 禁止 rolling alias | 用户+运行时会审 | 稳健性预注册前 | robustness.api.model_snapshot |
 | P1_API_ROBUSTNESS_CELLS | API 核心8 cells | `P1-I0-C0-E1/E2`、`P1-I0-C1-E1/E2`、`P1-I1-C0-E1/E2`、`P1-I1-C1-E1/E2`，即全部 identity×continuity 下的 shuffled 与 WS | 用户+方法会审 | 稳健性预注册前 | robustness.api.cells |
@@ -82,7 +83,7 @@ last-verified: 2026-07-16
 | P1_GATE_MEMORY_MAX | 最大内存/显存 | benchmark 后冻结 | 运行时会审 | Phase 9 前 | gates.scale.memory_max |
 | P1_GATE_DURATION_MAX | 最大预计总时长 | 预算约束 | 用户+成本会审 | formal freeze | gates.formal.duration_max |
 | P1_RECOVERY_DRILLS | 恢复演练次数 | 固定次数与故障场景 | 实现会审 | formal freeze | gates.formal.recovery_drills |
-| P1_ANALYSIS_ELIGIBILITY | 允许终态/排除阈值 | 主分析默认零 failed/imputed/fallback | 用户+方法会审 | analysis freeze | quality.eligibility |
+| P1_ANALYSIS_ELIGIBILITY | 允许终态/排除阈值 | 主分析默认零 failed/imputed/fallback | 用户+方法会审 | analysis freeze | quality.eligibility, quality.exclusion |
 | P1_MATRIX_COMPLETENESS | 矩阵完整性阈值 | 推荐100% expected terminal + 配对完整 | 方法+实现会审 | formal freeze | gates.formal.matrix_complete |
 | P1_PROTOCOL_VERSION | 首个冻结版本 | 语义化/内容 hash；推荐二者同时记录 | 实现+方法会审 | protocol freeze | protocol.version |
 | P1_DATA_ARCHIVE_URI | 正式数据归档位置 | 对象存储/受控卷；推荐不可变版本与校验 hash | 用户+运行时会审 | formal freeze | storage.archive_uri |

@@ -1,3 +1,47 @@
+<!-- BEGIN GENERATED PROTOCOL SUMMARY -->
+```yaml
+protocol_id: P1-LLM-OPINION-DYNAMICS
+execution_hash: 337245b2333db0ed6c1c0c1a5b9a36b44d9cacb41c73c796cd15b30574cea1ac
+primary_outcome_id: P1_PRIMARY_DELTA_LOG_BW
+primary_estimand_id: P1_PRIMARY_CONTINUITY_WS_SHUFFLED_DID
+factor_levels:
+  identity:
+  - identity_absent
+  - identity_present
+  continuity:
+  - continuity_absent
+  - continuity_present
+  exposure:
+  - self_history_only
+  - shuffled_social
+  - ws_neighbors
+cell_ids:
+- P1-I0-C0-E0
+- P1-I0-C0-E1
+- P1-I0-C0-E2
+- P1-I0-C1-E0
+- P1-I0-C1-E1
+- P1-I0-C1-E2
+- P1-I1-C0-E0
+- P1-I1-C0-E1
+- P1-I1-C0-E2
+- P1-I1-C1-E0
+- P1-I1-C1-E1
+- P1-I1-C1-E2
+formal_scale:
+  population_size: 1000
+  rounds: 50
+  matched_seeds_initial: 10
+  matched_seeds_max: 20
+model_route:
+  provider: self_hosted
+  model_id: Qwen/Qwen3-8B
+  precision: bf16
+  thinking: false
+  runtime: vllm
+```
+<!-- END GENERATED PROTOCOL SUMMARY -->
+
 ---
 status: draft; not confirmed or frozen
 authority: human-readable protocol draft derived from the approved focused spec; machine execution is forbidden until unresolved fields are frozen
@@ -9,6 +53,16 @@ last-verified: 2026-07-16
 
 **Protocol ID:** `P1-LLM-OPINION-DYNAMICS`
 **Protocol version:** `UNRESOLVED[P1_PROTOCOL_VERSION]`
+
+机器协议以 `protocol.version` 为唯一版本路径。议题块只保存稳定 `topic.id`、公开陈述
+`topic.statement` 及其 `topic.statement_sha256`，不得加入 `prompt`、`system` 或
+`instruction` 字段。四个 identity×continuity persona 组合只登记 `template_id` 与
+`template_sha256`；模板正文是受版本控制的外部制品，不进入机器协议自由文本字段。
+
+formal 冻结还必须让 `decision_provenance` 完整覆盖 schema 的每个 `P1_*` 决策 ID，
+逐项记录 `decision_record_id`、`approved_at` 与 `approvers`，并能在
+`docs/decisions.md` 中同时核对决策 ID 和决策记录 ID。仅把 unresolved marker 换成
+schema-shaped 值不构成审批，也不能通过 formal gate。
 
 ## 1. 研究对象与边界
 

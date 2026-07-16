@@ -1,0 +1,160 @@
+protocol:
+  id: P1-LLM-OPINION-DYNAMICS
+  version: UNRESOLVED[P1_PROTOCOL_VERSION]
+status: draft
+human_protocol_reference: docs/paper1-protocol.md
+
+topic:
+  id: UNRESOLVED[P1_TOPIC_PRIMARY]
+  statement: UNRESOLVED[P1_TOPIC_PRIMARY]
+  statement_sha256: UNRESOLVED[P1_TOPIC_PRIMARY]
+stance:
+  construct: UNRESOLVED[P1_TOPIC_PRIMARY]
+  scale: UNRESOLVED[P1_STANCE_SCALE]
+population:
+  size: 1000
+  source: UNRESOLVED[P1_POPULATION_SOURCE]
+  fields: UNRESOLVED[P1_POPULATION_FIELDS]
+  balance: UNRESOLVED[P1_POPULATION_BALANCE]
+  exact_n: UNRESOLVED[P1_POPULATION_EXACT_N]
+initialization:
+  stance: UNRESOLVED[P1_INITIAL_STANCE_GENERATOR]
+  reason: UNRESOLVED[P1_INITIAL_REASON_SOURCE]
+  matched_across_cells: true
+groups:
+  cuts: UNRESOLVED[P1_INITIAL_GROUP_CUTS]
+  min_size: UNRESOLVED[P1_MIN_GROUP_SIZE]
+
+outcomes:
+  primary:
+    id: P1_PRIMARY_DELTA_LOG_BW
+    definition: delta_log_between_within
+    t_star: UNRESOLVED[P1_ENDPOINT_TSTAR]
+    epsilon: UNRESOLVED[P1_LOG_EPSILON]
+primary_estimand:
+  id: P1_PRIMARY_CONTINUITY_WS_SHUFFLED_DID
+  definition: continuity_moderation_of_ws_minus_shuffled_matched_seed_did
+
+design:
+  population_size: 1000
+  rounds: 50
+  matched_seeds_initial: 10
+  matched_seeds_max: 20
+  factor_levels:
+    identity: [identity_absent, identity_present]
+    continuity: [continuity_absent, continuity_present]
+    exposure: [self_history_only, shuffled_social, ws_neighbors]
+  cells:
+    - {id: P1-I0-C0-E0, identity: identity_absent, continuity: continuity_absent, exposure: self_history_only}
+    - {id: P1-I0-C0-E1, identity: identity_absent, continuity: continuity_absent, exposure: shuffled_social}
+    - {id: P1-I0-C0-E2, identity: identity_absent, continuity: continuity_absent, exposure: ws_neighbors}
+    - {id: P1-I0-C1-E0, identity: identity_absent, continuity: continuity_present, exposure: self_history_only}
+    - {id: P1-I0-C1-E1, identity: identity_absent, continuity: continuity_present, exposure: shuffled_social}
+    - {id: P1-I0-C1-E2, identity: identity_absent, continuity: continuity_present, exposure: ws_neighbors}
+    - {id: P1-I1-C0-E0, identity: identity_present, continuity: continuity_absent, exposure: self_history_only}
+    - {id: P1-I1-C0-E1, identity: identity_present, continuity: continuity_absent, exposure: shuffled_social}
+    - {id: P1-I1-C0-E2, identity: identity_present, continuity: continuity_absent, exposure: ws_neighbors}
+    - {id: P1-I1-C1-E0, identity: identity_present, continuity: continuity_present, exposure: self_history_only}
+    - {id: P1-I1-C1-E1, identity: identity_present, continuity: continuity_present, exposure: shuffled_social}
+    - {id: P1-I1-C1-E2, identity: identity_present, continuity: continuity_present, exposure: ws_neighbors}
+
+persona:
+  identity_absent_continuity_absent:
+    template_id: UNRESOLVED[P1_PERSONA_TEMPLATES]
+    template_sha256: UNRESOLVED[P1_PERSONA_TEMPLATES]
+  identity_absent_continuity_present:
+    template_id: UNRESOLVED[P1_PERSONA_TEMPLATES]
+    template_sha256: UNRESOLVED[P1_PERSONA_TEMPLATES]
+  identity_present_continuity_absent:
+    template_id: UNRESOLVED[P1_PERSONA_TEMPLATES]
+    template_sha256: UNRESOLVED[P1_PERSONA_TEMPLATES]
+  identity_present_continuity_present:
+    template_id: UNRESOLVED[P1_PERSONA_TEMPLATES]
+    template_sha256: UNRESOLVED[P1_PERSONA_TEMPLATES]
+
+network:
+  type: watts_strogatz
+  directed: UNRESOLVED[P1_GRAPH_DIRECTION]
+  self_loops: false
+  connectivity: UNRESOLVED[P1_GRAPH_CONNECTIVITY]
+  on_invalid: UNRESOLVED[P1_INVALID_GRAPH_RULE]
+  ws:
+    k: UNRESOLVED[P1_WS_K]
+    p: UNRESOLVED[P1_WS_P]
+dynamics:
+  activation_mode: UNRESOLVED[P1_ACTIVATION_MODE]
+  activation_count: UNRESOLVED[P1_ACTIVATION_COUNT]
+memory:
+  window: UNRESOLVED[P1_MEMORY_WINDOW]
+exposure:
+  max_neighbors: UNRESOLVED[P1_MAX_NEIGHBORS]
+  social_count: UNRESOLVED[P1_SOCIAL_EXPOSURE_COUNT]
+
+model:
+  provider: self_hosted
+  model_id: Qwen/Qwen3-8B
+  revision: UNRESOLVED[P1_MODEL_REVISION]
+  precision: bf16
+runtime:
+  vllm:
+    name: vllm
+    version: UNRESOLVED[P1_VLLM_VERSION]
+  timeout: UNRESOLVED[P1_TIMEOUT_RETRY]
+  retry: UNRESOLVED[P1_TIMEOUT_RETRY]
+  concurrency: UNRESOLVED[P1_CONCURRENCY_BUDGET]
+  rate_budget: UNRESOLVED[P1_CONCURRENCY_BUDGET]
+generation:
+  temperature: UNRESOLVED[P1_TEMPERATURE]
+  top_p: UNRESOLVED[P1_TOP_P]
+  max_tokens: UNRESOLVED[P1_MAX_TOKENS]
+  seed: UNRESOLVED[P1_REQUEST_SEED]
+  thinking: false
+
+metrics:
+  variance_components: UNRESOLVED[P1_BW_FORMULA]
+  ddof: UNRESOLVED[P1_BW_DDOF]
+  missing_group: UNRESOLVED[P1_MISSING_GROUP_RULE]
+sample_size:
+  delta_min: UNRESOLVED[P1_DELTA_MIN]
+shapes:
+  thresholds: UNRESOLVED[P1_SHAPE_THRESHOLDS]
+  window: UNRESOLVED[P1_SHAPE_WINDOW]
+  sensitivity: UNRESOLVED[P1_SHAPE_SENSITIVITY]
+analysis:
+  primary_test: UNRESOLVED[P1_PRIMARY_INFERENCE]
+gates:
+  continuity:
+    scoring: UNRESOLVED[P1_CONTINUITY_MC_SCORING]
+    lock_max: UNRESOLVED[P1_CONTINUITY_LOCK_THRESHOLD]
+  quality:
+    refusal_max: UNRESOLVED[P1_REFUSAL_THRESHOLD]
+    parse_failure_max: UNRESOLVED[P1_PARSE_FAILURE_THRESHOLD]
+  scale:
+    design: UNRESOLVED[P1_SCALE_GATE_DESIGN]
+    delta_tolerance: UNRESOLVED[P1_GATE_DELTA_STABILITY]
+    failure_max: UNRESOLVED[P1_GATE_FAILURE_MAX]
+    throughput_min: UNRESOLVED[P1_GATE_THROUGHPUT_MIN]
+    memory_max: UNRESOLVED[P1_GATE_MEMORY_MAX]
+  formal:
+    duration_max: UNRESOLVED[P1_GATE_DURATION_MAX]
+    recovery_drills: UNRESOLVED[P1_RECOVERY_DRILLS]
+    matrix_complete: UNRESOLVED[P1_MATRIX_COMPLETENESS]
+quality:
+  eligibility: UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]
+  exclusion: UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]
+stopping:
+  on_gate_failure: stop_before_formal
+sampling:
+  formal_seeds: UNRESOLVED[P1_FORMAL_SEEDS]
+  blind_ssr: UNRESOLVED[P1_FORMAL_SEEDS]
+robustness:
+  api:
+    provider: UNRESOLVED[P1_API_PROVIDER]
+    model_snapshot: UNRESOLVED[P1_API_SNAPSHOT]
+    cells: UNRESOLVED[P1_API_ROBUSTNESS_CELLS]
+    scale: UNRESOLVED[P1_API_ROBUSTNESS_SCALE_FREEZE]
+storage:
+  archive_uri: UNRESOLVED[P1_DATA_ARCHIVE_URI]
+provenance:
+  archive_map: UNRESOLVED[P1_ARCHIVE_PROVENANCE_MAP]
+decision_provenance: {}

@@ -1,0 +1,542 @@
+from __future__ import annotations
+
+from copy import deepcopy
+from importlib import resources
+import json
+import math
+from pathlib import Path
+
+import pytest
+import yaml
+
+from agent_ex import (
+    canonical_protocol_hash,
+    load_protocol,
+    render_human_protocol_summary,
+    update_human_protocol_summary,
+    validate_human_protocol_sync,
+    validate_protocol,
+)
+
+
+PLATFORM_ROOT = Path(__file__).parents[1]
+REPOSITORY_ROOT = PLATFORM_ROOT.parent
+PROTOCOL_PATH = PLATFORM_ROOT / "configs" / "paper1" / "protocol.yaml"
+MIRROR_SCHEMA_PATH = PLATFORM_ROOT / "protocols" / "paper1.schema.json"
+HUMAN_PROTOCOL_PATH = REPOSITORY_ROOT / "docs" / "paper1-protocol.md"
+RESEARCH_QA_PATH = REPOSITORY_ROOT / "docs" / "research-qa.md"
+
+
+def _set(document, pointer: str, value) -> None:
+    target = document
+    parts = pointer.strip("/").split("/")
+    for part in parts[:-1]:
+        target = target[int(part)] if isinstance(target, list) else target[part]
+    if isinstance(target, list):
+        target[int(parts[-1])] = value
+    else:
+        target[parts[-1]] = value
+
+
+def _delete(document, pointer: str) -> None:
+    target = document
+    parts = pointer.strip("/").split("/")
+    for part in parts[:-1]:
+        target = target[part]
+    del target[parts[-1]]
+
+
+@pytest.fixture
+def protocol() -> dict[str, object]:
+    return load_protocol(PROTOCOL_PATH)
+
+
+@pytest.fixture
+def frozen_protocol(protocol) -> dict[str, object]:
+    candidate = deepcopy(protocol)
+    replacements = {
+        "/protocol/version": "1.0.0",
+        "/topic/id": "P1-TOPIC-001",
+        "/topic/statement": "The city should expand its public transit system.",
+        "/topic/statement_sha256": (
+            "1bf032505ebcf1becc82c88623b93a3f3b8546c046ba855ce6f4d0d1810c6466"
+        ),
+        "/stance/construct": "support_for_public_transit_expansion",
+        "/stance/scale": {"minimum": -1.0, "maximum": 1.0},
+        "/population/source": "audited_synthetic_population",
+        "/population/fields": ["age_band", "education", "topic_experience"],
+        "/population/balance": "joint_quota",
+        "/population/exact_n": "largest_remainder_then_seeded_shuffle",
+        "/initialization/stance": "stratified_uniform",
+        "/initialization/reason": "matched_template_bank",
+        "/initialization/matched_across_cells": True,
+        "/groups/cuts": [-0.34, 0.34],
+        "/groups/min_size": 100,
+        "/persona/identity_absent_continuity_absent/template_id": "persona-i0-c0-v1",
+        "/persona/identity_absent_continuity_absent/template_sha256": "1" * 64,
+        "/persona/identity_absent_continuity_present/template_id": "persona-i0-c1-v1",
+        "/persona/identity_absent_continuity_present/template_sha256": "2" * 64,
+        "/persona/identity_present_continuity_absent/template_id": "persona-i1-c0-v1",
+        "/persona/identity_present_continuity_absent/template_sha256": "3" * 64,
+        "/persona/identity_present_continuity_present/template_id": "persona-i1-c1-v1",
+        "/persona/identity_present_continuity_present/template_sha256": "4" * 64,
+        "/network/directed": False,
+        "/network/connectivity": "connected",
+        "/network/on_invalid": "fail",
+        "/network/ws/k": 6,
+        "/network/ws/p": 0.1,
+        "/dynamics/activation_mode": "all_synchronous",
+        "/dynamics/activation_count": 1000,
+        "/memory/window": 5,
+        "/exposure/max_neighbors": 6,
+        "/exposure/social_count": 6,
+        "/model/revision": "0123456789abcdef",
+        "/runtime/vllm/version": "0.10.0",
+        "/runtime/timeout": {"seconds": 120.0},
+        "/runtime/retry": {"max_attempts": 3},
+        "/runtime/concurrency": {"max_requests": 32},
+        "/runtime/rate_budget": {"requests_per_minute": 600},
+        "/generation/temperature": 0.7,
+        "/generation/top_p": 0.8,
+        "/generation/max_tokens": 256,
+        "/generation/seed": 42,
+        "/outcomes/primary/t_star": 50,
+        "/outcomes/primary/epsilon": 1e-6,
+        "/metrics/variance_components": "weighted_anova_decomposition",
+        "/metrics/ddof": 1,
+        "/metrics/missing_group": "fail",
+        "/sample_size/delta_min": 0.05,
+        "/analysis/primary_test": "matched_seed_randomization_test",
+        "/shapes/thresholds": {
+            "homogenization": 0.1,
+            "drift": 0.1,
+            "polarization": 0.2,
+            "bimodality": 0.2,
+            "stagnation": 0.01,
+        },
+        "/shapes/window": 5,
+        "/shapes/sensitivity": {"lower": 0.8, "upper": 1.2},
+        "/gates/continuity/scoring": "blind_human_and_rule",
+        "/gates/continuity/lock_max": 0.05,
+        "/gates/quality/refusal_max": 0.01,
+        "/gates/quality/parse_failure_max": 0.01,
+        "/gates/scale/design": "primary_eight_cells_matched_seeds",
+        "/gates/scale/delta_tolerance": 0.02,
+        "/gates/scale/failure_max": 0.01,
+        "/gates/scale/throughput_min": 5.0,
+        "/gates/scale/memory_max": 24.0,
+        "/gates/formal/duration_max": 168.0,
+        "/gates/formal/recovery_drills": 2,
+        "/gates/formal/matrix_complete": 1.0,
+        "/quality/eligibility": "complete_only",
+        "/quality/exclusion": "exclude_any_failed_imputed_or_fallback",
+        "/stopping/on_gate_failure": "stop_before_formal",
+        "/sampling/formal_seeds": list(range(20)),
+        "/sampling/blind_ssr": {
+            "initial_seed_count": 10,
+            "maximum_seed_count": 20,
+            "reestimate_after": 10,
+            "statistic": "centered_primary_contrast_residual_variance",
+            "decision_rule": "expand_once_to_precomputed_required_n_capped_at_20",
+        },
+        "/robustness/api/provider": "dashscope",
+        "/robustness/api/model_snapshot": "qwen-plus-2025-12-01",
+        "/robustness/api/cells": [
+            "P1-I0-C0-E1", "P1-I0-C0-E2", "P1-I0-C1-E1", "P1-I0-C1-E2",
+            "P1-I1-C0-E1", "P1-I1-C0-E2", "P1-I1-C1-E1", "P1-I1-C1-E2",
+        ],
+        "/robustness/api/scale": {"population_size": 200, "rounds": 50, "seeds": 5},
+        "/storage/archive_uri": "s3://agent-ex-paper1/frozen/run-data",
+        "/provenance/archive_map": {"pilot": "s3://agent-ex-paper1/pilot/manifest.json"},
+    }
+    candidate["status"] = "frozen"
+    for pointer, value in replacements.items():
+        _set(candidate, pointer, value)
+    schema = json.loads(
+        resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
+    )
+    decision_ids = _schema_decision_paths(schema)
+    candidate["decision_provenance"] = {
+        decision_id: {
+            "decision_record_id": f"D-TEST-{index:03d}",
+            "approved_at": "2026-07-16T04:00:00Z",
+            "approvers": [_qa_owners()[decision_id]],
+        }
+        for index, decision_id in enumerate(sorted(decision_ids), start=1)
+    }
+    return candidate
+
+
+def _schema_decision_paths(schema: dict[str, object]) -> dict[str, set[str]]:
+    found: dict[str, set[str]] = {}
+
+    def walk(node, path: str) -> None:
+        if not isinstance(node, dict):
+            return
+        decision_id = node.get("x-decision-id")
+        if decision_id:
+            found.setdefault(decision_id, set()).add(path)
+        for name, child in node.get("properties", {}).items():
+            walk(child, f"{path}.{name}" if path else name)
+
+    walk(schema, "")
+    return found
+
+
+def _qa_decision_paths() -> dict[str, set[str]]:
+    found: dict[str, set[str]] = {}
+    for line in RESEARCH_QA_PATH.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("| P1_"):
+            continue
+        columns = [column.strip() for column in line.strip("|").split("|")]
+        found[columns[0]] = {path.strip() for path in columns[-1].split(",")}
+    return found
+
+
+def _qa_owners() -> dict[str, str]:
+    found = {}
+    for line in RESEARCH_QA_PATH.read_text(encoding="utf-8").splitlines():
+        if line.startswith("| P1_"):
+            columns = [column.strip() for column in line.strip("|").split("|")]
+            found[columns[0]] = columns[3]
+    return found
+
+
+def _artifact_hashes(protocol, decision_id: str) -> dict[str, str]:
+    if decision_id == "P1_TOPIC_PRIMARY":
+        return {"topic.statement_sha256": protocol["topic"]["statement_sha256"]}
+    if decision_id == "P1_PERSONA_TEMPLATES":
+        return {
+            f"persona.{name}.template_sha256": value["template_sha256"]
+            for name, value in protocol["persona"].items()
+        }
+    return {}
+
+
+@pytest.fixture
+def approved_decisions_path(frozen_protocol, tmp_path) -> Path:
+    path = tmp_path / "decisions.md"
+    records = []
+    for decision_id, provenance in frozen_protocol["decision_provenance"].items():
+        records.append({
+            **provenance,
+            "field_ids": [decision_id],
+            "artifact_hashes": _artifact_hashes(frozen_protocol, decision_id),
+        })
+    body = yaml.safe_dump({"records": records}, sort_keys=False, allow_unicode=True)
+    path.write_text(
+        "<!-- BEGIN DECISION RECORDS -->\n```yaml\n"
+        f"{body}```\n<!-- END DECISION RECORDS -->\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+@pytest.fixture
+def approved_human_protocol_path(frozen_protocol, tmp_path) -> Path:
+    path = tmp_path / "paper1-protocol.md"
+    path.write_text(render_human_protocol_summary(frozen_protocol), encoding="utf-8")
+    return path
+
+
+def test_mode_and_status_are_consistent(protocol, frozen_protocol, approved_decisions_path):
+    validate_protocol(protocol, mode="draft")
+    confirmed = deepcopy(frozen_protocol)
+    confirmed["status"] = "confirmed"
+    validate_protocol(confirmed, mode="confirmed")
+    validate_protocol(frozen_protocol, mode="formal", decisions_path=approved_decisions_path)
+
+    for mode, invalid_statuses in {
+        "draft": ("confirmed", "frozen"),
+        "confirmed": ("draft", "frozen"),
+        "formal": ("draft", "confirmed"),
+    }.items():
+        for status in invalid_statuses:
+            candidate = deepcopy(frozen_protocol)
+            candidate["status"] = status
+            with pytest.raises(ValueError, match=f"{mode} mode requires status"):
+                validate_protocol(candidate, mode=mode, decisions_path=approved_decisions_path)
+
+
+def test_draft_accepts_only_registered_unresolved_markers(protocol):
+    validate_protocol(protocol, mode="draft")
+    candidate = deepcopy(protocol)
+    candidate["model"]["revision"] = "TBD"
+    with pytest.raises(ValueError, match="placeholder"):
+        validate_protocol(candidate, mode="draft")
+    candidate["model"]["revision"] = "UNRESOLVED[P1_NOT_REGISTERED]"
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(candidate, mode="draft")
+
+
+def test_draft_contains_registered_markers_instead_of_coder_defaults(protocol):
+    expected = {
+        "/population/source": "UNRESOLVED[P1_POPULATION_SOURCE]",
+        "/population/fields": "UNRESOLVED[P1_POPULATION_FIELDS]",
+        "/initialization/reason": "UNRESOLVED[P1_INITIAL_REASON_SOURCE]",
+        "/network/directed": "UNRESOLVED[P1_GRAPH_DIRECTION]",
+        "/dynamics/activation_mode": "UNRESOLVED[P1_ACTIVATION_MODE]",
+        "/memory/window": "UNRESOLVED[P1_MEMORY_WINDOW]",
+        "/generation/seed": "UNRESOLVED[P1_REQUEST_SEED]",
+        "/runtime/timeout": "UNRESOLVED[P1_TIMEOUT_RETRY]",
+        "/runtime/concurrency": "UNRESOLVED[P1_CONCURRENCY_BUDGET]",
+        "/metrics/ddof": "UNRESOLVED[P1_BW_DDOF]",
+        "/sample_size/delta_min": "UNRESOLVED[P1_DELTA_MIN]",
+        "/shapes/window": "UNRESOLVED[P1_SHAPE_WINDOW]",
+        "/robustness/api/provider": "UNRESOLVED[P1_API_PROVIDER]",
+        "/quality/eligibility": "UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]",
+        "/sampling/formal_seeds": "UNRESOLVED[P1_FORMAL_SEEDS]",
+        "/storage/archive_uri": "UNRESOLVED[P1_DATA_ARCHIVE_URI]",
+        "/provenance/archive_map": "UNRESOLVED[P1_ARCHIVE_PROVENANCE_MAP]",
+    }
+    for pointer, value in expected.items():
+        target = protocol
+        for part in pointer.strip("/").split("/"):
+            target = target[part]
+        assert target == value
+
+
+def test_every_formal_required_path_is_present_and_enforced(
+    frozen_protocol, approved_decisions_path
+):
+    schema = json.loads(
+        resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
+    )
+    assert len(schema["x-formal-required"]) >= 55
+    for pointer in schema["x-formal-required"]:
+        candidate = deepcopy(frozen_protocol)
+        _delete(candidate, pointer)
+        with pytest.raises(ValueError, match="schema|formal-required"):
+            validate_protocol(candidate, mode="formal", decisions_path=approved_decisions_path)
+
+
+@pytest.mark.parametrize(
+    "block",
+    [
+        "topic", "stance", "population", "initialization", "groups", "network",
+        "dynamics", "memory", "exposure", "generation", "runtime", "metrics",
+        "sample_size", "shapes", "gates", "quality", "stopping", "sampling",
+        "analysis", "robustness", "storage", "provenance",
+    ],
+)
+def test_every_execution_block_is_required(protocol, block):
+    del protocol[block]
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(protocol, mode="draft")
+
+
+def test_typos_and_unknown_fields_are_rejected_at_root_and_nested(protocol):
+    root_typo = deepcopy(protocol)
+    root_typo["generaton"] = root_typo.pop("generation")
+    nested_typo = deepcopy(protocol)
+    nested_typo["network"]["ws"]["probablity"] = nested_typo["network"]["ws"].pop("p")
+    for candidate in (root_typo, nested_typo):
+        with pytest.raises(ValueError, match="schema"):
+            validate_protocol(candidate, mode="draft")
+
+
+@pytest.mark.parametrize(
+    "placeholder",
+    [
+        "TBD", "todo", "ＦＩＸＭＥ", "un-decided", "P E N D I N G",
+        "not yet decided", "place_holder", "prefix TODO suffix",
+    ],
+)
+def test_bare_placeholders_are_rejected_recursively(protocol, placeholder):
+    candidate = deepcopy(protocol)
+    candidate["topic"]["statement"] = placeholder
+    with pytest.raises(ValueError, match="placeholder"):
+        validate_protocol(candidate, mode="draft")
+
+
+@pytest.mark.parametrize("extra", ["prompt", "system", "instruction"])
+def test_topic_rejects_prompt_and_instruction_fields(protocol, extra):
+    candidate = deepcopy(protocol)
+    candidate["topic"][extra] = "Any free text"
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(candidate, mode="draft")
+
+
+def test_persona_rejects_free_text(protocol):
+    candidate = deepcopy(protocol)
+    candidate["persona"]["identity_present_continuity_present"]["text"] = (
+        "Keep the initial position."
+    )
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(candidate, mode="draft")
+
+
+def test_topic_statement_hash_must_match(frozen_protocol, approved_decisions_path):
+    frozen_protocol["topic"]["statement_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="statement_sha256"):
+        validate_protocol(frozen_protocol, mode="formal", decisions_path=approved_decisions_path)
+
+
+def test_qa_paths_and_decision_ids_exactly_match_schema_annotations():
+    schema = json.loads(
+        resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
+    )
+    assert _schema_decision_paths(schema) == _qa_decision_paths()
+
+
+def test_formal_rejects_missing_decision_log_and_missing_approval(
+    frozen_protocol, approved_decisions_path, tmp_path
+):
+    missing = tmp_path / "missing.md"
+    with pytest.raises(ValueError, match="decision log"):
+        validate_protocol(frozen_protocol, mode="formal", decisions_path=missing)
+
+    text = approved_decisions_path.read_text(encoding="utf-8")
+    one_id, one_provenance = next(iter(frozen_protocol["decision_provenance"].items()))
+    incomplete = tmp_path / "incomplete.md"
+    incomplete.write_text(
+        text.replace(one_provenance["decision_record_id"], "REMOVED", 1), encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match="decision record"):
+        validate_protocol(frozen_protocol, mode="formal", decisions_path=incomplete)
+
+    del frozen_protocol["decision_provenance"][one_id]
+    with pytest.raises(ValueError, match="decision provenance"):
+        validate_protocol(
+            frozen_protocol, mode="formal", decisions_path=approved_decisions_path
+        )
+
+def test_formal_rejects_empty_approval_timestamp(frozen_protocol, approved_decisions_path):
+    first = next(iter(frozen_protocol["decision_provenance"].values()))
+    first["approved_at"] = ""
+    with pytest.raises(ValueError, match="schema|approved_at"):
+        validate_protocol(
+            frozen_protocol, mode="formal", decisions_path=approved_decisions_path
+        )
+
+
+def test_draft_may_leave_decision_provenance_empty(protocol):
+    assert protocol["decision_provenance"] == {}
+    validate_protocol(protocol, mode="draft")
+
+
+@pytest.mark.parametrize("value", [math.nan, math.inf, -math.inf])
+def test_non_finite_numbers_are_rejected_and_never_hashed(
+    frozen_protocol, approved_decisions_path, value
+):
+    frozen_protocol["generation"]["temperature"] = value
+    with pytest.raises(ValueError, match="finite"):
+        validate_protocol(
+            frozen_protocol, mode="formal", decisions_path=approved_decisions_path
+        )
+    with pytest.raises(ValueError):
+        canonical_protocol_hash(frozen_protocol)
+
+
+def test_schema_override_cannot_weaken_canonical_validation(
+    frozen_protocol, approved_decisions_path, tmp_path
+):
+    del frozen_protocol["generation"]["max_tokens"]
+    open_schema = tmp_path / "open.schema.json"
+    open_schema.write_text(json.dumps({"type": "object"}), encoding="utf-8")
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            schema_path=open_schema,
+            decisions_path=approved_decisions_path,
+        )
+
+
+def test_schema_override_is_additive_and_identity_checked(
+    frozen_protocol, approved_decisions_path, tmp_path
+):
+    restrictive = tmp_path / "restrictive.schema.json"
+    restrictive.write_text(
+        json.dumps(
+            {
+                "$id": "https://agent-ex.local/schemas/paper1.schema.json",
+                "type": "object",
+                "properties": {
+                    "protocol": {
+                        "type": "object",
+                        "properties": {"version": {"const": "2.0.0"}},
+                    }
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="override schema"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            schema_path=restrictive,
+            decisions_path=approved_decisions_path,
+        )
+
+    wrong_identity = tmp_path / "wrong.schema.json"
+    wrong_identity.write_text(json.dumps({"$id": "https://elsewhere/schema"}), encoding="utf-8")
+    with pytest.raises(ValueError, match="identity"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            schema_path=wrong_identity,
+            decisions_path=approved_decisions_path,
+        )
+
+
+def test_human_generated_summary_matches_machine_projection(protocol):
+    validate_human_protocol_sync(protocol, HUMAN_PROTOCOL_PATH)
+    assert f"execution_hash: {canonical_protocol_hash(protocol)}" in HUMAN_PROTOCOL_PATH.read_text(
+        encoding="utf-8"
+    )
+
+
+def test_human_sync_detects_any_execution_field_drift(protocol, tmp_path):
+    for pointer, replacement in (
+        ("/generation/temperature", 0.5),
+        ("/population/source", "different_source"),
+        ("/topic/statement", "A different neutral statement."),
+    ):
+        changed = deepcopy(protocol)
+        _set(changed, pointer, replacement)
+        with pytest.raises(ValueError, match="drift"):
+            validate_human_protocol_sync(changed, HUMAN_PROTOCOL_PATH)
+
+    original = HUMAN_PROTOCOL_PATH.read_text(encoding="utf-8")
+    rendered = render_human_protocol_summary(protocol)
+    assert rendered.startswith("<!-- BEGIN GENERATED PROTOCOL SUMMARY -->")
+    assert update_human_protocol_summary(original, protocol) == original
+
+
+def test_hash_tracks_execution_projection_but_ignores_review_metadata(frozen_protocol):
+    baseline = canonical_protocol_hash(frozen_protocol)
+    changed_status = deepcopy(frozen_protocol)
+    changed_status["status"] = "confirmed"
+    changed_reference = deepcopy(frozen_protocol)
+    changed_reference["human_protocol_reference"] = "docs/other.md"
+    changed_metadata = deepcopy(frozen_protocol)
+    changed_metadata["metadata"] = {"review_note": "wording only", "reviewer": "A"}
+    changed_execution = deepcopy(frozen_protocol)
+    changed_execution["generation"]["temperature"] = 0.6
+
+    assert canonical_protocol_hash(changed_status) == baseline
+    assert canonical_protocol_hash(changed_reference) == baseline
+    assert canonical_protocol_hash(changed_metadata) == baseline
+    assert canonical_protocol_hash(changed_execution) != baseline
+
+
+def test_hash_is_insensitive_to_mapping_order(frozen_protocol):
+    reordered = yaml.safe_load(yaml.safe_dump(frozen_protocol, sort_keys=True, allow_unicode=True))
+    assert canonical_protocol_hash(reordered) == canonical_protocol_hash(frozen_protocol)
+
+
+def test_packaged_schema_and_release_mirror_are_identical():
+    packaged = resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_bytes()
+    assert packaged == MIRROR_SCHEMA_PATH.read_bytes()
+    schema = json.loads(packaged)
+    assert schema["x-formal-required"]
+
+
+def test_public_protocol_api_is_importable():
+    from agent_ex import load_protocol as public_load
+    from agent_ex import validate_human_protocol_reference as public_reference
+
+    assert callable(public_load)
+    assert callable(public_reference)

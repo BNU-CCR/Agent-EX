@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-ex.local/schemas/paper1.schema.json",
+  "title": "Agent-EX Paper 1 Protocol",
+  "type": "object",
+  "x-execution-properties": [
+    "protocol", "topic", "stance", "population", "initialization", "groups",
+    "outcomes", "primary_estimand", "design", "persona", "network", "dynamics",
+    "memory", "exposure", "model", "runtime", "generation", "metrics", "sample_size",
+    "shapes", "analysis", "gates", "quality", "stopping", "sampling", "robustness",
+    "storage", "provenance"
+  ],
+  "x-formal-required": [
+    "/protocol/version", "/topic/id", "/topic/statement", "/topic/statement_sha256",
+    "/stance/construct", "/stance/scale", "/population/source", "/population/fields",
+    "/population/balance", "/population/exact_n", "/initialization/stance",
+    "/initialization/reason", "/groups/cuts", "/groups/min_size",
+    "/outcomes/primary/t_star", "/outcomes/primary/epsilon",
+    "/persona/identity_absent_continuity_absent/template_id",
+    "/persona/identity_absent_continuity_absent/template_sha256",
+    "/persona/identity_absent_continuity_present/template_id",
+    "/persona/identity_absent_continuity_present/template_sha256",
+    "/persona/identity_present_continuity_absent/template_id",
+    "/persona/identity_present_continuity_absent/template_sha256",
+    "/persona/identity_present_continuity_present/template_id",
+    "/persona/identity_present_continuity_present/template_sha256",
+    "/network/directed", "/network/connectivity", "/network/on_invalid", "/network/ws/k",
+    "/network/ws/p", "/dynamics/activation_mode", "/dynamics/activation_count",
+    "/memory/window", "/exposure/max_neighbors", "/exposure/social_count",
+    "/model/revision", "/runtime/vllm/version", "/runtime/timeout", "/runtime/retry",
+    "/runtime/concurrency", "/runtime/rate_budget", "/generation/temperature",
+    "/generation/top_p", "/generation/max_tokens", "/generation/seed",
+    "/metrics/variance_components", "/metrics/ddof", "/metrics/missing_group",
+    "/sample_size/delta_min", "/shapes/thresholds", "/shapes/window",
+    "/shapes/sensitivity", "/analysis/primary_test", "/gates/continuity/scoring",
+    "/gates/continuity/lock_max", "/gates/quality/refusal_max",
+    "/gates/quality/parse_failure_max", "/gates/scale/design",
+    "/gates/scale/delta_tolerance", "/gates/scale/failure_max",
+    "/gates/scale/throughput_min", "/gates/scale/memory_max",
+    "/gates/formal/duration_max", "/gates/formal/recovery_drills",
+    "/gates/formal/matrix_complete", "/quality/eligibility", "/quality/exclusion",
+    "/sampling/formal_seeds", "/sampling/blind_ssr", "/robustness/api/provider",
+    "/robustness/api/model_snapshot", "/robustness/api/cells", "/robustness/api/scale",
+    "/storage/archive_uri", "/provenance/archive_map"
+  ],
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1, "allOf": [{"not": {"pattern": "^\\s*$"}}, {"not": {"pattern": "^UNRESOLVED\\["}}]},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "cell": {
+      "type": "object", "required": ["id", "identity", "continuity", "exposure"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^P1-I[01]-C[01]-E[012]$"},
+        "identity": {"enum": ["identity_absent", "identity_present"]},
+        "continuity": {"enum": ["continuity_absent", "continuity_present"]},
+        "exposure": {"enum": ["self_history_only", "shuffled_social", "ws_neighbors"]}
+      }, "additionalProperties": false
+    },
+    "decision-provenance-entry": {
+      "type": "object", "required": ["decision_record_id", "approved_at", "approvers"],
+      "properties": {
+        "decision_record_id": {"type": "string", "pattern": "^D-[A-Z0-9-]+$"},
+        "approved_at": {"type": "string", "minLength": 1, "format": "date-time"},
+        "approvers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}}
+      }, "additionalProperties": false
+    }
+  },
+  "required": [
+    "protocol", "status", "human_protocol_reference", "topic", "stance", "population",
+    "initialization", "groups", "outcomes", "primary_estimand", "design", "persona",
+    "network", "dynamics", "memory", "exposure", "model", "runtime", "generation",
+    "metrics", "sample_size", "shapes", "analysis", "gates", "quality", "stopping",
+    "sampling", "robustness", "storage", "provenance", "decision_provenance"
+  ],
+  "properties": {
+    "protocol": {
+      "type": "object", "required": ["id", "version"],
+      "properties": {
+        "id": {"const": "P1-LLM-OPINION-DYNAMICS"},
+        "version": {"x-decision-id": "P1_PROTOCOL_VERSION", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PROTOCOL_VERSION]"}]}
+      }, "additionalProperties": false
+    },
+    "status": {"enum": ["draft", "confirmed", "frozen"]},
+    "human_protocol_reference": {"const": "docs/paper1-protocol.md"},
+    "metadata": {"type": "object", "properties": {"review_note": {"type": "string"}, "reviewer": {"type": "string"}}, "additionalProperties": false},
+    "topic": {
+      "type": "object", "required": ["id", "statement", "statement_sha256"],
+      "properties": {
+        "id": {"x-decision-id": "P1_TOPIC_PRIMARY", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_TOPIC_PRIMARY]"}]},
+        "statement": {"x-decision-id": "P1_TOPIC_PRIMARY", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_TOPIC_PRIMARY]"}]},
+        "statement_sha256": {"x-decision-id": "P1_TOPIC_PRIMARY", "oneOf": [{"$ref": "#/$defs/sha256"}, {"const": "UNRESOLVED[P1_TOPIC_PRIMARY]"}]}
+      }, "additionalProperties": false
+    },
+    "stance": {
+      "type": "object", "required": ["construct", "scale"],
+      "properties": {
+        "construct": {"x-decision-id": "P1_TOPIC_PRIMARY", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_TOPIC_PRIMARY]"}]},
+        "scale": {"x-decision-id": "P1_STANCE_SCALE", "oneOf": [
+          {"type": "object", "required": ["minimum", "maximum"], "properties": {"minimum": {"type": "number"}, "maximum": {"type": "number"}}, "additionalProperties": false},
+          {"const": "UNRESOLVED[P1_STANCE_SCALE]"}
+        ]}
+      }, "additionalProperties": false
+    },
+    "population": {
+      "type": "object", "required": ["size", "source", "fields", "balance", "exact_n"],
+      "properties": {
+        "size": {"const": 1000},
+        "source": {"x-decision-id": "P1_POPULATION_SOURCE", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_POPULATION_SOURCE]"}]},
+        "fields": {"x-decision-id": "P1_POPULATION_FIELDS", "oneOf": [{"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}}, {"const": "UNRESOLVED[P1_POPULATION_FIELDS]"}]},
+        "balance": {"x-decision-id": "P1_POPULATION_BALANCE", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_POPULATION_BALANCE]"}]},
+        "exact_n": {"x-decision-id": "P1_POPULATION_EXACT_N", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_POPULATION_EXACT_N]"}]}
+      }, "additionalProperties": false
+    },
+    "initialization": {
+      "type": "object", "required": ["stance", "reason", "matched_across_cells"],
+      "properties": {
+        "stance": {"x-decision-id": "P1_INITIAL_STANCE_GENERATOR", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_INITIAL_STANCE_GENERATOR]"}]},
+        "reason": {"x-decision-id": "P1_INITIAL_REASON_SOURCE", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_INITIAL_REASON_SOURCE]"}]},
+        "matched_across_cells": {"const": true}
+      }, "additionalProperties": false
+    },
+    "groups": {
+      "type": "object", "required": ["cuts", "min_size"],
+      "properties": {
+        "cuts": {"x-decision-id": "P1_INITIAL_GROUP_CUTS", "oneOf": [{"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "number"}}, {"const": "UNRESOLVED[P1_INITIAL_GROUP_CUTS]"}]},
+        "min_size": {"x-decision-id": "P1_MIN_GROUP_SIZE", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_MIN_GROUP_SIZE]"}]}
+      }, "additionalProperties": false
+    },
+    "outcomes": {
+      "type": "object", "required": ["primary"],
+      "properties": {"primary": {
+        "type": "object", "required": ["id", "definition", "t_star", "epsilon"],
+        "properties": {
+          "id": {"const": "P1_PRIMARY_DELTA_LOG_BW"}, "definition": {"const": "delta_log_between_within"},
+          "t_star": {"x-decision-id": "P1_ENDPOINT_TSTAR", "oneOf": [{"type": "integer", "minimum": 1, "maximum": 50}, {"const": "UNRESOLVED[P1_ENDPOINT_TSTAR]"}]},
+          "epsilon": {"x-decision-id": "P1_LOG_EPSILON", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_LOG_EPSILON]"}]}
+        }, "additionalProperties": false
+      }}, "additionalProperties": false
+    },
+    "primary_estimand": {"type": "object", "required": ["id", "definition"], "properties": {"id": {"const": "P1_PRIMARY_CONTINUITY_WS_SHUFFLED_DID"}, "definition": {"const": "continuity_moderation_of_ws_minus_shuffled_matched_seed_did"}}, "additionalProperties": false},
+    "design": {
+      "type": "object", "required": ["population_size", "rounds", "matched_seeds_initial", "matched_seeds_max", "factor_levels", "cells"],
+      "properties": {
+        "population_size": {"const": 1000}, "rounds": {"const": 50}, "matched_seeds_initial": {"const": 10}, "matched_seeds_max": {"const": 20},
+        "factor_levels": {"type": "object", "required": ["identity", "continuity", "exposure"], "properties": {"identity": {"const": ["identity_absent", "identity_present"]}, "continuity": {"const": ["continuity_absent", "continuity_present"]}, "exposure": {"const": ["self_history_only", "shuffled_social", "ws_neighbors"]}}, "additionalProperties": false},
+        "cells": {"type": "array", "minItems": 12, "maxItems": 12, "uniqueItems": true, "items": {"$ref": "#/$defs/cell"}}
+      }, "additionalProperties": false
+    },
+    "persona": {
+      "type": "object", "required": ["identity_absent_continuity_absent", "identity_absent_continuity_present", "identity_present_continuity_absent", "identity_present_continuity_present"],
+      "properties": {
+        "identity_absent_continuity_absent": {"type": "object", "required": ["template_id", "template_sha256"], "properties": {"template_id": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}, "template_sha256": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/sha256"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}}, "additionalProperties": false},
+        "identity_absent_continuity_present": {"type": "object", "required": ["template_id", "template_sha256"], "properties": {"template_id": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}, "template_sha256": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/sha256"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}}, "additionalProperties": false},
+        "identity_present_continuity_absent": {"type": "object", "required": ["template_id", "template_sha256"], "properties": {"template_id": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}, "template_sha256": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/sha256"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}}, "additionalProperties": false},
+        "identity_present_continuity_present": {"type": "object", "required": ["template_id", "template_sha256"], "properties": {"template_id": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}, "template_sha256": {"x-decision-id": "P1_PERSONA_TEMPLATES", "oneOf": [{"$ref": "#/$defs/sha256"}, {"const": "UNRESOLVED[P1_PERSONA_TEMPLATES]"}]}}, "additionalProperties": false}
+      }, "additionalProperties": false
+    },
+    "network": {
+      "type": "object", "required": ["type", "directed", "self_loops", "connectivity", "on_invalid", "ws"],
+      "properties": {
+        "type": {"const": "watts_strogatz"}, "self_loops": {"const": false},
+        "directed": {"x-decision-id": "P1_GRAPH_DIRECTION", "oneOf": [{"type": "boolean"}, {"const": "UNRESOLVED[P1_GRAPH_DIRECTION]"}]},
+        "connectivity": {"x-decision-id": "P1_GRAPH_CONNECTIVITY", "oneOf": [{"enum": ["connected", "giant_component"]}, {"const": "UNRESOLVED[P1_GRAPH_CONNECTIVITY]"}]},
+        "on_invalid": {"x-decision-id": "P1_INVALID_GRAPH_RULE", "oneOf": [{"const": "fail"}, {"const": "UNRESOLVED[P1_INVALID_GRAPH_RULE]"}]},
+        "ws": {"type": "object", "required": ["k", "p"], "properties": {
+          "k": {"x-decision-id": "P1_WS_K", "oneOf": [{"type": "integer", "minimum": 2}, {"const": "UNRESOLVED[P1_WS_K]"}]},
+          "p": {"x-decision-id": "P1_WS_P", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_WS_P]"}]}
+        }, "additionalProperties": false}
+      }, "additionalProperties": false
+    },
+    "dynamics": {"type": "object", "required": ["activation_mode", "activation_count"], "properties": {
+      "activation_mode": {"x-decision-id": "P1_ACTIVATION_MODE", "oneOf": [{"enum": ["all_synchronous", "subset_synchronous"]}, {"const": "UNRESOLVED[P1_ACTIVATION_MODE]"}]},
+      "activation_count": {"x-decision-id": "P1_ACTIVATION_COUNT", "oneOf": [{"type": "integer", "minimum": 1, "maximum": 1000}, {"const": "UNRESOLVED[P1_ACTIVATION_COUNT]"}]}
+    }, "additionalProperties": false},
+    "memory": {"type": "object", "required": ["window"], "properties": {"window": {"x-decision-id": "P1_MEMORY_WINDOW", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "all_history"}, {"const": "UNRESOLVED[P1_MEMORY_WINDOW]"}]}}, "additionalProperties": false},
+    "exposure": {"type": "object", "required": ["max_neighbors", "social_count"], "properties": {
+      "max_neighbors": {"x-decision-id": "P1_MAX_NEIGHBORS", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "all_neighbors"}, {"const": "UNRESOLVED[P1_MAX_NEIGHBORS]"}]},
+      "social_count": {"x-decision-id": "P1_SOCIAL_EXPOSURE_COUNT", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "degree_matched"}, {"const": "UNRESOLVED[P1_SOCIAL_EXPOSURE_COUNT]"}]}
+    }, "additionalProperties": false},
+    "model": {"type": "object", "required": ["provider", "model_id", "revision", "precision"], "properties": {
+      "provider": {"const": "self_hosted"}, "model_id": {"const": "Qwen/Qwen3-8B"}, "precision": {"const": "bf16"},
+      "revision": {"x-decision-id": "P1_MODEL_REVISION", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_MODEL_REVISION]"}]}
+    }, "additionalProperties": false},
+    "runtime": {"type": "object", "required": ["vllm", "timeout", "retry", "concurrency", "rate_budget"], "properties": {
+      "vllm": {"type": "object", "required": ["name", "version"], "properties": {"name": {"const": "vllm"}, "version": {"x-decision-id": "P1_VLLM_VERSION", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_VLLM_VERSION]"}]}}, "additionalProperties": false},
+      "timeout": {"x-decision-id": "P1_TIMEOUT_RETRY", "oneOf": [{"type": "object", "required": ["seconds"], "properties": {"seconds": {"type": "number", "exclusiveMinimum": 0}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_TIMEOUT_RETRY]"}]},
+      "retry": {"x-decision-id": "P1_TIMEOUT_RETRY", "oneOf": [{"type": "object", "required": ["max_attempts"], "properties": {"max_attempts": {"type": "integer", "minimum": 1}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_TIMEOUT_RETRY]"}]},
+      "concurrency": {"x-decision-id": "P1_CONCURRENCY_BUDGET", "oneOf": [{"type": "object", "required": ["max_requests"], "properties": {"max_requests": {"type": "integer", "minimum": 1}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_CONCURRENCY_BUDGET]"}]},
+      "rate_budget": {"x-decision-id": "P1_CONCURRENCY_BUDGET", "oneOf": [{"type": "object", "required": ["requests_per_minute"], "properties": {"requests_per_minute": {"type": "integer", "minimum": 1}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_CONCURRENCY_BUDGET]"}]}
+    }, "additionalProperties": false},
+    "generation": {"type": "object", "required": ["temperature", "top_p", "max_tokens", "seed", "thinking"], "properties": {
+      "temperature": {"x-decision-id": "P1_TEMPERATURE", "oneOf": [{"type": "number", "minimum": 0}, {"const": "UNRESOLVED[P1_TEMPERATURE]"}]},
+      "top_p": {"x-decision-id": "P1_TOP_P", "oneOf": [{"type": "number", "exclusiveMinimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_TOP_P]"}]},
+      "max_tokens": {"x-decision-id": "P1_MAX_TOKENS", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_MAX_TOKENS]"}]},
+      "seed": {"x-decision-id": "P1_REQUEST_SEED", "oneOf": [{"type": "integer", "minimum": 0}, {"const": "unsupported_record_nondeterministic"}, {"const": "UNRESOLVED[P1_REQUEST_SEED]"}]},
+      "thinking": {"const": false}
+    }, "additionalProperties": false},
+    "metrics": {"type": "object", "required": ["variance_components", "ddof", "missing_group"], "properties": {
+      "variance_components": {"x-decision-id": "P1_BW_FORMULA", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_BW_FORMULA]"}]},
+      "ddof": {"x-decision-id": "P1_BW_DDOF", "oneOf": [{"enum": [0, 1]}, {"const": "UNRESOLVED[P1_BW_DDOF]"}]},
+      "missing_group": {"x-decision-id": "P1_MISSING_GROUP_RULE", "oneOf": [{"enum": ["fail", "exclude"]}, {"const": "UNRESOLVED[P1_MISSING_GROUP_RULE]"}]}
+    }, "additionalProperties": false},
+    "sample_size": {"type": "object", "required": ["delta_min"], "properties": {"delta_min": {"x-decision-id": "P1_DELTA_MIN", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_DELTA_MIN]"}]}}, "additionalProperties": false},
+    "shapes": {"type": "object", "required": ["thresholds", "window", "sensitivity"], "properties": {
+      "thresholds": {"x-decision-id": "P1_SHAPE_THRESHOLDS", "oneOf": [
+        {"type": "object", "required": ["homogenization", "drift", "polarization", "bimodality", "stagnation"], "properties": {"homogenization": {"type": "number"}, "drift": {"type": "number"}, "polarization": {"type": "number"}, "bimodality": {"type": "number"}, "stagnation": {"type": "number"}}, "additionalProperties": false},
+        {"const": "UNRESOLVED[P1_SHAPE_THRESHOLDS]"}
+      ]},
+      "window": {"x-decision-id": "P1_SHAPE_WINDOW", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_SHAPE_WINDOW]"}]},
+      "sensitivity": {"x-decision-id": "P1_SHAPE_SENSITIVITY", "oneOf": [{"type": "object", "required": ["lower", "upper"], "properties": {"lower": {"type": "number"}, "upper": {"type": "number"}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_SHAPE_SENSITIVITY]"}]}
+    }, "additionalProperties": false},
+    "analysis": {"type": "object", "required": ["primary_test"], "properties": {"primary_test": {"x-decision-id": "P1_PRIMARY_INFERENCE", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PRIMARY_INFERENCE]"}]}}, "additionalProperties": false},
+    "gates": {"type": "object", "required": ["continuity", "quality", "scale", "formal"], "properties": {
+      "continuity": {"type": "object", "required": ["scoring", "lock_max"], "properties": {
+        "scoring": {"x-decision-id": "P1_CONTINUITY_MC_SCORING", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_CONTINUITY_MC_SCORING]"}]},
+        "lock_max": {"x-decision-id": "P1_CONTINUITY_LOCK_THRESHOLD", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_CONTINUITY_LOCK_THRESHOLD]"}]}
+      }, "additionalProperties": false},
+      "quality": {"type": "object", "required": ["refusal_max", "parse_failure_max"], "properties": {
+        "refusal_max": {"x-decision-id": "P1_REFUSAL_THRESHOLD", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_REFUSAL_THRESHOLD]"}]},
+        "parse_failure_max": {"x-decision-id": "P1_PARSE_FAILURE_THRESHOLD", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_PARSE_FAILURE_THRESHOLD]"}]}
+      }, "additionalProperties": false},
+      "scale": {"type": "object", "required": ["design", "delta_tolerance", "failure_max", "throughput_min", "memory_max"], "properties": {
+        "design": {"x-decision-id": "P1_SCALE_GATE_DESIGN", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_SCALE_GATE_DESIGN]"}]},
+        "delta_tolerance": {"x-decision-id": "P1_GATE_DELTA_STABILITY", "oneOf": [{"type": "number", "minimum": 0}, {"const": "UNRESOLVED[P1_GATE_DELTA_STABILITY]"}]},
+        "failure_max": {"x-decision-id": "P1_GATE_FAILURE_MAX", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_GATE_FAILURE_MAX]"}]},
+        "throughput_min": {"x-decision-id": "P1_GATE_THROUGHPUT_MIN", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_GATE_THROUGHPUT_MIN]"}]},
+        "memory_max": {"x-decision-id": "P1_GATE_MEMORY_MAX", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_GATE_MEMORY_MAX]"}]}
+      }, "additionalProperties": false},
+      "formal": {"type": "object", "required": ["duration_max", "recovery_drills", "matrix_complete"], "properties": {
+        "duration_max": {"x-decision-id": "P1_GATE_DURATION_MAX", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_GATE_DURATION_MAX]"}]},
+        "recovery_drills": {"x-decision-id": "P1_RECOVERY_DRILLS", "oneOf": [{"type": "integer", "minimum": 0}, {"const": "UNRESOLVED[P1_RECOVERY_DRILLS]"}]},
+        "matrix_complete": {"x-decision-id": "P1_MATRIX_COMPLETENESS", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_MATRIX_COMPLETENESS]"}]}
+      }, "additionalProperties": false}
+    }, "additionalProperties": false},
+    "quality": {"type": "object", "required": ["eligibility", "exclusion"], "properties": {
+      "eligibility": {"x-decision-id": "P1_ANALYSIS_ELIGIBILITY", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]"}]},
+      "exclusion": {"x-decision-id": "P1_ANALYSIS_ELIGIBILITY", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]"}]}
+    }, "additionalProperties": false},
+    "stopping": {"type": "object", "required": ["on_gate_failure"], "properties": {"on_gate_failure": {"const": "stop_before_formal"}}, "additionalProperties": false},
+    "sampling": {"type": "object", "required": ["formal_seeds", "blind_ssr"], "properties": {
+      "formal_seeds": {"x-decision-id": "P1_FORMAL_SEEDS", "oneOf": [{"type": "array", "minItems": 20, "maxItems": 20, "uniqueItems": true, "items": {"type": "integer", "minimum": 0}}, {"const": "UNRESOLVED[P1_FORMAL_SEEDS]"}]},
+      "blind_ssr": {"x-decision-id": "P1_FORMAL_SEEDS", "oneOf": [
+        {"type": "object", "required": ["initial_seed_count", "maximum_seed_count", "reestimate_after", "statistic", "decision_rule"], "properties": {"initial_seed_count": {"const": 10}, "maximum_seed_count": {"const": 20}, "reestimate_after": {"const": 10}, "statistic": {"const": "centered_primary_contrast_residual_variance"}, "decision_rule": {"$ref": "#/$defs/nonempty"}}, "additionalProperties": false},
+        {"const": "UNRESOLVED[P1_FORMAL_SEEDS]"}
+      ]}
+    }, "additionalProperties": false},
+    "robustness": {"type": "object", "required": ["api"], "properties": {"api": {
+      "type": "object", "required": ["provider", "model_snapshot", "cells", "scale"], "properties": {
+        "provider": {"x-decision-id": "P1_API_PROVIDER", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_API_PROVIDER]"}]},
+        "model_snapshot": {"x-decision-id": "P1_API_SNAPSHOT", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_API_SNAPSHOT]"}]},
+        "cells": {"x-decision-id": "P1_API_ROBUSTNESS_CELLS", "oneOf": [
+          {"const": ["P1-I0-C0-E1", "P1-I0-C0-E2", "P1-I0-C1-E1", "P1-I0-C1-E2", "P1-I1-C0-E1", "P1-I1-C0-E2", "P1-I1-C1-E1", "P1-I1-C1-E2"]},
+          {"const": "UNRESOLVED[P1_API_ROBUSTNESS_CELLS]"}
+        ]},
+        "scale": {"x-decision-id": "P1_API_ROBUSTNESS_SCALE_FREEZE", "oneOf": [
+          {"type": "object", "required": ["population_size", "rounds", "seeds"], "properties": {"population_size": {"type": "integer", "minimum": 1}, "rounds": {"type": "integer", "minimum": 1}, "seeds": {"type": "integer", "minimum": 1}}, "additionalProperties": false},
+          {"const": "UNRESOLVED[P1_API_ROBUSTNESS_SCALE_FREEZE]"}
+        ]}
+      }, "additionalProperties": false
+    }}, "additionalProperties": false},
+    "storage": {"type": "object", "required": ["archive_uri"], "properties": {"archive_uri": {"x-decision-id": "P1_DATA_ARCHIVE_URI", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_DATA_ARCHIVE_URI]"}]}}, "additionalProperties": false},
+    "provenance": {"type": "object", "required": ["archive_map"], "properties": {"archive_map": {"x-decision-id": "P1_ARCHIVE_PROVENANCE_MAP", "oneOf": [
+      {"type": "object", "minProperties": 1, "propertyNames": {"pattern": "^[A-Za-z0-9_.-]+$"}, "additionalProperties": {"$ref": "#/$defs/nonempty"}},
+      {"const": "UNRESOLVED[P1_ARCHIVE_PROVENANCE_MAP]"}
+    ]}}, "additionalProperties": false},
+    "decision_provenance": {"type": "object", "propertyNames": {"pattern": "^P1_[A-Z0-9_]+$"}, "additionalProperties": {"$ref": "#/$defs/decision-provenance-entry"}}
+  },
+  "additionalProperties": false
+}
