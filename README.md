@@ -25,7 +25,7 @@
 
 **当前工作入口**：先读 [AGENTS.md](AGENTS.md) 与 [项目总览](docs/project-overview.md)；Paper 1 人类可读协议见 [paper1-protocol.md](docs/paper1-protocol.md)，未决项见 [research-qa.md](docs/research-qa.md)，已确认选择见 [decisions.md](docs/decisions.md)。
 
-**当前代码位置**：正式平台 Phase 3A 已在 `codex/paper1-platform` 分支完成，提交基线为 `7e5731b`。若主工作区的 `main` 中看不到 `platform/`，请先阅读 [Phase 3A 交接日志](logs/2026-07-29-phase3a-handoff.md)，不要误判为代码尚未创建。
+**当前代码位置**：正式平台 Phase 3A 已合入本地 `main`，代码位于 `platform/`；实现提交为 `7e5731b`，交接文档提交为 `d03c6b2`。恢复开发前先阅读 [Phase 3A 交接日志](logs/2026-07-29-phase3a-handoff.md)。
 
 ---
 

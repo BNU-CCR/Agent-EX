@@ -44,3 +44,4 @@ dist/
 .vscode/
 .idea/
 .claude/
+.codex/

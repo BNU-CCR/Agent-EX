@@ -44,8 +44,9 @@ pilot-3.0 的 weak 条件出现高分端集中，lifelong strong 条件保留较
 
 ## 当前实现 checkpoint
 
-- 活跃分支：`codex/paper1-platform`。
+- 当前主入口分支：`main`；来源实现分支为 `codex/paper1-platform`。
 - Phase 3A 提交：`7e5731b`。
-- 主工作区 `main` 尚未集成该分支；在 `main` 中看不到 `platform/` 不代表代码丢失。
+- 本地 `main` 已于 2026-07-29 快进集成 `codex/paper1-platform`，主目录现已包含 `platform/`。
+- `codex/paper1-platform` worktree 暂时保留为已验证来源，不再是唯一代码入口。
 - 恢复开发前先读 `logs/2026-07-29-phase3a-handoff.md`。
 - formal 仍被未冻结研究决策阻断；当前通过的是平台基础验证，不是正式实验结果。

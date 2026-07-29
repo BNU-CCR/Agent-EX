@@ -7,29 +7,30 @@ last-verified: 2026-07-29
 
 # 2026-07-29｜Phase 3A 代码位置、进展与下一步交接
 
-## 先解释为什么主目录看不到代码
+## 当前代码位置
 
-本轮实现没有直接写入 OneDrive 主工作区的 `main`，而是在隔离 Git worktree 中完成：
+本轮实现最初在隔离 Git worktree 中完成，随后已快进合并到 OneDrive 主工作区：
 
 - 主工作区：`E:\OneDrive\Claude Code\Agent ex`
-- 主工作区分支/提交：`main` / `0f9e5ad`
+- 主工作区分支：`main`
 - Phase 3A worktree：`C:\Users\57220\.codex\visualizations\2026\07\14\019f5e98-1f87-7310-b4f2-8f0b85f37926\worktrees\Agent ex\codex\paper1-platform`
-- 活跃分支：`codex/paper1-platform`
+- 来源分支：`codex/paper1-platform`
 - Phase 3A 实现提交：`7e5731b0263a08338c37fbf441b676fb76e1d005`
+- Phase 3A 交接提交：`d03c6b2`
 
-因此，在主工作区 `main` 中看不到 `platform/` 是正常现象。代码没有丢失，也没有
-push 或合并到 `main`。主工作区另有用户自己的 `README.md`、`.codex/` 和
-`.pytest-tmp/` 变更，本轮没有覆盖它们。
+主目录现在已经包含 `platform/`。合并前主目录 README 删除“课程论文提交前”旧清单
+的意图已保留；本地 `.codex/`、`.pytest-tmp/`、虚拟环境和缓存均不进入 Git。
 
-恢复时先执行：
+恢复时优先从主目录执行：
 
 ```powershell
-Set-Location 'C:\Users\57220\.codex\visualizations\2026\07\14\019f5e98-1f87-7310-b4f2-8f0b85f37926\worktrees\Agent ex\codex\paper1-platform'
+Set-Location 'E:\OneDrive\Claude Code\Agent ex'
 git status --short --branch
 git log -1 --oneline
 ```
 
-预期看到 `codex/paper1-platform` 和 `7e5731b` 之后的交接文档提交。
+预期看到 `main`、`platform/`，以及 `d03c6b2` 之后的整合提交。隔离 worktree
+暂时保留用于追溯，但换机恢复应以 GitHub 上的 `main` 为准，不依赖其本机绝对路径。
 
 ## 当前已经完成
 
