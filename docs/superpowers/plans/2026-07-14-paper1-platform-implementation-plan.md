@@ -14,7 +14,10 @@ Paper 1 的正式设计为：
 
 - `identity information 2 × continuity requirement 2 × social exposure 3`，共12 cells；
 - 唯一 primary outcome：`ΔS_T = Δlog((B+ε)/(W+ε))`；
-- 唯一 primary estimand：continuity 对 `WS - shuffled` 网络效应的 matched-seed DiD 调节；
+- **2026-07-29方法修订：** 本行旧primary层级已由
+  `docs/superpowers/specs/2026-07-29-paper1-phase4a1-methodological-reframing-design.md`
+  取代；Phase 4B新计划必须将primary迁移为四persona条件等权平均的matched-seed
+  `WS-shadow`差异，并把continuity调节登记为关键secondary；
 - 正式规模：N=1000、T=50，首批10个 matched seeds，按预注册盲态规则最多扩展至20个；
 - Phase 0 与 N=200/500/1000 有限规模检验通过后才允许正式运行。
 
@@ -187,7 +190,10 @@ Paper 1 的正式设计为：
 - `MODEL_PROVIDER_ID`、`MODEL_ID/REVISION`、`INFERENCE_RUNTIME`；
 - temperature、top_p、max tokens、request seed、thinking、timeout、retry、concurrency/rate budget；
 - N=200/500/1000 有限规模检验的 cells、matched seed 数和 seed 列表；
-- 有限规模 gate 的 `ΔS_T` 稳定容差、最大失败/解析失败率、最小吞吐、最大内存和最大预计总时长；
+- 有限规模gate中新`P1_PRIMARY_OUTCOME`之四persona等权`WS-shadow`主对比的
+  `P1_GATE_PRIMARY_OUTCOME_STABILITY`容差、最大失败/解析失败率、最小吞吐、
+  最大内存和最大预计总时长；旧`P1_GATE_DELTA_STABILITY`与`ΔS_T`只作候选组际
+  结构诊断；
 - formal gate 的恢复演练次数、允许失败终态和矩阵完整性阈值。
 
 每个 unresolved 字段必须具有：稳定 ID、说明、候选值、推荐值、决策者、最迟 gate 和影响的 schema paths。Phase 3 schema 必须标记哪些字段是 `formal_required`，formal config 存在任何未冻结字段时验证失败。
@@ -457,10 +463,13 @@ Notebook 只能调用 package 公共接口并展示结果。
 ### 9.1 有限规模
 
 - 按 Phase 2 冻结的 cells 和 matched seeds，在 primary contrast 上依次运行 N=200/500/1000；
-- 比较 `ΔS_T`、失败率、吞吐、内存和稳定时间；
+- 比较新`P1_PRIMARY_OUTCOME`之四persona等权`WS-shadow`主对比、失败率、吞吐、
+  内存和稳定时间；`ΔS_T`只作候选/secondary诊断；
 - N=200/500 不进入正式主结论。
 
-准入报告必须逐项比较 frozen gate：`ΔS_T` 稳定容差、失败/解析失败上限、吞吐下限、内存上限、预计总时长上限。任一 gate 未过即停止，不允许用文字判断“看起来稳定”。
+准入报告必须逐项比较frozen gate：新primary contrast稳定容差、失败/解析失败上限、
+吞吐下限、内存上限、预计总时长上限。任一gate未过即停止，不允许用文字判断
+“看起来稳定”。
 
 ### 9.2 正式运行 gate
 

@@ -135,6 +135,9 @@
   - [x] 用户一次性批准整包
   - [x] 批准后形成完整书面规格
   - [x] 完成独立整份规格审查并修复事件ID、RNG作用域、恢复和主分析准入冲突
+  - [x] 完成传播学/ABM方法匿名审稿式复核并形成major-revision问题清单
+  - [x] 用户批准Phase 4A.1方法论重构方向并形成书面规格、决定卡与文献依据卡
+  - [x] 完成Phase 4A.1三轮独立规格审查；最终稳定ID迁移问题已本地修复，待用户书面复核
   - [ ] 用户完成整份书面规格复核后进入实施计划
 - [x] 形成议题包可替换的平台设计规格；书面规格复核前不改代码
 - **状态：** approved design; independently reviewed; pending user written-spec review

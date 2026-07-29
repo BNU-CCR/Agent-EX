@@ -2831,3 +2831,118 @@ Phase 4A 只有在以下条件同时满足时才算完成：
 31. *Population Synthesis Using Iterative Proportional Fitting (IPF): A Review
     and Future Research* (2016). *Transportation Research Procedia, 17*,
     223–233. https://doi.org/10.1016/j.trpro.2016.11.078
+
+## DR-P1-089：机器模拟的方法论定位、估计目标与主张阶梯
+
+**日期：** 2026-07-29
+
+**对应决定：** `D-2026-07-29-20`
+
+**状态：** 已确认
+
+### 需要解决的问题
+
+Phase 4A具有严格的工程协议，但若把人口对齐的LLM Agent称为真实公众、把固定WS称为
+真实社交平台、把非公开生成状态称为心理意见，传播学审稿人会把实现可重复性误当为
+行为效度。还需解决研究总问题“网络互动是否导致均质化/极化”与既有
+`continuity × (WS-shadow)`估计目标不完全对齐、WS与shadow实际消息剂量不完全相同，
+以及极化概念过宽的问题。
+
+### 支持本决策的证据
+
+1. Collins et al.（2024）强调Agent-based modelling需要区分概念模型、实现验证、
+   校验、敏感性和适用域。该框架支持把实现正确、系统内部构念和外部行为效度分层，
+   而非用单一“validation”概括。DOI: `10.18564/jasss.5258`。
+2. Hu and Collier（2024）系统量化persona效应，在多数数据集中persona变量解释的
+   输出方差低于10%，说明人口persona的作用有限且依赖任务与模型。它支持将
+   `identity`收窄为“身份线索可见性”，反对把它当作真人社会身份效应。
+   DOI: `10.18653/v1/2024.acl-long.554`。
+3. Park et al.（2024）的生成式Agent研究显示，使用深度访谈或调查材料进行条件化的
+   Agent比只给人口属性的Agent更接近对应真人回答。该比较反对从“人口字段对齐”
+   推导“行为代表性”。arXiv: `2411.10109`。
+4. Halberstam and Knight（2016）表明社交网络中的同质性选择会影响信息流；
+   Stroud（2010）表明选择性暴露具有持续的传播后果。固定WS和shadow只控制了部分
+   网络结构，未同时重现关系形成、内容选择和平台排序。
+   DOI: `10.1016/j.jpubeco.2016.08.011`；
+   `10.1111/j.1460-2466.2010.01497.x`。
+5. Bail et al.（2018）的随机现场实验发现，暴露于对立政治观点可能加剧而非缓和
+   极化，说明不能把异见接触的方向写成内置理论常数。DOI:
+   `10.1073/pnas.1804840115`。
+6. Yun and Park（2011）的在线论坛实验显示，感知自己处于网络少数与较低发帖意愿
+   相关，且与论坛多数意见一致的参与者更愿意发帖。Paper 1用外生publish flag能
+   隔离可见性层，却不包含沉默螺旋或由立场导致的表达反馈；它应被描述为控制基准而
+   非真实表达过程复原。DOI: `10.1111/j.1083-6101.2010.01533.x`。
+7. Mehlhaff（2024）的group-based polarization框架明确区分组间异质与组内同质，
+   并以CPC同时表达两者，说明极化测量必须与理论对象匹配。分布双峰、方差、端点集中
+   和组际分离不能互换。DOI: `10.1017/S0003055423001041`。
+
+### 反对意见与不同路径
+
+- **反对意见A：** 如果不声称模拟真实公众，研究的传播学贡献会过弱。
+  **回应：** 贡献可来自可控的传播机制比较、过程可观测性和可复现实验。把未验证的
+  外推写得更强不会增加有效证据，反而会使审稿人把论文当作低效度的替代被试研究。
+- **反对意见B：** 人口构成已经按CFPS/CNNIC等数据对齐，因此可以称为代表性公众。
+  **回应：** 构成对齐只约束输入字段分布；所有输出仍由同一模型权重和prompt生成，
+  不存在概率抽样推断或人口字段到真人行为的经验证映射。
+- **不同路径C：** 现在加入真人调查或平台数据完成外部验证。
+  **回应：** 这会改变成本、伦理、研究问题和实施阶段。用户已决定Paper 1当前不改
+  机制、不增加真人；外部验证作为未来独立研究，而不是本轮隐性扩项。
+- **不同路径D：** 把论文转成纯方法平台论文。
+  **回应：** 这会弱化原有传播理论问题。当前保留均质化、分化、漂移和可见表达作为
+  理论对象，但将直接结论限制在指定计算系统内。
+
+### 最终判断
+
+采用“理论驱动的生成式舆论动力学计算实验”定位。研究问题按动力学、网络结构、
+一致性要求、身份线索和表达层递进；主估计目标为跨matched seeds的`WS-shadow`
+平均差异；该差异在`identity × continuity`四个persona条件上等权平均，continuity
+调节为关键次级。该对比识别两个度数匹配但实际信息流可能不同的暴露系统之总效应，
+不识别纯拓扑或等剂量效应。旧`Δlog(B/W)`不再自动作为唯一primary outcome，只保留
+为候选组际结构指标；最终单一endpoint须在正式结果盲态下另行冻结。
+
+验证分为实现与证据链、计算构念、内部效度/结构不确定性和外部行为效度四级；前三者
+在Paper 1内完成，第四级明确未完成。主张采用三层阶梯：系统内部结论可直接报告，
+传播机制只能条件性解释，真人社会预测不得主张。
+
+### 写作与分析约束
+
+- 人口对齐写成输入约束，不写成样本代表性；
+- Agent写成计算实体，不写成被试或公众；
+- round 0、相对基线变化和无社会信息/机制基线必须同时报告；
+- 方差/距离下降称收敛或均质化，上升称离散化；单向端点集中称方向性集中；只有满足
+  预注册双峰条件时称双极化；
+- 必须报告实际消息数、年龄、来源覆盖、重复来源、空feed和发送者活跃度，解释
+  WS-shadow总效应时不得省略这些共同变化；
+- 同一基础模型的多个seed不覆盖人类异质性或跨模型不确定性。
+
+### 重开条件
+
+- 加入真人调查/实验、真实平台数据或正式外部行为基准；
+- 研究主张改为预测中国公众或特定平台；
+- WS-shadow升级为严格事件级剂量匹配；
+- 主矩阵加入内生发帖、动态重连、推荐算法、真人—AI混合或跨基础模型因素。
+
+### 本卡新增参考文献
+
+32. Collins, A. J., et al. (2024). How to do agent-based modelling.
+    *Journal of Artificial Societies and Social Simulation, 27*(1), 11.
+    https://doi.org/10.18564/jasss.5258
+33. Park, J. S., et al. (2024). Generative Agent Simulations of 1,000 People.
+    arXiv:2411.10109. https://arxiv.org/abs/2411.10109
+34. Halberstam, Y., & Knight, B. (2016). Homophily, group size, and the
+    diffusion of political information in social networks. *Journal of Public
+    Economics, 143*, 73–88.
+    https://doi.org/10.1016/j.jpubeco.2016.08.011
+35. Stroud, N. J. (2010). Polarization and partisan selective exposure.
+    *Journal of Communication, 60*(3), 556–576.
+    https://doi.org/10.1111/j.1460-2466.2010.01497.x
+36. Bail, C. A., et al. (2018). Exposure to opposing views on social media can
+    increase political polarization. *Proceedings of the National Academy of
+    Sciences, 115*(37), 9216–9221.
+    https://doi.org/10.1073/pnas.1804840115
+37. Yun, G. W., & Park, S.-Y. (2011). Selective Posting: Willingness to Post a
+    Message Online. *Journal of Computer-Mediated Communication, 16*(2),
+    201–227. https://doi.org/10.1111/j.1083-6101.2010.01533.x
+38. Mehlhaff, I. D. (2024). A Group-Based Approach to Measuring Polarization.
+    *American Political Science Review, 118*(3), 1518–1526.
+    https://doi.org/10.1017/S0003055423001041

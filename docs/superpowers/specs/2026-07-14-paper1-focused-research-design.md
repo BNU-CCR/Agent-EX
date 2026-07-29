@@ -8,6 +8,12 @@
 > 网络上的异质加权随机顺序事件。更完整的合同见
 > `2026-07-29-paper1-phase4a-completion-design.md`；若两者冲突，以后者为准。
 > schema与机器协议尚未同步，formal run仍须fail closed。
+>
+> **2026-07-29方法修订：** primary层级已由
+> `2026-07-29-paper1-phase4a1-methodological-reframing-design.md`取代：
+> primary estimand改为四个persona条件等权平均的`WS-shadow`效应，continuity调节
+> 降为关键secondary；旧`Δlog(B/W)`只保留为候选组际结构指标。本文其余矩阵、规模
+> 和机制条款保持有效。
 
 ## 1. 研究对象
 
@@ -25,7 +31,8 @@ Paper 1 研究的不是 AI Agent 注入真人社交网络后的真实社会效�
 
 1. 相对于无社会暴露，多轮邻居暴露是否改变群体意见分布及理由多样性？
 2. 身份信息和身份连续性要求是否分别改变 Agent 的可影响性与群体演化形态？
-3. 局部网络暴露产生的结果，是否不同于接收相同数量但打乱来源的社会信息？
+3. WS局部网络约束暴露的结果，是否不同于度数匹配但实际事件级信息流可能不同的
+   固定shadow网络？
 
 ## 3. 理论主张
 
@@ -96,7 +103,10 @@ Paper 1 不预设 LLM-agent 必然均质化或必然极化，而是比较四类�
 5. 保存shadow graph、游标、候选/入选exposure和呈现槽位；
 6. 不事后强制匹配立场分数或文本分布。两种社会系统因反馈而产生的内容差异属于处理效应的一部分。
 
-社会消息数量匹配只适用于 `shuffled_social` 与 `ws_neighbors`。`self_history_only` 是“无社会信息”的总效应基线，天然具有较少的信息量；不将它解释为纯拓扑效应，也不使用无关填充文本伪造等长输入。
+`shuffled_social`与`ws_neighbors`只逐节点匹配图度数，不保证事件级消息数量、年龄、
+来源活跃度或重复来源匹配；其差异解释为两个网络约束暴露系统的总效应。
+`self_history_only`是“无社会信息”的总效应基线，天然具有较少的信息量；不将它解释
+为纯拓扑效应，也不使用无关填充文本伪造等长输入。
 
 ### 5.4 主矩阵
 
@@ -166,7 +176,7 @@ T=50解释为50个sweeps，每个sweep包含当前N次有放回激活事件。�
 
 ### 7.1 主要结果
 
-唯一 primary outcome 是预注册终点 `T*` 的双层结构变化量：
+本节原“唯一primary outcome”地位已由Phase 4A.1取代。下式保留为候选组际结构指标：
 
 `S_t = log((B_t + ε) / (W_t + ε))`
 
@@ -196,20 +206,25 @@ T=50解释为50个sweeps，每个sweep包含当前N次有放回激活事件。�
 
 ### 7.3 主要 estimands
 
-唯一 primary estimand 是 matched-seed 条件下，连续性要求对局部网络效应的调节：
+原唯一primary estimand已由Phase 4A.1取代。现行primary是在四个
+`identity × continuity` persona条件上等权平均的matched-seed `WS-shadow`差异。
+下式降为关键secondary：
 
 `[ΔS_T(ws, continuity_present) - ΔS_T(shuffled, continuity_present)]`
 
 `- [ΔS_T(ws, continuity_absent) - ΔS_T(shuffled, continuity_absent)]`
 
-该对比在两个 identity 水平上分别估计，并以等权平均作为主检验；identity 的三阶交互作为 secondary。它回答：相对于接收相同数量、但来源随机化的社会消息，身份连续性是否使局部邻居网络更容易产生相对更强的组间分化与组内收缩。
+该对比在两个identity水平上分别估计，并以等权平均作为关键secondary检验；identity
+的三阶交互作为其他secondary。它回答：当WS与shadow构成拓扑和事件级信息流共同不同
+的两个网络约束暴露系统时，历史立场一致性要求是否调节两者在候选组际结构指标上的
+总差异。该检验不假定两个系统接收相同消息数量，也不识别纯拓扑调节。
 
 Secondary estimands：
 
 - `ws_neighbors - shuffled_social` 对 `ΔS_T` 的平均效应；
 - identity 主效应及其与 continuity、social exposure 的交互；
 - `ws_neighbors - self_history_only` 对总体方差、均值漂移和变化率的社会互动总效应；
-- primary contrast 对完整 `S_t` 轨迹的稳健性分析。
+- 候选组际结构对比在完整`S_t`轨迹上的secondary分析。
 
 形态分类和文本多样性均为 secondary/exploratory 解释，不与 primary hypothesis 共同构成一个未排序检验 family。
 
@@ -242,14 +257,17 @@ Secondary estimands：
 - mock：N=20/100/1000，验证流程、复杂度和指标；
 - real model：N=20/50/100，估计变化率、方差、失败率、成本和效应量；
 - 使用预先生成的分析 dry run 验证形态判定不会把单向漂移误判为极化。
-- 基于 primary estimand 的 matched-seed DiD 对比方差进行功效模拟；不得用单 cell 方差或 Agent-level 样本量代替。
+- 基于四个persona条件等权平均的matched-seed `WS-shadow`主对比方差进行功效模拟；
+  不得用单cell方差或Agent-level样本量代替。
 
 ### 9.3 正式规模
 
 Paper 1 采用分级实现，但正式主实验规模固定为 **N=1000、T=50、完整 12-cell 主矩阵**：
 
 1. 构念/流程校准：真实模型 N=20/50/100；
-2. 有限规模检验：在 primary contrast 上运行 N=200/500/1000，检查 `ΔS_T`、失败率、吞吐和内存是否随规模稳定；
+2. 有限规模检验：在`P1_PRIMARY_OUTCOME`冻结后，对其四persona等权
+   `WS-shadow`主对比运行N=200/500/1000，检查该endpoint、失败率、吞吐和内存是否
+   随规模稳定；`ΔS_T`只作为候选/secondary组际结构诊断；
 3. 正式主实验：N=1000、T=50、12 cells，第一阶段每 cell 运行完全相同的 10 个 matched seeds；
 4. 在不查看 primary contrast 的均值、方向、置信区间和显著性的前提下，按下述确定性规则进行一次盲态 nuisance-variance 重估；若所需精度不足，扩展至最多 20 个 matched seeds；
 5. 正式分析以 N=1000 数据为主，N=200/500 仅用于有限规模诊断和规模敏感性报告。
@@ -264,7 +282,10 @@ Paper 1 采用分级实现，但正式主实验规模固定为 **N=1000、T=50�
 
 协议冻结时、查看任何正式结果前，必须确定最小重要效应 `δ_min`。正式主检验使用双侧 `α=0.05`、目标 power `1-β=0.80`。
 
-对第一阶段每个 matched seed `s`，计算与 primary estimand 完全相同的 identity 等权平均 DiD 对比值 `z_s`。重估程序只允许读取中心化残差 `z_s - mean(z)` 以估计标准差，不向研究者输出 `mean(z)`、符号、CI、p 值或任何 cell 均值。
+对第一阶段每个matched seed `s`，计算与primary estimand完全相同、在四个persona
+条件上等权平均的`WS-shadow`对比值`z_s`。重估程序只允许读取中心化残差
+`z_s - mean(z)`以估计标准差，不向研究者输出`mean(z)`、符号、CI、p值或任何cell
+均值。
 
 为保留四个 cell 的配对协方差，方差必须直接从 `z_s` 估计，禁止从各 cell 方差拼接。令首批 `n0=10` 个 seed 的样本标准差为 `s_z`，使用预注册的一侧 80% 方差上界：
 
@@ -313,7 +334,8 @@ Paper 1 不可以声称：
 
 研究设计进入正式实现前必须满足：
 
-1. 主问题、唯一 primary estimand、唯一 primary outcome、终点 `T*` 和证据边界写入协议；
+1. 主问题、唯一primary estimand、唯一primary outcome、该outcome的终点/时间汇总
+   和证据边界写入协议；
 2. persona 两个因素的 prompt 差异可自动 diff，且没有额外方向性指令；
 3. 两个 social cells 的 exposure 数量、置换约束和来源可审计，且不存在跨 cell 内容泄漏；
 4. 预注册群体不依赖终态结果；

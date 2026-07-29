@@ -53,6 +53,11 @@ last-verified: 2026-07-29
 > 本文人类可读部分已按事件级语义修订，但当前generated summary/schema尚未扩展相应
 > 字段。因此本草案仍不代表可执行协议，formal run必须继续fail closed；不得手工修改
 > generated summary冒充机器协议已同步。
+>
+> **2026-07-29方法修订阻断：** `D-2026-07-29-20`已将primary estimand改为在四个
+> persona条件上等权平均的`WS-shadow`效应，并重开单一primary outcome。页首generated
+> summary仍显示旧continuity DiD和旧outcome，因为schema/draft YAML尚未进入Phase 4B
+> 迁移；该摘要是已知过期状态，不得用于formal run。
 
 # Paper 1 研究协议草案
 
@@ -113,13 +118,18 @@ Identity 只能增删人口学和议题相关经历块，不能泄露方向性�
 
 ## 4. 结果与 estimand
 
-唯一主要结果为预注册终点 `UNRESOLVED[P1_ENDPOINT_TSTAR]` 的：
+单一primary outcome为`UNRESOLVED[P1_PRIMARY_OUTCOME]`，须在读取正式结果前由统计
+规格冻结。旧候选组际结构指标为预注册终点`UNRESOLVED[P1_ENDPOINT_TSTAR]`的：
 
 `S_t = log((B_t + ε)/(W_t + ε))`，`ΔS_T = S_T* - S_0`
 
 其中 `ε=UNRESOLVED[P1_LOG_EPSILON]`；B/W 的精确总体权重和缺组规则见 `UNRESOLVED[P1_BW_FORMULA]`。报告 ΔS 时必须同时展示 B 与 W。
 
-唯一 primary estimand 是 continuity 对 `WS - shuffled` 的 matched-seed DiD 调节；在两个 identity 水平分别计算后等权平均。identity 三阶交互、`WS-self`、完整轨迹、分布形态和文本多样性均为 secondary/exploratory。
+primary estimand是在`identity × continuity`四个persona条件上等权平均的
+`WS - shadow` matched-seed差异，迁移后ID为
+`P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT`。continuity对该差异的DiD调节为关键
+secondary；identity交互、`WS-self`、完整轨迹、分布形态和文本多样性均为
+secondary/exploratory。
 
 ## 5. 规模与模型
 
@@ -134,7 +144,12 @@ Identity 只能增删人口学和议题相关经历块，不能泄露方向性�
 
 Phase 0A 必须证明 identity 只改变身份信息、continuity 提高连贯性但不锁死、四 persona cells 非退化、量表只测单一构念，且议题无不可接受的单向偏置/拒答。
 
-Phase 0B 必须完成 mock N=20/100/1000、真实 N=20/50/100、形态 dry run、吞吐/成本/失败率和 primary matched contrast 方差诊断。有限规模与正式 gate 仍需冻结 `UNRESOLVED[P1_GATE_DELTA_STABILITY]`、`UNRESOLVED[P1_GATE_FAILURE_MAX]`、`UNRESOLVED[P1_GATE_THROUGHPUT_MIN]`、`UNRESOLVED[P1_GATE_MEMORY_MAX]` 和 `UNRESOLVED[P1_GATE_DURATION_MAX]`。
+Phase 0B必须完成mock N=20/100/1000、真实N=20/50/100、形态dry run、吞吐/成本/
+失败率和primary matched contrast方差诊断。有限规模与正式gate仍需冻结
+`UNRESOLVED[P1_GATE_PRIMARY_OUTCOME_STABILITY]`、
+`UNRESOLVED[P1_GATE_FAILURE_MAX]`、`UNRESOLVED[P1_GATE_THROUGHPUT_MIN]`、
+`UNRESOLVED[P1_GATE_MEMORY_MAX]`和`UNRESOLVED[P1_GATE_DURATION_MAX]`。旧
+`P1_GATE_DELTA_STABILITY`只可登记候选组际结构secondary诊断，不控制主实验准入。
 
 每个预期事件只有成功提交才推进主状态链；重试耗尽则记录failed attempt/event并立即
 停止run，且不改变状态或游标。只有所有预期事件均succeeded的complete run可进入主
@@ -144,7 +159,10 @@ Paper 1主路径禁止imputed/fallback。任何例外必须由
 
 ## 7. 推断与证据边界
 
-seed/run 是独立重复单位；同 seed 条件采用配对/区组分析。最终推断方法为 `UNRESOLVED[P1_PRIMARY_INFERENCE]`。首10 seeds 的盲态扩样只能读取 primary seed-level 对比的中心化残差，不得输出均值、方向、CI、p 值或 cell 均值；`δ_min=UNRESOLVED[P1_DELTA_MIN]`。
+seed/run 是独立重复单位；同 seed 条件采用配对/区组分析。最终推断方法为
+`UNRESOLVED[P1_PRIMARY_INFERENCE]`。首10 seeds 的盲态扩样只能读取在四个persona
+条件上等权平均的`WS-shadow` seed-level对比之中心化残差，不得输出均值、方向、CI、
+p值或cell均值；`δ_min=UNRESOLVED[P1_DELTA_MIN]`。
 
 允许的结论限于指定模型、议题、persona 与暴露条件下的 LLM-agent 意见动力学。不得把 persona 当真实身份、把固定网络称为关系网络演化、把单向漂移称为两极化，或把 N=1000 当作外部效度保证。
 

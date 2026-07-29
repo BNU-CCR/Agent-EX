@@ -24,8 +24,13 @@ records: []
 
 ## D-2026-07-14-01：Paper 1 聚焦矩阵
 
-**状态：** 已确认。
-**决定：** 采用 identity 2 × continuity 2 × social exposure 3 的12 cells；唯一 primary outcome 为 `Δlog((B+ε)/(W+ε))`；唯一 primary estimand 为 continuity 对 `WS-shuffled` 的 matched-seed DiD 调节。正式规模 N=1000、T=50、首批10 matched seeds，按一次盲态 nuisance-variance 重估最多20个。
+**状态：** 矩阵与规模仍有效；primary outcome/estimand层级已由
+`D-2026-07-29-20`取代。
+
+**决定：** 采用 identity 2 × continuity 2 × social exposure 3 的12 cells。原定
+唯一primary outcome `Δlog((B+ε)/(W+ε))`和唯一primary estimand continuity对
+`WS-shuffled`的matched-seed DiD调节已停止作为现行层级；正式规模N=1000、T=50、
+首批10 matched seeds，按一次盲态nuisance-variance重估最多20个。
 
 **理由：** 将身份信息、历史连续性和网络暴露拆开识别，避免 pilot 的复合 prompt confound；N 与 seed 分别解决网络规模和独立重复问题。
 
@@ -767,3 +772,42 @@ WS边；只匹配平均度而不逐节点保度；构图失败后运行时修图
 
 **完整依据：** `DR-P1-088`和
 `docs/superpowers/specs/2026-07-29-paper1-phase4a-completion-design.md`。
+
+## D-2026-07-29-20：Paper 1机器模拟的方法论定位与主张边界
+
+**状态：** 已确认方法定位；不改变Phase 4A机制、主矩阵或正式机器参数。
+
+**决定：**
+
+- Paper 1定位为理论驱动的生成式舆论动力学计算实验，不定位为真人替代、真实平台
+  复原或中国公众预测。
+- 机器字段保持稳定，论文将`identity`解释为人口身份线索可见性，将`continuity`
+  解释为历史立场一致性要求，将private/public分别解释为非公开Agent状态和Agent
+  可见话语。
+- 主估计目标为`WS - shadow`平均差异，并解释为两个度数匹配但拓扑和事件级信息流
+  共同不同的网络约束暴露系统之总效应；不得称为纯拓扑或等消息剂量效应。
+- 该差异在`identity × continuity`四个persona条件上等权平均，迁移后ID为
+  `P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT`；旧continuity DiD降为关键secondary。
+- 旧`Δlog(B/W)`不再自动作为唯一primary outcome；最终单一primary endpoint在
+  正式结果盲态下另行冻结，旧指标只作为候选组际结构指标。
+- 研究结论分为系统内部结论、条件性机制解释和真人社会外推三层；Paper 1只直接识别
+  第一层，不单独支持第三层。
+- 验证分为实现/证据链、计算构念、内部效度/结构不确定性和外部行为效度四层；未加入
+  真人或平台基准时不得声称已完成人类行为效度。
+- 只有满足预注册形态条件时才使用“双极化”；单向端点集中称为方向性集中。
+
+**未选择：** 仅在讨论部分增加一般性免责声明；把人口对齐当作代表性验证；把LLM
+Agent直接称为公众；为提高外部效度而在当前阶段修改机制或增加真人样本。
+
+**完整依据：** `docs/paper1-design-rationale.md`的`DR-P1-089`及
+`docs/superpowers/specs/2026-07-29-paper1-phase4a1-methodological-reframing-design.md`。
+
+**取代范围：** 本决定只取代`D-2026-07-14-01`、07-14聚焦规格和当前人类协议草案中
+关于唯一primary outcome/estimand的条款；12-cell矩阵、N/T/seeds和生成机制保持有效。
+
+### 重开条件
+
+- 加入真人、真实平台或其他外部行为基准；
+- 研究目标改为总体/平台预测或真人替代；
+- WS-shadow实现严格事件级剂量匹配；
+- 主矩阵加入内生表达、动态关系、推荐算法或跨模型比较。

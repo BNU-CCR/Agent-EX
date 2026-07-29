@@ -252,6 +252,30 @@
   - 同步清除旧平台规格中的同步测试/迁移要求，明确failed即原位停止、excluded只属
     分析层、Paper 1主路径禁止imputed/fallback；B稳定旧ID被明确解释为消息容量并把
     B/K最终冻结gate移至Phase 0B。独立审查提出的blocker/major均已逐项关闭。
+  - 随后按用户要求从传播学审稿人与ABM方法专家角度复核Phase 4A。结论为
+    `major revision`而非设计作废：工程可追溯性很强，但研究问题与primary estimand、
+    identity/continuity构念、LLM行为效度、拓扑—消息剂量识别和真实舆论表述仍需修订。
+  - 识别出若干实施前必须解决的问题：public post事件/stock语义、shadow graph结构
+    目标、WS-shadow实际曝光剂量差异、稳定来源记忆缺失，以及baseline分组导致
+    `log(B/W)`初始值机械偏高。完整证据和建议记录于`findings.md`。
+  - 用户批准不改机制、不增加真人的Phase 4A.1方法论重构。新增方法规格
+    `docs/superpowers/specs/2026-07-29-paper1-phase4a1-methodological-reframing-design.md`、
+    决定`D-2026-07-29-20`和依据卡`DR-P1-089`。
+  - 修订将Paper 1定位为理论驱动的生成式舆论动力学计算实验；收窄identity、
+    continuity、private/public和network术语；将`WS-shadow`解释为两个网络约束
+    暴露系统的总效应，并建立四级验证与三层主张边界。实验机制和12-cell矩阵不变。
+  - 独立规格首轮审查发现旧协议与新规格形成双重primary，并指出“同步上界”会暗改
+    引擎。已将旧continuity DiD降为关键secondary、将四persona等权`WS-shadow`设为
+    primary estimand，重开单一primary outcome，并以严格串行`w_i=1`基线取代同步
+    稳健性；generated summary/schema迁移明确留给Phase 4B且当前继续fail closed。
+  - 第二轮审查发现07-14旧规格仍残留“主检验/相同消息数量”措辞，且`epsilon`和
+    有限规模gate仍占用旧primary路径。已把continuity DiD统一为关键secondary总效应，
+    将`epsilon`迁移为候选组际结构路径，并要求scale gate在新primary outcome盲态
+    冻结后检查其四persona等权`WS-shadow`对比。
+  - 第三轮审查发现稳定旧ID`P1_GATE_DELTA_STABILITY`仍会把scale gate绑定旧ΔS。
+    已新增`P1_GATE_PRIMARY_OUTCOME_STABILITY`，旧ID明确降为候选组际结构secondary
+    诊断；schema/YAML字段迁移仍留给Phase 4B。三轮审查上限已到，最终修订待用户书面
+    复核，不声称获得第四轮独立批准。
 - 边界：
   - 模块2虽已批准，但population、persona及其他Phase 4A模块尚未完成；当前不实现
     topic package，也不修改正式实验代码。

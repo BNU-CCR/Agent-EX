@@ -19,8 +19,9 @@ last-verified: 2026-07-29
 | P1_TOPIC_PRIMARY | 主议题与单一态度构念 | 已确认延迟退休、转基因食品、AI就业替代三包全部进入Phase 0 probe；若多个通过，优先级为延迟退休>转基因>AI就业，主议题取最高优先通过者，其余通过者按预注册预算进入稳健性；最终机器原文与hash仍须probe冻结，见`D-2026-07-29-02`、`D-2026-07-29-15`、`DR-P1-045`至`DR-P1-047`、`DR-P1-084` | 用户+方法会审 | Phase 0A 前 | topic.id, topic.statement, topic.statement_sha256, stance.construct |
 | P1_STANCE_SCALE | 立场量表 | 已确认首选1–7全标签有序量表、真实中点及独立1–5审计型confidence；须按`DR-P1-048`与0–10挑战者及字段顺序一起probe后冻结实际机器值 | 用户+方法会审 | Phase 0A 前 | stance.scale |
 | P1_INITIAL_GROUP_CUTS | 初始组切点 | 已确认按round 0固定为1–3/4/5–7三组，不按终点重分；见`D-2026-07-29-05`、`DR-P1-057` | 用户+方法会审 | Phase 4 前 | groups.cuts |
-| P1_ENDPOINT_TSTAR | primary 终点 T* | T=50 内预注册终点；不自动等同最后一轮 | 用户+方法会审 | Phase 0B 前 | outcomes.primary.t_star |
-| P1_LOG_EPSILON | log 比值 ε | 数值稳定常数；推荐用合成 fixture 做敏感性检查 | 方法会审 | Phase 0B 前 | outcomes.primary.epsilon |
+| P1_PRIMARY_OUTCOME | 单一primary outcome | 旧`Δlog(B/W)`只保留为候选组际结构指标；须依据动力学总问题、round-0机械基线和形态区分，在不读取正式结果的统计规格中冻结一个单一endpoint，见`D-2026-07-29-20`、`DR-P1-089` | 用户+方法会审 | analysis freeze | outcomes.primary.id, outcomes.primary.definition |
+| P1_ENDPOINT_TSTAR | 候选组际结构指标终点 T* | T=50 内预注册终点；不自动等同最后一轮，也不自动获得primary地位 | 用户+方法会审 | Phase 0B 前 | outcomes.group_structure.t_star |
+| P1_LOG_EPSILON | 候选组际结构log比值 ε | 数值稳定常数；推荐用合成fixture做敏感性检查，不得自动绑定新primary outcome | 方法会审 | Phase 0B 前 | outcomes.group_structure.epsilon |
 | P1_BW_FORMULA | B/W 精确公式 | 总体加权/ANOVA 分解；推荐满足可测试分解恒等式 | 方法会审 | Phase 0B 前 | metrics.variance_components |
 | P1_BW_DDOF | 方差 ddof | 0/1；须与公式和 fixture 一致 | 方法会审 | Phase 0B 前 | metrics.ddof |
 | P1_MISSING_GROUP_RULE | 缺组处理 | fail/exclude；推荐运行前 fail | 方法会审 | Phase 0B 前 | metrics.missing_group |
@@ -33,7 +34,7 @@ last-verified: 2026-07-29
 | P1_CONTINUITY_LOCK_THRESHOLD | 锁死门槛 | 已确认C1须提高历史解释连贯性但在强而非欺骗性反向信息下仍能可解释改变；精确上限保持`UNRESOLVED`，见`D-2026-07-29-06`、`DR-P1-063`、`DR-P1-064` | 方法会审 | Phase 0A 前 | gates.continuity.lock_max |
 | P1_REFUSAL_THRESHOLD | 拒答门槛 | Phase 0题干probe已确认实质拒答率不高于1%；formal runtime门槛和canonical值仍须冻结 | 方法+运行时会审 | Phase 0A 前 | gates.quality.refusal_max |
 | P1_PARSE_FAILURE_THRESHOLD | 解析失败门槛 | Phase 0题干probe已确认至多一次格式重试后有效解析率不低于99%；formal runtime门槛和canonical值仍须冻结 | 方法+运行时会审 | Phase 0A 前 | gates.quality.parse_failure_max |
-| P1_PRIMARY_INFERENCE | 主对比推断 | 配对单样本对比/置换/层级模型；推荐与 matched-seed 设计一致 | 方法会审 | analysis freeze | analysis.primary_test |
+| P1_PRIMARY_INFERENCE | 主对比推断 | 对四个persona条件等权平均的matched-seed `WS-shadow`差异采用配对单样本对比/置换/层级模型；精确方法待盲态冻结，见`D-2026-07-29-20`、`DR-P1-089` | 方法会审 | analysis freeze | analysis.primary_test |
 
 ## 人口、网络与暴露
 
@@ -87,7 +88,8 @@ last-verified: 2026-07-29
 | ID | 问题 | 候选 / 推荐 | 决策者 | 最迟 gate | Schema paths |
 |---|---|---|---|---|---|
 | P1_SCALE_GATE_DESIGN | N=200/500/1000 的 cells/seeds | primary contrast cells；matched seeds | 用户+方法会审 | Phase 9 前 | gates.scale.design |
-| P1_GATE_DELTA_STABILITY | ΔS 稳定容差 | 预注册绝对/相对容差 | 方法会审 | Phase 9 前 | gates.scale.delta_tolerance |
+| P1_GATE_PRIMARY_OUTCOME_STABILITY | 新primary outcome稳定容差 | 在`P1_PRIMARY_OUTCOME`冻结后，为其四persona等权`WS-shadow`主对比预注册绝对/相对容差，见`D-2026-07-29-20` | 方法会审 | Phase 9 前 | gates.scale.primary_outcome_tolerance |
+| P1_GATE_DELTA_STABILITY | 候选组际结构ΔS稳定容差 | 旧primary gate已由`P1_GATE_PRIMARY_OUTCOME_STABILITY`取代；若保留，只作candidate/secondary诊断，不得控制主实验准入 | 方法会审 | Phase 9 前 | gates.scale.group_structure_delta_tolerance |
 | P1_GATE_FAILURE_MAX | 最大生成失败率 | 固定上限 | 方法+运行时会审 | Phase 9 前 | gates.scale.failure_max |
 | P1_GATE_THROUGHPUT_MIN | 最小吞吐 | calls/tokens per second | 运行时+成本会审 | Phase 9 前 | gates.scale.throughput_min |
 | P1_GATE_MEMORY_MAX | 最大内存/显存 | benchmark 后冻结 | 运行时会审 | Phase 9 前 | gates.scale.memory_max |
