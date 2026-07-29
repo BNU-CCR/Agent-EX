@@ -2,7 +2,7 @@
 status: active navigation baseline
 authority: project scope and evidence map; not an execution protocol
 supersedes: README.md and logs/notion-2026-05-31.md as the entry point for work after 2026-07-14
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # Agent-EX 项目总览
@@ -36,8 +36,16 @@ pilot-3.0 的 weak 条件出现高分端集中，lifelong strong 条件保留较
 ## 代码与知识路线
 
 - 历史代码：`pilot-1.0/`、`pilot-2.0/`、`pilot-3.0/`，冻结。
-- 正式平台：后续只在 `platform/` 创建。
+- 正式平台：`platform/` 已完成 Phase 3A 协议、领域记录、运行身份、FrozenSchedule、manifest 与证据图基础；后续新能力只进入该目录。
 - 规范链：07-14 聚焦规格 → 已确认的人类协议 → schema 约束下的冻结机器协议；它规定应当发生什么。
 - 证据链：原始 attempt/event → checkpoint/冻结数据集 → run manifest 与归档 hash → 汇总结果；它记录实际发生了什么。
 - manifest/event 不得覆盖冻结协议；任何不一致均是需要显式标记并排除主分析的协议偏离，而不是新的规范。
 - 历史思路：README、Notion 交接和 `design/`，只作追溯。
+
+## 当前实现 checkpoint
+
+- 活跃分支：`codex/paper1-platform`。
+- Phase 3A 提交：`7e5731b`。
+- 主工作区 `main` 尚未集成该分支；在 `main` 中看不到 `platform/` 不代表代码丢失。
+- 恢复开发前先读 `logs/2026-07-29-phase3a-handoff.md`。
+- formal 仍被未冻结研究决策阻断；当前通过的是平台基础验证，不是正式实验结果。

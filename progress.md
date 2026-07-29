@@ -57,12 +57,12 @@
 - **状态：** in_progress
 - 执行的操作：
   - 按 make-plan 规则完成文档、代码和方法/统计三路 Phase 0 发现。
-  - 确认 `platform/` 尚不存在，当前运行依赖未锁定，pilot-3.0 Notebook 是实际实现。
+  - 2026-07-14 当时确认 `platform/` 尚不存在、运行依赖未锁定，pilot-3.0 Notebook 是实际实现。
   - 写入分阶段、逐模块、测试先行的实施计划。
   - 第一轮计划审阅发现官方API发现滞后、执行参数库存不全和大规模矩阵编排缺失。
   - 已增加 Phase 0B 官方API/依赖 gate、完整 unresolved inventory 与 formal-required 校验、registry/worker/矩阵审计/盲态扩样 orchestration 阶段。
   - 第二轮独立计划审阅结果为 `Approved`。
-  - 代码实施目前仅被 worktree 位置选择阻塞；未修改 pilot 或创建 platform。
+  - 2026-07-14 当时代码实施仅被 worktree 位置选择阻塞；该阻塞已于 Phase 3A 解决。
 - 创建/修改的文件：
   - `docs/superpowers/plans/2026-07-14-paper1-platform-implementation-plan.md`
   - `task_plan.md`
@@ -77,8 +77,8 @@
 ## 五问重启检查
 | 问题 | 答案 |
 |------|------|
-| 我在哪里？ | 阶段 3：书面规格审阅 |
-| 我要去哪里？ | 知识归档 → Paper 1 协议 → 平台实现 → 正式实验 |
+| 我在哪里？ | 正式平台阶段 3；Phase 3A 已完成，Phase 4 尚未开始 |
+| 我要去哪里？ | Phase 4 模块实现 → mock/真实模型校准 → 有限规模 gate → 正式实验 |
 | 目标是什么？ | 建成以 Paper 1 为首个协议的长期复用实验平台 |
 | 我学到了什么？ | 见 `findings.md` |
 | 我做了什么？ | 见上方记录 |
@@ -105,3 +105,4 @@
 - 下一步：
   - Phase 4：population、persona、network/exposure 与 mock fixtures。
   - formal-required 研究决策与 provider/runtime gate 继续保持 blocked。
+  - 代码位置和恢复命令见 `logs/2026-07-29-phase3a-handoff.md`。

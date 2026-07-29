@@ -25,12 +25,20 @@
 
 **当前工作入口**：先读 [AGENTS.md](AGENTS.md) 与 [项目总览](docs/project-overview.md)；Paper 1 人类可读协议见 [paper1-protocol.md](docs/paper1-protocol.md)，未决项见 [research-qa.md](docs/research-qa.md)，已确认选择见 [decisions.md](docs/decisions.md)。
 
+**当前代码位置**：正式平台 Phase 3A 已在 `codex/paper1-platform` 分支完成，提交基线为 `7e5731b`。若主工作区的 `main` 中看不到 `platform/`，请先阅读 [Phase 3A 交接日志](logs/2026-07-29-phase3a-handoff.md)，不要误判为代码尚未创建。
+
 ---
 
 ## 目录结构
 
 ```
 Agent-EX/
+├── platform/                  # 【正式平台】Paper 1 与后续研究唯一活跃代码
+│   ├── src/agent_ex/              # 协议、领域记录、运行身份与证据契约
+│   ├── protocols/                 # Paper 1 schema 镜像
+│   ├── configs/paper1/            # draft 机器协议；formal 尚未解锁
+│   └── tests/                     # 单元、边界、安装与 wheel smoke
+│
 ├── design/                    # 【共享】跨版本设计文档
 │   ├── research_design.md         # 技术方案（历史版本，05-23 大设计）
 │   ├── todo.md                    # 待办清单
@@ -129,7 +137,7 @@ Agent 进入在线舆论网络并多轮互动后，身份信息和跨轮连续�
 
 - 唯一 primary outcome：`Δlog((B+ε)/(W+ε))`，同时报告组间分量 B 与组内分量 W。
 - 主模型：Qwen3-8B BF16、non-thinking、自部署 vLLM；精确 revision 与运行环境须经 Phase 0B smoke 后冻结。
-- API：仅运行预注册核心8 cells 的固定 snapshot 外部稳健性子集，不解释为“API 部署效应”。
+- API：仅运行预注册固定 snapshot 的审批子集；核心8 cells 只是推荐候选，不是已冻结常量，也不解释为“API 部署效应”。
 
 ---
 
@@ -202,7 +210,9 @@ run_piao.bat
 
 ### 课程论文后：正式 Paper 1
 - [ ] 完成 Phase 0B 模型、API 与运行时 smoke，冻结仍未决的精确版本和生成参数
-- [ ] 搭建 `platform/` 并依次通过 mock、真实模型校准和 N=200/500/1000 有限规模 gate
+- [x] 完成 `platform/` Phase 3A 协议、领域记录、运行身份、FrozenSchedule、manifest 与证据图基础
+- [ ] 实现 population、persona、network/exposure、prompt、mock adapter 与同步 engine
+- [ ] 依次通过 mock、真实模型校准和 N=200/500/1000 有限规模 gate
 - [ ] 运行 N=1000、T=50、12 cells、10→20 matched-seed 正式矩阵
 - [ ] 冻结分析数据后执行预注册主分析与 API 外部稳健性子集
 
@@ -230,6 +240,9 @@ run_piao.bat
 | 2026-05-30 | — | pilot-3.0 历史 pilot 完成（四条件×五seed） |
 | 2026-05-31 | [notion-2026-05-31.md](logs/notion-2026-05-31.md) | 历史 pilot 状态交接 |
 | 2026-07-14 | [2026-07-14.md](logs/2026-07-14.md) | Paper 1 聚焦规格与正式规模基线 |
+| 2026-07-16 | [2026-07-16-phase3a-wip.md](logs/2026-07-16-phase3a-wip.md) | Phase 3A 中断 checkpoint（已被07-29取代） |
+| 2026-07-29 | [2026-07-29-phase3a-complete.md](logs/2026-07-29-phase3a-complete.md) | Phase 3A 实现与验证完成 |
+| 2026-07-29 | [2026-07-29-phase3a-handoff.md](logs/2026-07-29-phase3a-handoff.md) | 代码位置、文件清单与下一步恢复入口 |
 
 ---
 
@@ -245,4 +258,4 @@ run_piao.bat
 
 ---
 
-*README 最后核对：2026-07-16（Paper 1 以 2026-07-14 聚焦规格为准）*
+*README 最后核对：2026-07-29（Paper 1 以冻结机器协议为最终执行权威；冻结前以 2026-07-14 聚焦规格为研究边界）*

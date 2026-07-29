@@ -2,7 +2,7 @@
 status: active archive index
 authority: historical-use restrictions and provenance map; not an execution protocol
 supersedes: README.md as the authoritative guide to whether pilot assets may be reused
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # 历史 Pilot 索引
@@ -24,4 +24,4 @@ last-verified: 2026-07-16
 
 ## Git 与外部来源
 
-本知识基线基于 Git `0f9e5ad8a71c8fb8423044504f839bf5b4a24170`。对应 Notion 页面与外部原始数据 URI 尚未形成可验证的一一映射，记录为 `UNRESOLVED[P1_ARCHIVE_PROVENANCE_MAP]`。
+历史资产盘点基线为 Git `0f9e5ad8a71c8fb8423044504f839bf5b4a24170`；Phase 3A 平台实现基线为 `7e5731b0263a08338c37fbf441b676fb76e1d005`。对应 Notion 页面与外部原始数据 URI 尚未形成可验证的一一映射，记录为 `UNRESOLVED[P1_ARCHIVE_PROVENANCE_MAP]`。

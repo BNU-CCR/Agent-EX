@@ -2,7 +2,7 @@
 status: active program map
 authority: allocation of research questions across papers; not a Paper 1 execution source
 supersedes: the undifferentiated multi-factor roadmap in logs/notion-2026-05-23.md
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # 长期研究计划

@@ -2,7 +2,7 @@
 status: provisional
 authority: Phase0B official API discovery
 supersedes: none
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # Allowed APIs v1

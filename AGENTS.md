@@ -2,18 +2,19 @@
 status: active
 authority: project agent operating rules; subordinate to the specification chain and verified against the evidence chain
 supersedes: informal handoff instructions in README.md and logs/notion-2026-05-31.md for future Paper 1 work
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # Agent-EX 协作规则
 
 ## 五分钟路由
 
-1. 先读 `docs/project-overview.md`，区分历史证据、Paper 1 和后续研究。
-2. Paper 1 的已批准研究边界读 `docs/superpowers/specs/2026-07-14-paper1-focused-research-design.md`。
-3. 实施顺序读 `docs/superpowers/plans/2026-07-14-paper1-platform-implementation-plan.md`。
-4. 人类协议草案读 `docs/paper1-protocol.md`；未决项只在 `docs/research-qa.md` 决策。
-5. 已确认选择读 `docs/decisions.md`；历史 pilot 读 `docs/archive-index.md`。
+1. 先读 `logs/2026-07-29-phase3a-handoff.md`，确认分支、worktree、已完成边界与恢复顺序。
+2. 再读 `docs/project-overview.md`，区分历史证据、Paper 1 和后续研究。
+3. Paper 1 的已批准研究边界读 `docs/superpowers/specs/2026-07-14-paper1-focused-research-design.md`。
+4. 实施顺序读 `docs/superpowers/plans/2026-07-14-paper1-platform-implementation-plan.md`。
+5. 人类协议草案读 `docs/paper1-protocol.md`；未决项只在 `docs/research-qa.md` 决策。
+6. 已确认选择读 `docs/decisions.md`；历史 pilot 读 `docs/archive-index.md`。
 
 ## 权威层级
 

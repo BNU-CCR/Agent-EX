@@ -1,8 +1,8 @@
 ---
-status: active requirements; implementation pending
+status: active requirements; Phase 3A identity and persistence contracts implemented
 authority: reproducibility contract for platform and runs; actual values come from frozen protocol, environment lock and run manifests
 supersedes: ad hoc reproducibility practices in pilot notebooks
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # 可复现规范

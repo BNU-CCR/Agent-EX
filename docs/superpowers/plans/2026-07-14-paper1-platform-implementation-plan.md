@@ -43,7 +43,7 @@ Paper 1 的正式设计为：
 
 ### Phase 0 结论
 
-- `platform/` 当前不存在；
+- `platform/` 在 2026-07-14 发现阶段尚不存在；Phase 3A 已于 2026-07-29 建立；
 - `pilot-3.0/run.ipynb` 是实际正式 pilot 实现，`pilot-3.0/src` 与 pilot-1.0 逐字节相同；
 - 迁移同步语义、记录契约和测试样例，不复制任何旧主循环；
 - 当前环境未安装 pytest、PyYAML、NetworkX、SciPy、statsmodels、openai，实施前需建立隔离环境与锁定依赖。
