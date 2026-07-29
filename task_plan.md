@@ -4,7 +4,8 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
-阶段 4B实施：执行计划已获用户整包批准；4B-0、4B-1已完成，4B-2为下一待执行阶段
+阶段 4B实施：执行计划已获用户整包批准；4B-0、4B-1已完成，4B-2已进入实现，
+当前为未审查安全checkpoint
 
 ## 各阶段
 
@@ -152,6 +153,7 @@
 - [x] Phase 4B-0：建立可移植Python 3.12环境并确认迁移基线
 - [x] Phase 4B-1：迁移协议/schema/YAML/人类摘要并恢复测试全绿
 - [ ] Phase 4B-2：迁移event ordinal、schedule v2、domain records与artifact/RNG基础
+  （in_progress；实现与首轮验证已完成，独立规格/质量审查尚未开始）
 - [ ] Phase 4B-3：实现topic/population/initialization/persona mock制品
 - [ ] Phase 4B-4：实现WS/shadow图与node mapping
 - [ ] Phase 4B-5：实现attention/expression与冻结schedule
@@ -164,7 +166,7 @@
 - [ ] 完成 mock N=20/100/1000 验证
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
-- **状态：** in_progress（4B-0、4B-1 complete；4B-2 pending，尚未开始实现）
+- **状态：** in_progress（4B-0、4B-1 complete；4B-2 in_progress、unreviewed）
 
 ### 阶段 5：正式实验与分析
 - [ ] 完成 N=200/500/1000 的有限规模检验

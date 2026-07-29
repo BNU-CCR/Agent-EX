@@ -1,13 +1,12 @@
-"""Stable public protocol, validation, and evidence primitives."""
+"""Stable public protocol, artifact, RNG, and ordinal evidence primitives."""
 
+from .artifacts import ArtifactEnvelope
 from .domain import (
-    AgentState,
     EventStatus,
     ExposureRecord,
     FrozenSchedule,
     GenerationAttempt,
     GenerationEvent,
-    OpinionRecord,
     RunManifest,
     ScheduleSlot,
     canonical_payload_hash,
@@ -29,21 +28,23 @@ from .validation import (
     validate_human_protocol_reference,
     validate_human_protocol_sync,
 )
+from .rng import RNGProvenance, derive_rng_seed
 
 __all__ = [
-    "AgentState",
+    "ArtifactEnvelope",
     "EventStatus",
     "ExposureRecord",
     "FrozenSchedule",
     "GenerationAttempt",
     "GenerationEvent",
-    "OpinionRecord",
+    "RNGProvenance",
     "RunManifest",
     "ScheduleSlot",
     "canonical_payload_hash",
     "canonical_protocol_hash",
     "derive_attempt_id",
     "derive_event_id",
+    "derive_rng_seed",
     "derive_run_id",
     "evaluate_analysis_eligibility",
     "execution_projection",

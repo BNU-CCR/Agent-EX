@@ -341,6 +341,28 @@
     formal fail-closed smoke及schema字节镜像均通过，两个schema的SHA-256均为
     `150A34E0D6F79A666E4FFA1104D7F1FC3FB60D757DC945EA19B5E3A855B15D3A`。4B-1
     已进入精确文件提交状态；4B-2尚未开始实现。
+  - Phase 4B-2已进入严格TDD实现，但当前仅为`in_progress / unreviewed`安全
+    checkpoint。首组RED确认旧`derive_event_id(run_id, round, agent)`与schedule v1
+    无法表达有放回事件；迁移后`event_ordinal`从0连续，schedule v2显式记录
+    sweep/draw/agent/publish与算法版本，支持同Agent同sweep重复，并通过N=1000、
+    T=50的50,000-slot轻量构造。
+  - 新增版本化`ArtifactEnvelope`与`RNGProvenance`：制品ID绑定内容、算法、输入hash
+    与RNG证据；seed由matched seed、注册namespace和稳定coordinates确定性派生，
+    事件级namespace必须含`event_ordinal`，禁止`attempt_index`推进重试seed。
+  - domain主路径已破坏性迁移为ordinal事件：运行态仅保留
+    `pending/in_progress/succeeded/failed`，`excluded`不再是事件终态，
+    `imputed/fallback`不再存在于Paper 1运行链；recovery cursor仅含
+    `next_event_ordinal`和当前`event_id`。Exposure基础允许空社会feed和同发送者多帖，
+    evidence graph只要求来源事件在ordinal上更早，不再硬编码“恰好上一轮”。
+  - 旧`test_domain.py`的同步/round+agent契约被整体迁移，首次fresh全套为
+    `174 passed`。测试总数从4B-1的369下降，不是功能性失败，而是删除了约200项已经
+    失效的schedule v1、round cursor、同步AgentState及disposition兼容契约测试；
+    protocol/installation测试保持全绿。随后补上attempt/event严格JSON round-trip、
+    hash漂移和重试model-seed回归，当前全套为`177 passed`，覆盖率套件同为
+    `177 passed`、总覆盖率`84%`。
+  - 当前checkpoint尚未经过独立规格审查或代码质量审查，不得标记4B-2 complete。
+    下一步应先补强剩余fail-closed边界与覆盖率（尤其domain异常分支），再执行独立
+    规格/质量复审；审查关闭后才能更新为complete并进入4B-3。
 - 边界：
   - 模块2虽已批准，但population、persona及其他Phase 4A模块尚未完成；当前不实现
     topic package，也不修改正式实验代码。
