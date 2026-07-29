@@ -45,3 +45,4 @@ dist/
 .idea/
 .claude/
 .codex/
+.worktrees/
