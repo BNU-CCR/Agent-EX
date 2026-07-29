@@ -276,6 +276,19 @@
     已新增`P1_GATE_PRIMARY_OUTCOME_STABILITY`，旧ID明确降为候选组际结构secondary
     诊断；schema/YAML字段迁移仍留给Phase 4B。三轮审查上限已到，最终修订待用户书面
     复核，不声称获得第四轮独立批准。
+  - 用户已完成Phase 4A.1书面规格复核；提交`0600e2a`及此前Phase 4A提交已直接推送
+    至GitHub `origin/main`。
+  - 按make-plan要求完成Phase 4B三路只读文档发现。确认当前platform只有协议验证和
+    不可变证据地基，不存在population/network/feed/memory/adapter/engine/checkpoint
+    实现，且旧event/schedule/state/exposure语义与Phase 4A存在结构冲突。
+  - 使用旧Phase 3A Python 3.12.13环境运行基线：`342 passed, 11 failed`；Ruff check
+    和format check通过。11项失败来自已批准研究文档与尚未迁移schema/QA路径的预期
+    不一致，Phase 4B-1必须先恢复全绿。默认Python 3.14无pytest/ruff，不可作为项目
+    环境。
+  - 新增
+    `docs/superpowers/plans/2026-07-29-paper1-phase4b-implementation-plan.md`，
+    将Phase 4B拆为环境、协议迁移、domain v2、研究制品、网络、schedule、feed/memory、
+    mock adapter、事务engine/recovery及三档mock集成十个连续工作包。
 - 边界：
   - 模块2虽已批准，但population、persona及其他Phase 4A模块尚未完成；当前不实现
     topic package，也不修改正式实验代码。

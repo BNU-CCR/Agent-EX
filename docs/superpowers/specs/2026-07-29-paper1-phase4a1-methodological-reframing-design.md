@@ -1,5 +1,5 @@
 ---
-status: approved design; three-round review completed with final issue locally fixed; pending user written-spec review
+status: approved design; user written-spec review completed
 authority: Paper 1 methodological positioning and claim boundary; subordinate to future frozen machine protocol and schema
 approved-by: user
 approved-date: 2026-07-29

@@ -731,6 +731,29 @@
 - 方法重构不修改Phase 4A机制、12-cell主矩阵、N/T/seeds或事件语义；新增测量和
   报告要求进入Phase 4B实施计划。
 
+## 2026-07-29：Phase 4B代码与实施前发现
+
+- `platform/`当前只有协议加载/验证、人类摘要同步、不可变domain records、manifest
+  和evidence graph；没有population、network、feed、memory、adapter、event engine、
+  checkpoint内容或持久化实现。
+- 当前`derive_event_id(run_id, round_index, agent_id)`、按
+  `(round_index, agent_id)`去重的schedule以及按round严格递增的Agent历史，都无法
+  表示同一Agent同一sweep内有放回重复激活。
+- 当前`ExposureRecord`要求source agent唯一且social exposure非空，evidence graph
+  又把来源限制为恰好上一轮；这与同源多帖、合法空feed和同sweep前序成功帖冲突。
+- 当前manifest只有checkpoint URI/hash和`{round,event_index}`游标校验，没有
+  checkpoint状态、事件链、事务提交或同event恢复执行。
+- schema仍固定旧同步枚举、旧primary ID、旧outcome和旧scale gate；research-qa已经
+  记录新方法层级，因此Python 3.12基线出现11项预期协议一致性失败。Ruff与format保持
+  通过。
+- Phase 4B必须先迁移schema/domain/event identity，再实现研究制品和engine；若直接
+  从population或adapter开写，会把旧同步坐标固化到后续模块。
+- 可复用的是canonical JSON hash、深不可变payload、显式版本化round-trip、
+  GenerationAttempt证据合同、外部artifact绑定和formal fail-closed测试模式，不是
+  旧schedule/state/exposure语义。
+- 推荐执行期每run使用独立SQLite事务存储，严格串行提交，完成后导出不可变manifest
+  与证据索引；原始大响应和数据库不进入Git。
+
 ## 2026-07-29：Phase 4A传播学匿名审稿复核
 
 ### 模型定位与外部效度
