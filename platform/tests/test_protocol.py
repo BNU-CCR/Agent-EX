@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
 from importlib import resources
 import json
 import math
 from pathlib import Path
 
+import jsonschema
 import pytest
 import yaml
 
+from agent_ex import protocol as protocol_module
 from agent_ex import (
     canonical_protocol_hash,
     load_protocol,
@@ -25,6 +28,9 @@ PROTOCOL_PATH = PLATFORM_ROOT / "configs" / "paper1" / "protocol.yaml"
 MIRROR_SCHEMA_PATH = PLATFORM_ROOT / "protocols" / "paper1.schema.json"
 HUMAN_PROTOCOL_PATH = REPOSITORY_ROOT / "docs" / "paper1-protocol.md"
 RESEARCH_QA_PATH = REPOSITORY_ROOT / "docs" / "research-qa.md"
+DECISION_RECORDS_PATTERN = (
+    "<!-- BEGIN DECISION RECORDS -->\n```yaml\n{body}```\n<!-- END DECISION RECORDS -->\n"
+)
 
 
 def _set(document, pointer: str, value) -> None:
@@ -142,8 +148,14 @@ def frozen_protocol(protocol) -> dict[str, object]:
         "/robustness/api/provider": "dashscope",
         "/robustness/api/model_snapshot": "qwen-plus-2025-12-01",
         "/robustness/api/cells": [
-            "P1-I0-C0-E1", "P1-I0-C0-E2", "P1-I0-C1-E1", "P1-I0-C1-E2",
-            "P1-I1-C0-E1", "P1-I1-C0-E2", "P1-I1-C1-E1", "P1-I1-C1-E2",
+            "P1-I0-C0-E1",
+            "P1-I0-C0-E2",
+            "P1-I0-C1-E1",
+            "P1-I0-C1-E2",
+            "P1-I1-C0-E1",
+            "P1-I1-C0-E2",
+            "P1-I1-C1-E1",
+            "P1-I1-C1-E2",
         ],
         "/robustness/api/scale": {"population_size": 200, "rounds": 50, "seeds": 5},
         "/storage/archive_uri": "s3://agent-ex-paper1/frozen/run-data",
@@ -202,33 +214,52 @@ def _qa_owners() -> dict[str, str]:
     return found
 
 
-def _artifact_hashes(protocol, decision_id: str) -> dict[str, str]:
-    if decision_id == "P1_TOPIC_PRIMARY":
-        return {"topic.statement_sha256": protocol["topic"]["statement_sha256"]}
-    if decision_id == "P1_PERSONA_TEMPLATES":
-        return {
-            f"persona.{name}.template_sha256": value["template_sha256"]
-            for name, value in protocol["persona"].items()
-        }
-    return {}
+def _artifact_hashes(protocol, schema, decision_id: str) -> dict[str, str]:
+    paths = _schema_decision_paths(schema)[decision_id]
+    payload = {}
+    for path in paths:
+        value = protocol
+        for part in path.split("."):
+            value = value[part]
+        payload[f"/{path.replace('.', '/')}"] = value
+    encoded = json.dumps(
+        payload,
+        allow_nan=False,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return {decision_id: hashlib.sha256(encoded).hexdigest()}
+
+
+def _read_decision_records(path: Path) -> dict[str, object]:
+    text = path.read_text(encoding="utf-8")
+    body = text.split("```yaml\n", 1)[1].split("```", 1)[0]
+    return yaml.safe_load(body)
+
+
+def _write_decision_records(path: Path, document: dict[str, object]) -> None:
+    body = yaml.safe_dump(document, sort_keys=False, allow_unicode=True)
+    path.write_text(DECISION_RECORDS_PATTERN.format(body=body), encoding="utf-8")
 
 
 @pytest.fixture
 def approved_decisions_path(frozen_protocol, tmp_path) -> Path:
     path = tmp_path / "decisions.md"
+    schema = json.loads(
+        resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
+    )
     records = []
     for decision_id, provenance in frozen_protocol["decision_provenance"].items():
-        records.append({
-            **provenance,
-            "field_ids": [decision_id],
-            "artifact_hashes": _artifact_hashes(frozen_protocol, decision_id),
-        })
+        records.append(
+            {
+                **provenance,
+                "field_ids": [decision_id],
+                "artifact_hashes": _artifact_hashes(frozen_protocol, schema, decision_id),
+            }
+        )
     body = yaml.safe_dump({"records": records}, sort_keys=False, allow_unicode=True)
-    path.write_text(
-        "<!-- BEGIN DECISION RECORDS -->\n```yaml\n"
-        f"{body}```\n<!-- END DECISION RECORDS -->\n",
-        encoding="utf-8",
-    )
+    path.write_text(DECISION_RECORDS_PATTERN.format(body=body), encoding="utf-8")
     return path
 
 
@@ -239,12 +270,22 @@ def approved_human_protocol_path(frozen_protocol, tmp_path) -> Path:
     return path
 
 
-def test_mode_and_status_are_consistent(protocol, frozen_protocol, approved_decisions_path):
+def test_mode_and_status_are_consistent(
+    protocol,
+    frozen_protocol,
+    approved_decisions_path,
+    approved_human_protocol_path,
+):
     validate_protocol(protocol, mode="draft")
     confirmed = deepcopy(frozen_protocol)
     confirmed["status"] = "confirmed"
     validate_protocol(confirmed, mode="confirmed")
-    validate_protocol(frozen_protocol, mode="formal", decisions_path=approved_decisions_path)
+    validate_protocol(
+        frozen_protocol,
+        mode="formal",
+        decisions_path=approved_decisions_path,
+        human_protocol_path=approved_human_protocol_path,
+    )
 
     for mode, invalid_statuses in {
         "draft": ("confirmed", "frozen"),
@@ -255,7 +296,12 @@ def test_mode_and_status_are_consistent(protocol, frozen_protocol, approved_deci
             candidate = deepcopy(frozen_protocol)
             candidate["status"] = status
             with pytest.raises(ValueError, match=f"{mode} mode requires status"):
-                validate_protocol(candidate, mode=mode, decisions_path=approved_decisions_path)
+                validate_protocol(
+                    candidate,
+                    mode=mode,
+                    decisions_path=approved_decisions_path,
+                    human_protocol_path=approved_human_protocol_path,
+                )
 
 
 def test_draft_accepts_only_registered_unresolved_markers(protocol):
@@ -297,7 +343,7 @@ def test_draft_contains_registered_markers_instead_of_coder_defaults(protocol):
 
 
 def test_every_formal_required_path_is_present_and_enforced(
-    frozen_protocol, approved_decisions_path
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
 ):
     schema = json.loads(
         resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
@@ -307,16 +353,39 @@ def test_every_formal_required_path_is_present_and_enforced(
         candidate = deepcopy(frozen_protocol)
         _delete(candidate, pointer)
         with pytest.raises(ValueError, match="schema|formal-required"):
-            validate_protocol(candidate, mode="formal", decisions_path=approved_decisions_path)
+            validate_protocol(
+                candidate,
+                mode="formal",
+                decisions_path=approved_decisions_path,
+                human_protocol_path=approved_human_protocol_path,
+            )
 
 
 @pytest.mark.parametrize(
     "block",
     [
-        "topic", "stance", "population", "initialization", "groups", "network",
-        "dynamics", "memory", "exposure", "generation", "runtime", "metrics",
-        "sample_size", "shapes", "gates", "quality", "stopping", "sampling",
-        "analysis", "robustness", "storage", "provenance",
+        "topic",
+        "stance",
+        "population",
+        "initialization",
+        "groups",
+        "network",
+        "dynamics",
+        "memory",
+        "exposure",
+        "generation",
+        "runtime",
+        "metrics",
+        "sample_size",
+        "shapes",
+        "gates",
+        "quality",
+        "stopping",
+        "sampling",
+        "analysis",
+        "robustness",
+        "storage",
+        "provenance",
     ],
 )
 def test_every_execution_block_is_required(protocol, block):
@@ -338,11 +407,86 @@ def test_typos_and_unknown_fields_are_rejected_at_root_and_nested(protocol):
 @pytest.mark.parametrize(
     "placeholder",
     [
-        "TBD", "todo", "ＦＩＸＭＥ", "un-decided", "P E N D I N G",
-        "not yet decided", "place_holder", "prefix TODO suffix",
+        "TBD",
+        "todo",
+        "ＦＩＸＭＥ",
+        "un-decided",
+        "P E N D I N G",
+        "not yet decided",
+        "place_holder",
     ],
 )
 def test_bare_placeholders_are_rejected_recursively(protocol, placeholder):
+    candidate = deepcopy(protocol)
+    candidate["topic"]["statement"] = placeholder
+    with pytest.raises(ValueError, match="placeholder"):
+        validate_protocol(candidate, mode="draft")
+
+
+@pytest.mark.parametrize(
+    "placeholder",
+    [
+        "ＦＩＸＭＥ",
+        "not_decided",
+        "N/A",
+        "???",
+        "待定",
+        "未决定",
+        "待确认",
+        "未知",
+    ],
+)
+def test_structural_placeholder_variants_are_rejected(protocol, placeholder):
+    candidate = deepcopy(protocol)
+    candidate["topic"]["statement"] = placeholder
+    with pytest.raises(ValueError, match="placeholder"):
+        validate_protocol(candidate, mode="draft")
+
+
+def test_placeholder_words_inside_a_substantive_value_are_not_rejected(protocol):
+    candidate = deepcopy(protocol)
+    candidate["topic"]["statement"] = "The city has pending transit projects."
+    validate_protocol(candidate, mode="draft")
+
+
+@pytest.mark.parametrize(
+    "placeholder",
+    [
+        "TODO: choose a topic",
+        "TODO, choose a topic",
+        "TBD - choose a topic",
+        "FIXME=choose a topic",
+        "UNDECIDED—choose a topic",
+        "PENDING: choose a topic",
+        "PENDING, choose a topic",
+        "PENDING? choose a topic",
+        "PENDING! choose a topic",
+        "PENDING\u200b: choose a topic",
+        "NOT DECIDED: choose a topic",
+        "NOT DECIDED (choose a topic)",
+        "NOT\u200c DECIDED (choose a topic)",
+        "NOT YET DECIDED, choose a topic",
+        "NA: choose a topic",
+        "NA | choose a topic",
+        "NA\ufe0f: choose a topic",
+        "PLACEHOLDER / choose a topic",
+        "N/A: choose a topic",
+        "N/A, choose a topic",
+        "N/A\ufeff| choose a topic",
+        "TBD. choose a topic",
+        "TBD\u0301: choose a topic",
+        "T\u200dBD. choose a topic",
+        "TODO\u2060—choose a topic",
+        "TO\u034fDO: choose a topic",
+        "PEND\u20dding: choose a topic",
+        "PEND\u3164ING: choose a topic",
+        "待定：选择议题",
+        "未决定 - 选择议题",
+        "待确认 选择议题",
+        "未知=选择议题",
+    ],
+)
+def test_decorated_placeholder_prefixes_are_rejected(protocol, placeholder):
     candidate = deepcopy(protocol)
     candidate["topic"]["statement"] = placeholder
     with pytest.raises(ValueError, match="placeholder"):
@@ -366,10 +510,17 @@ def test_persona_rejects_free_text(protocol):
         validate_protocol(candidate, mode="draft")
 
 
-def test_topic_statement_hash_must_match(frozen_protocol, approved_decisions_path):
+def test_topic_statement_hash_must_match(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
+):
     frozen_protocol["topic"]["statement_sha256"] = "0" * 64
     with pytest.raises(ValueError, match="statement_sha256"):
-        validate_protocol(frozen_protocol, mode="formal", decisions_path=approved_decisions_path)
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
 
 
 def test_qa_paths_and_decision_ids_exactly_match_schema_annotations():
@@ -380,11 +531,16 @@ def test_qa_paths_and_decision_ids_exactly_match_schema_annotations():
 
 
 def test_formal_rejects_missing_decision_log_and_missing_approval(
-    frozen_protocol, approved_decisions_path, tmp_path
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path, tmp_path
 ):
     missing = tmp_path / "missing.md"
     with pytest.raises(ValueError, match="decision log"):
-        validate_protocol(frozen_protocol, mode="formal", decisions_path=missing)
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=missing,
+            human_protocol_path=approved_human_protocol_path,
+        )
 
     text = approved_decisions_path.read_text(encoding="utf-8")
     one_id, one_provenance = next(iter(frozen_protocol["decision_provenance"].items()))
@@ -393,20 +549,245 @@ def test_formal_rejects_missing_decision_log_and_missing_approval(
         text.replace(one_provenance["decision_record_id"], "REMOVED", 1), encoding="utf-8"
     )
     with pytest.raises(ValueError, match="decision record"):
-        validate_protocol(frozen_protocol, mode="formal", decisions_path=incomplete)
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=incomplete,
+            human_protocol_path=approved_human_protocol_path,
+        )
 
     del frozen_protocol["decision_provenance"][one_id]
     with pytest.raises(ValueError, match="decision provenance"):
         validate_protocol(
-            frozen_protocol, mode="formal", decisions_path=approved_decisions_path
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
         )
 
-def test_formal_rejects_empty_approval_timestamp(frozen_protocol, approved_decisions_path):
+
+def test_formal_rejects_empty_approval_timestamp(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
+):
     first = next(iter(frozen_protocol["decision_provenance"].values()))
     first["approved_at"] = ""
     with pytest.raises(ValueError, match="schema|approved_at"):
         validate_protocol(
-            frozen_protocol, mode="formal", decisions_path=approved_decisions_path
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+@pytest.mark.parametrize(
+    "approved_at",
+    [
+        "not-a-date",
+        "2026-02-30T04:00:00Z",
+        "2026-07-16 04:00:00Z",
+        "2026-07-16T04:00:00+08:00",
+    ],
+)
+def test_formal_requires_strict_rfc3339_utc_approval_timestamps(
+    frozen_protocol,
+    approved_decisions_path,
+    approved_human_protocol_path,
+    approved_at,
+):
+    first = next(iter(frozen_protocol["decision_provenance"].values()))
+    first["approved_at"] = approved_at
+    records = _read_decision_records(approved_decisions_path)
+    records["records"][0]["approved_at"] = approved_at
+    _write_decision_records(approved_decisions_path, records)
+    with pytest.raises(ValueError, match="approved_at|date-time|RFC3339"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+def test_project_format_checker_enforces_strict_rfc3339_utc() -> None:
+    validator = jsonschema.Draft202012Validator(
+        {"type": "string", "format": "date-time"},
+        format_checker=protocol_module.FORMAT_CHECKER,
+    )
+
+    assert not list(validator.iter_errors("2026-07-16T04:00:00Z"))
+    for invalid in (
+        "2026-02-30T04:00:00Z",
+        "2026-07-16 04:00:00Z",
+        "2026-07-16T04:00:00+08:00",
+    ):
+        assert list(validator.iter_errors(invalid)), invalid
+
+
+def test_formal_accepts_explicit_research_qa_path(
+    frozen_protocol,
+    approved_decisions_path,
+    approved_human_protocol_path,
+):
+    validate_protocol(
+        frozen_protocol,
+        mode="formal",
+        decisions_path=approved_decisions_path,
+        human_protocol_path=approved_human_protocol_path,
+        qa_path=RESEARCH_QA_PATH,
+    )
+
+
+def test_formal_requires_exact_decision_record_id_binding(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
+):
+    records = _read_decision_records(approved_decisions_path)
+    records["records"][0]["decision_record_id"] += "-EXTRA"
+    _write_decision_records(approved_decisions_path, records)
+    with pytest.raises(ValueError, match="decision record"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+def test_formal_requires_exact_field_id_membership(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
+):
+    records = _read_decision_records(approved_decisions_path)
+    records["records"][0]["field_ids"][0] += "_EXTRA"
+    _write_decision_records(approved_decisions_path, records)
+    with pytest.raises(ValueError, match="field|decision ID"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+def test_formal_rejects_fake_approver_even_when_record_matches(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
+):
+    first = next(iter(frozen_protocol["decision_provenance"].values()))
+    first["approvers"] = ["fake approver"]
+    records = _read_decision_records(approved_decisions_path)
+    records["records"][0]["approvers"] = ["fake approver"]
+    _write_decision_records(approved_decisions_path, records)
+    with pytest.raises(ValueError, match="approver|owner"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+@pytest.mark.parametrize("artifact", ["topic", "persona"])
+def test_formal_rejects_unapproved_artifact_hashes(
+    frozen_protocol,
+    approved_decisions_path,
+    approved_human_protocol_path,
+    artifact,
+):
+    if artifact == "topic":
+        statement = "The city should pause its public transit expansion."
+        frozen_protocol["topic"]["statement"] = statement
+        frozen_protocol["topic"]["statement_sha256"] = hashlib.sha256(
+            statement.encode("utf-8")
+        ).hexdigest()
+    else:
+        frozen_protocol["persona"]["identity_absent_continuity_absent"]["template_sha256"] = (
+            "a" * 64
+        )
+    with pytest.raises(ValueError, match="artifact"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+def test_formal_rejects_post_approval_field_mutation_even_after_human_summary_rerender(
+    frozen_protocol,
+    approved_decisions_path,
+    approved_human_protocol_path,
+):
+    frozen_protocol["generation"]["temperature"] = 0.5
+    approved_human_protocol_path.write_text(
+        render_human_protocol_summary(frozen_protocol), encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match="artifact"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+def test_formal_automatically_rejects_human_protocol_drift(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
+):
+    text = approved_human_protocol_path.read_text(encoding="utf-8")
+    approved_human_protocol_path.write_text(
+        text.replace("population_size: 1000", "population_size: 999", 1),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="drift"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
+        )
+
+
+def test_api_robustness_cells_accept_any_nonempty_canonical_unique_subset(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path
+):
+    frozen_protocol["robustness"]["api"]["cells"] = ["P1-I0-C0-E0"]
+    schema = json.loads(
+        resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
+    )
+    records = _read_decision_records(approved_decisions_path)
+    record = next(
+        item for item in records["records"] if "P1_API_ROBUSTNESS_CELLS" in item["field_ids"]
+    )
+    record["artifact_hashes"] = _artifact_hashes(frozen_protocol, schema, "P1_API_ROBUSTNESS_CELLS")
+    _write_decision_records(approved_decisions_path, records)
+    approved_human_protocol_path.write_text(
+        render_human_protocol_summary(frozen_protocol), encoding="utf-8"
+    )
+    validate_protocol(
+        frozen_protocol,
+        mode="formal",
+        decisions_path=approved_decisions_path,
+        human_protocol_path=approved_human_protocol_path,
+    )
+
+
+@pytest.mark.parametrize(
+    "cells",
+    [
+        [],
+        ["P1-I0-C0-E0", "P1-I0-C0-E0"],
+        ["P1-NOT-A-CELL"],
+    ],
+)
+def test_api_robustness_cells_reject_empty_duplicate_or_unknown_values(
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path, cells
+):
+    frozen_protocol["robustness"]["api"]["cells"] = cells
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
         )
 
 
@@ -417,19 +798,22 @@ def test_draft_may_leave_decision_provenance_empty(protocol):
 
 @pytest.mark.parametrize("value", [math.nan, math.inf, -math.inf])
 def test_non_finite_numbers_are_rejected_and_never_hashed(
-    frozen_protocol, approved_decisions_path, value
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path, value
 ):
     frozen_protocol["generation"]["temperature"] = value
     with pytest.raises(ValueError, match="finite"):
         validate_protocol(
-            frozen_protocol, mode="formal", decisions_path=approved_decisions_path
+            frozen_protocol,
+            mode="formal",
+            decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
         )
     with pytest.raises(ValueError):
         canonical_protocol_hash(frozen_protocol)
 
 
 def test_schema_override_cannot_weaken_canonical_validation(
-    frozen_protocol, approved_decisions_path, tmp_path
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path, tmp_path
 ):
     del frozen_protocol["generation"]["max_tokens"]
     open_schema = tmp_path / "open.schema.json"
@@ -440,11 +824,12 @@ def test_schema_override_cannot_weaken_canonical_validation(
             mode="formal",
             schema_path=open_schema,
             decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
         )
 
 
 def test_schema_override_is_additive_and_identity_checked(
-    frozen_protocol, approved_decisions_path, tmp_path
+    frozen_protocol, approved_decisions_path, approved_human_protocol_path, tmp_path
 ):
     restrictive = tmp_path / "restrictive.schema.json"
     restrictive.write_text(
@@ -468,6 +853,7 @@ def test_schema_override_is_additive_and_identity_checked(
             mode="formal",
             schema_path=restrictive,
             decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
         )
 
     wrong_identity = tmp_path / "wrong.schema.json"
@@ -478,6 +864,7 @@ def test_schema_override_is_additive_and_identity_checked(
             mode="formal",
             schema_path=wrong_identity,
             decisions_path=approved_decisions_path,
+            human_protocol_path=approved_human_protocol_path,
         )
 
 
@@ -485,6 +872,83 @@ def test_human_generated_summary_matches_machine_projection(protocol):
     validate_human_protocol_sync(protocol, HUMAN_PROTOCOL_PATH)
     assert f"execution_hash: {canonical_protocol_hash(protocol)}" in HUMAN_PROTOCOL_PATH.read_text(
         encoding="utf-8"
+    )
+
+
+@pytest.mark.parametrize("layout", ["duplicate", "missing_begin", "missing_end", "reversed"])
+def test_human_sync_requires_exactly_one_ordered_generated_summary_block(
+    protocol, tmp_path, layout
+):
+    path = tmp_path / "paper1-protocol.md"
+    summary = render_human_protocol_summary(protocol)
+    begin = "<!-- BEGIN GENERATED PROTOCOL SUMMARY -->"
+    end = "<!-- END GENERATED PROTOCOL SUMMARY -->"
+    documents = {
+        "duplicate": f"{summary}\n\n{summary}\n",
+        "missing_begin": summary.replace(begin, "", 1),
+        "missing_end": summary.replace(end, "", 1),
+        "reversed": f"{end}\n```yaml\n{{}}\n```\n{begin}",
+    }
+    path.write_text(documents[layout], encoding="utf-8")
+    with pytest.raises(ValueError, match="exactly one|markers"):
+        validate_human_protocol_sync(protocol, path)
+
+
+@pytest.mark.parametrize("layout", ["duplicate", "missing_begin", "missing_end", "reversed"])
+def test_human_summary_update_requires_exactly_one_ordered_marker_pair(protocol, layout):
+    summary = render_human_protocol_summary(protocol)
+    begin = "<!-- BEGIN GENERATED PROTOCOL SUMMARY -->"
+    end = "<!-- END GENERATED PROTOCOL SUMMARY -->"
+    documents = {
+        "duplicate": f"{summary}\n\n{summary}\n",
+        "missing_begin": summary.replace(begin, "", 1),
+        "missing_end": summary.replace(end, "", 1),
+        "reversed": f"{end}\n```yaml\n{{}}\n```\n{begin}",
+    }
+
+    with pytest.raises(ValueError, match="exactly one|markers"):
+        update_human_protocol_summary(documents[layout], protocol)
+
+
+@pytest.mark.parametrize(
+    ("git_marker", "project_name"),
+    [
+        (False, "agent-ex"),
+        (True, "unrelated-project"),
+    ],
+)
+def test_default_formal_paths_require_verified_source_checkout(
+    monkeypatch, tmp_path, git_marker, project_name
+):
+    fake_root = tmp_path / "fake"
+    fake_module = fake_root / "platform" / "src" / "agent_ex" / "protocol.py"
+    fake_module.parent.mkdir(parents=True)
+    fake_module.touch()
+    (fake_root / "platform" / "pyproject.toml").write_text(
+        f'[project]\nname = "{project_name}"\n', encoding="utf-8"
+    )
+    (fake_root / "docs").mkdir()
+    (fake_root / "docs" / "decisions.md").write_text("not trusted", encoding="utf-8")
+    if git_marker:
+        (fake_root / ".git").write_text("gitdir: elsewhere", encoding="utf-8")
+    monkeypatch.setattr(protocol_module, "__file__", str(fake_module))
+
+    with pytest.raises(ValueError, match="required.*outside a source checkout"):
+        protocol_module._resolve_formal_path(
+            None,
+            default_relative_path="docs/decisions.md",
+            argument_name="decision log",
+        )
+
+
+def test_default_formal_paths_resolve_in_verified_source_checkout():
+    assert (
+        protocol_module._resolve_formal_path(
+            None,
+            default_relative_path="docs/decisions.md",
+            argument_name="decision log",
+        )
+        == REPOSITORY_ROOT / "docs" / "decisions.md"
     )
 
 

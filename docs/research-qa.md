@@ -2,12 +2,15 @@
 status: active unresolved-register
 authority: canonical register of unresolved research and runtime decisions until each is moved to docs/decisions.md
 supersedes: scattered open questions in design/todo.md, README.md and historical Notion handoffs for Paper 1 implementation
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # Paper 1 研究问答与未决项
 
-规则：每个未决项必须保留稳定 ID。推荐值只是会审输入，不是执行默认值；在决策进入 `docs/decisions.md` 前，配置必须保留对应的 `UNRESOLVED[ID]` 并拒绝 formal run。
+规则：每个未决项必须保留稳定 ID。推荐值只是会审输入，不是执行默认值；在决策进入
+`docs/decisions.md` 的 fenced YAML 审批记录前，配置必须保留对应的
+`UNRESOLVED[ID]` 并拒绝 formal run。审批记录中的 `approvers` 至少要包含本表“决策者”
+列的完整 owner 角色字符串；模糊匹配、子串或自由改写不算授权。
 
 ## 构念、指标与推断
 
@@ -69,7 +72,7 @@ last-verified: 2026-07-16
 | P1_CONCURRENCY_BUDGET | 并发/显存/速率预算 | 由真实 benchmark 冻结 | 运行时+成本会审 | Phase 0B 结束 | runtime.concurrency, runtime.rate_budget |
 | P1_API_PROVIDER | API 稳健性提供方 | DashScope/其他；推荐固定 snapshot 可用者 | 用户+方法会审 | 稳健性预注册前 | robustness.api.provider |
 | P1_API_SNAPSHOT | API 精确 snapshot | 禁止 rolling alias | 用户+运行时会审 | 稳健性预注册前 | robustness.api.model_snapshot |
-| P1_API_ROBUSTNESS_CELLS | API 核心8 cells | `P1-I0-C0-E1/E2`、`P1-I0-C1-E1/E2`、`P1-I1-C0-E1/E2`、`P1-I1-C1-E1/E2`，即全部 identity×continuity 下的 shuffled 与 WS | 用户+方法会审 | 稳健性预注册前 | robustness.api.cells |
+| P1_API_ROBUSTNESS_CELLS | API 稳健性 cells | 从12个 canonical cell IDs 中审批1至12个不重复 cells；推荐核心8 cells 为 `P1-I0-C0-E1/E2`、`P1-I0-C1-E1/E2`、`P1-I1-C0-E1/E2`、`P1-I1-C1-E1/E2`，即全部 identity×continuity 下的 shuffled 与 WS | 用户+方法会审 | 稳健性预注册前 | robustness.api.cells |
 | P1_API_ROBUSTNESS_SCALE_FREEZE | API 子集最终 N/T/seeds | 暂拟 N=200/T=50/5 matched seeds；不定义 cells | 用户+成本会审 | 稳健性预注册前 | robustness.api.scale |
 
 ## 规模与运行 gates

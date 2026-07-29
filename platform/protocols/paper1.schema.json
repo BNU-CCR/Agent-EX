@@ -59,7 +59,7 @@
       "type": "object", "required": ["decision_record_id", "approved_at", "approvers"],
       "properties": {
         "decision_record_id": {"type": "string", "pattern": "^D-[A-Z0-9-]+$"},
-        "approved_at": {"type": "string", "minLength": 1, "format": "date-time"},
+        "approved_at": {"type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"},
         "approvers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}}
       }, "additionalProperties": false
     }
@@ -248,7 +248,12 @@
         "provider": {"x-decision-id": "P1_API_PROVIDER", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_API_PROVIDER]"}]},
         "model_snapshot": {"x-decision-id": "P1_API_SNAPSHOT", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_API_SNAPSHOT]"}]},
         "cells": {"x-decision-id": "P1_API_ROBUSTNESS_CELLS", "oneOf": [
-          {"const": ["P1-I0-C0-E1", "P1-I0-C0-E2", "P1-I0-C1-E1", "P1-I0-C1-E2", "P1-I1-C0-E1", "P1-I1-C0-E2", "P1-I1-C1-E1", "P1-I1-C1-E2"]},
+          {"type": "array", "minItems": 1, "maxItems": 12, "uniqueItems": true, "items": {"enum": [
+            "P1-I0-C0-E0", "P1-I0-C0-E1", "P1-I0-C0-E2",
+            "P1-I0-C1-E0", "P1-I0-C1-E1", "P1-I0-C1-E2",
+            "P1-I1-C0-E0", "P1-I1-C0-E1", "P1-I1-C0-E2",
+            "P1-I1-C1-E0", "P1-I1-C1-E1", "P1-I1-C1-E2"
+          ]}},
           {"const": "UNRESOLVED[P1_API_ROBUSTNESS_CELLS]"}
         ]},
         "scale": {"x-decision-id": "P1_API_ROBUSTNESS_SCALE_FREEZE", "oneOf": [

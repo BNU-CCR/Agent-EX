@@ -4,7 +4,7 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
-阶段 1
+阶段 3：正式平台基础（Phase 3A 已完成）
 
 ## 各阶段
 
@@ -20,21 +20,22 @@
 - [x] 用户确认 Paper 1 聚焦书面规格与 N=1000 分级方案
 - [x] 完成文档、代码与方法三路实施发现
 - [x] 完成逐文件实施计划审阅
-- **状态：** in_progress
+- **状态：** complete
 
 ### 阶段 2：知识归档与研究协议
-- [ ] 建立项目总览、长期研究计划、归档索引和 AI 接手规则
-- [ ] 将 pilot-1.0/2.0/3.0 标记为冻结原型，不物理移动
+- [x] 建立项目总览、长期研究计划、归档索引和 AI 接手规则
+- [x] 将 pilot-1.0/2.0/3.0 标记为冻结原型，不物理移动
 - [ ] 冻结 Paper 1 的构念、实验条件、指标和统计方案
-- [ ] 明确 Notion、本地文档、机器配置和实验输出的权威边界
-- **状态：** pending
+- [x] 明确 Notion、本地文档、机器配置和实验输出的权威边界
+- **状态：** in_progress（formal-required 研究决策仍待冻结）
 
 ### 阶段 3：正式平台基础
-- [ ] 建立单一 Python package 和依赖锁定
-- [ ] 实现 domain、population、persona、network/exposure、prompt、model adapter
-- [ ] 实现同步引擎、逐轮 checkpoint、恢复和 run manifest
+- [x] 建立单一 Python package 和依赖锁定
+- [x] 完成 Phase 3A：协议/schema gate、领域记录、运行身份、冻结 schedule、manifest 与证据图契约
+- [ ] 实现 population、persona、network/exposure、prompt、model adapter
+- [ ] 实现同步引擎、逐轮 checkpoint 持久化和恢复执行
 - [ ] 建立 mock LLM 与自动化测试
-- **状态：** pending
+- **状态：** in_progress
 
 ### 阶段 4：Paper 1 实验实现
 - [ ] 实现 Paper 1 机器可读协议和配置

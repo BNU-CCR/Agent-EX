@@ -46,7 +46,7 @@ model_route:
 status: draft; not confirmed or frozen
 authority: human-readable protocol draft derived from the approved focused spec; machine execution is forbidden until unresolved fields are frozen
 supersedes: pilot-3.0 four-condition design for future formal Paper 1 runs; does not supersede pilot evidence
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # Paper 1 研究协议草案
@@ -60,9 +60,16 @@ last-verified: 2026-07-16
 `template_sha256`；模板正文是受版本控制的外部制品，不进入机器协议自由文本字段。
 
 formal 冻结还必须让 `decision_provenance` 完整覆盖 schema 的每个 `P1_*` 决策 ID，
-逐项记录 `decision_record_id`、`approved_at` 与 `approvers`，并能在
-`docs/decisions.md` 中同时核对决策 ID 和决策记录 ID。仅把 unresolved marker 换成
-schema-shaped 值不构成审批，也不能通过 formal gate。
+逐项记录 `decision_record_id`、严格 RFC3339 UTC 的 `approved_at` 与非空
+`approvers`，并与 `docs/decisions.md` 的 fenced YAML 记录精确一致。决策 ID 必须是
+对应记录 `field_ids` 的完整成员，且至少一名 approver 必须精确匹配
+`docs/research-qa.md` 登记的 owner 角色。每个 `field_id` 都必须以其 schema
+`x-decision-id` 所标注字段的实际 JSON pointer 值组成 canonical payload，并将其
+SHA-256 精确写入对应记录的 `artifact_hashes[field_id]`。canonical payload 是
+`{JSON pointer: actual value}` 映射，按键排序、无多余空白、UTF-8 编码后计算
+SHA-256。全文子串、伪 approver 或未绑定字段均不构成审批。formal validation 会
+自动校验本页 generated summary，且要求 generated summary 标记恰好出现一对并
+顺序正确；不同步即拒绝运行。
 
 ## 1. 研究对象与边界
 
@@ -115,7 +122,7 @@ Identity 只能增删人口学和议题相关经历块，不能泄露方向性�
 - 有限规模 gate：在主对比上运行 N=200/500/1000；具体 cells/seeds 为 `UNRESOLVED[P1_SCALE_GATE_DESIGN]`。
 - 正式主实验：N=1000、T=50、12 cells、首批10 matched seeds；按冻结的盲态规则一次扩至最多20个。
 - 主模型：Qwen3-8B BF16、non-thinking、vLLM 自部署、全矩阵；revision 为 `UNRESOLVED[P1_MODEL_REVISION]`。
-- API：固定 snapshot 的核心8-cell 外部稳健性子集，cells 由 `UNRESOLVED[P1_API_ROBUSTNESS_CELLS]` 冻结；候选枚举为 `P1-I0-C0-E1/E2`、`P1-I0-C1-E1/E2`、`P1-I1-C0-E1/E2`、`P1-I1-C1-E1/E2`，即全部 identity×continuity 下的 shuffled 与 WS。规模暂拟 N=200、T=50、5 matched seeds，仅由 `UNRESOLVED[P1_API_ROBUSTNESS_SCALE_FREEZE]` 冻结。它是模型系统比较，不是 API 部署效应。
+- API：固定 snapshot 的外部稳健性子集，最终 cells 由 `UNRESOLVED[P1_API_ROBUSTNESS_CELLS]` 审批冻结；schema 允许从12个 canonical cell IDs 中选择1至12个不重复 cells。推荐但不强制的核心8-cell 候选为 `P1-I0-C0-E1/E2`、`P1-I0-C1-E1/E2`、`P1-I1-C0-E1/E2`、`P1-I1-C1-E1/E2`，即全部 identity×continuity 下的 shuffled 与 WS。规模暂拟 N=200、T=50、5 matched seeds，仅由 `UNRESOLVED[P1_API_ROBUSTNESS_SCALE_FREEZE]` 冻结。它是模型系统比较，不是 API 部署效应。
 - 主实验不微调权重；量化权重不得与 BF16 主矩阵混跑。
 
 ## 6. Gates、失败与停止

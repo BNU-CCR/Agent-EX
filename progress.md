@@ -82,3 +82,26 @@
 | 目标是什么？ | 建成以 Paper 1 为首个协议的长期复用实验平台 |
 | 我学到了什么？ | 见 `findings.md` |
 | 我做了什么？ | 见上方记录 |
+
+## 会话：2026-07-29
+
+### Phase 3A：协议、领域与运行证据基础
+- **状态：** complete
+- 执行的操作：
+  - 从 `c050655` WIP checkpoint 恢复，确认原 78 个失败同时来自旧 wheel 污染和待实现 release-hardening 测试。
+  - 修复 editable install 与 pytest 临时目录，建立普通 import、root/platform 双入口和隔离 wheel smoke。
+  - 完成协议/schema gate、decision value hash、human summary 同步和 Unicode placeholder 防绕过。
+  - 完成领域记录、分层运行身份、FrozenSchedule、RunManifest、恢复游标、证据图与严格 JSON round-trip。
+  - 经过多轮独立发布验证、边界审计和代码质量审查，逐项修复测试外绕过。
+- 验证结果：
+  - `353 passed`
+  - Ruff check/format、`pip check`、`git diff --check` 通过
+  - schema 镜像与17项依赖锁一致
+  - 最终三路独立审查均为 PASS，无 blocker/major
+- 边界：
+  - 未修改旧 pilots。
+  - 未运行 formal，未伪造审批记录。
+  - 未实现真实 model adapter、engine 或正式实验。
+- 下一步：
+  - Phase 4：population、persona、network/exposure 与 mock fixtures。
+  - formal-required 研究决策与 provider/runtime gate 继续保持 blocked。

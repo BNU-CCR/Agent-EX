@@ -29,8 +29,8 @@ where = ["src"]
 "agent_ex.schemas" = ["*.json"]
 
 [tool.pytest.ini_options]
-addopts = "--strict-config --strict-markers"
-pythonpath = ["src"]
+addopts = "--strict-config --strict-markers --basetemp=.pytest-tmp"
+cache_dir = ".pytest-tmp/cache"
 testpaths = ["tests"]
 
 [tool.ruff]

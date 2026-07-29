@@ -2,10 +2,25 @@
 status: active decision log
 authority: confirmed project decisions subordinate to the frozen machine protocol; run manifests are execution evidence only
 supersedes: scattered decision statements in README.md, design/ and Notion handoffs
-last-verified: 2026-07-16
+last-verified: 2026-07-29
 ---
 
 # 决策记录
+
+下列 fenced YAML 是 formal gate 唯一可读取的审批记录。当前机器协议仍为 draft，
+因此尚无已冻结字段记录；后续每条记录必须完整填写
+`decision_record_id`、UTC `approved_at`、`approvers`、`field_ids` 与
+`artifact_hashes`。`artifact_hashes` 必须逐一覆盖记录中的每个 `field_id`，其值是
+该决策 ID 在 schema 中标注字段的实际 JSON pointer 值所组成 canonical payload 的
+SHA-256；payload 是按键排序、无多余空白并以 UTF-8 编码的
+`{JSON pointer: actual value}` 映射。本页其余叙述仅保留研究决策语境，不能通过
+字符串命中充当审批。
+
+<!-- BEGIN DECISION RECORDS -->
+```yaml
+records: []
+```
+<!-- END DECISION RECORDS -->
 
 ## D-2026-07-14-01：Paper 1 聚焦矩阵
 
@@ -24,7 +39,7 @@ last-verified: 2026-07-16
 - 主模型使用 Qwen3-8B BF16、non-thinking，通过 vLLM 自部署，运行完整正式矩阵。
 - 固定精确模型 revision；其 hash 记为 `UNRESOLVED[P1_MODEL_REVISION]`，由 Phase 0B 实测后冻结。
 - Paper 1 主实验不微调权重；不把量化权重与 BF16 主矩阵混用。
-- API 仅运行预注册核心8 cells 的固定 snapshot 外部稳健性子集；cells 由 `UNRESOLVED[P1_API_ROBUSTNESS_CELLS]` 冻结，N/T/seeds 暂拟 N=200、T=50、5 matched seeds并由 `UNRESOLVED[P1_API_ROBUSTNESS_SCALE_FREEZE]` 冻结。
+- API 仅运行预注册的固定 snapshot 外部稳健性子集；推荐的核心8 cells 只是会审候选，不是 schema 常量。最终可从12个 canonical cell IDs 中审批1至12个不重复 cells，并由 `UNRESOLVED[P1_API_ROBUSTNESS_CELLS]` 冻结；N/T/seeds 暂拟 N=200、T=50、5 matched seeds并由 `UNRESOLVED[P1_API_ROBUSTNESS_SCALE_FREEZE]` 冻结。
 - API 与开放模型的差异只能解释为模型系统稳健性，不得解释为“API 部署效应”。
 
 **理由：** 固定权重、tokenizer、模板和推理栈提高百万级生成的可追溯性和可复现性；API 提供有限外部效度而不支配主检验。

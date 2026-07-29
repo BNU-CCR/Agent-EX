@@ -15,7 +15,7 @@ API 稳健性必须使用 `UNRESOLVED[P1_API_SNAPSHOT]` 的固定 snapshot；若
 
 ## 运行身份
 
-- `run_spec_hash`：规范化 protocol、run config、请求参数、模型身份、Git SHA 和环境 lock hash 的内容寻址。
+- `run_spec_hash`：规范化 protocol、run config、不可变 schedule hash、请求参数、模型身份、Git SHA 和环境 lock hash 的内容寻址。任何 schedule 坐标变化都必须改变 `run_spec_hash`。
 - `run_id`：`run_spec_hash + replicate_seed + launch_nonce`。
 - `event_id`：`run_id + round + agent_id`，作为逻辑事件幂等键。
 - `attempt_id`：`event_id + attempt_index`；重试追加而不覆盖。
@@ -39,3 +39,21 @@ manifest 至少记录 Git SHA、dirty 状态、Python minor、依赖 lock hash�
 ## Freeze 清单
 
 正式运行前必须冻结协议版本、12-cell schedule、20个候选 seed 的顺序、模型 revision、模板、生成参数、指标公式、质量阈值、盲态 SSR 程序、依赖锁、代码 SHA 和数据归档位置。
+
+## Schedule artifact 与 manifest 持久化边界
+
+不可变 schedule artifact 的 canonical JSON payload 为
+`{"version": 1, "slots": [{"round_index": <int>, "agent_id": <str>}, ...]}`。
+`schedule_hash` 是完整版本化 payload（包括 slot 顺序）的 canonical SHA-256。
+`FrozenSchedule.to_payload()` 与 `FrozenSchedule.from_payload()` 是公开的
+round-trip 边界。
+
+持久化 run manifest 不嵌入或递归复制运行时 `FrozenSchedule`。
+`RunManifest.to_payload()` 记录 `schedule_uri`、`schedule_hash` 和
+`schedule_count`；`RunManifest.from_payload(payload, schedule=...)` 要求调用方
+另行加载不可变 artifact，并重新核验 hash 与 count。`dataclasses.asdict()`
+不是持久化契约。
+
+恢复游标为 `{round_index, event_index}`，其中 `event_index` 是该轮下一个
+slot 的零基索引。已完成轮必须精确存在且全部为终态；游标存在时，下一轮
+已观测事件必须恰好等于 `event_index` 之前的有序 schedule 前缀。
