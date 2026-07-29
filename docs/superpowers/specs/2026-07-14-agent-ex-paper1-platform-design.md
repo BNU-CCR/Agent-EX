@@ -1,8 +1,11 @@
 # Agent-EX Paper 1 与长期实验平台设计规格
 
 **日期：** 2026-07-14
-**状态：** 已通过独立规格审阅，待用户确认
+**状态：** 历史平台规格；事件语义已由2026-07-29 Phase 4A完成规格修订
 **范围：** 项目知识归档、Paper 1 研究协议、长期复用实验平台
+
+> 本文的模块边界仍有效，但事件、曝光、记忆与恢复合同已由
+> `2026-07-29-paper1-phase4a-completion-design.md`取代；冲突时以后者为准。
 
 ## 1. 背景与目标
 
@@ -24,7 +27,7 @@ Agent-EX 已完成 pilot-1.0、pilot-2.0 和 pilot-3.0 三轮探索。现有工�
 - 冻结并索引 pilot-1.0/2.0/3.0；
 - 形成 Paper 1 正式协议；
 - 建立长期实验平台；
-- 实现 Paper 1 的人口、persona、网络/曝光、模型调用、同步演化、存储、验证和分析；
+- 实现 Paper 1 的人口、persona、网络/曝光、模型调用、串行事件演化、存储、验证和分析；
 - 先完成校准和有限规模 gate，再启动已固定 N=1000 正式矩阵。
 
 ### 2.2 非目标
@@ -167,8 +170,8 @@ platform/
 - `exposure.py`：谁实际看到谁，返回结构化 exposure record；
 - `prompts.py`：从协议和状态生成 prompt，并计算 prompt hash；
 - `models.py`：统一的 real/mock adapter、重试、限流和响应元数据；
-- `engine.py`：不可变快照、并发生成、同步提交；
-- `storage.py`：逐轮事件追加、checkpoint、幂等恢复、manifest；
+- `engine.py`：严格串行事件读取/提交、失败不变式和同事件恢复；不同run的并发由调度层负责；
+- `storage.py`：逐事件追加、分段/sweep checkpoint、幂等恢复、manifest；
 - `metrics.py`：唯一指标定义；
 - `validation.py`：运行前协议校验、运行后完整性校验；
 - `analysis.py`：seed-blocked 主分析、敏感性分析和图表数据。
@@ -182,23 +185,28 @@ Paper 1 协议
 → 机器配置校验
 → 人口与网络生成
 → run manifest
-→ 每轮不可变状态快照
-→ 每个 Agent 独立 exposure 与 RNG
+→ 冻结激活/发布 schedule
+→ 逐事件构造未读 exposure 与自身记忆
 → 模型生成和结构化解析
-→ 同步提交
+→ 私人状态/公开帖/游标原子提交
 → 事件追加与 checkpoint
 → 完整性验证
 → 分析数据集冻结
 → 统计分析与图表
 ```
 
-`event_id` 是逻辑事件和幂等写入的唯一键。恢复时按 `run_id` 查询所有非终态 `event_id`；已进入终态的事件不得重复调用模型或重复写入。
+`event_id` 是逻辑事件和幂等写入的唯一键。一个run内事件严格串行；恢复时按 `run_id`
+定位首个未成功事件（即`next_event_ordinal`）并验证连续成功前缀与状态hash，随后
+重放同一事件。已进入成功终态的事件
+不得重复调用模型或重复写入。完整事件合同以07-29 Phase 4A完成规格为准。
 
 运行与请求身份遵循以下契约：
 
 - `run_spec_hash`：对规范化后的 protocol、run config、模型请求参数、模型标识、代码 Git SHA 和环境 lock hash 做内容寻址；相同实验规范得到相同 hash；
 - `run_id`：`run_spec_hash + replicate_seed + launch_nonce` 的唯一实例标识；恢复同一实例沿用原 `run_id`，重跑则产生新 `launch_nonce`；
-- `event_id`：由 `run_id + round + agent_id` 派生，是逻辑生成事件和幂等写入键；
+- `event_ordinal`：run内从0开始连续递增的全局激活序号；有放回激活时同一Agent可在
+  同一sweep多次出现，`sweep_index`与`agent_id`都只是事件属性；
+- `event_id`：由`run_id + event_ordinal`派生，是逻辑生成事件和幂等写入键；
 - `attempt_id`：由 `event_id + attempt_index` 派生；每次重试均新增 attempt，不覆盖先前请求；
 - 每个 attempt 保存实际 exposure record、渲染后 prompt、请求参数、provider request id、原始响应、解析结果、错误、token usage、时间戳及各自内容 hash；
 - manifest 中的 prompt template hash 用于标识模板族，逐请求 rendered prompt hash 记录在 attempt；二者不得混用。
@@ -207,27 +215,37 @@ Paper 1 协议
 
 - 区分认证/参数错误、限流、暂时性服务器错误和解析错误；
 - 仅对可恢复错误使用指数退避和 jitter；`Retry-After` 仅在已验证 provider 确实返回且语义明确时使用，否则采用由 `UNRESOLVED[P1_TIMEOUT_RETRY]` 冻结的退避规则；
-- 单 Agent 最终失败必须记录失败事件，不得无日志地沿用旧分数；
-- 是否允许 fallback、重试后排除或保持原值由协议明确；
+- 单个事件重试耗尽必须记录失败attempt和event状态，并立即停止run，不得无日志地
+  沿用旧分数或继续后续状态链；
+- Paper 1主事件链不允许fallback、插补、跳过或以旧值继续；未来若批准例外，只能
+  作为另行版本化的分析/敏感性路径，不得伪装成成功状态提交；
 - 每轮或更细粒度地追加写入并 flush；
 - run manifest 记录 expected/actual count、最后完成轮次和失败清单；
 - 分析入口拒绝不完整、协议不匹配或 hash 不一致的 run；
 - 同秒重复启动不得覆盖已有 run。
 
-每个逻辑事件必须进入以下终态之一：
+主状态链中的逻辑事件只有两类运行结果：
 
-- `succeeded`：得到有效结构化结果；
-- `failed`：重试耗尽且无协议允许的替代结果；
-- `excluded`：按预注册规则从目标分析集排除，但保留全部事件；
-- `imputed`：仅在协议预先允许时生成插补值，并保留原失败状态与插补方法；
-- `fallback`：仅在协议预先允许时由指定备用模型/规则得到结果，并记录来源。
+- `succeeded`：得到有效结构化结果并原子提交状态；
+- `failed`：重试耗尽，未提交任何研究状态，run停在该event。
 
-`complete` 只表示所有预期事件均达到某个终态，不等于可进入主分析。manifest 分别记录 expected、succeeded、failed、excluded、imputed 和 fallback 数量。默认 Paper 1 主分析仅接受 `failed=0`、`imputed=0`、`fallback=0` 且排除比例未超过协议阈值的 complete run；其他 complete run 只能进入协议明确指定的敏感性分析。仍有非终态事件的 run 为 `incomplete`，分析入口一律拒绝。恢复只继续非终态事件。
+只有全部expected events均`succeeded`的run才是`complete`并可进入主分析。含failed
+或非终态事件的run均为`incomplete/failed`，分析入口拒绝；恢复只从首个未成功事件
+继续。`excluded`是对已成功事件或完整run附加的分析层标记，不是可继续状态链的事件
+终态；`imputed/fallback`保留为平台未来研究的扩展能力，但Paper 1主路径禁用，且不得
+计入成功事件数。
 
 ## 9. 随机性与可复现性
 
-- 人口、网络、exposure 和模型采样使用分离的 seed namespace；
-- 为每个 `(base_seed, round, agent_id, component)` 派生独立 RNG；
+- population、initial stance、initial reason、WS graph、node mapping、shadow graph、
+  attention weights、expression propensity、activation sequence、publish flags、
+  round-0 tiebreak、message slots和model sampling各用独立seed namespace；
+- RNG键由component作用域注册表决定：跨cell共用的activation、publish与message-slot
+  制品使用`(matched_seed, common_scope, event_ordinal, component)`；仅cell特异过程
+  才包含cell identity。不得强制所有component包含run/cell identity，也不得以
+  `round + agent_id`作唯一键；
+- 模型采样seed是否跨12 cells使用common-random-number配对，以及同一event的重试
+  attempt是否复用采样seed，须由显式未决字段冻结；实现不得自行选择；
 - API 若支持生成 seed，记录并传入；不支持时明确标记为非确定性重复；
 - manifest 至少记录：Git SHA、dirty 状态、协议版本、配置 hash、prompt hash、模型/provider 返回身份、参数、request id、finish reason、token usage、时间戳和依赖环境；
 - 商用滚动模型别名不能被描述为严格可复现模型版本；
@@ -266,9 +284,10 @@ Paper 1 协议
 
 - 任意 N 人口生成且满足平衡约束；
 - persona 因素只改变允许改变的 prompt 部分；
-- 同步更新中同轮 Agent 不读取新状态；
+- 有放回激活下`event_ordinal/event_id`唯一，同一Agent同一sweep重复激活不碰撞；
+- 后续事件读取前一成功事件已提交状态，失败事件不改变状态、游标或RNG进度；
 - exposure record 与实际 prompt 输入一致；
-- 每 Agent/round RNG 稳定且互不污染；
+- 每namespace/event-ordinal RNG稳定且互不污染；
 - parser 对合法、多个标签、缺失标签和越界值的行为；
 - 可恢复/不可恢复错误分类；
 - checkpoint 中断与幂等恢复；
@@ -303,7 +322,8 @@ Paper 1 协议
 
 ### Phase D：迁移与校准
 
-复用 pilot 中经过验证的同步更新骨架和 API adapter，但不复制旧双实现；完成 mock 规模测试、pilot 行为方向复现和 API 成本校准。
+只复用pilot中可验证的API adapter、记录结构与回归fixture，不复用同步更新骨架；
+完成串行事件不变量、mock规模测试、pilot行为方向对照和API成本校准。
 
 ### Phase E：Paper 1 正式实验
 

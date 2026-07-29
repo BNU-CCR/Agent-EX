@@ -80,7 +80,7 @@ Agent-EX/
 │   │   ├── agent.py               # Agent 类与 Prompt（weak / lifelong strong）
 │   │   ├── network.py             # BA / WS 网络构建
 │   │   ├── llm_client.py          # DashScope API 客户端
-│   │   ├── simulator.py           # 同步更新模拟器
+│   │   ├── simulator.py           # 事件过程模拟器（模块8规格修订后实现）
 │   │   ├── metrics.py             # 指标计算
 │   │   └── config.py              # 配置加载
 │   ├── run.ipynb                  # 历史 pilot notebook（Cell 0-15）
@@ -211,7 +211,7 @@ run_piao.bat
 ### 课程论文后：正式 Paper 1
 - [ ] 完成 Phase 0B 模型、API 与运行时 smoke，冻结仍未决的精确版本和生成参数
 - [x] 完成 `platform/` Phase 3A 协议、领域记录、运行身份、FrozenSchedule、manifest 与证据图基础
-- [ ] 实现 population、persona、network/exposure、prompt、mock adapter 与同步 engine
+- [ ] 实现 population、persona、network/exposure、prompt、mock adapter 与事件过程 engine
 - [ ] 依次通过 mock、真实模型校准和 N=200/500/1000 有限规模 gate
 - [ ] 运行 N=1000、T=50、12 cells、10→20 matched-seed 正式矩阵
 - [ ] 冻结分析数据后执行预注册主分析与 API 外部稳健性子集

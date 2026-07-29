@@ -49,6 +49,11 @@ supersedes: pilot-3.0 four-condition design for future formal Paper 1 runs; does
 last-verified: 2026-07-29
 ---
 
+> **2026-07-29修订阻断：** Phase 4A过程设计已由`D-2026-07-29-08`至`19`批准，
+> 本文人类可读部分已按事件级语义修订，但当前generated summary/schema尚未扩展相应
+> 字段。因此本草案仍不代表可执行协议，formal run必须继续fail closed；不得手工修改
+> generated summary冒充机器协议已同步。
+
 # Paper 1 研究协议草案
 
 **Protocol ID:** `P1-LLM-OPINION-DYNAMICS`
@@ -73,7 +78,7 @@ SHA-256。全文子串、伪 approver 或未绑定字段均不构成审批。for
 
 ## 1. 研究对象与边界
 
-研究异质初始立场的 LLM-agent 在固定讨论网络中经历多轮局部信息暴露、理由生成与同步立场更新后形成的意见形态。实验不直接估计真实公众或真实平台部署 AI Agent 的平均社会效应，也不研究关系拓扑演化。
+研究异质初始立场的 LLM-agent 在固定讨论网络中经历多轮局部信息暴露、理由生成与异质加权随机顺序更新后形成的意见形态。实验不直接估计真实公众或真实平台部署 AI Agent 的平均社会效应，也不研究关系拓扑演化。
 
 Paper 1 主实验排除 RLHF/abliterated、权重微调、真人—AI 混合网络、推荐算法、动态重连、多模型/多语言全因子，以及 pilot 的 weak/lifelong 复合 prompt。
 
@@ -102,9 +107,9 @@ Identity 只能增删人口学和议题相关经历块，不能泄露方向性�
 
 ## 3. 共享对象与更新合同
 
-同一 matched seed 的12个 cells 共享人口、身份材料、初始立场与理由、WS 图、激活顺序、social exposure 目标数量、模型版本和生成参数。每轮只读取不可变上一轮快照；所有 Agent 完成后同步提交。
+同一 matched seed 的12个 cells 共享人口、身份材料、初始立场与理由、WS图和逐节点度数保持的shadow graph、注意/表达参数、完整激活与发布日程、模型版本和生成参数。一个run内事件严格串行，每个成功事件读取前一成功提交后的状态并立即提交；不同run可并行。
 
-`self_history_only` 不接收其他 Agent 信息。`shuffled_social` 从同 seed 的 WS 边表预生成 degree-matched 映射，保持接收数量，禁止自环和真实邻边，并只使用本 cell 上一轮消息。`ws_neighbors` 只读取固定 WS 一阶邻居上一轮消息。所有映射和实际 exposure 必须保存和验证。
+每个Agent在round 0均有一条公开初始帖，结构性潜水者只在其后保持沉默。`self_history_only`不接收其他Agent信息；`shuffled_social`只从固定shadow graph邻居读取，`ws_neighbors`只从固定WS一阶邻居读取。每次激活最多读取游标后的最新B条新公开帖，首激活可读取round-0帖，不足不回填、过量旧帖过期、允许同一发送者多帖；入选消息再按预生成随机槽位呈现。模型自身记忆只含最近K次成功私人更新。失败事件不改变任何研究状态或游标，重试/恢复必须重放同一事件。所有schedule、映射、实际exposure和原始attempt必须保存和验证。
 
 ## 4. 结果与 estimand
 
@@ -131,7 +136,11 @@ Phase 0A 必须证明 identity 只改变身份信息、continuity 提高连贯�
 
 Phase 0B 必须完成 mock N=20/100/1000、真实 N=20/50/100、形态 dry run、吞吐/成本/失败率和 primary matched contrast 方差诊断。有限规模与正式 gate 仍需冻结 `UNRESOLVED[P1_GATE_DELTA_STABILITY]`、`UNRESOLVED[P1_GATE_FAILURE_MAX]`、`UNRESOLVED[P1_GATE_THROUGHPUT_MIN]`、`UNRESOLVED[P1_GATE_MEMORY_MAX]` 和 `UNRESOLVED[P1_GATE_DURATION_MAX]`。
 
-每个预期事件必须进入 succeeded/failed/excluded/imputed/fallback 之一；所有原始 attempt 均保留。默认主分析要求 complete 且 `failed=0, imputed=0, fallback=0`；排除阈值与例外为 `UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]`。未达 gate 即停止，不得用结果方向决定继续、删 seed 或改协议。
+每个预期事件只有成功提交才推进主状态链；重试耗尽则记录failed attempt/event并立即
+停止run，且不改变状态或游标。只有所有预期事件均succeeded的complete run可进入主
+分析。`excluded`只能是对成功事件或完整run的分析层标记，不是继续状态链的替代终态；
+Paper 1主路径禁止imputed/fallback。任何例外必须由
+`UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]`另行冻结，不得用结果方向决定继续、删seed或改协议。
 
 ## 7. 推断与证据边界
 

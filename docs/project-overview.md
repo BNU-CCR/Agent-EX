@@ -27,7 +27,8 @@ Agent-EX 研究 LLM-agent 在多轮在线讨论中的意见与理由演化。现
 - 正式矩阵：N=1000、T=50、12 cells、10 matched seeds，按一次盲态 nuisance-variance 重估最多扩至20个。
 - 主模型路线：Qwen3-8B BF16、non-thinking、固定 revision、自部署 vLLM；API 只作外部稳健性子集。
 
-协议细节见 `docs/paper1-protocol.md`，未决参数见 `docs/research-qa.md`。本页不复制或覆盖协议。
+协议细节见 `docs/paper1-protocol.md`，未决参数见 `docs/research-qa.md`，研究选择的证据与
+修订理由见 `docs/paper1-design-rationale.md`。本页不复制或覆盖协议。
 
 ## 已有证据的边界
 

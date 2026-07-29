@@ -16,9 +16,9 @@ last-verified: 2026-07-29
 
 | ID | 问题 | 候选 / 推荐 | 决策者 | 最迟 gate | Schema paths |
 |---|---|---|---|---|---|
-| P1_TOPIC_PRIMARY | 主议题与单一态度构念 | AI劳动议题；推荐把预测判断与规范支持二选一 | 用户+方法会审 | Phase 0A 前 | topic.id, topic.statement, topic.statement_sha256, stance.construct |
-| P1_STANCE_SCALE | 立场量表 | Likert/连续刻度；推荐先做认知访谈式 prompt 校准 | 用户+方法会审 | Phase 0A 前 | stance.scale |
-| P1_INITIAL_GROUP_CUTS | 初始组切点 | 三组/分位组；推荐保证预注册且每组足量 | 方法会审 | Phase 0B 前 | groups.cuts |
+| P1_TOPIC_PRIMARY | 主议题与单一态度构念 | 已确认延迟退休、转基因食品、AI就业替代三包全部进入Phase 0 probe；若多个通过，优先级为延迟退休>转基因>AI就业，主议题取最高优先通过者，其余通过者按预注册预算进入稳健性；最终机器原文与hash仍须probe冻结，见`D-2026-07-29-02`、`D-2026-07-29-15`、`DR-P1-045`至`DR-P1-047`、`DR-P1-084` | 用户+方法会审 | Phase 0A 前 | topic.id, topic.statement, topic.statement_sha256, stance.construct |
+| P1_STANCE_SCALE | 立场量表 | 已确认首选1–7全标签有序量表、真实中点及独立1–5审计型confidence；须按`DR-P1-048`与0–10挑战者及字段顺序一起probe后冻结实际机器值 | 用户+方法会审 | Phase 0A 前 | stance.scale |
+| P1_INITIAL_GROUP_CUTS | 初始组切点 | 已确认按round 0固定为1–3/4/5–7三组，不按终点重分；见`D-2026-07-29-05`、`DR-P1-057` | 用户+方法会审 | Phase 4 前 | groups.cuts |
 | P1_ENDPOINT_TSTAR | primary 终点 T* | T=50 内预注册终点；不自动等同最后一轮 | 用户+方法会审 | Phase 0B 前 | outcomes.primary.t_star |
 | P1_LOG_EPSILON | log 比值 ε | 数值稳定常数；推荐用合成 fixture 做敏感性检查 | 方法会审 | Phase 0B 前 | outcomes.primary.epsilon |
 | P1_BW_FORMULA | B/W 精确公式 | 总体加权/ANOVA 分解；推荐满足可测试分解恒等式 | 方法会审 | Phase 0B 前 | metrics.variance_components |
@@ -29,34 +29,40 @@ last-verified: 2026-07-29
 | P1_SHAPE_THRESHOLDS | 形态阈值 | 均质化/漂移/极化/双层/停滞阈值 | 方法会审 | Phase 0B 前 | shapes.thresholds |
 | P1_SHAPE_WINDOW | 连续窗口 | K轮；用合成轨迹校准 | 方法会审 | Phase 0B 前 | shapes.window |
 | P1_SHAPE_SENSITIVITY | 敏感性区间 | 预注册上下界 | 方法会审 | formal freeze | shapes.sensitivity |
-| P1_CONTINUITY_MC_SCORING | 连续性 manipulation check | 人工盲评/模型评审/规则；推荐双方法一致性 | 用户+方法会审 | Phase 0A 前 | gates.continuity.scoring |
-| P1_CONTINUITY_LOCK_THRESHOLD | 锁死门槛 | 近零变化率阈值 | 方法会审 | Phase 0A 前 | gates.continuity.lock_max |
-| P1_REFUSAL_THRESHOLD | 拒答门槛 | 最大率 | 方法+运行时会审 | Phase 0A 前 | gates.quality.refusal_max |
-| P1_PARSE_FAILURE_THRESHOLD | 解析失败门槛 | 最大率 | 方法+运行时会审 | Phase 0A 前 | gates.quality.parse_failure_max |
+| P1_CONTINUITY_MC_SCORING | 连续性 manipulation check | 已确认采用规则+独立模型judge+分层盲态人工编码，平衡“合理保持/充分信息后改变/信息不足”情境；精确量表与阈值待Phase 0冻结，见`D-2026-07-29-06`、`DR-P1-064` | 用户+方法会审 | Phase 0A 前 | gates.continuity.scoring |
+| P1_CONTINUITY_LOCK_THRESHOLD | 锁死门槛 | 已确认C1须提高历史解释连贯性但在强而非欺骗性反向信息下仍能可解释改变；精确上限保持`UNRESOLVED`，见`D-2026-07-29-06`、`DR-P1-063`、`DR-P1-064` | 方法会审 | Phase 0A 前 | gates.continuity.lock_max |
+| P1_REFUSAL_THRESHOLD | 拒答门槛 | Phase 0题干probe已确认实质拒答率不高于1%；formal runtime门槛和canonical值仍须冻结 | 方法+运行时会审 | Phase 0A 前 | gates.quality.refusal_max |
+| P1_PARSE_FAILURE_THRESHOLD | 解析失败门槛 | Phase 0题干probe已确认至多一次格式重试后有效解析率不低于99%；formal runtime门槛和canonical值仍须冻结 | 方法+运行时会审 | Phase 0A 前 | gates.quality.parse_failure_max |
 | P1_PRIMARY_INFERENCE | 主对比推断 | 配对单样本对比/置换/层级模型；推荐与 matched-seed 设计一致 | 方法会审 | analysis freeze | analysis.primary_test |
 
 ## 人口、网络与暴露
 
 | ID | 问题 | 候选 / 推荐 | 决策者 | 最迟 gate | Schema paths |
 |---|---|---|---|---|---|
-| P1_POPULATION_SOURCE | 人口来源 | 合成人口/调查边际；推荐可审计且无立场泄漏 | 用户+方法会审 | Phase 4 前 | population.source |
-| P1_POPULATION_FIELDS | 身份字段 | 人口学与议题经历清单 | 用户+方法会审 | Phase 4 前 | population.fields |
-| P1_POPULATION_BALANCE | 联合/边际平衡 | 独立/配额/联合分布 | 方法会审 | Phase 4 前 | population.balance |
-| P1_POPULATION_EXACT_N | 恰好 N 的生成规则 | 配额余数/受控抽样；推荐确定性算法 | 方法+实现会审 | Phase 4 前 | population.exact_n |
-| P1_INITIAL_STANCE_GENERATOR | 初始立场生成 | 固定分布/外部数据/模型生成 | 用户+方法会审 | Phase 4 前 | initialization.stance |
-| P1_INITIAL_REASON_SOURCE | 初始理由来源 | 模板/模型/语料；推荐跨 cell 完全匹配 | 用户+方法会审 | Phase 4 前 | initialization.reason |
-| P1_PERSONA_TEMPLATES | 四个 persona 模板制品 | identity×continuity 四组合；只登记稳定 template ID 与 SHA-256，不在协议中保存自由文本 | 用户+方法会审 | Phase 0A 前 | persona.identity_absent_continuity_absent.template_id, persona.identity_absent_continuity_absent.template_sha256, persona.identity_absent_continuity_present.template_id, persona.identity_absent_continuity_present.template_sha256, persona.identity_present_continuity_absent.template_id, persona.identity_present_continuity_absent.template_sha256, persona.identity_present_continuity_present.template_id, persona.identity_present_continuity_present.template_sha256 |
-| P1_MIN_GROUP_SIZE | 最小组样本 | 绝对数/比例 | 方法会审 | Phase 4 前 | groups.min_size |
-| P1_WS_K | WS 邻居数 k | Phase 0 候选网格；不沿用 pilot 默认 | 方法会审 | Phase 4 前 | network.ws.k |
-| P1_WS_P | WS 重连概率 p | Phase 0 候选网格；不沿用 pilot 冲突值 | 方法会审 | Phase 4 前 | network.ws.p |
-| P1_GRAPH_DIRECTION | 图方向 | 无向/有向；推荐与暴露语义一致 | 方法会审 | Phase 4 前 | network.directed |
-| P1_GRAPH_CONNECTIVITY | 连通要求 | connected/giant component | 方法会审 | Phase 4 前 | network.connectivity |
-| P1_INVALID_GRAPH_RULE | 非法参数/图处理 | 运行前 fail；推荐不静默修复 | 实现+方法会审 | Phase 4 前 | network.on_invalid |
-| P1_ACTIVATION_MODE | 激活方式 | 全体同步/子集同步 | 用户+方法会审 | Phase 4 前 | dynamics.activation_mode |
-| P1_ACTIVATION_COUNT | 每轮激活数 | N/固定数/比例 | 方法会审 | Phase 4 前 | dynamics.activation_count |
-| P1_MAX_NEIGHBORS | 最大邻居输入数 | 全邻居/抽样上限 | 方法+成本会审 | Phase 4 前 | exposure.max_neighbors |
-| P1_MEMORY_WINDOW | 历史窗口 | 全历史/固定K轮窗口/摘要 | 用户+方法会审 | Phase 4 前 | memory.window |
-| P1_SOCIAL_EXPOSURE_COUNT | 社会消息数 | degree/固定上限；必须匹配 E1/E2 | 方法会审 | Phase 4 前 | exposure.social_count |
+| P1_POPULATION_SOURCE | 人口来源 | 已确认目标总体为中国大陆18岁以上、过去半年上网的家庭/社区居民，并采用NBS2025+Census2020+CNNIC57+CFPS2022分层来源；实际文件版本、筛选变量和hash待冻结，见`D-2026-07-29-03`、`DR-P1-049`至`DR-P1-051` | 方法会审+机器冻结 | Phase 4 前 | population.source |
+| P1_POPULATION_FIELDS | 身份字段 | 已确认采用校准、身份可见、分析审计、议题扩展四类用途；共同身份卡限年龄段、调查记录性别、教育、当前城乡、主要活动及就业者宽职业组；精确crosswalk、机器标签和模板仍待冻结，见`D-2026-07-29-04`、`DR-P1-003`、`DR-P1-052`至`DR-P1-055` | 方法会审+机器冻结 | Phase 4 前 | population.fields |
+| P1_POPULATION_BALANCE | 联合/边际平衡 | 已确认加权CFPS2022成年网民作首选联合供体，以2025总体边际、2020详细交叉结构和CNNIC网民边际透明校准；精确字段/约束/容差仍未决，见`D-2026-07-29-03`、`DR-P1-050`、`DR-P1-051` | 方法会审 | Phase 4 前 | population.balance |
+| P1_POPULATION_EXACT_N | 恰好 N 的生成规则 | 已确认以校准权重为输入的TRS整数化生成恰好N人；每个matched seed重新抽取一份人口，同seed的12 cells逐Agent共用，seed间不得复用同一人口；精确排序/tie-break/RNG与输入制品待机器冻结，见`D-2026-07-29-16`、`DR-P1-085` | 方法+实现会审 | Phase 4 前 | population.exact_n |
+| P1_INITIAL_STANCE_GENERATOR | 初始立场生成 | 已确认采用七档人数`[50,100,200,300,200,100,50]`的受控对称单峰分布；人口—立场约束正交，同matched seed跨12 cells逐Agent匹配；精确算法/容差/RNG待机器冻结，见`D-2026-07-29-05`、`DR-P1-056`、`DR-P1-057` | 用户+方法会审 | Phase 4 前 | initialization.stance |
+| P1_INITIAL_REASON_SOURCE | 初始理由来源 | 已确认采用“来源支持的论据家族+冻结模型受控改写+机器/人工审计”的离线理由库；每Agent一条round-0理由，同matched seed跨cell完全匹配；理由制品和阈值待机器冻结，见`D-2026-07-29-05`、`DR-P1-058`至`DR-P1-060` | 用户+方法会审 | Phase 4 前 | initialization.reason |
+| P1_PERSONA_TEMPLATES | 四个 persona 模板制品 | 已确认由共同骨架确定性插入最小identity块和非锁死continuity块；absent条件真省略，不使用中立Persona/placebo；模板原文、顺序挑战、ID与hash经Phase 0冻结，见`D-2026-07-29-06`、`DR-P1-061`至`DR-P1-065` | 用户+方法会审 | Phase 0A 前 | persona.identity_absent_continuity_absent.template_id, persona.identity_absent_continuity_absent.template_sha256, persona.identity_absent_continuity_present.template_id, persona.identity_absent_continuity_present.template_sha256, persona.identity_present_continuity_absent.template_id, persona.identity_present_continuity_absent.template_sha256, persona.identity_present_continuity_present.template_id, persona.identity_present_continuity_present.template_sha256 |
+| P1_MIN_GROUP_SIZE | 最小组样本 | 已确认主分布三组为350/300/350并以300作运行前硬门槛；分布改变时必须联动重审，见`D-2026-07-29-05`、`DR-P1-057` | 用户+方法会审 | Phase 4 前 | groups.min_size |
+| P1_WS_K | WS 邻居数 k | 已确认N=1000首选`k=10`，以`{6,10,20}`做不调用LLM的结构挑战；精确值经锁定NetworkX和正式seeds复算后冻结，见`D-2026-07-29-07`、`DR-P1-067`、`DR-P1-070` | 用户+方法会审 | Phase 4 前 | network.ws.k |
+| P1_WS_P | WS 重连概率 p | 已确认首选`p=0.05`，以`{.02,.05,.10}`做纯结构挑战；不得按意见结果方向选值，见`D-2026-07-29-07`、`DR-P1-068`、`DR-P1-070` | 用户+方法会审 | Phase 4 前 | network.ws.p |
+| P1_GRAPH_DIRECTION | 图方向 | 已确认标准WS无向简单图，边解释为稳定的相互可见接触，不代表真实关注关系，见`D-2026-07-29-07`、`DR-P1-066` | 用户+方法会审 | Phase 4 前 | network.directed |
+| P1_GRAPH_CONNECTIVITY | 连通要求 | 已确认N个节点全连通，不采用giant component加小分量，见`D-2026-07-29-07`、`DR-P1-066`、`DR-P1-069` | 用户+方法会审 | Phase 4 前 | network.connectivity |
+| P1_INVALID_GRAPH_RULE | 非法参数/图处理 | 已确认运行时`fail`且不得修边/取巨分量/重抽；冻结前只按预注册确定性候选seed序列筛选并保存失败attempt，见`D-2026-07-29-07`、`DR-P1-069` | 用户+实现+方法会审 | Phase 4 前 | network.on_invalid |
+| P1_ACTIVATION_MODE | 激活方式 | 已确认固定WS上的异质加权随机顺序激活；事件严格串行读取前一成功提交状态，失败事件不得改变状态或游标，恢复时重放同一事件；当前schema枚举不兼容，正式修订前继续fail closed，见`D-2026-07-29-08`、`D-2026-07-29-18`、`DR-P1-071`、`DR-P1-087` | 用户+方法会审 | Phase 4 前 | dynamics.activation_mode |
+| P1_ACTIVATION_COUNT | 每轮激活数 | 已确认T=50 sweeps、每sweep当前N次有放回事件；正式N=1000即每run 50,000事件，见`D-2026-07-29-08`、`DR-P1-072` | 方法会审 | Phase 4 前 | dynamics.activation_count |
+| P1_ACTIVITY_WEIGHT_DISTRIBUTION | 长期活跃权重分布 | 已确认主模型为正截断对数正态并归一化`sum(w_i)=N`；截断Pareto为重尾敏感性、等权为机制基线；精确参数待Phase 0冻结，见`D-2026-07-29-12`、`DR-P1-081` | 用户+方法会审 | Phase 0 前 | 待schema扩展 |
+| P1_ACTIVITY_CALIBRATION_TARGETS | 活跃过程校准目标 | 已确认按权重/实现激活Gini、top 1%/10%份额、最大个体份额、有限T零激活比例、跨sweep波动和跨N稳定性做非结果导向校准；目标区间/容差/算法待冻结，见`D-2026-07-29-12`、`DR-P1-081` | 方法+成本会审 | Phase 0 前 | 待schema扩展 |
+| P1_PRIVATE_UPDATE_SEMANTICS | 私人更新与公开表达关系 | 已确认每次激活先更新私人状态，是否替换最近公开帖子由预生成`publish_flag`决定；社会曝光只读公开帖子，见`D-2026-07-29-09`、`DR-P1-078` | 用户+方法会审 | Phase 4 前 | 待schema扩展 |
+| P1_PUBLISH_PROCESS | 公开表达过程 | 已确认hurdle–Beta结构：潜水者后续q=0，非潜水者q来自Beta；精确潜水比例/Beta参数待校准，见`D-2026-07-29-11`、`DR-P1-080` | 用户+方法会审 | Phase 0 前 | 待schema扩展 |
+| P1_ATTENTION_EXPRESSION_CORRELATION | 注意与表达倾向关系 | 已确认主模型独立；正相关为预注册敏感性，具体构造/强度待冻结，见`D-2026-07-29-11`、`DR-P1-080` | 用户+方法会审 | Phase 0 前 | 待schema扩展 |
+| P1_PRIVATE_PUBLIC_OUTCOME_PRIORITY | 私人/公开分布的分析排序 | 已确认私人状态为唯一primary；公开存量、公开流量和表达偏差为强制预注册secondary，见`D-2026-07-29-10`、`DR-P1-079` | 用户+统计会审 | Phase 0 前 | 待analysis schema扩展 |
+| P1_MAX_NEIGHBORS | feed消息容量B（稳定旧ID，非邻居/来源数量） | 已确认有限未读feed及Phase 0候选程序：主候选B=6、挑战`{4,6,8}`；B限制消息条数且允许同一发送者多帖，不限制邻居/来源数。精确B与制品hash须在Phase 0B冻结；Phase 4B将schema路径迁移为`exposure.feed_message_capacity`并保留旧ID作provenance，见`D-2026-07-29-14`、`D-2026-07-29-19`、`DR-P1-083`、`DR-P1-088` | 方法+成本会审 | Phase 0B 结束 | exposure.feed_message_capacity（待schema迁移） |
+| P1_MEMORY_WINDOW | 私人更新记忆窗口K | 已确认模型只见最近K次成功私人更新，主候选K=3、挑战`{1,3,5}`；round-0不永久保留且不使用LLM摘要，完整历史只进入证据链；精确K与制品hash须在Phase 0B冻结，见`D-2026-07-29-17`、`DR-P1-086` | 用户+方法会审 | Phase 0B 结束 | memory.window |
+| P1_SOCIAL_EXPOSURE_COUNT | 社会消息数 | 已确认E1固定shadow graph、E2原WS；首激活可读取邻居round-0公开帖，之后只读游标后最新至多B条；允许同一发送者多帖，不足不回填、超量过期、空feed显式记录，见`D-2026-07-29-13`至`15`、`D-2026-07-29-19`、`DR-P1-082`至`DR-P1-084`、`DR-P1-088` | 方法会审 | Phase 4 前 | exposure.social_count |
 
 ## 模型、API 与运行时
 
@@ -68,7 +74,8 @@ last-verified: 2026-07-29
 | P1_TOP_P | top_p | Phase 0 候选；须验证实际传递 | 用户+方法会审 | Phase 0A 前 | generation.top_p |
 | P1_MAX_TOKENS | max tokens | 按结构化理由长度校准 | 方法+成本会审 | Phase 0B 前 | generation.max_tokens |
 | P1_REQUEST_SEED | 模型采样 seed | vLLM 支持性实测；不支持则标记非确定 | 运行时会审 | adapter 实现前 | generation.seed |
-| P1_TIMEOUT_RETRY | timeout/retry | 按错误分类和 Retry-After 冻结 | 运行时会审 | adapter 实现前 | runtime.timeout, runtime.retry |
+| P1_MODEL_SEED_PAIRING | 模型采样seed的cell/attempt配对语义 | 明确决定是否在同matched seed的12 cells按event ordinal配对模型采样seed，以及同一event重试是否复用seed；未冻结前实现必须fail closed，不得隐式继承旧`round+agent`键 | 用户+方法+运行时会审 | adapter 实现前 | generation.seed_pairing（待schema扩展） |
+| P1_TIMEOUT_RETRY | timeout/retry | 已确认失败事件不提交私人状态、公开帖、游标或RNG进度；重试与恢复必须保持相同event identity和预生成输入。精确timeout、错误分类、次数与Retry-After仍待运行时冻结，见`D-2026-07-29-18`、`DR-P1-087` | 运行时会审 | adapter 实现前 | runtime.timeout, runtime.retry |
 | P1_CONCURRENCY_BUDGET | 并发/显存/速率预算 | 由真实 benchmark 冻结 | 运行时+成本会审 | Phase 0B 结束 | runtime.concurrency, runtime.rate_budget |
 | P1_API_PROVIDER | API 稳健性提供方 | DashScope/其他；推荐固定 snapshot 可用者 | 用户+方法会审 | 稳健性预注册前 | robustness.api.provider |
 | P1_API_SNAPSHOT | API 精确 snapshot | 禁止 rolling alias | 用户+运行时会审 | 稳健性预注册前 | robustness.api.model_snapshot |
