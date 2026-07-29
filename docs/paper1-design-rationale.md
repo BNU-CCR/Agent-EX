@@ -2946,3 +2946,39 @@ Phase 4A具有严格的工程协议，但若把人口对齐的LLM Agent称为真
 38. Mehlhaff, I. D. (2024). A Group-Based Approach to Measuring Polarization.
     *American Political Science Review, 118*(3), 1518–1526.
     https://doi.org/10.1017/S0003055423001041
+
+## DR-P1-090：Phase 4B的mock边界、断代迁移与事务存储
+
+**日期：** 2026-07-29
+
+### 判断对象
+
+Phase 4B需要在尚未冻结真实模型revision、运行预算和若干研究参数时实现完整平台。
+本卡只判断实施边界和持久化架构，不判断意见动力学机制的经验真实性。
+
+### 工程依据
+
+1. **mock-only边界。** 确定性mock可以验证schema、事件身份、状态变异、checkpoint、
+   恢复和证据hash，而不把真实模型调用误写成正式实验。真实adapter需要另行冻结模型
+   与runtime制品，因此不应成为4B平台正确性的前置条件。
+2. **断代迁移。** 07-29规格已明确事件严格串行读取前一成功提交状态；继续暴露
+   synchronous或`round+agent`接口会使调用者能够生成协议禁止的执行轨迹。这里删除
+   兼容层属于纠正失效契约，不是扩张研究机制。
+3. **每run SQLite。** 单run内事件顺序严格且需原子提交，SQLite事务可把event、
+   state、cursor和checkpoint作为同一故障边界；每run独立数据库避免跨run锁竞争和
+   污染。不可变导出、manifest与hash用于证据发布，运行库本身不进入Git。
+4. **协作门控。** 4B-0至4B-9按书面计划连续执行；只在需要新增研究参数或改变研究
+   范围时停顿。此规则减少工程微决策往返，不授权跳过TDD、验证或formal fail-closed。
+
+### 文献边界
+
+本卡不新增研究文献，也不声称SQLite是传播仿真的理论要求。激活、表达、feed与恢复
+语义的研究依据仍分别记录于`DR-P1-071`至`088`；方法论与主张边界记录于
+`DR-P1-089`。事务存储的选择是可审计实现判断，必须由故障注入、恢复等价性和证据
+完整性测试验证。
+
+### 最终建议
+
+采用“确定性mock完成4B、删除旧同步兼容、每run SQLite事务库、不可变证据导出”的
+实施包，并按4B计划连续推进。任何fixture值不得进入formal协议，任何manifest不得
+覆盖冻结规范。

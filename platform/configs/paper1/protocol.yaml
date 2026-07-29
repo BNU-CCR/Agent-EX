@@ -27,13 +27,17 @@ groups:
 
 outcomes:
   primary:
-    id: P1_PRIMARY_DELTA_LOG_BW
+    id: UNRESOLVED[P1_PRIMARY_OUTCOME]
+    definition: UNRESOLVED[P1_PRIMARY_OUTCOME]
+  group_structure:
+    id: P1_CANDIDATE_DELTA_LOG_BW
     definition: delta_log_between_within
     t_star: UNRESOLVED[P1_ENDPOINT_TSTAR]
     epsilon: UNRESOLVED[P1_LOG_EPSILON]
+  required_secondary: [public_stock, public_flow, expression_gap]
 primary_estimand:
-  id: P1_PRIMARY_CONTINUITY_WS_SHUFFLED_DID
-  definition: continuity_moderation_of_ws_minus_shuffled_matched_seed_did
+  id: P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT
+  definition: equal_weight_identity_continuity_average_of_matched_seed_ws_minus_shadow
 
 design:
   population_size: 1000
@@ -81,14 +85,55 @@ network:
   ws:
     k: UNRESOLVED[P1_WS_K]
     p: UNRESOLVED[P1_WS_P]
+  shadow:
+    fixed_for_run: true
+    degree_matching: per_node_exact
+    forbid_ws_edges: true
+    connectivity: connected
+    on_invalid: fail
 dynamics:
-  activation_mode: UNRESOLVED[P1_ACTIVATION_MODE]
-  activation_count: UNRESOLVED[P1_ACTIVATION_COUNT]
+  activation_mode: weighted_random_sequential_with_replacement
+  activation_count: 1000
+  sampling: with_replacement
+  activity_weights:
+    family: positive_truncated_lognormal
+    normalization: sum_equals_population_size
+    parameters: UNRESOLVED[P1_ACTIVITY_WEIGHT_DISTRIBUTION]
+    calibration_targets: UNRESOLVED[P1_ACTIVITY_CALIBRATION_TARGETS]
+state_model:
+  private_state: updated_on_every_successful_activation
+  public_post_stock: latest_successfully_published_post
+  private_update_semantics: private_then_optional_public_post
+  social_exposure_reads: public_posts_only
+expression:
+  publish_process:
+    family: hurdle_beta
+    flags: pregenerated_before_run
+    parameters: UNRESOLVED[P1_PUBLISH_PROCESS]
+  attention_expression_correlation:
+    main: independent
+    sensitivity: UNRESOLVED[P1_ATTENTION_EXPRESSION_CORRELATION]
+event_model:
+  identity: run_id_plus_event_ordinal
+  read_state: previous_successful_commit
+  commit_order: strict_serial
+  failure_effect: no_state_cursor_or_rng_progress
+  retry_identity: same_event_id_new_attempt_id
+  sweep_role: observation_and_checkpoint_boundary_only
+checkpoint:
+  resume_cursor: next_event_ordinal
+  failed_event: resume_same_event_identity
+  verification: checkpoint_state_hash_and_event_chain
 memory:
   window: UNRESOLVED[P1_MEMORY_WINDOW]
 exposure:
-  max_neighbors: UNRESOLVED[P1_MAX_NEIGHBORS]
-  social_count: UNRESOLVED[P1_SOCIAL_EXPOSURE_COUNT]
+  feed_message_capacity: UNRESOLVED[P1_MAX_NEIGHBORS]
+  social_count: finite_unread_by_exposure_graph
+  candidate_rule: public_posts_after_receiver_cursor
+  overflow: keep_latest_and_expire_older
+  underflow: no_backfill_allow_empty
+  slot_order: frozen_seeded_permutation_after_selection
+  first_activation: eligible_neighbor_round_zero_public_posts
 
 model:
   provider: self_hosted
@@ -108,6 +153,7 @@ generation:
   top_p: UNRESOLVED[P1_TOP_P]
   max_tokens: UNRESOLVED[P1_MAX_TOKENS]
   seed: UNRESOLVED[P1_REQUEST_SEED]
+  seed_pairing: UNRESOLVED[P1_MODEL_SEED_PAIRING]
   thinking: false
 
 metrics:
@@ -122,6 +168,20 @@ shapes:
   sensitivity: UNRESOLVED[P1_SHAPE_SENSITIVITY]
 analysis:
   primary_test: UNRESOLVED[P1_PRIMARY_INFERENCE]
+  hierarchy:
+    primary: [P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT]
+    key_secondary: [P1_SECONDARY_CONTINUITY_WS_SHADOW_MODERATION]
+    exploratory: [identity_moderation, identity_continuity_interaction, e0_mechanism_baseline]
+  outcome_priority:
+    primary: private_state
+    required_secondary: [public_stock, public_flow, expression_gap]
+  terminology:
+    identity: population_identity_cue_visibility
+    continuity: historical_stance_consistency_requirement
+    private_state: nonpublic_agent_state
+    public_post: agent_visible_discourse
+  process_diagnostics:
+    [message_count, message_age, source_coverage, repeated_source_share, empty_feed, sender_activity]
 gates:
   continuity:
     scoring: UNRESOLVED[P1_CONTINUITY_MC_SCORING]
@@ -131,7 +191,8 @@ gates:
     parse_failure_max: UNRESOLVED[P1_PARSE_FAILURE_THRESHOLD]
   scale:
     design: UNRESOLVED[P1_SCALE_GATE_DESIGN]
-    delta_tolerance: UNRESOLVED[P1_GATE_DELTA_STABILITY]
+    primary_outcome_tolerance: UNRESOLVED[P1_GATE_PRIMARY_OUTCOME_STABILITY]
+    group_structure_delta_tolerance: UNRESOLVED[P1_GATE_DELTA_STABILITY]
     failure_max: UNRESOLVED[P1_GATE_FAILURE_MAX]
     throughput_min: UNRESOLVED[P1_GATE_THROUGHPUT_MIN]
     memory_max: UNRESOLVED[P1_GATE_MEMORY_MAX]
@@ -148,6 +209,13 @@ sampling:
   formal_seeds: UNRESOLVED[P1_FORMAL_SEEDS]
   blind_ssr: UNRESOLVED[P1_FORMAL_SEEDS]
 robustness:
+  labels:
+    model: [primary_self_hosted, api_snapshot_subset]
+    prompt: [canonical, order_sensitivity]
+    topic: [primary, reduced_topic_package]
+    mechanism:
+      [equal_activity, truncated_pareto_activity, positive_attention_expression_correlation,
+       high_exposure_stock_snapshot]
   api:
     provider: UNRESOLVED[P1_API_PROVIDER]
     model_snapshot: UNRESOLVED[P1_API_SNAPSHOT]

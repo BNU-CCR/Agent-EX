@@ -289,6 +289,58 @@
     `docs/superpowers/plans/2026-07-29-paper1-phase4b-implementation-plan.md`，
     将Phase 4B拆为环境、协议迁移、domain v2、研究制品、网络、schedule、feed/memory、
     mock adapter、事务engine/recovery及三档mock集成十个连续工作包。
+  - 用户整包批准Phase 4B：4B保持mock-only、不保留旧同步API兼容层、每run使用独立
+    SQLite事务库并生成不可变证据导出，按4B-0至4B-9连续执行，仅在新增研究参数或
+    重大范围变化时暂停。决定与工程依据记录为`D-2026-07-29-21`和`DR-P1-090`。
+  - Phase 4B-0完成：在当前隔离worktree建立项目本地`platform/.venv`，Python为
+    `3.12.13`；按`requirements-dev.lock`安装并通过`pip check`。基线精确复现
+    `342 passed, 11 failed`，11项均为Phase 4A/4A.1已批准文档与旧schema/YAML的
+    预期迁移RED，不存在导入或依赖失败。
+  - Phase 4B-1进入TDD：先新增新primary层级、严格串行有放回激活、private/public、
+    finite unread feed及event/checkpoint协议测试，定向运行得到`3 failed`，失败原因
+    分别为旧estimand、缺`feed_message_capacity`和缺activity-weight结构，确认RED有效。
+  - 已迁移canonical/mirror schema、draft YAML、research-QA路径和generated summary
+    投影；旧`Δlog(B/W)`移至`outcomes.group_structure`，新primary outcome保持
+    `UNRESOLVED[P1_PRIMARY_OUTCOME]`，新primary estimand为
+    `P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT`。中间全套测试达到`353 passed, 2 failed`，
+    仅剩generated summary漂移；随后调用`update_human_protocol_summary(...)`重生成，
+    相关定向测试`2 passed`。
+  - Phase 4B-1首次实现验收：格式化后fresh全套为`357 passed in 13.13s`；Ruff check、
+    Ruff format check、`pip check`和`git diff --check`均通过；canonical与packaged
+    schema字节一致，SHA-256均为
+    `A057D5D52AFFD146631BE8C7AC7ECA04EB62A0423EC69A55D5B3223E30E1CB6E`。
+  - 独立规格审查要求修正三处candidate约束：`memory.window`不得保留旧
+    `all_history`；`activation_count`必须固定为每sweep N=1000次；尚未决的
+    `generation.seed_pairing`不得被schema预先锁成唯一resolved答案。三个最小回归
+    测试先得到`3 failed`，分别确认旧值被错误接受及其他可审计resolved值被错误拒绝；
+    随后只修改schema，定向GREEN为`3 passed`。
+  - 修订后使用显式`--basetemp .pytest-tmp\phase4b1-fix`完成fresh验收：
+    `360 passed in 12.18s`；Ruff check、Ruff format check、`pip check`、
+    `git diff --check`和旧语义扫描均通过。canonical与packaged schema字节一致，
+    SHA-256均为
+    `150A34E0D6F79A666E4FFA1104D7F1FC3FB60D757DC945EA19B5E3A855B15D3A`。当前等待
+    规格复审，复审关闭前不进入4B-2。
+  - Phase 4B-1规格复审已`APPROVED`。随后代码质量审查发现JSON Schema只能约束
+    数值类型和区间端点，不能保证activity-weight最小值严格小于最大值，也不能保证
+    calibration `[lower, upper]`顺序；同时人类协议手写区仍保留机器迁移未完成的
+    过期说明。本轮按质量审查意见进入语义验证与文档状态修订，完成前继续停留4B-1。
+  - 质量修订先以真实`validate_protocol`路径建立9项RED：activity-weight
+    `minimum == maximum`、`minimum > maximum`，六个calibration区间倒置及人类协议
+    stale blocker均被旧实现错误接受。新增集中语义排序验证后定向GREEN为`9 passed`；
+    `minimum < maximum`使用严格关系，range使用`lower <= upper`，只在相关值已解析为
+    数值时比较，不填任何研究默认值。
+  - 质量修订fresh验收使用
+    `--basetemp .pytest-tmp\phase4b1-quality-fix`：`369 passed in 12.07s`；Ruff
+    check、Ruff format check、`pip check`、`git diff --check`、schema镜像/hash、
+    旧同步语义扫描和stale blocker扫描均通过。schema未改，SHA-256仍为
+    `150A34E0D6F79A666E4FFA1104D7F1FC3FB60D757DC945EA19B5E3A855B15D3A`。当前停止
+    修改并等待代码质量复审。
+  - Phase 4B-1规格复审与代码质量复审均已`APPROVED`。提交前fresh验证再次得到
+    `369 passed in 12.27s`；覆盖率套件同为`369 passed`，总覆盖率`91%`；
+    Ruff check、Ruff format check、`pip check`、`git diff --check`、draft验证、
+    formal fail-closed smoke及schema字节镜像均通过，两个schema的SHA-256均为
+    `150A34E0D6F79A666E4FFA1104D7F1FC3FB60D757DC945EA19B5E3A855B15D3A`。4B-1
+    已进入精确文件提交状态；4B-2尚未开始实现。
 - 边界：
   - 模块2虽已批准，但population、persona及其他Phase 4A模块尚未完成；当前不实现
     topic package，也不修改正式实验代码。

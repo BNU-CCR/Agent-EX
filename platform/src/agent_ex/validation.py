@@ -50,6 +50,14 @@ def human_protocol_projection(protocol: Mapping[str, Any]) -> dict[str, Any]:
         "execution_hash": canonical_protocol_hash(protocol),
         "primary_outcome_id": protocol["outcomes"]["primary"]["id"],
         "primary_estimand_id": protocol["primary_estimand"]["id"],
+        "key_secondary_estimand_ids": protocol["analysis"]["hierarchy"]["key_secondary"],
+        "outcome_priority": protocol["analysis"]["outcome_priority"],
+        "process_contract": {
+            "activation_mode": protocol["dynamics"]["activation_mode"],
+            "feed_message_capacity": protocol["exposure"]["feed_message_capacity"],
+            "event_identity": protocol["event_model"]["identity"],
+            "resume_cursor": protocol["checkpoint"]["resume_cursor"],
+        },
         "factor_levels": design["factor_levels"],
         "cell_ids": [cell["id"] for cell in design["cells"]],
         "formal_scale": {

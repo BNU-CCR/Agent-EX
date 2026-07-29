@@ -4,7 +4,7 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
-阶段 4入口：Phase 4A/4A.1已确认，Phase 4B实施计划待执行批准
+阶段 4B实施：执行计划已获用户整包批准；4B-0、4B-1已完成，4B-2为下一待执行阶段
 
 ## 各阶段
 
@@ -140,17 +140,17 @@
   - [x] 完成Phase 4A.1三轮独立规格审查；最终稳定ID迁移问题已本地修复
   - [x] 用户完成整份书面规格复核
   - [x] 完成Phase 4B文档发现与分阶段实施计划
-  - [ ] 用户批准Phase 4B实施计划后开始逐阶段TDD执行
+  - [x] 用户整包批准Phase 4B实施计划与连续执行边界
 - [x] 形成议题包可替换的平台设计规格；书面规格复核前不改代码
-- **状态：** Phase 4A/4A.1 approved and user-reviewed; Phase 4B plan pending execution approval
+- **状态：** Phase 4A/4A.1 approved and user-reviewed; Phase 4B executing
 - **产出：**
   - 检索过程与发现进入 `findings.md`
   - 每个选择的支持、反对和边界证据进入 `docs/paper1-design-rationale.md`
   - 用户批准后的模块化设计进入新的书面规格
 
 ### 阶段 4：Paper 1 实验实现
-- [ ] Phase 4B-0：建立可移植Python 3.12环境并确认迁移基线
-- [ ] Phase 4B-1：迁移协议/schema/YAML/人类摘要并恢复测试全绿
+- [x] Phase 4B-0：建立可移植Python 3.12环境并确认迁移基线
+- [x] Phase 4B-1：迁移协议/schema/YAML/人类摘要并恢复测试全绿
 - [ ] Phase 4B-2：迁移event ordinal、schedule v2、domain records与artifact/RNG基础
 - [ ] Phase 4B-3：实现topic/population/initialization/persona mock制品
 - [ ] Phase 4B-4：实现WS/shadow图与node mapping
@@ -164,7 +164,7 @@
 - [ ] 完成 mock N=20/100/1000 验证
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
-- **状态：** pending
+- **状态：** in_progress（4B-0、4B-1 complete；4B-2 pending，尚未开始实现）
 
 ### 阶段 5：正式实验与分析
 - [ ] 完成 N=200/500/1000 的有限规模检验

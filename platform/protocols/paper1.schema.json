@@ -6,7 +6,8 @@
   "x-execution-properties": [
     "protocol", "topic", "stance", "population", "initialization", "groups",
     "outcomes", "primary_estimand", "design", "persona", "network", "dynamics",
-    "memory", "exposure", "model", "runtime", "generation", "metrics", "sample_size",
+    "state_model", "expression", "event_model", "checkpoint", "memory", "exposure",
+    "model", "runtime", "generation", "metrics", "sample_size",
     "shapes", "analysis", "gates", "quality", "stopping", "sampling", "robustness",
     "storage", "provenance"
   ],
@@ -15,7 +16,8 @@
     "/stance/construct", "/stance/scale", "/population/source", "/population/fields",
     "/population/balance", "/population/exact_n", "/initialization/stance",
     "/initialization/reason", "/groups/cuts", "/groups/min_size",
-    "/outcomes/primary/t_star", "/outcomes/primary/epsilon",
+    "/outcomes/primary/id", "/outcomes/primary/definition",
+    "/outcomes/group_structure/t_star", "/outcomes/group_structure/epsilon",
     "/persona/identity_absent_continuity_absent/template_id",
     "/persona/identity_absent_continuity_absent/template_sha256",
     "/persona/identity_absent_continuity_present/template_id",
@@ -26,16 +28,23 @@
     "/persona/identity_present_continuity_present/template_sha256",
     "/network/directed", "/network/connectivity", "/network/on_invalid", "/network/ws/k",
     "/network/ws/p", "/dynamics/activation_mode", "/dynamics/activation_count",
-    "/memory/window", "/exposure/max_neighbors", "/exposure/social_count",
+    "/dynamics/activity_weights/parameters",
+    "/dynamics/activity_weights/calibration_targets",
+    "/state_model/private_update_semantics",
+    "/expression/publish_process/parameters",
+    "/expression/attention_expression_correlation/sensitivity",
+    "/memory/window", "/exposure/feed_message_capacity", "/exposure/social_count",
     "/model/revision", "/runtime/vllm/version", "/runtime/timeout", "/runtime/retry",
     "/runtime/concurrency", "/runtime/rate_budget", "/generation/temperature",
     "/generation/top_p", "/generation/max_tokens", "/generation/seed",
+    "/generation/seed_pairing",
     "/metrics/variance_components", "/metrics/ddof", "/metrics/missing_group",
     "/sample_size/delta_min", "/shapes/thresholds", "/shapes/window",
     "/shapes/sensitivity", "/analysis/primary_test", "/gates/continuity/scoring",
     "/gates/continuity/lock_max", "/gates/quality/refusal_max",
     "/gates/quality/parse_failure_max", "/gates/scale/design",
-    "/gates/scale/delta_tolerance", "/gates/scale/failure_max",
+    "/gates/scale/primary_outcome_tolerance",
+    "/gates/scale/group_structure_delta_tolerance", "/gates/scale/failure_max",
     "/gates/scale/throughput_min", "/gates/scale/memory_max",
     "/gates/formal/duration_max", "/gates/formal/recovery_drills",
     "/gates/formal/matrix_complete", "/quality/eligibility", "/quality/exclusion",
@@ -46,6 +55,14 @@
   "$defs": {
     "nonempty": {"type": "string", "minLength": 1, "allOf": [{"not": {"pattern": "^\\s*$"}}, {"not": {"pattern": "^UNRESOLVED\\["}}]},
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "unit-range": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "prefixItems": [
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"type": "number", "minimum": 0, "maximum": 1}
+      ],
+      "items": false
+    },
     "cell": {
       "type": "object", "required": ["id", "identity", "continuity", "exposure"],
       "properties": {
@@ -67,7 +84,8 @@
   "required": [
     "protocol", "status", "human_protocol_reference", "topic", "stance", "population",
     "initialization", "groups", "outcomes", "primary_estimand", "design", "persona",
-    "network", "dynamics", "memory", "exposure", "model", "runtime", "generation",
+    "network", "dynamics", "state_model", "expression", "event_model", "checkpoint",
+    "memory", "exposure", "model", "runtime", "generation",
     "metrics", "sample_size", "shapes", "analysis", "gates", "quality", "stopping",
     "sampling", "robustness", "storage", "provenance", "decision_provenance"
   ],
@@ -126,17 +144,36 @@
       }, "additionalProperties": false
     },
     "outcomes": {
-      "type": "object", "required": ["primary"],
-      "properties": {"primary": {
-        "type": "object", "required": ["id", "definition", "t_star", "epsilon"],
-        "properties": {
-          "id": {"const": "P1_PRIMARY_DELTA_LOG_BW"}, "definition": {"const": "delta_log_between_within"},
-          "t_star": {"x-decision-id": "P1_ENDPOINT_TSTAR", "oneOf": [{"type": "integer", "minimum": 1, "maximum": 50}, {"const": "UNRESOLVED[P1_ENDPOINT_TSTAR]"}]},
-          "epsilon": {"x-decision-id": "P1_LOG_EPSILON", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_LOG_EPSILON]"}]}
-        }, "additionalProperties": false
-      }}, "additionalProperties": false
+      "type": "object", "required": ["primary", "group_structure", "required_secondary"],
+      "properties": {
+        "primary": {
+          "type": "object", "required": ["id", "definition"],
+          "properties": {
+            "id": {"x-decision-id": "P1_PRIMARY_OUTCOME", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PRIMARY_OUTCOME]"}]},
+            "definition": {"x-decision-id": "P1_PRIMARY_OUTCOME", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PRIMARY_OUTCOME]"}]}
+          }, "additionalProperties": false
+        },
+        "group_structure": {
+          "type": "object", "required": ["id", "definition", "t_star", "epsilon"],
+          "properties": {
+            "id": {"const": "P1_CANDIDATE_DELTA_LOG_BW"},
+            "definition": {"const": "delta_log_between_within"},
+            "t_star": {"x-decision-id": "P1_ENDPOINT_TSTAR", "oneOf": [{"type": "integer", "minimum": 1, "maximum": 50}, {"const": "UNRESOLVED[P1_ENDPOINT_TSTAR]"}]},
+            "epsilon": {"x-decision-id": "P1_LOG_EPSILON", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_LOG_EPSILON]"}]}
+          }, "additionalProperties": false
+        },
+        "required_secondary": {
+          "const": ["public_stock", "public_flow", "expression_gap"]
+        }
+      }, "additionalProperties": false
     },
-    "primary_estimand": {"type": "object", "required": ["id", "definition"], "properties": {"id": {"const": "P1_PRIMARY_CONTINUITY_WS_SHUFFLED_DID"}, "definition": {"const": "continuity_moderation_of_ws_minus_shuffled_matched_seed_did"}}, "additionalProperties": false},
+    "primary_estimand": {
+      "type": "object", "required": ["id", "definition"],
+      "properties": {
+        "id": {"const": "P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT"},
+        "definition": {"const": "equal_weight_identity_continuity_average_of_matched_seed_ws_minus_shadow"}
+      }, "additionalProperties": false
+    },
     "design": {
       "type": "object", "required": ["population_size", "rounds", "matched_seeds_initial", "matched_seeds_max", "factor_levels", "cells"],
       "properties": {
@@ -155,7 +192,7 @@
       }, "additionalProperties": false
     },
     "network": {
-      "type": "object", "required": ["type", "directed", "self_loops", "connectivity", "on_invalid", "ws"],
+      "type": "object", "required": ["type", "directed", "self_loops", "connectivity", "on_invalid", "ws", "shadow"],
       "properties": {
         "type": {"const": "watts_strogatz"}, "self_loops": {"const": false},
         "directed": {"x-decision-id": "P1_GRAPH_DIRECTION", "oneOf": [{"type": "boolean"}, {"const": "UNRESOLVED[P1_GRAPH_DIRECTION]"}]},
@@ -164,17 +201,145 @@
         "ws": {"type": "object", "required": ["k", "p"], "properties": {
           "k": {"x-decision-id": "P1_WS_K", "oneOf": [{"type": "integer", "minimum": 2}, {"const": "UNRESOLVED[P1_WS_K]"}]},
           "p": {"x-decision-id": "P1_WS_P", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_WS_P]"}]}
-        }, "additionalProperties": false}
+        }, "additionalProperties": false},
+        "shadow": {
+          "type": "object", "required": ["fixed_for_run", "degree_matching", "forbid_ws_edges", "connectivity", "on_invalid"],
+          "properties": {
+            "fixed_for_run": {"const": true},
+            "degree_matching": {"const": "per_node_exact"},
+            "forbid_ws_edges": {"const": true},
+            "connectivity": {"const": "connected"},
+            "on_invalid": {"const": "fail"}
+          }, "additionalProperties": false
+        }
       }, "additionalProperties": false
     },
-    "dynamics": {"type": "object", "required": ["activation_mode", "activation_count"], "properties": {
-      "activation_mode": {"x-decision-id": "P1_ACTIVATION_MODE", "oneOf": [{"enum": ["all_synchronous", "subset_synchronous"]}, {"const": "UNRESOLVED[P1_ACTIVATION_MODE]"}]},
-      "activation_count": {"x-decision-id": "P1_ACTIVATION_COUNT", "oneOf": [{"type": "integer", "minimum": 1, "maximum": 1000}, {"const": "UNRESOLVED[P1_ACTIVATION_COUNT]"}]}
-    }, "additionalProperties": false},
-    "memory": {"type": "object", "required": ["window"], "properties": {"window": {"x-decision-id": "P1_MEMORY_WINDOW", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "all_history"}, {"const": "UNRESOLVED[P1_MEMORY_WINDOW]"}]}}, "additionalProperties": false},
-    "exposure": {"type": "object", "required": ["max_neighbors", "social_count"], "properties": {
-      "max_neighbors": {"x-decision-id": "P1_MAX_NEIGHBORS", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "all_neighbors"}, {"const": "UNRESOLVED[P1_MAX_NEIGHBORS]"}]},
-      "social_count": {"x-decision-id": "P1_SOCIAL_EXPOSURE_COUNT", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "degree_matched"}, {"const": "UNRESOLVED[P1_SOCIAL_EXPOSURE_COUNT]"}]}
+    "dynamics": {
+      "type": "object",
+      "required": ["activation_mode", "activation_count", "sampling", "activity_weights"],
+      "properties": {
+        "activation_mode": {"x-decision-id": "P1_ACTIVATION_MODE", "oneOf": [{"const": "weighted_random_sequential_with_replacement"}, {"const": "UNRESOLVED[P1_ACTIVATION_MODE]"}]},
+        "activation_count": {"x-decision-id": "P1_ACTIVATION_COUNT", "oneOf": [{"const": 1000}, {"const": "UNRESOLVED[P1_ACTIVATION_COUNT]"}]},
+        "sampling": {"const": "with_replacement"},
+        "activity_weights": {
+          "type": "object", "required": ["family", "normalization", "parameters", "calibration_targets"],
+          "properties": {
+            "family": {"const": "positive_truncated_lognormal"},
+            "normalization": {"const": "sum_equals_population_size"},
+            "parameters": {"x-decision-id": "P1_ACTIVITY_WEIGHT_DISTRIBUTION", "oneOf": [
+              {"type": "object", "required": ["log_sigma", "minimum", "maximum"], "properties": {
+                "log_sigma": {"type": "number", "exclusiveMinimum": 0},
+                "minimum": {"type": "number", "exclusiveMinimum": 0},
+                "maximum": {"type": "number", "exclusiveMinimum": 0}
+              }, "additionalProperties": false},
+              {"const": "UNRESOLVED[P1_ACTIVITY_WEIGHT_DISTRIBUTION]"}
+            ]},
+            "calibration_targets": {"x-decision-id": "P1_ACTIVITY_CALIBRATION_TARGETS", "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "weight_gini_range", "realized_activation_gini_range",
+                  "top_1_percent_share_range", "top_10_percent_share_range",
+                  "maximum_individual_share_max", "zero_activation_rate_range",
+                  "cross_sweep_cv_range", "cross_n_absolute_tolerance"
+                ],
+                "properties": {
+                  "weight_gini_range": {"$ref": "#/$defs/unit-range"},
+                  "realized_activation_gini_range": {"$ref": "#/$defs/unit-range"},
+                  "top_1_percent_share_range": {"$ref": "#/$defs/unit-range"},
+                  "top_10_percent_share_range": {"$ref": "#/$defs/unit-range"},
+                  "maximum_individual_share_max": {"type": "number", "minimum": 0, "maximum": 1},
+                  "zero_activation_rate_range": {"$ref": "#/$defs/unit-range"},
+                  "cross_sweep_cv_range": {
+                    "type": "array", "minItems": 2, "maxItems": 2,
+                    "prefixItems": [
+                      {"type": "number", "minimum": 0},
+                      {"type": "number", "minimum": 0}
+                    ],
+                    "items": false
+                  },
+                  "cross_n_absolute_tolerance": {"type": "number", "minimum": 0}
+                },
+                "additionalProperties": false
+              },
+              {"const": "UNRESOLVED[P1_ACTIVITY_CALIBRATION_TARGETS]"}
+            ]}
+          }, "additionalProperties": false
+        }
+      }, "additionalProperties": false
+    },
+    "state_model": {
+      "type": "object",
+      "required": ["private_state", "public_post_stock", "private_update_semantics", "social_exposure_reads"],
+      "properties": {
+        "private_state": {"const": "updated_on_every_successful_activation"},
+        "public_post_stock": {"const": "latest_successfully_published_post"},
+        "private_update_semantics": {"x-decision-id": "P1_PRIVATE_UPDATE_SEMANTICS", "const": "private_then_optional_public_post"},
+        "social_exposure_reads": {"const": "public_posts_only"}
+      }, "additionalProperties": false
+    },
+    "expression": {
+      "type": "object", "required": ["publish_process", "attention_expression_correlation"],
+      "properties": {
+        "publish_process": {
+          "type": "object", "required": ["family", "flags", "parameters"],
+          "properties": {
+            "family": {"const": "hurdle_beta"},
+            "flags": {"const": "pregenerated_before_run"},
+            "parameters": {"x-decision-id": "P1_PUBLISH_PROCESS", "oneOf": [
+              {"type": "object", "required": ["structural_lurker_probability", "beta_alpha", "beta_beta"], "properties": {
+                "structural_lurker_probability": {"type": "number", "minimum": 0, "maximum": 1},
+                "beta_alpha": {"type": "number", "exclusiveMinimum": 0},
+                "beta_beta": {"type": "number", "exclusiveMinimum": 0}
+              }, "additionalProperties": false},
+              {"const": "UNRESOLVED[P1_PUBLISH_PROCESS]"}
+            ]}
+          }, "additionalProperties": false
+        },
+        "attention_expression_correlation": {
+          "type": "object", "required": ["main", "sensitivity"],
+          "properties": {
+            "main": {"x-decision-id": "P1_ATTENTION_EXPRESSION_CORRELATION", "const": "independent"},
+            "sensitivity": {"x-decision-id": "P1_ATTENTION_EXPRESSION_CORRELATION", "oneOf": [
+              {"type": "object", "required": ["method", "rho"], "properties": {
+                "method": {"$ref": "#/$defs/nonempty"},
+                "rho": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+              }, "additionalProperties": false},
+              {"const": "UNRESOLVED[P1_ATTENTION_EXPRESSION_CORRELATION]"}
+            ]}
+          }, "additionalProperties": false
+        }
+      }, "additionalProperties": false
+    },
+    "event_model": {
+      "type": "object",
+      "required": ["identity", "read_state", "commit_order", "failure_effect", "retry_identity", "sweep_role"],
+      "properties": {
+        "identity": {"const": "run_id_plus_event_ordinal"},
+        "read_state": {"const": "previous_successful_commit"},
+        "commit_order": {"const": "strict_serial"},
+        "failure_effect": {"const": "no_state_cursor_or_rng_progress"},
+        "retry_identity": {"const": "same_event_id_new_attempt_id"},
+        "sweep_role": {"const": "observation_and_checkpoint_boundary_only"}
+      }, "additionalProperties": false
+    },
+    "checkpoint": {
+      "type": "object", "required": ["resume_cursor", "failed_event", "verification"],
+      "properties": {
+        "resume_cursor": {"const": "next_event_ordinal"},
+        "failed_event": {"const": "resume_same_event_identity"},
+        "verification": {"const": "checkpoint_state_hash_and_event_chain"}
+      }, "additionalProperties": false
+    },
+    "memory": {"type": "object", "required": ["window"], "properties": {"window": {"x-decision-id": "P1_MEMORY_WINDOW", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_MEMORY_WINDOW]"}]}}, "additionalProperties": false},
+    "exposure": {"type": "object", "required": ["feed_message_capacity", "social_count", "candidate_rule", "overflow", "underflow", "slot_order", "first_activation"], "properties": {
+      "feed_message_capacity": {"x-decision-id": "P1_MAX_NEIGHBORS", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_MAX_NEIGHBORS]"}]},
+      "social_count": {"x-decision-id": "P1_SOCIAL_EXPOSURE_COUNT", "oneOf": [{"const": "finite_unread_by_exposure_graph"}, {"const": "UNRESOLVED[P1_SOCIAL_EXPOSURE_COUNT]"}]},
+      "candidate_rule": {"const": "public_posts_after_receiver_cursor"},
+      "overflow": {"const": "keep_latest_and_expire_older"},
+      "underflow": {"const": "no_backfill_allow_empty"},
+      "slot_order": {"const": "frozen_seeded_permutation_after_selection"},
+      "first_activation": {"const": "eligible_neighbor_round_zero_public_posts"}
     }, "additionalProperties": false},
     "model": {"type": "object", "required": ["provider", "model_id", "revision", "precision"], "properties": {
       "provider": {"const": "self_hosted"}, "model_id": {"const": "Qwen/Qwen3-8B"}, "precision": {"const": "bf16"},
@@ -187,11 +352,12 @@
       "concurrency": {"x-decision-id": "P1_CONCURRENCY_BUDGET", "oneOf": [{"type": "object", "required": ["max_requests"], "properties": {"max_requests": {"type": "integer", "minimum": 1}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_CONCURRENCY_BUDGET]"}]},
       "rate_budget": {"x-decision-id": "P1_CONCURRENCY_BUDGET", "oneOf": [{"type": "object", "required": ["requests_per_minute"], "properties": {"requests_per_minute": {"type": "integer", "minimum": 1}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_CONCURRENCY_BUDGET]"}]}
     }, "additionalProperties": false},
-    "generation": {"type": "object", "required": ["temperature", "top_p", "max_tokens", "seed", "thinking"], "properties": {
+    "generation": {"type": "object", "required": ["temperature", "top_p", "max_tokens", "seed", "seed_pairing", "thinking"], "properties": {
       "temperature": {"x-decision-id": "P1_TEMPERATURE", "oneOf": [{"type": "number", "minimum": 0}, {"const": "UNRESOLVED[P1_TEMPERATURE]"}]},
       "top_p": {"x-decision-id": "P1_TOP_P", "oneOf": [{"type": "number", "exclusiveMinimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_TOP_P]"}]},
       "max_tokens": {"x-decision-id": "P1_MAX_TOKENS", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_MAX_TOKENS]"}]},
       "seed": {"x-decision-id": "P1_REQUEST_SEED", "oneOf": [{"type": "integer", "minimum": 0}, {"const": "unsupported_record_nondeterministic"}, {"const": "UNRESOLVED[P1_REQUEST_SEED]"}]},
+      "seed_pairing": {"x-decision-id": "P1_MODEL_SEED_PAIRING", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_MODEL_SEED_PAIRING]"}]},
       "thinking": {"const": false}
     }, "additionalProperties": false},
     "metrics": {"type": "object", "required": ["variance_components", "ddof", "missing_group"], "properties": {
@@ -208,7 +374,40 @@
       "window": {"x-decision-id": "P1_SHAPE_WINDOW", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_SHAPE_WINDOW]"}]},
       "sensitivity": {"x-decision-id": "P1_SHAPE_SENSITIVITY", "oneOf": [{"type": "object", "required": ["lower", "upper"], "properties": {"lower": {"type": "number"}, "upper": {"type": "number"}}, "additionalProperties": false}, {"const": "UNRESOLVED[P1_SHAPE_SENSITIVITY]"}]}
     }, "additionalProperties": false},
-    "analysis": {"type": "object", "required": ["primary_test"], "properties": {"primary_test": {"x-decision-id": "P1_PRIMARY_INFERENCE", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PRIMARY_INFERENCE]"}]}}, "additionalProperties": false},
+    "analysis": {
+      "type": "object", "required": ["primary_test", "hierarchy", "outcome_priority", "terminology", "process_diagnostics"],
+      "properties": {
+        "primary_test": {"x-decision-id": "P1_PRIMARY_INFERENCE", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_PRIMARY_INFERENCE]"}]},
+        "hierarchy": {
+          "type": "object", "required": ["primary", "key_secondary", "exploratory"],
+          "properties": {
+            "primary": {"const": ["P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT"]},
+            "key_secondary": {"const": ["P1_SECONDARY_CONTINUITY_WS_SHADOW_MODERATION"]},
+            "exploratory": {"const": ["identity_moderation", "identity_continuity_interaction", "e0_mechanism_baseline"]}
+          }, "additionalProperties": false
+        },
+        "outcome_priority": {
+          "x-decision-id": "P1_PRIVATE_PUBLIC_OUTCOME_PRIORITY",
+          "type": "object", "required": ["primary", "required_secondary"],
+          "properties": {
+            "primary": {"const": "private_state"},
+            "required_secondary": {"const": ["public_stock", "public_flow", "expression_gap"]}
+          }, "additionalProperties": false
+        },
+        "terminology": {
+          "type": "object", "required": ["identity", "continuity", "private_state", "public_post"],
+          "properties": {
+            "identity": {"const": "population_identity_cue_visibility"},
+            "continuity": {"const": "historical_stance_consistency_requirement"},
+            "private_state": {"const": "nonpublic_agent_state"},
+            "public_post": {"const": "agent_visible_discourse"}
+          }, "additionalProperties": false
+        },
+        "process_diagnostics": {
+          "const": ["message_count", "message_age", "source_coverage", "repeated_source_share", "empty_feed", "sender_activity"]
+        }
+      }, "additionalProperties": false
+    },
     "gates": {"type": "object", "required": ["continuity", "quality", "scale", "formal"], "properties": {
       "continuity": {"type": "object", "required": ["scoring", "lock_max"], "properties": {
         "scoring": {"x-decision-id": "P1_CONTINUITY_MC_SCORING", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_CONTINUITY_MC_SCORING]"}]},
@@ -218,9 +417,10 @@
         "refusal_max": {"x-decision-id": "P1_REFUSAL_THRESHOLD", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_REFUSAL_THRESHOLD]"}]},
         "parse_failure_max": {"x-decision-id": "P1_PARSE_FAILURE_THRESHOLD", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_PARSE_FAILURE_THRESHOLD]"}]}
       }, "additionalProperties": false},
-      "scale": {"type": "object", "required": ["design", "delta_tolerance", "failure_max", "throughput_min", "memory_max"], "properties": {
+      "scale": {"type": "object", "required": ["design", "primary_outcome_tolerance", "group_structure_delta_tolerance", "failure_max", "throughput_min", "memory_max"], "properties": {
         "design": {"x-decision-id": "P1_SCALE_GATE_DESIGN", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_SCALE_GATE_DESIGN]"}]},
-        "delta_tolerance": {"x-decision-id": "P1_GATE_DELTA_STABILITY", "oneOf": [{"type": "number", "minimum": 0}, {"const": "UNRESOLVED[P1_GATE_DELTA_STABILITY]"}]},
+        "primary_outcome_tolerance": {"x-decision-id": "P1_GATE_PRIMARY_OUTCOME_STABILITY", "oneOf": [{"type": "number", "minimum": 0}, {"const": "UNRESOLVED[P1_GATE_PRIMARY_OUTCOME_STABILITY]"}]},
+        "group_structure_delta_tolerance": {"x-decision-id": "P1_GATE_DELTA_STABILITY", "oneOf": [{"type": "number", "minimum": 0}, {"const": "UNRESOLVED[P1_GATE_DELTA_STABILITY]"}]},
         "failure_max": {"x-decision-id": "P1_GATE_FAILURE_MAX", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_GATE_FAILURE_MAX]"}]},
         "throughput_min": {"x-decision-id": "P1_GATE_THROUGHPUT_MIN", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_GATE_THROUGHPUT_MIN]"}]},
         "memory_max": {"x-decision-id": "P1_GATE_MEMORY_MAX", "oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"const": "UNRESOLVED[P1_GATE_MEMORY_MAX]"}]}
@@ -243,7 +443,20 @@
         {"const": "UNRESOLVED[P1_FORMAL_SEEDS]"}
       ]}
     }, "additionalProperties": false},
-    "robustness": {"type": "object", "required": ["api"], "properties": {"api": {
+    "robustness": {"type": "object", "required": ["labels", "api"], "properties": {
+      "labels": {
+        "type": "object", "required": ["model", "prompt", "topic", "mechanism"],
+        "properties": {
+          "model": {"const": ["primary_self_hosted", "api_snapshot_subset"]},
+          "prompt": {"const": ["canonical", "order_sensitivity"]},
+          "topic": {"const": ["primary", "reduced_topic_package"]},
+          "mechanism": {"const": [
+            "equal_activity", "truncated_pareto_activity",
+            "positive_attention_expression_correlation", "high_exposure_stock_snapshot"
+          ]}
+        }, "additionalProperties": false
+      },
+      "api": {
       "type": "object", "required": ["provider", "model_snapshot", "cells", "scale"], "properties": {
         "provider": {"x-decision-id": "P1_API_PROVIDER", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_API_PROVIDER]"}]},
         "model_snapshot": {"x-decision-id": "P1_API_SNAPSHOT", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_API_SNAPSHOT]"}]},

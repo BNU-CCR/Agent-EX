@@ -91,11 +91,36 @@ def frozen_protocol(protocol) -> dict[str, object]:
         "/network/on_invalid": "fail",
         "/network/ws/k": 6,
         "/network/ws/p": 0.1,
-        "/dynamics/activation_mode": "all_synchronous",
+        "/dynamics/activation_mode": "weighted_random_sequential_with_replacement",
         "/dynamics/activation_count": 1000,
+        "/dynamics/activity_weights/parameters": {
+            "log_sigma": 0.8,
+            "minimum": 0.05,
+            "maximum": 20.0,
+        },
+        "/dynamics/activity_weights/calibration_targets": {
+            "weight_gini_range": [0.2, 0.6],
+            "realized_activation_gini_range": [0.2, 0.6],
+            "top_1_percent_share_range": [0.01, 0.2],
+            "top_10_percent_share_range": [0.2, 0.7],
+            "maximum_individual_share_max": 0.2,
+            "zero_activation_rate_range": [0.0, 0.5],
+            "cross_sweep_cv_range": [0.0, 1.0],
+            "cross_n_absolute_tolerance": 0.1,
+        },
+        "/state_model/private_update_semantics": "private_then_optional_public_post",
+        "/expression/publish_process/parameters": {
+            "structural_lurker_probability": 0.4,
+            "beta_alpha": 2.0,
+            "beta_beta": 3.0,
+        },
+        "/expression/attention_expression_correlation/sensitivity": {
+            "method": "gaussian_copula",
+            "rho": 0.3,
+        },
         "/memory/window": 5,
-        "/exposure/max_neighbors": 6,
-        "/exposure/social_count": 6,
+        "/exposure/feed_message_capacity": 6,
+        "/exposure/social_count": "finite_unread_by_exposure_graph",
         "/model/revision": "0123456789abcdef",
         "/runtime/vllm/version": "0.10.0",
         "/runtime/timeout": {"seconds": 120.0},
@@ -106,8 +131,11 @@ def frozen_protocol(protocol) -> dict[str, object]:
         "/generation/top_p": 0.8,
         "/generation/max_tokens": 256,
         "/generation/seed": 42,
-        "/outcomes/primary/t_star": 50,
-        "/outcomes/primary/epsilon": 1e-6,
+        "/generation/seed_pairing": "matched_by_event_ordinal_reused_for_retry",
+        "/outcomes/primary/id": "private_state_endpoint_v1",
+        "/outcomes/primary/definition": "mean_absolute_change_from_round_zero",
+        "/outcomes/group_structure/t_star": 50,
+        "/outcomes/group_structure/epsilon": 1e-6,
         "/metrics/variance_components": "weighted_anova_decomposition",
         "/metrics/ddof": 1,
         "/metrics/missing_group": "fail",
@@ -127,7 +155,8 @@ def frozen_protocol(protocol) -> dict[str, object]:
         "/gates/quality/refusal_max": 0.01,
         "/gates/quality/parse_failure_max": 0.01,
         "/gates/scale/design": "primary_eight_cells_matched_seeds",
-        "/gates/scale/delta_tolerance": 0.02,
+        "/gates/scale/primary_outcome_tolerance": 0.02,
+        "/gates/scale/group_structure_delta_tolerance": 0.02,
         "/gates/scale/failure_max": 0.01,
         "/gates/scale/throughput_min": 5.0,
         "/gates/scale/memory_max": 24.0,
@@ -315,20 +344,40 @@ def test_draft_accepts_only_registered_unresolved_markers(protocol):
         validate_protocol(candidate, mode="draft")
 
 
+def test_formal_rejects_phase4b_draft_unresolved_fields(protocol):
+    candidate = deepcopy(protocol)
+    candidate["status"] = "frozen"
+    with pytest.raises(ValueError, match="placeholder|unresolved"):
+        validate_protocol(candidate, mode="formal")
+
+
 def test_draft_contains_registered_markers_instead_of_coder_defaults(protocol):
     expected = {
         "/population/source": "UNRESOLVED[P1_POPULATION_SOURCE]",
         "/population/fields": "UNRESOLVED[P1_POPULATION_FIELDS]",
         "/initialization/reason": "UNRESOLVED[P1_INITIAL_REASON_SOURCE]",
         "/network/directed": "UNRESOLVED[P1_GRAPH_DIRECTION]",
-        "/dynamics/activation_mode": "UNRESOLVED[P1_ACTIVATION_MODE]",
+        "/dynamics/activation_mode": "weighted_random_sequential_with_replacement",
+        "/dynamics/activity_weights/parameters": ("UNRESOLVED[P1_ACTIVITY_WEIGHT_DISTRIBUTION]"),
+        "/dynamics/activity_weights/calibration_targets": (
+            "UNRESOLVED[P1_ACTIVITY_CALIBRATION_TARGETS]"
+        ),
+        "/expression/publish_process/parameters": "UNRESOLVED[P1_PUBLISH_PROCESS]",
+        "/expression/attention_expression_correlation/sensitivity": (
+            "UNRESOLVED[P1_ATTENTION_EXPRESSION_CORRELATION]"
+        ),
         "/memory/window": "UNRESOLVED[P1_MEMORY_WINDOW]",
+        "/exposure/feed_message_capacity": "UNRESOLVED[P1_MAX_NEIGHBORS]",
         "/generation/seed": "UNRESOLVED[P1_REQUEST_SEED]",
+        "/generation/seed_pairing": "UNRESOLVED[P1_MODEL_SEED_PAIRING]",
+        "/outcomes/primary/id": "UNRESOLVED[P1_PRIMARY_OUTCOME]",
+        "/outcomes/primary/definition": "UNRESOLVED[P1_PRIMARY_OUTCOME]",
         "/runtime/timeout": "UNRESOLVED[P1_TIMEOUT_RETRY]",
         "/runtime/concurrency": "UNRESOLVED[P1_CONCURRENCY_BUDGET]",
         "/metrics/ddof": "UNRESOLVED[P1_BW_DDOF]",
         "/sample_size/delta_min": "UNRESOLVED[P1_DELTA_MIN]",
         "/shapes/window": "UNRESOLVED[P1_SHAPE_WINDOW]",
+        "/gates/scale/primary_outcome_tolerance": ("UNRESOLVED[P1_GATE_PRIMARY_OUTCOME_STABILITY]"),
         "/robustness/api/provider": "UNRESOLVED[P1_API_PROVIDER]",
         "/quality/eligibility": "UNRESOLVED[P1_ANALYSIS_ELIGIBILITY]",
         "/sampling/formal_seeds": "UNRESOLVED[P1_FORMAL_SEEDS]",
@@ -340,6 +389,149 @@ def test_draft_contains_registered_markers_instead_of_coder_defaults(protocol):
         for part in pointer.strip("/").split("/"):
             target = target[part]
         assert target == value
+
+
+def test_phase4b_protocol_contract_replaces_synchronous_round_semantics(protocol):
+    assert protocol["primary_estimand"] == {
+        "id": "P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT",
+        "definition": ("equal_weight_identity_continuity_average_of_matched_seed_ws_minus_shadow"),
+    }
+    assert protocol["analysis"]["hierarchy"]["key_secondary"] == [
+        "P1_SECONDARY_CONTINUITY_WS_SHADOW_MODERATION"
+    ]
+    assert protocol["outcomes"]["group_structure"]["id"] == "P1_CANDIDATE_DELTA_LOG_BW"
+    assert protocol["outcomes"]["primary"]["id"] == "UNRESOLVED[P1_PRIMARY_OUTCOME]"
+    assert protocol["dynamics"]["activation_mode"] == "weighted_random_sequential_with_replacement"
+    assert protocol["event_model"] == {
+        "identity": "run_id_plus_event_ordinal",
+        "read_state": "previous_successful_commit",
+        "commit_order": "strict_serial",
+        "failure_effect": "no_state_cursor_or_rng_progress",
+        "retry_identity": "same_event_id_new_attempt_id",
+        "sweep_role": "observation_and_checkpoint_boundary_only",
+    }
+    assert protocol["checkpoint"]["resume_cursor"] == "next_event_ordinal"
+    assert protocol["state_model"]["social_exposure_reads"] == "public_posts_only"
+    assert protocol["analysis"]["outcome_priority"] == {
+        "primary": "private_state",
+        "required_secondary": ["public_stock", "public_flow", "expression_gap"],
+    }
+    assert protocol["robustness"]["labels"] == {
+        "model": ["primary_self_hosted", "api_snapshot_subset"],
+        "prompt": ["canonical", "order_sensitivity"],
+        "topic": ["primary", "reduced_topic_package"],
+        "mechanism": [
+            "equal_activity",
+            "truncated_pareto_activity",
+            "positive_attention_expression_correlation",
+            "high_exposure_stock_snapshot",
+        ],
+    }
+    assert "max_neighbors" not in protocol["exposure"]
+    assert "all_synchronous" not in json.dumps(protocol)
+    assert "subset_synchronous" not in json.dumps(protocol)
+    assert "previous_round" not in json.dumps(protocol)
+
+
+def test_legacy_protocol_fields_and_values_are_rejected(protocol):
+    legacy_exposure = deepcopy(protocol)
+    legacy_exposure["exposure"]["max_neighbors"] = legacy_exposure["exposure"].pop(
+        "feed_message_capacity"
+    )
+    legacy_activation = deepcopy(protocol)
+    legacy_activation["dynamics"]["activation_mode"] = "all_synchronous"
+    legacy_primary = deepcopy(protocol)
+    legacy_primary["outcomes"]["primary"] = {
+        "id": "P1_PRIMARY_DELTA_LOG_BW",
+        "definition": "delta_log_between_within",
+        "t_star": "UNRESOLVED[P1_ENDPOINT_TSTAR]",
+        "epsilon": "UNRESOLVED[P1_LOG_EPSILON]",
+    }
+    for candidate in (legacy_exposure, legacy_activation, legacy_primary):
+        with pytest.raises(ValueError, match="schema"):
+            validate_protocol(candidate, mode="draft")
+
+
+def test_memory_window_rejects_removed_all_history_candidate(protocol):
+    candidate = deepcopy(protocol)
+    candidate["memory"]["window"] = "all_history"
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(candidate, mode="draft")
+
+
+def test_activation_count_is_exactly_one_population_per_sweep(protocol):
+    candidate = deepcopy(protocol)
+    candidate["dynamics"]["activation_count"] = 500
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(candidate, mode="draft")
+
+
+def test_seed_pairing_is_auditable_without_precommitting_one_resolved_answer(protocol):
+    schema = json.loads(
+        resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
+    )
+    assert _schema_decision_paths(schema)["P1_MODEL_SEED_PAIRING"] == {"generation.seed_pairing"}
+    assert "/generation/seed_pairing" in schema["x-formal-required"]
+
+    candidate = deepcopy(protocol)
+    candidate["generation"]["seed_pairing"] = "auditable_pairing_contract_selected_at_freeze"
+    validate_protocol(candidate, mode="draft")
+
+    candidate["generation"]["seed_pairing"] = ""
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(candidate, mode="draft")
+
+
+def test_new_nested_process_blocks_reject_unknown_fields(frozen_protocol):
+    candidate = deepcopy(frozen_protocol)
+    candidate["dynamics"]["activity_weights"]["calibration_targets"]["outcome_delta"] = [
+        0.0,
+        1.0,
+    ]
+    with pytest.raises(ValueError, match="schema"):
+        validate_protocol(candidate, mode="confirmed")
+
+
+@pytest.mark.parametrize(
+    ("minimum", "maximum"),
+    [
+        (1.0, 1.0),
+        (2.0, 1.0),
+    ],
+)
+def test_activity_weight_minimum_must_be_strictly_below_maximum(frozen_protocol, minimum, maximum):
+    candidate = deepcopy(frozen_protocol)
+    candidate["status"] = "confirmed"
+    parameters = candidate["dynamics"]["activity_weights"]["parameters"]
+    parameters["minimum"] = minimum
+    parameters["maximum"] = maximum
+    with pytest.raises(
+        ValueError,
+        match=r"dynamics\.activity_weights\.parameters\.minimum.*maximum",
+    ):
+        validate_protocol(candidate, mode="confirmed")
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "weight_gini_range",
+        "realized_activation_gini_range",
+        "top_1_percent_share_range",
+        "top_10_percent_share_range",
+        "zero_activation_rate_range",
+        "cross_sweep_cv_range",
+    ],
+)
+def test_activity_calibration_ranges_require_ordered_bounds(frozen_protocol, field):
+    candidate = deepcopy(frozen_protocol)
+    candidate["status"] = "confirmed"
+    candidate["dynamics"]["activity_weights"]["calibration_targets"][field] = [0.8, 0.2]
+    with pytest.raises(
+        ValueError,
+        match=rf"dynamics\.activity_weights\.calibration_targets\.{field}",
+    ):
+        validate_protocol(candidate, mode="confirmed")
 
 
 def test_every_formal_required_path_is_present_and_enforced(
@@ -870,9 +1062,21 @@ def test_schema_override_is_additive_and_identity_checked(
 
 def test_human_generated_summary_matches_machine_projection(protocol):
     validate_human_protocol_sync(protocol, HUMAN_PROTOCOL_PATH)
-    assert f"execution_hash: {canonical_protocol_hash(protocol)}" in HUMAN_PROTOCOL_PATH.read_text(
-        encoding="utf-8"
-    )
+    text = HUMAN_PROTOCOL_PATH.read_text(encoding="utf-8")
+    assert f"execution_hash: {canonical_protocol_hash(protocol)}" in text
+    assert "primary_estimand_id: P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT" in text
+    assert "P1_SECONDARY_CONTINUITY_WS_SHADOW_MODERATION" in text
+    assert "primary: private_state" in text
+    assert "activation_mode: weighted_random_sequential_with_replacement" in text
+    assert "feed_message_capacity: UNRESOLVED[P1_MAX_NEIGHBORS]" in text
+    assert "event_identity: run_id_plus_event_ordinal" in text
+    assert "resume_cursor: next_event_ordinal" in text
+
+
+def test_human_protocol_does_not_claim_phase4b_machine_migration_is_pending():
+    text = HUMAN_PROTOCOL_PATH.read_text(encoding="utf-8")
+    assert "generated summary/schema尚未扩展" not in text
+    assert "summary仍显示旧continuity DiD和旧outcome" not in text
 
 
 @pytest.mark.parametrize("layout", ["duplicate", "missing_begin", "missing_end", "reversed"])

@@ -55,13 +55,13 @@ last-verified: 2026-07-29
 | P1_INVALID_GRAPH_RULE | 非法参数/图处理 | 已确认运行时`fail`且不得修边/取巨分量/重抽；冻结前只按预注册确定性候选seed序列筛选并保存失败attempt，见`D-2026-07-29-07`、`DR-P1-069` | 用户+实现+方法会审 | Phase 4 前 | network.on_invalid |
 | P1_ACTIVATION_MODE | 激活方式 | 已确认固定WS上的异质加权随机顺序激活；事件严格串行读取前一成功提交状态，失败事件不得改变状态或游标，恢复时重放同一事件；当前schema枚举不兼容，正式修订前继续fail closed，见`D-2026-07-29-08`、`D-2026-07-29-18`、`DR-P1-071`、`DR-P1-087` | 用户+方法会审 | Phase 4 前 | dynamics.activation_mode |
 | P1_ACTIVATION_COUNT | 每轮激活数 | 已确认T=50 sweeps、每sweep当前N次有放回事件；正式N=1000即每run 50,000事件，见`D-2026-07-29-08`、`DR-P1-072` | 方法会审 | Phase 4 前 | dynamics.activation_count |
-| P1_ACTIVITY_WEIGHT_DISTRIBUTION | 长期活跃权重分布 | 已确认主模型为正截断对数正态并归一化`sum(w_i)=N`；截断Pareto为重尾敏感性、等权为机制基线；精确参数待Phase 0冻结，见`D-2026-07-29-12`、`DR-P1-081` | 用户+方法会审 | Phase 0 前 | 待schema扩展 |
-| P1_ACTIVITY_CALIBRATION_TARGETS | 活跃过程校准目标 | 已确认按权重/实现激活Gini、top 1%/10%份额、最大个体份额、有限T零激活比例、跨sweep波动和跨N稳定性做非结果导向校准；目标区间/容差/算法待冻结，见`D-2026-07-29-12`、`DR-P1-081` | 方法+成本会审 | Phase 0 前 | 待schema扩展 |
-| P1_PRIVATE_UPDATE_SEMANTICS | 私人更新与公开表达关系 | 已确认每次激活先更新私人状态，是否替换最近公开帖子由预生成`publish_flag`决定；社会曝光只读公开帖子，见`D-2026-07-29-09`、`DR-P1-078` | 用户+方法会审 | Phase 4 前 | 待schema扩展 |
-| P1_PUBLISH_PROCESS | 公开表达过程 | 已确认hurdle–Beta结构：潜水者后续q=0，非潜水者q来自Beta；精确潜水比例/Beta参数待校准，见`D-2026-07-29-11`、`DR-P1-080` | 用户+方法会审 | Phase 0 前 | 待schema扩展 |
-| P1_ATTENTION_EXPRESSION_CORRELATION | 注意与表达倾向关系 | 已确认主模型独立；正相关为预注册敏感性，具体构造/强度待冻结，见`D-2026-07-29-11`、`DR-P1-080` | 用户+方法会审 | Phase 0 前 | 待schema扩展 |
-| P1_PRIVATE_PUBLIC_OUTCOME_PRIORITY | 私人/公开分布的分析排序 | 已确认私人状态为唯一primary；公开存量、公开流量和表达偏差为强制预注册secondary，见`D-2026-07-29-10`、`DR-P1-079` | 用户+统计会审 | Phase 0 前 | 待analysis schema扩展 |
-| P1_MAX_NEIGHBORS | feed消息容量B（稳定旧ID，非邻居/来源数量） | 已确认有限未读feed及Phase 0候选程序：主候选B=6、挑战`{4,6,8}`；B限制消息条数且允许同一发送者多帖，不限制邻居/来源数。精确B与制品hash须在Phase 0B冻结；Phase 4B将schema路径迁移为`exposure.feed_message_capacity`并保留旧ID作provenance，见`D-2026-07-29-14`、`D-2026-07-29-19`、`DR-P1-083`、`DR-P1-088` | 方法+成本会审 | Phase 0B 结束 | exposure.feed_message_capacity（待schema迁移） |
+| P1_ACTIVITY_WEIGHT_DISTRIBUTION | 长期活跃权重分布 | 已确认主模型为正截断对数正态并归一化`sum(w_i)=N`；截断Pareto为重尾敏感性、等权为机制基线；精确参数待Phase 0冻结，见`D-2026-07-29-12`、`DR-P1-081` | 用户+方法会审 | Phase 0 前 | dynamics.activity_weights.parameters |
+| P1_ACTIVITY_CALIBRATION_TARGETS | 活跃过程校准目标 | 已确认按权重/实现激活Gini、top 1%/10%份额、最大个体份额、有限T零激活比例、跨sweep波动和跨N稳定性做非结果导向校准；目标区间/容差/算法待冻结，见`D-2026-07-29-12`、`DR-P1-081` | 方法+成本会审 | Phase 0 前 | dynamics.activity_weights.calibration_targets |
+| P1_PRIVATE_UPDATE_SEMANTICS | 私人更新与公开表达关系 | 已确认每次激活先更新私人状态，是否替换最近公开帖子由预生成`publish_flag`决定；社会曝光只读公开帖子，见`D-2026-07-29-09`、`DR-P1-078` | 用户+方法会审 | Phase 4 前 | state_model.private_update_semantics |
+| P1_PUBLISH_PROCESS | 公开表达过程 | 已确认hurdle–Beta结构：潜水者后续q=0，非潜水者q来自Beta；精确潜水比例/Beta参数待校准，见`D-2026-07-29-11`、`DR-P1-080` | 用户+方法会审 | Phase 0 前 | expression.publish_process.parameters |
+| P1_ATTENTION_EXPRESSION_CORRELATION | 注意与表达倾向关系 | 已确认主模型独立；正相关为预注册敏感性，具体构造/强度待冻结，见`D-2026-07-29-11`、`DR-P1-080` | 用户+方法会审 | Phase 0 前 | expression.attention_expression_correlation.main, expression.attention_expression_correlation.sensitivity |
+| P1_PRIVATE_PUBLIC_OUTCOME_PRIORITY | 私人/公开分布的分析排序 | 已确认私人状态为唯一primary；公开存量、公开流量和表达偏差为强制预注册secondary，见`D-2026-07-29-10`、`DR-P1-079` | 用户+统计会审 | Phase 0 前 | analysis.outcome_priority |
+| P1_MAX_NEIGHBORS | feed消息容量B（稳定旧ID，非邻居/来源数量） | 已确认有限未读feed及Phase 0候选程序：主候选B=6、挑战`{4,6,8}`；B限制消息条数且允许同一发送者多帖，不限制邻居/来源数。精确B与制品hash须在Phase 0B冻结；Phase 4B将schema路径迁移为`exposure.feed_message_capacity`并保留旧ID作provenance，见`D-2026-07-29-14`、`D-2026-07-29-19`、`DR-P1-083`、`DR-P1-088` | 方法+成本会审 | Phase 0B 结束 | exposure.feed_message_capacity |
 | P1_MEMORY_WINDOW | 私人更新记忆窗口K | 已确认模型只见最近K次成功私人更新，主候选K=3、挑战`{1,3,5}`；round-0不永久保留且不使用LLM摘要，完整历史只进入证据链；精确K与制品hash须在Phase 0B冻结，见`D-2026-07-29-17`、`DR-P1-086` | 用户+方法会审 | Phase 0B 结束 | memory.window |
 | P1_SOCIAL_EXPOSURE_COUNT | 社会消息数 | 已确认E1固定shadow graph、E2原WS；首激活可读取邻居round-0公开帖，之后只读游标后最新至多B条；允许同一发送者多帖，不足不回填、超量过期、空feed显式记录，见`D-2026-07-29-13`至`15`、`D-2026-07-29-19`、`DR-P1-082`至`DR-P1-084`、`DR-P1-088` | 方法会审 | Phase 4 前 | exposure.social_count |
 
@@ -75,7 +75,7 @@ last-verified: 2026-07-29
 | P1_TOP_P | top_p | Phase 0 候选；须验证实际传递 | 用户+方法会审 | Phase 0A 前 | generation.top_p |
 | P1_MAX_TOKENS | max tokens | 按结构化理由长度校准 | 方法+成本会审 | Phase 0B 前 | generation.max_tokens |
 | P1_REQUEST_SEED | 模型采样 seed | vLLM 支持性实测；不支持则标记非确定 | 运行时会审 | adapter 实现前 | generation.seed |
-| P1_MODEL_SEED_PAIRING | 模型采样seed的cell/attempt配对语义 | 明确决定是否在同matched seed的12 cells按event ordinal配对模型采样seed，以及同一event重试是否复用seed；未冻结前实现必须fail closed，不得隐式继承旧`round+agent`键 | 用户+方法+运行时会审 | adapter 实现前 | generation.seed_pairing（待schema扩展） |
+| P1_MODEL_SEED_PAIRING | 模型采样seed的cell/attempt配对语义 | 明确决定是否在同matched seed的12 cells按event ordinal配对模型采样seed，以及同一event重试是否复用seed；未冻结前实现必须fail closed，不得隐式继承旧`round+agent`键 | 用户+方法+运行时会审 | adapter 实现前 | generation.seed_pairing |
 | P1_TIMEOUT_RETRY | timeout/retry | 已确认失败事件不提交私人状态、公开帖、游标或RNG进度；重试与恢复必须保持相同event identity和预生成输入。精确timeout、错误分类、次数与Retry-After仍待运行时冻结，见`D-2026-07-29-18`、`DR-P1-087` | 运行时会审 | adapter 实现前 | runtime.timeout, runtime.retry |
 | P1_CONCURRENCY_BUDGET | 并发/显存/速率预算 | 由真实 benchmark 冻结 | 运行时+成本会审 | Phase 0B 结束 | runtime.concurrency, runtime.rate_budget |
 | P1_API_PROVIDER | API 稳健性提供方 | DashScope/其他；推荐固定 snapshot 可用者 | 用户+方法会审 | 稳健性预注册前 | robustness.api.provider |

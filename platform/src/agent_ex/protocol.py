@@ -395,6 +395,47 @@ def _validate_schema(
         raise ValueError(f"{label} validation failed at {location}: {error.message}") from error
 
 
+def _is_resolved_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def _validate_semantic_ordering(protocol: Mapping[str, Any]) -> None:
+    activity_weights = protocol["dynamics"]["activity_weights"]
+    parameters = activity_weights["parameters"]
+    if isinstance(parameters, Mapping):
+        minimum = parameters["minimum"]
+        maximum = parameters["maximum"]
+        if _is_resolved_number(minimum) and _is_resolved_number(maximum) and minimum >= maximum:
+            raise ValueError(
+                "dynamics.activity_weights.parameters.minimum must be strictly below "
+                "dynamics.activity_weights.parameters.maximum"
+            )
+
+    calibration_targets = activity_weights["calibration_targets"]
+    if not isinstance(calibration_targets, Mapping):
+        return
+    range_fields = (
+        "weight_gini_range",
+        "realized_activation_gini_range",
+        "top_1_percent_share_range",
+        "top_10_percent_share_range",
+        "zero_activation_rate_range",
+        "cross_sweep_cv_range",
+    )
+    for field in range_fields:
+        bounds = calibration_targets[field]
+        if (
+            isinstance(bounds, (list, tuple))
+            and len(bounds) == 2
+            and all(_is_resolved_number(bound) for bound in bounds)
+            and bounds[0] > bounds[1]
+        ):
+            raise ValueError(
+                f"dynamics.activity_weights.calibration_targets.{field} "
+                "lower bound must not exceed upper bound"
+            )
+
+
 def validate_protocol(
     protocol: Mapping[str, Any],
     *,
@@ -412,6 +453,7 @@ def validate_protocol(
     canonical_schema = _packaged_schema()
     _validate_finite_numbers(protocol)
     _validate_schema(protocol, canonical_schema)
+    _validate_semantic_ordering(protocol)
     if protocol["status"] != required_status[mode]:
         raise ValueError(f"{mode} mode requires status={required_status[mode]}")
     if schema_path is not None:

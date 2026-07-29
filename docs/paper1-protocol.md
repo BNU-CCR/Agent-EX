@@ -1,9 +1,22 @@
 <!-- BEGIN GENERATED PROTOCOL SUMMARY -->
 ```yaml
 protocol_id: P1-LLM-OPINION-DYNAMICS
-execution_hash: 337245b2333db0ed6c1c0c1a5b9a36b44d9cacb41c73c796cd15b30574cea1ac
-primary_outcome_id: P1_PRIMARY_DELTA_LOG_BW
-primary_estimand_id: P1_PRIMARY_CONTINUITY_WS_SHUFFLED_DID
+execution_hash: 07488808b66cf1a378d9bfd155735a3fe84f5d6b8e7d1a43878c1b8a752ed5c4
+primary_outcome_id: UNRESOLVED[P1_PRIMARY_OUTCOME]
+primary_estimand_id: P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT
+key_secondary_estimand_ids:
+- P1_SECONDARY_CONTINUITY_WS_SHADOW_MODERATION
+outcome_priority:
+  primary: private_state
+  required_secondary:
+  - public_stock
+  - public_flow
+  - expression_gap
+process_contract:
+  activation_mode: weighted_random_sequential_with_replacement
+  feed_message_capacity: UNRESOLVED[P1_MAX_NEIGHBORS]
+  event_identity: run_id_plus_event_ordinal
+  resume_cursor: next_event_ordinal
 factor_levels:
   identity:
   - identity_absent
@@ -49,15 +62,10 @@ supersedes: pilot-3.0 four-condition design for future formal Paper 1 runs; does
 last-verified: 2026-07-29
 ---
 
-> **2026-07-29修订阻断：** Phase 4A过程设计已由`D-2026-07-29-08`至`19`批准，
-> 本文人类可读部分已按事件级语义修订，但当前generated summary/schema尚未扩展相应
-> 字段。因此本草案仍不代表可执行协议，formal run必须继续fail closed；不得手工修改
-> generated summary冒充机器协议已同步。
->
-> **2026-07-29方法修订阻断：** `D-2026-07-29-20`已将primary estimand改为在四个
-> persona条件上等权平均的`WS-shadow`效应，并重开单一primary outcome。页首generated
-> summary仍显示旧continuity DiD和旧outcome，因为schema/draft YAML尚未进入Phase 4B
-> 迁移；该摘要是已知过期状态，不得用于formal run。
+> **2026-07-29 Phase 4B状态：** schema、draft YAML与页首generated summary已完成
+> Phase 4A/4A.1协议迁移。当前草案仍不可用于formal run：event ordinal、private/public
+> 与checkpoint的domain记录将在Phase 4B-2迁移，且机器协议仍含未冻结研究参数、
+> `decision_provenance`尚无正式审批记录。上述任一阻断未关闭时都必须fail closed。
 
 # Paper 1 研究协议草案
 
