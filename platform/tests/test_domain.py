@@ -1,4 +1,4 @@
-from dataclasses import FrozenInstanceError
+from dataclasses import FrozenInstanceError, replace
 import json
 
 import pytest
@@ -153,6 +153,8 @@ def make_attempt(
     prompt = ({"role": "user", "content": "mock"},)
     params = {"temperature": 0.0}
     identity = {"provider": "mock", "model": "deterministic", "revision": "1"}
+    provider_metadata = {"headers": {"x-request-id": f"provider-{attempt_index}"}}
+    usage = {"prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15}
     raw = '{"stance": 4}'
     parsed = {"stance": 4, "reason": "mock"}
     terminal = status in {EventStatus.SUCCEEDED, EventStatus.FAILED}
@@ -171,6 +173,9 @@ def make_attempt(
         model_identity_hash=canonical_payload_hash(identity),
         model_seed=model_seed,
         provider_request_id=(f"provider-{attempt_index}" if terminal else None),
+        provider_metadata=provider_metadata if terminal else {},
+        provider_metadata_hash=canonical_payload_hash(provider_metadata if terminal else {}),
+        http_status=200 if status is EventStatus.SUCCEEDED else (422 if terminal else None),
         raw_response=raw if status is EventStatus.SUCCEEDED else None,
         raw_response_hash=(
             canonical_payload_hash(raw) if status is EventStatus.SUCCEEDED else None
@@ -179,6 +184,9 @@ def make_attempt(
         parsed_response_hash=(
             canonical_payload_hash(parsed) if status is EventStatus.SUCCEEDED else None
         ),
+        usage=usage if status is EventStatus.SUCCEEDED else {},
+        usage_hash=canonical_payload_hash(usage if status is EventStatus.SUCCEEDED else {}),
+        finish_reason="stop" if status is EventStatus.SUCCEEDED else None,
         error={"code": "mock_failure"} if status is EventStatus.FAILED else None,
         started_at=None if status is EventStatus.PENDING else NOW,
         finished_at=LATER if terminal else None,
@@ -226,6 +234,11 @@ def test_event_and_attempt_ids_reject_invalid_ordinals_and_indices() -> None:
         derive_event_id("run-stable", True)
     with pytest.raises(ValueError, match="attempt_index"):
         derive_attempt_id("event-stable", 0)
+
+
+def test_run_identity_rejects_whitespace_only_launch_nonce() -> None:
+    with pytest.raises(ValueError, match="launch_nonce"):
+        derive_run_id({"protocol_id": "paper1"}, 7, "   ")
 
 
 def test_schedule_v2_supports_repeated_agent_within_same_sweep() -> None:
@@ -370,6 +383,30 @@ def test_event_level_rng_requires_global_event_ordinal_and_rejects_attempt_index
         )
 
 
+@pytest.mark.parametrize(
+    "nested_coordinates",
+    [
+        {"retry": {"attempt_index": 2}},
+        {"retry_history": [{"attempt_index": 2}]},
+    ],
+)
+def test_rng_rejects_attempt_index_at_any_coordinate_depth(
+    nested_coordinates: dict[str, object],
+) -> None:
+    from agent_ex.rng import RNGProvenance
+
+    with pytest.raises(ValueError, match="attempt_index"):
+        RNGProvenance.create(
+            matched_seed=9,
+            namespace="model_sampling",
+            coordinates={
+                "artifact_kind": "request",
+                "event_ordinal": 3,
+                **nested_coordinates,
+            },
+        )
+
+
 def test_retry_provenance_reuses_model_seed_for_same_event() -> None:
     from agent_ex.rng import RNGProvenance
 
@@ -382,6 +419,29 @@ def test_retry_provenance_reuses_model_seed_for_same_event() -> None:
 
     assert first.derived_seed == retry.derived_seed
     assert "attempt_index" not in retry.coordinates
+
+
+def test_rng_typed_construction_accepts_its_own_frozen_coordinates() -> None:
+    from agent_ex.rng import RNGProvenance
+
+    provenance = RNGProvenance.create(
+        matched_seed=9,
+        namespace="model_sampling",
+        coordinates={
+            "artifact_kind": "request",
+            "event_ordinal": 3,
+            "nested": {"scope": ["common"]},
+        },
+    )
+
+    recreated = RNGProvenance.create(
+        matched_seed=provenance.matched_seed,
+        namespace=provenance.namespace,
+        coordinates=provenance.coordinates,
+    )
+
+    assert recreated == provenance
+    assert replace(provenance) == provenance
 
 
 def test_rng_rejects_unregistered_namespace() -> None:
@@ -469,6 +529,65 @@ def test_artifact_envelope_rejects_noncanonical_hashes_and_unknown_fields() -> N
         ArtifactEnvelope.from_payload(payload)
 
 
+def test_artifact_typed_construction_accepts_its_own_frozen_values() -> None:
+    from agent_ex.artifacts import ArtifactEnvelope
+    from agent_ex.rng import RNGProvenance
+
+    rng = RNGProvenance.create(
+        matched_seed=5,
+        namespace="population",
+        coordinates={"artifact_kind": "population"},
+    )
+    envelope = ArtifactEnvelope.create(
+        artifact_type="population",
+        schema_version="paper1.population.v1",
+        algorithm_id="mock.population",
+        algorithm_version="1.0.0",
+        input_hashes={"protocol": SHA_A},
+        payload={"members": [{"agent_id": "agent-0"}]},
+        rng_provenance=(rng,),
+    )
+
+    recreated = ArtifactEnvelope.create(
+        artifact_type=envelope.artifact_type,
+        schema_version=envelope.schema_version,
+        algorithm_id=envelope.algorithm_id,
+        algorithm_version=envelope.algorithm_version,
+        input_hashes=envelope.input_hashes,
+        payload=envelope.payload,
+        rng_provenance=envelope.rng_provenance,
+    )
+
+    assert recreated == envelope
+    assert replace(envelope) == envelope
+
+
+def test_artifact_create_rejects_invalid_rng_provenance_with_clear_type_error() -> None:
+    from agent_ex.artifacts import ArtifactEnvelope
+
+    with pytest.raises(TypeError, match="rng_provenance must be a tuple"):
+        ArtifactEnvelope.create(
+            artifact_type="topic",
+            schema_version="v1",
+            algorithm_id="mock",
+            algorithm_version="1",
+            input_hashes={},
+            payload={},
+            rng_provenance=[],  # type: ignore[arg-type]
+        )
+
+    with pytest.raises(TypeError, match="rng_provenance must contain RNGProvenance"):
+        ArtifactEnvelope.create(
+            artifact_type="topic",
+            schema_version="v1",
+            algorithm_id="mock",
+            algorithm_version="1",
+            input_hashes={},
+            payload={},
+            rng_provenance=("not-provenance",),  # type: ignore[arg-type]
+        )
+
+
 def test_event_status_contains_only_runtime_state_chain_values() -> None:
     assert {status.value for status in EventStatus} == {
         "pending",
@@ -499,6 +618,22 @@ def test_generation_event_identity_uses_ordinal_and_schedule_coordinates_are_att
         )
 
 
+def test_generation_event_rejects_attempt_ids_not_derived_from_its_identity() -> None:
+    schedule = make_schedule(population_size=1, sweep_count=1)
+    run_spec = make_run_spec(schedule)
+    run_id = derive_run_id(run_spec, 5, "nonce")
+    event = make_event(run_id, schedule.slots[0])
+
+    with pytest.raises(ValueError, match="attempt_ids.*event_id"):
+        GenerationEvent(
+            **{
+                **event.to_payload(),
+                "status": EventStatus.SUCCEEDED,
+                "attempt_ids": ("attempt-forged",),
+            }
+        )
+
+
 def test_generation_attempt_retries_keep_event_identity_and_model_seed() -> None:
     event_id = derive_event_id("run-stable", 0)
     first = make_attempt(
@@ -513,6 +648,65 @@ def test_generation_attempt_retries_keep_event_identity_and_model_seed() -> None
     assert first.event_id == second.event_id
     assert first.model_seed == second.model_seed
     assert first.attempt_id != second.attempt_id
+
+
+def test_generation_attempt_restores_provider_response_evidence_contract() -> None:
+    attempt = make_attempt(derive_event_id("run-stable", 0), "exposure-0")
+    payload = attempt.to_payload()
+
+    assert payload["provider_metadata"] == {"headers": {"x-request-id": "provider-1"}}
+    assert payload["provider_metadata_hash"] == canonical_payload_hash(payload["provider_metadata"])
+    assert payload["http_status"] == 200
+    assert payload["usage"] == {
+        "prompt_tokens": 10,
+        "completion_tokens": 5,
+        "total_tokens": 15,
+    }
+    assert payload["usage_hash"] == canonical_payload_hash(payload["usage"])
+    assert payload["finish_reason"] == "stop"
+
+
+def test_generation_attempt_rejects_empty_model_identity() -> None:
+    attempt = make_attempt(derive_event_id("run-stable", 0), "exposure-0")
+
+    with pytest.raises(ValueError, match="model_identity"):
+        replace(
+            attempt,
+            model_identity={},
+            model_identity_hash=canonical_payload_hash({}),
+        )
+
+
+def test_failed_attempt_preserves_real_provider_response_without_parsed_success() -> None:
+    succeeded = make_attempt(derive_event_id("run-stable", 0), "exposure-0")
+    raw_error = '{"choices":[{"message":{"content":"not valid JSON contract"}}]}'
+    failed = replace(
+        succeeded,
+        status=EventStatus.FAILED,
+        raw_response=raw_error,
+        raw_response_hash=canonical_payload_hash(raw_error),
+        parsed_response=None,
+        parsed_response_hash=None,
+        finish_reason="stop",
+        error={"code": "parse_error", "message": "response contract failed"},
+    )
+
+    restored = GenerationAttempt.from_payload(json.loads(json.dumps(failed.to_payload())))
+
+    assert restored == failed
+    assert restored.raw_response == raw_error
+    assert restored.provider_metadata["headers"]["x-request-id"] == "provider-1"
+
+
+def test_failed_attempt_rejects_parsed_success_content() -> None:
+    succeeded = make_attempt(derive_event_id("run-stable", 0), "exposure-0")
+
+    with pytest.raises(ValueError, match="failed attempt.*parsed"):
+        replace(
+            succeeded,
+            status=EventStatus.FAILED,
+            error={"code": "format_error"},
+        )
 
 
 def test_attempt_and_event_json_round_trip_are_strict() -> None:
@@ -544,6 +738,34 @@ def test_attempt_round_trip_rejects_hash_and_attempt_identity_drift() -> None:
     payload = attempt.to_payload()
     payload["attempt_id"] = "attempt-forged"
     with pytest.raises(ValueError, match="attempt_id"):
+        GenerationAttempt.from_payload(payload)
+
+
+@pytest.mark.parametrize(
+    ("field_name", "tampered_value", "hash_field"),
+    [
+        (
+            "provider_metadata",
+            {"headers": {"x-request-id": "tampered"}},
+            "provider_metadata_hash",
+        ),
+        (
+            "usage",
+            {"prompt_tokens": 10, "completion_tokens": 6, "total_tokens": 16},
+            "usage_hash",
+        ),
+    ],
+)
+def test_attempt_round_trip_rejects_provider_evidence_hash_drift(
+    field_name: str,
+    tampered_value: dict[str, object],
+    hash_field: str,
+) -> None:
+    attempt = make_attempt(derive_event_id("run-stable", 0), "exposure-0")
+    payload = attempt.to_payload()
+    payload[field_name] = tampered_value
+
+    with pytest.raises(ValueError, match=hash_field):
         GenerationAttempt.from_payload(payload)
 
 
@@ -653,6 +875,52 @@ def test_manifest_payload_round_trip_requires_external_schedule() -> None:
     assert RunManifest.from_payload(payload, schedule=schedule) == manifest
     with pytest.raises(ValueError, match="schedule"):
         RunManifest.from_payload(payload, schedule=make_schedule(population_size=3))
+
+
+def test_manifest_payload_rejects_boolean_schedule_count() -> None:
+    schedule = make_schedule(population_size=1, sweep_count=1)
+    manifest = make_manifest(schedule, statuses=(EventStatus.SUCCEEDED,))
+    payload = json.loads(json.dumps(manifest.to_payload()))
+    payload["schedule_count"] = True
+
+    with pytest.raises(TypeError, match="schedule_count.*integer"):
+        RunManifest.from_payload(payload, schedule=schedule)
+
+
+def test_manifest_payload_rejects_object_encoded_event_ids() -> None:
+    schedule = make_schedule(population_size=1, sweep_count=1)
+    manifest = make_manifest(schedule, statuses=(EventStatus.SUCCEEDED,))
+    payload = json.loads(json.dumps(manifest.to_payload()))
+    payload["event_ids"] = {manifest.event_ids[0]: None}
+
+    with pytest.raises(TypeError, match="event_ids.*JSON array"):
+        RunManifest.from_payload(payload, schedule=schedule)
+
+
+@pytest.mark.parametrize(
+    ("field_name", "invalid_value"),
+    [
+        ("model_identity", {"provider": "mock"}),
+        (
+            "environment",
+            {
+                "python_version": "",
+                "dependency_lock_hash": SHA_B,
+                "platform": "test",
+            },
+        ),
+    ],
+)
+def test_manifest_reproducibility_identity_requires_all_nonempty_fields(
+    field_name: str, invalid_value: dict[str, object]
+) -> None:
+    schedule = make_schedule()
+    manifest = make_manifest(schedule, statuses=(EventStatus.SUCCEEDED,) * schedule.count)
+    payload = json.loads(json.dumps(manifest.to_payload()))
+    payload[field_name] = invalid_value
+
+    with pytest.raises(ValueError, match=field_name):
+        RunManifest.from_payload(payload, schedule=schedule)
 
 
 def build_graph(

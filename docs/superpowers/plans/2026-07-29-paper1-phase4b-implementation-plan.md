@@ -1,5 +1,5 @@
 ---
-status: proposed implementation plan; pending user execution approval
+status: approved implementation plan; executing; Phase 4B-0 through 4B-2 complete
 authority: Phase 4B implementation sequence
 date: 2026-07-29
 inputs:
@@ -228,12 +228,16 @@ checkpoint/recovery + N=20/100/1000整体验证
 
 ## 6. Phase 4B-2：event ordinal、领域记录v2与artifact/RNG基础
 
+**状态（2026-08-01）：** complete / independently reviewed。独立规格/反模式审查与
+代码质量复审均为`APPROVED`；最终fresh全套为`194 passed`，独立全量覆盖率为`85%`
+（1245 statements / 187 missed）。Phase 4B-3尚未开始。
+
 ### RED测试
 
 在`platform/tests/test_domain.py`先增加：
 
 - 同一Agent同一sweep可出现多次且event ID不同；
-- `event_ordinal`从1连续到`N×T`，不可重复或缺口；
+- `event_ordinal`从0连续到`N×T-1`，不可重复或缺口；
 - `derive_event_id(run_id, event_ordinal)`稳定且不读取agent/sweep；
 - schedule v2 JSON round-trip与v1明确拒绝/迁移错误；
 - recovery cursor只保存`next_event_ordinal`和当前event identity；

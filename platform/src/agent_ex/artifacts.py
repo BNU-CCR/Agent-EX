@@ -70,7 +70,7 @@ class ArtifactEnvelope:
             raise TypeError("rng_provenance must be a tuple")
         if not all(isinstance(item, RNGProvenance) for item in self.rng_provenance):
             raise TypeError("rng_provenance must contain RNGProvenance values")
-        _require_json_transport(self.payload, "artifact payload")
+        _freeze(self.payload)
         _require_sha256("output_hash", self.output_hash)
         actual_output_hash = canonical_payload_hash(self.payload)
         if self.output_hash != actual_output_hash:
@@ -105,7 +105,11 @@ class ArtifactEnvelope:
         payload: object,
         rng_provenance: tuple[RNGProvenance, ...],
     ) -> ArtifactEnvelope:
-        _require_json_transport(payload, "artifact payload")
+        if not isinstance(rng_provenance, tuple):
+            raise TypeError("rng_provenance must be a tuple")
+        if not all(isinstance(item, RNGProvenance) for item in rng_provenance):
+            raise TypeError("rng_provenance must contain RNGProvenance values")
+        _freeze(payload)
         output_hash = canonical_payload_hash(payload)
         identity = _identity_payload(
             artifact_type=artifact_type,

@@ -44,6 +44,17 @@ _EVENT_LEVEL_NAMESPACES = frozenset(
 )
 
 
+def _reject_attempt_index(value: object) -> None:
+    if isinstance(value, Mapping):
+        if "attempt_index" in value:
+            raise ValueError("attempt_index cannot participate in RNG derivation")
+        for item in value.values():
+            _reject_attempt_index(item)
+    elif isinstance(value, (list, tuple)):
+        for item in value:
+            _reject_attempt_index(item)
+
+
 def _validated_key(
     matched_seed: int,
     namespace: str,
@@ -58,13 +69,12 @@ def _validated_key(
     if "artifact_kind" not in coordinates:
         raise ValueError("coordinates must bind artifact_kind")
     _require_string("coordinates[artifact_kind]", coordinates["artifact_kind"])
-    if "attempt_index" in coordinates:
-        raise ValueError("attempt_index cannot participate in RNG derivation")
     if namespace in _EVENT_LEVEL_NAMESPACES:
         if "event_ordinal" not in coordinates:
             raise ValueError(f"{namespace} RNG coordinates must include event_ordinal")
         _require_int("coordinates[event_ordinal]", coordinates["event_ordinal"])
-    _require_json_transport(coordinates, "coordinates")
+    _freeze(coordinates)
+    _reject_attempt_index(coordinates)
     return {
         "derivation_version": RNG_DERIVATION_VERSION,
         "matched_seed": matched_seed,

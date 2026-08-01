@@ -33,7 +33,7 @@ def _require_string(field_name: str, value: Any, *, optional: bool = False) -> N
     if not isinstance(value, str):
         suffix = " or None" if optional else ""
         raise TypeError(f"{field_name} must be a string{suffix}")
-    if not value:
+    if not value.strip():
         raise ValueError(f"{field_name} must not be empty")
 
 
@@ -152,6 +152,22 @@ def _require_unique_ids(field_name: str, values: Any) -> None:
         _require_id(field_name[:-1] if field_name.endswith("s") else field_name, value)
     if len(set(values)) != len(values):
         raise ValueError(f"{field_name} must contain unique IDs")
+
+
+def _require_mapping_fields(
+    field_name: str,
+    value: Any,
+    required_fields: tuple[str, ...],
+) -> None:
+    if not isinstance(value, Mapping):
+        raise TypeError(f"{field_name} must be a mapping")
+    missing = tuple(
+        required_field for required_field in required_fields if required_field not in value
+    )
+    if missing:
+        raise ValueError(f"{field_name} must contain {', '.join(required_fields)}")
+    for required_field in required_fields:
+        _require_string(f"{field_name}[{required_field}]", value[required_field])
 
 
 def _require_evidence_uri(field_name: str, value: Any) -> None:
@@ -302,10 +318,16 @@ class GenerationAttempt:
     model_identity_hash: str
     model_seed: int
     provider_request_id: str | None
+    provider_metadata: Mapping[str, object]
+    provider_metadata_hash: str
+    http_status: int | None
     raw_response: str | None
     raw_response_hash: str | None
     parsed_response: Mapping[str, object] | None
     parsed_response_hash: str | None
+    usage: Mapping[str, object]
+    usage_hash: str
+    finish_reason: str | None
     error: Mapping[str, object] | None
     started_at: str | None
     finished_at: str | None
@@ -321,13 +343,20 @@ class GenerationAttempt:
         _require_tuple("rendered_messages", self.rendered_messages)
         if not all(isinstance(message, Mapping) for message in self.rendered_messages):
             raise TypeError("rendered_messages must contain mappings")
-        for field_name in ("request_parameters", "model_identity"):
+        for field_name in ("request_parameters", "model_identity", "provider_metadata", "usage"):
             if not isinstance(getattr(self, field_name), Mapping):
                 raise TypeError(f"{field_name} must be a mapping")
+        if not self.model_identity:
+            raise ValueError("model_identity must be a non-empty mapping")
         _require_int("model_seed", self.model_seed)
         if self.provider_request_id is not None:
             _require_id("provider_request_id", self.provider_request_id)
         _require_string("raw_response", self.raw_response, optional=True)
+        _require_string("finish_reason", self.finish_reason, optional=True)
+        if self.http_status is not None:
+            _require_int("http_status", self.http_status, minimum=100)
+            if self.http_status > 599:
+                raise ValueError("http_status must be at most 599")
         if self.parsed_response is not None and not isinstance(self.parsed_response, Mapping):
             raise TypeError("parsed_response must be a mapping or None")
         if self.error is not None and not isinstance(self.error, Mapping):
@@ -336,6 +365,8 @@ class GenerationAttempt:
             "rendered_prompt_hash",
             "request_parameters_hash",
             "model_identity_hash",
+            "provider_metadata_hash",
+            "usage_hash",
         ):
             _require_sha256(field_name, getattr(self, field_name))
         _require_sha256("raw_response_hash", self.raw_response_hash, optional=True)
@@ -349,6 +380,10 @@ class GenerationAttempt:
             self.request_parameters,
         )
         _require_payload_hash("model_identity_hash", self.model_identity_hash, self.model_identity)
+        _require_payload_hash(
+            "provider_metadata_hash", self.provider_metadata_hash, self.provider_metadata
+        )
+        _require_payload_hash("usage_hash", self.usage_hash, self.usage)
         if (self.raw_response is None) != (self.raw_response_hash is None):
             raise ValueError("raw_response and raw_response_hash must be paired")
         if (self.parsed_response is None) != (self.parsed_response_hash is None):
@@ -367,32 +402,46 @@ class GenerationAttempt:
         object.__setattr__(self, "rendered_messages", _freeze(self.rendered_messages))
         object.__setattr__(self, "request_parameters", _freeze(self.request_parameters))
         object.__setattr__(self, "model_identity", _freeze(self.model_identity))
+        object.__setattr__(self, "provider_metadata", _freeze(self.provider_metadata))
         object.__setattr__(self, "parsed_response", _freeze(self.parsed_response))
+        object.__setattr__(self, "usage", _freeze(self.usage))
         object.__setattr__(self, "error", _freeze(self.error))
 
     def _validate_status_contract(self) -> None:
         if self.status is EventStatus.PENDING:
-            if any(
-                value is not None
-                for value in (
-                    self.provider_request_id,
-                    self.raw_response,
-                    self.parsed_response,
-                    self.error,
-                    self.started_at,
-                    self.finished_at,
+            if (
+                any(
+                    value is not None
+                    for value in (
+                        self.provider_request_id,
+                        self.http_status,
+                        self.raw_response,
+                        self.parsed_response,
+                        self.finish_reason,
+                        self.error,
+                        self.started_at,
+                        self.finished_at,
+                    )
                 )
+                or self.provider_metadata
+                or self.usage
             ):
                 raise ValueError("pending attempt cannot contain execution evidence")
         elif self.status is EventStatus.IN_PROGRESS:
-            if self.started_at is None or any(
-                value is not None
-                for value in (
-                    self.raw_response,
-                    self.parsed_response,
-                    self.error,
-                    self.finished_at,
+            if (
+                self.started_at is None
+                or any(
+                    value is not None
+                    for value in (
+                        self.raw_response,
+                        self.parsed_response,
+                        self.finish_reason,
+                        self.error,
+                        self.finished_at,
+                    )
                 )
+                or self.usage
+                or self.http_status is not None
             ):
                 raise ValueError("in_progress attempt requires only started execution")
         elif self.status is EventStatus.SUCCEEDED:
@@ -400,20 +449,45 @@ class GenerationAttempt:
                 self.provider_request_id,
                 self.raw_response,
                 self.parsed_response,
+                self.finish_reason,
                 self.started_at,
                 self.finished_at,
             )
-            if any(value is None for value in required) or self.error is not None:
+            if (
+                any(value is None for value in required)
+                or self.error is not None
+                or not self.provider_metadata
+                or not self.usage
+            ):
                 raise ValueError("succeeded attempt requires complete response evidence")
+            if self.http_status is None or not 200 <= self.http_status < 300:
+                raise ValueError("succeeded attempt requires a 2xx HTTP status")
+            self._validate_usage()
         elif self.status is EventStatus.FAILED:
             if (
                 self.started_at is None
                 or self.finished_at is None
                 or not self.error
-                or self.raw_response is not None
                 or self.parsed_response is not None
             ):
-                raise ValueError("failed attempt requires timestamps and error only")
+                raise ValueError(
+                    "failed attempt requires timestamps and error without parsed success content"
+                )
+            if self.usage:
+                self._validate_usage()
+
+    def _validate_usage(self) -> None:
+        required = {"prompt_tokens", "completion_tokens", "total_tokens"}
+        if not required.issubset(self.usage):
+            raise ValueError(
+                "usage must contain prompt_tokens, completion_tokens, and total_tokens"
+            )
+        for key in required:
+            _require_int(f"usage[{key}]", self.usage[key])
+        if self.usage["total_tokens"] != (
+            self.usage["prompt_tokens"] + self.usage["completion_tokens"]
+        ):
+            raise ValueError("usage total_tokens must equal prompt plus completion tokens")
 
     def to_payload(self) -> dict[str, object]:
         return _json_ready(
@@ -432,10 +506,16 @@ class GenerationAttempt:
                 "model_identity_hash": self.model_identity_hash,
                 "model_seed": self.model_seed,
                 "provider_request_id": self.provider_request_id,
+                "provider_metadata": self.provider_metadata,
+                "provider_metadata_hash": self.provider_metadata_hash,
+                "http_status": self.http_status,
                 "raw_response": self.raw_response,
                 "raw_response_hash": self.raw_response_hash,
                 "parsed_response": self.parsed_response,
                 "parsed_response_hash": self.parsed_response_hash,
+                "usage": self.usage,
+                "usage_hash": self.usage_hash,
+                "finish_reason": self.finish_reason,
                 "error": self.error,
                 "started_at": self.started_at,
                 "finished_at": self.finished_at,
@@ -459,10 +539,16 @@ class GenerationAttempt:
             "model_identity_hash",
             "model_seed",
             "provider_request_id",
+            "provider_metadata",
+            "provider_metadata_hash",
+            "http_status",
             "raw_response",
             "raw_response_hash",
             "parsed_response",
             "parsed_response_hash",
+            "usage",
+            "usage_hash",
+            "finish_reason",
             "error",
             "started_at",
             "finished_at",
@@ -471,7 +557,7 @@ class GenerationAttempt:
             raise ValueError("attempt payload fields do not match the v2 contract")
         if type(payload["rendered_messages"]) is not list:
             raise TypeError("attempt rendered_messages must be a JSON array")
-        for field_name in ("request_parameters", "model_identity"):
+        for field_name in ("request_parameters", "model_identity", "provider_metadata", "usage"):
             if type(payload[field_name]) is not dict:
                 raise TypeError(f"attempt {field_name} must be a JSON object")
         for field_name in ("parsed_response", "error"):
@@ -520,6 +606,12 @@ class GenerationEvent:
         if not isinstance(self.status, EventStatus):
             raise TypeError("status must be an EventStatus")
         _require_unique_ids("attempt_ids", self.attempt_ids)
+        expected_attempt_ids = tuple(
+            derive_attempt_id(self.event_id, attempt_index)
+            for attempt_index in range(1, len(self.attempt_ids) + 1)
+        )
+        if self.attempt_ids != expected_attempt_ids:
+            raise ValueError("attempt_ids must be derived from event_id in one-based order")
         _require_string("failure_reason", self.failure_reason, optional=True)
         if self.status is EventStatus.PENDING and len(self.attempt_ids) > 1:
             raise ValueError("pending event may reference at most one pending attempt")
@@ -762,17 +854,16 @@ class RunManifest:
         if self.dirty != (self.diff_hash is not None):
             raise ValueError("dirty and diff_hash must be recorded consistently")
         _require_sha256("environment_lock_hash", self.environment_lock_hash)
-        if not isinstance(self.model_identity, Mapping) or not self.model_identity:
-            raise ValueError("model_identity must be a non-empty mapping")
-        if not isinstance(self.environment, Mapping):
-            raise TypeError("environment must be a mapping")
-        required_environment = {
-            "python_version",
-            "dependency_lock_hash",
-            "platform",
-        }
-        if not required_environment.issubset(self.environment):
-            raise ValueError("environment is missing reproducibility identity")
+        _require_mapping_fields(
+            "model_identity",
+            self.model_identity,
+            ("provider", "model", "revision", "runtime"),
+        )
+        _require_mapping_fields(
+            "environment",
+            self.environment,
+            ("python_version", "dependency_lock_hash", "platform"),
+        )
         _require_sha256(
             "environment[dependency_lock_hash]",
             self.environment["dependency_lock_hash"],
@@ -973,7 +1064,10 @@ class RunManifest:
         }
         if type(payload) is not dict or set(payload) != expected_fields:
             raise ValueError("manifest payload fields do not match the v2 contract")
+        if type(payload["event_ids"]) is not list:
+            raise TypeError("manifest payload event_ids must be a JSON array")
         _require_json_transport(payload, "manifest payload")
+        _require_int("manifest payload schedule_count", payload["schedule_count"], minimum=1)
         if (
             payload["schedule_hash"] != schedule.schedule_hash
             or payload["schedule_count"] != schedule.count

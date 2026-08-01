@@ -341,8 +341,8 @@
     formal fail-closed smoke及schema字节镜像均通过，两个schema的SHA-256均为
     `150A34E0D6F79A666E4FFA1104D7F1FC3FB60D757DC945EA19B5E3A855B15D3A`。4B-1
     已进入精确文件提交状态；4B-2尚未开始实现。
-  - Phase 4B-2已进入严格TDD实现，但当前仅为`in_progress / unreviewed`安全
-    checkpoint。首组RED确认旧`derive_event_id(run_id, round, agent)`与schedule v1
+  - Phase 4B-2进入严格TDD实现时先建立未审查安全checkpoint。首组RED确认旧
+    `derive_event_id(run_id, round, agent)`与schedule v1
     无法表达有放回事件；迁移后`event_ordinal`从0连续，schedule v2显式记录
     sweep/draw/agent/publish与算法版本，支持同Agent同sweep重复，并通过N=1000、
     T=50的50,000-slot轻量构造。
@@ -360,9 +360,50 @@
     protocol/installation测试保持全绿。随后补上attempt/event严格JSON round-trip、
     hash漂移和重试model-seed回归，当前全套为`177 passed`，覆盖率套件同为
     `177 passed`、总覆盖率`84%`。
-  - 当前checkpoint尚未经过独立规格审查或代码质量审查，不得标记4B-2 complete。
-    下一步应先补强剩余fail-closed边界与覆盖率（尤其domain异常分支），再执行独立
-    规格/质量复审；审查关闭后才能更新为complete并进入4B-3。
+  - 已在台式机以Codex bundled Python 3.12.13重建`platform/.venv`，按
+    `requirements-dev.lock`安装17项精确版本依赖；`pip check`通过，lock SHA-256为
+    `13878C75C775657BBFB0896AE858645C0FE37CC4C3717EDD5FBAD4833B6FD292`。台式机fresh
+    基线精确复现`177 passed in 11.35s`与总覆盖率`84%`。
+  - 本轮继续以五组可复现RED→GREEN补强domain失败关闭：拒绝不由event identity派生的
+    attempt IDs；恢复manifest模型/环境复现身份必需字段及非空字符串；拒绝JSON boolean
+    冒充单槽`schedule_count`；拒绝object键冒充`event_ids`数组；拒绝纯空白
+    `launch_nonce`。定向domain回归为`41 passed`。
+  - 同步修正Phase 4B计划中的低层笔误：`event_ordinal`应从0连续到`N×T-1`，与
+    Phase 4A权威规格、代码和测试保持一致；attempt index仍从1开始，二者不得混淆。
+  - 本轮fresh验收得到`183 passed in 11.62s`；覆盖率套件同为`183 passed`，总覆盖率
+    从`84%`提高至`85%`。Ruff check、Ruff format check、`pip check`与
+    `git diff --check`均通过。
+  - 独立代码质量审查发现P1：`rng.py`只拒绝顶层`attempt_index`，嵌套object/array
+    可改变同一event的model seed。两个参数化回归先得到预期RED：`2 failed`且均为
+    `DID NOT RAISE ValueError`；最小GREEN在严格JSON transport校验后递归拒绝任意
+    层级该键。定向RNG回归为`7 passed`，domain回归为`43 passed`。当时4B-2尚未
+    关闭并等待该审查项复核，未进入4B-3。修复后的fresh完整套件与
+    覆盖率套件均为`185 passed`，总覆盖率`85%`；Ruff check、Ruff format check、
+    `pip check`与`git diff --check`均通过。
+  - 当时checkpoint尚未通过独立规格审查与代码质量复核，因此未标记4B-2 complete。
+    fail-closed补强后进入独立规格/反模式审查与代码质量复审；最终关闭情况见下方
+    Phase 4B-2收口记录。
+  - Phase 4B-2代码质量审查的四项修订已按严格TDD实现；当时继续等待复审。
+    定向RED为`7 failed`，覆盖provider响应证据字段缺失、FAILED真实响应被拒、冻结typed值
+    无法复用，以及非法`rng_provenance`错误类型不明确；最小GREEN为`7 passed`。
+    `GenerationAttempt`现恢复4B-1的provider metadata/headers、HTTP status、usage、
+    finish reason及对应hash，并拒绝空`model_identity`；FAILED允许保留真实raw response
+    及元数据但禁止parsed success。RNG/Artifact typed构造现支持自身冻结值及
+    `dataclasses.replace`，而`from_payload`严格JSON边界不变；artifact工厂在派生ID前明确
+    校验provenance类型。实现代理的fresh全套为`194 passed in 12.92s`；其coverage
+    coverage运行报告使用了与最终独立全量验证不同的统计口径，不作为4B-2最终
+    覆盖率。待复审关闭前未进入4B-3。
+  - Phase 4B-2独立规格审查与反模式审查均为`APPROVED`，独立代码质量复审为
+    `APPROVED`。RNG嵌套`attempt_index` P1以及provider证据、FAILED响应保存、冻结typed
+    值复用、provenance错误合同四项质量修订均已关闭。
+  - Phase 4B-2最终fresh验证为`194 passed`，无skip、无xfail；独立全量coverage为
+    `1245 statements / 187 missed / 85%`。Ruff check、Ruff format check、`pip check`、
+    `git diff --check`、schema镜像、draft gate和formal fail-closed gate均通过。
+  - 文档收口前验证快照的Git diff SHA-256为
+    `481BFA0FB75EEFC9E438732B9CF3A93FC889BB19DFA061E9ACAD545DC215B081`；这是
+    pre-documentation verification hash，文档修改后会变化，不是最终提交hash。
+  - Phase 4B-2状态已更新为`complete / independently reviewed`。下一工作包是4B-3，
+    但4B-3尚未开始；本次收口未新增研究参数，也未填补任何`UNRESOLVED[...]`。
 - 边界：
   - 模块2虽已批准，但population、persona及其他Phase 4A模块尚未完成；当前不实现
     topic package，也不修改正式实验代码。
