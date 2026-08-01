@@ -89,8 +89,19 @@ def frozen_protocol(protocol) -> dict[str, object]:
         "/network/directed": False,
         "/network/connectivity": "connected",
         "/network/on_invalid": "fail",
+        "/network/library/version": "3.6.1",
         "/network/ws/k": 6,
         "/network/ws/p": 0.1,
+        "/network/ws/builder_algorithm": "paper1.mock_networkx_watts_strogatz@1.0.0",
+        "/network/shadow/builder_algorithm": (
+            "paper1.mock_forbidden_edge_connected_double_swap@1.0.0"
+        ),
+        "/network/shadow/max_attempts": 3,
+        "/network/shadow/trial_budget_per_edge": 1000,
+        "/network/structure_gate/algorithm_version": "1.0.0",
+        "/network/structure_gate/ring_lattice_algorithm": ("networkx.watts_strogatz_graph_p0"),
+        "/network/structure_gate/random_null_algorithm": "networkx.gnm_random_graph",
+        "/network/structure_gate/random_null_replicates": 3,
         "/dynamics/activation_mode": "weighted_random_sequential_with_replacement",
         "/dynamics/activation_count": 1000,
         "/dynamics/activity_weights/parameters": {
@@ -357,6 +368,23 @@ def test_draft_contains_registered_markers_instead_of_coder_defaults(protocol):
         "/population/fields": "UNRESOLVED[P1_POPULATION_FIELDS]",
         "/initialization/reason": "UNRESOLVED[P1_INITIAL_REASON_SOURCE]",
         "/network/directed": "UNRESOLVED[P1_GRAPH_DIRECTION]",
+        "/network/library/version": "UNRESOLVED[P1_NETWORK_LIBRARY_VERSION]",
+        "/network/ws/builder_algorithm": "UNRESOLVED[P1_WS_BUILDER_ALGORITHM]",
+        "/network/shadow/builder_algorithm": "UNRESOLVED[P1_SHADOW_BUILDER_ALGORITHM]",
+        "/network/shadow/max_attempts": "UNRESOLVED[P1_SHADOW_MAX_ATTEMPTS]",
+        "/network/shadow/trial_budget_per_edge": ("UNRESOLVED[P1_SHADOW_TRIAL_BUDGET_PER_EDGE]"),
+        "/network/structure_gate/algorithm_version": (
+            "UNRESOLVED[P1_STRUCTURE_GATE_ALGORITHM_VERSION]"
+        ),
+        "/network/structure_gate/ring_lattice_algorithm": (
+            "UNRESOLVED[P1_RING_LATTICE_BASELINE_ALGORITHM]"
+        ),
+        "/network/structure_gate/random_null_algorithm": (
+            "UNRESOLVED[P1_RANDOM_GRAPH_NULL_ALGORITHM]"
+        ),
+        "/network/structure_gate/random_null_replicates": (
+            "UNRESOLVED[P1_RANDOM_GRAPH_NULL_REPLICATES]"
+        ),
         "/dynamics/activation_mode": "weighted_random_sequential_with_replacement",
         "/dynamics/activity_weights/parameters": ("UNRESOLVED[P1_ACTIVITY_WEIGHT_DISTRIBUTION]"),
         "/dynamics/activity_weights/calibration_targets": (
@@ -1071,6 +1099,9 @@ def test_human_generated_summary_matches_machine_projection(protocol):
     assert "feed_message_capacity: UNRESOLVED[P1_MAX_NEIGHBORS]" in text
     assert "event_identity: run_id_plus_event_ordinal" in text
     assert "resume_cursor: next_event_ordinal" in text
+    assert "library_version: UNRESOLVED[P1_NETWORK_LIBRARY_VERSION]" in text
+    assert "ws_builder_algorithm: UNRESOLVED[P1_WS_BUILDER_ALGORITHM]" in text
+    assert "random_null_replicates: UNRESOLVED[P1_RANDOM_GRAPH_NULL_REPLICATES]" in text
 
 
 def test_human_protocol_does_not_claim_phase4b_machine_migration_is_pending():

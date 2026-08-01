@@ -1,4 +1,4 @@
-# Exact Python 3.12 development/runtime closure for Agent-EX Phase 3A.
+# Exact Python 3.12 development/runtime closure through Agent-EX Phase 4B-4.
 # SHA-256 may be computed with: Get-FileHash requirements-dev.lock -Algorithm SHA256
 attrs==26.1.0
 colorama==0.4.6
@@ -6,6 +6,7 @@ coverage==7.15.2
 iniconfig==2.3.0
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
+networkx==3.6.1
 packaging==26.2
 pluggy==1.6.0
 Pygments==2.20.0

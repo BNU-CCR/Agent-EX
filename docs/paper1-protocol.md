@@ -1,7 +1,7 @@
 <!-- BEGIN GENERATED PROTOCOL SUMMARY -->
 ```yaml
 protocol_id: P1-LLM-OPINION-DYNAMICS
-execution_hash: 07488808b66cf1a378d9bfd155735a3fe84f5d6b8e7d1a43878c1b8a752ed5c4
+execution_hash: 89c97f896d7c6a0490e04c223e812df648499cc5ca71b9978fedaacc68f0b0c5
 primary_outcome_id: UNRESOLVED[P1_PRIMARY_OUTCOME]
 primary_estimand_id: P1_PRIMARY_WS_SHADOW_AVERAGE_EFFECT
 key_secondary_estimand_ids:
@@ -17,6 +17,16 @@ process_contract:
   feed_message_capacity: UNRESOLVED[P1_MAX_NEIGHBORS]
   event_identity: run_id_plus_event_ordinal
   resume_cursor: next_event_ordinal
+network_freeze_contract:
+  library_version: UNRESOLVED[P1_NETWORK_LIBRARY_VERSION]
+  ws_builder_algorithm: UNRESOLVED[P1_WS_BUILDER_ALGORITHM]
+  shadow_builder_algorithm: UNRESOLVED[P1_SHADOW_BUILDER_ALGORITHM]
+  shadow_max_attempts: UNRESOLVED[P1_SHADOW_MAX_ATTEMPTS]
+  shadow_trial_budget_per_edge: UNRESOLVED[P1_SHADOW_TRIAL_BUDGET_PER_EDGE]
+  structure_gate_algorithm_version: UNRESOLVED[P1_STRUCTURE_GATE_ALGORITHM_VERSION]
+  ring_lattice_algorithm: UNRESOLVED[P1_RING_LATTICE_BASELINE_ALGORITHM]
+  random_null_algorithm: UNRESOLVED[P1_RANDOM_GRAPH_NULL_ALGORITHM]
+  random_null_replicates: UNRESOLVED[P1_RANDOM_GRAPH_NULL_REPLICATES]
 factor_levels:
   identity:
   - identity_absent

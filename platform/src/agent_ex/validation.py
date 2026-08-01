@@ -43,6 +43,7 @@ def validate_human_protocol_reference(protocol: Mapping[str, Any]) -> None:
 def human_protocol_projection(protocol: Mapping[str, Any]) -> dict[str, Any]:
     design = protocol["design"]
     model = protocol["model"]
+    network = protocol["network"]
     from .protocol import canonical_protocol_hash
 
     return {
@@ -57,6 +58,17 @@ def human_protocol_projection(protocol: Mapping[str, Any]) -> dict[str, Any]:
             "feed_message_capacity": protocol["exposure"]["feed_message_capacity"],
             "event_identity": protocol["event_model"]["identity"],
             "resume_cursor": protocol["checkpoint"]["resume_cursor"],
+        },
+        "network_freeze_contract": {
+            "library_version": network["library"]["version"],
+            "ws_builder_algorithm": network["ws"]["builder_algorithm"],
+            "shadow_builder_algorithm": network["shadow"]["builder_algorithm"],
+            "shadow_max_attempts": network["shadow"]["max_attempts"],
+            "shadow_trial_budget_per_edge": network["shadow"]["trial_budget_per_edge"],
+            "structure_gate_algorithm_version": network["structure_gate"]["algorithm_version"],
+            "ring_lattice_algorithm": network["structure_gate"]["ring_lattice_algorithm"],
+            "random_null_algorithm": network["structure_gate"]["random_null_algorithm"],
+            "random_null_replicates": network["structure_gate"]["random_null_replicates"],
         },
         "factor_levels": design["factor_levels"],
         "cell_ids": [cell["id"] for cell in design["cells"]],

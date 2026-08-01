@@ -9,6 +9,7 @@ description = "Reproducible simulation platform for Agent-EX Paper 1."
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "jsonschema==4.26.0",
+    "networkx==3.6.1",
     "PyYAML==6.0.3",
 ]
 

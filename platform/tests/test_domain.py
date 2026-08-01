@@ -1060,7 +1060,11 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "TopicPackage",
         "assign_initial_reasons",
         "assign_initial_stances",
+        "build_agent_node_mapping",
         "build_population_artifact",
+        "build_shadow_artifact",
+        "build_structural_gate_artifact",
+        "build_ws_artifact",
         "canonical_payload_hash",
         "canonical_protocol_hash",
         "derive_attempt_id",
@@ -1078,6 +1082,9 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "validate_human_protocol_reference",
         "validate_human_protocol_sync",
         "validate_persona_factor_diff",
+        "validate_shadow_artifact",
+        "validate_structural_gate_artifact",
+        "validate_ws_artifact",
         "validate_protocol",
     }
 

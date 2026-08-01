@@ -26,8 +26,15 @@
     "/persona/identity_present_continuity_absent/template_sha256",
     "/persona/identity_present_continuity_present/template_id",
     "/persona/identity_present_continuity_present/template_sha256",
-    "/network/directed", "/network/connectivity", "/network/on_invalid", "/network/ws/k",
-    "/network/ws/p", "/dynamics/activation_mode", "/dynamics/activation_count",
+    "/network/directed", "/network/connectivity", "/network/on_invalid",
+    "/network/library/version", "/network/ws/k", "/network/ws/p",
+    "/network/ws/builder_algorithm", "/network/shadow/builder_algorithm",
+    "/network/shadow/max_attempts", "/network/shadow/trial_budget_per_edge",
+    "/network/structure_gate/algorithm_version",
+    "/network/structure_gate/ring_lattice_algorithm",
+    "/network/structure_gate/random_null_algorithm",
+    "/network/structure_gate/random_null_replicates",
+    "/dynamics/activation_mode", "/dynamics/activation_count",
     "/dynamics/activity_weights/parameters",
     "/dynamics/activity_weights/calibration_targets",
     "/state_model/private_update_semantics",
@@ -192,24 +199,42 @@
       }, "additionalProperties": false
     },
     "network": {
-      "type": "object", "required": ["type", "directed", "self_loops", "connectivity", "on_invalid", "ws", "shadow"],
+      "type": "object", "required": ["type", "directed", "self_loops", "connectivity", "on_invalid", "library", "ws", "shadow", "structure_gate"],
       "properties": {
         "type": {"const": "watts_strogatz"}, "self_loops": {"const": false},
         "directed": {"x-decision-id": "P1_GRAPH_DIRECTION", "oneOf": [{"type": "boolean"}, {"const": "UNRESOLVED[P1_GRAPH_DIRECTION]"}]},
         "connectivity": {"x-decision-id": "P1_GRAPH_CONNECTIVITY", "oneOf": [{"enum": ["connected", "giant_component"]}, {"const": "UNRESOLVED[P1_GRAPH_CONNECTIVITY]"}]},
         "on_invalid": {"x-decision-id": "P1_INVALID_GRAPH_RULE", "oneOf": [{"const": "fail"}, {"const": "UNRESOLVED[P1_INVALID_GRAPH_RULE]"}]},
-        "ws": {"type": "object", "required": ["k", "p"], "properties": {
+        "library": {"type": "object", "required": ["name", "version"], "properties": {
+          "name": {"const": "networkx"},
+          "version": {"x-decision-id": "P1_NETWORK_LIBRARY_VERSION", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_NETWORK_LIBRARY_VERSION]"}]}
+        }, "additionalProperties": false},
+        "ws": {"type": "object", "required": ["k", "p", "builder_algorithm"], "properties": {
           "k": {"x-decision-id": "P1_WS_K", "oneOf": [{"type": "integer", "minimum": 2}, {"const": "UNRESOLVED[P1_WS_K]"}]},
-          "p": {"x-decision-id": "P1_WS_P", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_WS_P]"}]}
+          "p": {"x-decision-id": "P1_WS_P", "oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNRESOLVED[P1_WS_P]"}]},
+          "builder_algorithm": {"x-decision-id": "P1_WS_BUILDER_ALGORITHM", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_WS_BUILDER_ALGORITHM]"}]}
         }, "additionalProperties": false},
         "shadow": {
-          "type": "object", "required": ["fixed_for_run", "degree_matching", "forbid_ws_edges", "connectivity", "on_invalid"],
+          "type": "object", "required": ["fixed_for_run", "degree_matching", "forbid_ws_edges", "connectivity", "on_invalid", "builder_algorithm", "max_attempts", "trial_budget_per_edge"],
           "properties": {
             "fixed_for_run": {"const": true},
             "degree_matching": {"const": "per_node_exact"},
             "forbid_ws_edges": {"const": true},
             "connectivity": {"const": "connected"},
-            "on_invalid": {"const": "fail"}
+            "on_invalid": {"const": "fail"},
+            "builder_algorithm": {"x-decision-id": "P1_SHADOW_BUILDER_ALGORITHM", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_SHADOW_BUILDER_ALGORITHM]"}]},
+            "max_attempts": {"x-decision-id": "P1_SHADOW_MAX_ATTEMPTS", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_SHADOW_MAX_ATTEMPTS]"}]},
+            "trial_budget_per_edge": {"x-decision-id": "P1_SHADOW_TRIAL_BUDGET_PER_EDGE", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_SHADOW_TRIAL_BUDGET_PER_EDGE]"}]}
+          }, "additionalProperties": false
+        },
+        "structure_gate": {
+          "type": "object", "required": ["algorithm_version", "ring_lattice_algorithm", "random_null_algorithm", "random_null_replicates", "disconnected_null_rule"],
+          "properties": {
+            "algorithm_version": {"x-decision-id": "P1_STRUCTURE_GATE_ALGORITHM_VERSION", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_STRUCTURE_GATE_ALGORITHM_VERSION]"}]},
+            "ring_lattice_algorithm": {"x-decision-id": "P1_RING_LATTICE_BASELINE_ALGORITHM", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_RING_LATTICE_BASELINE_ALGORITHM]"}]},
+            "random_null_algorithm": {"x-decision-id": "P1_RANDOM_GRAPH_NULL_ALGORITHM", "oneOf": [{"$ref": "#/$defs/nonempty"}, {"const": "UNRESOLVED[P1_RANDOM_GRAPH_NULL_ALGORITHM]"}]},
+            "random_null_replicates": {"x-decision-id": "P1_RANDOM_GRAPH_NULL_REPLICATES", "oneOf": [{"type": "integer", "minimum": 1}, {"const": "UNRESOLVED[P1_RANDOM_GRAPH_NULL_REPLICATES]"}]},
+            "disconnected_null_rule": {"const": "fail"}
           }, "additionalProperties": false
         }
       }, "additionalProperties": false

@@ -25,6 +25,8 @@ _REGISTERED_NAMESPACES = frozenset(
         "ws_graph",
         "agent_node_mapping",
         "shadow_graph",
+        "structure_ring_lattice",
+        "structure_random_null",
         "attention",
         "expression",
         "activation",

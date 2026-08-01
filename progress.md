@@ -492,3 +492,45 @@
   - Phase 4B-3状态已更新为`complete / independently reviewed`。1,000条理由与其他
     fixture值继续明确为`mock_only / not_frozen`，本轮未填补任何`UNRESOLVED[...]`；
     Phase 4B-4尚未开始。
+  - Phase 4B-4按严格TDD进入实现。第一组RED在收集期得到
+    `ModuleNotFoundError: agent_ex.network`；随后实现并公开导出WS、shadow、Agent-node
+    mapping五个最小接口。WS专项先达到`13 passed`，network专项首轮为`19 passed`。
+  - 工程gate将NetworkX 3.6.1写入Python 3.12锁文件并实际安装；初稿曾以独立工程ID
+    登记版本、WS/shadow算法和mock预算。审查已判定该旁路无效并迁移为schema正式
+    `P1_*`决策ID；draft继续为`UNRESOLVED[P1_*]`，未把工程候选升级为研究冻结。
+  - shadow采用版本化、有界、确定性的forbidden-edge connected double-swap：从WS副本
+    逐步消除全部WS边，每个接受交换即时验证连通，始终保持简单图与逐节点度数；预算
+    耗尽立即fail closed。后续三组hash/downstream回归先得到`3 failed`，补充下游绕过
+    完整WS验证得到`1 failed`，修复后分别为`3 passed`与`1 passed`。matched-seed混搭
+    回归先得到`1 failed`，修复后相关范围`4 passed`；shadow与mapping现在都拒绝跨seed
+    输入。
+  - N=1000、`k={6,10,20}`、`p={.02,.05,.10}`、三个预登记mock seeds的27张WS纯结构
+    gate全部连通且边数严格为`N*k/2`，无失败seed。锚点`k=10,p=.05`三seed的聚类为
+    `.5620/.5621/.5741`，平均最短路为`5.086/5.059/5.247`，直径均为9。对应三张shadow
+    均首attempt成功、度数逐节点匹配、全连通且WS边交集为0；耗时20.77至21.80秒。
+    gate只读结构、连通、耗时与制品大小，未读取意见或调用LLM。
+  - 首次fresh全套为`285 passed, 12 failed`：旧精确公开API集合缺五个新接口，且最初
+    使用未获协议链覆盖的工程ID污染schema decision ID集合。首轮临时隔离后
+    protocol/wheel/API定向为`144 passed`；随后审查要求并已完成正式`P1_*`迁移。修复后的fresh全套为
+    `299 passed in 42.91s`；coverage同为`299 passed`，`2081 statements / 297 missed /
+    86%`，新network模块`85%`。
+  - Phase 4B-4五类P1 review fixes已按严格TDD实现：mapping三制品绑定、正式`P1_*`
+    schema/QA/YAML迁移、纯结构D-07 gate、WS严格审计与shadow严格审计。network定向
+    `39 passed`、protocol `139 passed`；分拆fresh全套合计`314 passed`，coverage `86%`。
+    当前保持`in_progress / review fixes pending re-review`；未提交、未进入Phase 4B-5。
+  - Phase 4B-4后续multi-attempt audit与代码质量修复均按严格TDD关闭。独立规格、反模式与
+    代码质量审查最终均为`APPROVED`，无开放审查项。最终network专项为`43 passed`，
+    protocol/schema gates为`143 passed`；连续fresh全套为`318 passed in 31.25s`，无skip/xfail；
+    coverage套件为`318 passed in 97.43s`，`2237 statements / 323 missed / 86%`，
+    `network.py`为`84%`。
+  - N=1000锚点由独立验证重算通过：WS、shadow、D-07结构gate及绑定population、round-0与
+    WS的Agent-node mapping均通过builder/validator合同。shadow output hash相较早期checkpoint
+    的变化只来自新增完整multi-attempt audit；图结构和交换计数未变。全部制品与hash仍为
+    `mock_only / not_frozen`工程证据，所有精确`P1_*`机器值继续保持`UNRESOLVED[...]`，
+    不构成formal freeze。
+  - 完成文档更新前的已验证代码/测试工作树快照SHA-256为
+    `B19E18908FEA12EC605310A096CCFC9A0A58FB3CEF9A9F6DED4766B55A1661DB`。这是
+    pre-documentation verification hash；文档更新后最终release verifier会产生新快照，
+    它不是提交hash。
+  - Phase 4B-4现已关闭为`complete / independently reviewed`。本轮未调用真实模型、未填补
+    `UNRESOLVED[...]`、未冻结formal参数；Phase 4B-5尚未开始。

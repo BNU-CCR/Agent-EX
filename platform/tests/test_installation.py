@@ -28,6 +28,19 @@ def test_imports_resolve_to_current_source_tree() -> None:
         )
 
 
+def test_phase4b4_network_interfaces_are_public() -> None:
+    expected = {
+        "build_ws_artifact",
+        "build_shadow_artifact",
+        "build_agent_node_mapping",
+        "validate_ws_artifact",
+        "validate_shadow_artifact",
+    }
+
+    assert expected <= set(agent_ex.__all__)
+    assert all(callable(getattr(agent_ex, name)) for name in expected)
+
+
 def test_packaged_schema_matches_canonical_source() -> None:
     canonical_schema = SOURCE_PACKAGE / "schemas" / "paper1.schema.json"
     packaged_schema = resources.files("agent_ex.schemas").joinpath("paper1.schema.json")

@@ -82,15 +82,28 @@ network:
   self_loops: false
   connectivity: UNRESOLVED[P1_GRAPH_CONNECTIVITY]
   on_invalid: UNRESOLVED[P1_INVALID_GRAPH_RULE]
+  library:
+    name: networkx
+    version: UNRESOLVED[P1_NETWORK_LIBRARY_VERSION]
   ws:
     k: UNRESOLVED[P1_WS_K]
     p: UNRESOLVED[P1_WS_P]
+    builder_algorithm: UNRESOLVED[P1_WS_BUILDER_ALGORITHM]
   shadow:
     fixed_for_run: true
     degree_matching: per_node_exact
     forbid_ws_edges: true
     connectivity: connected
     on_invalid: fail
+    builder_algorithm: UNRESOLVED[P1_SHADOW_BUILDER_ALGORITHM]
+    max_attempts: UNRESOLVED[P1_SHADOW_MAX_ATTEMPTS]
+    trial_budget_per_edge: UNRESOLVED[P1_SHADOW_TRIAL_BUDGET_PER_EDGE]
+  structure_gate:
+    algorithm_version: UNRESOLVED[P1_STRUCTURE_GATE_ALGORITHM_VERSION]
+    ring_lattice_algorithm: UNRESOLVED[P1_RING_LATTICE_BASELINE_ALGORITHM]
+    random_null_algorithm: UNRESOLVED[P1_RANDOM_GRAPH_NULL_ALGORITHM]
+    random_null_replicates: UNRESOLVED[P1_RANDOM_GRAPH_NULL_REPLICATES]
+    disconnected_null_rule: fail
 dynamics:
   activation_mode: weighted_random_sequential_with_replacement
   activation_count: 1000

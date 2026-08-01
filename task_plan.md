@@ -5,7 +5,8 @@
 
 ## 当前阶段
 阶段 4B实施：执行计划已获用户整包批准；4B-0、4B-1、4B-2已完成并通过独立审查；
-4B-3已完成并通过独立规格、反模式与代码质量审查；4B-4尚未开始
+4B-3与4B-4均已完成并通过独立规格、反模式与代码质量审查；4B-4状态为
+`complete / independently reviewed`，Phase 4B-5尚未开始
 
 ## 各阶段
 
@@ -158,7 +159,10 @@
   （complete / independently reviewed；规格/反模式与代码质量审查均`APPROVED`；最终
   fresh全套274 passed且无skip/xfail，覆盖率1817 statements / 257 missed / 86%；
   fixture继续为mock-only/not-frozen）
-- [ ] Phase 4B-4：实现WS/shadow图与node mapping
+- [x] Phase 4B-4：实现WS/shadow图与node mapping
+  （`complete / independently reviewed`；规格、反模式与代码质量审查均`APPROVED`；最终
+  连续fresh全套318 passed，覆盖率2237 statements / 323 missed / 86%；所有精确`P1_*`
+  机器值仍为`UNRESOLVED[...]`，制品与hash仅为mock-only/not-frozen）
 - [ ] Phase 4B-5：实现attention/expression与冻结schedule
 - [ ] Phase 4B-6：实现private/public/feed/memory
 - [ ] Phase 4B-7：实现prompt/parser/mock adapter
@@ -169,7 +173,7 @@
 - [ ] 完成 mock N=20/100/1000 验证
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
-- **状态：** in_progress（4B-0至4B-3 complete / independently reviewed；4B-4尚未开始）
+- **状态：** in_progress（4B-0至4B-4 complete / independently reviewed；4B-5未开始）
 
 ### 阶段 5：正式实验与分析
 - [ ] 完成 N=200/500/1000 的有限规模检验

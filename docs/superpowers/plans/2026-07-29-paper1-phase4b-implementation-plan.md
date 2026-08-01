@@ -1,5 +1,5 @@
 ---
-status: approved implementation plan; executing; Phase 4B-0 through 4B-2 complete
+status: approved implementation plan; executing; Phase 4B-0 through 4B-4 complete / independently reviewed
 authority: Phase 4B implementation sequence
 date: 2026-07-29
 inputs:
@@ -362,6 +362,14 @@ mock fixture保持`mock_only / not_frozen`，未填补`UNRESOLVED[...]`。Phase 
 - 不用中性persona填充absent条件。
 
 ## 8. Phase 4B-4：WS/shadow网络与node mapping
+
+**状态（2026-08-01）：** complete / independently reviewed。独立规格、反模式与代码质量
+审查均为`APPROVED`；最终连续fresh全套为`318 passed in 31.25s`，coverage为
+`318 passed in 97.43s`（`2237 statements / 323 missed / 86%`，`network.py`为`84%`）。
+network专项`43 passed`，protocol/schema gates为`143 passed`。N=1000纯结构锚点及
+population/round-0/WS三制品绑定的node mapping均通过独立复算。NetworkX、构图算法、预算、
+结构gate规则及全部精确`P1_*`机器值仍为`UNRESOLVED[...]`；现有制品和hash仅为
+`mock_only / not_frozen`工程证据，不构成formal freeze。Phase 4B-5尚未开始。
 
 ### 前置工程gate
 
