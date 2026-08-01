@@ -402,8 +402,63 @@
   - 文档收口前验证快照的Git diff SHA-256为
     `481BFA0FB75EEFC9E438732B9CF3A93FC889BB19DFA061E9ACAD545DC215B081`；这是
     pre-documentation verification hash，文档修改后会变化，不是最终提交hash。
-  - Phase 4B-2状态已更新为`complete / independently reviewed`。下一工作包是4B-3，
-    但4B-3尚未开始；本次收口未新增研究参数，也未填补任何`UNRESOLVED[...]`。
+  - Phase 4B-2状态已更新为`complete / independently reviewed`。在Phase 4B-2收口时，
+    下一工作包是4B-3且尚未开始；该次收口未新增研究参数，也未填补任何
+    `UNRESOLVED[...]`。
+  - Phase 4B-3按四组严格TDD进入实现。TopicPackage组由缺模块RED开始，完成严格JSON
+    round-trip、版本合同、七档标签、固定输出字段顺序与canonical package hash；定向
+    GREEN为`7 passed`。TRS/population组同样先确认缺模块RED，随后实现exact-N、非法或
+    未缩放权重、结构零、缺失、不可实现约束与超容差fail closed；定向GREEN为
+    `14 passed`。
+  - 初始化组先冻结N=20/100/1000接口与期望分布；实现N=1000批准精确人数
+    `[50,100,200,300,200,100,50]`以及明确标记mock的small-N最大余数缩放规则。人口—
+    立场使用joint-stratum受约束整数分配并报告字段级count error；round 0制品同时保存
+    私人立场/理由和一条必发公开初始帖。初始化定向GREEN为`10 passed`。
+  - Persona组先确认缺模块RED，再实现共同骨架机械插入identity/continuity块、absent
+    真省略、analysis-only字段隔离、禁用锁死措辞和四条件自动diff；因素块外任意字符
+    变化都会fail。Persona定向GREEN为`6 passed`。
+  - 新增5个`platform/tests/fixtures/paper1/mock_*.artifact.json`版本化fixture envelopes，
+    覆盖topic、人口框、理由库、Persona模板和N=20/100/1000 scale cases。首次整合时
+    PowerShell控制台编码破坏Unicode，ArtifactEnvelope以output-hash mismatch正确拒绝；
+    最终文件改为经`apply_patch`落盘的ASCII-safe JSON，fixture/公开API整合为
+    `42 passed`。该事件未改变研究参数，也未放宽hash校验。
+  - 首次fresh全套发现旧公开API集合测试未纳入4B-3接口，结果为`235 passed, 1 failed`；
+    按已由RED测试冻结的公开边界更新集合后，定向API回归为`2 passed`。在首轮实现
+    checkpoint，4B-3尚未经过独立规格、反模式或代码质量审查，因此当时保持
+    `in_progress / unreviewed`并停止于4B-3边界，未进入4B-4。
+  - 4B-3实现代理最终fresh全套为`236 passed in 13.77s`，无skip/xfail；coverage套件
+    同为`236 passed`，`1723 statements / 250 missed / 85%`。Ruff check、Ruff format
+    check、`pip check`、`git diff --check`均通过；schema镜像、draft unresolved登记和
+    formal fail-closed定向gate为`3 passed`。上述证据只表明首轮实现可交付审查，不把
+    4B-3标记complete。
+  - Phase 4B-3独立审查修订以三组RED→GREEN实现。Population的`3 failed`确认TRS
+    source counts/residual draw count/tolerance未进入制品且不同tolerance共用envelope；
+    修订后这些审计值进入payload，约束与tolerance共同绑定input hash，round-trip保留。
+    Persona/空块的`7 failed`确认模板可扩张越权身份字段、空denylist可清空平台禁语、
+    present块及四条件diff可接受空串；修订后平台固定现有六字段allowlist，平台禁语独立
+    强制，identity/continuity present块均非空。未写formal默认、未改变TRS语义，也未为
+    无fractional residual的官方scale fixture伪造seed差异。
+  - 审查修订后fresh全套为`246 passed in 11.92s`；coverage同为`246 passed`，
+    `1735 statements / 251 missed / 86%`。五模块/fixture交叉回归`52 passed`；platform
+    范围Ruff、format、pip check、diff check以及schema镜像/draft/formal三个gate均通过。
+    该阶段性检查点继续保持`in_progress / review fixes pending re-review`，当时等待独立
+    复审、未提交且未进入4B-4。
+  - Persona policy复审继续按严格TDD修订：参数化恶意模板及直接差异校验回归先得到
+    `9 failed, 15 passed`，证明平台不可覆盖禁语仅含“never change/永不改变”且差异校验
+    未执行同一政策。最小GREEN将已批准的抗从众/不受影响、固定原有价值方向、最大一步
+    变化和永不改变逐字短语提升为平台不可清空常量，模板denylist仍可追加更严格禁语；
+    render与validate共用同一fail-closed检查。Persona定向为`24 passed`，五模块/fixture
+    交叉回归为`62 passed`。格式化后fresh全套与coverage均为`256 passed`，coverage为
+    `1742 statements / 252 missed / 86%`，persona为`82%`；Ruff check、19文件format
+    check、pip check、diff check与schema/draft/formal三门禁全部通过。该阶段性检查点
+    当时仍为`in_progress / review fixes pending re-review`，未提交且未进入4B-4。
+  - 最终规格复审继续发现`docs/decisions.md:306-307`四个canonical逐字禁语尚未提升为
+    平台常量。identity/continuity恶意块对render与直接validate的回归先得到
+    `8 failed, 24 passed`；最小GREEN仅加入“坚持、捍卫、忠于、除非证据确凿”，不扩展
+    语义分类。Persona定向为`32 passed`，五模块/fixture为`70 passed`；fresh全套与
+    coverage均为`264 passed`，coverage仍为`1742 statements / 252 missed / 86%`，
+    persona为`82%`。Ruff、19文件format、pip、diff与三门禁均通过。该阶段性检查点
+    当时继续保持`in_progress / review fixes pending re-review`，未提交且未进入4B-4。
 - 边界：
   - 模块2虽已批准，但population、persona及其他Phase 4A模块尚未完成；当前不实现
     topic package，也不修改正式实验代码。
@@ -422,3 +477,18 @@
   - 模块8机制设计已经批准，但B、K、活跃/表达分布参数与过程阈值仍只是Phase 0
     候选；它们在真实gate冻结前继续保持`UNRESOLVED[...]`。当前未修改schema、
     formal YAML或实验运行代码。
+  - Phase 4B-3代码质量审查的五项发现已按严格TDD关闭：理由按立场确定性洗牌并无放回
+    分配、容量不足fail closed，显式mock理由fixture含1,000条唯一记录；Persona对归一化
+    payload/envelope做严格diff，身份模板以`Formatter`解析并恰好使用六个允许字段；供体
+    schema必须同构并给出精确missing/extra诊断；人口制品同时保存target、weighted与
+    integerized边际/联合计数及calibration/TRS误差。
+  - 独立规格审查、反模式审查与代码质量复审均为`APPROVED`，没有开放审查项。质量定向
+    回归为`72 passed`；最终fresh全套为`274 passed`，无skip、无xfail；coverage套件同为
+    `274 passed`，`1817 statements / 257 missed / 86%`。platform Ruff/format、pip、diff、
+    schema镜像、draft unresolved、formal fail-closed与generated human-summary同步gate均通过。
+  - 文档收口前验证快照的Git diff SHA-256为
+    `57de0f024bbf41ba8b46335d593f90a5617578536824ba12450cee999db4fa5d`；这是
+    pre-documentation verification hash，文档修改后会变化，不是提交hash。
+  - Phase 4B-3状态已更新为`complete / independently reviewed`。1,000条理由与其他
+    fixture值继续明确为`mock_only / not_frozen`，本轮未填补任何`UNRESOLVED[...]`；
+    Phase 4B-4尚未开始。

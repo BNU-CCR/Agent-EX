@@ -1,0 +1,89 @@
+{
+  "artifact_id": "artifact-8578af80b16a29dac1560830734c22ccda13da94726ad62eaf4e4ff3fafe0f98",
+  "artifact_type": "paper1.mock_population_frame",
+  "schema_version": "paper1.artifact-envelope.v1",
+  "algorithm_id": "paper1.mock_fixture",
+  "algorithm_version": "1.0.0",
+  "input_hashes": {
+    "fixture_source": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "output_hash": "081d30c60546f936dafbb0d2e2184ae90f158c8fce372e6a41679f0a305fb46f",
+  "rng_provenance": [],
+  "payload": {
+    "schema_version": "paper1.mock-population-frame.v1",
+    "donors": [
+      {
+        "donor_id": "d0",
+        "fields": {
+          "gender": "female",
+          "urban": "urban",
+          "education": "higher",
+          "age_band": "30-39",
+          "activity": "employed",
+          "occupation": "professional"
+        }
+      },
+      {
+        "donor_id": "d1",
+        "fields": {
+          "gender": "female",
+          "urban": "rural",
+          "education": "other",
+          "age_band": "40-49",
+          "activity": "employed",
+          "occupation": "service"
+        }
+      },
+      {
+        "donor_id": "d2",
+        "fields": {
+          "gender": "male",
+          "urban": "urban",
+          "education": "other",
+          "age_band": "50-59",
+          "activity": "not-employed",
+          "occupation": "not-applicable"
+        }
+      },
+      {
+        "donor_id": "d3",
+        "fields": {
+          "gender": "male",
+          "urban": "rural",
+          "education": "higher",
+          "age_band": "18-29",
+          "activity": "student",
+          "occupation": "not-applicable"
+        }
+      }
+    ],
+    "weight_profiles": {
+      "20": [
+        5.0,
+        5.0,
+        5.0,
+        5.0
+      ],
+      "100": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "1000": [
+        250.0,
+        250.0,
+        250.0,
+        250.0
+      ]
+    },
+    "constraints": {
+      "marginals": {},
+      "joints": []
+    },
+    "metadata": {
+      "mock_only": true,
+      "research_parameter_status": "not_frozen"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "artifact_id": "artifact-7c21c3057c959a2688384b40aca7db194c0fcac84e3595c24bcab68bc98d26f3",
+  "artifact_type": "paper1.mock_scale_cases",
+  "schema_version": "paper1.artifact-envelope.v1",
+  "algorithm_id": "paper1.mock_fixture",
+  "algorithm_version": "1.0.0",
+  "input_hashes": {
+    "fixture_source": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "output_hash": "c68558b85c44aaa133fb9a08ecd1b0c08bde52113006f3b82a5e008a2becc908",
+  "rng_provenance": [],
+  "payload": {
+    "schema_version": "paper1.mock-scale-cases.v1",
+    "cases": [
+      {
+        "n": 20,
+        "stance_counts": [
+          1,
+          2,
+          4,
+          6,
+          4,
+          2,
+          1
+        ]
+      },
+      {
+        "n": 100,
+        "stance_counts": [
+          5,
+          10,
+          20,
+          30,
+          20,
+          10,
+          5
+        ]
+      },
+      {
+        "n": 1000,
+        "stance_counts": [
+          50,
+          100,
+          200,
+          300,
+          200,
+          100,
+          50
+        ]
+      }
+    ],
+    "metadata": {
+      "mock_only": true,
+      "research_parameter_status": "not_frozen"
+    }
+  }
+}

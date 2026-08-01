@@ -1,0 +1,35 @@
+{
+  "artifact_id": "artifact-0357251725af7e1df354e3787884b038500f297222a68f84d11b0083b98034e0",
+  "artifact_type": "paper1.mock_persona_template",
+  "schema_version": "paper1.artifact-envelope.v1",
+  "algorithm_id": "paper1.mock_fixture",
+  "algorithm_version": "1.0.0",
+  "input_hashes": {
+    "fixture_source": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "output_hash": "5e946f0b016d5eaf1ae7be662468ba4e1845030265be78322480f1b991d9cbc6",
+  "rng_provenance": [],
+  "payload": {
+    "schema_version": "paper1.mock-persona-template.v1",
+    "common_skeleton": "Common task boundary.\n{identity_block}{continuity_block}Use the common output contract.",
+    "identity_block_template": "[Identity]\nAge band: {age_band}\nRecorded gender: {gender}\nEducation: {education}\nUrban/rural: {urban}\nActivity: {activity}\nOccupation: {occupation}\nThese attributes do not predetermine a stance.\n",
+    "continuity_block": "[Explanatory continuity]\nUse prior stance and reasons. Maintaining or changing is allowed; do not ignore persuasive information merely to appear consistent.\n",
+    "required_identity_fields": [
+      "age_band",
+      "gender",
+      "education",
+      "urban",
+      "activity",
+      "occupation"
+    ],
+    "forbidden_phrases": [
+      "never change",
+      "do not be influenced",
+      "ordinary citizen"
+    ],
+    "metadata": {
+      "mock_only": true,
+      "research_parameter_status": "not_frozen"
+    }
+  }
+}

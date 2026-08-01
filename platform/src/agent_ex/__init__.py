@@ -22,6 +22,9 @@ from .protocol import (
     load_protocol,
     validate_protocol,
 )
+from .initialization import assign_initial_reasons, assign_initial_stances
+from .persona import render_persona, validate_persona_factor_diff
+from .population import TRSIntegerization, build_population_artifact, trs_integerize
 from .validation import (
     render_human_protocol_summary,
     update_human_protocol_summary,
@@ -29,6 +32,7 @@ from .validation import (
     validate_human_protocol_sync,
 )
 from .rng import RNGProvenance, derive_rng_seed
+from .topic import TopicPackage
 
 __all__ = [
     "ArtifactEnvelope",
@@ -40,6 +44,11 @@ __all__ = [
     "RNGProvenance",
     "RunManifest",
     "ScheduleSlot",
+    "TRSIntegerization",
+    "TopicPackage",
+    "assign_initial_reasons",
+    "assign_initial_stances",
+    "build_population_artifact",
     "canonical_payload_hash",
     "canonical_protocol_hash",
     "derive_attempt_id",
@@ -50,9 +59,12 @@ __all__ = [
     "execution_projection",
     "load_protocol",
     "render_human_protocol_summary",
+    "render_persona",
+    "trs_integerize",
     "update_human_protocol_summary",
     "validate_human_protocol_reference",
     "validate_human_protocol_sync",
+    "validate_persona_factor_diff",
     "validate_evidence_graph",
     "validate_protocol",
 ]

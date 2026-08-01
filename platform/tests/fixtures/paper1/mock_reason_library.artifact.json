@@ -1,0 +1,6021 @@
+{
+  "artifact_id": "artifact-22210110bda3f27445058136e71291cd26572d79ecd0b4842722d69afdc5a5da",
+  "artifact_type": "paper1.mock_reason_library",
+  "schema_version": "paper1.artifact-envelope.v1",
+  "algorithm_id": "paper1.mock_fixture",
+  "algorithm_version": "1.0.0",
+  "input_hashes": {
+    "fixture_source": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "output_hash": "47e7a1ca9a086933f8f33197a46be259c65e777688c756dbfa81936423782ee3",
+  "rng_provenance": [],
+  "payload": {
+    "schema_version": "paper1.mock-reason-library.v1",
+    "entries": [
+      {
+        "reason_id": "reason-1-000",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 000.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-001",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 001.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-002",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 002.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-003",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 003.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-004",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 004.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-005",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 005.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-006",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 006.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-007",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 007.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-008",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 008.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-009",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 009.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-010",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 010.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-011",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 011.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-012",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 012.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-013",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 013.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-014",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 014.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-015",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 015.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-016",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 016.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-017",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 017.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-018",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 018.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-019",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 019.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-020",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 020.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-021",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 021.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-022",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 022.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-023",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 023.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-024",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 024.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-025",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 025.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-026",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 026.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-027",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 027.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-028",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 028.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-029",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 029.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-030",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 030.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-031",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 031.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-032",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 032.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-033",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 033.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-034",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 034.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-035",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 035.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-036",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 036.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-037",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 037.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-038",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 038.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-039",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 039.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-040",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 040.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-041",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 041.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-042",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 042.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-043",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 043.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-044",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 044.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-045",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 045.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-046",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 046.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-047",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 047.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-1-048",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 048.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-1-049",
+        "stance": 1,
+        "text": "Explicit mock reason for stance 1, variant 049.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-000",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 000.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-001",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 001.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-002",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 002.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-003",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 003.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-004",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 004.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-005",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 005.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-006",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 006.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-007",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 007.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-008",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 008.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-009",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 009.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-010",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 010.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-011",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 011.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-012",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 012.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-013",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 013.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-014",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 014.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-015",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 015.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-016",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 016.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-017",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 017.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-018",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 018.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-019",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 019.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-020",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 020.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-021",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 021.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-022",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 022.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-023",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 023.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-024",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 024.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-025",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 025.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-026",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 026.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-027",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 027.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-028",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 028.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-029",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 029.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-030",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 030.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-031",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 031.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-032",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 032.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-033",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 033.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-034",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 034.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-035",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 035.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-036",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 036.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-037",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 037.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-038",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 038.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-039",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 039.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-040",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 040.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-041",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 041.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-042",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 042.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-043",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 043.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-044",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 044.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-045",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 045.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-046",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 046.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-047",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 047.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-048",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 048.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-049",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 049.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-050",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 050.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-051",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 051.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-052",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 052.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-053",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 053.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-054",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 054.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-055",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 055.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-056",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 056.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-057",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 057.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-058",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 058.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-059",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 059.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-060",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 060.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-061",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 061.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-062",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 062.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-063",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 063.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-064",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 064.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-065",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 065.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-066",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 066.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-067",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 067.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-068",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 068.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-069",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 069.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-070",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 070.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-071",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 071.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-072",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 072.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-073",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 073.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-074",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 074.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-075",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 075.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-076",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 076.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-077",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 077.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-078",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 078.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-079",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 079.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-080",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 080.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-081",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 081.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-082",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 082.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-083",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 083.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-084",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 084.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-085",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 085.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-086",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 086.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-087",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 087.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-088",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 088.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-089",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 089.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-090",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 090.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-091",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 091.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-092",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 092.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-093",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 093.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-094",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 094.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-095",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 095.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-096",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 096.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-097",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 097.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-2-098",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 098.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-2-099",
+        "stance": 2,
+        "text": "Explicit mock reason for stance 2, variant 099.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-000",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 000.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-001",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 001.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-002",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 002.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-003",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 003.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-004",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 004.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-005",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 005.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-006",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 006.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-007",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 007.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-008",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 008.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-009",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 009.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-010",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 010.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-011",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 011.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-012",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 012.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-013",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 013.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-014",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 014.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-015",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 015.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-016",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 016.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-017",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 017.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-018",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 018.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-019",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 019.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-020",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 020.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-021",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 021.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-022",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 022.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-023",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 023.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-024",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 024.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-025",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 025.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-026",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 026.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-027",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 027.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-028",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 028.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-029",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 029.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-030",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 030.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-031",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 031.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-032",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 032.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-033",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 033.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-034",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 034.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-035",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 035.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-036",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 036.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-037",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 037.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-038",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 038.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-039",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 039.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-040",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 040.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-041",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 041.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-042",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 042.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-043",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 043.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-044",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 044.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-045",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 045.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-046",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 046.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-047",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 047.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-048",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 048.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-049",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 049.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-050",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 050.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-051",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 051.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-052",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 052.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-053",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 053.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-054",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 054.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-055",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 055.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-056",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 056.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-057",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 057.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-058",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 058.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-059",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 059.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-060",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 060.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-061",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 061.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-062",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 062.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-063",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 063.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-064",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 064.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-065",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 065.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-066",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 066.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-067",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 067.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-068",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 068.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-069",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 069.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-070",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 070.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-071",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 071.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-072",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 072.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-073",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 073.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-074",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 074.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-075",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 075.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-076",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 076.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-077",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 077.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-078",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 078.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-079",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 079.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-080",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 080.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-081",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 081.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-082",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 082.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-083",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 083.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-084",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 084.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-085",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 085.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-086",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 086.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-087",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 087.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-088",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 088.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-089",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 089.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-090",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 090.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-091",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 091.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-092",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 092.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-093",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 093.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-094",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 094.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-095",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 095.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-096",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 096.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-097",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 097.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-098",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 098.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-099",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 099.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-100",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 100.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-101",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 101.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-102",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 102.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-103",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 103.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-104",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 104.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-105",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 105.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-106",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 106.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-107",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 107.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-108",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 108.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-109",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 109.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-110",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 110.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-111",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 111.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-112",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 112.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-113",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 113.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-114",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 114.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-115",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 115.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-116",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 116.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-117",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 117.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-118",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 118.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-119",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 119.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-120",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 120.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-121",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 121.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-122",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 122.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-123",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 123.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-124",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 124.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-125",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 125.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-126",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 126.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-127",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 127.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-128",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 128.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-129",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 129.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-130",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 130.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-131",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 131.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-132",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 132.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-133",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 133.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-134",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 134.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-135",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 135.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-136",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 136.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-137",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 137.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-138",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 138.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-139",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 139.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-140",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 140.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-141",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 141.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-142",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 142.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-143",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 143.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-144",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 144.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-145",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 145.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-146",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 146.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-147",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 147.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-148",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 148.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-149",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 149.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-150",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 150.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-151",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 151.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-152",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 152.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-153",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 153.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-154",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 154.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-155",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 155.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-156",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 156.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-157",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 157.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-158",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 158.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-159",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 159.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-160",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 160.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-161",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 161.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-162",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 162.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-163",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 163.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-164",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 164.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-165",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 165.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-166",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 166.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-167",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 167.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-168",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 168.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-169",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 169.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-170",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 170.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-171",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 171.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-172",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 172.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-173",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 173.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-174",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 174.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-175",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 175.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-176",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 176.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-177",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 177.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-178",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 178.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-179",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 179.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-180",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 180.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-181",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 181.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-182",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 182.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-183",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 183.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-184",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 184.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-185",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 185.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-186",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 186.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-187",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 187.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-188",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 188.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-189",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 189.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-190",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 190.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-191",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 191.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-192",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 192.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-193",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 193.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-194",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 194.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-195",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 195.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-196",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 196.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-197",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 197.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-3-198",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 198.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-3-199",
+        "stance": 3,
+        "text": "Explicit mock reason for stance 3, variant 199.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-000",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 000.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-001",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 001.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-002",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 002.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-003",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 003.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-004",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 004.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-005",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 005.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-006",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 006.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-007",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 007.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-008",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 008.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-009",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 009.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-010",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 010.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-011",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 011.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-012",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 012.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-013",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 013.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-014",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 014.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-015",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 015.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-016",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 016.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-017",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 017.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-018",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 018.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-019",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 019.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-020",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 020.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-021",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 021.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-022",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 022.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-023",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 023.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-024",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 024.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-025",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 025.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-026",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 026.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-027",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 027.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-028",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 028.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-029",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 029.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-030",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 030.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-031",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 031.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-032",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 032.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-033",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 033.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-034",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 034.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-035",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 035.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-036",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 036.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-037",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 037.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-038",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 038.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-039",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 039.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-040",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 040.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-041",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 041.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-042",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 042.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-043",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 043.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-044",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 044.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-045",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 045.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-046",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 046.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-047",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 047.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-048",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 048.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-049",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 049.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-050",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 050.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-051",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 051.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-052",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 052.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-053",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 053.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-054",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 054.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-055",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 055.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-056",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 056.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-057",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 057.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-058",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 058.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-059",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 059.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-060",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 060.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-061",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 061.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-062",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 062.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-063",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 063.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-064",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 064.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-065",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 065.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-066",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 066.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-067",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 067.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-068",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 068.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-069",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 069.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-070",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 070.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-071",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 071.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-072",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 072.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-073",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 073.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-074",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 074.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-075",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 075.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-076",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 076.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-077",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 077.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-078",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 078.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-079",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 079.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-080",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 080.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-081",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 081.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-082",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 082.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-083",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 083.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-084",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 084.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-085",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 085.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-086",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 086.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-087",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 087.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-088",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 088.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-089",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 089.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-090",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 090.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-091",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 091.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-092",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 092.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-093",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 093.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-094",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 094.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-095",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 095.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-096",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 096.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-097",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 097.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-098",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 098.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-099",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 099.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-100",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 100.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-101",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 101.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-102",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 102.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-103",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 103.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-104",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 104.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-105",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 105.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-106",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 106.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-107",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 107.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-108",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 108.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-109",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 109.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-110",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 110.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-111",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 111.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-112",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 112.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-113",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 113.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-114",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 114.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-115",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 115.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-116",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 116.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-117",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 117.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-118",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 118.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-119",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 119.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-120",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 120.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-121",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 121.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-122",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 122.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-123",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 123.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-124",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 124.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-125",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 125.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-126",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 126.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-127",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 127.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-128",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 128.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-129",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 129.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-130",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 130.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-131",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 131.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-132",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 132.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-133",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 133.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-134",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 134.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-135",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 135.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-136",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 136.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-137",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 137.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-138",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 138.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-139",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 139.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-140",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 140.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-141",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 141.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-142",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 142.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-143",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 143.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-144",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 144.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-145",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 145.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-146",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 146.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-147",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 147.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-148",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 148.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-149",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 149.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-150",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 150.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-151",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 151.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-152",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 152.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-153",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 153.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-154",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 154.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-155",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 155.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-156",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 156.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-157",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 157.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-158",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 158.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-159",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 159.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-160",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 160.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-161",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 161.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-162",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 162.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-163",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 163.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-164",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 164.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-165",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 165.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-166",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 166.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-167",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 167.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-168",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 168.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-169",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 169.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-170",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 170.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-171",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 171.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-172",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 172.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-173",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 173.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-174",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 174.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-175",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 175.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-176",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 176.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-177",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 177.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-178",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 178.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-179",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 179.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-180",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 180.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-181",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 181.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-182",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 182.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-183",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 183.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-184",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 184.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-185",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 185.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-186",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 186.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-187",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 187.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-188",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 188.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-189",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 189.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-190",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 190.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-191",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 191.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-192",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 192.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-193",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 193.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-194",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 194.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-195",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 195.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-196",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 196.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-197",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 197.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-198",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 198.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-199",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 199.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-200",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 200.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-201",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 201.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-202",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 202.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-203",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 203.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-204",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 204.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-205",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 205.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-206",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 206.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-207",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 207.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-208",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 208.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-209",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 209.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-210",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 210.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-211",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 211.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-212",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 212.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-213",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 213.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-214",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 214.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-215",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 215.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-216",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 216.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-217",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 217.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-218",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 218.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-219",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 219.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-220",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 220.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-221",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 221.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-222",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 222.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-223",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 223.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-224",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 224.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-225",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 225.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-226",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 226.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-227",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 227.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-228",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 228.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-229",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 229.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-230",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 230.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-231",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 231.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-232",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 232.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-233",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 233.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-234",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 234.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-235",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 235.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-236",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 236.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-237",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 237.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-238",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 238.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-239",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 239.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-240",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 240.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-241",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 241.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-242",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 242.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-243",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 243.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-244",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 244.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-245",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 245.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-246",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 246.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-247",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 247.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-248",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 248.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-249",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 249.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-250",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 250.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-251",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 251.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-252",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 252.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-253",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 253.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-254",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 254.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-255",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 255.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-256",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 256.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-257",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 257.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-258",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 258.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-259",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 259.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-260",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 260.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-261",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 261.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-262",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 262.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-263",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 263.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-264",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 264.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-265",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 265.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-266",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 266.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-267",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 267.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-268",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 268.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-269",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 269.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-270",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 270.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-271",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 271.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-272",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 272.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-273",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 273.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-274",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 274.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-275",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 275.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-276",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 276.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-277",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 277.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-278",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 278.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-279",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 279.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-280",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 280.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-281",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 281.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-282",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 282.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-283",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 283.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-284",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 284.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-285",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 285.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-286",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 286.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-287",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 287.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-288",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 288.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-289",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 289.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-290",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 290.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-291",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 291.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-292",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 292.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-293",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 293.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-294",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 294.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-295",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 295.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-296",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 296.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-297",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 297.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-4-298",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 298.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-4-299",
+        "stance": 4,
+        "text": "Explicit mock reason for stance 4, variant 299.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-000",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 000.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-001",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 001.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-002",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 002.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-003",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 003.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-004",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 004.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-005",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 005.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-006",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 006.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-007",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 007.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-008",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 008.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-009",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 009.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-010",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 010.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-011",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 011.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-012",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 012.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-013",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 013.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-014",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 014.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-015",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 015.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-016",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 016.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-017",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 017.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-018",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 018.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-019",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 019.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-020",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 020.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-021",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 021.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-022",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 022.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-023",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 023.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-024",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 024.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-025",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 025.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-026",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 026.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-027",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 027.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-028",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 028.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-029",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 029.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-030",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 030.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-031",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 031.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-032",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 032.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-033",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 033.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-034",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 034.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-035",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 035.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-036",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 036.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-037",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 037.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-038",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 038.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-039",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 039.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-040",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 040.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-041",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 041.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-042",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 042.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-043",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 043.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-044",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 044.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-045",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 045.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-046",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 046.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-047",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 047.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-048",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 048.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-049",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 049.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-050",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 050.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-051",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 051.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-052",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 052.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-053",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 053.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-054",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 054.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-055",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 055.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-056",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 056.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-057",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 057.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-058",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 058.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-059",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 059.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-060",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 060.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-061",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 061.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-062",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 062.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-063",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 063.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-064",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 064.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-065",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 065.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-066",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 066.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-067",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 067.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-068",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 068.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-069",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 069.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-070",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 070.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-071",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 071.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-072",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 072.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-073",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 073.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-074",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 074.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-075",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 075.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-076",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 076.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-077",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 077.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-078",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 078.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-079",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 079.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-080",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 080.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-081",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 081.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-082",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 082.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-083",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 083.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-084",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 084.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-085",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 085.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-086",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 086.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-087",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 087.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-088",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 088.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-089",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 089.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-090",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 090.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-091",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 091.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-092",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 092.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-093",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 093.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-094",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 094.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-095",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 095.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-096",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 096.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-097",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 097.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-098",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 098.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-099",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 099.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-100",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 100.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-101",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 101.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-102",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 102.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-103",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 103.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-104",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 104.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-105",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 105.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-106",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 106.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-107",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 107.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-108",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 108.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-109",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 109.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-110",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 110.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-111",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 111.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-112",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 112.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-113",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 113.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-114",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 114.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-115",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 115.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-116",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 116.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-117",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 117.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-118",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 118.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-119",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 119.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-120",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 120.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-121",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 121.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-122",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 122.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-123",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 123.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-124",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 124.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-125",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 125.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-126",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 126.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-127",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 127.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-128",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 128.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-129",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 129.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-130",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 130.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-131",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 131.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-132",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 132.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-133",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 133.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-134",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 134.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-135",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 135.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-136",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 136.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-137",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 137.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-138",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 138.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-139",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 139.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-140",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 140.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-141",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 141.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-142",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 142.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-143",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 143.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-144",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 144.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-145",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 145.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-146",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 146.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-147",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 147.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-148",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 148.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-149",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 149.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-150",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 150.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-151",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 151.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-152",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 152.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-153",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 153.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-154",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 154.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-155",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 155.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-156",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 156.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-157",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 157.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-158",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 158.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-159",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 159.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-160",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 160.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-161",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 161.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-162",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 162.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-163",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 163.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-164",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 164.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-165",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 165.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-166",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 166.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-167",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 167.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-168",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 168.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-169",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 169.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-170",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 170.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-171",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 171.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-172",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 172.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-173",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 173.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-174",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 174.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-175",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 175.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-176",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 176.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-177",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 177.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-178",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 178.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-179",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 179.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-180",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 180.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-181",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 181.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-182",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 182.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-183",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 183.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-184",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 184.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-185",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 185.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-186",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 186.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-187",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 187.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-188",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 188.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-189",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 189.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-190",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 190.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-191",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 191.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-192",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 192.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-193",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 193.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-194",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 194.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-195",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 195.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-196",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 196.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-197",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 197.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-5-198",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 198.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-5-199",
+        "stance": 5,
+        "text": "Explicit mock reason for stance 5, variant 199.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-000",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 000.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-001",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 001.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-002",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 002.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-003",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 003.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-004",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 004.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-005",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 005.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-006",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 006.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-007",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 007.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-008",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 008.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-009",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 009.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-010",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 010.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-011",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 011.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-012",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 012.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-013",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 013.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-014",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 014.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-015",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 015.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-016",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 016.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-017",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 017.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-018",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 018.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-019",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 019.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-020",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 020.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-021",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 021.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-022",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 022.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-023",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 023.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-024",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 024.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-025",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 025.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-026",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 026.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-027",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 027.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-028",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 028.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-029",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 029.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-030",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 030.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-031",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 031.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-032",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 032.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-033",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 033.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-034",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 034.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-035",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 035.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-036",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 036.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-037",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 037.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-038",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 038.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-039",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 039.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-040",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 040.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-041",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 041.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-042",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 042.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-043",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 043.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-044",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 044.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-045",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 045.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-046",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 046.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-047",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 047.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-048",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 048.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-049",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 049.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-050",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 050.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-051",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 051.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-052",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 052.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-053",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 053.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-054",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 054.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-055",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 055.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-056",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 056.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-057",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 057.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-058",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 058.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-059",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 059.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-060",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 060.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-061",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 061.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-062",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 062.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-063",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 063.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-064",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 064.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-065",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 065.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-066",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 066.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-067",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 067.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-068",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 068.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-069",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 069.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-070",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 070.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-071",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 071.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-072",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 072.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-073",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 073.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-074",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 074.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-075",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 075.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-076",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 076.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-077",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 077.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-078",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 078.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-079",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 079.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-080",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 080.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-081",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 081.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-082",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 082.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-083",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 083.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-084",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 084.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-085",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 085.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-086",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 086.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-087",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 087.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-088",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 088.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-089",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 089.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-090",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 090.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-091",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 091.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-092",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 092.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-093",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 093.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-094",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 094.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-095",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 095.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-096",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 096.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-097",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 097.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-6-098",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 098.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-6-099",
+        "stance": 6,
+        "text": "Explicit mock reason for stance 6, variant 099.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-000",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 000.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-001",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 001.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-002",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 002.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-003",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 003.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-004",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 004.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-005",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 005.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-006",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 006.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-007",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 007.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-008",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 008.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-009",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 009.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-010",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 010.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-011",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 011.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-012",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 012.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-013",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 013.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-014",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 014.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-015",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 015.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-016",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 016.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-017",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 017.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-018",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 018.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-019",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 019.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-020",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 020.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-021",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 021.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-022",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 022.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-023",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 023.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-024",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 024.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-025",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 025.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-026",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 026.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-027",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 027.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-028",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 028.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-029",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 029.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-030",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 030.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-031",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 031.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-032",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 032.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-033",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 033.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-034",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 034.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-035",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 035.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-036",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 036.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-037",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 037.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-038",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 038.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-039",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 039.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-040",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 040.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-041",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 041.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-042",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 042.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-043",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 043.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-044",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 044.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-045",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 045.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-046",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 046.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-047",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 047.",
+        "argument_family": "mock-family-1"
+      },
+      {
+        "reason_id": "reason-7-048",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 048.",
+        "argument_family": "mock-family-0"
+      },
+      {
+        "reason_id": "reason-7-049",
+        "stance": 7,
+        "text": "Explicit mock reason for stance 7, variant 049.",
+        "argument_family": "mock-family-1"
+      }
+    ],
+    "metadata": {
+      "mock_only": true,
+      "research_parameter_status": "not_frozen"
+    }
+  }
+}

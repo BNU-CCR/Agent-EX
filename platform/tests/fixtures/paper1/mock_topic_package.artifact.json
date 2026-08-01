@@ -1,0 +1,56 @@
+{
+  "artifact_id": "artifact-7cd2fb954199873faf32d5198c73e4fca8fc3ebc611e6b369560ef5d471605e9",
+  "artifact_type": "paper1.mock_topic_package",
+  "schema_version": "paper1.artifact-envelope.v1",
+  "algorithm_id": "paper1.mock_fixture",
+  "algorithm_version": "1.0.0",
+  "input_hashes": {
+    "fixture_source": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "output_hash": "41f095892094e9e84aebddeeb36bfefebe65c96ebec8943100a2fa876299c445",
+  "rng_provenance": [],
+  "payload": {
+    "schema_version": "paper1.topic-package.mock.v1",
+    "package_version": "0.0.1-mock",
+    "topic_id": "mock-topic",
+    "construct": "Support for an explicit mock statement",
+    "target_population": "Synthetic test population only",
+    "applicability": "mock-only; prohibited for formal runs",
+    "fact_card": "Mock fact card without research parameters.",
+    "core_statement": "I support this mock statement.",
+    "paraphrases": [
+      "Overall, I favor this mock statement."
+    ],
+    "stance_labels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7"
+    ],
+    "confidence_contract": {
+      "minimum": 1,
+      "maximum": 5,
+      "analysis_only": true
+    },
+    "output_contract": [
+      "stance",
+      "confidence",
+      "public_reason"
+    ],
+    "argument_families": [
+      "mock-family-0",
+      "mock-family-1"
+    ],
+    "round0_reason_library_artifact_id": "artifact-22210110bda3f27445058136e71291cd26572d79ecd0b4842722d69afdc5a5da",
+    "topic_extension_fields": [
+      "mock_extension"
+    ],
+    "metadata": {
+      "mock_only": true,
+      "research_parameter_status": "not_frozen"
+    }
+  }
+}

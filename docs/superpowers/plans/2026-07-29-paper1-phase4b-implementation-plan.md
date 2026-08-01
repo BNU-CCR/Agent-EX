@@ -230,7 +230,7 @@ checkpoint/recovery + N=20/100/1000整体验证
 
 **状态（2026-08-01）：** complete / independently reviewed。独立规格/反模式审查与
 代码质量复审均为`APPROVED`；最终fresh全套为`194 passed`，独立全量覆盖率为`85%`
-（1245 statements / 187 missed）。Phase 4B-3尚未开始。
+（1245 statements / 187 missed）。在Phase 4B-2收口时，Phase 4B-3尚未开始。
 
 ### RED测试
 
@@ -296,6 +296,12 @@ checkpoint/recovery + N=20/100/1000整体验证
 - 不让main engine产生excluded/imputed/fallback。
 
 ## 7. Phase 4B-3：topic、population、initialization与persona制品
+
+**状态（2026-08-01）：** complete / independently reviewed。独立规格审查、反模式审查
+与代码质量复审均为`APPROVED`；质量定向回归为`72 passed`，最终fresh全套为
+`274 passed`且无skip/xfail，独立全量覆盖率为`86%`
+（1817 statements / 257 missed）。schema、draft、formal与human-summary gate均通过；
+mock fixture保持`mock_only / not_frozen`，未填补`UNRESOLVED[...]`。Phase 4B-4尚未开始。
 
 ### 新文件
 
