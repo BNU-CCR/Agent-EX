@@ -577,3 +577,64 @@
     freeze或提交hash。
   - Phase 4B-5现已关闭为`complete / independently reviewed`。本轮未调用真实模型、未产生
     研究结果、未冻结formal参数；Phase 4B-6尚未开始。
+  - 2026-08-18 Phase 4B-6已进入严格TDD实现；验收边界限于private/public
+    状态、有限未读feed、memory与可追溯exposure记录。当前状态为
+    `in_progress / implementation complete / pending independent review`。state/memory/feed/
+    domain/initialization定向为97 passed，fresh全套435 passed，coverage 3688 statements /
+    519 missed / 86%；Ruff、format、pip、diff、schema/draft/formal/human-summary门禁通过。
+    本轮仍未进入4B-7/4B-8，未调用真实模型，未冻结B/K或任何formal参数。
+  - Phase 4B-6首轮独立审查复现了来源字段可重封装、selection缺少可信输入重放、
+    round-0证据跳过及累计public log造成长期O(E²)调用形态。修复严格按A-E分组先建立
+    RED，再加入TopicPackage/七文字标签、state/post/memory exact replay、incremental
+    unread slice、稳定round-0排序、selection exact replay，以及带source post/update hash、
+    graph/capacity/round-0 provenance的ExposureRecord；evidence graph现绑定manifest seed并对
+    round-0 trusted evidence fail closed。
+  - 修复后state/memory/feed/domain/initialization定向`110 passed`；N=1000/T=50调用形态以50,000次
+    event-local空未读切片在`15.81s`通过；fresh full为`448 passed in 72.43s`，coverage为
+    `448 passed in 225.28s`、`3838 statements / 549 missed / 86%`。Ruff、format、pip、diff、
+    schema镜像、88个draft unresolved、formal fail-closed、human-summary与安装门禁通过。
+    当前为`in_progress / review repairs implemented / pending independent re-review`，不标
+    complete、不提交、不进入4B-7/4B-8。
+  - Phase 4B-6最终复审继续以严格TDD关闭1P1+2P2：普通selected source和全部expired
+    round-0 candidates现在都必须提供真实typed `PublicPost`/`PrivateUpdate`映射及TopicPackage，
+    并完整重放seed/topic/agent/hash、实际成功source event ID/ordinal、publish flag与attempt；
+    跨seed、event漂移及SimpleNamespace伪证据均fail closed。新增latest-public pointer可信post/
+    previous-pointer replay validator并进入公开API；neighbor集合在hash/replay前按Agent ID规范排序，
+    同集合反序得到相同selection ID/hash。
+  - 最终复审修复后定向为`114 passed in 16.97s`，fresh full为`452 passed in 78.83s`；
+    coverage为`452 passed in 249.49s`、`3879 statements / 557 missed / 86%`，domain/feed/
+    memory/state分别为81%/84%/87%/88%。状态仍为pending independent re-review，不标complete。
+  - 最后两项P1继续先RED后GREEN：event-backed update必须绑定source event末次且成功attempt，
+    不能绑定最终成功前的FAILED retry；ExposureRecord新增完整有序`candidate_post_hashes`，
+    全部expired round-0也逐ID/hash核验，因此同ID替换内容、缺失/错序/伪hash/bool均失败。
+    最终full为`455 passed in 84.92s`；coverage为`455 passed in 255.29s`、`3893 statements /
+    557 missed / 86%`。状态继续pending independent re-review。
+  - 对最后一项普通expired-event candidate P1先撤回过早生产改动，恢复455-pass快照后再
+    建立专门RED；缺typed maps、同ID内容替换、跨seed及FAILED attempt绑定均确认旧实现接受。
+    GREEN统一遍历全部ordered candidate ID/hash并执行typed post/update、topic/seed、actual event
+    与末次成功attempt重放；selected arrays只作额外显示/source核对。最终定向`119 passed in
+    16.70s`，full`457 passed in 79.11s`，coverage`457 passed in 229.82s`、`3918 statements /
+    567 missed / 86%`，状态继续pending independent re-review。
+  - 最后一项round-0分类P1先RED确认：合法expired round-0记录可清空其round-0 IDs/RNG并
+    重封装后被旧实现接受。GREEN从typed candidates按原顺序重建真实round-0 ID元组并与记录
+    精确比较，receiver-self/round-0规则作用于真实集合；event帖错标round-0同样失败。最终定向
+    `120 passed in 14.64s`，full`458 passed in 77.25s`，coverage`458 passed in 219.41s`、
+    `3924 statements / 568 missed / 86%`，继续pending independent re-review。
+  - 最后一项receiver-self P1专门RED确认：普通event-backed候选可在过期后继续由receiver自身
+    署名，只要另有合法selected来源，旧验证仍接受。GREEN将self-source检查前移到all-candidate
+    typed replay的round-0/event分支之前，因而selected/expired与两类namespace全部统一拒绝；
+    原有event错标round-0攻击保留非self来源以独立验证分类。最终定向`121 passed in 14.31s`，
+    full`459 passed in 73.82s`，coverage`459 passed in 219.14s`、`3922 statements / 566 missed /
+    86%`；N=1000/T=50为`1 passed in 13.21s`，五项protocol gate、四项installation测试及全部
+    静态/协议/卫生门禁通过，状态继续pending independent re-review。
+  - Phase 4B-6最终独立规格/反模式与代码质量复审均为`APPROVED`，release verification为
+    `PASS`，阶段关闭为`complete / independently reviewed`。最终连续fresh full为
+    `459 passed in 68.59s`，coverage为`459 passed in 218.13s`、
+    `3922 statements / 566 missed / 86%`，feed/memory/state/domain分别为84%/87%/88%/81%；
+    定向回归121 passed，补充攻击套件18 passed及2 passed，protocol/installation 144 passed，
+    N=1000/T=50增量调用形态为`1 passed in 12.99s`。完成文档前候选canonical snapshot
+    SHA-256为`3563f328c7f749b423b7e8bb01aa99d7bf20ffe92d458c454f9f6a67ccf9fe36`，两份schema
+    镜像SHA-256均为`3db603ea0c8303a061838cd962db687a6d5ab616bacc78dd1876b007d7a5783e`；文档更新后
+    release将生成新snapshot。draft仍含88个`UNRESOLVED[...]`，所有产物保持
+    `mock_only / not_frozen`，B/K未冻结且只能显式作为mock挑战输入。本阶段未调用真实模型、
+    未产生研究结果；Phase 4B-7尚未开始。

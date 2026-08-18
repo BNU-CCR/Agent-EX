@@ -232,17 +232,44 @@ class EventStatus(StrEnum):
 
 @dataclass(frozen=True, slots=True)
 class ExposureRecord:
-    """Minimal 4B-2 exposure boundary, pending feed expansion in 4B-6."""
+    """Hash-bound Phase 4B-6 evidence for finite-unread public exposure."""
 
     exposure_id: str
+    matched_seed: int
     event_ordinal: int
     receiver_agent_id: str
     exposure_mode: str
+    exposure_graph_hash: str | None
+    capacity: int
+    selection_id: str
+    selection_hash: str
+    cursor_before_id: str
+    cursor_before_hash: str
+    cursor_after_id: str
+    cursor_after_hash: str
+    candidate_post_ids: tuple[str, ...]
+    candidate_post_hashes: tuple[str, ...]
+    selected_post_ids: tuple[str, ...]
+    expired_post_ids: tuple[str, ...]
+    round0_candidate_post_ids: tuple[str, ...]
+    source_post_ids: tuple[str, ...]
+    source_post_hashes: tuple[str, ...]
+    source_update_ids: tuple[str, ...]
+    source_update_hashes: tuple[str, ...]
     source_agent_ids: tuple[str, ...]
-    source_event_ids: tuple[str, ...]
+    source_event_ids: tuple[str | None, ...]
+    message_ages: tuple[int, ...]
+    original_orders: tuple[int, ...]
+    display_slots: tuple[int, ...]
+    rendered_texts: tuple[str, ...]
+    rendered_hashes: tuple[str, ...]
+    slot_rng_hash: str
+    round0_rng_hash: str | None
+    record_hash: str
 
     def __post_init__(self) -> None:
         _require_id("exposure_id", self.exposure_id)
+        _require_int("matched_seed", self.matched_seed)
         _require_int("event_ordinal", self.event_ordinal)
         _require_id("receiver_agent_id", self.receiver_agent_id)
         if self.exposure_mode not in {
@@ -251,55 +278,293 @@ class ExposureRecord:
             "ws_neighbors",
         }:
             raise ValueError("exposure_mode is not a legal Paper 1 factor level")
-        _require_tuple("source_agent_ids", self.source_agent_ids)
+        if self.exposure_mode == "self_history_only":
+            if self.exposure_graph_hash is not None:
+                raise ValueError("self_history_only cannot bind an exposure graph")
+        else:
+            _require_sha256("exposure_graph_hash", self.exposure_graph_hash)
+        _require_int("capacity", self.capacity, minimum=1)
+        for name in (
+            "selection_id",
+            "cursor_before_id",
+            "cursor_after_id",
+        ):
+            _require_id(name, getattr(self, name))
+        for name in (
+            "selection_hash",
+            "cursor_before_hash",
+            "cursor_after_hash",
+            "slot_rng_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        _require_sha256("round0_rng_hash", self.round0_rng_hash, optional=True)
+        for name in (
+            "candidate_post_ids",
+            "candidate_post_hashes",
+            "selected_post_ids",
+            "expired_post_ids",
+            "round0_candidate_post_ids",
+            "source_post_ids",
+            "source_post_hashes",
+            "source_update_ids",
+            "source_update_hashes",
+            "source_agent_ids",
+            "source_event_ids",
+            "message_ages",
+            "original_orders",
+            "display_slots",
+            "rendered_texts",
+            "rendered_hashes",
+        ):
+            _require_tuple(name, getattr(self, name))
+        for name in (
+            "candidate_post_ids",
+            "selected_post_ids",
+            "expired_post_ids",
+            "round0_candidate_post_ids",
+            "source_post_ids",
+            "source_update_ids",
+        ):
+            _require_unique_ids(name, getattr(self, name))
         for source_agent_id in self.source_agent_ids:
             _require_id("source_agent_id", source_agent_id)
             if source_agent_id == self.receiver_agent_id:
                 raise ValueError("exposure cannot use the receiver as a social source")
-        _require_unique_ids("source_event_ids", self.source_event_ids)
-        if len(self.source_agent_ids) != len(self.source_event_ids):
-            raise ValueError("source_agent_ids and source_event_ids must be paired")
+        nonround_source_events = tuple(
+            source_event_id
+            for source_event_id in self.source_event_ids
+            if source_event_id is not None
+        )
+        _require_unique_ids("source_event_ids", nonround_source_events)
+        if not set(self.round0_candidate_post_ids).issubset(self.candidate_post_ids):
+            raise ValueError("round-0 candidate posts must be exposure candidates")
+        if bool(self.round0_candidate_post_ids) != (self.round0_rng_hash is not None):
+            raise ValueError("round-0 candidates and round-0 RNG provenance must be paired")
+        selected_count = len(self.selected_post_ids)
+        if len(self.candidate_post_hashes) != len(self.candidate_post_ids):
+            raise ValueError("candidate post IDs and hashes must be paired in order")
+        for value in self.candidate_post_hashes:
+            _require_sha256("candidate_post_hash", value)
+        candidate_hash_by_id = dict(
+            zip(self.candidate_post_ids, self.candidate_post_hashes, strict=True)
+        )
+        paired = (
+            self.source_post_ids,
+            self.source_post_hashes,
+            self.source_update_ids,
+            self.source_update_hashes,
+            self.source_agent_ids,
+            self.source_event_ids,
+            self.message_ages,
+            self.original_orders,
+            self.display_slots,
+            self.rendered_texts,
+            self.rendered_hashes,
+        )
+        if any(len(values) != selected_count for values in paired):
+            raise ValueError("selected exposure evidence fields must be paired")
+        if self.source_post_ids != self.selected_post_ids:
+            raise ValueError("source_post_ids must match selected_post_ids in evidence order")
+        if any(
+            candidate_hash_by_id[post_id] != post_hash
+            for post_id, post_hash in zip(
+                self.source_post_ids, self.source_post_hashes, strict=True
+            )
+        ):
+            raise ValueError("selected source hashes must match ordered candidate post hashes")
+        for name, values in (
+            ("source_post_hash", self.source_post_hashes),
+            ("source_update_hash", self.source_update_hashes),
+        ):
+            for value in values:
+                _require_sha256(name, value)
+        if set(self.selected_post_ids) & set(self.expired_post_ids) or (
+            set(self.selected_post_ids) | set(self.expired_post_ids)
+        ) != set(self.candidate_post_ids):
+            raise ValueError("selected and expired posts must partition candidates")
+        for name, values in (
+            ("message_age", self.message_ages),
+            ("original_order", self.original_orders),
+            ("display_slot", self.display_slots),
+        ):
+            for value in values:
+                _require_int(name, value, minimum=1 if name == "message_age" else 0)
+        if set(self.display_slots) != set(range(selected_count)):
+            raise ValueError("display_slots must be a complete zero-based permutation")
+        for text, digest in zip(self.rendered_texts, self.rendered_hashes, strict=True):
+            _require_string("rendered_text", text)
+            _require_sha256("rendered_hash", digest)
+            if digest != canonical_payload_hash(text):
+                raise ValueError("rendered_hash does not match rendered public text")
         if self.exposure_mode == "self_history_only" and self.source_event_ids:
             raise ValueError("self_history_only exposure cannot contain social sources")
-        object.__setattr__(self, "source_agent_ids", tuple(self.source_agent_ids))
-        object.__setattr__(self, "source_event_ids", tuple(self.source_event_ids))
+        if self.exposure_mode == "self_history_only" and self.candidate_post_ids:
+            raise ValueError("self_history_only exposure cannot contain candidate posts")
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
 
-    def to_payload(self) -> dict[str, object]:
+    @property
+    def metadata(self) -> dict[str, object]:
+        return {"mock_only": True, "research_parameter_status": "not_frozen"}
+
+    def content_payload(self) -> dict[str, object]:
         return {
+            "schema_version": "paper1.mock-exposure-record.v1",
             "exposure_id": self.exposure_id,
+            "matched_seed": self.matched_seed,
             "event_ordinal": self.event_ordinal,
             "receiver_agent_id": self.receiver_agent_id,
             "exposure_mode": self.exposure_mode,
-            "source_agent_ids": list(self.source_agent_ids),
-            "source_event_ids": list(self.source_event_ids),
+            "exposure_graph_hash": self.exposure_graph_hash,
+            "capacity": self.capacity,
+            "selection_id": self.selection_id,
+            "selection_hash": self.selection_hash,
+            "cursor_before_id": self.cursor_before_id,
+            "cursor_before_hash": self.cursor_before_hash,
+            "cursor_after_id": self.cursor_after_id,
+            "cursor_after_hash": self.cursor_after_hash,
+            "candidate_post_ids": self.candidate_post_ids,
+            "candidate_post_hashes": self.candidate_post_hashes,
+            "selected_post_ids": self.selected_post_ids,
+            "expired_post_ids": self.expired_post_ids,
+            "round0_candidate_post_ids": self.round0_candidate_post_ids,
+            "source_post_ids": self.source_post_ids,
+            "source_post_hashes": self.source_post_hashes,
+            "source_update_ids": self.source_update_ids,
+            "source_update_hashes": self.source_update_hashes,
+            "source_agent_ids": self.source_agent_ids,
+            "source_event_ids": self.source_event_ids,
+            "message_ages": self.message_ages,
+            "original_orders": self.original_orders,
+            "display_slots": self.display_slots,
+            "rendered_texts": self.rendered_texts,
+            "rendered_hashes": self.rendered_hashes,
+            "slot_rng_hash": self.slot_rng_hash,
+            "round0_rng_hash": self.round0_rng_hash,
+            "metadata": self.metadata,
         }
 
     @classmethod
+    def create(
+        cls,
+        *,
+        matched_seed: int,
+        event_ordinal: int,
+        receiver_agent_id: str,
+        exposure_mode: str,
+        exposure_graph_hash: str | None,
+        capacity: int,
+        selection_id: str,
+        selection_hash: str,
+        cursor_before_id: str,
+        cursor_before_hash: str,
+        cursor_after_id: str,
+        cursor_after_hash: str,
+        candidate_post_ids: tuple[str, ...],
+        candidate_post_hashes: tuple[str, ...],
+        selected_post_ids: tuple[str, ...],
+        expired_post_ids: tuple[str, ...],
+        round0_candidate_post_ids: tuple[str, ...],
+        source_post_ids: tuple[str, ...],
+        source_post_hashes: tuple[str, ...],
+        source_update_ids: tuple[str, ...],
+        source_update_hashes: tuple[str, ...],
+        source_agent_ids: tuple[str, ...],
+        source_event_ids: tuple[str | None, ...],
+        message_ages: tuple[int, ...],
+        original_orders: tuple[int, ...],
+        display_slots: tuple[int, ...],
+        rendered_texts: tuple[str, ...],
+        rendered_hashes: tuple[str, ...],
+        slot_rng_hash: str,
+        round0_rng_hash: str | None,
+        mock_only: bool,
+    ) -> ExposureRecord:
+        if mock_only is not True:
+            raise ValueError("Phase 4B-6 exposure records must be explicitly mock_only")
+        # GenerationEvent binds this deterministic per-run ordinal ID before feed construction.
+        exposure_id = f"exposure-{event_ordinal}"
+        values = {
+            "exposure_id": exposure_id,
+            "matched_seed": matched_seed,
+            "event_ordinal": event_ordinal,
+            "receiver_agent_id": receiver_agent_id,
+            "exposure_mode": exposure_mode,
+            "exposure_graph_hash": exposure_graph_hash,
+            "capacity": capacity,
+            "selection_id": selection_id,
+            "selection_hash": selection_hash,
+            "cursor_before_id": cursor_before_id,
+            "cursor_before_hash": cursor_before_hash,
+            "cursor_after_id": cursor_after_id,
+            "cursor_after_hash": cursor_after_hash,
+            "candidate_post_ids": candidate_post_ids,
+            "candidate_post_hashes": candidate_post_hashes,
+            "selected_post_ids": selected_post_ids,
+            "expired_post_ids": expired_post_ids,
+            "round0_candidate_post_ids": round0_candidate_post_ids,
+            "source_post_ids": source_post_ids,
+            "source_post_hashes": source_post_hashes,
+            "source_update_ids": source_update_ids,
+            "source_update_hashes": source_update_hashes,
+            "source_agent_ids": source_agent_ids,
+            "source_event_ids": source_event_ids,
+            "message_ages": message_ages,
+            "original_orders": original_orders,
+            "display_slots": display_slots,
+            "rendered_texts": rendered_texts,
+            "rendered_hashes": rendered_hashes,
+            "slot_rng_hash": slot_rng_hash,
+            "round0_rng_hash": round0_rng_hash,
+        }
+        content = {
+            "schema_version": "paper1.mock-exposure-record.v1",
+            **values,
+            "metadata": {"mock_only": True, "research_parameter_status": "not_frozen"},
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
     def from_payload(cls, payload: Mapping[str, object]) -> ExposureRecord:
-        expected = {
-            "exposure_id",
-            "event_ordinal",
-            "receiver_agent_id",
-            "exposure_mode",
+        expected = set(cls.__dataclass_fields__) | {"schema_version", "metadata"}
+        if type(payload) is not dict or set(payload) != expected:
+            raise ValueError("exposure payload fields do not match the Phase 4B-6 contract")
+        if payload["schema_version"] != "paper1.mock-exposure-record.v1":
+            raise ValueError("exposure schema_version is not supported")
+        if payload["metadata"] != {
+            "mock_only": True,
+            "research_parameter_status": "not_frozen",
+        }:
+            raise ValueError("exposure metadata must remain mock_only and not_frozen")
+        tuple_fields = {
+            "candidate_post_ids",
+            "candidate_post_hashes",
+            "selected_post_ids",
+            "expired_post_ids",
+            "round0_candidate_post_ids",
+            "source_post_ids",
+            "source_post_hashes",
+            "source_update_ids",
+            "source_update_hashes",
             "source_agent_ids",
             "source_event_ids",
+            "message_ages",
+            "original_orders",
+            "display_slots",
+            "rendered_texts",
+            "rendered_hashes",
         }
-        if type(payload) is not dict or set(payload) != expected:
-            raise ValueError("exposure payload fields do not match the v2 contract")
-        if (
-            type(payload["source_agent_ids"]) is not list
-            or type(payload["source_event_ids"]) is not list
-        ):
-            raise TypeError("exposure source IDs must be JSON arrays")
+        if any(type(payload[name]) is not list for name in tuple_fields):
+            raise TypeError("exposure repeated evidence fields must be JSON arrays")
         _require_json_transport(payload, "exposure payload")
-        return cls(
-            exposure_id=payload["exposure_id"],  # type: ignore[arg-type]
-            event_ordinal=payload["event_ordinal"],  # type: ignore[arg-type]
-            receiver_agent_id=payload["receiver_agent_id"],  # type: ignore[arg-type]
-            exposure_mode=payload["exposure_mode"],  # type: ignore[arg-type]
-            source_agent_ids=tuple(payload["source_agent_ids"]),  # type: ignore[arg-type]
-            source_event_ids=tuple(payload["source_event_ids"]),  # type: ignore[arg-type]
-        )
+        values = {
+            name: tuple(payload[name]) if name in tuple_fields else payload[name]
+            for name in cls.__dataclass_fields__
+        }
+        return cls(**values)  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)
@@ -1093,6 +1358,10 @@ def validate_evidence_graph(
     events: tuple[GenerationEvent, ...],
     attempts: tuple[GenerationAttempt, ...],
     exposures: tuple[ExposureRecord, ...],
+    *,
+    public_posts_by_id: Mapping[str, Any] | None = None,
+    private_updates_by_id: Mapping[str, Any] | None = None,
+    topic_package: Any | None = None,
 ) -> None:
     """Validate an ordinal event chain and its exact immutable evidence."""
 
@@ -1146,6 +1415,9 @@ def validate_evidence_graph(
             raise ValueError("recovery cursor must identify the first nonsucceeded event")
 
     referenced_attempt_ids: list[str] = []
+    from .state import PrivateUpdate, PublicPost, validate_public_post
+    from .topic import TopicPackage
+
     for event in events:
         if event.run_id != manifest.run_id:
             raise ValueError("event run_id must match manifest")
@@ -1165,25 +1437,185 @@ def validate_evidence_graph(
         if event.exposure_id not in exposure_by_id:
             raise ValueError("event exposure_id must identify exposure evidence")
         exposure = exposure_by_id[event.exposure_id]
+        if exposure.matched_seed != manifest.matched_seed:
+            raise ValueError("exposure matched seed must match manifest matched seed")
         if (
             exposure.event_ordinal != event.event_ordinal
             or exposure.receiver_agent_id != event.agent_id
         ):
             raise ValueError("event and exposure ordinal/receiver must match")
-        for source_agent_id, source_event_id in zip(
+        has_trusted_sources = bool(exposure.candidate_post_ids)
+        if has_trusted_sources and (
+            public_posts_by_id is None
+            or private_updates_by_id is None
+            or not isinstance(topic_package, TopicPackage)
+        ):
+            raise ValueError(
+                "every selected or round-0 social source requires trusted typed post/update maps "
+                "and a topic package"
+            )
+        trusted_round0_posts: dict[str, PublicPost] = {}
+        candidate_hash_by_id = dict(
+            zip(
+                exposure.candidate_post_ids,
+                exposure.candidate_post_hashes,
+                strict=True,
+            )
+        )
+        actual_round0_ids: list[str] = []
+        for candidate_id, candidate_hash in zip(
+            exposure.candidate_post_ids, exposure.candidate_post_hashes, strict=True
+        ):
+            candidate_post = public_posts_by_id.get(candidate_id)  # type: ignore[union-attr]
+            if not isinstance(candidate_post, PublicPost):
+                raise TypeError("trusted candidate evidence must contain PublicPost values")
+            candidate_update = private_updates_by_id.get(candidate_post.source_update_id)  # type: ignore[union-attr]
+            if not isinstance(candidate_update, PrivateUpdate):
+                raise TypeError("trusted candidate evidence must contain PrivateUpdate values")
+            if candidate_post.record_hash != candidate_hash:
+                raise ValueError("candidate post hash must match exposure evidence")
+            if (
+                candidate_post.matched_seed != manifest.matched_seed
+                or candidate_update.matched_seed != manifest.matched_seed
+            ):
+                raise ValueError("trusted candidate seed must match manifest seed")
+            validate_public_post(candidate_post, candidate_update, topic_package)
+            if candidate_post.author_agent_id == event.agent_id:
+                raise ValueError("social candidate cannot use the receiver as its source")
+            if candidate_post.source_event_id is None:
+                actual_round0_ids.append(candidate_id)
+                if (
+                    candidate_post.published_event_ordinal is not None
+                    or candidate_update.event_id is not None
+                    or candidate_update.event_ordinal is not None
+                ):
+                    raise ValueError("round-0 candidate event fields must be absent")
+            else:
+                candidate_event = event_by_id.get(candidate_post.source_event_id)
+                if candidate_event is None or candidate_event.status is not EventStatus.SUCCEEDED:
+                    raise ValueError("event candidate must identify a succeeded source event")
+                if (
+                    candidate_event.event_ordinal >= event.event_ordinal
+                    or candidate_event.agent_id != candidate_post.author_agent_id
+                    or candidate_event.publish_flag is not True
+                    or candidate_post.published_event_ordinal != candidate_event.event_ordinal
+                    or candidate_update.event_id != candidate_event.event_id
+                    or candidate_update.event_ordinal != candidate_event.event_ordinal
+                ):
+                    raise ValueError(
+                        "event candidate must match earlier actual source event ID and ordinal"
+                    )
+                if (
+                    not candidate_event.attempt_ids
+                    or candidate_update.source_attempt_id != candidate_event.attempt_ids[-1]
+                ):
+                    raise ValueError("event candidate must bind final successful attempt")
+                candidate_attempt = attempt_by_id.get(candidate_update.source_attempt_id)
+                if (
+                    candidate_attempt is None
+                    or candidate_attempt.event_id != candidate_event.event_id
+                    or candidate_attempt.status is not EventStatus.SUCCEEDED
+                ):
+                    raise ValueError("event candidate must bind final successful attempt")
+        if tuple(actual_round0_ids) != exposure.round0_candidate_post_ids:
+            raise ValueError("actual round-0 candidate order must match round-0 candidate evidence")
+        for source_post_id in exposure.round0_candidate_post_ids:
+            post = public_posts_by_id.get(source_post_id)  # type: ignore[union-attr]
+            if not isinstance(post, PublicPost):
+                raise TypeError("trusted social post evidence must contain PublicPost values")
+            if post.record_hash != candidate_hash_by_id[source_post_id]:
+                raise ValueError("round-0 candidate post hash must match exposure evidence")
+            update = private_updates_by_id.get(post.source_update_id)  # type: ignore[union-attr]
+            if not isinstance(update, PrivateUpdate):
+                raise TypeError("trusted social update evidence must contain PrivateUpdate values")
+            if (
+                post.matched_seed != manifest.matched_seed
+                or update.matched_seed != manifest.matched_seed
+            ):
+                raise ValueError("trusted round-0 source seed must match manifest seed")
+            if (
+                post.source_event_id is not None
+                or post.published_event_ordinal is not None
+                or update.event_id is not None
+                or update.event_ordinal is not None
+            ):
+                raise ValueError("round-0 source event ID and ordinal must both be absent")
+            validate_public_post(post, update, topic_package)
+            trusted_round0_posts[source_post_id] = post
+        for (
+            source_post_id,
+            source_post_hash,
+            source_update_id,
+            source_update_hash,
+            source_agent_id,
+            source_event_id,
+        ) in zip(
+            exposure.source_post_ids,
+            exposure.source_post_hashes,
+            exposure.source_update_ids,
+            exposure.source_update_hashes,
             exposure.source_agent_ids,
             exposure.source_event_ids,
             strict=True,
         ):
-            source = event_by_id.get(source_event_id)
-            if source is None:
-                raise ValueError("exposure source_event_id must identify graph evidence")
-            if source.event_ordinal >= event.event_ordinal:
-                raise ValueError("exposure sources must be earlier, never future events")
-            if source.agent_id != source_agent_id:
-                raise ValueError("exposure source agent must match source event")
-            if source.status is not EventStatus.SUCCEEDED:
-                raise ValueError("exposure source event must be succeeded")
+            post = public_posts_by_id.get(source_post_id)  # type: ignore[union-attr]
+            update = private_updates_by_id.get(source_update_id)  # type: ignore[union-attr]
+            if not isinstance(post, PublicPost):
+                raise TypeError("trusted social post evidence must contain PublicPost values")
+            if not isinstance(update, PrivateUpdate):
+                raise TypeError("trusted social update evidence must contain PrivateUpdate values")
+            if post.record_hash != source_post_hash:
+                raise ValueError("exposure source post hash must match trusted evidence")
+            if update.record_hash != source_update_hash:
+                raise ValueError("exposure source update hash must match trusted evidence")
+            if (
+                post.source_update_id != source_update_id
+                or post.source_update_hash != source_update_hash
+                or post.author_agent_id != source_agent_id
+                or post.source_event_id != source_event_id
+            ):
+                raise ValueError("exposure trusted source chain fields do not match")
+            if (
+                post.matched_seed != manifest.matched_seed
+                or update.matched_seed != manifest.matched_seed
+            ):
+                raise ValueError("trusted social source seed must match manifest seed")
+            validate_public_post(post, update, topic_package)
+            if source_event_id is not None:
+                source = event_by_id.get(source_event_id)
+                if source is None:
+                    raise ValueError("exposure source_event_id must identify graph evidence")
+                if source.event_ordinal >= event.event_ordinal:
+                    raise ValueError("exposure sources must be earlier, never future events")
+                if source.agent_id != source_agent_id:
+                    raise ValueError("exposure source agent must match source event")
+                if source.status is not EventStatus.SUCCEEDED:
+                    raise ValueError("exposure source event must be succeeded")
+                if source.publish_flag is not True:
+                    raise ValueError("exposure source event must have frozen publish_flag=true")
+                if (
+                    post.published_event_ordinal != source.event_ordinal
+                    or update.event_id != source.event_id
+                    or update.event_ordinal != source.event_ordinal
+                ):
+                    raise ValueError(
+                        "trusted source event ID and ordinal must match the actual succeeded event"
+                    )
+                if not source.attempt_ids or update.source_attempt_id != source.attempt_ids[-1]:
+                    raise ValueError(
+                        "trusted source update must bind the final successful source attempt"
+                    )
+                source_attempt = attempt_by_id.get(update.source_attempt_id)
+                if (
+                    source_attempt is None
+                    or source_attempt.event_id != source.event_id
+                    or source_attempt.status is not EventStatus.SUCCEEDED
+                ):
+                    raise ValueError(
+                        "trusted source attempt must belong to the event and be succeeded"
+                    )
+            elif source_post_id not in trusted_round0_posts:
+                raise ValueError("selected round-0 source must be bound as a round-0 candidate")
 
         event_attempts: list[GenerationAttempt] = []
         for attempt_id in event.attempt_ids:

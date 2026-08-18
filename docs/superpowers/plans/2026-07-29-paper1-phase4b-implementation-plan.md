@@ -1,5 +1,5 @@
 ---
-status: approved implementation plan; executing; Phase 4B-0 through 4B-5 complete / independently reviewed; Phase 4B-6 not started
+status: approved implementation plan; executing; Phase 4B-0 through 4B-6 complete / independently reviewed; Phase 4B-7 not started
 authority: Phase 4B implementation sequence
 date: 2026-07-29
 inputs:
@@ -490,6 +490,21 @@ formal freeze。完成文档更新前的已验证代码/测试候选canonical sn
 
 ## 10. Phase 4B-6：private/public状态、有限未读feed与memory
 
+**状态（2026-08-18）：** `complete / independently reviewed`。首轮及最终复审的来源重放、
+selection重放、round-0证据、latest-public pointer、邻居集合规范化、末次成功attempt、
+全candidate hash与累计日志性能缺口均已先RED后修复。独立规格/反模式与代码质量复审均为
+`APPROVED`，release verification为`PASS`；最终连续fresh全套为
+`459 passed in 68.59s`，coverage为`459 passed in 218.13s`、
+`3922 statements / 566 missed / 86%`（feed 84%、memory 87%、state 88%、domain 81%）。
+定向回归为121 passed，补充攻击套件为18 passed及2 passed，protocol/installation为
+144 passed；N=1000/T=50增量调用形态为`1 passed in 12.99s`。Ruff/format/pip/diff及
+schema/draft/formal/human-summary门禁通过。完成文档更新前的已验证候选canonical snapshot
+SHA-256为`3563f328c7f749b423b7e8bb01aa99d7bf20ffe92d458c454f9f6a67ccf9fe36`；文档更新后
+release会产生新snapshot。两份schema镜像SHA-256均为
+`3db603ea0c8303a061838cd962db687a6d5ab616bacc78dd1876b007d7a5783e`。draft仍含88个
+`UNRESOLVED[...]`，全部产物保持`mock_only / not_frozen`；B/K仍为调用者显式提供的mock
+挑战输入而非formal冻结值。Phase 4B-7未开始。
+
 ### 新文件
 
 - `platform/src/agent_ex/state.py`
@@ -525,7 +540,7 @@ Exposure证据必须记录候选、入选、过期、post/event/source ID、消�
 
 ### Memory算法
 
-- 只取最近K次成功非公开更新；
+- 只取最近K次成功私人更新，不因是否公开而过滤；
 - 每条含文字立场、理由、confidence和是否公开；
 - 按旧到新排列；
 - round 0不永久置顶；

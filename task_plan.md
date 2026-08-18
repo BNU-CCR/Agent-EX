@@ -4,8 +4,8 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
-阶段 4B实施：执行计划已获用户整包批准；4B-0至4B-5均已完成并通过独立审查；
-Phase 4B-5状态为`complete / independently reviewed`，Phase 4B-6尚未开始
+阶段 4B实施：执行计划已获用户整包批准；4B-0至4B-6均已完成并通过独立审查；
+Phase 4B-6状态为`complete / independently reviewed`，Phase 4B-7尚未开始
 
 ## 各阶段
 
@@ -167,7 +167,11 @@ Phase 4B-5状态为`complete / independently reviewed`，Phase 4B-6尚未开始
   verification为`PASS`；最终连续fresh全套402 passed in 69.92s，coverage 402 passed in
   204.17s、2876 statements / 419 missed / 85%，schedule.py为638/96/85%；draft仍含
   88个UNRESOLVED，mock制品保持mock_only/not_frozen）
-- [ ] Phase 4B-6：实现private/public/feed/memory
+- [x] Phase 4B-6：实现private/public/feed/memory
+  （`complete / independently reviewed`；规格/反模式与代码质量复审均`APPROVED`，release
+  verification为`PASS`；最终连续fresh全套459 passed in 68.59s，coverage 459 passed in
+  218.13s、3922 statements / 566 missed / 86%；B/K仍为显式mock挑战输入，formal值未冻结，
+  draft仍含88个`UNRESOLVED[...]`；Phase 4B-7未开始）
 - [ ] Phase 4B-7：实现prompt/parser/mock adapter
 - [ ] Phase 4B-8：实现SQLite事务存储、严格串行engine与checkpoint/recovery
 - [ ] Phase 4B-9：完成N=20/100/1000 mock集成与交接
@@ -176,7 +180,7 @@ Phase 4B-5状态为`complete / independently reviewed`，Phase 4B-6尚未开始
 - [ ] 完成 mock N=20/100/1000 验证
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
-- **状态：** in_progress（4B-0至4B-5 complete / independently reviewed；4B-6未开始）
+- **状态：** in_progress（4B-0至4B-6 complete / independently reviewed；4B-7未开始）
 
 ### 阶段 5：正式实验与分析
 - [ ] 完成 N=200/500/1000 的有限规模检验

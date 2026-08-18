@@ -1,5 +1,6 @@
 from dataclasses import FrozenInstanceError, replace
 import json
+from types import SimpleNamespace
 
 import pytest
 
@@ -19,10 +20,61 @@ from agent_ex.domain import (
     evaluate_analysis_eligibility,
     validate_evidence_graph,
 )
+from agent_ex.state import PrivateUpdate, PublicPost
+from agent_ex.topic import TopicPackage
 
 
 SHA_A = "a" * 64
 SHA_B = "b" * 64
+
+
+def topic() -> TopicPackage:
+    return TopicPackage.from_payload(
+        {
+            "schema_version": "paper1.topic-package.mock.v1",
+            "package_version": "mock",
+            "topic_id": "mock-topic",
+            "construct": "mock",
+            "target_population": "mock",
+            "applicability": "mock",
+            "fact_card": "mock",
+            "core_statement": "mock",
+            "paraphrases": ["mock"],
+            "stance_labels": [f"label-{index}" for index in range(7)],
+            "confidence_contract": {"minimum": 1, "maximum": 5, "analysis_only": True},
+            "output_contract": ["stance", "confidence", "public_reason"],
+            "argument_families": ["mock"],
+            "round0_reason_library_artifact_id": "artifact-" + "a" * 64,
+            "topic_extension_fields": [],
+            "metadata": {"mock_only": True, "research_parameter_status": "not_frozen"},
+        }
+    )
+
+
+def source_post(
+    *,
+    agent_id: str,
+    event_id: str | None,
+    event_ordinal: int | None,
+    seed: int = 17,
+) -> tuple[PrivateUpdate, PublicPost]:
+    update = PrivateUpdate.create(
+        topic_package=topic(),
+        matched_seed=seed,
+        agent_id=agent_id,
+        event_id=event_id,
+        event_ordinal=event_ordinal,
+        sequence_index=0 if event_ordinal is None else 1,
+        stance_label="label-0",
+        reason="typed source reason",
+        confidence=None if event_ordinal is None else 3,
+        published=True,
+        source_attempt_id=(None if event_id is None else derive_attempt_id(event_id, 1)),
+        mock_only=True,
+    )
+    return update, PublicPost.from_private_update(update, mock_only=True)
+
+
 NOW = "2026-07-29T00:00:00Z"
 LATER = "2026-07-29T00:00:01Z"
 
@@ -130,15 +182,72 @@ def make_exposure(
     event_ordinal: int,
     receiver_agent_id: str,
     source_agent_ids: tuple[str, ...] = (),
-    source_event_ids: tuple[str, ...] = (),
+    source_event_ids: tuple[str | None, ...] = (),
+    matched_seed: int = 17,
+    source_posts: tuple[PublicPost, ...] | None = None,
+    expired_round0_posts: tuple[PublicPost, ...] = (),
+    expired_event_posts: tuple[PublicPost, ...] = (),
 ) -> ExposureRecord:
-    return ExposureRecord(
-        exposure_id=f"exposure-{event_ordinal}",
+    if source_posts is not None:
+        source_agent_ids = tuple(post.author_agent_id for post in source_posts)
+        source_event_ids = tuple(post.source_event_id for post in source_posts)
+        post_ids = tuple(post.post_id for post in source_posts)
+        post_hashes = tuple(post.record_hash for post in source_posts)
+        update_ids = tuple(post.source_update_id for post in source_posts)
+        update_hashes = tuple(post.source_update_hash for post in source_posts)
+    else:
+        post_ids = tuple(f"post-{event_ordinal}-{index}" for index in range(len(source_event_ids)))
+        post_hashes = (SHA_A,) * len(post_ids)
+        update_ids = tuple(f"update-{event_ordinal}-{index}" for index in range(len(post_ids)))
+        update_hashes = (SHA_B,) * len(post_ids)
+    expired_posts = expired_round0_posts + expired_event_posts
+    expired_ids = tuple(post.post_id for post in expired_posts)
+    candidate_ids = post_ids + expired_ids
+    candidate_hashes = post_hashes + tuple(post.record_hash for post in expired_posts)
+    rendered_texts = tuple(
+        f"Member {agent_id} | mock stance | mock public reason" for agent_id in source_agent_ids
+    )
+    return ExposureRecord.create(
+        matched_seed=matched_seed,
         event_ordinal=event_ordinal,
         receiver_agent_id=receiver_agent_id,
         exposure_mode="ws_neighbors",
+        exposure_graph_hash=SHA_A,
+        capacity=4,
+        selection_id=f"selection-{event_ordinal}",
+        selection_hash=SHA_A,
+        cursor_before_id=f"cursor-before-{event_ordinal}",
+        cursor_before_hash=SHA_A,
+        cursor_after_id=f"cursor-after-{event_ordinal}",
+        cursor_after_hash=SHA_B,
+        candidate_post_ids=candidate_ids,
+        candidate_post_hashes=candidate_hashes,
+        selected_post_ids=post_ids,
+        expired_post_ids=expired_ids,
+        round0_candidate_post_ids=tuple(
+            post_id
+            for post_id, source_event_id in zip(post_ids, source_event_ids, strict=True)
+            if source_event_id is None
+        )
+        + tuple(post.post_id for post in expired_round0_posts),
+        source_post_ids=post_ids,
+        source_post_hashes=post_hashes,
+        source_update_ids=update_ids,
+        source_update_hashes=update_hashes,
         source_agent_ids=source_agent_ids,
         source_event_ids=source_event_ids,
+        message_ages=(1,) * len(post_ids),
+        original_orders=tuple(range(len(post_ids))),
+        display_slots=tuple(range(len(post_ids))),
+        rendered_texts=rendered_texts,
+        rendered_hashes=tuple(canonical_payload_hash(text) for text in rendered_texts),
+        slot_rng_hash=SHA_A,
+        round0_rng_hash=(
+            SHA_A
+            if any(value is None for value in source_event_ids) or expired_round0_posts
+            else None
+        ),
+        mock_only=True,
     )
 
 
@@ -976,31 +1085,512 @@ def build_graph(
 def test_evidence_graph_accepts_same_sweep_earlier_source_and_succeeded_prefix() -> None:
     schedule = make_schedule()
     manifest, events, attempts, exposures = build_graph(
-        schedule,
-        (EventStatus.SUCCEEDED,) * schedule.count,
-        source_at={1: (0,), 3: (1, 2)},
+        schedule, (EventStatus.SUCCEEDED,) * schedule.count
     )
-
-    validate_evidence_graph(manifest, events, attempts, exposures)
+    updates_and_posts = tuple(
+        source_post(
+            agent_id=events[index].agent_id,
+            event_id=events[index].event_id,
+            event_ordinal=events[index].event_ordinal,
+        )
+        for index in (0, 2)
+    )
+    records = list(exposures)
+    records[1] = make_exposure(
+        event_ordinal=1,
+        receiver_agent_id=events[1].agent_id,
+        source_posts=(updates_and_posts[0][1],),
+    )
+    records[3] = make_exposure(
+        event_ordinal=3,
+        receiver_agent_id=events[3].agent_id,
+        source_posts=(updates_and_posts[1][1],),
+    )
+    validate_evidence_graph(
+        manifest,
+        events,
+        attempts,
+        tuple(records),
+        public_posts_by_id={post.post_id: post for _, post in updates_and_posts},
+        private_updates_by_id={update.update_id: update for update, _ in updates_and_posts},
+        topic_package=topic(),
+    )
 
 
 def test_evidence_graph_rejects_future_source_without_previous_round_rule() -> None:
     schedule = make_schedule()
     manifest, events, attempts, exposures = build_graph(
-        schedule,
-        (EventStatus.SUCCEEDED,) * schedule.count,
-        source_at={1: (0,)},
+        schedule, (EventStatus.SUCCEEDED,) * schedule.count
+    )
+    update, post = source_post(
+        agent_id=events[3].agent_id,
+        event_id=events[3].event_id,
+        event_ordinal=events[3].event_ordinal,
     )
     tampered = list(exposures)
     tampered[1] = make_exposure(
         event_ordinal=1,
         receiver_agent_id=schedule.slots[1].agent_id,
-        source_agent_ids=(schedule.slots[3].agent_id,),
-        source_event_ids=(events[3].event_id,),
+        source_posts=(post,),
     )
 
     with pytest.raises(ValueError, match="earlier|future"):
-        validate_evidence_graph(manifest, events, attempts, tuple(tampered))
+        validate_evidence_graph(
+            manifest,
+            events,
+            attempts,
+            tuple(tampered),
+            public_posts_by_id={post.post_id: post},
+            private_updates_by_id={update.update_id: update},
+            topic_package=topic(),
+        )
+
+
+def test_evidence_graph_rejects_exposure_seed_drift() -> None:
+    schedule = make_schedule(population_size=1, sweep_count=1)
+    manifest, events, attempts, exposures = build_graph(schedule, (EventStatus.SUCCEEDED,))
+    forged = make_exposure(
+        event_ordinal=0,
+        receiver_agent_id=events[0].agent_id,
+        matched_seed=18,
+    )
+    with pytest.raises(ValueError, match="exposure.*seed|seed.*manifest"):
+        validate_evidence_graph(manifest, events, attempts, (forged,))
+
+
+def test_evidence_graph_round0_source_requires_trusted_post_update_maps() -> None:
+    schedule = make_schedule(population_size=1, sweep_count=1)
+    manifest, events, attempts, _ = build_graph(schedule, (EventStatus.SUCCEEDED,))
+    update, post = source_post(agent_id="agent-round0", event_id=None, event_ordinal=None)
+    round0 = make_exposure(
+        event_ordinal=0,
+        receiver_agent_id=events[0].agent_id,
+        source_posts=(post,),
+    )
+    with pytest.raises(ValueError, match="round-0.*trusted|trusted.*round-0"):
+        validate_evidence_graph(manifest, events, attempts, (round0,))
+
+    validate_evidence_graph(
+        manifest,
+        events,
+        attempts,
+        (round0,),
+        public_posts_by_id={post.post_id: post},
+        private_updates_by_id={update.update_id: update},
+        topic_package=topic(),
+    )
+
+    payload = round0.to_payload()
+    payload["round0_rng_hash"] = None
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="round-0.*RNG|RNG.*round-0"):
+        ExposureRecord.from_payload(payload)
+
+
+def test_evidence_graph_requires_trusted_sources_for_selected_and_expired_round0() -> None:
+    schedule = make_schedule(population_size=2, sweep_count=1)
+    manifest, events, attempts, exposures = build_graph(
+        schedule, (EventStatus.SUCCEEDED, EventStatus.SUCCEEDED)
+    )
+    _, event_post = source_post(
+        agent_id=events[0].agent_id,
+        event_id=events[0].event_id,
+        event_ordinal=events[0].event_ordinal,
+    )
+    selected = list(exposures)
+    selected[1] = make_exposure(
+        event_ordinal=1,
+        receiver_agent_id=events[1].agent_id,
+        source_posts=(event_post,),
+    )
+    with pytest.raises(ValueError, match="trusted.*source|source.*trusted"):
+        validate_evidence_graph(manifest, events, attempts, tuple(selected))
+
+    _, round0_post = source_post(agent_id="agent-round0", event_id=None, event_ordinal=None)
+    expired = list(exposures)
+    expired[0] = make_exposure(
+        event_ordinal=0,
+        receiver_agent_id=events[0].agent_id,
+        expired_round0_posts=(round0_post,),
+    )
+    with pytest.raises(ValueError, match="trusted.*source|source.*trusted"):
+        validate_evidence_graph(manifest, events, attempts, tuple(expired))
+
+
+def test_evidence_graph_rejects_cross_seed_event_drift_and_fake_typed_sources() -> None:
+    schedule = make_schedule(population_size=2, sweep_count=1)
+    manifest, events, attempts, exposures = build_graph(
+        schedule, (EventStatus.SUCCEEDED, EventStatus.SUCCEEDED)
+    )
+    for seed, ordinal, match in (
+        (18, events[0].event_ordinal, "seed"),
+        (17, events[0].event_ordinal + 99, "ordinal"),
+    ):
+        update, post = source_post(
+            agent_id=events[0].agent_id,
+            event_id=events[0].event_id,
+            event_ordinal=ordinal,
+            seed=seed,
+        )
+        records = list(exposures)
+        records[1] = make_exposure(
+            event_ordinal=1,
+            receiver_agent_id=events[1].agent_id,
+            source_posts=(post,),
+        )
+        with pytest.raises(ValueError, match=match):
+            validate_evidence_graph(
+                manifest,
+                events,
+                attempts,
+                tuple(records),
+                public_posts_by_id={post.post_id: post},
+                private_updates_by_id={update.update_id: update},
+                topic_package=topic(),
+            )
+
+    good_update, good_post = source_post(
+        agent_id=events[0].agent_id,
+        event_id=events[0].event_id,
+        event_ordinal=events[0].event_ordinal,
+    )
+    records = list(exposures)
+    records[1] = make_exposure(
+        event_ordinal=1,
+        receiver_agent_id=events[1].agent_id,
+        source_posts=(good_post,),
+    )
+    fake_post = SimpleNamespace(**good_post.to_payload())
+    fake_update = SimpleNamespace(**good_update.to_payload())
+    with pytest.raises(TypeError, match="PublicPost|PrivateUpdate|typed"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            attempts,
+            tuple(records),
+            public_posts_by_id={good_post.post_id: fake_post},
+            private_updates_by_id={good_update.update_id: fake_update},
+            topic_package=topic(),
+        )
+
+
+def test_evidence_graph_source_update_must_bind_final_successful_attempt() -> None:
+    schedule = make_schedule(population_size=2, sweep_count=1)
+    manifest, events, _, exposures = build_graph(
+        schedule, (EventStatus.SUCCEEDED, EventStatus.SUCCEEDED)
+    )
+    source_event = make_event(
+        manifest.run_id, schedule.slots[0], status=EventStatus.SUCCEEDED, attempt_count=2
+    )
+    receiver_event = events[1]
+    failed = make_attempt(
+        source_event.event_id,
+        source_event.exposure_id,
+        attempt_index=1,
+        status=EventStatus.FAILED,
+    )
+    succeeded = make_attempt(
+        source_event.event_id,
+        source_event.exposure_id,
+        attempt_index=2,
+        status=EventStatus.SUCCEEDED,
+    )
+    update, post = source_post(
+        agent_id=source_event.agent_id,
+        event_id=source_event.event_id,
+        event_ordinal=source_event.event_ordinal,
+    )
+    records = list(exposures)
+    records[1] = make_exposure(
+        event_ordinal=1,
+        receiver_agent_id=receiver_event.agent_id,
+        source_posts=(post,),
+    )
+    receiver_attempt = make_attempt(receiver_event.event_id, receiver_event.exposure_id)
+    with pytest.raises(ValueError, match="final|successful.*attempt|attempt.*succeeded"):
+        validate_evidence_graph(
+            manifest,
+            (source_event, receiver_event),
+            (failed, succeeded, receiver_attempt),
+            tuple(records),
+            public_posts_by_id={post.post_id: post},
+            private_updates_by_id={update.update_id: update},
+            topic_package=topic(),
+        )
+
+
+def test_expired_round0_candidate_hash_rejects_same_id_content_replacement() -> None:
+    schedule = make_schedule(population_size=1, sweep_count=1)
+    manifest, events, attempts, exposures = build_graph(schedule, (EventStatus.SUCCEEDED,))
+    original_update, original_post = source_post(
+        agent_id="agent-round0", event_id=None, event_ordinal=None
+    )
+    replacement_update = PrivateUpdate.create(
+        topic_package=topic(),
+        matched_seed=17,
+        agent_id="agent-round0",
+        event_id=None,
+        event_ordinal=None,
+        sequence_index=0,
+        stance_label="label-1",
+        reason="replacement content",
+        confidence=None,
+        published=True,
+        source_attempt_id=None,
+        mock_only=True,
+    )
+    replacement_post = PublicPost.from_private_update(replacement_update, mock_only=True)
+    assert replacement_post.post_id == original_post.post_id
+    assert replacement_post.record_hash != original_post.record_hash
+    records = list(exposures)
+    records[0] = make_exposure(
+        event_ordinal=0,
+        receiver_agent_id=events[0].agent_id,
+        expired_round0_posts=(original_post,),
+    )
+    with pytest.raises(ValueError, match="candidate.*hash|hash.*candidate"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            attempts,
+            tuple(records),
+            public_posts_by_id={replacement_post.post_id: replacement_post},
+            private_updates_by_id={replacement_update.update_id: replacement_update},
+            topic_package=topic(),
+        )
+
+
+def test_exposure_candidate_hashes_reject_missing_wrong_order_hash_and_bool() -> None:
+    first_update, first_post = source_post(agent_id="agent-a", event_id="event-a", event_ordinal=1)
+    second_update, second_post = source_post(
+        agent_id="agent-b", event_id="event-b", event_ordinal=2
+    )
+    assert first_update.update_id != second_update.update_id
+    record = make_exposure(
+        event_ordinal=3,
+        receiver_agent_id="agent-r",
+        source_posts=(first_post, second_post),
+    )
+    missing = record.to_payload()
+    missing.pop("candidate_post_hashes")
+    with pytest.raises(ValueError, match="fields"):
+        ExposureRecord.from_payload(missing)
+
+    for values in (
+        list(reversed(record.candidate_post_hashes)),
+        ["f" * 64, record.candidate_post_hashes[1]],
+        [True, record.candidate_post_hashes[1]],
+    ):
+        payload = record.to_payload()
+        payload["candidate_post_hashes"] = values
+        payload["record_hash"] = canonical_payload_hash(
+            {name: value for name, value in payload.items() if name != "record_hash"}
+        )
+        with pytest.raises((TypeError, ValueError), match="candidate|hash"):
+            ExposureRecord.from_payload(payload)
+
+
+def test_expired_event_candidate_requires_typed_exact_seeded_source() -> None:
+    schedule = make_schedule(population_size=3, sweep_count=2)
+    manifest, events, attempts, exposures = build_graph(schedule, (EventStatus.SUCCEEDED,) * 6)
+    expired_update, expired_post = source_post(
+        agent_id=events[2].agent_id,
+        event_id=events[2].event_id,
+        event_ordinal=events[2].event_ordinal,
+    )
+    selected_update, selected_post = source_post(
+        agent_id=events[3].agent_id,
+        event_id=events[3].event_id,
+        event_ordinal=events[3].event_ordinal,
+    )
+    records = list(exposures)
+    records[5] = make_exposure(
+        event_ordinal=5,
+        receiver_agent_id=events[5].agent_id,
+        source_posts=(selected_post,),
+        expired_event_posts=(expired_post,),
+    )
+    base_posts = {selected_post.post_id: selected_post}
+    base_updates = {selected_update.update_id: selected_update}
+    with pytest.raises((TypeError, ValueError), match="candidate|trusted|source"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            attempts,
+            tuple(records),
+            public_posts_by_id=base_posts,
+            private_updates_by_id=base_updates,
+            topic_package=topic(),
+        )
+
+    for seed, reason in ((17, "replacement"), (18, "cross seed")):
+        replacement_update = PrivateUpdate.create(
+            topic_package=topic(),
+            matched_seed=seed,
+            agent_id=events[2].agent_id,
+            event_id=events[2].event_id,
+            event_ordinal=events[2].event_ordinal,
+            sequence_index=1,
+            stance_label="label-1",
+            reason=reason,
+            confidence=3,
+            published=True,
+            source_attempt_id=events[2].attempt_ids[-1],
+            mock_only=True,
+        )
+        replacement_post = PublicPost.from_private_update(replacement_update, mock_only=True)
+        with pytest.raises(ValueError, match="candidate|hash|seed"):
+            validate_evidence_graph(
+                manifest,
+                events,
+                attempts,
+                tuple(records),
+                public_posts_by_id={**base_posts, expired_post.post_id: replacement_post},
+                private_updates_by_id={
+                    **base_updates,
+                    replacement_update.update_id: replacement_update,
+                },
+                topic_package=topic(),
+            )
+
+
+def test_expired_event_candidate_rejects_failed_source_attempt() -> None:
+    schedule = make_schedule(population_size=3, sweep_count=2)
+    manifest, events, _, exposures = build_graph(schedule, (EventStatus.SUCCEEDED,) * 6)
+    source_event = make_event(manifest.run_id, schedule.slots[2], attempt_count=2)
+    events = events[:2] + (source_event,) + events[3:]
+    failed = make_attempt(
+        source_event.event_id, source_event.exposure_id, attempt_index=1, status=EventStatus.FAILED
+    )
+    succeeded = make_attempt(source_event.event_id, source_event.exposure_id, attempt_index=2)
+    other_attempts = tuple(
+        make_attempt(event.event_id, event.exposure_id)
+        for index, event in enumerate(events)
+        if index != 2
+    )
+    expired_update, expired_post = source_post(
+        agent_id=source_event.agent_id,
+        event_id=source_event.event_id,
+        event_ordinal=source_event.event_ordinal,
+    )
+    selected_update, selected_post = source_post(
+        agent_id=events[3].agent_id,
+        event_id=events[3].event_id,
+        event_ordinal=events[3].event_ordinal,
+    )
+    records = list(exposures)
+    records[5] = make_exposure(
+        event_ordinal=5,
+        receiver_agent_id=events[5].agent_id,
+        source_posts=(selected_post,),
+        expired_event_posts=(expired_post,),
+    )
+    with pytest.raises(ValueError, match="attempt|successful"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            (failed, succeeded) + other_attempts,
+            tuple(records),
+            public_posts_by_id={
+                expired_post.post_id: expired_post,
+                selected_post.post_id: selected_post,
+            },
+            private_updates_by_id={
+                expired_update.update_id: expired_update,
+                selected_update.update_id: selected_update,
+            },
+            topic_package=topic(),
+        )
+
+
+def test_evidence_graph_rebuilds_exact_round0_candidate_classification() -> None:
+    schedule = make_schedule(population_size=1, sweep_count=1)
+    manifest, events, attempts, exposures = build_graph(schedule, (EventStatus.SUCCEEDED,))
+    update, post = source_post(agent_id="agent-round0", event_id=None, event_ordinal=None)
+    valid = make_exposure(
+        event_ordinal=0,
+        receiver_agent_id=events[0].agent_id,
+        expired_round0_posts=(post,),
+    )
+    payload = valid.to_payload()
+    payload["round0_candidate_post_ids"] = []
+    payload["round0_rng_hash"] = None
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    hidden_round0 = ExposureRecord.from_payload(payload)
+    with pytest.raises(ValueError, match="round-0.*candidate|candidate.*round-0"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            attempts,
+            (hidden_round0,),
+            public_posts_by_id={post.post_id: post},
+            private_updates_by_id={update.update_id: update},
+            topic_package=topic(),
+        )
+
+
+def test_expired_event_candidate_rejects_receiver_as_source() -> None:
+    schedule = make_schedule(population_size=3, sweep_count=2)
+    manifest, events, attempts, exposures = build_graph(schedule, (EventStatus.SUCCEEDED,) * 6)
+    assert events[0].agent_id == events[5].agent_id
+    expired_update, expired_post = source_post(
+        agent_id=events[0].agent_id,
+        event_id=events[0].event_id,
+        event_ordinal=events[0].event_ordinal,
+    )
+    selected_update, selected_post = source_post(
+        agent_id=events[3].agent_id,
+        event_id=events[3].event_id,
+        event_ordinal=events[3].event_ordinal,
+    )
+    records = list(exposures)
+    records[5] = make_exposure(
+        event_ordinal=5,
+        receiver_agent_id=events[5].agent_id,
+        source_posts=(selected_post,),
+        expired_event_posts=(expired_post,),
+    )
+    with pytest.raises(ValueError, match="receiver|self"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            attempts,
+            tuple(records),
+            public_posts_by_id={
+                expired_post.post_id: expired_post,
+                selected_post.post_id: selected_post,
+            },
+            private_updates_by_id={
+                expired_update.update_id: expired_update,
+                selected_update.update_id: selected_update,
+            },
+            topic_package=topic(),
+        )
+
+    event_update, event_post = source_post(
+        agent_id=events[0].agent_id,
+        event_id=events[0].event_id,
+        event_ordinal=events[0].event_ordinal,
+    )
+    mislabeled = make_exposure(
+        event_ordinal=1,
+        receiver_agent_id=events[1].agent_id,
+        expired_round0_posts=(event_post,),
+    )
+    with pytest.raises(ValueError, match="round-0|earlier"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            attempts,
+            (exposures[0], mislabeled),
+            public_posts_by_id={event_post.post_id: event_post},
+            private_updates_by_id={event_update.update_id: event_update},
+            topic_package=topic(),
+        )
 
 
 def test_evidence_graph_rejects_ordinal_gap_forged_id_and_schedule_drift() -> None:
@@ -1049,10 +1639,19 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
     expected = {
         "ArtifactEnvelope",
         "EventStatus",
+        "ExposureSelection",
+        "FeedCandidate",
+        "FeedCursor",
         "ExposureRecord",
         "FrozenSchedule",
         "GenerationAttempt",
         "GenerationEvent",
+        "LatestPublicPointer",
+        "MemoryItem",
+        "MemoryView",
+        "PrivateState",
+        "PrivateUpdate",
+        "PublicPost",
         "RNGProvenance",
         "RunManifest",
         "ScheduleSlot",
@@ -1064,6 +1663,8 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "build_activation_schedule",
         "build_attention_artifact",
         "build_expression_artifact",
+        "build_exposure_record",
+        "build_memory_view",
         "build_population_artifact",
         "build_publish_schedule",
         "build_shadow_artifact",
@@ -1081,13 +1682,20 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "render_human_protocol_summary",
         "reconstruct_event_rng_provenance",
         "render_persona",
+        "select_unread_feed",
         "trs_integerize",
         "update_human_protocol_summary",
         "validate_evidence_graph",
+        "validate_exposure_record",
+        "validate_exposure_selection",
         "validate_event_rng_ledger",
         "validate_human_protocol_reference",
         "validate_human_protocol_sync",
         "validate_matched_schedule_reuse",
+        "validate_latest_public_pointer",
+        "validate_memory_view",
+        "validate_private_state",
+        "validate_public_post",
         "validate_persona_factor_diff",
         "validate_shadow_artifact",
         "validate_structural_gate_artifact",

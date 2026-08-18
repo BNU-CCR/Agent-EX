@@ -16,6 +16,15 @@ from .domain import (
     evaluate_analysis_eligibility,
     validate_evidence_graph,
 )
+from .feed import (
+    ExposureSelection,
+    FeedCandidate,
+    FeedCursor,
+    build_exposure_record,
+    select_unread_feed,
+    validate_exposure_record,
+    validate_exposure_selection,
+)
 from .protocol import (
     canonical_protocol_hash,
     execution_projection,
@@ -32,6 +41,7 @@ from .network import (
     validate_structural_gate_artifact,
     validate_ws_artifact,
 )
+from .memory import MemoryItem, MemoryView, build_memory_view, validate_memory_view
 from .persona import render_persona, validate_persona_factor_diff
 from .population import TRSIntegerization, build_population_artifact, trs_integerize
 from .validation import (
@@ -50,15 +60,33 @@ from .schedule import (
     validate_event_rng_ledger,
     validate_matched_schedule_reuse,
 )
+from .state import (
+    LatestPublicPointer,
+    PrivateState,
+    PrivateUpdate,
+    PublicPost,
+    validate_latest_public_pointer,
+    validate_private_state,
+    validate_public_post,
+)
 from .topic import TopicPackage
 
 __all__ = [
     "ArtifactEnvelope",
     "EventStatus",
+    "ExposureSelection",
+    "FeedCandidate",
+    "FeedCursor",
     "ExposureRecord",
     "FrozenSchedule",
     "GenerationAttempt",
     "GenerationEvent",
+    "LatestPublicPointer",
+    "MemoryItem",
+    "MemoryView",
+    "PrivateState",
+    "PrivateUpdate",
+    "PublicPost",
     "RNGProvenance",
     "RunManifest",
     "ScheduleSlot",
@@ -70,6 +98,8 @@ __all__ = [
     "build_activation_schedule",
     "build_attention_artifact",
     "build_expression_artifact",
+    "build_exposure_record",
+    "build_memory_view",
     "build_population_artifact",
     "build_publish_schedule",
     "build_shadow_artifact",
@@ -87,16 +117,23 @@ __all__ = [
     "render_human_protocol_summary",
     "reconstruct_event_rng_provenance",
     "render_persona",
+    "select_unread_feed",
     "trs_integerize",
     "update_human_protocol_summary",
     "validate_human_protocol_reference",
     "validate_human_protocol_sync",
     "validate_matched_schedule_reuse",
+    "validate_latest_public_pointer",
+    "validate_memory_view",
+    "validate_private_state",
+    "validate_public_post",
     "validate_shadow_artifact",
     "validate_structural_gate_artifact",
     "validate_ws_artifact",
     "validate_persona_factor_diff",
     "validate_evidence_graph",
+    "validate_exposure_record",
+    "validate_exposure_selection",
     "validate_event_rng_ledger",
     "validate_protocol",
 ]
