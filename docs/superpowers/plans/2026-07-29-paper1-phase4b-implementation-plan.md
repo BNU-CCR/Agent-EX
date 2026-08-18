@@ -1,5 +1,5 @@
 ---
-status: approved implementation plan; executing; Phase 4B-0 through 4B-4 complete / independently reviewed
+status: approved implementation plan; executing; Phase 4B-0 through 4B-5 complete / independently reviewed; Phase 4B-6 not started
 authority: Phase 4B implementation sequence
 date: 2026-07-29
 inputs:
@@ -428,6 +428,19 @@ population/round-0/WS三制品绑定的node mapping均通过独立复算。Netwo
 - 不把NetworkX默认行为当作未记录的研究参数。
 
 ## 9. Phase 4B-5：attention、expression与完整冻结schedule
+
+**状态（2026-08-18）：** `complete / independently reviewed`。独立规格/反模式审查与
+代码质量复审均为`APPROVED`，独立release verification为`PASS`。最终连续fresh全套为
+`402 passed in 69.92s`；coverage为`402 passed in 204.17s`、
+`2876 statements / 419 missed / 85%`（`schedule.py`为
+`638 statements / 96 missed / 85%`），定向验证为`275 passed`。N=1000/T=50显式mock
+构造耗时23.765秒，activation/publish JSON为4,110,564/5,132,825 bytes，ledger一次可信
+验证为3.193秒、验证后单ordinal读取约47微秒。两份schema镜像SHA-256一致；draft中仍有
+88个`UNRESOLVED[...]`，所有制品继续为`mock_only / not_frozen`，因此这些结果不构成
+formal freeze。完成文档更新前的已验证代码/测试候选canonical snapshot为
+`dc1b81a27919ec9e606c58342fb8771ba6e5ba962bf6c20006ba8f3168d6ea2c`，schema镜像为
+`3db603ea0c8303a061838cd962db687a6d5ab616bacc78dd1876b007d7a5783e`；文档后release将生成
+新的最终snapshot。Phase 4B-6尚未开始。
 
 ### 新文件
 

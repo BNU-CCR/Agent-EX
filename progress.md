@@ -534,3 +534,46 @@
     它不是提交hash。
   - Phase 4B-4现已关闭为`complete / independently reviewed`。本轮未调用真实模型、未填补
     `UNRESOLVED[...]`、未冻结formal参数；Phase 4B-5尚未开始。
+  - Phase 4B-5已按严格TDD完成首轮attention、hurdle–Beta expression、weighted-with-
+    replacement activation与预生成publish FrozenSchedule实现。RED依次覆盖模块/接口缺失、
+    Pareto/equal能力、审计诊断、公开API与hash-consistent attention伪造；后续审查修复补齐
+    有限预算截断、逐event provenance、三源强绑定、runtime/diagnostics重封装及canonical
+    12-cell/expected-seed门禁；后续复审又以RED确认lognormal location此前被隐式固定为0，现已
+    改为显式未冻结参数并进入payload/hash/RNG/replay合同。终审继续补齐Beta严格内点有限budget、
+    N/T/event能力上限和紧凑event RNG ledger；最终又移除stdlib无界`betavariate`，改用自有bounded
+    gamma-ratio Beta，并把raw ledger入口迁移为trusted validation→typed O(1)读取。schedule专项
+    最终34 passed。
+  - 同matched seed的12 cells必须逐字复用attention、expression、activation与publish四制品；
+    validator会确定性重算全部RNG序列、source/input hash和最终schedule hash。跨seed绑定、
+    伪造activation/expression/publish payload以及运行后更改publish flag均fail closed。
+  - 2026-08-18从断点恢复后又按严格TDD关闭最终三个P1：普通调用无法再伪造
+    `ValidatedEventRNGLedger`，可信核验后才签发sealed capability；截断lognormal改用每attempt
+    两次uniform的显式Box–Muller，Pareto改用每attempt一次uniform的inverse CDF，均不调用
+    stdlib隐藏循环；N>1000在attention/expression sampling以及activation/publish source replay
+    前统一fail fast。三项均先观察到针对旧实现的RED，再完成最小GREEN；Beta sanity降至N=1000。
+  - postfix代码质量复审继续以严格TDD关闭两个容量P1：oversized不可物化Sequence原先在N门禁
+    前触发元素访问，12组attention/expression/activation/publish oversized或bool envelope原先
+    在全cell预检前触发replay；修复后先用`len`/raw声明完成N≤1000、T≤50、events≤50,000
+    bool-safe门禁，再执行物化、深层语义校验和确定性重放。
+  - 后续1P1+1P1+P2继续先RED：raw ledger的int→float/bool可在strict type gate前进入rebuild，
+    len=1000 Sequence会被tuple探测index 1000，删除10类preflight必需字段会进入replay。GREEN
+    引入strict-JSON canonical类型敏感比较、`range(validated_len)`物化，以及records/N/T/slots/
+    ledger count必需且`N×T`一致的全cell preflight。
+  - 最终独立验证：连续full为`402 passed in 69.92s`，coverage为
+    `402 passed in 204.17s`、`2876 statements / 419 missed / 85%`，`schedule.py`为
+    `638 statements / 96 missed / 85%`；定向验证为`275 passed`。N=1000/T=50显式mock
+    23.765秒构造50,000个连续ordinal；activation/publish JSON为4,110,564/5,132,825 bytes，
+    JSON round-trip一致。ledger一次可信验证为3.193秒，验证后ordinal 49,999读取约47微秒，
+    且禁止digest重扫后仍成功；未调用LLM。
+    最新N=1000/T=50 gate再次为`1 passed in 28.18s`。
+  - 独立规格/反模式与代码质量复审均为`APPROVED`，独立release verification为`PASS`；
+    所有定向攻击、Ruff/format、依赖、diff、schema镜像及Git hygiene gate通过。最终验证快照
+    候选canonical snapshot SHA-256为
+    `dc1b81a27919ec9e606c58342fb8771ba6e5ba962bf6c20006ba8f3168d6ea2c`；它是完成文档
+    更新前的已验证代码/测试候选，文档后release会生成新的最终snapshot。两份schema镜像
+    SHA-256均为`3db603ea0c8303a061838cd962db687a6d5ab616bacc78dd1876b007d7a5783e`。
+  - draft仍含88个`UNRESOLVED[...]`。所有mock参数均须调用者显式传入，产物保持
+    `mock_only / not_frozen`，formal继续fail closed；上述快照与schema hash不构成formal
+    freeze或提交hash。
+  - Phase 4B-5现已关闭为`complete / independently reviewed`。本轮未调用真实模型、未产生
+    研究结果、未冻结formal参数；Phase 4B-6尚未开始。

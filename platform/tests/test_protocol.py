@@ -105,6 +105,7 @@ def frozen_protocol(protocol) -> dict[str, object]:
         "/dynamics/activation_mode": "weighted_random_sequential_with_replacement",
         "/dynamics/activation_count": 1000,
         "/dynamics/activity_weights/parameters": {
+            "log_location": 0.0,
             "log_sigma": 0.8,
             "minimum": 0.05,
             "maximum": 20.0,
@@ -360,6 +361,20 @@ def test_formal_rejects_phase4b_draft_unresolved_fields(protocol):
     candidate["status"] = "frozen"
     with pytest.raises(ValueError, match="placeholder|unresolved"):
         validate_protocol(candidate, mode="formal")
+
+
+def test_lognormal_location_must_be_explicit_in_resolved_protocol(frozen_protocol):
+    schema = json.loads(MIRROR_SCHEMA_PATH.read_text(encoding="utf-8"))
+    parameters_schema = schema["properties"]["dynamics"]["properties"]["activity_weights"][
+        "properties"
+    ]["parameters"]["oneOf"][0]
+    assert "log_location" in parameters_schema["required"]
+    assert "default" not in parameters_schema["properties"]["log_location"]
+
+    candidate = deepcopy(frozen_protocol)
+    del candidate["dynamics"]["activity_weights"]["parameters"]["log_location"]
+    with pytest.raises(ValueError, match="schema.*activity_weights.parameters"):
+        validate_protocol(candidate, mode="confirmed")
 
 
 def test_draft_contains_registered_markers_instead_of_coder_defaults(protocol):

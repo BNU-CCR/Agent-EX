@@ -41,6 +41,15 @@ from .validation import (
     validate_human_protocol_sync,
 )
 from .rng import RNGProvenance, derive_rng_seed
+from .schedule import (
+    build_activation_schedule,
+    build_attention_artifact,
+    build_expression_artifact,
+    build_publish_schedule,
+    reconstruct_event_rng_provenance,
+    validate_event_rng_ledger,
+    validate_matched_schedule_reuse,
+)
 from .topic import TopicPackage
 
 __all__ = [
@@ -58,7 +67,11 @@ __all__ = [
     "assign_initial_reasons",
     "assign_initial_stances",
     "build_agent_node_mapping",
+    "build_activation_schedule",
+    "build_attention_artifact",
+    "build_expression_artifact",
     "build_population_artifact",
+    "build_publish_schedule",
     "build_shadow_artifact",
     "build_structural_gate_artifact",
     "build_ws_artifact",
@@ -72,15 +85,18 @@ __all__ = [
     "execution_projection",
     "load_protocol",
     "render_human_protocol_summary",
+    "reconstruct_event_rng_provenance",
     "render_persona",
     "trs_integerize",
     "update_human_protocol_summary",
     "validate_human_protocol_reference",
     "validate_human_protocol_sync",
+    "validate_matched_schedule_reuse",
     "validate_shadow_artifact",
     "validate_structural_gate_artifact",
     "validate_ws_artifact",
     "validate_persona_factor_diff",
     "validate_evidence_graph",
+    "validate_event_rng_ledger",
     "validate_protocol",
 ]

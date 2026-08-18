@@ -252,7 +252,8 @@
             "family": {"const": "positive_truncated_lognormal"},
             "normalization": {"const": "sum_equals_population_size"},
             "parameters": {"x-decision-id": "P1_ACTIVITY_WEIGHT_DISTRIBUTION", "oneOf": [
-              {"type": "object", "required": ["log_sigma", "minimum", "maximum"], "properties": {
+              {"type": "object", "required": ["log_location", "log_sigma", "minimum", "maximum"], "properties": {
+                "log_location": {"type": "number"},
                 "log_sigma": {"type": "number", "exclusiveMinimum": 0},
                 "minimum": {"type": "number", "exclusiveMinimum": 0},
                 "maximum": {"type": "number", "exclusiveMinimum": 0}
