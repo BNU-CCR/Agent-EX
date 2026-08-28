@@ -342,7 +342,10 @@ def test_feed_rejects_numeric_stance_label_before_public_rendering() -> None:
 
 def test_extended_exposure_record_binds_selection_cursor_posts_slots_and_rendering() -> None:
     selection = select()
-    record = build_exposure_record(selection, mock_only=True)
+    record = build_exposure_record(selection, topic_package=topic(), mock_only=True)
+    assert record.topic_package_id == topic().topic_id
+    assert record.topic_package_hash == topic().package_hash
+    assert record.receiver_event_id == selection.receiver_event_id
 
     assert record.event_ordinal == selection.receiver_event_ordinal
     assert record.selection_id == selection.selection_id
@@ -575,7 +578,7 @@ def test_selection_validator_rejects_reenveloped_selected_and_provenance_attacks
 
 def test_exposure_record_validator_binds_selection_posts_and_updates() -> None:
     selection = select()
-    record = build_exposure_record(selection, mock_only=True)
+    record = build_exposure_record(selection, topic_package=topic(), mock_only=True)
     posts_by_id = {value.post_id: value for value in timeline()}
     # Source-update objects are reconstructed from the helper's deterministic posts below.
     source_updates = tuple(

@@ -638,3 +638,112 @@
     release将生成新snapshot。draft仍含88个`UNRESOLVED[...]`，所有产物保持
     `mock_only / not_frozen`，B/K未冻结且只能显式作为mock挑战输入。本阶段未调用真实模型、
     未产生研究结果；Phase 4B-7尚未开始。
+  - 2026-08-18 Phase 4B-7按严格TDD完成首轮实现，状态为`in_progress / implementation
+    complete / pending independent review`。三个模块的首个RED均为预期的模块缺失；随后
+    分切片完成PromptView、严格parser和provider-neutral deterministic MockAdapter。Prompt
+    以typed GenerationEvent绑定event/attempt上下文，并绑定seed/cell/topic/persona/current
+    private state/memory/exposure/template；visible projection不含候选/过期帖、内部hash/RNG、
+    cell/mode标签、他人private state、数字社会立场或confidence，社会消息只按4B-6已有
+    display slots排列。
+  - parser严格接受ordered `stance/confidence/public_reason`，并拒绝数字或未知label、bool/
+    nonfinite/越界confidence、空/控制字符理由、缺失/额外/重复字段、代码围栏、尾随文本和
+    模型覆盖`publish_flag`；成功与失败均保留raw response及hash，失败不产生parsed内容。
+    MockAdapter只消费从PromptView派生的request和显式script/mock seed，response绑定
+    request/event/attempt/script/model/runtime及全部hash；它不联网、不重试、不改变state/cursor。
+  - 新增定向32 passed；最终连续fresh全套为`491 passed in 74.37s`，coverage为
+    `491 passed in 225.44s`、`4492 statements / 638 missed / 86%`，新增adapter base/mock、
+    parser、prompt覆盖率分别为88%/88%/89%/83%。N=20/100/1000 prompt+render工程基准分别
+    为0.072/0.373/3.484秒。Ruff、format、pip、diff通过；schema镜像hash未变且draft继续
+    含88个`UNRESOLVED[...]`。阶段尚待独立规格/反模式、代码质量和release复审，不标记
+    complete、不提交、不推送、不进入4B-8。
+  - Phase 4B-7首轮独立审查为FAIL（7项P1与1项P2）。随后严格按A-G分组建立RED并修复：
+    complete pending event与ExposureRecord现绑定topic/run/receiver event；完整successful
+    private-update history重放state与latest-K memory；population artifact、persona template与
+    cell condition机械重放；所有自然文本进入单一deterministic JSON data payload并使用显式
+    mock context/parser limits；AdapterRequest改为factory-sealed capability，response与parse
+    evidence加入trusted replay validator；parser绑定topic/response/request/event/attempt并对
+    UTF-8、bytes、depth、duplicate/order/extra/bool/nonfinite严格fail closed。
+  - 修复后定向`125 passed in 17.68s`，fresh full为`500 passed in 79.99s`；coverage为
+    `500 passed in 250.21s`、`7647 statements / 697 missed / 91%`，adapter base/mock、parser、
+    prompt分别为89%/86%/88%/82%。N=20/100/1000 prompt+render为
+    0.1029/0.5574/5.486秒；10,000层JSON攻击0.0078秒返回depth evidence，50,000字符理由在
+    显式预算内0.0098秒成功。Ruff/format/pip/diff、schema镜像与88个UNRESOLVED gate通过。
+    状态为`in_progress / review repairs implemented / pending independent re-review`；未提交、
+    未推送、未进入4B-8或真实模型。
+  - Phase 4B-7第二轮独立复审再报4P1+2P2，全部按RED→GREEN修复：PromptView和
+    AdapterResponse的普通构造/from_payload现均为untrusted，必须分别对完整topic/persona/
+    population/history/state/memory/exposure selection/source/event/limits或request/script/runtime
+    重放后才返回sealed capability；AdapterRequest/parser拒绝unsealed输入。ExposureRecord现
+    同时调用4B-6 selection与record validators，hash-consistent rendered social攻击失败。
+    system role改为固定静态常量，persona及全部自然文本只在单一user JSON data object中。
+    PromptLimits在JSON序列化前检查每个字符串与memory/social count；ParserLimits先检查字符数，
+    再建立有限UTF-8副本并检查bytes。
+  - 第二轮修复后定向`128 passed in 16.25s`，fresh full `503 passed in 76.34s`，coverage
+    `503 passed in 228.98s`、`7762 statements / 710 missed / 91%`；base/mock/parser/prompt为
+    89%/86%/87%/82%。N=20/100/1000为0.1562/0.7716/7.0455秒，10,000层JSON为
+    0.0106秒失败关闭，50,000字符理由为0.0092秒。状态继续pending independent re-review；
+    未提交、未推送、未进入4B-8。
+  - 2026-08-27从暂停断点恢复4B-7。保留RED
+    `test_prompt_requires_manifest_bound_run_cell_and_frozen_schedule_provenance`先复现缺失
+    `RunManifest`参数，再最小GREEN：prompt view现hash绑定typed manifest，并核验run/seed/
+    canonical cell/recovery cursor/current frozen slot；全部非round-0 private/social source须属于
+    同run成功前缀、严格早于receiver、匹配冻结slot并绑定final successful attempt。四种I×C
+    persona静态mock控制复归通过，population/persona自然文本仍只在user JSON data。
+    focused为52 passed，final fresh full为511 passed in 73.83s，production coverage为511 passed in
+    234.59s、4898 statements / 710 missed / 86%；N=1000 prompt+render为8.9075秒，深层攻击
+    focused通过，50,000字符理由为0.0131秒。Ruff/format/pip/diff、schema镜像、human summary、
+    wheel/formal fail-closed与Git hygiene均通过。状态仍为pending independent re-review；未提交、
+    未推送、未进入4B-8。
+  - 4B-7最终review repairs继续逐项RED→GREEN。四个I×C cell现在共享完全相同的静态system
+    合同；版本化`trusted_control`仅携带从cell和已验证persona重放得到的布尔控制，I0/C0为
+    真省略而非负向指令，C0仍接收与C1相同的private state/memory。每个非round-0 own/social
+    `PrivateUpdate`的stance/confidence/reason严格绑定其final SUCCEEDED attempt的
+    `parsed_response`，publish状态继续绑定冻结schedule/event及PublicPost。新增一次性
+    `ValidatedPromptRunContext`：raw manifest只在context创建时roundtrip/hash并预建schedule、
+    event-ID set、source event/attempt索引，随后每prompt只按当前与可见source查询；N=50000
+    context验证0.317秒，三次稀疏lookup约6.8微秒。HMAC seal文档已修正为反序列化/意外变异
+    完整性哨兵，不声称对任意同进程Python代码构成安全边界。focused 118 passed；fresh full
+    514 passed in 80.54s；production coverage 514 passed in 248.34s、4981 statements /
+    729 missed / 85%，base/mock/parser/prompt为90%/87%/87%/80%；N=1000 prompt+render
+    8.827秒。protocol/install 144 passed；Ruff、format、pip、diff及schema镜像/88 unresolved
+    gates通过。状态保持pending independent re-review；未提交、未推送、未进入4B-8。
+  - 2026-08-27复审追加三项P1均严格RED→GREEN：`ValidatedPromptRunContext`的可见seal不再
+    是可复制身份对象，而是对manifest/run/cell/recovery、schedule slots、event-ID set及
+    source event/attempt索引做canonical摘要的closure-held HMAC完整性哨兵，消费者逐次复验；
+    domain graph与prompt撤销未获`P1_MODEL_SEED_PAIRING`批准的同event retry seed相等约束，
+    仍逐attempt严格记录整数seed；prompt以O(candidate_count)逐条重放全部candidate的typed
+    post/update，expired round-0内容漂移亦失败关闭。定向145 passed，三项追加回归9 passed；
+    final fresh full 522 passed in 75.45s；production coverage 522 passed in 232.90s、5004
+    statements / 728 missed / 85%，prompt 81%；N=1000 prompt+render 10.001秒，N=50000
+    context验证0.903秒、三次lookup 3.1微秒；10,000层攻击gate通过，50,000字符理由0.0153秒。
+    状态仍为pending independent re-review；未提交、未推送、未进入4B-8。
+  - 2026-08-28最终2 P1 + 2 P2继续严格RED→GREEN：新增四项回归先稳定得到`4 failed`，
+    分别证明consumer仍重序列化完整source graph、FrozenSchedule缓存hash可掩盖反射漂移、
+    未决`model_sampling`仍可派生，以及parser超长字符在门禁前进入seal/hash。最小GREEN将
+    context改为独立typed schedule/manifest/event/attempt snapshot的`id + weakref` exact-owner
+    registry，consumer O(1)查找且仅使用snapshot；weakref回调按exact stored ref清理，复制/
+    replace/跨cell失败关闭。公共RNG namespace移除`model_sampling`，未冻结时明确失败；parser
+    在seal/hash前执行strict string、character、单次有界UTF-8和byte gate。focused
+    prompt/parser/mock/domain/feed为`151 passed in 16.29s`；此前522/full/coverage仅为旧snapshot
+    历史证据，当前snapshot待独立复审后只跑一次final full+coverage。未提交、未推送、未进入4B-8。
+  - 2026-08-28生命周期复审的3 P1 + 1 P2已收口：run context公共handle只保留scalar
+    identity/metadata，完整schedule/event/attempt/index只在exact-owner registry；新增原子
+    `advance_validated_prompt_run_context`，同一handle可连续推进成功event，仅按本event attempt
+    数量校验，失败不移动cursor或prefix commitment，且不约束不同event/attempt的显式model
+    seed。PromptView新增logical context ID与current prefix hash，manifest hash明确为恢复时baseline。
+    prompt source exact-cover使用`len + expected-ID point lookup`，不再全量遍历调用者map；parser
+    在UTF-8编码前先用字符数保守拒绝必然超过byte budget的输入。50,000-slot连续三event结构
+    回归通过；恢复context初始索引另需exact-cover manifest完整成功前缀，防止遗漏未来可能读取
+    的旧source。追加恢复一致性测试先得到`2 failed`，证明live advance与checkpoint恢复算法
+    不同且恢复prefix未绑定attempt内容；现统一stable genesis + ordinal event hash + ordered
+    attempt hashes fold，同证据恢复得到相同logical context ID/prefix，内容变化则prefix变化，
+    仍不冻结model-seed pairing。两项GREEN `2 passed in 0.55s`、context focused
+    `15 passed in 1.44s`；prompt/parser/mock/domain/feed focused为`159 passed in 18.42s`，Ruff/format/diff
+    通过。本修复按计划未跑full/coverage，状态仍为pending independent re-review；未提交、
+    未推送、未进入4B-8。
+  - 2026-08-28并发一致性P2已用无sleep的Event协调回归完成RED→GREEN：RED明确观察到旧
+    event cursor绑定advance后新prefix，metadata也没有单次原子版本捕获。GREEN改为每context
+    writer lock与不可变`cursor + prefix`版本最后发布；prompt/metadata reader每次只捕获一个
+    版本，append-only indexes不会跨旧cursor可见，不复制完整prefix且不占用全局跨run长锁。
+    新增`2 passed in 0.61s`，context focused `17 passed in 1.41s`，扩展focused
+    `161 passed in 18.74s`，Ruff/format/diff通过；未跑full/coverage、未提交、未推送、未进入4B-8。

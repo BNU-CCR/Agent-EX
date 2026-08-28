@@ -187,6 +187,7 @@ def make_exposure(
     source_posts: tuple[PublicPost, ...] | None = None,
     expired_round0_posts: tuple[PublicPost, ...] = (),
     expired_event_posts: tuple[PublicPost, ...] = (),
+    receiver_event_id: str | None = None,
 ) -> ExposureRecord:
     if source_posts is not None:
         source_agent_ids = tuple(post.author_agent_id for post in source_posts)
@@ -208,8 +209,11 @@ def make_exposure(
         f"Member {agent_id} | mock stance | mock public reason" for agent_id in source_agent_ids
     )
     return ExposureRecord.create(
+        topic_package_id=topic().topic_id,
+        topic_package_hash=topic().package_hash,
         matched_seed=matched_seed,
         event_ordinal=event_ordinal,
+        receiver_event_id=receiver_event_id or f"receiver-event-{event_ordinal}",
         receiver_agent_id=receiver_agent_id,
         exposure_mode="ws_neighbors",
         exposure_graph_hash=SHA_A,
@@ -264,8 +268,12 @@ def make_attempt(
     identity = {"provider": "mock", "model": "deterministic", "revision": "1"}
     provider_metadata = {"headers": {"x-request-id": f"provider-{attempt_index}"}}
     usage = {"prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15}
-    raw = '{"stance": 4}'
-    parsed = {"stance": 4, "reason": "mock"}
+    parsed = {
+        "stance": "label-0",
+        "confidence": 3,
+        "public_reason": "typed source reason",
+    }
+    raw = json.dumps(parsed, separators=(",", ":"))
     terminal = status in {EventStatus.SUCCEEDED, EventStatus.FAILED}
     return GenerationAttempt(
         attempt_id=derive_attempt_id(event_id, attempt_index),
@@ -475,19 +483,33 @@ def test_rng_derivation_is_deterministic_and_namespace_separated() -> None:
     )
 
 
+def test_model_sampling_rng_fails_closed_while_pairing_decision_is_unresolved() -> None:
+    from agent_ex.rng import RNGProvenance, derive_rng_seed
+
+    coordinates = {"artifact_kind": "request", "event_ordinal": 3}
+    with pytest.raises(ValueError, match="P1_MODEL_SEED_PAIRING|not registered|unresolved"):
+        derive_rng_seed(9, "model_sampling", coordinates)
+    with pytest.raises(ValueError, match="P1_MODEL_SEED_PAIRING|not registered|unresolved"):
+        RNGProvenance.create(
+            matched_seed=9,
+            namespace="model_sampling",
+            coordinates=coordinates,
+        )
+
+
 def test_event_level_rng_requires_global_event_ordinal_and_rejects_attempt_index() -> None:
     from agent_ex.rng import RNGProvenance
 
     with pytest.raises(ValueError, match="event_ordinal"):
         RNGProvenance.create(
             matched_seed=9,
-            namespace="model_sampling",
+            namespace="message_slot",
             coordinates={"artifact_kind": "request"},
         )
     with pytest.raises(ValueError, match="attempt_index"):
         RNGProvenance.create(
             matched_seed=9,
-            namespace="model_sampling",
+            namespace="message_slot",
             coordinates={"artifact_kind": "request", "event_ordinal": 3, "attempt_index": 2},
         )
 
@@ -507,7 +529,7 @@ def test_rng_rejects_attempt_index_at_any_coordinate_depth(
     with pytest.raises(ValueError, match="attempt_index"):
         RNGProvenance.create(
             matched_seed=9,
-            namespace="model_sampling",
+            namespace="message_slot",
             coordinates={
                 "artifact_kind": "request",
                 "event_ordinal": 3,
@@ -516,26 +538,12 @@ def test_rng_rejects_attempt_index_at_any_coordinate_depth(
         )
 
 
-def test_retry_provenance_reuses_model_seed_for_same_event() -> None:
-    from agent_ex.rng import RNGProvenance
-
-    first = RNGProvenance.create(
-        matched_seed=9,
-        namespace="model_sampling",
-        coordinates={"artifact_kind": "request", "event_ordinal": 3},
-    )
-    retry = RNGProvenance.from_payload(first.to_payload())
-
-    assert first.derived_seed == retry.derived_seed
-    assert "attempt_index" not in retry.coordinates
-
-
 def test_rng_typed_construction_accepts_its_own_frozen_coordinates() -> None:
     from agent_ex.rng import RNGProvenance
 
     provenance = RNGProvenance.create(
         matched_seed=9,
-        namespace="model_sampling",
+        namespace="message_slot",
         coordinates={
             "artifact_kind": "request",
             "event_ordinal": 3,
@@ -743,7 +751,7 @@ def test_generation_event_rejects_attempt_ids_not_derived_from_its_identity() ->
         )
 
 
-def test_generation_attempt_retries_keep_event_identity_and_model_seed() -> None:
+def test_generation_attempt_retries_keep_event_identity_and_record_each_model_seed() -> None:
     event_id = derive_event_id("run-stable", 0)
     first = make_attempt(
         event_id,
@@ -752,10 +760,10 @@ def test_generation_attempt_retries_keep_event_identity_and_model_seed() -> None
         status=EventStatus.FAILED,
         model_seed=99,
     )
-    second = make_attempt(event_id, "exposure-0", attempt_index=2, model_seed=99)
+    second = make_attempt(event_id, "exposure-0", attempt_index=2, model_seed=100)
 
     assert first.event_id == second.event_id
-    assert first.model_seed == second.model_seed
+    assert first.model_seed != second.model_seed
     assert first.attempt_id != second.attempt_id
 
 
@@ -878,7 +886,7 @@ def test_attempt_round_trip_rejects_provider_evidence_hash_drift(
         GenerationAttempt.from_payload(payload)
 
 
-def test_evidence_graph_retries_must_keep_model_seed() -> None:
+def test_evidence_graph_records_but_does_not_freeze_retry_model_seed_pairing() -> None:
     schedule = make_schedule(population_size=1, sweep_count=1)
     run_spec = make_run_spec(schedule)
     run_id = derive_run_id(run_spec, 17, "launch-a")
@@ -902,8 +910,7 @@ def test_evidence_graph_retries_must_keep_model_seed() -> None:
     )
     manifest = make_manifest(schedule, statuses=(EventStatus.SUCCEEDED,))
 
-    with pytest.raises(ValueError, match="model_seed"):
-        validate_evidence_graph(manifest, (event,), attempts, (exposure,))
+    validate_evidence_graph(manifest, (event,), attempts, (exposure,))
 
 
 def test_exposure_allows_empty_social_feed_and_same_sender_multiple_events() -> None:
@@ -1115,6 +1122,45 @@ def test_evidence_graph_accepts_same_sweep_earlier_source_and_succeeded_prefix()
         private_updates_by_id={update.update_id: update for update, _ in updates_and_posts},
         topic_package=topic(),
     )
+
+
+def test_evidence_graph_rejects_source_update_content_not_committed_by_final_attempt() -> None:
+    schedule = make_schedule()
+    manifest, events, attempts, exposures = build_graph(
+        schedule, (EventStatus.SUCCEEDED,) * schedule.count
+    )
+    update, post = source_post(
+        agent_id=events[0].agent_id,
+        event_id=events[0].event_id,
+        event_ordinal=events[0].event_ordinal,
+    )
+    records = list(exposures)
+    records[1] = make_exposure(
+        event_ordinal=1,
+        receiver_agent_id=events[1].agent_id,
+        source_posts=(post,),
+    )
+    forged = {
+        "stance": update.stance_label,
+        "confidence": update.confidence,
+        "public_reason": "not the committed update reason",
+    }
+    changed_attempts = list(attempts)
+    changed_attempts[0] = replace(
+        changed_attempts[0],
+        parsed_response=forged,
+        parsed_response_hash=canonical_payload_hash(forged),
+    )
+    with pytest.raises(ValueError, match="parsed response|private update|content"):
+        validate_evidence_graph(
+            manifest,
+            events,
+            tuple(changed_attempts),
+            tuple(records),
+            public_posts_by_id={post.post_id: post},
+            private_updates_by_id={update.update_id: update},
+            topic_package=topic(),
+        )
 
 
 def test_evidence_graph_rejects_future_source_without_previous_round_rule() -> None:
@@ -1638,6 +1684,8 @@ def test_manifest_rejects_events_after_first_failed_event() -> None:
 def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None:
     expected = {
         "ArtifactEnvelope",
+        "AdapterRequest",
+        "AdapterResponse",
         "EventStatus",
         "ExposureSelection",
         "FeedCandidate",
@@ -1649,8 +1697,17 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "LatestPublicPointer",
         "MemoryItem",
         "MemoryView",
+        "MockAdapter",
+        "MockScriptStep",
+        "ModelAdapter",
+        "ParseEvidence",
+        "ParsedAgentUpdate",
+        "ParserLimits",
         "PrivateState",
         "PrivateUpdate",
+        "PromptView",
+        "PromptLimits",
+        "ValidatedPromptRunContext",
         "PublicPost",
         "RNGProvenance",
         "RunManifest",
@@ -1659,6 +1716,7 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "TopicPackage",
         "assign_initial_reasons",
         "assign_initial_stances",
+        "advance_validated_prompt_run_context",
         "build_agent_node_mapping",
         "build_activation_schedule",
         "build_attention_artifact",
@@ -1667,6 +1725,7 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "build_memory_view",
         "build_population_artifact",
         "build_publish_schedule",
+        "build_prompt_view",
         "build_shadow_artifact",
         "build_structural_gate_artifact",
         "build_ws_artifact",
@@ -1679,9 +1738,11 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "evaluate_analysis_eligibility",
         "execution_projection",
         "load_protocol",
+        "parse_agent_update",
         "render_human_protocol_summary",
         "reconstruct_event_rng_provenance",
         "render_persona",
+        "render_messages",
         "select_unread_feed",
         "trs_integerize",
         "update_human_protocol_summary",
@@ -1701,6 +1762,11 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "validate_structural_gate_artifact",
         "validate_ws_artifact",
         "validate_protocol",
+        "validate_adapter_response",
+        "validate_parse_evidence",
+        "validate_prompt_view",
+        "validate_prompt_run_context",
+        "validated_prompt_run_context_metadata",
     }
 
     assert set(agent_ex.__all__) == expected

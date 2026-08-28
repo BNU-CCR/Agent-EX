@@ -1,5 +1,5 @@
 ---
-status: approved implementation plan; executing; Phase 4B-0 through 4B-6 complete / independently reviewed; Phase 4B-7 not started
+status: approved implementation plan; executing; Phase 4B-0 through 4B-6 complete / independently reviewed; Phase 4B-7 review repairs implemented / pending independent re-review
 authority: Phase 4B implementation sequence
 date: 2026-07-29
 inputs:
@@ -568,6 +568,98 @@ Exposure证据必须记录候选、入选、过期、post/event/source ID、消�
 - 不按立场、相似性、热度或LLM相关性排序。
 
 ## 11. Phase 4B-7：prompt view、parser与mock adapter
+
+**状态（2026-08-18）：** `in_progress / review repairs implemented / pending independent
+re-review`。已按严格TDD实现hash绑定的`PromptView`、只渲染授权内容的两消息视图、严格
+`stance → confidence → public_reason`解析证据、provider-neutral adapter合同和确定性脚本
+`MockAdapter`。Prompt输入由typed `GenerationEvent`绑定event/attempt上下文，并同时绑定
+matched seed、canonical cell、topic、rendered persona、当前private state、最近K次memory、
+ExposureRecord及模板版本；社会消息只使用4B-6已经冻结的display-slot顺序，不重新抽样。
+parser不修补JSON、不强制类型转换、不填默认值，数字/未知立场、bool/nonfinite confidence、
+空理由、重复/额外字段、代码围栏、尾随文本和`publish_flag`均作为带raw hash的失败证据返回。
+adapter request只能从PromptView派生；response绑定event/attempt、request、script、显式mock
+seed、mock model/runtime identity和全部hash，单次调用返回response或timeout，不实现retry、
+状态提交、SQLite或真实模型。
+
+前两轮独立审查发现的event/exposure跨域、截断memory、自洽persona注入、文本边界、request/
+response自述、parser Unicode/depth及evidence重封装问题，已逐组先RED后GREEN修复。Prompt
+现重放完整event、population/template/persona及successful history，所有自然文本作为单一
+deterministic JSON data payload；request采用factory-sealed capability，response与parse
+evidence均有trusted replay validator；反序列化view/response必须完整重放后重新签章；system
+role固定且全部persona自然文本只进入user JSON；prompt/parser资源预算由调用者显式传入、
+hash绑定并在复制/序列化前preflight。2026-08-27恢复后继续以RED→GREEN补齐typed
+RunManifest、canonical cell、recovery cursor、当前及所有非round-0来源的冻结schedule slot/
+同run成功前缀/final successful attempt重放。修复后prompt/parser/mock定向为52 passed，最终
+连续fresh全套为`511 passed in 73.83s`；production-source coverage为
+`511 passed in 234.59s`、`4898 statements / 710 missed / 86%`，新增
+base/mock/parser/prompt分别为90%/87%/87%/80%。N=1000的PromptView+render工程基准为
+8.9075秒。Ruff、format、pip与diff门禁已通过；两份schema继续保持相同
+SHA-256 `3db603ea0c8303a061838cd962db687a6d5ab616bacc78dd1876b007d7a5783e`，draft仍有
+88个`UNRESOLVED[...]`。全部新增记录保持`mock_only / not_frozen`；本阶段未调用网络、
+vLLM/OpenAI、未读取研究结果、未冻结model seed pairing/timeout/retry或其他formal参数，
+也未进入Phase 4B-8。实现完成不等于阶段关闭，须等待独立规格/反模式、代码质量和release
+re-review与release verification。
+
+最终review repairs继续按RED→GREEN修复三项边界：四cell现在使用完全相同的静态system
+合同，I0/C0是真省略且C0仍接收相同memory，版本化可信控制布尔由cell与persona重放产生；
+全部非round-0 own/social更新严格绑定final成功attempt的stance/confidence/public_reason；
+raw manifest只在`ValidatedPromptRunContext`创建时验证/hash并预建schedule/event/attempt索引，
+后续prompt不再复制或扫描完整prefix。seal仅是同进程完整性哨兵而非安全/授权边界。最新
+focused为118 passed，fresh full为514 passed in 80.54s，production coverage为514 passed in
+248.34s、4981 statements / 729 missed / 85%；N=1000 prompt+render为8.827秒，N=50000
+context验证0.317秒且后续event membership为O(1)。protocol/install 144 passed，Ruff/format/
+pip/diff、schema镜像与88个UNRESOLVED gate通过。状态仍为pending independent re-review，
+未提交、未推送、未进入4B-8。
+
+2026-08-27复审追加三项P1也已逐项RED→GREEN：`ValidatedPromptRunContext`改为对全部
+可见语义字段及schedule/event/attempt索引做canonical摘要并使用closure-held HMAC完整性
+哨兵，所有消费者按当前内容复验；`P1_MODEL_SEED_PAIRING`仍未决，因此domain graph与prompt
+只校验/记录每次attempt的显式整数`model_seed`，不再擅自要求同event retries相等；prompt以
+单次线性遍历重放全部candidate的typed `PublicPost`/`PrivateUpdate`，包括未被选择的过期
+round-0内容。最终fresh full为522 passed in 75.45s；production coverage为522 passed in
+232.90s、5004 statements / 728 missed / 85%，prompt覆盖81%；N=1000 prompt+render为
+10.001秒，N=50000含content-bound sentinel的context验证0.903秒、三次lookup约3.1微秒。
+状态继续为pending independent re-review；未提交、未推送、未进入4B-8。
+
+2026-08-28最终2 P1 + 2 P2收尾替换了上述逐consumer全量HMAC复验：context创建时独立
+typed replay `FrozenSchedule`、manifest、events与attempts，并把immutable snapshot登记到
+`id + weakref exact owner` registry；consumer只做O(1) owner查找并只读snapshot，复制/
+replace/跨cell句柄失败关闭，weakref清理防止陈旧entry与迟到callback污染ID复用。公共RNG
+registry移除`model_sampling`，在`P1_MODEL_SEED_PAIRING`冻结前派生明确失败；attempt仍只记录
+显式`model_seed`证据。parser在response seal/hash之前完成严格string、character和单次有界
+UTF-8/byte gate，超限明确抛出fail-closed异常，普通malformed/depth证据合同不变。四项回归
+先得到预期`4 failed`，最小GREEN后prompt/parser/mock/domain/feed focused为
+`151 passed in 16.29s`。此前522/full/coverage数据仅属上一snapshot历史证据；当前snapshot待
+独立复审后只运行一次最终full+coverage。未提交、未推送、未进入4B-8。
+
+2026-08-28生命周期复审追加的3 P1 + 1 P2已按TDD修复。公共
+`ValidatedPromptRunContext`现在只暴露不可嵌套篡改的scalar identity/metadata；完整schedule、
+event、attempt及索引仅存在validator registry snapshot。新增
+`advance_validated_prompt_run_context`以同一owner identity原子校验并追加连续成功event及其
+failed-then-successful attempt chain，失败不推进cursor/prefix，成功仅做每event attempts数目的
+工作；恢复时的初始event/attempt索引必须exact-cover manifest完整成功前缀，避免后续prompt
+需要此前被省略的旧source；prompt同时绑定baseline manifest hash、logical context identity与当前增量prefix
+commitment。每个prompt的source evidence exact-cover检查改为`len + expected-ID point lookup`，
+不再遍历整张调用者map。parser在UTF-8编码前同时执行character与保守byte-count preflight，
+随后只做一次受byte budget约束的严格编码。50,000-slot结构回归确认context创建后连续三次
+advance不再重放schedule，且三个event使用不同显式`model_seed`仍合法，不冻结未决pairing。
+随后新增两项恢复一致性RED，稳定得到`2 failed`：live advance与checkpoint恢复的prefix算法
+不同，且恢复注册不绑定attempt内容。现已统一为稳定run/seed/cell/schedule genesis，再按ordinal
+fold canonical event hash与ordered canonical attempt hashes；同一完整证据恢复得到相同logical
+context ID与prefix hash，任一合法event/attempt内容漂移则改变prefix，但不规定model-seed
+pairing。两项GREEN为`2 passed in 0.55s`，context focused为`15 passed in 1.44s`；当前prompt/
+parser/mock/domain/feed focused为`159 passed in 18.42s`，Ruff/format通过；按收尾
+策略未重复运行full/coverage，须待独立复审批准同一snapshot后各运行一次。未提交、未推送、
+未进入4B-8。
+
+并发一致性P2也已按确定性RED→GREEN收口：使用`threading.Event`协调而非sleep的回归先证明
+prompt reader可把旧event cursor与advance后的新prefix混合，metadata也缺少统一原子版本捕获。
+现由每个context自己的writer lock串行advance，完整校验后先追加新event/attempt键，最后一次
+替换不可变`cursor + prefix`版本；metadata和每次prompt build只捕获一次该版本。旧版本reader
+无法越过其cursor访问新增索引，且无需逐prompt/advance复制prefix，也不持有全局跨run长锁。
+两项新增GREEN为`2 passed in 0.61s`，context focused为`17 passed in 1.41s`，扩展focused为
+`161 passed in 18.74s`；Ruff check、format check和diff check通过。未跑full/coverage，未提交、
+未推送、未进入4B-8。
 
 ### 新文件
 

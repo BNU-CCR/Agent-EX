@@ -235,8 +235,11 @@ class ExposureRecord:
     """Hash-bound Phase 4B-6 evidence for finite-unread public exposure."""
 
     exposure_id: str
+    topic_package_id: str
+    topic_package_hash: str
     matched_seed: int
     event_ordinal: int
+    receiver_event_id: str
     receiver_agent_id: str
     exposure_mode: str
     exposure_graph_hash: str | None
@@ -269,8 +272,11 @@ class ExposureRecord:
 
     def __post_init__(self) -> None:
         _require_id("exposure_id", self.exposure_id)
+        _require_id("topic_package_id", self.topic_package_id)
+        _require_sha256("topic_package_hash", self.topic_package_hash)
         _require_int("matched_seed", self.matched_seed)
         _require_int("event_ordinal", self.event_ordinal)
+        _require_id("receiver_event_id", self.receiver_event_id)
         _require_id("receiver_agent_id", self.receiver_agent_id)
         if self.exposure_mode not in {
             "self_history_only",
@@ -411,8 +417,11 @@ class ExposureRecord:
         return {
             "schema_version": "paper1.mock-exposure-record.v1",
             "exposure_id": self.exposure_id,
+            "topic_package_id": self.topic_package_id,
+            "topic_package_hash": self.topic_package_hash,
             "matched_seed": self.matched_seed,
             "event_ordinal": self.event_ordinal,
+            "receiver_event_id": self.receiver_event_id,
             "receiver_agent_id": self.receiver_agent_id,
             "exposure_mode": self.exposure_mode,
             "exposure_graph_hash": self.exposure_graph_hash,
@@ -448,8 +457,11 @@ class ExposureRecord:
     def create(
         cls,
         *,
+        topic_package_id: str,
+        topic_package_hash: str,
         matched_seed: int,
         event_ordinal: int,
+        receiver_event_id: str,
         receiver_agent_id: str,
         exposure_mode: str,
         exposure_graph_hash: str | None,
@@ -486,8 +498,11 @@ class ExposureRecord:
         exposure_id = f"exposure-{event_ordinal}"
         values = {
             "exposure_id": exposure_id,
+            "topic_package_id": topic_package_id,
+            "topic_package_hash": topic_package_hash,
             "matched_seed": matched_seed,
             "event_ordinal": event_ordinal,
+            "receiver_event_id": receiver_event_id,
             "receiver_agent_id": receiver_agent_id,
             "exposure_mode": exposure_mode,
             "exposure_graph_hash": exposure_graph_hash,
@@ -1418,6 +1433,19 @@ def validate_evidence_graph(
     from .state import PrivateUpdate, PublicPost, validate_public_post
     from .topic import TopicPackage
 
+    def validate_attempt_update_content(
+        attempt: GenerationAttempt, update: PrivateUpdate, *, label: str
+    ) -> None:
+        expected = {
+            "stance": update.stance_label,
+            "confidence": update.confidence,
+            "public_reason": update.reason,
+        }
+        if dict(attempt.parsed_response or {}) != expected:
+            raise ValueError(
+                f"{label} final attempt parsed response content must exactly match private update"
+            )
+
     for event in events:
         if event.run_id != manifest.run_id:
             raise ValueError("event run_id must match manifest")
@@ -1517,6 +1545,9 @@ def validate_evidence_graph(
                     or candidate_attempt.status is not EventStatus.SUCCEEDED
                 ):
                     raise ValueError("event candidate must bind final successful attempt")
+                validate_attempt_update_content(
+                    candidate_attempt, candidate_update, label="event candidate"
+                )
         if tuple(actual_round0_ids) != exposure.round0_candidate_post_ids:
             raise ValueError("actual round-0 candidate order must match round-0 candidate evidence")
         for source_post_id in exposure.round0_candidate_post_ids:
@@ -1614,6 +1645,7 @@ def validate_evidence_graph(
                     raise ValueError(
                         "trusted source attempt must belong to the event and be succeeded"
                     )
+                validate_attempt_update_content(source_attempt, update, label="trusted source")
             elif source_post_id not in trusted_round0_posts:
                 raise ValueError("selected round-0 source must be bound as a round-0 candidate")
 
@@ -1632,8 +1664,6 @@ def validate_evidence_graph(
             range(1, len(event_attempts) + 1)
         ):
             raise ValueError("attempt_index values must be contiguous and one-based")
-        if len({attempt.model_seed for attempt in event_attempts}) > 1:
-            raise ValueError("retries must preserve the event model_seed")
         attempt_statuses = [attempt.status for attempt in event_attempts]
         if event.status is EventStatus.SUCCEEDED:
             if (

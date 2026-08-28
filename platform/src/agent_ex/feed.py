@@ -795,6 +795,7 @@ def select_unread_feed(
 def build_exposure_record(
     selection: ExposureSelection,
     *,
+    topic_package: TopicPackage,
     mock_only: bool,
 ) -> ExposureRecord:
     """Freeze a selection into the event evidence graph's extended exposure record."""
@@ -802,9 +803,16 @@ def build_exposure_record(
     _require_mock_only(mock_only)
     if not isinstance(selection, ExposureSelection):
         raise TypeError("selection must be an ExposureSelection")
+    if not isinstance(topic_package, TopicPackage):
+        raise TypeError("topic_package must be a TopicPackage")
+    if any(item.stance_label not in topic_package.stance_labels for item in selection.candidates):
+        raise ValueError("exposure candidates must use the bound topic package labels")
     return ExposureRecord.create(
+        topic_package_id=topic_package.topic_id,
+        topic_package_hash=topic_package.package_hash,
         matched_seed=selection.matched_seed,
         event_ordinal=selection.receiver_event_ordinal,
+        receiver_event_id=selection.receiver_event_id,
         receiver_agent_id=selection.receiver_agent_id,
         exposure_mode=selection.exposure_mode,
         exposure_graph_hash=selection.exposure_graph_hash,
@@ -889,7 +897,7 @@ def validate_exposure_record(
 
     if not isinstance(record, ExposureRecord):
         raise TypeError("record must be an ExposureRecord")
-    expected = build_exposure_record(selection, mock_only=True)
+    expected = build_exposure_record(selection, topic_package=topic_package, mock_only=True)
     if record != expected:
         raise ValueError("exposure record replay does not match its selection")
     for candidate in selection.selected:

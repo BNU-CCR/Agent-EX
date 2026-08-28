@@ -1,6 +1,14 @@
 """Stable public protocol, artifact, RNG, and ordinal evidence primitives."""
 
 from .artifacts import ArtifactEnvelope
+from .adapters import (
+    AdapterRequest,
+    AdapterResponse,
+    MockAdapter,
+    MockScriptStep,
+    ModelAdapter,
+    validate_adapter_response,
+)
 from .domain import (
     EventStatus,
     ExposureRecord,
@@ -42,7 +50,25 @@ from .network import (
     validate_ws_artifact,
 )
 from .memory import MemoryItem, MemoryView, build_memory_view, validate_memory_view
+from .parser import (
+    ParseEvidence,
+    ParsedAgentUpdate,
+    ParserLimits,
+    parse_agent_update,
+    validate_parse_evidence,
+)
 from .persona import render_persona, validate_persona_factor_diff
+from .prompt import (
+    PromptLimits,
+    PromptView,
+    ValidatedPromptRunContext,
+    advance_validated_prompt_run_context,
+    build_prompt_view,
+    render_messages,
+    validate_prompt_run_context,
+    validate_prompt_view,
+    validated_prompt_run_context_metadata,
+)
 from .population import TRSIntegerization, build_population_artifact, trs_integerize
 from .validation import (
     render_human_protocol_summary,
@@ -73,6 +99,8 @@ from .topic import TopicPackage
 
 __all__ = [
     "ArtifactEnvelope",
+    "AdapterRequest",
+    "AdapterResponse",
     "EventStatus",
     "ExposureSelection",
     "FeedCandidate",
@@ -84,8 +112,17 @@ __all__ = [
     "LatestPublicPointer",
     "MemoryItem",
     "MemoryView",
+    "MockAdapter",
+    "MockScriptStep",
+    "ModelAdapter",
+    "ParseEvidence",
+    "ParsedAgentUpdate",
+    "ParserLimits",
     "PrivateState",
     "PrivateUpdate",
+    "PromptView",
+    "PromptLimits",
+    "ValidatedPromptRunContext",
     "PublicPost",
     "RNGProvenance",
     "RunManifest",
@@ -94,6 +131,7 @@ __all__ = [
     "TopicPackage",
     "assign_initial_reasons",
     "assign_initial_stances",
+    "advance_validated_prompt_run_context",
     "build_agent_node_mapping",
     "build_activation_schedule",
     "build_attention_artifact",
@@ -102,6 +140,7 @@ __all__ = [
     "build_memory_view",
     "build_population_artifact",
     "build_publish_schedule",
+    "build_prompt_view",
     "build_shadow_artifact",
     "build_structural_gate_artifact",
     "build_ws_artifact",
@@ -114,9 +153,11 @@ __all__ = [
     "evaluate_analysis_eligibility",
     "execution_projection",
     "load_protocol",
+    "parse_agent_update",
     "render_human_protocol_summary",
     "reconstruct_event_rng_provenance",
     "render_persona",
+    "render_messages",
     "select_unread_feed",
     "trs_integerize",
     "update_human_protocol_summary",
@@ -136,4 +177,9 @@ __all__ = [
     "validate_exposure_selection",
     "validate_event_rng_ledger",
     "validate_protocol",
+    "validate_adapter_response",
+    "validate_parse_evidence",
+    "validate_prompt_view",
+    "validate_prompt_run_context",
+    "validated_prompt_run_context_metadata",
 ]

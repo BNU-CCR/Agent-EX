@@ -35,7 +35,6 @@ _REGISTERED_NAMESPACES = frozenset(
         "publish_ledger",
         "round0_tiebreak",
         "message_slot",
-        "model_sampling",
     }
 )
 _EVENT_LEVEL_NAMESPACES = frozenset(
@@ -43,7 +42,6 @@ _EVENT_LEVEL_NAMESPACES = frozenset(
         "activation",
         "publish",
         "message_slot",
-        "model_sampling",
     }
 )
 
@@ -66,6 +64,10 @@ def _validated_key(
 ) -> dict[str, object]:
     _require_int("matched_seed", matched_seed)
     _require_string("namespace", namespace)
+    if namespace == "model_sampling":
+        raise ValueError(
+            "model_sampling RNG is unavailable while P1_MODEL_SEED_PAIRING is unresolved"
+        )
     if namespace not in _REGISTERED_NAMESPACES:
         raise ValueError(f"namespace is not registered: {namespace}")
     if not isinstance(coordinates, Mapping):

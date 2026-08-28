@@ -5,7 +5,7 @@
 
 ## 当前阶段
 阶段 4B实施：执行计划已获用户整包批准；4B-0至4B-6均已完成并通过独立审查；
-Phase 4B-6状态为`complete / independently reviewed`，Phase 4B-7尚未开始
+Phase 4B-7状态为`in_progress / review repairs implemented / pending independent re-review`
 
 ## 各阶段
 
@@ -173,6 +173,26 @@ Phase 4B-6状态为`complete / independently reviewed`，Phase 4B-7尚未开始
   218.13s、3922 statements / 566 missed / 86%；B/K仍为显式mock挑战输入，formal值未冻结，
   draft仍含88个`UNRESOLVED[...]`；Phase 4B-7未开始）
 - [ ] Phase 4B-7：实现prompt/parser/mock adapter
+  （`in_progress / review repairs implemented / pending independent re-review`；前两轮审查的
+  prompt/event/exposure、memory、persona、serialization/budget、adapter capability/response
+  replay及parser/evidence P1/P2，以及view/response capability、static system和preflight预算均按
+  RED→GREEN修复；恢复后又将typed RunManifest、canonical cell、冻结schedule slot、同run
+  successful source prefix/final attempt接入prompt可信重放；最终review repairs进一步统一四cell
+  system合同、令I0/C0真省略且C0保留同memory，将final attempt parsed content绑定更新，并引入
+  一次验证的`ValidatedPromptRunContext`消除逐prompt manifest扫描；定向118 passed，连续fresh
+  全套514 passed in 80.54s，production coverage 514 passed in 248.34s、4981 statements /
+  729 missed / 85%；N=1000 prompt+render为8.827秒，N=50000 context验证0.317秒且后续索引
+  O(1)；mock_only/not_frozen，未进入4B-8）
+  （2026-08-27追加P1修复：run context改为内容绑定HMAC完整性哨兵并覆盖全部索引；撤销
+  未获批准的retry model-seed相等约束；全部候选含expired round-0均先做typed source replay。
+  最终fresh full 522 passed，production coverage 522 passed / 85%；仍待独立复审。）
+  （2026-08-28最终收尾：逐consumer全图HMAC改为独立typed snapshot的exact-owner弱注册表；
+  `model_sampling`从公共RNG namespace移除并在未决期fail closed；parser字符/字节gate前移到
+  seal/hash之前。四项预期RED后focused 151 passed；待独立复审，再只跑一次final full/
+  coverage；未提交、未推送、未进入4B-8。）
+  （2026-08-28并发P2收尾：每context writer lock + 不可变cursor/prefix版本最后发布；prompt与
+  metadata只捕获一次版本，无全局长锁或prefix复制。确定性RED后新增2 passed、context 17 passed、
+  扩展focused 161 passed；待独立复审，未跑full/coverage、未提交、未推送、未进入4B-8。）
 - [ ] Phase 4B-8：实现SQLite事务存储、严格串行engine与checkpoint/recovery
 - [ ] Phase 4B-9：完成N=20/100/1000 mock集成与交接
 - [ ] 实现 Paper 1 机器可读协议和配置
@@ -180,7 +200,8 @@ Phase 4B-6状态为`complete / independently reviewed`，Phase 4B-7尚未开始
 - [ ] 完成 mock N=20/100/1000 验证
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
-- **状态：** in_progress（4B-0至4B-6 complete / independently reviewed；4B-7未开始）
+- **状态：** in_progress（4B-0至4B-6 complete / independently reviewed；4B-7
+  review repairs implemented / pending independent re-review）
 
 ### 阶段 5：正式实验与分析
 - [ ] 完成 N=200/500/1000 的有限规模检验
