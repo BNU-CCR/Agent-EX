@@ -1,6 +1,13 @@
 """Stable public protocol, artifact, RNG, and ordinal evidence primitives."""
 
 from .artifacts import ArtifactEnvelope
+from .checkpoint import (
+    Checkpoint,
+    build_checkpoint,
+    load_checkpoint,
+    validate_checkpoint,
+    write_checkpoint_atomic,
+)
 from .adapters import (
     AdapterRequest,
     AdapterResponse,
@@ -99,6 +106,7 @@ from .topic import TopicPackage
 
 __all__ = [
     "ArtifactEnvelope",
+    "Checkpoint",
     "AdapterRequest",
     "AdapterResponse",
     "EventStatus",
@@ -133,6 +141,7 @@ __all__ = [
     "assign_initial_stances",
     "advance_validated_prompt_run_context",
     "build_agent_node_mapping",
+    "build_checkpoint",
     "build_activation_schedule",
     "build_attention_artifact",
     "build_expression_artifact",
@@ -153,6 +162,7 @@ __all__ = [
     "evaluate_analysis_eligibility",
     "execution_projection",
     "load_protocol",
+    "load_checkpoint",
     "parse_agent_update",
     "render_human_protocol_summary",
     "reconstruct_event_rng_provenance",
@@ -178,8 +188,10 @@ __all__ = [
     "validate_event_rng_ledger",
     "validate_protocol",
     "validate_adapter_response",
+    "validate_checkpoint",
     "validate_parse_evidence",
     "validate_prompt_view",
     "validate_prompt_run_context",
     "validated_prompt_run_context_metadata",
+    "write_checkpoint_atomic",
 ]

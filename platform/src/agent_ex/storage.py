@@ -37,6 +37,18 @@ def _canonical_json(value: object) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+def _freeze_recovery_evidence(value: object) -> object:
+    if isinstance(value, Mapping):
+        return MappingProxyType(
+            {key: _freeze_recovery_evidence(item) for key, item in value.items()}
+        )
+    if isinstance(value, (tuple, list)):
+        return tuple(_freeze_recovery_evidence(item) for item in value)
+    if isinstance(value, (set, frozenset)):
+        return frozenset(_freeze_recovery_evidence(item) for item in value)
+    return value
+
+
 def _load_canonical_json(value: str, label: str) -> object:
     if type(value) is not str:
         raise ValueError(f"stored {label} JSON is not text")
@@ -1646,6 +1658,138 @@ class RunStorage:
                 raise ValueError("stored public post payload hash does not match")
             result.append(PublicPost.from_payload(payload))
         return tuple(result)
+
+    def recovery_evidence(self, next_event_ordinal: int | None = None) -> Mapping[str, object]:
+        """Return a canonical read-only recovery projection after full integrity replay."""
+
+        self.verify_integrity()
+        progress = self.progress
+        ordinal = progress.next_event_ordinal if next_event_ordinal is None else next_event_ordinal
+        _require_int("next_event_ordinal", ordinal)
+        if not 0 <= ordinal <= progress.next_event_ordinal:
+            raise ValueError("recovery evidence ordinal is ahead of committed SQLite progress")
+        if self.binding.round0_root is None:
+            raise ValueError("recovery evidence requires sealed round-0 state")
+
+        round0_entries = self._round0_entries(require_exact=True)
+        private_states = {
+            entry["agent_id"]: PrivateState.from_payload(entry["private_state"])
+            for entry in round0_entries
+        }
+        latest_pointers = {
+            entry["agent_id"]: LatestPublicPointer.from_payload(entry["latest_public_pointer"])
+            for entry in round0_entries
+        }
+        cursors = {
+            entry["agent_id"]: FeedCursor.from_payload(entry["initial_feed_cursor"])
+            for entry in round0_entries
+        }
+        public_stock = [entry["public_post"] for entry in round0_entries]
+        chain_head = self._event_chain_genesis(self.binding.round0_root)
+        for event_ordinal in range(ordinal):
+            event = self.event_at(event_ordinal)
+            if event is None:
+                raise ValueError("recovery evidence event prefix has a gap")
+            attempts = self.attempts_for_event(event.event_id)
+            update_row = self._connection.execute(
+                """SELECT payload_json, payload_hash FROM private_updates
+                   WHERE event_ordinal = ?""",
+                (event_ordinal,),
+            ).fetchone()
+            if update_row is None:
+                raise ValueError("recovery evidence lacks private update")
+            update_payload = _load_canonical_json(update_row[0], "private update")
+            if canonical_payload_hash(update_payload) != update_row[1]:
+                raise ValueError("stored private update payload hash does not match")
+            update = PrivateUpdate.from_payload(update_payload)
+            state = PrivateState.from_update(
+                update,
+                previous=private_states[event.agent_id],
+                mock_only=True,
+            )
+            cursor = cursors[event.agent_id].advance(event_ordinal)
+            post_row = self._connection.execute(
+                """SELECT payload_json, payload_hash FROM public_posts
+                   WHERE event_ordinal = ?""",
+                (event_ordinal,),
+            ).fetchone()
+            post = None
+            if post_row is not None:
+                post_payload = _load_canonical_json(post_row[0], "public post")
+                if canonical_payload_hash(post_payload) != post_row[1]:
+                    raise ValueError("stored public post payload hash does not match")
+                post = PublicPost.from_payload(post_payload)
+                public_stock.append(post.to_payload())
+                latest_pointers[event.agent_id] = LatestPublicPointer.from_post(
+                    post,
+                    previous=latest_pointers[event.agent_id],
+                    mock_only=True,
+                )
+            private_states[event.agent_id] = state
+            cursors[event.agent_id] = cursor
+            chain_head = canonical_payload_hash(
+                {
+                    "previous": chain_head,
+                    "event": event.to_payload(),
+                    "attempts": self._attempt_chain_entries(event.event_id, attempts),
+                    "private_update_hash": update.record_hash,
+                    "private_state_hash": state.record_hash,
+                    "public_post_hash": None if post is None else post.record_hash,
+                    "cursor_hash": cursor.record_hash,
+                }
+            )
+
+        attempt_prefix: list[dict[str, object]] = []
+        if ordinal < self.binding.schedule_count:
+            event_id = derive_event_id(self.binding.run_id, ordinal)
+            rows = self._connection.execute(
+                """SELECT DISTINCT attempt_id, attempt_index FROM attempt_transitions
+                   WHERE event_id = ? ORDER BY attempt_index""",
+                (event_id,),
+            ).fetchall()
+            for attempt_id, attempt_index in rows:
+                transitions, entries = self._attempt_transition_chain_entries(attempt_id)
+                checkpoint_transitions: list[dict[str, object]] = []
+                checkpoint_entries: list[dict[str, object]] = []
+                for transition, entry in zip(transitions, entries):
+                    transition_payload = transition.to_payload()
+                    row_envelope = dict(entry["row_envelope"])
+                    if row_envelope["raw_response_uri"] is not None:
+                        transition_payload["raw_response"] = None
+                    row_envelope["checkpoint_payload_hash"] = canonical_payload_hash(
+                        transition_payload
+                    )
+                    checkpoint_transitions.append(transition_payload)
+                    checkpoint_entries.append(
+                        {
+                            "transition": dict(transition_payload),
+                            "row_envelope": row_envelope,
+                        }
+                    )
+                attempt_prefix.append(
+                    {
+                        "attempt_id": attempt_id,
+                        "attempt_index": attempt_index,
+                        "transitions": tuple(checkpoint_transitions),
+                        "transition_entries": tuple(checkpoint_entries),
+                    }
+                )
+        roster = self.binding.expected_agent_ids
+        return _freeze_recovery_evidence(
+            {
+                "next_event_ordinal": ordinal,
+                "event_chain_head": chain_head,
+                "private_states": tuple(
+                    private_states[agent_id].to_payload() for agent_id in roster
+                ),
+                "public_stock": tuple(public_stock),
+                "latest_public_pointers": tuple(
+                    latest_pointers[agent_id].to_payload() for agent_id in roster
+                ),
+                "feed_cursors": tuple(cursors[agent_id].to_payload() for agent_id in roster),
+                "current_attempt_prefix": tuple(attempt_prefix),
+            }
+        )  # type: ignore[return-value]
 
     def assert_complete(self) -> None:
         self.verify_integrity()

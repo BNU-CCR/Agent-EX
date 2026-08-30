@@ -1686,6 +1686,7 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "ArtifactEnvelope",
         "AdapterRequest",
         "AdapterResponse",
+        "Checkpoint",
         "EventStatus",
         "ExposureSelection",
         "FeedCandidate",
@@ -1720,6 +1721,7 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "build_agent_node_mapping",
         "build_activation_schedule",
         "build_attention_artifact",
+        "build_checkpoint",
         "build_expression_artifact",
         "build_exposure_record",
         "build_memory_view",
@@ -1738,6 +1740,7 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "evaluate_analysis_eligibility",
         "execution_projection",
         "load_protocol",
+        "load_checkpoint",
         "parse_agent_update",
         "render_human_protocol_summary",
         "reconstruct_event_rng_provenance",
@@ -1763,10 +1766,12 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "validate_ws_artifact",
         "validate_protocol",
         "validate_adapter_response",
+        "validate_checkpoint",
         "validate_parse_evidence",
         "validate_prompt_view",
         "validate_prompt_run_context",
         "validated_prompt_run_context_metadata",
+        "write_checkpoint_atomic",
     }
 
     assert set(agent_ex.__all__) == expected
