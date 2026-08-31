@@ -21,11 +21,19 @@ from .domain import (
     derive_attempt_id,
     derive_event_id,
     GenerationAttempt,
+    EventStatus,
 )
-from .storage import ExternalResponseReference, RunStorage
+from .storage import (
+    ExecutionState,
+    ExecutionStatus,
+    ExternalResponseReference,
+    ResumeAuthorizationEvidence,
+    RunStorage,
+    TerminalFailureEvidence,
+)
 
 
-_CHECKPOINT_VERSION = "paper1.checkpoint.v1"
+_CHECKPOINT_VERSION = "paper1.checkpoint.v2"
 _MAX_CHECKPOINT_BYTES = 16 * 1024 * 1024
 _MAX_JSON_DEPTH = 32
 
@@ -329,6 +337,18 @@ class Checkpoint:
     state_collection_root: str
     event_chain_head: str
     current_attempt_prefix: tuple[Mapping[str, object], ...]
+    execution_state: Mapping[str, object]
+    execution_state_hash: str
+    terminal_failure: Mapping[str, object] | None
+    terminal_failure_hash: str | None
+    resume_authorization: Mapping[str, object] | None
+    resume_authorization_hash: str | None
+    terminal_failure_prefix: tuple[Mapping[str, object], ...]
+    terminal_failure_prefix_hash: str
+    resume_authorization_prefix: tuple[Mapping[str, object], ...]
+    resume_authorization_prefix_hash: str
+    causal_evidence_prefix: tuple[Mapping[str, object], ...]
+    causal_evidence_root: str
 
     @property
     def resume_action(self) -> str:
@@ -349,6 +369,12 @@ class Checkpoint:
         if status in {"pending", "in_progress"}:
             return "resume_same_attempt"
         if status == "failed":
+            if validated.terminal_failure is not None:
+                return (
+                    "retry_same_event"
+                    if validated.resume_authorization is not None
+                    else "halted_current_event"
+                )
             return "retry_same_event"
         if status == "succeeded":
             return "commit_landed_success"
@@ -390,6 +416,18 @@ class Checkpoint:
             "state_collection_root": self.state_collection_root,
             "event_chain_head": self.event_chain_head,
             "current_attempt_prefix": _plain(self.current_attempt_prefix),
+            "execution_state": _plain(self.execution_state),
+            "execution_state_hash": self.execution_state_hash,
+            "terminal_failure": _plain(self.terminal_failure),
+            "terminal_failure_hash": self.terminal_failure_hash,
+            "resume_authorization": _plain(self.resume_authorization),
+            "resume_authorization_hash": self.resume_authorization_hash,
+            "terminal_failure_prefix": _plain(self.terminal_failure_prefix),
+            "terminal_failure_prefix_hash": self.terminal_failure_prefix_hash,
+            "resume_authorization_prefix": _plain(self.resume_authorization_prefix),
+            "resume_authorization_prefix_hash": self.resume_authorization_prefix_hash,
+            "causal_evidence_prefix": _plain(self.causal_evidence_prefix),
+            "causal_evidence_root": self.causal_evidence_root,
         }
 
     def to_payload(self) -> dict[str, object]:
@@ -434,6 +472,18 @@ class Checkpoint:
             "state_collection_root",
             "event_chain_head",
             "current_attempt_prefix",
+            "execution_state",
+            "execution_state_hash",
+            "terminal_failure",
+            "terminal_failure_hash",
+            "resume_authorization",
+            "resume_authorization_hash",
+            "terminal_failure_prefix",
+            "terminal_failure_prefix_hash",
+            "resume_authorization_prefix",
+            "resume_authorization_prefix_hash",
+            "causal_evidence_prefix",
+            "causal_evidence_root",
         }
         if set(body) != expected_fields:
             raise ValueError("checkpoint body has unexpected fields")
@@ -498,6 +548,296 @@ class Checkpoint:
         if type(prefix) is not list or any(type(item) is not dict for item in prefix):
             raise TypeError("checkpoint attempt prefix must be a list of plain mappings")
         _validate_attempt_prefix(prefix, body["current_event_id"])
+        execution_payload = body["execution_state"]
+        if type(execution_payload) is not dict:
+            raise TypeError("checkpoint execution state must be a plain mapping")
+        execution = ExecutionState.from_payload(execution_payload)
+        _require_sha256("execution_state_hash", body["execution_state_hash"])
+        if execution.payload_hash != body["execution_state_hash"]:
+            raise ValueError("checkpoint execution state hash does not match")
+        if (
+            execution.run_id != body["run_id"]
+            or execution.baseline_manifest_hash != body["baseline_manifest_hash"]
+            or execution.next_event_ordinal != body["next_event_ordinal"]
+            or execution.current_event_id != body["current_event_id"]
+        ):
+            raise ValueError("checkpoint execution state identity does not match")
+        failure_payload = body["terminal_failure"]
+        authorization_payload = body["resume_authorization"]
+        failure_prefix_payload = body["terminal_failure_prefix"]
+        authorization_prefix_payload = body["resume_authorization_prefix"]
+        if type(failure_prefix_payload) is not list or any(
+            type(item) is not dict for item in failure_prefix_payload
+        ):
+            raise TypeError("checkpoint terminal failure prefix must be a list of mappings")
+        if type(authorization_prefix_payload) is not list or any(
+            type(item) is not dict for item in authorization_prefix_payload
+        ):
+            raise TypeError("checkpoint resume authorization prefix must be a list of mappings")
+        failure_prefix = tuple(
+            TerminalFailureEvidence.from_payload(item) for item in failure_prefix_payload
+        )
+        authorization_prefix = tuple(
+            ResumeAuthorizationEvidence.from_payload(item) for item in authorization_prefix_payload
+        )
+        causal_prefix_payload = body["causal_evidence_prefix"]
+        if type(causal_prefix_payload) is not list or any(
+            type(item) is not dict for item in causal_prefix_payload
+        ):
+            raise TypeError("checkpoint causal evidence prefix must be a list of mappings")
+        _require_sha256("causal_evidence_root", body["causal_evidence_root"])
+        if canonical_payload_hash(causal_prefix_payload) != body["causal_evidence_root"]:
+            raise ValueError("checkpoint causal evidence root does not match prefix")
+        causal_prefix: list[TerminalFailureEvidence | ResumeAuthorizationEvidence] = []
+        previous_hash: str | None = None
+        previous_value: TerminalFailureEvidence | ResumeAuthorizationEvidence | None = None
+        halted_attempt_indexes: dict[str, int] = {}
+        for expected_sequence, item in enumerate(causal_prefix_payload, start=1):
+            evidence_kind = item.get("evidence_kind")
+            value = (
+                TerminalFailureEvidence.from_payload(item)
+                if evidence_kind == "failure"
+                else ResumeAuthorizationEvidence.from_payload(item)
+                if evidence_kind == "authorization"
+                else None
+            )
+            expected_type = (
+                TerminalFailureEvidence
+                if expected_sequence % 2 == 1
+                else ResumeAuthorizationEvidence
+            )
+            if (
+                value is None
+                or not isinstance(value, expected_type)
+                or value.evidence_sequence != expected_sequence
+                or value.previous_evidence_hash != previous_hash
+                or value.run_id != body["run_id"]
+                or value.event_id != derive_event_id(value.run_id, value.event_ordinal)
+                or value.event_ordinal > body["next_event_ordinal"]
+            ):
+                raise ValueError("checkpoint causal evidence chain is discontinuous or forked")
+            if isinstance(value, ResumeAuthorizationEvidence) and (
+                value.previous_terminal_failure_hash != value.previous_evidence_hash
+                or not isinstance(previous_value, TerminalFailureEvidence)
+                or value.event_id != previous_value.event_id
+                or value.event_ordinal != previous_value.event_ordinal
+            ):
+                raise ValueError("checkpoint authorization does not bind preceding failure")
+            if isinstance(value, TerminalFailureEvidence):
+                if value.attempt_index <= halted_attempt_indexes.get(value.event_id, 0):
+                    raise ValueError("checkpoint halted attempt indexes are not increasing")
+                halted_attempt_indexes[value.event_id] = value.attempt_index
+            causal_prefix.append(value)
+            previous_hash = value.payload_hash
+            previous_value = value
+        if (
+            tuple(item for item in causal_prefix if isinstance(item, TerminalFailureEvidence))
+            != (failure_prefix)
+            or tuple(
+                item for item in causal_prefix if isinstance(item, ResumeAuthorizationEvidence)
+            )
+            != authorization_prefix
+        ):
+            raise ValueError("checkpoint causal evidence does not exact-cover typed prefixes")
+        for name, values in (
+            ("terminal_failure_prefix_hash", failure_prefix_payload),
+            ("resume_authorization_prefix_hash", authorization_prefix_payload),
+        ):
+            _require_sha256(name, body[name])
+            if canonical_payload_hash(values) != body[name]:
+                raise ValueError(f"checkpoint {name} does not match prefix")
+        failure = None
+        authorization = None
+        if failure_payload is None:
+            if body["terminal_failure_hash"] is not None:
+                raise ValueError("checkpoint terminal failure hash lacks payload")
+        else:
+            if type(failure_payload) is not dict:
+                raise TypeError("checkpoint terminal failure must be a plain mapping")
+            failure = TerminalFailureEvidence.from_payload(failure_payload)
+            _require_sha256("terminal_failure_hash", body["terminal_failure_hash"])
+            if failure.payload_hash != body["terminal_failure_hash"]:
+                raise ValueError("checkpoint terminal failure hash does not match")
+            if (
+                failure.run_id != body["run_id"]
+                or failure.event_id != body["current_event_id"]
+                or failure.event_ordinal != body["next_event_ordinal"]
+            ):
+                raise ValueError("checkpoint terminal failure identity does not match")
+        if authorization_payload is None:
+            if body["resume_authorization_hash"] is not None:
+                raise ValueError("checkpoint resume authorization hash lacks payload")
+        else:
+            if type(authorization_payload) is not dict:
+                raise TypeError("checkpoint resume authorization must be a plain mapping")
+            authorization = ResumeAuthorizationEvidence.from_payload(authorization_payload)
+            _require_sha256("resume_authorization_hash", body["resume_authorization_hash"])
+            if authorization.payload_hash != body["resume_authorization_hash"]:
+                raise ValueError("checkpoint resume authorization hash does not match")
+            if (
+                authorization.run_id != body["run_id"]
+                or authorization.event_id != body["current_event_id"]
+                or authorization.event_ordinal != body["next_event_ordinal"]
+            ):
+                raise ValueError("checkpoint resume authorization identity does not match")
+        if failure is not None:
+            if not prefix:
+                raise ValueError("checkpoint terminal failure lacks attempt evidence")
+            last_transitions = prefix[-1]["transitions"]
+            last_transition = last_transitions[-1]
+            terminal_envelope = prefix[-1]["transition_entries"][-1]["row_envelope"]
+            if (
+                last_transition["status"] != "failed"
+                or prefix[-1]["attempt_id"] != failure.attempt_id
+                or prefix[-1]["attempt_index"] != failure.attempt_index
+                or terminal_envelope["payload_hash"] != failure.terminal_transition_hash
+            ):
+                raise ValueError("checkpoint terminal failure lacks failed terminal attempt")
+            if execution.status.value != "failed" or execution.failed_event_ids != (
+                failure.event_id,
+            ):
+                raise ValueError("checkpoint execution state disagrees with halt evidence")
+        elif authorization is not None and (
+            execution.status.value != "running" or execution.failed_event_ids
+        ):
+            raise ValueError("checkpoint execution state disagrees with resume authorization")
+        terminal_evidence = causal_prefix[-1] if causal_prefix else None
+        current_terminal_evidence = (
+            terminal_evidence
+            if terminal_evidence is not None
+            and terminal_evidence.event_ordinal == body["next_event_ordinal"]
+            else None
+        )
+        if failure != (
+            current_terminal_evidence
+            if isinstance(current_terminal_evidence, TerminalFailureEvidence)
+            else None
+        ):
+            raise ValueError("checkpoint current terminal failure does not match causal chain")
+        if authorization != (
+            current_terminal_evidence
+            if isinstance(current_terminal_evidence, ResumeAuthorizationEvidence)
+            else None
+        ):
+            raise ValueError("checkpoint current resume authorization does not match causal chain")
+        failures_by_hash = {item.payload_hash: item for item in failure_prefix}
+        if len(failures_by_hash) != len(failure_prefix):
+            raise ValueError("checkpoint terminal failure prefix contains duplicates")
+        seen_authorizations: set[str] = set()
+        for item in authorization_prefix:
+            matched = failures_by_hash.get(item.previous_terminal_failure_hash)
+            if (
+                matched is None
+                or item.previous_terminal_failure_hash in seen_authorizations
+                or (
+                    item.run_id != matched.run_id
+                    or item.event_id != matched.event_id
+                    or item.event_ordinal != matched.event_ordinal
+                )
+            ):
+                raise ValueError("checkpoint resume authorization prefix is forked")
+            seen_authorizations.add(item.previous_terminal_failure_hash)
+        failure_by_attempt = {
+            (item.event_id, item.event_ordinal, item.attempt_index): item for item in failure_prefix
+        }
+        authorization_by_failure = {
+            item.previous_terminal_failure_hash: item for item in authorization_prefix
+        }
+        if len(failure_by_attempt) != len(failure_prefix) or len(authorization_by_failure) != len(
+            authorization_prefix
+        ):
+            raise ValueError("checkpoint causal evidence is duplicate or forked")
+        for item in failure_prefix:
+            bound_authorization = authorization_by_failure.get(item.payload_hash)
+            if item.event_ordinal < body["next_event_ordinal"] and bound_authorization is None:
+                raise ValueError("committed checkpoint history crossed an unauthorized failure")
+            if item.event_ordinal == body["next_event_ordinal"]:
+                bound_attempt = next(
+                    (
+                        attempt_item
+                        for attempt_item in prefix
+                        if attempt_item["attempt_id"] == item.attempt_id
+                        and attempt_item["attempt_index"] == item.attempt_index
+                    ),
+                    None,
+                )
+                if bound_attempt is None:
+                    raise ValueError("checkpoint failure lacks its exact candidate attempt")
+                bound_terminal = bound_attempt["transitions"][-1]
+                bound_envelope = bound_attempt["transition_entries"][-1]["row_envelope"]
+                if (
+                    bound_terminal["status"] != EventStatus.FAILED.value
+                    or bound_envelope["payload_hash"] != item.terminal_transition_hash
+                    or item.terminal_attempt_hash != item.terminal_transition_hash
+                ):
+                    raise ValueError("checkpoint failure does not bind a real FAILED terminal")
+        for position, attempt_item in enumerate(prefix):
+            attempt_index = attempt_item["attempt_index"]
+            terminal_status = attempt_item["transitions"][-1]["status"]
+            bound_failure = failure_by_attempt.get(
+                (body["current_event_id"], body["next_event_ordinal"], attempt_index)
+            )
+            bound_authorization = (
+                None
+                if bound_failure is None
+                else authorization_by_failure.get(bound_failure.payload_hash)
+            )
+            if attempt_index > 1:
+                prior = prefix[position - 1] if position else None
+                prior_failure = failure_by_attempt.get(
+                    (
+                        body["current_event_id"],
+                        body["next_event_ordinal"],
+                        attempt_index - 1,
+                    )
+                )
+                if (
+                    prior is None
+                    or prior["attempt_index"] != attempt_index - 1
+                    or prior["transitions"][-1]["status"] != EventStatus.FAILED.value
+                    or prior_failure is None
+                    or authorization_by_failure.get(prior_failure.payload_hash) is None
+                ):
+                    raise ValueError(
+                        "checkpoint retry attempt lacks exact failure and authorization evidence"
+                    )
+            if terminal_status != EventStatus.FAILED.value and bound_failure is not None:
+                raise ValueError("checkpoint causal failure binds a non-failed attempt")
+            if position < len(prefix) - 1 and (
+                bound_failure is None or bound_authorization is None
+            ):
+                raise ValueError("checkpoint prior attempt lacks exact causal authorization")
+        succeeded_ids = tuple(
+            derive_event_id(body["run_id"], ordinal)
+            for ordinal in range(body["next_event_ordinal"])
+        )
+        expected_counts = {status.value: 0 for status in EventStatus}
+        expected_counts[EventStatus.SUCCEEDED.value] = body["next_event_ordinal"]
+        expected_event_ids = succeeded_ids
+        if prefix:
+            last_status = prefix[-1]["transitions"][-1]["status"]
+            expected_counts[last_status] += 1
+            expected_event_ids += (body["current_event_id"],)
+        expected_execution = ExecutionState(
+            schema_version="paper1.execution-state.v1",
+            run_id=body["run_id"],
+            baseline_manifest_hash=body["baseline_manifest_hash"],
+            status=(
+                ExecutionStatus.COMPLETE
+                if body["next_event_ordinal"] == body["schedule_count"]
+                else ExecutionStatus.FAILED
+                if failure is not None
+                else ExecutionStatus.RUNNING
+            ),
+            next_event_ordinal=body["next_event_ordinal"],
+            expected_event_count=body["schedule_count"],
+            current_event_id=body["current_event_id"],
+            event_ids=expected_event_ids,  # type: ignore[arg-type]
+            status_counts=expected_counts,
+            failed_event_ids=() if failure is None else (failure.event_id,),
+        )
+        if execution != expected_execution:
+            raise ValueError("checkpoint execution state does not replay from causal evidence")
         _validate_depth(payload)
         frozen_prefix = tuple(_freeze(item) for item in prefix)
         return cls(
@@ -531,6 +871,26 @@ class Checkpoint:
             state_collection_root=body["state_collection_root"],
             event_chain_head=body["event_chain_head"],
             current_attempt_prefix=frozen_prefix,  # type: ignore[arg-type]
+            execution_state=_freeze(execution_payload),  # type: ignore[arg-type]
+            execution_state_hash=body["execution_state_hash"],
+            terminal_failure=(None if failure_payload is None else _freeze(failure_payload)),  # type: ignore[arg-type]
+            terminal_failure_hash=body["terminal_failure_hash"],
+            resume_authorization=(
+                None if authorization_payload is None else _freeze(authorization_payload)
+            ),  # type: ignore[arg-type]
+            resume_authorization_hash=body["resume_authorization_hash"],
+            terminal_failure_prefix=tuple(  # type: ignore[arg-type]
+                _freeze(item) for item in failure_prefix_payload
+            ),
+            terminal_failure_prefix_hash=body["terminal_failure_prefix_hash"],
+            resume_authorization_prefix=tuple(  # type: ignore[arg-type]
+                _freeze(item) for item in authorization_prefix_payload
+            ),
+            resume_authorization_prefix_hash=body["resume_authorization_prefix_hash"],
+            causal_evidence_prefix=tuple(  # type: ignore[arg-type]
+                _freeze(item) for item in causal_prefix_payload
+            ),
+            causal_evidence_root=body["causal_evidence_root"],
         )
 
 
@@ -728,11 +1088,18 @@ def build_checkpoint(storage: RunStorage) -> Checkpoint:
 
     if not isinstance(storage, RunStorage):
         raise TypeError("storage must be a RunStorage")
+    with storage.consistent_read():
+        return _build_checkpoint_snapshot(storage)
+
+
+def _build_checkpoint_snapshot(storage: RunStorage) -> Checkpoint:
+    """Build while the caller pins one authoritative SQLite read snapshot."""
+
     binding = storage.binding
     if binding.round0_root is None:
         raise ValueError("checkpoint requires sealed round-0 state")
     progress = storage.progress
-    evidence = storage.recovery_evidence()
+    evidence = storage._recovery_evidence_snapshot()
     private_root = _root(list(evidence["private_states"]))
     public_root = _root(list(evidence["public_stock"]))
     pointer_root = _root(list(evidence["latest_public_pointers"]))
@@ -750,6 +1117,16 @@ def build_checkpoint(storage: RunStorage) -> Checkpoint:
         if progress.next_event_ordinal < progress.expected_event_count
         else None
     )
+    execution_payload = _plain(evidence["execution_state"])
+    assert type(execution_payload) is dict
+    failure_payload = _plain(evidence["terminal_failure"])
+    authorization_payload = _plain(evidence["resume_authorization"])
+    failure_prefix_payload = _plain(evidence["terminal_failure_prefix"])
+    authorization_prefix_payload = _plain(evidence["resume_authorization_prefix"])
+    causal_prefix_payload = _plain(evidence["causal_evidence_prefix"])
+    assert type(failure_prefix_payload) is list
+    assert type(authorization_prefix_payload) is list
+    assert type(causal_prefix_payload) is list
     checkpoint = Checkpoint(
         version=_CHECKPOINT_VERSION,
         storage_schema_version=binding.schema_version,
@@ -788,6 +1165,22 @@ def build_checkpoint(storage: RunStorage) -> Checkpoint:
         ),
         event_chain_head=evidence["event_chain_head"],  # type: ignore[arg-type]
         current_attempt_prefix=evidence["current_attempt_prefix"],  # type: ignore[arg-type]
+        execution_state=execution_payload,
+        execution_state_hash=canonical_payload_hash(execution_payload),
+        terminal_failure=failure_payload,  # type: ignore[arg-type]
+        terminal_failure_hash=(
+            None if failure_payload is None else canonical_payload_hash(failure_payload)
+        ),
+        resume_authorization=authorization_payload,  # type: ignore[arg-type]
+        resume_authorization_hash=(
+            None if authorization_payload is None else canonical_payload_hash(authorization_payload)
+        ),
+        terminal_failure_prefix=tuple(failure_prefix_payload),  # type: ignore[arg-type]
+        terminal_failure_prefix_hash=canonical_payload_hash(failure_prefix_payload),
+        resume_authorization_prefix=tuple(authorization_prefix_payload),  # type: ignore[arg-type]
+        resume_authorization_prefix_hash=canonical_payload_hash(authorization_prefix_payload),
+        causal_evidence_prefix=tuple(causal_prefix_payload),  # type: ignore[arg-type]
+        causal_evidence_root=canonical_payload_hash(causal_prefix_payload),
     )
     return Checkpoint.from_payload(checkpoint.to_payload())
 
@@ -798,32 +1191,183 @@ def validate_checkpoint(checkpoint: Checkpoint, storage: RunStorage) -> str:
     if not isinstance(checkpoint, Checkpoint):
         raise TypeError("checkpoint must be a Checkpoint")
     checkpoint = Checkpoint.from_payload(checkpoint.to_payload())
+    with storage.consistent_read():
+        return _validate_checkpoint_snapshot(checkpoint, storage)
+
+
+def _validate_checkpoint_snapshot(checkpoint: Checkpoint, storage: RunStorage) -> str:
+    """Classify freshness while the caller holds one SQLite read snapshot."""
+
     if checkpoint.next_event_ordinal > storage.progress.next_event_ordinal:
         raise ValueError("checkpoint is ahead of SQLite storage")
     if checkpoint.next_event_ordinal < storage.progress.next_event_ordinal:
-        evidence = storage.recovery_evidence(checkpoint.next_event_ordinal)
+        evidence = storage._recovery_evidence_snapshot(checkpoint.next_event_ordinal)
         expected = _build_checkpoint_from_evidence(storage, evidence)
         if not _is_attempt_prefix(
             checkpoint.current_attempt_prefix,
             evidence["current_attempt_prefix"],  # type: ignore[arg-type]
         ):
             raise ValueError("stale checkpoint attempt prefix conflicts with SQLite history")
-        expected = replace(expected, current_attempt_prefix=checkpoint.current_attempt_prefix)
+        if not _is_evidence_prefix(checkpoint, expected):
+            raise ValueError("stale checkpoint recovery authorization prefix conflicts")
+        if not _candidate_covers_bound_failures(checkpoint, expected):
+            raise ValueError("checkpoint causal evidence omits a bound failed attempt")
+        expected = _replace_progress_evidence(expected, checkpoint)
         if checkpoint != expected:
             raise ValueError("stale checkpoint conflicts with SQLite history")
         return "stale"
-    current = build_checkpoint(storage)
+    current = _build_checkpoint_snapshot(storage)
     if checkpoint == current:
         return "current"
-    if _is_attempt_prefix(
-        checkpoint.current_attempt_prefix,
-        current.current_attempt_prefix,
-    ) and checkpoint == replace(
-        current,
-        current_attempt_prefix=checkpoint.current_attempt_prefix,
+    if (
+        _is_attempt_prefix(
+            checkpoint.current_attempt_prefix,
+            current.current_attempt_prefix,
+        )
+        and _is_evidence_prefix(checkpoint, current)
+        and _candidate_covers_bound_failures(checkpoint, current)
+        and checkpoint == _replace_progress_evidence(current, checkpoint)
     ):
         return "stale"
     raise ValueError("checkpoint conflicts with SQLite storage")
+
+
+def _candidate_covers_bound_failures(candidate: Checkpoint, stored: Checkpoint) -> bool:
+    """Replay candidate attempt cycles without collapsing legal pre-halt stages."""
+
+    del stored  # Prefix equality is checked separately; this helper checks causal completeness.
+    failures = tuple(
+        TerminalFailureEvidence.from_payload(_plain(item))
+        for item in candidate.terminal_failure_prefix
+    )
+    authorizations = tuple(
+        ResumeAuthorizationEvidence.from_payload(_plain(item))
+        for item in candidate.resume_authorization_prefix
+    )
+    failure_by_attempt = {
+        (item.event_id, item.event_ordinal, item.attempt_id, item.attempt_index): item
+        for item in failures
+    }
+    authorization_by_failure = {
+        item.previous_terminal_failure_hash: item for item in authorizations
+    }
+    attempts = candidate.current_attempt_prefix
+    for position, attempt in enumerate(attempts):
+        transitions = attempt.get("transitions")
+        if not isinstance(transitions, (tuple, list)) or not transitions:
+            return False
+        terminal = transitions[-1]
+        if not isinstance(terminal, Mapping):
+            return False
+        status = terminal.get("status")
+        key = (
+            candidate.current_event_id,
+            candidate.next_event_ordinal,
+            attempt.get("attempt_id"),
+            attempt.get("attempt_index"),
+        )
+        failure = failure_by_attempt.get(key)
+        authorization = (
+            None if failure is None else authorization_by_failure.get(failure.payload_hash)
+        )
+        if position < len(attempts) - 1:
+            if status != EventStatus.FAILED.value or failure is None or authorization is None:
+                return False
+        elif status != EventStatus.FAILED.value and failure is not None:
+            return False
+    return True
+
+
+def _is_evidence_prefix(candidate: Checkpoint, stored: Checkpoint) -> bool:
+    required_committed = tuple(
+        item
+        for item in stored.causal_evidence_prefix
+        if item.get("event_ordinal") < candidate.next_event_ordinal
+    )
+    if len(candidate.causal_evidence_prefix) < len(required_committed) or _plain(
+        candidate.causal_evidence_prefix[: len(required_committed)]
+    ) != _plain(required_committed):
+        return False
+    for candidate_values, stored_values in (
+        (candidate.terminal_failure_prefix, stored.terminal_failure_prefix),
+        (candidate.resume_authorization_prefix, stored.resume_authorization_prefix),
+        (candidate.causal_evidence_prefix, stored.causal_evidence_prefix),
+    ):
+        if len(candidate_values) > len(stored_values) or _plain(candidate_values) != _plain(
+            stored_values[: len(candidate_values)]
+        ):
+            return False
+    return True
+
+
+def _replace_progress_evidence(expected: Checkpoint, candidate: Checkpoint) -> Checkpoint:
+    """Replay, rather than trust, a structurally validated older causal prefix."""
+
+    counts = {status.value: 0 for status in EventStatus}
+    counts[EventStatus.SUCCEEDED.value] = candidate.next_event_ordinal
+    event_ids = tuple(
+        derive_event_id(candidate.run_id, ordinal)
+        for ordinal in range(candidate.next_event_ordinal)
+    )
+    if candidate.current_attempt_prefix:
+        status = candidate.current_attempt_prefix[-1]["transitions"][-1]["status"]
+        counts[status] += 1
+        event_ids += (candidate.current_event_id,)  # type: ignore[arg-type]
+    terminal_payload = (
+        candidate.causal_evidence_prefix[-1] if candidate.causal_evidence_prefix else None
+    )
+    terminal: TerminalFailureEvidence | ResumeAuthorizationEvidence | None = None
+    if terminal_payload is not None:
+        plain_terminal = _plain(terminal_payload)
+        assert type(plain_terminal) is dict
+        terminal = (
+            TerminalFailureEvidence.from_payload(plain_terminal)
+            if plain_terminal.get("evidence_kind") == "failure"
+            else ResumeAuthorizationEvidence.from_payload(plain_terminal)
+        )
+        if terminal.event_ordinal != candidate.next_event_ordinal:
+            terminal = None
+    failure = terminal if isinstance(terminal, TerminalFailureEvidence) else None
+    authorization = terminal if isinstance(terminal, ResumeAuthorizationEvidence) else None
+    execution = ExecutionState(
+        schema_version="paper1.execution-state.v1",
+        run_id=candidate.run_id,
+        baseline_manifest_hash=candidate.baseline_manifest_hash,
+        status=(
+            ExecutionStatus.COMPLETE
+            if candidate.next_event_ordinal == candidate.schedule_count
+            else ExecutionStatus.FAILED
+            if failure is not None
+            else ExecutionStatus.RUNNING
+        ),
+        next_event_ordinal=candidate.next_event_ordinal,
+        expected_event_count=candidate.schedule_count,
+        current_event_id=candidate.current_event_id,
+        event_ids=event_ids,
+        status_counts=counts,
+        failed_event_ids=() if failure is None else (failure.event_id,),
+    )
+    failure_payload = None if failure is None else failure.to_payload()
+    authorization_payload = None if authorization is None else authorization.to_payload()
+
+    return replace(
+        expected,
+        current_attempt_prefix=candidate.current_attempt_prefix,
+        execution_state=_freeze(execution.to_payload()),  # type: ignore[arg-type]
+        execution_state_hash=execution.payload_hash,
+        terminal_failure=(None if failure_payload is None else _freeze(failure_payload)),  # type: ignore[arg-type]
+        terminal_failure_hash=None if failure is None else failure.payload_hash,
+        resume_authorization=(
+            None if authorization_payload is None else _freeze(authorization_payload)
+        ),  # type: ignore[arg-type]
+        resume_authorization_hash=(None if authorization is None else authorization.payload_hash),
+        terminal_failure_prefix=candidate.terminal_failure_prefix,
+        terminal_failure_prefix_hash=candidate.terminal_failure_prefix_hash,
+        resume_authorization_prefix=candidate.resume_authorization_prefix,
+        resume_authorization_prefix_hash=candidate.resume_authorization_prefix_hash,
+        causal_evidence_prefix=candidate.causal_evidence_prefix,
+        causal_evidence_root=candidate.causal_evidence_root,
+    )
 
 
 def _is_attempt_prefix(
@@ -869,6 +1413,49 @@ def _build_checkpoint_from_evidence(
             "event_chain_head": chain_head,
         }
     )
+    attempt_prefix = evidence["current_attempt_prefix"]
+    assert isinstance(attempt_prefix, (tuple, list))
+    succeeded_ids = tuple(derive_event_id(binding.run_id, index) for index in range(ordinal))
+    counts = {status.value: 0 for status in EventStatus}
+    counts[EventStatus.SUCCEEDED.value] = ordinal
+    event_ids = succeeded_ids
+    if attempt_prefix:
+        latest = attempt_prefix[-1]
+        assert isinstance(latest, Mapping)
+        transitions = latest["transitions"]
+        assert isinstance(transitions, (tuple, list)) and transitions
+        terminal = transitions[-1]
+        assert isinstance(terminal, Mapping)
+        terminal_status = terminal["status"]
+        assert isinstance(terminal_status, str)
+        counts[terminal_status] += 1
+        event_ids += (derive_event_id(binding.run_id, ordinal),)
+    execution = ExecutionState(
+        schema_version="paper1.execution-state.v1",
+        run_id=binding.run_id,
+        baseline_manifest_hash=binding.manifest_hash,
+        status=(
+            ExecutionStatus.COMPLETE
+            if ordinal == binding.schedule_count
+            else ExecutionStatus.RUNNING
+        ),
+        next_event_ordinal=ordinal,
+        expected_event_count=binding.schedule_count,
+        current_event_id=(
+            derive_event_id(binding.run_id, ordinal) if ordinal < binding.schedule_count else None
+        ),
+        event_ids=event_ids,
+        status_counts=counts,
+        failed_event_ids=(),
+    )
+    failure_prefix_payload = _plain(evidence["terminal_failure_prefix"])
+    authorization_prefix_payload = _plain(evidence["resume_authorization_prefix"])
+    causal_prefix_payload = _plain(evidence["causal_evidence_prefix"])
+    assert type(failure_prefix_payload) is list
+    assert type(authorization_prefix_payload) is list
+    assert type(causal_prefix_payload) is list
+    failure_payload = _plain(evidence["terminal_failure"])
+    authorization_payload = _plain(evidence["resume_authorization"])
     checkpoint = Checkpoint(
         version=_CHECKPOINT_VERSION,
         storage_schema_version=binding.schema_version,
@@ -908,6 +1495,22 @@ def _build_checkpoint_from_evidence(
             }
         ),
         event_chain_head=chain_head,
-        current_attempt_prefix=(),
+        current_attempt_prefix=attempt_prefix,  # type: ignore[arg-type]
+        execution_state=execution.to_payload(),
+        execution_state_hash=execution.payload_hash,
+        terminal_failure=failure_payload,  # type: ignore[arg-type]
+        terminal_failure_hash=(
+            None if failure_payload is None else canonical_payload_hash(failure_payload)
+        ),
+        resume_authorization=authorization_payload,  # type: ignore[arg-type]
+        resume_authorization_hash=(
+            None if authorization_payload is None else canonical_payload_hash(authorization_payload)
+        ),
+        terminal_failure_prefix=tuple(failure_prefix_payload),  # type: ignore[arg-type]
+        terminal_failure_prefix_hash=canonical_payload_hash(failure_prefix_payload),
+        resume_authorization_prefix=tuple(authorization_prefix_payload),  # type: ignore[arg-type]
+        resume_authorization_prefix_hash=canonical_payload_hash(authorization_prefix_payload),
+        causal_evidence_prefix=tuple(causal_prefix_payload),  # type: ignore[arg-type]
+        causal_evidence_root=canonical_payload_hash(causal_prefix_payload),
     )
     return Checkpoint.from_payload(checkpoint.to_payload())

@@ -102,6 +102,18 @@ from .state import (
     validate_private_state,
     validate_public_post,
 )
+from .storage import (
+    EventJournalState,
+    ExecutionState,
+    ExecutionStatus,
+    ExternalResponseReference,
+    ResumeAuthorizationEvidence,
+    RunLease,
+    RunStorage,
+    StorageBinding,
+    StorageProgress,
+    TerminalFailureEvidence,
+)
 from .topic import TopicPackage
 
 __all__ = [
@@ -110,10 +122,15 @@ __all__ = [
     "AdapterRequest",
     "AdapterResponse",
     "EventStatus",
+    "EventJournalState",
+    "ExecutionState",
+    "ExecutionStatus",
     "ExposureSelection",
     "FeedCandidate",
     "FeedCursor",
     "ExposureRecord",
+    "ExternalResponseReference",
+    "ResumeAuthorizationEvidence",
     "FrozenSchedule",
     "GenerationAttempt",
     "GenerationEvent",
@@ -134,7 +151,12 @@ __all__ = [
     "PublicPost",
     "RNGProvenance",
     "RunManifest",
+    "RunLease",
+    "RunStorage",
     "ScheduleSlot",
+    "StorageBinding",
+    "StorageProgress",
+    "TerminalFailureEvidence",
     "TRSIntegerization",
     "TopicPackage",
     "assign_initial_reasons",

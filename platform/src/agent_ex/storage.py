@@ -3,11 +3,17 @@
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
+import stat
+import tempfile
+import threading
+from contextlib import contextmanager
 from dataclasses import dataclass
+from enum import StrEnum
 from pathlib import Path
 from types import MappingProxyType
-from typing import Callable, Mapping
+from typing import BinaryIO, Callable, Mapping
 
 from .artifacts import ArtifactEnvelope
 from .domain import (
@@ -21,6 +27,7 @@ from .domain import (
     _require_id,
     _require_int,
     _require_sha256,
+    _require_timestamp,
     canonical_payload_hash,
     derive_event_id,
 )
@@ -29,8 +36,286 @@ from .network import validate_shadow_artifact, validate_ws_artifact
 from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
 
 
-_SCHEMA_VERSION = "paper1.run-storage.v2"
-_SQLITE_USER_VERSION = 2
+_SCHEMA_VERSION = "paper1.run-storage.v5"
+_SQLITE_USER_VERSION = 5
+
+
+class ExecutionStatus(StrEnum):
+    """Observed run lifecycle; this is not a frozen retry policy."""
+
+    RUNNING = "running"
+    FAILED = "failed"
+    COMPLETE = "complete"
+
+
+@dataclass(frozen=True, slots=True)
+class EventJournalState:
+    event_id: str | None
+    event_ordinal: int
+    next_attempt_index: int
+    latest_transition: GenerationAttempt | None
+    resume_state: str
+
+
+@dataclass(frozen=True, slots=True)
+class ExecutionState:
+    schema_version: str
+    run_id: str
+    baseline_manifest_hash: str
+    status: ExecutionStatus
+    next_event_ordinal: int
+    expected_event_count: int
+    current_event_id: str | None
+    event_ids: tuple[str, ...]
+    status_counts: Mapping[str, int]
+    failed_event_ids: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.event_ids, (tuple, list)) or not isinstance(
+            self.failed_event_ids, (tuple, list)
+        ):
+            raise TypeError("execution event IDs must be tuples or lists")
+        if not isinstance(self.status_counts, Mapping):
+            raise TypeError("execution status counts must be a mapping")
+        object.__setattr__(self, "event_ids", tuple(self.event_ids))
+        object.__setattr__(self, "failed_event_ids", tuple(self.failed_event_ids))
+        normalized_counts = dict(self.status_counts)
+        if self.schema_version != "paper1.execution-state.v1":
+            raise ValueError("execution state schema version is unsupported")
+        _require_id("execution state run_id", self.run_id)
+        _require_sha256("execution state baseline_manifest_hash", self.baseline_manifest_hash)
+        if not isinstance(self.status, ExecutionStatus):
+            raise TypeError("execution status must be typed")
+        _require_int("execution next_event_ordinal", self.next_event_ordinal)
+        _require_int("execution expected_event_count", self.expected_event_count, minimum=1)
+        if self.next_event_ordinal > self.expected_event_count:
+            raise ValueError("execution ordinal exceeds expected event count")
+        if self.current_event_id is not None:
+            _require_id("execution current_event_id", self.current_event_id)
+        expected_statuses = {status.value for status in EventStatus}
+        if set(normalized_counts) != expected_statuses:
+            raise ValueError("execution status counts must enumerate runtime statuses")
+        for label, count in normalized_counts.items():
+            _require_int(f"execution status_counts[{label}]", count)
+        for event_id in (*self.event_ids, *self.failed_event_ids):
+            _require_id("execution event_id", event_id)
+        if len(set(self.event_ids)) != len(self.event_ids):
+            raise ValueError("execution event IDs must be unique")
+        if any(event_id not in self.event_ids for event_id in self.failed_event_ids):
+            raise ValueError("failed event IDs must be included in execution event IDs")
+        if sum(normalized_counts.values()) != len(self.event_ids):
+            raise ValueError("execution status counts must count event IDs exactly")
+        object.__setattr__(self, "status_counts", MappingProxyType(normalized_counts))
+
+    def to_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self.schema_version,
+            "run_id": self.run_id,
+            "baseline_manifest_hash": self.baseline_manifest_hash,
+            "status": self.status.value,
+            "next_event_ordinal": self.next_event_ordinal,
+            "expected_event_count": self.expected_event_count,
+            "current_event_id": self.current_event_id,
+            "event_ids": list(self.event_ids),
+            "status_counts": dict(self.status_counts),
+            "failed_event_ids": list(self.failed_event_ids),
+        }
+
+    @property
+    def payload_hash(self) -> str:
+        return canonical_payload_hash(self.to_payload())
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> ExecutionState:
+        fields = {
+            "schema_version",
+            "run_id",
+            "baseline_manifest_hash",
+            "status",
+            "next_event_ordinal",
+            "expected_event_count",
+            "current_event_id",
+            "event_ids",
+            "status_counts",
+            "failed_event_ids",
+        }
+        if type(payload) is not dict or set(payload) != fields:
+            raise ValueError("execution state payload fields do not match")
+        if type(payload["event_ids"]) is not list or type(payload["failed_event_ids"]) is not list:
+            raise TypeError("execution state event IDs must be arrays")
+        if type(payload["status_counts"]) is not dict:
+            raise TypeError("execution state status_counts must be a mapping")
+        return cls(
+            schema_version=payload["schema_version"],  # type: ignore[arg-type]
+            run_id=payload["run_id"],  # type: ignore[arg-type]
+            baseline_manifest_hash=payload["baseline_manifest_hash"],  # type: ignore[arg-type]
+            status=ExecutionStatus(payload["status"]),  # type: ignore[arg-type]
+            next_event_ordinal=payload["next_event_ordinal"],  # type: ignore[arg-type]
+            expected_event_count=payload["expected_event_count"],  # type: ignore[arg-type]
+            current_event_id=payload["current_event_id"],  # type: ignore[arg-type]
+            event_ids=tuple(payload["event_ids"]),  # type: ignore[arg-type]
+            status_counts=payload["status_counts"],  # type: ignore[arg-type]
+            failed_event_ids=tuple(payload["failed_event_ids"]),  # type: ignore[arg-type]
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class TerminalFailureEvidence:
+    evidence_sequence: int
+    previous_evidence_hash: str | None
+    evidence_kind: str
+    evidence_id: str
+    run_id: str
+    event_id: str
+    event_ordinal: int
+    attempt_id: str
+    attempt_index: int
+    terminal_transition_hash: str
+    terminal_attempt_hash: str
+    reason: str
+    policy_evidence: Mapping[str, object]
+    recorded_at: str
+
+    def __post_init__(self) -> None:
+        _require_int("evidence_sequence", self.evidence_sequence, minimum=1)
+        if self.previous_evidence_hash is not None:
+            _require_sha256("previous_evidence_hash", self.previous_evidence_hash)
+        if self.evidence_kind != "failure":
+            raise ValueError("terminal failure evidence kind must be failure")
+        _require_id("evidence_id", self.evidence_id)
+        _require_id("run_id", self.run_id)
+        _require_id("event_id", self.event_id)
+        _require_int("event_ordinal", self.event_ordinal)
+        _require_id("attempt_id", self.attempt_id)
+        _require_int("attempt_index", self.attempt_index, minimum=1)
+        _require_sha256("terminal_transition_hash", self.terminal_transition_hash)
+        _require_sha256("terminal_attempt_hash", self.terminal_attempt_hash)
+        if type(self.reason) is not str or not self.reason.strip():
+            raise ValueError("terminal failure reason must be non-empty")
+        if type(self.policy_evidence) is not dict or not {
+            "policy_id",
+            "policy_hash",
+        } <= set(self.policy_evidence):
+            raise ValueError("terminal failure requires external policy evidence")
+        _require_id("policy_evidence[policy_id]", self.policy_evidence["policy_id"])
+        _require_sha256("policy_evidence[policy_hash]", self.policy_evidence["policy_hash"])
+        _require_timestamp("recorded_at", self.recorded_at)
+        object.__setattr__(self, "policy_evidence", _freeze_recovery_evidence(self.policy_evidence))
+
+    def to_payload(self) -> dict[str, object]:
+        return {
+            "evidence_sequence": self.evidence_sequence,
+            "previous_evidence_hash": self.previous_evidence_hash,
+            "evidence_kind": self.evidence_kind,
+            "evidence_id": self.evidence_id,
+            "run_id": self.run_id,
+            "event_id": self.event_id,
+            "event_ordinal": self.event_ordinal,
+            "attempt_id": self.attempt_id,
+            "attempt_index": self.attempt_index,
+            "terminal_transition_hash": self.terminal_transition_hash,
+            "terminal_attempt_hash": self.terminal_attempt_hash,
+            "reason": self.reason,
+            "policy_evidence": _plain_evidence(self.policy_evidence),
+            "recorded_at": self.recorded_at,
+        }
+
+    @property
+    def payload_hash(self) -> str:
+        return canonical_payload_hash(self.to_payload())
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> TerminalFailureEvidence:
+        if type(payload) is not dict or set(payload) != {
+            "evidence_sequence",
+            "previous_evidence_hash",
+            "evidence_kind",
+            "evidence_id",
+            "run_id",
+            "event_id",
+            "event_ordinal",
+            "attempt_id",
+            "attempt_index",
+            "terminal_transition_hash",
+            "terminal_attempt_hash",
+            "reason",
+            "policy_evidence",
+            "recorded_at",
+        }:
+            raise ValueError("terminal failure payload fields do not match")
+        return cls(**dict(payload))  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class ResumeAuthorizationEvidence:
+    """External, explicit permission to retry one already halted event."""
+
+    evidence_sequence: int
+    previous_evidence_hash: str
+    evidence_kind: str
+    authorization_id: str
+    run_id: str
+    event_id: str
+    event_ordinal: int
+    previous_terminal_failure_hash: str
+    policy_evidence_id: str
+    policy_evidence_hash: str
+    authorized_at: str
+
+    def __post_init__(self) -> None:
+        _require_int("evidence_sequence", self.evidence_sequence, minimum=1)
+        _require_sha256("previous_evidence_hash", self.previous_evidence_hash)
+        if self.evidence_kind != "authorization":
+            raise ValueError("resume authorization evidence kind must be authorization")
+        _require_id("authorization_id", self.authorization_id)
+        _require_id("run_id", self.run_id)
+        _require_id("event_id", self.event_id)
+        _require_int("event_ordinal", self.event_ordinal)
+        _require_sha256("previous_terminal_failure_hash", self.previous_terminal_failure_hash)
+        _require_id("policy_evidence_id", self.policy_evidence_id)
+        _require_sha256("policy_evidence_hash", self.policy_evidence_hash)
+        _require_timestamp("authorized_at", self.authorized_at)
+
+    def to_payload(self) -> dict[str, object]:
+        return {
+            "evidence_sequence": self.evidence_sequence,
+            "previous_evidence_hash": self.previous_evidence_hash,
+            "evidence_kind": self.evidence_kind,
+            "authorization_id": self.authorization_id,
+            "run_id": self.run_id,
+            "event_id": self.event_id,
+            "event_ordinal": self.event_ordinal,
+            "previous_terminal_failure_hash": self.previous_terminal_failure_hash,
+            "policy_evidence_id": self.policy_evidence_id,
+            "policy_evidence_hash": self.policy_evidence_hash,
+            "authorized_at": self.authorized_at,
+        }
+
+    @property
+    def payload_hash(self) -> str:
+        return canonical_payload_hash(self.to_payload())
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> ResumeAuthorizationEvidence:
+        if type(payload) is not dict or set(payload) != {
+            "evidence_sequence",
+            "previous_evidence_hash",
+            "evidence_kind",
+            "authorization_id",
+            "run_id",
+            "event_id",
+            "event_ordinal",
+            "previous_terminal_failure_hash",
+            "policy_evidence_id",
+            "policy_evidence_hash",
+            "authorized_at",
+        }:
+            raise ValueError("resume authorization payload fields do not match")
+        return cls(**dict(payload))  # type: ignore[arg-type]
+
+
+_LEASE_REGISTRY: set[object] = set()
+_LEASE_REGISTRY_GUARD = threading.Lock()
 
 
 def _canonical_json(value: object) -> str:
@@ -46,6 +331,16 @@ def _freeze_recovery_evidence(value: object) -> object:
         return tuple(_freeze_recovery_evidence(item) for item in value)
     if isinstance(value, (set, frozenset)):
         return frozenset(_freeze_recovery_evidence(item) for item in value)
+    return value
+
+
+def _plain_evidence(value: object) -> object:
+    if isinstance(value, Mapping):
+        return {key: _plain_evidence(item) for key, item in value.items()}
+    if isinstance(value, (tuple, list)):
+        return [_plain_evidence(item) for item in value]
+    if isinstance(value, (set, frozenset)):
+        raise TypeError("evidence payload cannot contain sets")
     return value
 
 
@@ -237,6 +532,135 @@ class ExternalResponseReference:
         _require_sha256("external response sha256", self.sha256)
 
 
+class RunLease:
+    """Process-lifetime exclusive writer lease, released automatically on crash/close."""
+
+    def __init__(self, store: RunStorage) -> None:
+        self._store = store
+        database = store._path.resolve()
+        self._path = (
+            database.with_suffix(database.suffix + ".lease") if os.name == "nt" else database
+        )
+        self._handle: BinaryIO | None = None
+        self._registry_key: object | None = None
+
+    @staticmethod
+    def _is_reparse_point(value: os.stat_result) -> bool:
+        return bool(getattr(value, "st_file_attributes", 0) & 0x400)
+
+    def _open_stable_handle(self) -> tuple[BinaryIO, object]:
+        if os.name != "nt":
+            flags = os.O_RDWR | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+            descriptor = os.open(self._store._path, flags)
+            value = os.fstat(descriptor)
+            identity = (value.st_dev, value.st_ino)
+            if (
+                not stat.S_ISREG(value.st_mode)
+                or value.st_nlink != 1
+                or identity != self._store._database_identity
+            ):
+                os.close(descriptor)
+                raise RuntimeError("run database lease identity is not stable")
+            return os.fdopen(descriptor, "r+b", buffering=0), ("db-inode", *identity)
+
+        if self._path.exists() or self._path.is_symlink():
+            before = os.lstat(self._path)
+            if not stat.S_ISREG(before.st_mode) or self._is_reparse_point(before):
+                raise RuntimeError("Windows run lease sidecar must not be a reparse point")
+        flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_BINARY", 0)
+        descriptor = os.open(self._path, flags, 0o600)
+        handle_value = os.fstat(descriptor)
+        path_value = os.lstat(self._path)
+        handle_identity = (handle_value.st_dev, handle_value.st_ino)
+        path_identity = (path_value.st_dev, path_value.st_ino)
+        if (
+            not stat.S_ISREG(handle_value.st_mode)
+            or handle_value.st_nlink != 1
+            or self._is_reparse_point(path_value)
+            or handle_identity != path_identity
+        ):
+            os.close(descriptor)
+            raise RuntimeError("Windows run lease sidecar identity is not stable")
+        return os.fdopen(descriptor, "r+b", buffering=0), ("sidecar", *handle_identity)
+
+    def acquire(self) -> RunLease:
+        if self._handle is not None:
+            raise RuntimeError("run lease is already acquired by this owner")
+        self._store._assert_database_single_link()
+        with _LEASE_REGISTRY_GUARD:
+            handle, registry_key = self._open_stable_handle()
+            if registry_key in _LEASE_REGISTRY:
+                handle.close()
+                raise RuntimeError("run lease is already owned in this process")
+            locked = False
+            try:
+                handle.seek(0, os.SEEK_END)
+                if handle.tell() == 0:
+                    handle.write(b"0")
+                    handle.flush()
+                handle.seek(0)
+                if os.name == "nt":
+                    import msvcrt
+
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                else:
+                    import fcntl
+
+                    fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                locked = True
+                self._store._assert_database_single_link()
+            except (OSError, BlockingIOError) as error:
+                handle.close()
+                raise RuntimeError("run lease is already owned by another process") from error
+            except BaseException:
+                if locked:
+                    handle.seek(0)
+                    if os.name == "nt":
+                        import msvcrt
+
+                        msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+                    else:
+                        import fcntl
+
+                        fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+                handle.close()
+                raise
+            _LEASE_REGISTRY.add(registry_key)
+            self._handle = handle
+            self._registry_key = registry_key
+            self._store._owned_lease = self
+        return self
+
+    def release(self) -> None:
+        handle = self._handle
+        if handle is None:
+            return
+        try:
+            handle.seek(0)
+            if os.name == "nt":
+                import msvcrt
+
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        finally:
+            handle.close()
+            with _LEASE_REGISTRY_GUARD:
+                _LEASE_REGISTRY.discard(self._registry_key)
+            if self._store._owned_lease is self:
+                self._store._owned_lease = None
+            self._handle = None
+            self._registry_key = None
+
+    def __enter__(self) -> RunLease:
+        return self.acquire()
+
+    def __exit__(self, exc_type: object, exc: object, traceback: object) -> None:
+        self.release()
+
+
 def _validate_success_bundle(
     *,
     run_id: str,
@@ -371,13 +795,55 @@ class RunStorage:
         path: Path,
         connection: sqlite3.Connection,
         schedule: FrozenSchedule,
+        database_identity_handle: BinaryIO,
         raw_response_resolver: Callable[[ExternalResponseReference], str] | None = None,
     ) -> None:
         self._path = path
         self._connection = connection
         self._schedule = schedule
         self._raw_response_resolver = raw_response_resolver
+        self._owned_lease: RunLease | None = None
+        self._database_identity_handle: BinaryIO | None = database_identity_handle
+        identity_value = os.fstat(database_identity_handle.fileno())
+        self._database_identity: tuple[int, int] | None = (
+            identity_value.st_dev,
+            identity_value.st_ino,
+        )
+        self._assert_database_single_link(capture_identity=True)
         self._binding = self._read_binding()
+
+    @staticmethod
+    def _open_database_identity_handle(database: Path) -> BinaryIO:
+        """Open one no-follow handle whose identity remains authoritative until close."""
+
+        try:
+            before = os.lstat(database)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"run database does not exist: {database}") from None
+        if not stat.S_ISREG(before.st_mode) or bool(
+            getattr(before, "st_file_attributes", 0) & 0x400
+        ):
+            raise RuntimeError("run database path must name a regular non-reparse file")
+        flags = os.O_RDWR | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_BINARY", 0)
+        if os.name != "nt":
+            flags |= getattr(os, "O_NOFOLLOW", 0)
+        descriptor = os.open(database, flags)
+        try:
+            value = os.fstat(descriptor)
+            after = os.lstat(database)
+            identity = (value.st_dev, value.st_ino)
+            if (
+                not stat.S_ISREG(value.st_mode)
+                or value.st_nlink != 1
+                or identity != (after.st_dev, after.st_ino)
+                or not stat.S_ISREG(after.st_mode)
+                or bool(getattr(after, "st_file_attributes", 0) & 0x400)
+            ):
+                raise RuntimeError("run database identity is not stable")
+            return os.fdopen(descriptor, "r+b", buffering=0)
+        except BaseException:
+            os.close(descriptor)
+            raise
 
     @classmethod
     def create(
@@ -420,9 +886,19 @@ class RunStorage:
         roster_payload = list(roster)
         roster_hash = canonical_payload_hash(roster_payload)
         database = Path(path)
-        if database.exists():
+        if database.exists() or database.is_symlink():
             raise FileExistsError(f"run database already exists: {database}")
-        connection = sqlite3.connect(database, isolation_level=None)
+        descriptor, temporary_name = tempfile.mkstemp(
+            dir=database.parent,
+            prefix=f".{database.name}.",
+            suffix=".tmp",
+        )
+        os.close(descriptor)
+        temporary = Path(temporary_name)
+        temporary_uri = temporary.absolute().as_uri() + "?mode=rw"
+        connection: sqlite3.Connection | None = sqlite3.connect(
+            temporary_uri, isolation_level=None, uri=True
+        )
         try:
             connection.execute("PRAGMA foreign_keys = ON")
             connection.execute(f"PRAGMA user_version = {_SQLITE_USER_VERSION}")
@@ -537,6 +1013,35 @@ class RunStorage:
                     payload_json TEXT NOT NULL,
                     payload_hash TEXT NOT NULL
                 );
+                CREATE TABLE execution_state (
+                    singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
+                    payload_json TEXT NOT NULL,
+                    payload_hash TEXT NOT NULL
+                );
+                CREATE TABLE terminal_failures (
+                    evidence_id TEXT PRIMARY KEY,
+                    evidence_sequence INTEGER NOT NULL UNIQUE,
+                    previous_evidence_hash TEXT,
+                    evidence_kind TEXT NOT NULL CHECK (evidence_kind = 'failure'),
+                    event_id TEXT NOT NULL,
+                    event_ordinal INTEGER NOT NULL,
+                    attempt_id TEXT NOT NULL UNIQUE,
+                    attempt_index INTEGER NOT NULL,
+                    terminal_transition_hash TEXT NOT NULL UNIQUE,
+                    payload_json TEXT NOT NULL,
+                    payload_hash TEXT NOT NULL
+                );
+                CREATE TABLE resume_authorizations (
+                    authorization_id TEXT PRIMARY KEY,
+                    evidence_sequence INTEGER NOT NULL UNIQUE,
+                    previous_evidence_hash TEXT NOT NULL UNIQUE,
+                    evidence_kind TEXT NOT NULL CHECK (evidence_kind = 'authorization'),
+                    event_id TEXT NOT NULL,
+                    event_ordinal INTEGER NOT NULL,
+                    previous_terminal_failure_hash TEXT NOT NULL UNIQUE,
+                    payload_json TEXT NOT NULL,
+                    payload_hash TEXT NOT NULL
+                );
                 COMMIT;
                 """
             )
@@ -593,16 +1098,58 @@ class RunStorage:
                 "INSERT INTO progress VALUES (1, 0, ?, 0, ?)",
                 (manifest.schedule.count, genesis),
             )
+            initial_execution = ExecutionState(
+                schema_version="paper1.execution-state.v1",
+                run_id=manifest.run_id,
+                baseline_manifest_hash=canonical_payload_hash(manifest_payload),
+                status=ExecutionStatus.RUNNING,
+                next_event_ordinal=0,
+                expected_event_count=manifest.schedule.count,
+                current_event_id=derive_event_id(manifest.run_id, 0),
+                event_ids=(),
+                status_counts={status.value: 0 for status in EventStatus},
+                failed_event_ids=(),
+            )
+            connection.execute(
+                "INSERT INTO execution_state VALUES (1, ?, ?)",
+                (_canonical_json(initial_execution.to_payload()), initial_execution.payload_hash),
+            )
             connection.commit()
-            return cls(
+            connection.close()
+            connection = None
+            os.link(temporary, database, follow_symlinks=False)
+            temporary_identity = os.stat(temporary, follow_symlinks=False)
+            installed_identity = os.stat(database, follow_symlinks=False)
+            if (temporary_identity.st_dev, temporary_identity.st_ino) != (
+                installed_identity.st_dev,
+                installed_identity.st_ino,
+            ) or installed_identity.st_nlink != 2:
+                raise RuntimeError("installed run database identity does not match temporary file")
+            temporary.unlink()
+            installed_identity = os.stat(database, follow_symlinks=False)
+            if installed_identity.st_nlink != 1:
+                raise RuntimeError("installed run database link count is not one")
+            expected_database_identity = (installed_identity.st_dev, installed_identity.st_ino)
+            return cls.open(
                 database,
-                connection,
-                replayed_schedule,
+                manifest=manifest,
+                artifact_hashes=artifacts,
+                expected_agent_ids=roster,
+                expected_exposure_mode=exposure_mode,
+                expected_exposure_graph_hash=exposure_graph_hash,
+                expected_exposure_graph_artifact=expected_exposure_graph_artifact,
+                expected_source_ws_artifact=expected_source_ws_artifact,
                 raw_response_resolver=raw_response_resolver,
+                _expected_database_identity=expected_database_identity,
             )
         except BaseException:
-            connection.rollback()
-            connection.close()
+            if connection is not None:
+                connection.rollback()
+                connection.close()
+            try:
+                temporary.unlink()
+            except FileNotFoundError:
+                pass
             raise
 
     @classmethod
@@ -618,6 +1165,7 @@ class RunStorage:
         expected_exposure_graph_artifact: ArtifactEnvelope | None = None,
         expected_source_ws_artifact: ArtifactEnvelope | None = None,
         raw_response_resolver: Callable[[ExternalResponseReference], str] | None = None,
+        _expected_database_identity: tuple[int, int] | None = None,
     ) -> RunStorage:
         manifest, replayed_schedule = _replay_manifest(manifest)
         artifacts = _validate_artifact_hashes(artifact_hashes)
@@ -644,11 +1192,19 @@ class RunStorage:
         if any(slot.agent_id not in roster for slot in replayed_schedule.slots):
             raise ValueError("frozen schedule contains an agent outside expected population roster")
         database = Path(path)
-        if not database.is_file():
-            raise FileNotFoundError(f"run database does not exist: {database}")
-        database_uri = database.resolve().as_uri() + "?mode=rw"
-        connection = sqlite3.connect(database_uri, isolation_level=None, uri=True)
+        identity_handle = cls._open_database_identity_handle(database)
+        opened_identity_value = os.fstat(identity_handle.fileno())
+        opened_identity = (opened_identity_value.st_dev, opened_identity_value.st_ino)
+        if (
+            _expected_database_identity is not None
+            and opened_identity != _expected_database_identity
+        ):
+            identity_handle.close()
+            raise RuntimeError("installed run database identity changed before hardened open")
+        database_uri = database.absolute().as_uri() + "?mode=rw"
+        connection: sqlite3.Connection | None = None
         try:
+            connection = sqlite3.connect(database_uri, isolation_level=None, uri=True)
             connection.execute("PRAGMA foreign_keys = ON")
             if connection.execute("PRAGMA user_version").fetchone()[0] != _SQLITE_USER_VERSION:
                 raise ValueError("storage schema version is unsupported")
@@ -656,6 +1212,7 @@ class RunStorage:
                 database,
                 connection,
                 replayed_schedule,
+                identity_handle,
                 raw_response_resolver=raw_response_resolver,
             )
             expected = {
@@ -692,7 +1249,9 @@ class RunStorage:
             store.verify_integrity()
             return store
         except BaseException:
-            connection.close()
+            if connection is not None:
+                connection.close()
+            identity_handle.close()
             raise
 
     def _read_binding(self) -> StorageBinding:
@@ -754,12 +1313,244 @@ class RunStorage:
             raise ValueError("storage progress is missing")
         return StorageProgress(*row)
 
+    def acquire_run_lease(self) -> RunLease:
+        """Return an unacquired lease context for a future engine run lifecycle."""
+
+        return RunLease(self)
+
+    def _assert_database_single_link(self, *, capture_identity: bool = False) -> None:
+        """Fail closed unless the database path names one stable regular file."""
+
+        handle = self._database_identity_handle
+        if handle is None or handle.closed:
+            raise RuntimeError("run database stable identity handle is closed")
+        try:
+            path_value = os.stat(self._path, follow_symlinks=False)
+            handle_value = os.fstat(handle.fileno())
+        except OSError as error:
+            raise RuntimeError("run database file identity cannot be verified") from error
+        link_count = getattr(handle_value, "st_nlink", None)
+        device = getattr(handle_value, "st_dev", None)
+        inode = getattr(handle_value, "st_ino", None)
+        path_identity = (getattr(path_value, "st_dev", None), getattr(path_value, "st_ino", None))
+        if (
+            not stat.S_ISREG(handle_value.st_mode)
+            or not stat.S_ISREG(path_value.st_mode)
+            or bool(getattr(path_value, "st_file_attributes", 0) & 0x400)
+            or type(link_count) is not int
+            or link_count != 1
+            or type(device) is not int
+            or type(inode) is not int
+            or inode <= 0
+            or path_identity != (device, inode)
+        ):
+            raise RuntimeError("run database hard-link or stable identity check failed")
+        identity = (device, inode)
+        if capture_identity:
+            self._database_identity = identity
+        elif self._database_identity != identity:
+            raise RuntimeError("run database file identity changed after open")
+
+    def assert_run_lease_owned(self) -> None:
+        lease = self._owned_lease
+        if lease is None or lease._handle is None:
+            raise RuntimeError("run lease is not owned by this storage instance")
+        self._assert_database_single_link()
+
+    def _begin_write(self) -> None:
+        """Open a write transaction only after revalidating the writer capability."""
+
+        self._connection.execute("BEGIN IMMEDIATE")
+        try:
+            self.assert_run_lease_owned()
+        except BaseException:
+            self._connection.rollback()
+            raise
+
+    def _commit_write(self) -> None:
+        """Revalidate DB identity/link count at the last point before COMMIT."""
+
+        self.assert_run_lease_owned()
+        self._connection.commit()
+
+    def _assert_retry_authorized(self, event_id: str, attempt_index: int) -> None:
+        """Require the immediately preceding FAILED attempt's exact causal pair."""
+
+        if attempt_index <= 1:
+            return
+        progress = self.progress
+        expected_event_id = derive_event_id(self.binding.run_id, progress.next_event_ordinal)
+        if event_id != expected_event_id:
+            raise ValueError("retry authorization must bind the current run event identity")
+        previous = self._connection.execute(
+            """SELECT attempt_id, payload_hash FROM attempts
+               WHERE event_id = ? AND attempt_index = ? AND status = ?""",
+            (event_id, attempt_index - 1, EventStatus.FAILED.value),
+        ).fetchone()
+        if previous is None:
+            raise ValueError("next attempt requires the prior attempt to be terminal FAILED")
+        chain = self.causal_evidence_prefix()
+        if len(chain) < 2:
+            raise ValueError("next attempt requires explicit failure evidence and authorization")
+        failure, authorization = chain[-2:]
+        if (
+            not isinstance(failure, TerminalFailureEvidence)
+            or not isinstance(authorization, ResumeAuthorizationEvidence)
+            or failure.run_id != self.binding.run_id
+            or authorization.run_id != self.binding.run_id
+            or failure.event_id != event_id
+            or failure.event_ordinal != progress.next_event_ordinal
+            or failure.attempt_index != attempt_index - 1
+            or failure.attempt_id != previous[0]
+            or failure.terminal_attempt_hash != previous[1]
+            or failure.terminal_transition_hash != previous[1]
+            or authorization.event_id != event_id
+            or authorization.event_ordinal != failure.event_ordinal
+            or authorization.run_id != failure.run_id
+            or authorization.previous_terminal_failure_hash != failure.payload_hash
+            or authorization.previous_evidence_hash != failure.payload_hash
+        ):
+            raise ValueError(
+                "next attempt requires the prior FAILED attempt's exact failure/authorization pair"
+            )
+
+    def _verify_retry_authorization_exact_cover(self) -> None:
+        """Replay every retry edge against one unique adjacent failure/auth pair."""
+
+        failures = self.terminal_failure_evidence_prefix()
+        authorizations = self.resume_authorization_evidence_prefix()
+        failure_by_attempt = {(item.event_id, item.attempt_index): item for item in failures}
+        if len(failure_by_attempt) != len(failures):
+            raise ValueError("retry failure evidence is duplicate or forked")
+        authorization_by_failure = {
+            item.previous_terminal_failure_hash: item for item in authorizations
+        }
+        if len(authorization_by_failure) != len(authorizations):
+            raise ValueError("retry authorization evidence is duplicate or forked")
+        rows = self._connection.execute(
+            """SELECT event_id, attempt_index FROM attempt_transitions
+               WHERE transition_index = 1 ORDER BY event_id, attempt_index"""
+        ).fetchall()
+        for event_id, attempt_index in rows:
+            if attempt_index == 1:
+                continue
+            previous = self._connection.execute(
+                """SELECT attempt_id, payload_hash, status FROM attempts
+                   WHERE event_id = ? AND attempt_index = ?""",
+                (event_id, attempt_index - 1),
+            ).fetchone()
+            failure = failure_by_attempt.get((event_id, attempt_index - 1))
+            authorization = (
+                None if failure is None else authorization_by_failure.get(failure.payload_hash)
+            )
+            if (
+                previous is None
+                or previous[2] != EventStatus.FAILED.value
+                or failure is None
+                or authorization is None
+                or failure.attempt_id != previous[0]
+                or failure.terminal_attempt_hash != previous[1]
+                or failure.terminal_transition_hash != previous[1]
+                or authorization.event_id != event_id
+                or authorization.event_ordinal != failure.event_ordinal
+                or authorization.previous_evidence_hash != failure.payload_hash
+            ):
+                raise ValueError(
+                    "retry attempt lacks exact-cover failure and authorization evidence"
+                )
+
+    def execution_state(self) -> ExecutionState:
+        row = self._connection.execute(
+            "SELECT payload_json, payload_hash FROM execution_state WHERE singleton = 1"
+        ).fetchone()
+        if row is None:
+            raise ValueError("execution state is missing")
+        payload = _load_canonical_json(row[0], "execution state")
+        if canonical_payload_hash(payload) != row[1]:
+            raise ValueError("stored execution state payload hash does not match")
+        value = ExecutionState.from_payload(payload)  # type: ignore[arg-type]
+        if value.payload_hash != row[1] or value.run_id != self.binding.run_id:
+            raise ValueError("stored execution state identity does not match")
+        return value
+
+    def current_event_journal(self) -> EventJournalState:
+        progress = self.progress
+        if progress.next_event_ordinal == progress.expected_event_count:
+            return EventJournalState(None, progress.next_event_ordinal, 1, None, "complete")
+        event_id = derive_event_id(self.binding.run_id, progress.next_event_ordinal)
+        rows = self._connection.execute(
+            """SELECT attempt_id, attempt_index FROM attempt_transitions
+               WHERE event_id = ? ORDER BY attempt_index, transition_index""",
+            (event_id,),
+        ).fetchall()
+        if not rows:
+            return EventJournalState(event_id, progress.next_event_ordinal, 1, None, "new_attempt")
+        latest_attempt_id, latest_index = rows[-1]
+        latest = self.attempt_transitions(latest_attempt_id)[-1]
+        states = {
+            EventStatus.PENDING: "pending_attempt_requires_same_request",
+            EventStatus.IN_PROGRESS: "in_progress_requires_provider_reconciliation",
+            EventStatus.FAILED: "failed_attempt_requires_external_authorization",
+            EventStatus.SUCCEEDED: "succeeded_attempt_requires_atomic_commit",
+        }
+        if latest.status is EventStatus.FAILED:
+            failure = next(
+                (
+                    item
+                    for item in reversed(self.terminal_failure_evidence_prefix())
+                    if item.run_id == self.binding.run_id
+                    and item.event_id == event_id
+                    and item.event_ordinal == progress.next_event_ordinal
+                    and item.attempt_id == latest.attempt_id
+                    and item.attempt_index == latest.attempt_index
+                ),
+                None,
+            )
+            authorization = (
+                None
+                if failure is None
+                else next(
+                    (
+                        item
+                        for item in reversed(self.resume_authorization_evidence_prefix())
+                        if item.run_id == self.binding.run_id
+                        and item.run_id == failure.run_id
+                        and item.event_id == event_id
+                        and item.event_ordinal == progress.next_event_ordinal
+                        and item.previous_terminal_failure_hash == failure.payload_hash
+                    ),
+                    None,
+                )
+            )
+            if failure is not None:
+                states[EventStatus.FAILED] = (
+                    "retry_same_event"
+                    if authorization is not None
+                    and authorization.previous_terminal_failure_hash == failure.payload_hash
+                    else "halted_current_event"
+                )
+        next_index = latest_index + 1 if latest.status is EventStatus.FAILED else latest_index
+        return EventJournalState(
+            event_id,
+            progress.next_event_ordinal,
+            next_index,
+            latest,
+            states[latest.status],
+        )
+
+    def _replace_execution_state(self, value: ExecutionState) -> None:
+        self._connection.execute(
+            "UPDATE execution_state SET payload_json = ?, payload_hash = ? WHERE singleton = 1",
+            (_canonical_json(value.to_payload()), value.payload_hash),
+        )
+
     def append_attempt(
         self,
         attempt: GenerationAttempt,
         *,
         external_response: ExternalResponseReference | None = None,
     ) -> None:
+        self._assert_not_halted()
         if self.binding.round0_root is None:
             raise ValueError("initial state must be sealed before appending attempts")
         if not isinstance(attempt, GenerationAttempt):
@@ -861,8 +1652,37 @@ class RunStorage:
         payload = dict(full_payload)
         if external_response is not None:
             payload["raw_response"] = None
+        prior_execution = self.execution_state()
+        counts = dict(prior_execution.status_counts)
+        if replayed.event_id in prior_execution.event_ids:
+            prior_statuses = [
+                status.value
+                for status in EventStatus
+                if status is not EventStatus.SUCCEEDED and counts[status.value] > 0
+            ]
+            if len(prior_statuses) != 1:
+                raise ValueError("execution state current attempt status is ambiguous")
+            counts[prior_statuses[0]] -= 1
+            event_ids = prior_execution.event_ids
+        else:
+            event_ids = prior_execution.event_ids + (replayed.event_id,)
+        counts[replayed.status.value] += 1
+        transition_execution = ExecutionState(
+            schema_version=prior_execution.schema_version,
+            run_id=prior_execution.run_id,
+            baseline_manifest_hash=prior_execution.baseline_manifest_hash,
+            status=ExecutionStatus.RUNNING,
+            next_event_ordinal=prior_execution.next_event_ordinal,
+            expected_event_count=prior_execution.expected_event_count,
+            current_event_id=replayed.event_id,
+            event_ids=event_ids,
+            status_counts=counts,
+            failed_event_ids=(),
+        )
         try:
-            self._connection.execute("BEGIN IMMEDIATE")
+            self._begin_write()
+            if transition_index == 1:
+                self._assert_retry_authorized(replayed.event_id, replayed.attempt_index)
             self._connection.execute(
                 """INSERT INTO attempt_transitions
                    (attempt_id, transition_index, event_id, attempt_index, status,
@@ -880,8 +1700,9 @@ class RunStorage:
                     None if external_response is None else external_response.sha256,
                 ),
             )
+            self._replace_execution_state(transition_execution)
             if replayed.status not in {EventStatus.FAILED, EventStatus.SUCCEEDED}:
-                self._connection.commit()
+                self._commit_write()
                 return
             self._connection.execute(
                 """INSERT INTO attempts
@@ -899,7 +1720,7 @@ class RunStorage:
                     None if external_response is None else external_response.sha256,
                 ),
             )
-            self._connection.commit()
+            self._commit_write()
         except sqlite3.IntegrityError as error:
             self._connection.rollback()
             raise ValueError("attempt records are append-only") from error
@@ -1038,7 +1859,7 @@ class RunStorage:
             or replayed_cursor.exposure_graph_hash != self.binding.expected_exposure_graph_hash
         ):
             raise ValueError("initial feed cursor exposure provenance does not match run binding")
-        self._connection.execute("BEGIN IMMEDIATE")
+        self._begin_write()
         try:
             self._insert_payload(
                 "private_updates",
@@ -1056,7 +1877,7 @@ class RunStorage:
             self._insert_current("latest_public_pointers", agent_id, replayed_pointer.to_payload())
             self._insert_current("feed_cursors", agent_id, replayed_cursor.to_payload())
             self._insert_current("initial_feed_cursors", agent_id, replayed_cursor.to_payload())
-            self._connection.commit()
+            self._commit_write()
         except sqlite3.IntegrityError as error:
             self._connection.rollback()
             raise ValueError("agent initial state is append-only") from error
@@ -1200,7 +2021,7 @@ class RunStorage:
         entries = self._round0_entries(require_exact=True)
         round0_root = canonical_payload_hash(entries)
         genesis = self._event_chain_genesis(round0_root)
-        self._connection.execute("BEGIN IMMEDIATE")
+        self._begin_write()
         try:
             self._connection.execute(
                 "UPDATE binding SET round0_root = ? WHERE singleton = 1 AND round0_root IS NULL",
@@ -1210,7 +2031,7 @@ class RunStorage:
                 "UPDATE progress SET event_chain_head = ? WHERE singleton = 1",
                 (genesis,),
             )
-            self._connection.commit()
+            self._commit_write()
         except BaseException:
             self._connection.rollback()
             raise
@@ -1228,6 +2049,7 @@ class RunStorage:
         public_post: PublicPost | None,
         latest_public_pointer: LatestPublicPointer | None,
     ) -> None:
+        self._assert_not_halted()
         records = (event, final_attempt, private_update, private_state, feed_cursor)
         types = (GenerationEvent, GenerationAttempt, PrivateUpdate, PrivateState, FeedCursor)
         if any(not isinstance(value, expected) for value, expected in zip(records, types)):
@@ -1237,7 +2059,8 @@ class RunStorage:
         replayed_update = PrivateUpdate.from_payload(private_update.to_payload())
         replayed_state = PrivateState.from_payload(private_state.to_payload())
         replayed_cursor = FeedCursor.from_payload(feed_cursor.to_payload())
-        ordinal = self.progress.next_event_ordinal
+        progress = self.progress
+        ordinal = progress.next_event_ordinal
         if replayed_event.run_id != self.binding.run_id:
             raise ValueError("event run does not match storage")
         if replayed_event.event_ordinal != ordinal:
@@ -1349,7 +2172,35 @@ class RunStorage:
                 "cursor_hash": replayed_cursor.record_hash,
             }
         )
-        self._connection.execute("BEGIN IMMEDIATE")
+        prior_execution = self.execution_state()
+        counts = dict(prior_execution.status_counts)
+        if (
+            prior_execution.event_ids[-1:] != (replayed_event.event_id,)
+            or counts[EventStatus.SUCCEEDED.value] != ordinal + 1
+        ):
+            raise ValueError("execution state does not bind succeeded attempt before commit")
+        new_ordinal = ordinal + 1
+        execution = ExecutionState(
+            schema_version=prior_execution.schema_version,
+            run_id=prior_execution.run_id,
+            baseline_manifest_hash=prior_execution.baseline_manifest_hash,
+            status=(
+                ExecutionStatus.COMPLETE
+                if new_ordinal == progress.expected_event_count
+                else ExecutionStatus.RUNNING
+            ),
+            next_event_ordinal=new_ordinal,
+            expected_event_count=progress.expected_event_count,
+            current_event_id=(
+                None
+                if new_ordinal == progress.expected_event_count
+                else derive_event_id(self.binding.run_id, new_ordinal)
+            ),
+            event_ids=prior_execution.event_ids,
+            status_counts=counts,
+            failed_event_ids=prior_execution.failed_event_ids,
+        )
+        self._begin_write()
         try:
             self._insert_payload(
                 "events",
@@ -1392,7 +2243,8 @@ class RunStorage:
                    WHERE singleton = 1""",
                 (ordinal + 1, ordinal + 1, chain_head),
             )
-            self._connection.commit()
+            self._replace_execution_state(execution)
+            self._commit_write()
         except BaseException:
             self._connection.rollback()
             raise
@@ -1659,7 +2511,335 @@ class RunStorage:
             result.append(PublicPost.from_payload(payload))
         return tuple(result)
 
+    def private_updates_for_agent(self, agent_id: str) -> tuple[PrivateUpdate, ...]:
+        """Strictly replay one agent's full private history, including round 0."""
+
+        _require_id("agent_id", agent_id)
+        rows = self._connection.execute(
+            """SELECT event_ordinal, payload_json, payload_hash FROM private_updates
+               WHERE agent_id = ?
+               ORDER BY CASE WHEN event_ordinal IS NULL THEN -1 ELSE event_ordinal END""",
+            (agent_id,),
+        ).fetchall()
+        if not rows:
+            raise ValueError("agent has no round-0 private update")
+        values: list[PrivateUpdate] = []
+        previous_state: PrivateState | None = None
+        for index, (event_ordinal, payload_json, payload_hash) in enumerate(rows):
+            payload = _load_canonical_json(payload_json, "private update history")
+            if canonical_payload_hash(payload) != payload_hash:
+                raise ValueError("stored private update history hash does not match")
+            value = PrivateUpdate.from_payload(payload)
+            if value.agent_id != agent_id or value.sequence_index != index:
+                raise ValueError("private update sequence is not strictly continuous")
+            if index == 0:
+                if event_ordinal is not None or value.event_ordinal is not None:
+                    raise ValueError("private update history must begin at round 0")
+            else:
+                event = self.event_at(event_ordinal)
+                if (
+                    event_ordinal != value.event_ordinal
+                    or event is None
+                    or event.event_id != value.event_id
+                    or event.agent_id != value.agent_id
+                ):
+                    raise ValueError("private update history lacks a committed event")
+            previous_state = PrivateState.from_update(
+                value, previous=previous_state, mock_only=True
+            )
+            values.append(value)
+        current = self.private_state(agent_id)
+        if current != previous_state:
+            raise ValueError("private update history does not replay current private state")
+        return tuple(values)
+
+    def _assert_not_halted(self) -> None:
+        chain = self.causal_evidence_prefix()
+        if chain and isinstance(chain[-1], TerminalFailureEvidence):
+            raise ValueError("run is halted by append-only terminal failure evidence")
+
+    def terminal_failure_evidence(self) -> TerminalFailureEvidence | None:
+        prefix = self.terminal_failure_evidence_prefix()
+        return None if not prefix else prefix[-1]
+
+    def terminal_failure_evidence_prefix(self) -> tuple[TerminalFailureEvidence, ...]:
+        rows = self._connection.execute(
+            """SELECT payload_json, payload_hash FROM terminal_failures
+               ORDER BY evidence_sequence"""
+        ).fetchall()
+        values: list[TerminalFailureEvidence] = []
+        for row in rows:
+            payload = _load_canonical_json(row[0], "terminal failure")
+            if canonical_payload_hash(payload) != row[1]:
+                raise ValueError("terminal failure payload hash does not match")
+            values.append(TerminalFailureEvidence.from_payload(payload))  # type: ignore[arg-type]
+        return tuple(values)
+
+    def resume_authorization_evidence(self) -> ResumeAuthorizationEvidence | None:
+        prefix = self.resume_authorization_evidence_prefix()
+        return None if not prefix else prefix[-1]
+
+    def resume_authorization_evidence_prefix(
+        self,
+    ) -> tuple[ResumeAuthorizationEvidence, ...]:
+        rows = self._connection.execute(
+            """SELECT payload_json, payload_hash FROM resume_authorizations
+               ORDER BY evidence_sequence"""
+        ).fetchall()
+        values: list[ResumeAuthorizationEvidence] = []
+        for row in rows:
+            payload = _load_canonical_json(row[0], "resume authorization")
+            if canonical_payload_hash(payload) != row[1]:
+                raise ValueError("resume authorization payload hash does not match")
+            values.append(ResumeAuthorizationEvidence.from_payload(payload))  # type: ignore[arg-type]
+        return tuple(values)
+
+    def causal_evidence_prefix(
+        self,
+    ) -> tuple[TerminalFailureEvidence | ResumeAuthorizationEvidence, ...]:
+        """Return the single hash-linked failure/authorization evidence chain."""
+
+        values: list[TerminalFailureEvidence | ResumeAuthorizationEvidence] = [
+            *self.terminal_failure_evidence_prefix(),
+            *self.resume_authorization_evidence_prefix(),
+        ]
+        values.sort(key=lambda item: item.evidence_sequence)
+        previous_hash: str | None = None
+        for expected_sequence, item in enumerate(values, start=1):
+            expected_type = (
+                TerminalFailureEvidence
+                if expected_sequence % 2 == 1
+                else ResumeAuthorizationEvidence
+            )
+            if (
+                item.evidence_sequence != expected_sequence
+                or not isinstance(item, expected_type)
+                or item.previous_evidence_hash != previous_hash
+                or item.run_id != self.binding.run_id
+                or item.event_id != derive_event_id(self.binding.run_id, item.event_ordinal)
+            ):
+                raise ValueError("causal evidence chain is discontinuous, forked, or reordered")
+            if isinstance(item, ResumeAuthorizationEvidence) and (
+                item.previous_terminal_failure_hash != item.previous_evidence_hash
+                or expected_sequence < 2
+                or not isinstance(values[expected_sequence - 2], TerminalFailureEvidence)
+                or item.run_id != values[expected_sequence - 2].run_id
+                or item.event_id != values[expected_sequence - 2].event_id
+                or item.event_ordinal != values[expected_sequence - 2].event_ordinal
+            ):
+                raise ValueError("resume authorization does not bind preceding failure")
+            previous_hash = item.payload_hash
+        return tuple(values)
+
+    def record_terminal_failure(
+        self,
+        *,
+        event_id: str,
+        reason: str,
+        policy_evidence: Mapping[str, object],
+        recorded_at: str,
+    ) -> TerminalFailureEvidence:
+        """Record a caller-authorized stop without choosing retry/timeout policy."""
+
+        self._assert_not_halted()
+        journal = self.current_event_journal()
+        if journal.event_id != event_id or journal.latest_transition is None:
+            raise ValueError("terminal failure must bind the current event attempt evidence")
+        if journal.latest_transition.status is not EventStatus.FAILED:
+            raise ValueError("terminal failure requires a failed terminal attempt")
+        chain = self.causal_evidence_prefix()
+        if chain and isinstance(chain[-1], TerminalFailureEvidence):
+            raise ValueError("run is already halted by append-only failure evidence")
+        if any(
+            isinstance(item, TerminalFailureEvidence)
+            and item.attempt_id == journal.latest_transition.attempt_id
+            for item in chain
+        ):
+            raise ValueError("the failed attempt is already bound to terminal failure evidence")
+        terminal_hash = canonical_payload_hash(journal.latest_transition.to_payload())
+        payload_without_id = {
+            "evidence_sequence": len(chain) + 1,
+            "previous_evidence_hash": None if not chain else chain[-1].payload_hash,
+            "evidence_kind": "failure",
+            "run_id": self.binding.run_id,
+            "event_id": event_id,
+            "event_ordinal": journal.event_ordinal,
+            "attempt_id": journal.latest_transition.attempt_id,
+            "attempt_index": journal.latest_transition.attempt_index,
+            "terminal_transition_hash": terminal_hash,
+            "terminal_attempt_hash": terminal_hash,
+            "reason": reason,
+            "policy_evidence": dict(policy_evidence),
+            "recorded_at": recorded_at,
+        }
+        evidence = TerminalFailureEvidence(
+            evidence_id="halt-" + canonical_payload_hash(payload_without_id),
+            **payload_without_id,  # type: ignore[arg-type]
+        )
+        previous = self.execution_state()
+        counts = dict(previous.status_counts)
+        if previous.event_ids[-1:] != (event_id,) or counts[EventStatus.FAILED.value] != 1:
+            raise ValueError("execution state does not bind the failed current attempt")
+        failed = ExecutionState(
+            schema_version=previous.schema_version,
+            run_id=previous.run_id,
+            baseline_manifest_hash=previous.baseline_manifest_hash,
+            status=ExecutionStatus.FAILED,
+            next_event_ordinal=previous.next_event_ordinal,
+            expected_event_count=previous.expected_event_count,
+            current_event_id=event_id,
+            event_ids=previous.event_ids,
+            status_counts=counts,
+            failed_event_ids=(event_id,),
+        )
+        self._begin_write()
+        try:
+            self._insert_payload(
+                "terminal_failures",
+                (
+                    "evidence_id",
+                    "evidence_sequence",
+                    "previous_evidence_hash",
+                    "evidence_kind",
+                    "event_id",
+                    "event_ordinal",
+                    "attempt_id",
+                    "attempt_index",
+                    "terminal_transition_hash",
+                ),
+                (
+                    evidence.evidence_id,
+                    evidence.evidence_sequence,
+                    evidence.previous_evidence_hash,
+                    evidence.evidence_kind,
+                    evidence.event_id,
+                    evidence.event_ordinal,
+                    evidence.attempt_id,
+                    evidence.attempt_index,
+                    evidence.terminal_transition_hash,
+                ),
+                evidence.to_payload(),
+            )
+            self._replace_execution_state(failed)
+            self._commit_write()
+        except BaseException:
+            self._connection.rollback()
+            raise
+        return evidence
+
+    def authorize_resume(
+        self,
+        *,
+        authorization_id: str,
+        event_id: str,
+        previous_terminal_failure_hash: str,
+        policy_evidence_id: str,
+        policy_evidence_hash: str,
+        authorized_at: str,
+    ) -> ResumeAuthorizationEvidence:
+        """Append external retry authorization without selecting retry policy."""
+
+        failure = self.terminal_failure_evidence()
+        if failure is None:
+            raise ValueError("resume authorization requires terminal failure evidence")
+        prior_authorization = self.resume_authorization_evidence()
+        if (
+            prior_authorization is not None
+            and prior_authorization.previous_terminal_failure_hash == failure.payload_hash
+        ):
+            raise ValueError("resume authorization is append-only and already recorded")
+        if event_id != failure.event_id or previous_terminal_failure_hash != failure.payload_hash:
+            raise ValueError("resume authorization does not bind the terminal failure")
+        chain = self.causal_evidence_prefix()
+        if not chain or chain[-1].payload_hash != failure.payload_hash:
+            raise ValueError("resume authorization must immediately follow terminal failure")
+        evidence = ResumeAuthorizationEvidence(
+            evidence_sequence=len(chain) + 1,
+            previous_evidence_hash=failure.payload_hash,
+            evidence_kind="authorization",
+            authorization_id=authorization_id,
+            run_id=self.binding.run_id,
+            event_id=event_id,
+            event_ordinal=failure.event_ordinal,
+            previous_terminal_failure_hash=previous_terminal_failure_hash,
+            policy_evidence_id=policy_evidence_id,
+            policy_evidence_hash=policy_evidence_hash,
+            authorized_at=authorized_at,
+        )
+        previous = self.execution_state()
+        if (
+            previous.status is not ExecutionStatus.FAILED
+            or previous.current_event_id != event_id
+            or previous.next_event_ordinal != failure.event_ordinal
+            or previous.failed_event_ids != (event_id,)
+        ):
+            raise ValueError("execution state does not bind the halted event")
+        resumed = ExecutionState(
+            schema_version=previous.schema_version,
+            run_id=previous.run_id,
+            baseline_manifest_hash=previous.baseline_manifest_hash,
+            status=ExecutionStatus.RUNNING,
+            next_event_ordinal=previous.next_event_ordinal,
+            expected_event_count=previous.expected_event_count,
+            current_event_id=previous.current_event_id,
+            event_ids=previous.event_ids,
+            status_counts=previous.status_counts,
+            failed_event_ids=(),
+        )
+        self._begin_write()
+        try:
+            self._insert_payload(
+                "resume_authorizations",
+                (
+                    "authorization_id",
+                    "evidence_sequence",
+                    "previous_evidence_hash",
+                    "evidence_kind",
+                    "event_id",
+                    "event_ordinal",
+                    "previous_terminal_failure_hash",
+                ),
+                (
+                    evidence.authorization_id,
+                    evidence.evidence_sequence,
+                    evidence.previous_evidence_hash,
+                    evidence.evidence_kind,
+                    evidence.event_id,
+                    evidence.event_ordinal,
+                    evidence.previous_terminal_failure_hash,
+                ),
+                evidence.to_payload(),
+            )
+            self._replace_execution_state(resumed)
+            self._commit_write()
+        except sqlite3.IntegrityError as error:
+            self._connection.rollback()
+            raise ValueError("resume authorization is duplicate, forked, or append-only") from error
+        except BaseException:
+            self._connection.rollback()
+            raise
+        return evidence
+
+    @contextmanager
+    def consistent_read(self):  # type: ignore[no-untyped-def]
+        """Pin all reads to one SQLite snapshot; never hold this across model calls."""
+
+        owns_transaction = not self._connection.in_transaction
+        if owns_transaction:
+            self._connection.execute("BEGIN")
+        try:
+            yield self
+        finally:
+            if owns_transaction and self._connection.in_transaction:
+                self._connection.rollback()
+
     def recovery_evidence(self, next_event_ordinal: int | None = None) -> Mapping[str, object]:
+        with self.consistent_read():
+            return self._recovery_evidence_snapshot(next_event_ordinal)
+
+    def _recovery_evidence_snapshot(
+        self, next_event_ordinal: int | None = None
+    ) -> Mapping[str, object]:
         """Return a canonical read-only recovery projection after full integrity replay."""
 
         self.verify_integrity()
@@ -1775,6 +2955,35 @@ class RunStorage:
                     }
                 )
         roster = self.binding.expected_agent_ids
+        current_projection = ordinal == progress.next_event_ordinal
+        execution_payload = self.execution_state().to_payload() if current_projection else None
+        failure_prefix = tuple(
+            item
+            for item in self.terminal_failure_evidence_prefix()
+            if item.event_ordinal <= ordinal
+        )
+        failure_hashes = {item.payload_hash for item in failure_prefix}
+        authorization_prefix = tuple(
+            item
+            for item in self.resume_authorization_evidence_prefix()
+            if item.previous_terminal_failure_hash in failure_hashes
+        )
+        causal_prefix = tuple(
+            item for item in self.causal_evidence_prefix() if item.event_ordinal <= ordinal
+        )
+        terminal_item = causal_prefix[-1] if causal_prefix else None
+        failure = (
+            terminal_item
+            if isinstance(terminal_item, TerminalFailureEvidence)
+            and terminal_item.event_ordinal == ordinal
+            else None
+        )
+        authorization = (
+            terminal_item
+            if isinstance(terminal_item, ResumeAuthorizationEvidence)
+            and terminal_item.event_ordinal == ordinal
+            else None
+        )
         return _freeze_recovery_evidence(
             {
                 "next_event_ordinal": ordinal,
@@ -1788,6 +2997,16 @@ class RunStorage:
                 ),
                 "feed_cursors": tuple(cursors[agent_id].to_payload() for agent_id in roster),
                 "current_attempt_prefix": tuple(attempt_prefix),
+                "execution_state": execution_payload,
+                "terminal_failure": None if failure is None else failure.to_payload(),
+                "resume_authorization": (
+                    None if authorization is None else authorization.to_payload()
+                ),
+                "terminal_failure_prefix": tuple(item.to_payload() for item in failure_prefix),
+                "resume_authorization_prefix": tuple(
+                    item.to_payload() for item in authorization_prefix
+                ),
+                "causal_evidence_prefix": tuple(item.to_payload() for item in causal_prefix),
             }
         )  # type: ignore[return-value]
 
@@ -1837,6 +3056,211 @@ class RunStorage:
             and progress.expected_event_count == self.binding.schedule_count
         ):
             raise ValueError("stored manifest progress is invalid")
+        execution = self.execution_state()
+        failure_rows = self._connection.execute(
+            """SELECT evidence_id, evidence_sequence, previous_evidence_hash, evidence_kind,
+                      event_id, event_ordinal, attempt_id, attempt_index,
+                      terminal_transition_hash, payload_json, payload_hash
+               FROM terminal_failures ORDER BY evidence_sequence"""
+        ).fetchall()
+        failures: list[TerminalFailureEvidence] = []
+        for row in failure_rows:
+            (
+                evidence_id,
+                evidence_sequence,
+                previous_evidence_hash,
+                evidence_kind,
+                event_id,
+                event_ordinal,
+                attempt_id,
+                attempt_index,
+                terminal_transition_hash,
+                payload_json,
+                payload_hash,
+            ) = row
+            payload = _load_canonical_json(payload_json, "terminal failure")
+            if canonical_payload_hash(payload) != payload_hash:
+                raise ValueError("terminal failure payload hash does not match")
+            value = TerminalFailureEvidence.from_payload(payload)  # type: ignore[arg-type]
+            if (
+                evidence_id,
+                evidence_sequence,
+                previous_evidence_hash,
+                evidence_kind,
+                event_id,
+                event_ordinal,
+                attempt_id,
+                attempt_index,
+                terminal_transition_hash,
+            ) != (
+                value.evidence_id,
+                value.evidence_sequence,
+                value.previous_evidence_hash,
+                value.evidence_kind,
+                value.event_id,
+                value.event_ordinal,
+                value.attempt_id,
+                value.attempt_index,
+                value.terminal_transition_hash,
+            ):
+                raise ValueError("terminal failure row identity does not match typed payload")
+            failures.append(value)
+        authorization_rows = self._connection.execute(
+            """SELECT authorization_id, evidence_sequence, previous_evidence_hash,
+                      evidence_kind, event_id, event_ordinal,
+                      previous_terminal_failure_hash, payload_json, payload_hash
+               FROM resume_authorizations ORDER BY evidence_sequence"""
+        ).fetchall()
+        authorizations: list[ResumeAuthorizationEvidence] = []
+        for (
+            authorization_id,
+            evidence_sequence,
+            previous_evidence_hash,
+            evidence_kind,
+            event_id,
+            event_ordinal,
+            failure_hash,
+            payload_json,
+            payload_hash,
+        ) in authorization_rows:
+            payload = _load_canonical_json(payload_json, "resume authorization")
+            if canonical_payload_hash(payload) != payload_hash:
+                raise ValueError("resume authorization payload hash does not match")
+            value = ResumeAuthorizationEvidence.from_payload(payload)  # type: ignore[arg-type]
+            if (
+                authorization_id,
+                evidence_sequence,
+                previous_evidence_hash,
+                evidence_kind,
+                event_id,
+                event_ordinal,
+                failure_hash,
+            ) != (
+                value.authorization_id,
+                value.evidence_sequence,
+                value.previous_evidence_hash,
+                value.evidence_kind,
+                value.event_id,
+                value.event_ordinal,
+                value.previous_terminal_failure_hash,
+            ):
+                raise ValueError("resume authorization row identity does not match typed payload")
+            authorizations.append(value)
+        causal_chain = self.causal_evidence_prefix()
+        if tuple(
+            item for item in causal_chain if isinstance(item, TerminalFailureEvidence)
+        ) != tuple(failures) or tuple(
+            item for item in causal_chain if isinstance(item, ResumeAuthorizationEvidence)
+        ) != tuple(authorizations):
+            raise ValueError("causal evidence chain does not exact-cover stored evidence")
+        failure_by_hash = {value.payload_hash: value for value in failures}
+        if len(failure_by_hash) != len(failures):
+            raise ValueError("terminal failure evidence contains a duplicate or fork")
+        authorization_by_failure: dict[str, ResumeAuthorizationEvidence] = {}
+        for authorization in authorizations:
+            failure = failure_by_hash.get(authorization.previous_terminal_failure_hash)
+            if failure is None or (
+                authorization.run_id != self.binding.run_id
+                or authorization.event_id != failure.event_id
+                or authorization.event_ordinal != failure.event_ordinal
+                or authorization.previous_terminal_failure_hash in authorization_by_failure
+            ):
+                raise ValueError("resume authorization evidence is forked or lacks failure")
+            authorization_by_failure[authorization.previous_terminal_failure_hash] = authorization
+        last_halted_attempt_index: dict[str, int] = {}
+        for failure in failures:
+            if failure.run_id != self.binding.run_id or failure.event_id != derive_event_id(
+                self.binding.run_id, failure.event_ordinal
+            ):
+                raise ValueError("terminal failure run does not match storage")
+            attempt_match = self._connection.execute(
+                """SELECT attempt_id, attempt_index, payload_hash FROM attempts
+                   WHERE event_id = ? AND status = ? AND attempt_id = ?
+                         AND attempt_index = ? AND payload_hash = ?""",
+                (
+                    failure.event_id,
+                    EventStatus.FAILED.value,
+                    failure.attempt_id,
+                    failure.attempt_index,
+                    failure.terminal_attempt_hash,
+                ),
+            ).fetchone()
+            if (
+                attempt_match is None
+                or failure.terminal_transition_hash != failure.terminal_attempt_hash
+            ):
+                raise ValueError("terminal failure does not bind a failed attempt")
+            if failure.attempt_index <= last_halted_attempt_index.get(failure.event_id, 0):
+                raise ValueError("terminal failure attempt indexes are not strictly increasing")
+            last_halted_attempt_index[failure.event_id] = failure.attempt_index
+            if failure.event_ordinal < progress.next_event_ordinal and (
+                failure.payload_hash not in authorization_by_failure
+            ):
+                raise ValueError("committed progress crossed an unauthorized terminal failure")
+            if failure.event_ordinal > progress.next_event_ordinal:
+                raise ValueError("terminal failure is ahead of committed progress")
+        succeeded_ids = tuple(
+            derive_event_id(self.binding.run_id, index)
+            for index in range(progress.next_event_ordinal)
+        )
+        expected_counts = {status.value: 0 for status in EventStatus}
+        expected_counts[EventStatus.SUCCEEDED.value] = progress.succeeded_event_count
+        expected_status = (
+            ExecutionStatus.COMPLETE
+            if progress.next_event_ordinal == progress.expected_event_count
+            else ExecutionStatus.RUNNING
+        )
+        current_attempt_status = None
+        current_event_id = None
+        if expected_status is ExecutionStatus.RUNNING:
+            current_event_id = derive_event_id(self.binding.run_id, progress.next_event_ordinal)
+            latest_row = self._connection.execute(
+                """SELECT status FROM attempt_transitions WHERE event_id = ?
+                   ORDER BY attempt_index DESC, transition_index DESC LIMIT 1""",
+                (current_event_id,),
+            ).fetchone()
+            if latest_row is not None:
+                current_attempt_status = EventStatus(latest_row[0])
+        current_failure = (
+            causal_chain[-1]
+            if causal_chain and isinstance(causal_chain[-1], TerminalFailureEvidence)
+            else None
+        )
+        if current_failure is not None and (
+            current_failure.event_id != current_event_id or current_attempt_status is None
+        ):
+            raise ValueError("terminal failure does not bind current event")
+        if current_failure is not None and (
+            current_failure.payload_hash not in authorization_by_failure
+        ):
+            if current_attempt_status is not EventStatus.FAILED:
+                raise ValueError("unauthorized terminal failure was advanced")
+            expected_status = ExecutionStatus.FAILED
+        expected_ids = (
+            succeeded_ids if current_attempt_status is None else succeeded_ids + (current_event_id,)  # type: ignore[arg-type]
+        )
+        if current_attempt_status is not None:
+            expected_counts[current_attempt_status.value] += 1
+        expected_failed_ids = (
+            (current_event_id,)
+            if current_failure is not None
+            and current_failure.event_ordinal == progress.next_event_ordinal
+            and current_attempt_status is EventStatus.FAILED
+            else ()
+        )
+        expected_current = None if expected_status is ExecutionStatus.COMPLETE else current_event_id
+        if (
+            execution.schema_version != "paper1.execution-state.v1"
+            or execution.baseline_manifest_hash != self.binding.manifest_hash
+            or execution.next_event_ordinal != progress.next_event_ordinal
+            or execution.expected_event_count != progress.expected_event_count
+            or execution.status is not expected_status
+            or execution.current_event_id != expected_current
+            or execution.event_ids != expected_ids
+            or dict(execution.status_counts) != expected_counts
+            or execution.failed_event_ids != expected_failed_ids
+        ):
+            raise ValueError("execution state does not replay from SQLite truth")
         rows = self._connection.execute(
             "SELECT event_ordinal FROM events ORDER BY event_ordinal"
         ).fetchall()
@@ -1844,6 +3268,7 @@ class RunStorage:
         if ordinals != tuple(range(progress.next_event_ordinal)):
             raise ValueError("stored succeeded event prefix has a gap or duplicate")
         self._verify_attempt_exact_cover(progress)
+        self._verify_retry_authorization_exact_cover()
         initial_updates: dict[str, PrivateUpdate] = {}
         for update_id, agent_id, payload_json, payload_hash in self._connection.execute(
             """SELECT update_id, agent_id, payload_json, payload_hash FROM private_updates
@@ -2212,7 +3637,12 @@ class RunStorage:
                     raise ValueError("succeeded event attempt journal is not exact-cover")
 
     def close(self) -> None:
+        if self._owned_lease is not None:
+            self._owned_lease.release()
         self._connection.close()
+        if self._database_identity_handle is not None:
+            self._database_identity_handle.close()
+            self._database_identity_handle = None
 
     def __enter__(self) -> RunStorage:
         return self

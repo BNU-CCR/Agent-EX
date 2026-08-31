@@ -34,10 +34,26 @@ from test_storage import (
     attempt_transition,
     expected_agent_ids,
     manifest,
+    schedule,
     seal_expected_initial_state,
     successful_event,
     successful_state_records,
 )
+
+
+@pytest.fixture(autouse=True)
+def explicitly_lease_created_checkpoint_stores(monkeypatch: pytest.MonkeyPatch):
+    """Checkpoint fixtures explicitly hold the writer lease during mutation."""
+
+    original = RunStorage.create.__func__
+
+    def create_with_explicit_lease(cls, *args: object, **kwargs: object) -> RunStorage:
+        store = original(cls, *args, **kwargs)
+        store.acquire_run_lease().acquire()
+        return store
+
+    monkeypatch.setattr(RunStorage, "create", classmethod(create_with_explicit_lease))
+    yield
 
 
 def _create_sealed_store(path: Path) -> tuple[RunStorage, object, dict[str, str]]:
@@ -62,7 +78,7 @@ def test_empty_sealed_run_builds_deterministic_storage_bound_checkpoint(tmp_path
         second = build_checkpoint(store)
 
         assert first == second
-        assert first.version == "paper1.checkpoint.v1"
+        assert first.version == "paper1.checkpoint.v2"
         assert first.run_id == run_manifest.run_id
         assert first.protocol_id == run_manifest.protocol_id
         assert first.protocol_version == run_manifest.protocol_version
@@ -76,6 +92,283 @@ def test_empty_sealed_run_builds_deterministic_storage_bound_checkpoint(tmp_path
         assert first.expected_exposure_graph_hash is None
         assert first.expected_source_ws_artifact_hash is None
         assert validate_checkpoint(first, store) == "current"
+
+
+def test_checkpoint_binds_halt_and_explicit_resume_authorization(tmp_path: Path) -> None:
+    store, run_manifest, _ = _create_sealed_store(tmp_path / "halted.sqlite3")
+    with store:
+        failed = attempt(run_manifest)
+        append_terminal_attempt(store, failed)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="externally authorized stop",
+            policy_evidence={"policy_id": "halt-policy", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T00:00:00+00:00",
+        )
+        halted = build_checkpoint(store)
+        assert halted.resume_action == "halted_current_event"
+        assert halted.terminal_failure_hash == failure.payload_hash
+        assert halted.resume_authorization is None
+
+        authorization = store.authorize_resume(
+            authorization_id="resume-checkpoint-1",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-30T01:00:00+00:00",
+        )
+        resumed = build_checkpoint(store)
+        assert resumed.resume_action == "retry_same_event"
+        assert resumed.resume_authorization_hash == authorization.payload_hash
+        assert validate_checkpoint(resumed, store) == "current"
+        assert validate_checkpoint(halted, store) == "stale"
+
+        tampered = resumed.to_payload()
+        body = tampered["checkpoint"]
+        assert isinstance(body, dict)
+        body["resume_authorization"] = None
+        body["resume_authorization_hash"] = None
+        tampered["checkpoint_hash"] = canonical_payload_hash(body)
+        with pytest.raises(ValueError, match="execution state disagrees|authorization"):
+            Checkpoint.from_payload(tampered)
+
+
+def test_validate_checkpoint_uses_exactly_one_consistent_read_scope(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, _, _ = _create_sealed_store(tmp_path / "snapshot.sqlite3")
+    with store:
+        checkpoint = build_checkpoint(store)
+        original = RunStorage.consistent_read
+        calls = 0
+
+        def counted(self: RunStorage):  # type: ignore[no-untyped-def]
+            nonlocal calls
+            calls += 1
+            return original(self)
+
+        monkeypatch.setattr(RunStorage, "consistent_read", counted)
+        assert validate_checkpoint(checkpoint, store) == "current"
+        assert calls == 1
+
+
+def test_checkpoint_binds_full_multiple_halt_authorization_prefix(tmp_path: Path) -> None:
+    store, run_manifest, _ = _create_sealed_store(tmp_path / "multi-halt.sqlite3")
+    with store:
+        for index in (1, 2):
+            failed = attempt(run_manifest, index=index)
+            append_terminal_attempt(store, failed)
+            failure = store.record_terminal_failure(
+                event_id=failed.event_id,
+                reason=f"halt-{index}",
+                policy_evidence={"policy_id": f"halt-{index}", "policy_hash": "a" * 64},
+                recorded_at=f"2026-08-30T0{index}:00:00+00:00",
+            )
+            store.authorize_resume(
+                authorization_id=f"resume-{index}",
+                event_id=failed.event_id,
+                previous_terminal_failure_hash=failure.payload_hash,
+                policy_evidence_id=f"retry-{index}",
+                policy_evidence_hash="b" * 64,
+                authorized_at=f"2026-08-30T1{index}:00:00+00:00",
+            )
+        checkpoint = build_checkpoint(store)
+        assert len(checkpoint.terminal_failure_prefix) == 2
+        assert len(checkpoint.resume_authorization_prefix) == 2
+        assert Checkpoint.from_payload(checkpoint.to_payload()) == checkpoint
+        assert validate_checkpoint(checkpoint, store) == "current"
+
+
+def test_checkpoint_cannot_hide_authorized_failure_by_truncating_causal_evidence(
+    tmp_path: Path,
+) -> None:
+    store, run_manifest, _ = _create_sealed_store(tmp_path / "truncated-causal.sqlite3")
+    with store:
+        failed = attempt(run_manifest)
+        append_terminal_attempt(store, failed)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="halt",
+            policy_evidence={"policy_id": "halt-policy", "policy_hash": "a" * 64},
+            recorded_at="2026-08-30T01:00:00+00:00",
+        )
+        store.authorize_resume(
+            authorization_id="resume-hidden-chain",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-30T02:00:00+00:00",
+        )
+        retry = attempt(run_manifest, index=2)
+        store.append_attempt(attempt_transition(retry, EventStatus.PENDING))
+        payload = build_checkpoint(store).to_payload()
+        body = payload["checkpoint"]
+        assert isinstance(body, dict)
+        body["terminal_failure"] = None
+        body["terminal_failure_hash"] = None
+        body["resume_authorization"] = None
+        body["resume_authorization_hash"] = None
+        body["terminal_failure_prefix"] = []
+        body["terminal_failure_prefix_hash"] = canonical_payload_hash([])
+        body["resume_authorization_prefix"] = []
+        body["resume_authorization_prefix_hash"] = canonical_payload_hash([])
+        body["causal_evidence_prefix"] = []
+        body["causal_evidence_root"] = canonical_payload_hash([])
+        payload["checkpoint_hash"] = canonical_payload_hash(body)
+        with pytest.raises(ValueError, match="causal|authorization|failure|attempt"):
+            Checkpoint.from_payload(payload)
+
+
+@pytest.mark.parametrize(
+    "tamper", ["duplicate", "reverse", "skip-sequence", "wrong-event", "fork", "cross-ordinal"]
+)
+def test_checkpoint_from_payload_rejects_causal_chain_tamper(tmp_path: Path, tamper: str) -> None:
+    store, run_manifest, _ = _create_sealed_store(tmp_path / f"checkpoint-{tamper}.sqlite3")
+    with store:
+        for index in (1, 2):
+            failed = attempt(run_manifest, index=index)
+            append_terminal_attempt(store, failed)
+            failure = store.record_terminal_failure(
+                event_id=failed.event_id,
+                reason=f"halt-{index}",
+                policy_evidence={"policy_id": f"halt-{index}", "policy_hash": "a" * 64},
+                recorded_at=f"2026-08-30T0{index}:00:00+00:00",
+            )
+            store.authorize_resume(
+                authorization_id=f"resume-{index}",
+                event_id=failed.event_id,
+                previous_terminal_failure_hash=failure.payload_hash,
+                policy_evidence_id=f"retry-{index}",
+                policy_evidence_hash="b" * 64,
+                authorized_at=f"2026-08-30T1{index}:00:00+00:00",
+            )
+        payload = build_checkpoint(store).to_payload()
+    body = payload["checkpoint"]
+    assert isinstance(body, dict)
+    causal = body["causal_evidence_prefix"]
+    assert isinstance(causal, list)
+    if tamper == "duplicate":
+        causal.insert(1, dict(causal[0]))
+    elif tamper == "reverse":
+        causal[0], causal[1] = causal[1], causal[0]
+    elif tamper == "skip-sequence":
+        causal[2]["evidence_sequence"] = 9
+    elif tamper == "wrong-event":
+        causal[2]["event_id"] = "event-forged"
+    elif tamper == "fork":
+        causal[3]["previous_evidence_hash"] = "f" * 64
+    else:
+        causal[2]["event_ordinal"] = 1
+    body["causal_evidence_root"] = canonical_payload_hash(causal)
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    with pytest.raises(ValueError, match="causal|evidence|authorization|attempt"):
+        Checkpoint.from_payload(payload)
+
+
+def test_checkpoint_from_payload_replays_execution_instead_of_trusting_rehashed_claim(
+    tmp_path: Path,
+) -> None:
+    store, _, _ = _create_sealed_store(tmp_path / "forged-execution.sqlite3")
+    with store:
+        payload = build_checkpoint(store).to_payload()
+    body = payload["checkpoint"]
+    assert isinstance(body, dict)
+    execution = body["execution_state"]
+    assert isinstance(execution, dict)
+    execution["status"] = "failed"
+    body["execution_state_hash"] = canonical_payload_hash(execution)
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    with pytest.raises(ValueError, match="execution state does not replay"):
+        Checkpoint.from_payload(payload)
+
+
+def test_authorized_failure_history_remains_recoverable_through_retry_and_commit(
+    tmp_path: Path,
+) -> None:
+    database = tmp_path / "authorized-lifecycle.sqlite3"
+    store, run_manifest, artifacts = _create_sealed_store(database)
+    checkpoints: list[Checkpoint] = []
+    with store:
+        failed = attempt(run_manifest, index=1)
+        append_terminal_attempt(store, failed)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="halt",
+            policy_evidence={"policy_id": "halt-policy", "policy_hash": "a" * 64},
+            recorded_at="2026-08-30T01:00:00+00:00",
+        )
+        store.authorize_resume(
+            authorization_id="resume-lifecycle",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-30T02:00:00+00:00",
+        )
+        checkpoints.append(build_checkpoint(store))
+        retry_failed = attempt(run_manifest, index=2)
+        store.append_attempt(attempt_transition(retry_failed, EventStatus.PENDING))
+        checkpoints.append(build_checkpoint(store))
+        store.append_attempt(attempt_transition(retry_failed, EventStatus.IN_PROGRESS))
+        checkpoints.append(build_checkpoint(store))
+        store.append_attempt(retry_failed)
+        checkpoints.append(build_checkpoint(store))
+        retry_failure = store.record_terminal_failure(
+            event_id=retry_failed.event_id,
+            reason="halt retry",
+            policy_evidence={"policy_id": "halt-policy-2", "policy_hash": "a" * 64},
+            recorded_at="2026-08-30T03:00:00+00:00",
+        )
+        checkpoints.append(build_checkpoint(store))
+        store.authorize_resume(
+            authorization_id="resume-lifecycle-2",
+            event_id=retry_failed.event_id,
+            previous_terminal_failure_hash=retry_failure.payload_hash,
+            policy_evidence_id="retry-policy-2",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-30T04:00:00+00:00",
+        )
+        checkpoints.append(build_checkpoint(store))
+        succeeded = attempt(run_manifest, index=3, status=EventStatus.SUCCEEDED)
+        append_terminal_attempt(store, succeeded)
+        landed = build_checkpoint(store)
+        checkpoints.append(landed)
+        records = successful_state_records(
+            run_manifest,
+            ordinal=0,
+            previous_state=store.private_state("agent-0"),  # type: ignore[arg-type]
+            previous_cursor=store.feed_cursor("agent-0"),  # type: ignore[arg-type]
+            previous_pointer=store.latest_public_pointer("agent-0"),
+            attempt_index=3,
+        )
+        store.commit_success(
+            successful_event(run_manifest, ordinal=0, attempt_count=3),
+            final_attempt=succeeded,
+            private_update=records[0],
+            private_state=records[1],
+            feed_cursor=records[2],
+            public_post=records[3],
+            latest_public_pointer=records[4],
+        )
+        committed = build_checkpoint(store)
+        assert committed.resume_action == "start_current_event"
+        assert committed.terminal_failure is None
+        assert committed.resume_authorization is None
+        assert len(committed.causal_evidence_prefix) == 4
+        assert all(validate_checkpoint(item, store) == "stale" for item in checkpoints)
+
+    with RunStorage.open(
+        database,
+        manifest=run_manifest,
+        artifact_hashes=artifacts,
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as reopened:
+        reopened.verify_integrity()
+        assert validate_checkpoint(committed, reopened) == "current"
 
 
 @pytest.mark.parametrize(
@@ -315,6 +608,20 @@ def test_same_ordinal_strict_attempt_prefix_is_trustworthy_stale(
         elif progression == "failed_to_retry":
             append_terminal_attempt(store, first)
             stale = build_checkpoint(store)
+            failure = store.record_terminal_failure(
+                event_id=first.event_id,
+                reason="retry progression",
+                policy_evidence={"policy_id": "halt", "policy_hash": "a" * 64},
+                recorded_at="2026-08-18T00:00:00+00:00",
+            )
+            store.authorize_resume(
+                authorization_id="resume-progression",
+                event_id=first.event_id,
+                previous_terminal_failure_hash=failure.payload_hash,
+                policy_evidence_id="retry-policy",
+                policy_evidence_hash="b" * 64,
+                authorized_at="2026-08-18T01:00:00+00:00",
+            )
             second = attempt(run_manifest, index=2, status=EventStatus.FAILED)
             store.append_attempt(attempt_transition(second, EventStatus.PENDING))
         else:
@@ -353,6 +660,10 @@ def test_same_ordinal_attempt_prefix_ahead_or_fork_conflicts(tmp_path: Path) -> 
         entry["transition_entries"].append(
             {"transition": dict(in_progress), "row_envelope": envelope}
         )
+        execution = ahead_payload["checkpoint"]["execution_state"]
+        execution["status_counts"]["pending"] = 0
+        execution["status_counts"]["in_progress"] = 1
+        ahead_payload["checkpoint"]["execution_state_hash"] = canonical_payload_hash(execution)
         ahead_payload["checkpoint_hash"] = canonical_payload_hash(ahead_payload["checkpoint"])
         ahead = Checkpoint.from_payload(ahead_payload)
         fork = replace(current, current_manifest_hash="f" * 64)
@@ -431,7 +742,7 @@ def test_validate_checkpoint_rejects_ahead_ordinal(tmp_path: Path) -> None:
     store, _, _ = _create_sealed_store(tmp_path / "run.sqlite3")
     with store:
         checkpoint = build_checkpoint(store)
-        with pytest.raises(ValueError, match="ahead"):
+        with pytest.raises(ValueError, match="ahead|identity"):
             validate_checkpoint(
                 replace(
                     checkpoint,
@@ -450,6 +761,20 @@ def test_stale_checkpoint_with_failed_attempt_prefix_validates_against_later_suc
         failed = attempt(run_manifest, index=1, status=EventStatus.FAILED)
         append_terminal_attempt(store, failed)
         stale = build_checkpoint(store)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="later success retry",
+            policy_evidence={"policy_id": "halt", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T00:00:00+00:00",
+        )
+        store.authorize_resume(
+            authorization_id="resume-later-success",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-18T01:00:00+00:00",
+        )
         succeeded = attempt(run_manifest, index=2, status=EventStatus.SUCCEEDED)
         append_terminal_attempt(store, succeeded)
         event = successful_event(run_manifest, ordinal=0, attempt_count=2)
@@ -475,6 +800,301 @@ def test_stale_checkpoint_with_failed_attempt_prefix_validates_against_later_suc
         )
 
         assert validate_checkpoint(stale, store) == "stale"
+
+
+def test_failed_transition_checkpoint_becomes_stale_after_halt_evidence(
+    tmp_path: Path,
+) -> None:
+    store, run_manifest, _ = _create_sealed_store(tmp_path / "run.sqlite3")
+    with store:
+        failed = attempt(run_manifest, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed)
+        pre_halt = build_checkpoint(store)
+        assert pre_halt.execution_state["status"] == "running"
+        assert pre_halt.terminal_failure_prefix == ()
+
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="external halt",
+            policy_evidence={"policy_id": "halt-policy", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T00:00:00+00:00",
+        )
+        halted = build_checkpoint(store)
+        assert halted.execution_state["status"] == "failed"
+        assert halted.terminal_failure_hash == failure.payload_hash
+        assert validate_checkpoint(pre_halt, store) == "stale"
+
+
+def test_checkpoint_replays_every_failed_attempt_causal_stage_as_a_stale_prefix(
+    tmp_path: Path,
+) -> None:
+    store, run_manifest, _ = _create_sealed_store(tmp_path / "run.sqlite3")
+    with store:
+        snapshots: list[tuple[str, Checkpoint]] = []
+        failed1 = attempt(run_manifest, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed1)
+        snapshots.append(("attempt-1-pre-halt", build_checkpoint(store)))
+        failure1 = store.record_terminal_failure(
+            event_id=failed1.event_id,
+            reason="halt one",
+            policy_evidence={"policy_id": "halt-1", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T00:00:00+00:00",
+        )
+        snapshots.append(("attempt-1-halted", build_checkpoint(store)))
+        store.authorize_resume(
+            authorization_id="resume-1",
+            event_id=failed1.event_id,
+            previous_terminal_failure_hash=failure1.payload_hash,
+            policy_evidence_id="retry-1",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-18T01:00:00+00:00",
+        )
+        snapshots.append(("attempt-1-authorized", build_checkpoint(store)))
+
+        attempt2 = attempt(run_manifest, index=2, status=EventStatus.FAILED)
+        store.append_attempt(attempt_transition(attempt2, EventStatus.PENDING))
+        retry_pending = build_checkpoint(store)
+        snapshots.append(("attempt-2-pending", retry_pending))
+        store.append_attempt(attempt_transition(attempt2, EventStatus.IN_PROGRESS))
+        snapshots.append(("attempt-2-in-progress", build_checkpoint(store)))
+        store.append_attempt(attempt2)
+        snapshots.append(("attempt-2-pre-halt", build_checkpoint(store)))
+        failure2 = store.record_terminal_failure(
+            event_id=attempt2.event_id,
+            reason="halt two",
+            policy_evidence={"policy_id": "halt-2", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T02:00:00+00:00",
+        )
+        snapshots.append(("attempt-2-halted", build_checkpoint(store)))
+        store.authorize_resume(
+            authorization_id="resume-2",
+            event_id=attempt2.event_id,
+            previous_terminal_failure_hash=failure2.payload_hash,
+            policy_evidence_id="retry-2",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-18T03:00:00+00:00",
+        )
+        snapshots.append(("attempt-2-authorized", build_checkpoint(store)))
+
+        succeeded3 = attempt(run_manifest, index=3, status=EventStatus.SUCCEEDED)
+        append_terminal_attempt(store, succeeded3)
+        snapshots.append(("attempt-3-succeeded-uncommitted", build_checkpoint(store)))
+        previous_state = store.private_state("agent-0")
+        previous_cursor = store.feed_cursor("agent-0")
+        assert previous_state is not None and previous_cursor is not None
+        update, state, cursor, post, pointer = successful_state_records(
+            run_manifest,
+            ordinal=0,
+            previous_state=previous_state,
+            previous_cursor=previous_cursor,
+            previous_pointer=store.latest_public_pointer("agent-0"),
+            attempt_index=3,
+        )
+        store.commit_success(
+            successful_event(run_manifest, ordinal=0, attempt_count=3),
+            final_attempt=succeeded3,
+            private_update=update,
+            private_state=state,
+            feed_cursor=cursor,
+            public_post=post,
+            latest_public_pointer=pointer,
+        )
+
+        for label, checkpoint in snapshots:
+            assert validate_checkpoint(checkpoint, store) == "stale", label
+
+        forged = replace(
+            retry_pending,
+            terminal_failure=None,
+            terminal_failure_hash=None,
+            resume_authorization=None,
+            resume_authorization_hash=None,
+            terminal_failure_prefix=(),
+            terminal_failure_prefix_hash=canonical_payload_hash([]),
+            resume_authorization_prefix=(),
+            resume_authorization_prefix_hash=canonical_payload_hash([]),
+            causal_evidence_prefix=(),
+            causal_evidence_root=canonical_payload_hash([]),
+        )
+        with pytest.raises(ValueError, match="causal|failed|conflict"):
+            validate_checkpoint(forged, store)
+
+
+@pytest.mark.parametrize("tamper", ["drop_failed_attempt", "drop_causal_pair"])
+def test_checkpoint_from_payload_exact_covers_retry_attempts_and_causal_pairs(
+    tmp_path: Path, tamper: str
+) -> None:
+    store, run_manifest, _ = _create_sealed_store(tmp_path / f"{tamper}.sqlite3")
+    with store:
+        failed = attempt(run_manifest, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="exact-cover gate",
+            policy_evidence={"policy_id": "halt", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T00:00:00+00:00",
+        )
+        store.authorize_resume(
+            authorization_id="resume-exact-cover",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-18T01:00:00+00:00",
+        )
+        retry = attempt(run_manifest, index=2, status=EventStatus.FAILED)
+        store.append_attempt(attempt_transition(retry, EventStatus.PENDING))
+        payload = build_checkpoint(store).to_payload()
+
+    body = payload["checkpoint"]
+    assert isinstance(body, dict)
+    if tamper == "drop_failed_attempt":
+        body["current_attempt_prefix"] = body["current_attempt_prefix"][1:]
+    else:
+        body["terminal_failure_prefix"] = []
+        body["terminal_failure_prefix_hash"] = canonical_payload_hash([])
+        body["resume_authorization_prefix"] = []
+        body["resume_authorization_prefix_hash"] = canonical_payload_hash([])
+        body["causal_evidence_prefix"] = []
+        body["causal_evidence_root"] = canonical_payload_hash([])
+        body["resume_authorization"] = None
+        body["resume_authorization_hash"] = None
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    with pytest.raises(ValueError, match="attempt|causal|failure|authorization|continuous"):
+        Checkpoint.from_payload(payload)
+
+
+def test_committed_checkpoint_cannot_delete_preexisting_causal_history(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest(schedule(publish_flags=(False,)))
+    store = RunStorage.create(
+        tmp_path / "committed-causal.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": "b" * 64},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    with store:
+        seal_expected_initial_state(store, run_manifest)
+        failed = attempt(run_manifest, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="committed causal gate",
+            policy_evidence={"policy_id": "halt", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T00:00:00+00:00",
+        )
+        store.authorize_resume(
+            authorization_id="resume-committed-causal",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-18T01:00:00+00:00",
+        )
+        succeeded = attempt(run_manifest, index=2, status=EventStatus.SUCCEEDED)
+        append_terminal_attempt(store, succeeded)
+        previous_state = store.private_state("agent-0")
+        previous_cursor = store.feed_cursor("agent-0")
+        assert previous_state is not None and previous_cursor is not None
+        update, state, cursor, post, pointer = successful_state_records(
+            run_manifest,
+            ordinal=0,
+            previous_state=previous_state,
+            previous_cursor=previous_cursor,
+            previous_pointer=store.latest_public_pointer("agent-0"),
+            attempt_index=2,
+        )
+        store.commit_success(
+            successful_event(run_manifest, ordinal=0, attempt_count=2),
+            final_attempt=succeeded,
+            private_update=update,
+            private_state=state,
+            feed_cursor=cursor,
+            public_post=post,
+            latest_public_pointer=pointer,
+        )
+        payload = build_checkpoint(store).to_payload()
+        body = payload["checkpoint"]
+        assert isinstance(body, dict)
+        body["terminal_failure_prefix"] = []
+        body["terminal_failure_prefix_hash"] = canonical_payload_hash([])
+        body["resume_authorization_prefix"] = []
+        body["resume_authorization_prefix_hash"] = canonical_payload_hash([])
+        body["causal_evidence_prefix"] = []
+        body["causal_evidence_root"] = canonical_payload_hash([])
+        payload["checkpoint_hash"] = canonical_payload_hash(body)
+        forged = Checkpoint.from_payload(payload)
+        with pytest.raises(ValueError, match="causal|authorization|conflict|failure"):
+            validate_checkpoint(forged, store)
+
+
+def test_cross_ordinal_pre_halt_checkpoint_does_not_reuse_prior_event_evidence(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest(schedule(publish_flags=(False, False)))
+    store = RunStorage.create(
+        tmp_path / "run.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": "b" * 64},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    with store:
+        seal_expected_initial_state(store, run_manifest)
+        failed0 = attempt(run_manifest, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed0)
+        failure0 = store.record_terminal_failure(
+            event_id=failed0.event_id,
+            reason="halt zero",
+            policy_evidence={"policy_id": "halt-0", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T00:00:00+00:00",
+        )
+        store.authorize_resume(
+            authorization_id="resume-0",
+            event_id=failed0.event_id,
+            previous_terminal_failure_hash=failure0.payload_hash,
+            policy_evidence_id="retry-0",
+            policy_evidence_hash="b" * 64,
+            authorized_at="2026-08-18T01:00:00+00:00",
+        )
+        succeeded0 = attempt(run_manifest, index=2, status=EventStatus.SUCCEEDED)
+        append_terminal_attempt(store, succeeded0)
+        state0 = store.private_state("agent-0")
+        cursor0 = store.feed_cursor("agent-0")
+        assert state0 is not None and cursor0 is not None
+        update, state, cursor, post, pointer = successful_state_records(
+            run_manifest,
+            ordinal=0,
+            previous_state=state0,
+            previous_cursor=cursor0,
+            previous_pointer=store.latest_public_pointer("agent-0"),
+            attempt_index=2,
+        )
+        store.commit_success(
+            successful_event(run_manifest, ordinal=0, attempt_count=2),
+            final_attempt=succeeded0,
+            private_update=update,
+            private_state=state,
+            feed_cursor=cursor,
+            public_post=post,
+            latest_public_pointer=pointer,
+        )
+        failed1 = attempt(run_manifest, ordinal=1, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed1)
+        pre_halt1 = build_checkpoint(store)
+        assert pre_halt1.execution_state["status"] == "running"
+        assert pre_halt1.terminal_failure is None
+        store.record_terminal_failure(
+            event_id=failed1.event_id,
+            reason="halt one",
+            policy_evidence={"policy_id": "halt-1", "policy_hash": "a" * 64},
+            recorded_at="2026-08-18T02:00:00+00:00",
+        )
+        assert validate_checkpoint(pre_halt1, store) == "stale"
 
 
 def test_build_runs_exactly_one_full_storage_verification(
@@ -1008,7 +1628,7 @@ def test_validate_stale_checkpoint_replays_untrusted_dataclass_structure(
             validate_checkpoint(forged, store)
 
 
-def test_n50000_schedule_checkpoint_boundary_is_linear_once_not_per_event(
+def test_n50000_schedule_empty_state_checkpoint_boundary_is_linear_once(
     tmp_path: Path,
 ) -> None:
     frozen_schedule = FrozenSchedule(
@@ -1044,6 +1664,8 @@ def test_n50000_schedule_checkpoint_boundary_is_linear_once_not_per_event(
 
     assert checkpoint.schedule_count == 50_000
     assert checkpoint.next_event_ordinal == 0
+    assert checkpoint.current_attempt_prefix == ()
+    assert checkpoint.causal_evidence_prefix == ()
     assert elapsed < 8.0
 
 

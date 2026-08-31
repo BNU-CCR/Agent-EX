@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import sqlite3
+import subprocess
+import sys
 from contextlib import closing
 from functools import lru_cache
 from pathlib import Path
@@ -25,13 +29,55 @@ from agent_ex.domain import (
 from agent_ex.feed import FeedCursor
 from agent_ex.network import build_shadow_artifact, build_ws_artifact
 from agent_ex.state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
-from agent_ex.storage import ExternalResponseReference, RunStorage, StorageBinding
+from agent_ex.storage import (
+    EventJournalState,
+    ExecutionState,
+    ExecutionStatus,
+    ExternalResponseReference,
+    ResumeAuthorizationEvidence,
+    RunStorage,
+    StorageBinding,
+)
 from agent_ex.topic import TopicPackage
 
 
 SHA_A = "a" * 64
 SHA_B = "b" * 64
 NOW = "2026-08-18T00:00:00+00:00"
+
+
+@pytest.fixture(autouse=True)
+def explicitly_lease_created_test_stores(
+    monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
+):
+    """Most storage tests explicitly hold a lease for each created writer."""
+
+    unleased_tests = {
+        "test_halted_run_requires_canonical_append_only_resume_authorization",
+        "test_reopen_fails_closed_on_resume_authorization_tamper",
+        "test_every_mutator_requires_this_storage_instance_to_hold_run_lease",
+        "test_run_lease_rejects_second_owner_and_releases_on_context_exit",
+        "test_run_lease_is_exclusive_across_processes",
+        "test_second_process_direct_mutator_is_rejected_and_crash_releases_lease",
+        "test_hardlink_alias_blocks_every_preopened_writer_and_cross_process_owner",
+        "test_hardlink_created_after_lease_blocks_mutation_until_alias_is_removed",
+        "test_windows_lease_handle_prevents_sidecar_replacement_while_owned",
+    }
+    if any(
+        request.node.name == name or request.node.name.startswith(name + "[")
+        for name in unleased_tests
+    ):
+        yield
+        return
+    original = RunStorage.create.__func__
+
+    def create_with_explicit_lease(cls, *args: object, **kwargs: object) -> RunStorage:
+        store = original(cls, *args, **kwargs)
+        store.acquire_run_lease().acquire()
+        return store
+
+    monkeypatch.setattr(RunStorage, "create", classmethod(create_with_explicit_lease))
+    yield
 
 
 @lru_cache(maxsize=2)
@@ -50,7 +96,7 @@ def real_network_artifacts(matched_seed: int = 17) -> tuple[ArtifactEnvelope, Ar
 def storage_genesis(binding: StorageBinding) -> str:
     return canonical_payload_hash(
         {
-            "schema_version": "paper1.run-storage.v2",
+            "schema_version": "paper1.run-storage.v5",
             "run_id": binding.run_id,
             "run_spec_hash": binding.run_spec_hash,
             "protocol_hash": binding.protocol_hash,
@@ -279,6 +325,79 @@ def append_terminal_attempt(
     store.append_attempt(terminal, external_response=external_response)
 
 
+def authorize_retry(store: RunStorage, failed: GenerationAttempt, suffix: str) -> None:
+    failure = store.record_terminal_failure(
+        event_id=failed.event_id,
+        reason=f"test retry {suffix}",
+        policy_evidence={"policy_id": f"halt-{suffix}", "policy_hash": SHA_A},
+        recorded_at=NOW,
+    )
+    store.authorize_resume(
+        authorization_id=f"resume-{suffix}",
+        event_id=failed.event_id,
+        previous_terminal_failure_hash=failure.payload_hash,
+        policy_evidence_id=f"retry-{suffix}",
+        policy_evidence_hash=SHA_B,
+        authorized_at=NOW,
+    )
+
+
+def rewrite_causal_identity(
+    store: RunStorage,
+    *,
+    failure_run_id: str | None = None,
+    authorization_run_id: str | None = None,
+    event_ordinal: int | None = None,
+) -> None:
+    """Rewrite a causal pair self-consistently to exercise typed identity replay."""
+
+    failure_row = store._connection.execute(
+        "SELECT evidence_id, payload_json FROM terminal_failures"
+    ).fetchone()
+    authorization_row = store._connection.execute(
+        "SELECT authorization_id, payload_json FROM resume_authorizations"
+    ).fetchone()
+    assert failure_row is not None and authorization_row is not None
+    failure = json.loads(failure_row[1])
+    authorization = json.loads(authorization_row[1])
+    if failure_run_id is not None:
+        failure["run_id"] = failure_run_id
+    if authorization_run_id is not None:
+        authorization["run_id"] = authorization_run_id
+    if event_ordinal is not None:
+        failure["event_ordinal"] = event_ordinal
+        authorization["event_ordinal"] = event_ordinal
+    failure_hash = canonical_payload_hash(failure)
+    authorization["previous_evidence_hash"] = failure_hash
+    authorization["previous_terminal_failure_hash"] = failure_hash
+    authorization_hash = canonical_payload_hash(authorization)
+    store._connection.execute(
+        """UPDATE terminal_failures
+           SET event_ordinal = ?, payload_json = ?, payload_hash = ?
+           WHERE evidence_id = ?""",
+        (
+            failure["event_ordinal"],
+            json.dumps(failure, ensure_ascii=False, sort_keys=True, separators=(",", ":")),
+            failure_hash,
+            failure_row[0],
+        ),
+    )
+    store._connection.execute(
+        """UPDATE resume_authorizations
+           SET event_ordinal = ?, previous_evidence_hash = ?,
+               previous_terminal_failure_hash = ?, payload_json = ?, payload_hash = ?
+           WHERE authorization_id = ?""",
+        (
+            authorization["event_ordinal"],
+            failure_hash,
+            failure_hash,
+            json.dumps(authorization, ensure_ascii=False, sort_keys=True, separators=(",", ":")),
+            authorization_hash,
+            authorization_row[0],
+        ),
+    )
+
+
 def seal_expected_initial_state(store: RunStorage, run_manifest: RunManifest) -> None:
     if store.binding.round0_root is not None:
         return
@@ -407,6 +526,28 @@ def successful_state_records(
     return update, state, cursor, post, pointer
 
 
+def commit_fixture_event(store: RunStorage, run_manifest: RunManifest, ordinal: int) -> None:
+    final_attempt = attempt(run_manifest, ordinal=ordinal, status=EventStatus.SUCCEEDED)
+    append_terminal_attempt(store, final_attempt)
+    agent_id = run_manifest.schedule.slots[ordinal].agent_id
+    update, state, cursor, post, pointer = successful_state_records(
+        run_manifest,
+        ordinal=ordinal,
+        previous_state=store.private_state(agent_id),  # type: ignore[arg-type]
+        previous_cursor=store.feed_cursor(agent_id),  # type: ignore[arg-type]
+        previous_pointer=store.latest_public_pointer(agent_id),
+    )
+    store.commit_success(
+        successful_event(run_manifest, ordinal=ordinal),
+        final_attempt=final_attempt,
+        private_update=update,
+        private_state=state,
+        feed_cursor=cursor,
+        public_post=post,
+        latest_public_pointer=pointer,
+    )
+
+
 def test_create_close_and_reopen_binds_run_protocol_schedule_and_artifacts(
     tmp_path: Path,
 ) -> None:
@@ -423,7 +564,7 @@ def test_create_close_and_reopen_binds_run_protocol_schedule_and_artifacts(
         expected_exposure_graph_hash=None,
     ) as store:
         binding = store.binding
-        assert binding.schema_version == "paper1.run-storage.v2"
+        assert binding.schema_version == "paper1.run-storage.v5"
         assert binding.run_id == run_manifest.run_id
         assert binding.run_spec_hash == run_manifest.run_spec_hash
         assert binding.protocol_hash == run_manifest.protocol_hash
@@ -703,6 +844,853 @@ def test_success_transaction_rolls_back_every_research_state_on_mid_commit_failu
         store.assert_complete()
 
 
+def test_private_updates_for_agent_replays_round0_and_continuous_history(tmp_path: Path) -> None:
+    run_manifest = manifest(schedule(publish_flags=(False, False)))
+    with RunStorage.create(
+        tmp_path / "history.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        commit_fixture_event(store, run_manifest, 0)
+        history = store.private_updates_for_agent("agent-0")
+        assert isinstance(history, tuple)
+        assert tuple(item.sequence_index for item in history) == (0, 1)
+        assert history[-1].record_hash == store.private_state("agent-0").latest_update_hash  # type: ignore[union-attr]
+        store._connection.execute(
+            "UPDATE private_updates SET payload_hash = ? WHERE agent_id = ? AND event_ordinal = ?",
+            (SHA_A, "agent-0", 0),
+        )
+        with pytest.raises(ValueError, match="hash"):
+            store.private_updates_for_agent("agent-0")
+
+
+def test_current_event_journal_is_typed_and_never_chooses_retry_policy(tmp_path: Path) -> None:
+    run_manifest = manifest()
+    with RunStorage.create(
+        tmp_path / "journal.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        initial = store.current_event_journal()
+        assert isinstance(initial, EventJournalState)
+        assert initial.event_id == derive_event_id(run_manifest.run_id, 0)
+        assert initial.next_attempt_index == 1
+        assert initial.latest_transition is None
+        assert initial.resume_state == "new_attempt"
+        failed = attempt(run_manifest)
+        append_terminal_attempt(store, failed)
+        resumed = store.current_event_journal()
+        assert resumed.next_attempt_index == 2
+        assert resumed.latest_transition == failed
+        assert resumed.resume_state == "failed_attempt_requires_external_authorization"
+        assert not hasattr(resumed, "max_attempts")
+        projected = store.execution_state()
+        assert projected.event_ids == (failed.event_id,)
+        assert projected.status_counts[EventStatus.FAILED.value] == 1
+        assert projected.status is ExecutionStatus.RUNNING
+
+
+def test_current_event_journal_never_reuses_prior_event_halt_authorization(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest(schedule(publish_flags=(False, False)))
+    database = tmp_path / "cross-event-journal.sqlite3"
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        failed0 = attempt(run_manifest, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed0)
+        failure0 = store.record_terminal_failure(
+            event_id=failed0.event_id,
+            reason="event zero halt",
+            policy_evidence={"policy_id": "halt-0", "policy_hash": SHA_A},
+            recorded_at=NOW,
+        )
+        store.authorize_resume(
+            authorization_id="resume-event-0",
+            event_id=failed0.event_id,
+            previous_terminal_failure_hash=failure0.payload_hash,
+            policy_evidence_id="retry-0",
+            policy_evidence_hash=SHA_B,
+            authorized_at="2026-08-30T01:00:00+00:00",
+        )
+        succeeded0 = attempt(run_manifest, index=2, status=EventStatus.SUCCEEDED)
+        append_terminal_attempt(store, succeeded0)
+        records0 = successful_state_records(
+            run_manifest,
+            ordinal=0,
+            previous_state=store.private_state("agent-0"),  # type: ignore[arg-type]
+            previous_cursor=store.feed_cursor("agent-0"),  # type: ignore[arg-type]
+            previous_pointer=store.latest_public_pointer("agent-0"),
+            attempt_index=2,
+        )
+        store.commit_success(
+            successful_event(run_manifest, ordinal=0, attempt_count=2),
+            final_attempt=succeeded0,
+            private_update=records0[0],
+            private_state=records0[1],
+            feed_cursor=records0[2],
+            public_post=records0[3],
+            latest_public_pointer=records0[4],
+        )
+        failed1 = attempt(run_manifest, ordinal=1, index=1, status=EventStatus.FAILED)
+        append_terminal_attempt(store, failed1)
+        journal = store.current_event_journal()
+        assert journal.event_id == failed1.event_id
+        assert journal.latest_transition == failed1
+        assert journal.resume_state == "failed_attempt_requires_external_authorization"
+
+    with RunStorage.open(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as reopened:
+        journal = reopened.current_event_journal()
+        assert journal.event_id == derive_event_id(run_manifest.run_id, 1)
+        assert journal.resume_state == "failed_attempt_requires_external_authorization"
+
+
+def test_execution_state_is_separate_hash_bound_projection_and_updates_with_success(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest(schedule(publish_flags=(False,)))
+    with RunStorage.create(
+        tmp_path / "execution.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=("agent-0",),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        baseline_hash = store.binding.manifest_hash
+        seal_expected_initial_state(store, run_manifest)
+        before = store.execution_state()
+        assert before.status is ExecutionStatus.RUNNING
+        assert before.event_ids == ()
+        assert before.payload_hash == canonical_payload_hash(before.to_payload())
+        commit_fixture_event(store, run_manifest, 0)
+        after = store.execution_state()
+        assert after.status is ExecutionStatus.COMPLETE
+        assert after.event_ids == (derive_event_id(run_manifest.run_id, 0),)
+        assert after.status_counts[EventStatus.SUCCEEDED.value] == 1
+        assert store.binding.manifest_hash == baseline_hash
+
+
+def test_terminal_halt_is_append_only_explicit_and_never_advances_research_state(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest()
+    with RunStorage.create(
+        tmp_path / "halt.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        failed = attempt(run_manifest)
+        append_terminal_attempt(store, failed)
+        before = store.progress
+        evidence = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="caller-authorized terminal stop",
+            policy_evidence={"policy_id": "frozen-policy", "policy_hash": SHA_A},
+            recorded_at=NOW,
+        )
+        assert evidence.event_id == failed.event_id
+        assert store.terminal_failure_evidence() == evidence
+        assert store.execution_state().status is ExecutionStatus.FAILED
+        assert store.progress == before
+        assert store.event_at(0) is None
+        with pytest.raises(ValueError, match="already halted|append-only"):
+            store.record_terminal_failure(
+                event_id=failed.event_id,
+                reason="second decision",
+                policy_evidence={"policy_id": "other", "policy_hash": SHA_B},
+                recorded_at=NOW,
+            )
+        with pytest.raises(ValueError, match="halted"):
+            store.append_attempt(
+                attempt_transition(attempt(run_manifest, index=2), EventStatus.PENDING)
+            )
+
+
+def test_execution_state_constructor_deeply_normalizes_mutable_inputs() -> None:
+    event_ids = ["event-0"]
+    failed_ids = ["event-0"]
+    counts = {status.value: 0 for status in EventStatus}
+    counts[EventStatus.FAILED.value] = 1
+    value = ExecutionState(
+        schema_version="paper1.execution-state.v1",
+        run_id="run-immutable",
+        baseline_manifest_hash=SHA_A,
+        status=ExecutionStatus.FAILED,
+        next_event_ordinal=0,
+        expected_event_count=1,
+        current_event_id="event-0",
+        event_ids=event_ids,  # type: ignore[arg-type]
+        status_counts=counts,
+        failed_event_ids=failed_ids,  # type: ignore[arg-type]
+    )
+    event_ids.append("event-forged")
+    failed_ids.clear()
+    counts[EventStatus.FAILED.value] = 0
+    assert value.event_ids == ("event-0",)
+    assert value.failed_event_ids == ("event-0",)
+    assert value.status_counts[EventStatus.FAILED.value] == 1
+    with pytest.raises(TypeError):
+        value.status_counts[EventStatus.FAILED.value] = 0  # type: ignore[index]
+
+
+def test_halted_run_requires_canonical_append_only_resume_authorization(tmp_path: Path) -> None:
+    run_manifest = manifest()
+    database = tmp_path / "authorized-resume.sqlite3"
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        with store.acquire_run_lease():
+            seal_expected_initial_state(store, run_manifest)
+            failed = attempt(run_manifest)
+            append_terminal_attempt(store, failed)
+            failure = store.record_terminal_failure(
+                event_id=failed.event_id,
+                reason="caller-authorized terminal stop",
+                policy_evidence={"policy_id": "frozen-policy", "policy_hash": SHA_A},
+                recorded_at=NOW,
+            )
+            before = store.recovery_evidence()
+            with pytest.raises(ValueError, match="halted|authorization"):
+                store.append_attempt(
+                    attempt_transition(attempt(run_manifest, index=2), EventStatus.PENDING)
+                )
+            with pytest.raises(ValueError, match="bind"):
+                store.authorize_resume(
+                    authorization_id="wrong-event-authorization",
+                    event_id="event-forged",
+                    previous_terminal_failure_hash=failure.payload_hash,
+                    policy_evidence_id="external-retry-policy",
+                    policy_evidence_hash=SHA_B,
+                    authorized_at="2026-08-30T01:00:00+00:00",
+                )
+            authorization = store.authorize_resume(
+                authorization_id="resume-authorization-1",
+                event_id=failed.event_id,
+                previous_terminal_failure_hash=failure.payload_hash,
+                policy_evidence_id="external-retry-policy",
+                policy_evidence_hash=SHA_B,
+                authorized_at="2026-08-30T01:00:00+00:00",
+            )
+            assert isinstance(authorization, ResumeAuthorizationEvidence)
+            assert store.execution_state().status is ExecutionStatus.RUNNING
+            assert store.current_event_journal().resume_state == "retry_same_event"
+            retry_pending = attempt_transition(attempt(run_manifest, index=2), EventStatus.PENDING)
+            store.append_attempt(retry_pending)
+            assert store.current_event_journal().latest_transition == retry_pending
+            assert store.recovery_evidence()["next_event_ordinal"] == before["next_event_ordinal"]
+            after = store.recovery_evidence()
+            for name in (
+                "next_event_ordinal",
+                "private_states",
+                "public_stock",
+                "latest_public_pointers",
+                "feed_cursors",
+                "event_chain_head",
+            ):
+                assert after[name] == before[name]
+            with pytest.raises(ValueError, match="duplicate|append-only|already"):
+                store.authorize_resume(
+                    authorization_id="resume-authorization-1",
+                    event_id=failed.event_id,
+                    previous_terminal_failure_hash=failure.payload_hash,
+                    policy_evidence_id="external-retry-policy",
+                    policy_evidence_hash=SHA_B,
+                    authorized_at="2026-08-30T01:00:00+00:00",
+                )
+            with pytest.raises(ValueError, match="append-only|already"):
+                store.authorize_resume(
+                    authorization_id="forked-authorization",
+                    event_id=failed.event_id,
+                    previous_terminal_failure_hash=failure.payload_hash,
+                    policy_evidence_id="different-policy",
+                    policy_evidence_hash=SHA_A,
+                    authorized_at="2026-08-30T02:00:00+00:00",
+                )
+
+    with RunStorage.open(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as reopened:
+        assert reopened.execution_state().status is ExecutionStatus.RUNNING
+        assert reopened.current_event_journal().resume_state == (
+            "pending_attempt_requires_same_request"
+        )
+        assert reopened.resume_authorization_evidence().authorization_id == (
+            "resume-authorization-1"
+        )
+
+
+@pytest.mark.parametrize("tamper", ["delete", "row-event", "payload"])
+def test_reopen_fails_closed_on_resume_authorization_tamper(tmp_path: Path, tamper: str) -> None:
+    run_manifest = manifest()
+    database = tmp_path / f"authorization-{tamper}.sqlite3"
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        with store.acquire_run_lease():
+            seal_expected_initial_state(store, run_manifest)
+            failed = attempt(run_manifest)
+            append_terminal_attempt(store, failed)
+            failure = store.record_terminal_failure(
+                event_id=failed.event_id,
+                reason="halt",
+                policy_evidence={"policy_id": "halt-policy", "policy_hash": SHA_A},
+                recorded_at=NOW,
+            )
+            store.authorize_resume(
+                authorization_id="resume-tamper-test",
+                event_id=failed.event_id,
+                previous_terminal_failure_hash=failure.payload_hash,
+                policy_evidence_id="retry-policy",
+                policy_evidence_hash=SHA_B,
+                authorized_at="2026-08-30T01:00:00+00:00",
+            )
+    with sqlite3.connect(database) as connection:
+        if tamper == "delete":
+            connection.execute("DELETE FROM resume_authorizations")
+        elif tamper == "row-event":
+            connection.execute("UPDATE resume_authorizations SET event_id = ?", ("event-forged",))
+        else:
+            connection.execute("UPDATE resume_authorizations SET payload_json = '{}' ")
+    with pytest.raises(ValueError, match="authorization|execution state"):
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+
+def test_same_event_supports_multiple_append_only_halt_authorization_cycles(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest()
+    with RunStorage.create(
+        tmp_path / "multiple-halts.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        for index in (1, 2):
+            failed = attempt(run_manifest, index=index)
+            append_terminal_attempt(store, failed)
+            failure = store.record_terminal_failure(
+                event_id=failed.event_id,
+                reason=f"external halt {index}",
+                policy_evidence={"policy_id": f"halt-policy-{index}", "policy_hash": SHA_A},
+                recorded_at=f"2026-08-30T0{index}:00:00+00:00",
+            )
+            store.authorize_resume(
+                authorization_id=f"resume-{index}",
+                event_id=failed.event_id,
+                previous_terminal_failure_hash=failure.payload_hash,
+                policy_evidence_id=f"retry-policy-{index}",
+                policy_evidence_hash=SHA_B,
+                authorized_at=f"2026-08-30T1{index}:00:00+00:00",
+            )
+        assert len(store.terminal_failure_evidence_prefix()) == 2
+        assert len(store.resume_authorization_evidence_prefix()) == 2
+        assert store.execution_state().status is ExecutionStatus.RUNNING
+        store.verify_integrity()
+
+
+def test_halt_authorization_cycles_form_one_explicit_canonical_causal_chain(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest()
+    with RunStorage.create(
+        tmp_path / "causal-chain.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        previous_hash = None
+        for cycle, attempt_index in enumerate((1, 2), start=1):
+            failed = attempt(run_manifest, index=attempt_index)
+            append_terminal_attempt(store, failed)
+            failure = store.record_terminal_failure(
+                event_id=failed.event_id,
+                reason=f"halt {cycle}",
+                policy_evidence={"policy_id": f"halt-{cycle}", "policy_hash": SHA_A},
+                recorded_at=f"2026-08-30T0{cycle}:00:00+00:00",
+            )
+            assert failure.evidence_sequence == cycle * 2 - 1
+            assert failure.previous_evidence_hash == previous_hash
+            assert failure.evidence_kind == "failure"
+            assert failure.attempt_id == failed.attempt_id
+            assert failure.attempt_index == attempt_index
+            assert failure.terminal_transition_hash == canonical_payload_hash(failed.to_payload())
+            authorization = store.authorize_resume(
+                authorization_id=f"resume-causal-{cycle}",
+                event_id=failed.event_id,
+                previous_terminal_failure_hash=failure.payload_hash,
+                policy_evidence_id=f"retry-{cycle}",
+                policy_evidence_hash=SHA_B,
+                authorized_at=f"2026-08-30T1{cycle}:00:00+00:00",
+            )
+            assert authorization.evidence_sequence == cycle * 2
+            assert authorization.previous_evidence_hash == failure.payload_hash
+            assert authorization.evidence_kind == "authorization"
+            assert store.execution_state().failed_event_ids == ()
+            if cycle == 1:
+                with pytest.raises(ValueError, match="already bound|attempt"):
+                    store.record_terminal_failure(
+                        event_id=failed.event_id,
+                        reason="illegal second halt for same attempt",
+                        policy_evidence={"policy_id": "halt-again", "policy_hash": SHA_A},
+                        recorded_at="2026-08-30T11:30:00+00:00",
+                    )
+            previous_hash = authorization.payload_hash
+
+        assert tuple(item.payload_hash for item in store.causal_evidence_prefix()) == tuple(
+            item.payload_hash
+            for pair in zip(
+                store.terminal_failure_evidence_prefix(),
+                store.resume_authorization_evidence_prefix(),
+            )
+            for item in pair
+        )
+
+
+@pytest.mark.parametrize(
+    ("failure_run_id", "authorization_run_id", "foreign_ordinal"),
+    [
+        ("run-foreign", None, None),
+        (None, "run-foreign", None),
+        ("run-foreign", "run-foreign", None),
+        (None, None, 1),
+    ],
+    ids=(
+        "failure-foreign-run",
+        "authorization-foreign-run",
+        "pair-foreign-run-rehashed",
+        "pair-foreign-ordinal-rehashed",
+    ),
+)
+def test_foreign_causal_identity_never_authorizes_current_retry(
+    tmp_path: Path,
+    failure_run_id: str | None,
+    authorization_run_id: str | None,
+    foreign_ordinal: int | None,
+) -> None:
+    run_manifest = manifest()
+    with RunStorage.create(
+        tmp_path / "foreign-causal-identity.sqlite3",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        failed = attempt(run_manifest)
+        append_terminal_attempt(store, failed)
+        authorize_retry(store, failed, "foreign-causal-identity")
+        rewrite_causal_identity(
+            store,
+            failure_run_id=failure_run_id,
+            authorization_run_id=authorization_run_id,
+            event_ordinal=foreign_ordinal,
+        )
+
+        journal = store.current_event_journal()
+        assert journal.resume_state != "retry_same_event"
+        pending_retry = attempt_transition(attempt(run_manifest, index=2), EventStatus.PENDING)
+        with pytest.raises(ValueError, match="identity|run|ordinal|failure|authorization|causal"):
+            store.append_attempt(pending_retry)
+        assert (
+            store._connection.execute(
+                "SELECT COUNT(*) FROM attempt_transitions WHERE attempt_index = 2"
+            ).fetchone()[0]
+            == 0
+        )
+        with pytest.raises(ValueError, match="identity|run|event|failure|authorization|causal"):
+            store.verify_integrity()
+
+
+@pytest.mark.parametrize(
+    "tamper",
+    [
+        "delete-failure",
+        "delete-authorization",
+        "skip-sequence",
+        "wrong-event",
+        "fork-chain",
+        "wrong-attempt",
+        "reinsert-with-wrong-sequence",
+    ],
+)
+def test_reopen_fails_closed_on_causal_chain_tamper(tmp_path: Path, tamper: str) -> None:
+    run_manifest = manifest()
+    database = tmp_path / f"causal-tamper-{tamper}.sqlite3"
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        failed = attempt(run_manifest)
+        append_terminal_attempt(store, failed)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="halt",
+            policy_evidence={"policy_id": "halt-policy", "policy_hash": SHA_A},
+            recorded_at=NOW,
+        )
+        store.authorize_resume(
+            authorization_id="resume-tamper-chain",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash=SHA_B,
+            authorized_at="2026-08-30T01:00:00+00:00",
+        )
+
+    with sqlite3.connect(database) as connection:
+        if tamper == "delete-failure":
+            connection.execute("DELETE FROM terminal_failures")
+        elif tamper == "delete-authorization":
+            connection.execute("DELETE FROM resume_authorizations")
+        elif tamper == "skip-sequence":
+            connection.execute("UPDATE resume_authorizations SET evidence_sequence = 9")
+        elif tamper == "wrong-event":
+            connection.execute("UPDATE terminal_failures SET event_id = 'event-forged'")
+        elif tamper == "fork-chain":
+            connection.execute(
+                "UPDATE resume_authorizations SET previous_evidence_hash = ?", (SHA_B,)
+            )
+        elif tamper == "wrong-attempt":
+            connection.execute("UPDATE terminal_failures SET attempt_index = 99")
+        else:
+            row = connection.execute("SELECT * FROM resume_authorizations").fetchone()
+            assert row is not None
+            connection.execute("DELETE FROM resume_authorizations")
+            values = list(row)
+            values[1] = 7
+            connection.execute(
+                "INSERT INTO resume_authorizations VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                values,
+            )
+
+    with pytest.raises(ValueError, match="causal|evidence|execution|failure|authorization"):
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+
+def test_every_mutator_requires_this_storage_instance_to_hold_run_lease(tmp_path: Path) -> None:
+    run_manifest = manifest()
+    database = tmp_path / "mutator-lease.sqlite3"
+    with (
+        RunStorage.create(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        ) as owner,
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        ) as intruder,
+    ):
+        with pytest.raises(RuntimeError, match="lease"):
+            intruder.initialize_agent(*initial_records("agent-0"))
+        with owner.acquire_run_lease():
+            owner.initialize_agent(*initial_records("agent-0"))
+            with pytest.raises(RuntimeError, match="lease"):
+                intruder.initialize_agent(*initial_records("agent-1"))
+
+
+def test_run_lease_rejects_second_owner_and_releases_on_context_exit(tmp_path: Path) -> None:
+    run_manifest = manifest()
+    database = tmp_path / "leased.sqlite3"
+    with (
+        RunStorage.create(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        ) as first,
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        ) as second,
+    ):
+        with first.acquire_run_lease():
+            first.assert_run_lease_owned()
+            with pytest.raises(RuntimeError, match="lease"):
+                with second.acquire_run_lease():
+                    pass
+        with second.acquire_run_lease():
+            second.assert_run_lease_owned()
+
+
+def test_posix_lease_branch_opens_and_keys_the_real_database_inode(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Portable structural probe only; Windows CI does not claim a real fcntl run."""
+
+    database = tmp_path / "posix-branch.sqlite3"
+    run_manifest = manifest()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        with monkeypatch.context() as patcher:
+            patcher.setattr(storage_module.os, "name", "posix")
+            lease = store.acquire_run_lease()
+            handle, key = lease._open_stable_handle()
+            try:
+                value = os.fstat(handle.fileno())
+                assert lease._path == database.resolve()
+                assert key == ("db-inode", value.st_dev, value.st_ino)
+                assert (value.st_dev, value.st_ino) == store._database_identity
+                assert value.st_nlink == 1
+            finally:
+                handle.close()
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows handle deletion semantics")
+def test_windows_lease_handle_prevents_sidecar_replacement_while_owned(tmp_path: Path) -> None:
+    database = tmp_path / "windows-stable-lease.sqlite3"
+    run_manifest = manifest()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        lease = store.acquire_run_lease()
+        with lease:
+            with pytest.raises(PermissionError):
+                lease._path.unlink()
+            assert lease._path.exists()
+
+
+def test_run_lease_is_exclusive_across_processes(tmp_path: Path) -> None:
+    run_manifest = manifest()
+    database = tmp_path / "cross-process.sqlite3"
+    script = (
+        "import os,sys\n"
+        "p=sys.argv[1]\n"
+        "f=open(p,'r+b')\n"
+        "try:\n"
+        "  if os.name=='nt':\n"
+        "    import msvcrt; msvcrt.locking(f.fileno(),msvcrt.LK_NBLCK,1)\n"
+        "  else:\n"
+        "    import fcntl; fcntl.flock(f.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)\n"
+        "except (OSError,BlockingIOError): sys.exit(73)\n"
+        "sys.exit(0)\n"
+    )
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        lease_path = (
+            database.with_suffix(database.suffix + ".lease") if os.name == "nt" else database
+        )
+        with store.acquire_run_lease():
+            blocked = subprocess.run([sys.executable, "-c", script, str(lease_path)], check=False)
+            assert blocked.returncode == 73
+        released = subprocess.run([sys.executable, "-c", script, str(lease_path)], check=False)
+        assert released.returncode == 0
+
+
+def test_second_process_direct_mutator_is_rejected_and_crash_releases_lease(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest()
+    database = tmp_path / "process-mutator.sqlite3"
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        tests_path = str(Path(__file__).resolve().parent)
+        direct_mutator = (
+            "import sys\n"
+            f"sys.path.insert(0, {tests_path!r})\n"
+            "from test_storage import manifest,expected_agent_ids,initial_records,SHA_B\n"
+            "from agent_ex.storage import RunStorage\n"
+            "m=manifest(); s=RunStorage.open(sys.argv[1],manifest=m,artifact_hashes={'population':SHA_B},expected_agent_ids=expected_agent_ids(m),expected_exposure_mode='self_history_only',expected_exposure_graph_hash=None)\n"
+            "try: s.initialize_agent(*initial_records('agent-0'))\n"
+            "except RuntimeError: sys.exit(73)\n"
+            "sys.exit(0)\n"
+        )
+        blocked = subprocess.run([sys.executable, "-c", direct_mutator, str(database)], check=False)
+        assert blocked.returncode == 73
+
+        crash_owner = (
+            "import os,sys\n"
+            f"sys.path.insert(0, {tests_path!r})\n"
+            "from test_storage import manifest,expected_agent_ids,SHA_B\n"
+            "from agent_ex.storage import RunStorage\n"
+            "m=manifest(); s=RunStorage.open(sys.argv[1],manifest=m,artifact_hashes={'population':SHA_B},expected_agent_ids=expected_agent_ids(m),expected_exposure_mode='self_history_only',expected_exposure_graph_hash=None)\n"
+            "s.acquire_run_lease().acquire(); os._exit(91)\n"
+        )
+        crashed = subprocess.run([sys.executable, "-c", crash_owner, str(database)], check=False)
+        assert crashed.returncode == 91
+        with store.acquire_run_lease():
+            store.initialize_agent(*initial_records("agent-0"))
+
+
+def test_hardlink_alias_blocks_every_preopened_writer_and_cross_process_owner(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest()
+    database = tmp_path / "original" / "run.sqlite3"
+    database.parent.mkdir()
+    alias = tmp_path / "alias" / "same-run.sqlite3"
+    alias.parent.mkdir()
+    first = RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    second = RunStorage.open(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    try:
+        os.link(database, alias)
+        for store in (first, second):
+            with pytest.raises(RuntimeError, match="hard.?link|link count"):
+                store.acquire_run_lease().acquire()
+
+        tests_path = str(Path(__file__).resolve().parent)
+        script = (
+            "import sys\n"
+            f"sys.path.insert(0, {tests_path!r})\n"
+            "from test_storage import manifest,expected_agent_ids,SHA_B\n"
+            "from agent_ex.storage import RunStorage\n"
+            "m=manifest()\n"
+            "try:\n"
+            " s=RunStorage.open(sys.argv[1],manifest=m,artifact_hashes={'population':SHA_B},expected_agent_ids=expected_agent_ids(m),expected_exposure_mode='self_history_only',expected_exposure_graph_hash=None)\n"
+            " s.acquire_run_lease().acquire()\n"
+            "except RuntimeError: sys.exit(73)\n"
+            "sys.exit(0)\n"
+        )
+        blocked = subprocess.run([sys.executable, "-c", script, str(alias)], check=False)
+        assert blocked.returncode == 73
+    finally:
+        second.close()
+        first.close()
+
+
+def test_hardlink_created_after_lease_blocks_mutation_until_alias_is_removed(
+    tmp_path: Path,
+) -> None:
+    run_manifest = manifest()
+    database = tmp_path / "run.sqlite3"
+    alias = tmp_path / "other" / "run-alias.sqlite3"
+    alias.parent.mkdir()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        with store.acquire_run_lease():
+            os.link(database, alias)
+            with pytest.raises(RuntimeError, match="hard.?link|link count"):
+                store.initialize_agent(*initial_records("agent-0"))
+            assert store.private_state("agent-0") is None
+            alias.unlink()
+            store.initialize_agent(*initial_records("agent-0"))
+            assert store.private_state("agent-0") is not None
+
+
 def test_reopen_fails_closed_on_tampered_event_payload(tmp_path: Path) -> None:
     database = tmp_path / "run.sqlite3"
     run_manifest = manifest(schedule(publish_flags=(False,)))
@@ -803,6 +1791,7 @@ def test_failed_then_success_attempt_chain_requires_matching_final_evidence(
         succeeded = attempt(run_manifest, index=2, status=EventStatus.SUCCEEDED)
         seal_expected_initial_state(store, run_manifest)
         append_terminal_attempt(store, failed)
+        authorize_retry(store, failed, "matching-final-evidence")
         seal_expected_initial_state(store, run_manifest)
         append_terminal_attempt(store, succeeded)
         records = successful_state_records(
@@ -1125,6 +2114,7 @@ def test_attempt_transition_journal_is_monotonic_append_only_and_terminal(
         )
         assert store.attempts_for_event(terminal.event_id) == (terminal,)
         succeeded = attempt(run_manifest, index=2, status=EventStatus.SUCCEEDED)
+        authorize_retry(store, terminal, "transition-journal")
         seal_expected_initial_state(store, run_manifest)
         append_terminal_attempt(store, succeeded)
         assert store.attempts_for_event(terminal.event_id) == (terminal, succeeded)
@@ -1453,15 +2443,16 @@ def test_landed_success_attempt_reopens_and_commits_without_reissuing_attempt(
         expected_exposure_graph_hash=None,
     ) as recovered:
         assert recovered.attempts_for_event(succeeded.event_id) == (succeeded,)
-        recovered.commit_success(
-            successful_event(run_manifest, ordinal=0),
-            final_attempt=succeeded,
-            private_update=records[0],
-            private_state=records[1],
-            feed_cursor=records[2],
-            public_post=records[3],
-            latest_public_pointer=records[4],
-        )
+        with recovered.acquire_run_lease():
+            recovered.commit_success(
+                successful_event(run_manifest, ordinal=0),
+                final_attempt=succeeded,
+                private_update=records[0],
+                private_state=records[1],
+                feed_cursor=records[2],
+                public_post=records[3],
+                latest_public_pointer=records[4],
+            )
         recovered.assert_complete()
 
 
@@ -1577,6 +2568,7 @@ def test_live_create_resolver_replays_external_failed_prefix_before_success_comm
         store.initialize_agent(*initial)
         seal_expected_initial_state(store, run_manifest)
         append_terminal_attempt(store, failed, external_response=failed_ref)
+        authorize_retry(store, failed, "external-failed-prefix")
         seal_expected_initial_state(store, run_manifest)
         append_terminal_attempt(store, succeeded, external_response=success_ref)
         records = successful_state_records(
@@ -1636,6 +2628,22 @@ def test_append_rejects_next_attempt_until_prior_terminal_and_after_complete(
         store.append_attempt(attempt_transition(failed, EventStatus.IN_PROGRESS))
         seal_expected_initial_state(store, run_manifest)
         store.append_attempt(failed)
+        with pytest.raises(ValueError, match="authorization|failure evidence"):
+            store.append_attempt(pending_second)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="explicit retry gate",
+            policy_evidence={"policy_id": "halt", "policy_hash": SHA_A},
+            recorded_at=NOW,
+        )
+        store.authorize_resume(
+            authorization_id="resume-explicit-retry",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash=SHA_B,
+            authorized_at=NOW,
+        )
         seal_expected_initial_state(store, run_manifest)
         append_terminal_attempt(store, second)
         records = successful_state_records(
@@ -1669,6 +2677,84 @@ def test_append_rejects_next_attempt_until_prior_terminal_and_after_complete(
             store.schedule_slot(-1)
         with pytest.raises(ValueError):
             store.schedule_slot(1)
+
+
+def test_verify_integrity_requires_exact_failure_authorization_pair_for_every_retry(
+    tmp_path: Path,
+) -> None:
+    database = tmp_path / "run.sqlite3"
+    run_manifest = manifest(schedule(publish_flags=(False,)))
+    failed = attempt(run_manifest, index=1, status=EventStatus.FAILED)
+    second = attempt_transition(
+        attempt(run_manifest, index=2, status=EventStatus.FAILED), EventStatus.PENDING
+    )
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        append_terminal_attempt(store, failed)
+        failure = store.record_terminal_failure(
+            event_id=failed.event_id,
+            reason="retry gate",
+            policy_evidence={"policy_id": "halt", "policy_hash": SHA_A},
+            recorded_at=NOW,
+        )
+        store.authorize_resume(
+            authorization_id="resume-exact-cover",
+            event_id=failed.event_id,
+            previous_terminal_failure_hash=failure.payload_hash,
+            policy_evidence_id="retry-policy",
+            policy_evidence_hash=SHA_B,
+            authorized_at=NOW,
+        )
+        store.append_attempt(second)
+        store._connection.execute("DELETE FROM resume_authorizations")
+        with pytest.raises(ValueError, match="authoriz|exact-cover|causal"):
+            store.verify_integrity()
+
+
+def test_mutator_rolls_back_if_hardlink_appears_after_transaction_entry(
+    tmp_path: Path,
+) -> None:
+    database = tmp_path / "run.sqlite3"
+    alias = tmp_path / "late-alias.sqlite3"
+    run_manifest = manifest(schedule(publish_flags=(False,)))
+    pending = attempt_transition(attempt(run_manifest), EventStatus.PENDING)
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        fired = False
+
+        def create_alias(statement: str) -> None:
+            nonlocal fired
+            if not fired and statement.lstrip().startswith("INSERT INTO attempt_transitions"):
+                fired = True
+                os.link(database, alias)
+
+        store._connection.set_trace_callback(create_alias)
+        try:
+            with pytest.raises(RuntimeError, match="hard-link|identity"):
+                store.append_attempt(pending)
+        finally:
+            store._connection.set_trace_callback(None)
+            if alias.exists():
+                alias.unlink()
+        assert fired is True
+        assert (
+            store._connection.execute("SELECT COUNT(*) FROM attempt_transitions").fetchone()[0] == 0
+        )
+        assert store.execution_state().event_ids == ()
 
 
 def test_open_closes_connection_when_pragma_initialization_fails(
@@ -1709,6 +2795,152 @@ def test_open_closes_connection_when_pragma_initialization_fails(
             expected_exposure_graph_hash=None,
         )
     assert failing.closed is True
+
+
+def test_create_rejects_dangling_symlink_without_creating_its_target(tmp_path: Path) -> None:
+    database = tmp_path / "dangling.sqlite3"
+    missing_target = tmp_path / "must-remain-missing.sqlite3"
+    try:
+        database.symlink_to(missing_target)
+    except OSError as error:
+        pytest.skip(f"symlink creation is unavailable: {error}")
+    run_manifest = manifest()
+    with pytest.raises((FileExistsError, RuntimeError), match="exist|link|target"):
+        RunStorage.create(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+    assert database.is_symlink()
+    assert not missing_target.exists()
+
+
+def test_create_no_replace_install_loses_race_without_overwriting_target(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    database = tmp_path / "raced.sqlite3"
+    sentinel = b"competitor-won"
+    run_manifest = manifest()
+    real_link = os.link
+    hook_called = False
+
+    def competing_link(source: object, target: object, **kwargs: object) -> None:
+        nonlocal hook_called
+        hook_called = True
+        Path(target).write_bytes(sentinel)
+        real_link(source, target, **kwargs)
+
+    monkeypatch.setattr(storage_module.os, "link", competing_link)
+    with pytest.raises(FileExistsError):
+        RunStorage.create(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+    assert hook_called is True
+    assert database.read_bytes() == sentinel
+    assert not tuple(tmp_path.glob(f".{database.name}.*.tmp"))
+
+
+def test_create_binds_installed_inode_through_unified_hardened_open(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    database = tmp_path / "installed.sqlite3"
+    replacement = tmp_path / "installed-copy.sqlite3"
+    displaced = tmp_path / "installed-original.sqlite3"
+    run_manifest = manifest()
+    real_open = RunStorage.open.__func__
+
+    def racing_open(cls: type[RunStorage], path: object, **kwargs: object) -> RunStorage:
+        shutil.copy2(database, replacement)
+        database.replace(displaced)
+        replacement.replace(database)
+        return real_open(cls, path, **kwargs)
+
+    monkeypatch.setattr(RunStorage, "open", classmethod(racing_open))
+    with pytest.raises(RuntimeError, match="identity|installed"):
+        RunStorage.create(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+    assert database.exists()
+    assert displaced.exists()
+
+
+def test_open_detects_path_swap_between_identity_capture_and_sqlite_connect(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    database = tmp_path / "stable-open.sqlite3"
+    replacement = tmp_path / "replacement.sqlite3"
+    displaced = tmp_path / "displaced.sqlite3"
+    run_manifest = manifest()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ):
+        pass
+    shutil.copy2(database, replacement)
+    real_connect = sqlite3.connect
+    hook_called = False
+
+    def racing_connect(*args: object, **kwargs: object) -> sqlite3.Connection:
+        nonlocal hook_called
+        hook_called = True
+        try:
+            database.replace(displaced)
+            replacement.replace(database)
+        except PermissionError as error:
+            raise RuntimeError("stable identity handle blocked path replacement") from error
+        return real_connect(*args, **kwargs)
+
+    monkeypatch.setattr(storage_module.sqlite3, "connect", racing_connect)
+    with pytest.raises(RuntimeError, match="identity|replacement|stable"):
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+    assert hook_called is True
+    assert database.exists()
+    assert displaced.exists() or os.name == "nt"
+
+
+@pytest.mark.skipif(os.name == "nt", reason="real POSIX no-follow identity smoke")
+def test_posix_open_identity_smoke_holds_original_inode_until_close(tmp_path: Path) -> None:
+    database = tmp_path / "posix-open-identity.sqlite3"
+    run_manifest = manifest()
+    store = RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    try:
+        assert store._database_identity_handle is not None
+        handle_stat = os.fstat(store._database_identity_handle.fileno())
+        assert (handle_stat.st_dev, handle_stat.st_ino) == store._database_identity
+        assert handle_stat.st_nlink == 1
+    finally:
+        store.close()
 
 
 def test_repeated_failed_open_releases_database_for_replace_and_unlink(tmp_path: Path) -> None:
