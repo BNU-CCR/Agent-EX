@@ -492,14 +492,18 @@ def prepared_evidence_bundle(
     *,
     script_step: MockScriptStep | None = None,
     script_steps: tuple[MockScriptStep, ...] | None = None,
+    single_event: bool = False,
 ) -> tuple[RunStorage, dict[str, object]]:
+    agent_ids = ("agent-0001",) if single_event else ("agent-0001", "agent-0002")
     frozen_schedule = FrozenSchedule(
         schema_version="paper1.schedule.v2",
         algorithm_id="mock.weighted-with-replacement",
         algorithm_version="1.0.0",
-        population_size=2,
+        population_size=len(agent_ids),
         sweep_count=1,
-        slots=(
+        slots=(ScheduleSlot(0, 1, 0, "agent-0001", False),)
+        if single_event
+        else (
             ScheduleSlot(0, 1, 0, "agent-0001", False),
             ScheduleSlot(1, 1, 1, "agent-0002", False),
         ),
@@ -509,14 +513,14 @@ def prepared_evidence_bundle(
         tmp_path / "evidence.sqlite",
         manifest=run_manifest,
         artifact_hashes={"population": SHA_B},
-        expected_agent_ids=("agent-0001", "agent-0002"),
+        expected_agent_ids=agent_ids,
         expected_exposure_mode="self_history_only",
         expected_exposure_graph_hash=None,
     )
     round0: dict[
         str, tuple[PrivateUpdate, PrivateState, PublicPost, LatestPublicPointer, FeedCursor]
     ] = {}
-    for agent_id in ("agent-0001", "agent-0002"):
+    for agent_id in agent_ids:
         update = PrivateUpdate.create(
             topic_package=prompt_topic(),
             matched_seed=17,
@@ -701,6 +705,7 @@ def prepared_evidence_bundle(
     )
     return store, {
         "path": tmp_path / "evidence.sqlite",
+        "expected_agent_ids": agent_ids,
         "manifest": run_manifest,
         "event_input": event_input,
         "policy": policy,
@@ -718,7 +723,7 @@ def reopen_evidence_store(store: RunStorage, values: Mapping[str, object]) -> Ru
         values["path"],
         manifest=values["manifest"],
         artifact_hashes={"population": SHA_B},
-        expected_agent_ids=("agent-0001", "agent-0002"),
+        expected_agent_ids=values.get("expected_agent_ids", ("agent-0001", "agent-0002")),
         expected_exposure_mode="self_history_only",
         expected_exposure_graph_hash=None,
     )
@@ -1432,6 +1437,17 @@ def test_retry_references_follow_only_current_attempt_across_reopen_boundaries(
     assert store.terminal_failure_evidence_prefix() == (failure,)
     assert store.resume_authorization_evidence_prefix() == (authorization,)
 
+    retry_values = {**values, "request_evidence": request_evidence, "pending": pending}
+    retry_invocation = persisted_invocation(retry_values)
+    store.record_invocation_evidence(retry_invocation)
+    store = reopen_evidence_store(store, values)
+    assert store.invocation_evidence(pending.attempt_id) == retry_invocation
+    succeeded = finalized_evidence(store, retry_values, retry_invocation)
+    store.record_finalized_attempt(succeeded)
+    store = reopen_evidence_store(store, values)
+    assert store.parse_evidence(pending.attempt_id) == succeeded.parse_evidence
+    assert store.current_event_journal().latest_transition == succeeded.attempt
+
 
 def test_finalized_failure_sql_error_rolls_back_parse_terminal_failure_and_execution(
     tmp_path: Path,
@@ -1606,8 +1622,61 @@ def test_integrity_rejects_hash_consistent_terminal_projection_tamper(tmp_path: 
         store.verify_integrity()
 
 
-def test_integrity_accepts_committed_v6_success_history(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    "field",
+    (
+        "started_at",
+        "finished_at",
+        "provider_request_id",
+        "provider_metadata",
+        "http_status",
+        "usage",
+        "finish_reason",
+    ),
+)
+def test_integrity_rejects_hash_consistent_terminal_execution_tamper(
+    tmp_path: Path, field: str
+) -> None:
     store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(finalized)
+    payload = finalized.attempt.to_payload()
+    if field == "started_at":
+        payload[field] = "2026-08-17T23:59:59+00:00"
+    elif field == "finished_at":
+        payload[field] = "2026-08-18T00:00:01+00:00"
+    elif field == "provider_request_id":
+        payload[field] = "provider-request-tampered"
+    elif field == "provider_metadata":
+        payload[field] = {**payload[field], "forged_execution_field": True}
+        payload["provider_metadata_hash"] = canonical_payload_hash(payload[field])
+    elif field == "http_status":
+        payload[field] = 201
+    elif field == "usage":
+        payload[field] = {"prompt_tokens": 30, "completion_tokens": 4, "total_tokens": 34}
+        payload["usage_hash"] = canonical_payload_hash(payload[field])
+    else:
+        payload[field] = "length"
+    encoded = storage_module._canonical_json(payload)
+    payload_hash = canonical_payload_hash(payload)
+    store._connection.execute(
+        "UPDATE attempts SET payload_json = ?, payload_hash = ? WHERE attempt_id = ?",
+        (encoded, payload_hash, finalized.attempt.attempt_id),
+    )
+    store._connection.execute(
+        """UPDATE attempt_transitions SET payload_json = ?, payload_hash = ?
+           WHERE attempt_id = ? AND status = ?""",
+        (encoded, payload_hash, finalized.attempt.attempt_id, EventStatus.SUCCEEDED.value),
+    )
+    store._connection.commit()
+
+    with pytest.raises(ValueError, match="terminal|execution projection|invocation|IN_PROGRESS"):
+        store.verify_integrity()
+
+
+def test_integrity_accepts_committed_v6_success_history(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path, single_event=True)
     invocation_value = land_invocation(store, values)
     finalized = finalized_evidence(store, values, invocation_value)
     store.record_finalized_attempt(finalized)
@@ -1649,6 +1718,7 @@ def test_integrity_accepts_committed_v6_success_history(tmp_path: Path) -> None:
     )
 
     store.verify_integrity()
+    store.assert_complete()
 
 
 def successful_event(

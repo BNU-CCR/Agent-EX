@@ -370,6 +370,52 @@ def _plain_evidence(value: object) -> object:
     return value
 
 
+def _validate_terminal_execution_projection(
+    terminal: GenerationAttempt,
+    invocation: PersistedInvocationEvidence,
+    parsed: ParseEvidence | ParseNotApplicableEvidence,
+) -> None:
+    """Bind every terminal execution field to persisted adapter evidence."""
+
+    response = invocation.response
+    execution = invocation.to_payload()["execution_payload"]
+    expected_error = (
+        response.error
+        if response.outcome == "timeout"
+        else (parsed.error if terminal.status is EventStatus.FAILED else None)
+    )
+    expected = (
+        execution["started_at"],
+        execution["finished_at"],
+        response.provider_request_id,
+        execution["provider_metadata"],
+        canonical_payload_hash(execution["provider_metadata"]),
+        execution["http_status"],
+        execution["usage"],
+        canonical_payload_hash(execution["usage"]),
+        execution["finish_reason"],
+        response.raw_response,
+        response.raw_response_hash,
+        expected_error,
+    )
+    actual = (
+        terminal.started_at,
+        terminal.finished_at,
+        terminal.provider_request_id,
+        terminal.provider_metadata,
+        terminal.provider_metadata_hash,
+        terminal.http_status,
+        terminal.usage,
+        terminal.usage_hash,
+        terminal.finish_reason,
+        terminal.raw_response,
+        terminal.raw_response_hash,
+        terminal.error,
+    )
+    if actual != expected:
+        raise ValueError("terminal execution projection does not match persisted invocation")
+
+
 def _load_canonical_json(value: str, label: str) -> object:
     if type(value) is not str:
         raise ValueError(f"stored {label} JSON is not text")
@@ -2504,43 +2550,7 @@ class RunStorage:
             or parse.parser_limits_hash != request.parser_limits_hash
         ):
             raise ValueError("finalized request, response, parse, or parser links drifted")
-        response = invocation.response
-        execution = invocation.to_payload()["execution_payload"]
-        expected_error = (
-            response.error
-            if response.outcome == "timeout"
-            else (parse.error if terminal.status is EventStatus.FAILED else None)
-        )
-        expected_execution = (
-            execution["started_at"],
-            execution["finished_at"],
-            response.provider_request_id,
-            execution["provider_metadata"],
-            canonical_payload_hash(execution["provider_metadata"]),
-            execution["http_status"],
-            execution["usage"],
-            canonical_payload_hash(execution["usage"]),
-            execution["finish_reason"],
-            response.raw_response,
-            response.raw_response_hash,
-            expected_error,
-        )
-        actual_execution = (
-            terminal.started_at,
-            terminal.finished_at,
-            terminal.provider_request_id,
-            terminal.provider_metadata,
-            terminal.provider_metadata_hash,
-            terminal.http_status,
-            terminal.usage,
-            terminal.usage_hash,
-            terminal.finish_reason,
-            terminal.raw_response,
-            terminal.raw_response_hash,
-            terminal.error,
-        )
-        if actual_execution != expected_execution:
-            raise ValueError("terminal execution projection does not match persisted invocation")
+        _validate_terminal_execution_projection(terminal, invocation, parse)
         if already_terminal:
             landed_parse = self.parse_evidence(terminal.attempt_id)
             failure_row = self._connection.execute(
@@ -4599,6 +4609,7 @@ class RunStorage:
             ):
                 raise ValueError("v6 parse evidence binding drifted")
             if terminal is not None and parsed is not None:
+                _validate_terminal_execution_projection(terminal, invocation, parsed)
                 failure = failure_by_attempt.get(attempt_id)
                 FinalizedAttemptEvidence.create(
                     request_hash=request.request_hash,
