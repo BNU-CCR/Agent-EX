@@ -5,6 +5,7 @@ import json
 
 import pytest
 
+from agent_ex import execution_evidence as execution_evidence_module
 from agent_ex import (
     EventEvidenceReferences,
     EventInputEvidence,
@@ -43,16 +44,7 @@ def policy() -> MockAttemptPolicyBinding:
 
 
 def adapter_binding(adapter: MockAdapter) -> MockAdapterExecutionBinding:
-    value = prepared(RUN_ID, ordinal=9)
-    response = adapter.generate(value.request)
-    return MockAdapterExecutionBinding.create(
-        expected_adapter_kind="agent_ex.adapters.mock.MockAdapter",
-        expected_adapter_version="1.0.0",
-        runtime_identity=response.runtime_identity,
-        model_identity=response.model_identity,
-        script_hash=response.script_hash,
-        mock_only=True,
-    )
+    return adapter.execution_binding()
 
 
 def parser_limits() -> ParserLimits:
@@ -212,7 +204,7 @@ def test_policy_and_adapter_binding_reject_extra_or_tampered_payload_fields() ->
             expected_adapter_version="1.0.0",
             runtime_identity=binding.runtime_identity,
             model_identity=binding.model_identity,
-            script_hash=binding.script_hash,
+            script_step_hashes=binding.script_step_hashes,
             mock_only=True,
         )
     forged = binding.to_payload()
@@ -229,23 +221,56 @@ def test_policy_and_adapter_binding_are_deeply_immutable_and_isolated() -> None:
         "runtime_version": "1.0.0",
     }
     model = {"model": "mock", "revision": "r1", "mode": "script_only"}
+    script_step_hashes = {"event-example": ("a" * 64,)}
     binding = MockAdapterExecutionBinding.create(
         expected_adapter_kind="deterministic_mock",
         expected_adapter_version="1.0.0",
         runtime_identity=runtime,
         model_identity=model,
-        script_hash="a" * 64,
+        script_step_hashes=script_step_hashes,
         mock_only=True,
     )
     runtime["provider"] = "mutated"
     model["revision"] = "mutated"
+    script_step_hashes["event-example"] = ("b" * 64,)
 
     assert binding.runtime_identity["provider"] == "deterministic-mock"
     assert binding.model_identity["revision"] == "r1"
+    assert binding.script_step_hashes["event-example"] == ("a" * 64,)
+    assert binding.script_hash == canonical_payload_hash({"event-example": ("a" * 64,)})
     with pytest.raises(TypeError):
         binding.runtime_identity["provider"] = "x"  # type: ignore[index]
+    with pytest.raises(TypeError):
+        binding.script_step_hashes["event-example"] = ("c" * 64,)  # type: ignore[index]
     with pytest.raises(FrozenInstanceError):
         binding.script_hash = "b" * 64  # type: ignore[misc]
+
+
+def test_adapter_binding_capability_is_private_and_not_serialized() -> None:
+    value = prepared(RUN_ID, ordinal=9)
+    adapter = adapter_for(value.authorization.event_id)
+    binding = adapter.execution_binding()
+
+    assert execution_evidence_module._has_trusted_mock_adapter_execution_binding(binding)
+    restored = MockAdapterExecutionBinding.from_payload(binding.to_payload())
+    assert restored == binding
+    assert not execution_evidence_module._has_trusted_mock_adapter_execution_binding(restored)
+    assert not hasattr(execution_evidence_module, "seal_mock_adapter_execution_binding")
+
+
+def test_public_adapter_binding_factory_is_structural_but_untrusted() -> None:
+    trusted = adapter_for(prepared(RUN_ID, ordinal=9).authorization.event_id).execution_binding()
+    public = MockAdapterExecutionBinding.create(
+        expected_adapter_kind=trusted.expected_adapter_kind,
+        expected_adapter_version=trusted.expected_adapter_version,
+        runtime_identity=trusted.runtime_identity,
+        model_identity=trusted.model_identity,
+        script_step_hashes=trusted.script_step_hashes,
+        mock_only=True,
+    )
+
+    assert public == trusted
+    assert not execution_evidence_module._has_trusted_mock_adapter_execution_binding(public)
 
 
 def test_event_input_evidence_round_trip_hash_binding_and_deep_immutability() -> None:

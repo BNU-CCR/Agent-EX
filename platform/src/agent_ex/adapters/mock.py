@@ -14,7 +14,11 @@ from ..domain import (
     _require_string,
     canonical_payload_hash,
 )
-from ..execution_evidence import MockAdapterExecutionBinding
+from ..execution_evidence import (
+    MockAdapterExecutionBinding,
+    _has_trusted_mock_adapter_execution_binding,
+    _seal_mock_adapter_execution_binding,
+)
 from .base import (
     AdapterRequest,
     AdapterResponse,
@@ -36,6 +40,15 @@ _MODEL_IDENTITY = {
     "revision": "phase4b7-script-v1",
     "mode": "script_only_no_generation",
 }
+
+
+def _script_step_commitments(
+    script: Mapping[str, Sequence[MockScriptStep]],
+) -> dict[str, tuple[str, ...]]:
+    return {
+        event_id: tuple(canonical_payload_hash(step.to_payload()) for step in steps)
+        for event_id, steps in sorted(script.items())
+    }
 
 
 @dataclass(frozen=True, slots=True)
@@ -109,23 +122,20 @@ class MockAdapter(ModelAdapter):
             normalized[event_id] = values
         self._script = MappingProxyType(dict(normalized))
         self._runtime = _freeze(dict(_RUNTIME))
-        self._script_hash = canonical_payload_hash(
-            {
-                event_id: tuple(step.to_payload() for step in steps)
-                for event_id, steps in sorted(normalized.items())
-            }
-        )
+        self._script_hash = canonical_payload_hash(_script_step_commitments(self._script))
 
     def execution_binding(self) -> MockAdapterExecutionBinding:
         """Return immutable execution evidence derived from this frozen adapter."""
 
-        return MockAdapterExecutionBinding.create(
-            expected_adapter_kind=_RUNTIME["adapter"],
-            expected_adapter_version=_RUNTIME["adapter_version"],
-            runtime_identity=dict(self._runtime),
-            model_identity=dict(_MODEL_IDENTITY),
-            script_hash=self._script_hash,
-            mock_only=True,
+        return _seal_mock_adapter_execution_binding(
+            MockAdapterExecutionBinding.create(
+                expected_adapter_kind=_RUNTIME["adapter"],
+                expected_adapter_version=_RUNTIME["adapter_version"],
+                runtime_identity=dict(self._runtime),
+                model_identity=dict(_MODEL_IDENTITY),
+                script_step_hashes=_script_step_commitments(self._script),
+                mock_only=True,
+            )
         )
 
     def generate(self, request: AdapterRequest) -> AdapterResponse:
@@ -228,6 +238,8 @@ def verify_persisted_mock_response(
         raise ValueError("adapter request replay does not match its record")
     if not isinstance(binding, MockAdapterExecutionBinding):
         raise TypeError("persisted response verification requires a typed execution binding")
+    if not _has_trusted_mock_adapter_execution_binding(binding):
+        raise ValueError("adapter execution binding is not a trusted sealed capability")
 
     expected_binding = {
         "expected_adapter_kind": _RUNTIME["adapter"],
@@ -267,6 +279,18 @@ def verify_persisted_mock_response(
         raise ValueError("persisted response model binding drifted")
     if response.script_hash != binding.script_hash:
         raise ValueError("persisted response script binding drifted")
+
+    committed_steps = binding.script_step_hashes.get(request.event_id)
+    committed_index = request.attempt_index - 1
+    if committed_steps is None or not 0 <= committed_index < len(committed_steps):
+        raise ValueError("binding has no committed script step for event attempt")
+    step_payload = {
+        "outcome": response.outcome,
+        "raw_response": response.raw_response,
+        "error_message": (None if response.error is None else response.error["message"]),
+    }
+    if canonical_payload_hash(step_payload) != committed_steps[committed_index]:
+        raise ValueError("persisted response does not match committed mock script step")
 
     response_identity = {
         "request_hash": request.record_hash,

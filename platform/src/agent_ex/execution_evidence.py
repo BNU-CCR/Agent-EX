@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import hmac
 import re
+import secrets
 from typing import TYPE_CHECKING, Mapping
 
 from .adapters.base import AdapterResponse
@@ -33,7 +36,7 @@ if TYPE_CHECKING:
 
 
 _POLICY_SCHEMA = "paper1.mock-attempt-policy-binding.v1"
-_ADAPTER_BINDING_SCHEMA = "paper1.mock-adapter-execution-binding.v1"
+_ADAPTER_BINDING_SCHEMA = "paper1.mock-adapter-execution-binding.v2"
 _EVENT_INPUT_SCHEMA = "paper1.event-input-evidence.v1"
 _INVOCATION_SCHEMA = "paper1.persisted-invocation-evidence.v1"
 _PARSE_NA_SCHEMA = "paper1.parse-not-applicable-evidence.v1"
@@ -62,6 +65,27 @@ def _strict_payload(payload: Mapping[str, object], expected: set[str], label: st
 
 def _derive_record_id(prefix: str, identity: Mapping[str, object]) -> str:
     return prefix + canonical_payload_hash(identity)
+
+
+def _make_binding_capability_authenticator() -> tuple[object, object]:
+    """Create a same-process integrity sentinel, not a security boundary."""
+
+    key = secrets.token_bytes(32)
+
+    def issue(record_hash: str) -> str:
+        return hmac.new(
+            key,
+            b"agent-ex/mock-adapter-execution-binding/v2\x00" + record_hash.encode("ascii"),
+            hashlib.sha256,
+        ).hexdigest()
+
+    def verify(signature: object, record_hash: str) -> bool:
+        return type(signature) is str and hmac.compare_digest(signature, issue(record_hash))
+
+    return issue, verify
+
+
+_issue_binding_seal, _verify_binding_seal = _make_binding_capability_authenticator()
 
 
 @dataclass(frozen=True, slots=True)
@@ -165,9 +189,11 @@ class MockAdapterExecutionBinding:
     runtime_identity_hash: str
     model_identity: Mapping[str, str]
     model_identity_hash: str
+    script_step_hashes: Mapping[str, tuple[str, ...]]
     script_hash: str
     mock_only: bool
     record_hash: str = field(repr=False)
+    _factory_seal: object = field(default=None, repr=False, compare=False)
 
     def __post_init__(self) -> None:
         _require_id("binding_id", self.binding_id)
@@ -194,6 +220,17 @@ class MockAdapterExecutionBinding:
             "runtime_identity_hash", self.runtime_identity_hash, self.runtime_identity
         )
         _require_payload_hash("model_identity_hash", self.model_identity_hash, self.model_identity)
+        if not isinstance(self.script_step_hashes, Mapping) or not self.script_step_hashes:
+            raise ValueError("script_step_hashes must be a non-empty event commitment mapping")
+        normalized_steps: dict[str, tuple[str, ...]] = {}
+        for event_id, step_hashes in self.script_step_hashes.items():
+            _require_id("script commitment event_id", event_id)
+            if not isinstance(step_hashes, tuple) or not step_hashes:
+                raise ValueError("each script event must contain ordered step commitments")
+            for step_hash in step_hashes:
+                _require_sha256("script step hash", step_hash)
+            normalized_steps[event_id] = step_hashes
+        _require_payload_hash("script_hash", self.script_hash, normalized_steps)
         if self.mock_only is not True:
             raise ValueError("adapter execution binding must be explicitly mock_only")
         expected_id = _derive_record_id(
@@ -203,6 +240,7 @@ class MockAdapterExecutionBinding:
                 "expected_adapter_version": self.expected_adapter_version,
                 "runtime_identity_hash": self.runtime_identity_hash,
                 "model_identity_hash": self.model_identity_hash,
+                "script_step_hashes": normalized_steps,
                 "script_hash": self.script_hash,
             },
         )
@@ -211,6 +249,7 @@ class MockAdapterExecutionBinding:
         _require_payload_hash("record_hash", self.record_hash, self.content_payload())
         object.__setattr__(self, "runtime_identity", _freeze(self.runtime_identity))
         object.__setattr__(self, "model_identity", _freeze(self.model_identity))
+        object.__setattr__(self, "script_step_hashes", _freeze(normalized_steps))
 
     def content_payload(self) -> dict[str, object]:
         return {
@@ -222,6 +261,7 @@ class MockAdapterExecutionBinding:
             "runtime_identity_hash": self.runtime_identity_hash,
             "model_identity": self.model_identity,
             "model_identity_hash": self.model_identity_hash,
+            "script_step_hashes": self.script_step_hashes,
             "script_hash": self.script_hash,
             "mock_only": self.mock_only,
         }
@@ -237,11 +277,12 @@ class MockAdapterExecutionBinding:
         expected_adapter_version: str,
         runtime_identity: Mapping[str, str],
         model_identity: Mapping[str, str],
-        script_hash: str,
+        script_step_hashes: Mapping[str, tuple[str, ...]],
         mock_only: bool,
     ) -> MockAdapterExecutionBinding:
         runtime_hash = canonical_payload_hash(runtime_identity)
         model_hash = canonical_payload_hash(model_identity)
+        script_hash = canonical_payload_hash(script_step_hashes)
         binding_id = _derive_record_id(
             "adapter-execution-binding-",
             {
@@ -249,6 +290,7 @@ class MockAdapterExecutionBinding:
                 "expected_adapter_version": expected_adapter_version,
                 "runtime_identity_hash": runtime_hash,
                 "model_identity_hash": model_hash,
+                "script_step_hashes": script_step_hashes,
                 "script_hash": script_hash,
             },
         )
@@ -260,6 +302,7 @@ class MockAdapterExecutionBinding:
             "runtime_identity_hash": runtime_hash,
             "model_identity": model_identity,
             "model_identity_hash": model_hash,
+            "script_step_hashes": script_step_hashes,
             "script_hash": script_hash,
             "mock_only": mock_only,
         }
@@ -268,7 +311,7 @@ class MockAdapterExecutionBinding:
 
     @classmethod
     def from_payload(cls, payload: Mapping[str, object]) -> MockAdapterExecutionBinding:
-        expected = set(cls.__dataclass_fields__) | {"schema_version"}
+        expected = (set(cls.__dataclass_fields__) - {"_factory_seal"}) | {"schema_version"}
         _strict_payload(payload, expected, "adapter execution binding")
         if payload["schema_version"] != _ADAPTER_BINDING_SCHEMA:
             raise ValueError("adapter execution binding schema is unsupported")
@@ -277,7 +320,55 @@ class MockAdapterExecutionBinding:
             or type(payload["model_identity"]) is not dict
         ):
             raise TypeError("adapter identities must be JSON objects")
-        return cls(**{name: payload[name] for name in cls.__dataclass_fields__})  # type: ignore[arg-type]
+        if type(payload["script_step_hashes"]) is not dict:
+            raise TypeError("script_step_hashes must be a JSON object")
+        script_step_hashes = {
+            event_id: tuple(step_hashes)  # type: ignore[arg-type]
+            for event_id, step_hashes in payload["script_step_hashes"].items()  # type: ignore[union-attr]
+        }
+        values = {
+            name: payload[name]
+            for name in cls.__dataclass_fields__
+            if name not in {"script_step_hashes", "_factory_seal"}
+        }
+        return cls(**values, script_step_hashes=script_step_hashes)  # type: ignore[arg-type]
+
+
+def _seal_mock_adapter_execution_binding(
+    binding: MockAdapterExecutionBinding,
+) -> MockAdapterExecutionBinding:
+    """Seal an adapter-derived binding for same-process integrity checks.
+
+    This private capability is not a security boundary and is never serialized.  A
+    later storage task must independently verify persisted bindings against its causal
+    store/checkpoint before it introduces any private persisted-binding reseal path.
+    """
+
+    if not isinstance(binding, MockAdapterExecutionBinding):
+        raise TypeError("binding must be a MockAdapterExecutionBinding")
+    if binding.record_hash != canonical_payload_hash(binding.content_payload()):
+        raise ValueError("adapter execution binding content is not hash-bound")
+    object.__setattr__(
+        binding,
+        "_factory_seal",
+        _issue_binding_seal(binding.record_hash),  # type: ignore[operator]
+    )
+    return binding
+
+
+def _has_trusted_mock_adapter_execution_binding(
+    binding: MockAdapterExecutionBinding,
+) -> bool:
+    try:
+        return (
+            isinstance(binding, MockAdapterExecutionBinding)
+            and binding.record_hash == canonical_payload_hash(binding.content_payload())
+            and _verify_binding_seal(  # type: ignore[operator]
+                binding._factory_seal, binding.record_hash
+            )
+        )
+    except (TypeError, ValueError, UnicodeError, RecursionError):
+        return False
 
 
 @dataclass(frozen=True, slots=True)

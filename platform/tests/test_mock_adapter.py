@@ -70,6 +70,23 @@ def _rehash_response_payload(payload: dict[str, object]) -> dict[str, object]:
     return payload
 
 
+def _public_binding_like(
+    binding: MockAdapterExecutionBinding,
+    *,
+    script_step_hashes: dict[str, tuple[str, ...]] | None = None,
+) -> MockAdapterExecutionBinding:
+    return MockAdapterExecutionBinding.create(
+        expected_adapter_kind=binding.expected_adapter_kind,
+        expected_adapter_version=binding.expected_adapter_version,
+        runtime_identity=binding.runtime_identity,
+        model_identity=binding.model_identity,
+        script_step_hashes=(
+            dict(binding.script_step_hashes) if script_step_hashes is None else script_step_hashes
+        ),
+        mock_only=True,
+    )
+
+
 def test_mock_adapter_implements_interface_and_returns_hash_bound_success() -> None:
     value: ModelAdapter = adapter()
     response = value.generate(request())
@@ -118,6 +135,12 @@ def test_execution_binding_is_available_before_generate_and_matches_response() -
     assert binding.model_identity == response.model_identity
     assert binding.model_identity_hash == response.model_identity_hash
     assert binding.script_hash == response.script_hash
+    assert binding.script_hash == canonical_payload_hash(binding.script_step_hashes)
+    assert binding.script_step_hashes[EVENT_ID][0] == canonical_payload_hash(
+        MockScriptStep.success(
+            {"stance": "label-2", "confidence": 4, "public_reason": "scripted"}
+        ).to_payload()
+    )
 
 
 def test_persisted_response_roundtrip_rehydrates_trusted_response_without_generate(
@@ -207,11 +230,11 @@ def test_persisted_response_rejects_independently_tampered_and_rehashed_binding(
         "expected_adapter_version": original.expected_adapter_version,
         "runtime_identity": dict(original.runtime_identity),
         "model_identity": dict(original.model_identity),
-        "script_hash": original.script_hash,
+        "script_step_hashes": dict(original.script_step_hashes),
         "mock_only": True,
     }
     if field == "script_hash":
-        values[field] = "2" * 64
+        values["script_step_hashes"] = {EVENT_ID: ("2" * 64,) * 3}
     else:
         identity = dict(values[field])  # type: ignore[arg-type]
         identity[next(iter(identity))] = "tampered"
@@ -226,6 +249,169 @@ def test_persisted_response_rejects_independently_tampered_and_rehashed_binding(
             request=trusted_request,
             response_payload=value.generate(trusted_request).to_payload(),
             binding=tampered,
+        )
+
+
+def test_persisted_response_rejects_forged_raw_with_recomputed_hashes() -> None:
+    value = adapter()
+    trusted_request = request()
+    binding = value.execution_binding()
+    payload = value.generate(trusted_request).to_payload()
+    payload["raw_response"] = '{"stance":"label-6","confidence":5,"public_reason":"forged"}'
+    payload["raw_response_hash"] = canonical_payload_hash(payload["raw_response"])
+    _rehash_response_payload(payload)
+
+    with pytest.raises(ValueError, match="script|step|commit"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=payload,
+            binding=binding,
+        )
+
+
+@pytest.mark.parametrize("rewrite", ["timeout_error", "outcome"])
+def test_persisted_response_rejects_timeout_error_or_outcome_rewrite(rewrite: str) -> None:
+    value = adapter()
+    trusted_request = request(attempt_index=3)
+    binding = value.execution_binding()
+    payload = value.generate(trusted_request).to_payload()
+    if rewrite == "timeout_error":
+        payload["error"] = {"code": "timeout", "message": "rewritten timeout"}
+    else:
+        payload["outcome"] = "response"
+        payload["raw_response"] = "rewritten response"
+        payload["raw_response_hash"] = canonical_payload_hash(payload["raw_response"])
+        payload["error"] = None
+    _rehash_response_payload(payload)
+
+    with pytest.raises(ValueError, match="script|step|commit"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=payload,
+            binding=binding,
+        )
+
+
+def test_persisted_response_rejects_public_binding_joint_rewrite() -> None:
+    value = adapter()
+    trusted_request = request()
+    trusted_binding = value.execution_binding()
+    payload = value.generate(trusted_request).to_payload()
+    payload["raw_response"] = "jointly forged"
+    payload["raw_response_hash"] = canonical_payload_hash(payload["raw_response"])
+    forged_step = {
+        "outcome": "response",
+        "raw_response": payload["raw_response"],
+        "error_message": None,
+    }
+    commitments = dict(trusted_binding.script_step_hashes)
+    commitments[EVENT_ID] = (
+        canonical_payload_hash(forged_step),
+        *commitments[EVENT_ID][1:],
+    )
+    public_binding = _public_binding_like(trusted_binding, script_step_hashes=commitments)
+    payload["script_hash"] = public_binding.script_hash
+    response_identity = {
+        "request_hash": trusted_request.record_hash,
+        "event_id": trusted_request.event_id,
+        "topic_package_id": trusted_request.topic_package_id,
+        "topic_package_hash": trusted_request.topic_package_hash,
+        "attempt_index": trusted_request.attempt_index,
+        "attempt_id": trusted_request.attempt_id,
+        "mock_seed": trusted_request.mock_seed,
+        "script_hash": public_binding.script_hash,
+    }
+    payload["response_id"] = "adapter-response-" + canonical_payload_hash(response_identity)
+    payload["provider_request_id"] = "mock-provider-request-" + canonical_payload_hash(
+        {**response_identity, "runtime_identity": public_binding.runtime_identity}
+    )
+    _rehash_response_payload(payload)
+
+    with pytest.raises(ValueError, match="trusted|sealed|capability|binding"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=payload,
+            binding=public_binding,
+        )
+
+
+def test_persisted_response_rejects_deserialized_binding() -> None:
+    value = adapter()
+    trusted_request = request()
+    response = value.generate(trusted_request)
+    restored_binding = MockAdapterExecutionBinding.from_payload(
+        value.execution_binding().to_payload()
+    )
+
+    with pytest.raises(ValueError, match="trusted|sealed|capability|binding"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=response.to_payload(),
+            binding=restored_binding,
+        )
+
+
+@pytest.mark.parametrize("attempt_index", [2, 3])
+def test_persisted_response_rejects_wrong_committed_event_attempt_step(
+    attempt_index: int,
+) -> None:
+    value = adapter()
+    trusted_request = request(attempt_index=attempt_index)
+    payload = value.generate(trusted_request).to_payload()
+    first_step_payload = value.generate(request()).to_payload()
+    payload["outcome"] = first_step_payload["outcome"]
+    payload["raw_response"] = first_step_payload["raw_response"]
+    payload["raw_response_hash"] = first_step_payload["raw_response_hash"]
+    payload["error"] = first_step_payload["error"]
+    _rehash_response_payload(payload)
+
+    with pytest.raises(ValueError, match="script|step|commit"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=payload,
+            binding=value.execution_binding(),
+        )
+
+
+def test_persisted_response_rejects_binding_without_committed_event() -> None:
+    value = adapter()
+    trusted_request = request()
+    payload = value.generate(trusted_request).to_payload()
+    other_event = "event-other"
+    other_adapter = MockAdapter(
+        script={
+            other_event: (
+                MockScriptStep.success(
+                    {"stance": "label-2", "confidence": 4, "public_reason": "scripted"}
+                ),
+            )
+        },
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    other_binding = other_adapter.execution_binding()
+    payload["script_hash"] = other_binding.script_hash
+    response_identity = {
+        "request_hash": trusted_request.record_hash,
+        "event_id": trusted_request.event_id,
+        "topic_package_id": trusted_request.topic_package_id,
+        "topic_package_hash": trusted_request.topic_package_hash,
+        "attempt_index": trusted_request.attempt_index,
+        "attempt_id": trusted_request.attempt_id,
+        "mock_seed": trusted_request.mock_seed,
+        "script_hash": other_binding.script_hash,
+    }
+    payload["response_id"] = "adapter-response-" + canonical_payload_hash(response_identity)
+    payload["provider_request_id"] = "mock-provider-request-" + canonical_payload_hash(
+        {**response_identity, "runtime_identity": other_binding.runtime_identity}
+    )
+    _rehash_response_payload(payload)
+
+    with pytest.raises(ValueError, match="event|attempt|commit"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=payload,
+            binding=other_binding,
         )
 
 
