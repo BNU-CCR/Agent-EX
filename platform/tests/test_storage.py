@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 import sqlite3
+import stat
 import subprocess
 import sys
 from contextlib import closing
@@ -811,6 +812,217 @@ def test_open_rejects_wrong_user_version_without_any_file_or_sidecar_mutation(
 
     assert database.read_bytes() == before_bytes
     assert {path.name: path.read_bytes() for path in tmp_path.iterdir()} == before_directory
+
+
+@pytest.mark.parametrize("user_version", (5, 999))
+def test_read_only_wrong_version_reaches_version_gate_without_mutation(
+    tmp_path: Path, user_version: int
+) -> None:
+    database = tmp_path / f"read-only-v{user_version}.sqlite3"
+    with sqlite3.connect(database) as connection:
+        connection.execute(f"PRAGMA user_version = {user_version}")
+        connection.execute("CREATE TABLE legacy_fixture (value TEXT NOT NULL)")
+
+    original_mode = stat.S_IMODE(database.stat().st_mode)
+    os.chmod(database, stat.S_IREAD)
+    before_bytes = database.read_bytes()
+    before_directory = {path.name: path.read_bytes() for path in tmp_path.iterdir()}
+    run_manifest = manifest()
+    try:
+        with pytest.raises(ValueError, match="storage schema version.*unsupported"):
+            RunStorage.open(
+                database,
+                manifest=run_manifest,
+                artifact_hashes={"population": SHA_B},
+                expected_agent_ids=expected_agent_ids(run_manifest),
+                expected_exposure_mode="self_history_only",
+                expected_exposure_graph_hash=None,
+            )
+        assert database.read_bytes() == before_bytes
+        assert {path.name: path.read_bytes() for path in tmp_path.iterdir()} == before_directory
+    finally:
+        os.chmod(database, original_mode | stat.S_IWRITE)
+
+
+@pytest.mark.parametrize("suffix", ("-wal", "-shm", "-journal"))
+def test_open_rejects_any_sqlite_sidecar_without_mutation(tmp_path: Path, suffix: str) -> None:
+    database = tmp_path / "run.sqlite3"
+    run_manifest = manifest()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ):
+        pass
+    Path(f"{database}{suffix}").write_bytes(b"stale-sidecar-fixture")
+    before_directory = {path.name: path.read_bytes() for path in tmp_path.iterdir()}
+
+    with pytest.raises(ValueError, match="sidecar|rollback image"):
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+    assert {path.name: path.read_bytes() for path in tmp_path.iterdir()} == before_directory
+
+
+def test_open_rechecks_sidecars_immediately_before_read_write_connect(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    database = tmp_path / "run.sqlite3"
+    run_manifest = manifest()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ):
+        pass
+    before_bytes = database.read_bytes()
+    sidecar = Path(f"{database}-wal")
+    real_connect = sqlite3.connect
+    connect_uris: list[str] = []
+
+    class RacingVersionConnection:
+        def __init__(self, connection: sqlite3.Connection) -> None:
+            self._connection = connection
+
+        def execute(self, statement: str) -> sqlite3.Cursor:
+            return self._connection.execute(statement)
+
+        def close(self) -> None:
+            self._connection.close()
+            sidecar.write_bytes(b"appeared-after-version-probe")
+
+    def racing_connect(database_uri: str, **kwargs: object) -> RacingVersionConnection:
+        connect_uris.append(database_uri)
+        if "immutable=1" not in database_uri:
+            pytest.fail("read-write SQLite connection opened after a sidecar appeared")
+        return RacingVersionConnection(real_connect(database_uri, **kwargs))
+
+    monkeypatch.setattr(storage_module.sqlite3, "connect", racing_connect)
+    with pytest.raises(ValueError, match="sidecar|rollback image"):
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+    assert connect_uris == [database.absolute().as_uri() + "?mode=ro&immutable=1"]
+    assert database.read_bytes() == before_bytes
+    assert sidecar.read_bytes() == b"appeared-after-version-probe"
+
+
+def test_normal_connection_rechecks_version_before_mutable_pragmas(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    database = tmp_path / "run.sqlite3"
+    run_manifest = manifest()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ):
+        pass
+    real_connect = sqlite3.connect
+    read_write_statements: list[str] = []
+
+    class RacingVersionConnection:
+        def __init__(self, connection: sqlite3.Connection) -> None:
+            self._connection = connection
+
+        def execute(self, statement: str) -> sqlite3.Cursor:
+            return self._connection.execute(statement)
+
+        def close(self) -> None:
+            self._connection.close()
+            with real_connect(database) as drift_connection:
+                drift_connection.execute("PRAGMA user_version = 5")
+
+    class TrackingReadWriteConnection:
+        def __init__(self, connection: sqlite3.Connection) -> None:
+            self._connection = connection
+
+        def execute(self, statement: str) -> sqlite3.Cursor:
+            read_write_statements.append(statement)
+            return self._connection.execute(statement)
+
+        def close(self) -> None:
+            self._connection.close()
+
+    def racing_connect(
+        database_uri: str, **kwargs: object
+    ) -> RacingVersionConnection | TrackingReadWriteConnection:
+        connection = real_connect(database_uri, **kwargs)
+        if "immutable=1" in database_uri:
+            return RacingVersionConnection(connection)
+        return TrackingReadWriteConnection(connection)
+
+    monkeypatch.setattr(storage_module.sqlite3, "connect", racing_connect)
+    with pytest.raises(ValueError, match="storage schema version.*unsupported.*found 5"):
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+    assert read_write_statements == ["PRAGMA user_version"]
+
+
+@pytest.mark.parametrize(("main_version", "wal_version"), ((5, 6), (6, 5)))
+def test_open_rejects_committed_wal_before_immutable_version_probe(
+    tmp_path: Path, main_version: int, wal_version: int
+) -> None:
+    database = tmp_path / "wal-backed.sqlite3"
+    writer = sqlite3.connect(database)
+    try:
+        assert writer.execute("PRAGMA journal_mode = WAL").fetchone() == ("wal",)
+        writer.execute("PRAGMA wal_autocheckpoint = 0")
+        writer.execute("CREATE TABLE wal_fixture (value TEXT NOT NULL)")
+        writer.execute(f"PRAGMA user_version = {main_version}")
+        writer.commit()
+        assert writer.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()[0] == 0
+        assert int.from_bytes(database.read_bytes()[60:64], "big") == main_version
+
+        writer.execute(f"PRAGMA user_version = {wal_version}")
+        writer.execute("INSERT INTO wal_fixture VALUES ('committed-in-wal')")
+        writer.commit()
+        assert writer.execute("PRAGMA user_version").fetchone() == (wal_version,)
+        assert Path(f"{database}-wal").exists()
+        before_directory = {path.name: path.read_bytes() for path in tmp_path.iterdir()}
+        run_manifest = manifest()
+
+        with pytest.raises(ValueError, match="sidecar|rollback image"):
+            RunStorage.open(
+                database,
+                manifest=run_manifest,
+                artifact_hashes={"population": SHA_B},
+                expected_agent_ids=expected_agent_ids(run_manifest),
+                expected_exposure_mode="self_history_only",
+                expected_exposure_graph_hash=None,
+            )
+
+        assert {path.name: path.read_bytes() for path in tmp_path.iterdir()} == before_directory
+    finally:
+        writer.close()
 
 
 def test_failed_attempt_is_append_only_and_does_not_mutate_research_state(

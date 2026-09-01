@@ -38,6 +38,7 @@ from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
 
 _SCHEMA_VERSION = "paper1.run-storage.v6"
 _SQLITE_USER_VERSION = 6
+_SQLITE_SIDECAR_SUFFIXES = ("-wal", "-shm", "-journal")
 
 
 class ExecutionStatus(StrEnum):
@@ -824,7 +825,7 @@ class RunStorage:
             getattr(before, "st_file_attributes", 0) & 0x400
         ):
             raise RuntimeError("run database path must name a regular non-reparse file")
-        flags = os.O_RDWR | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_BINARY", 0)
+        flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_BINARY", 0)
         if os.name != "nt":
             flags |= getattr(os, "O_NOFOLLOW", 0)
         descriptor = os.open(database, flags)
@@ -840,10 +841,22 @@ class RunStorage:
                 or bool(getattr(after, "st_file_attributes", 0) & 0x400)
             ):
                 raise RuntimeError("run database identity is not stable")
-            return os.fdopen(descriptor, "r+b", buffering=0)
+            return os.fdopen(descriptor, "rb", buffering=0)
         except BaseException:
             os.close(descriptor)
             raise
+
+    @staticmethod
+    def _assert_sqlite_sidecar_free(database: Path) -> None:
+        """Require one stable rollback image before immutable version inspection."""
+
+        for suffix in _SQLITE_SIDECAR_SUFFIXES:
+            sidecar = Path(f"{database}{suffix}")
+            if sidecar.exists() or sidecar.is_symlink():
+                raise ValueError(
+                    "storage open requires a sidecar-free rollback image; "
+                    f"found SQLite sidecar {sidecar.name}"
+                )
 
     @classmethod
     def create(
@@ -1257,6 +1270,7 @@ class RunStorage:
         database_uri = database.absolute().as_uri() + "?mode=rw"
         connection: sqlite3.Connection | None = None
         try:
+            cls._assert_sqlite_sidecar_free(database)
             read_only_uri = database.absolute().as_uri() + "?mode=ro&immutable=1"
             version_connection = sqlite3.connect(read_only_uri, uri=True)
             try:
@@ -1271,7 +1285,15 @@ class RunStorage:
                     f"expected SQLite user_version {_SQLITE_USER_VERSION}, "
                     f"found {observed_user_version}"
                 )
+            cls._assert_sqlite_sidecar_free(database)
             connection = sqlite3.connect(database_uri, isolation_level=None, uri=True)
+            observed_user_version = connection.execute("PRAGMA user_version").fetchone()[0]
+            if observed_user_version != _SQLITE_USER_VERSION:
+                raise ValueError(
+                    "storage schema version is unsupported: "
+                    f"expected SQLite user_version {_SQLITE_USER_VERSION}, "
+                    f"found {observed_user_version}"
+                )
             connection.execute("PRAGMA foreign_keys = ON")
             store = cls(
                 database,
