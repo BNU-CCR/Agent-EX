@@ -4,9 +4,16 @@ import json
 
 import pytest
 
+from agent_ex.adapters import base as adapter_base
 from agent_ex.adapters.base import AdapterRequest, AdapterResponse, ModelAdapter
-from agent_ex.adapters.mock import MockAdapter, MockScriptStep, validate_adapter_response
+from agent_ex.adapters.mock import (
+    MockAdapter,
+    MockScriptStep,
+    validate_adapter_response,
+    verify_persisted_mock_response,
+)
 from agent_ex.domain import canonical_payload_hash, derive_attempt_id
+from agent_ex.execution_evidence import MockAdapterExecutionBinding
 from agent_ex.persona import render_persona
 from agent_ex.prompt import PromptView, render_messages
 from test_prompt import EVENT_ID, build as build_prompt, member, persona_template
@@ -18,7 +25,9 @@ MESSAGES = (
 )
 
 
-def request(*, event_id: str = EVENT_ID, attempt_index: int = 1) -> AdapterRequest:
+def request(
+    *, event_id: str = EVENT_ID, attempt_index: int = 1, mock_seed: int = 12345
+) -> AdapterRequest:
     view = (
         build_prompt()
         if event_id == EVENT_ID
@@ -34,7 +43,7 @@ def request(*, event_id: str = EVENT_ID, attempt_index: int = 1) -> AdapterReque
     return AdapterRequest.create(
         prompt_view=view,
         attempt_index=attempt_index,
-        mock_seed=12345,
+        mock_seed=mock_seed,
         mock_only=True,
     )
 
@@ -53,6 +62,12 @@ def adapter() -> MockAdapter:
         mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
         mock_only=True,
     )
+
+
+def _rehash_response_payload(payload: dict[str, object]) -> dict[str, object]:
+    content = {key: value for key, value in payload.items() if key != "record_hash"}
+    payload["record_hash"] = canonical_payload_hash(content)
+    return payload
 
 
 def test_mock_adapter_implements_interface_and_returns_hash_bound_success() -> None:
@@ -86,6 +101,158 @@ def test_mock_adapter_implements_interface_and_returns_hash_bound_success() -> N
     assert response.record_hash == canonical_payload_hash(response.content_payload())
     assert AdapterResponse.from_payload(response.to_payload()) == response
     validate_adapter_response(response, request(), adapter())
+
+
+def test_execution_binding_is_available_before_generate_and_matches_response() -> None:
+    value = adapter()
+
+    binding = value.execution_binding()
+    response = value.generate(request())
+
+    assert isinstance(binding, MockAdapterExecutionBinding)
+    assert MockAdapterExecutionBinding.from_payload(binding.to_payload()) == binding
+    assert binding.expected_adapter_kind == response.runtime_identity["adapter"]
+    assert binding.expected_adapter_version == response.runtime_identity["adapter_version"]
+    assert binding.runtime_identity == response.runtime_identity
+    assert binding.runtime_identity_hash == response.runtime_identity_hash
+    assert binding.model_identity == response.model_identity
+    assert binding.model_identity_hash == response.model_identity_hash
+    assert binding.script_hash == response.script_hash
+
+
+def test_persisted_response_roundtrip_rehydrates_trusted_response_without_generate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    value = adapter()
+    trusted_request = request()
+    binding = value.execution_binding()
+    response = value.generate(trusted_request)
+    calls = 0
+
+    def fail_generate(_: AdapterRequest) -> AdapterResponse:
+        nonlocal calls
+        calls += 1
+        pytest.fail("persisted response verification replayed generate")
+
+    monkeypatch.setattr(value, "generate", fail_generate)
+    restored = verify_persisted_mock_response(
+        request=trusted_request,
+        response_payload=response.to_payload(),
+        binding=binding,
+    )
+
+    assert restored == response
+    assert adapter_base._has_trusted_response_seal(restored)
+    assert calls == 0
+
+
+@pytest.mark.parametrize(
+    "mismatch",
+    ["request", "event", "attempt", "mock_seed"],
+)
+def test_persisted_response_rejects_complete_request_linkage_mismatch(mismatch: str) -> None:
+    value = adapter()
+    trusted_request = request()
+    payload = value.generate(trusted_request).to_payload()
+    if mismatch == "request":
+        other = request(attempt_index=2)
+    elif mismatch == "event":
+        other = request(event_id="event-other")
+    elif mismatch == "attempt":
+        other = request(attempt_index=3)
+    else:
+        other = request(mock_seed=54321)
+
+    with pytest.raises(ValueError, match="request|event|attempt|seed|link"):
+        verify_persisted_mock_response(
+            request=other,
+            response_payload=payload,
+            binding=value.execution_binding(),
+        )
+
+
+@pytest.mark.parametrize("field", ["script_hash", "runtime_identity", "model_identity"])
+def test_persisted_response_rejects_independently_tampered_and_rehashed_response(
+    field: str,
+) -> None:
+    value = adapter()
+    trusted_request = request()
+    payload = value.generate(trusted_request).to_payload()
+    if field == "script_hash":
+        payload[field] = "1" * 64
+    else:
+        identity = dict(payload[field])  # type: ignore[arg-type]
+        identity[next(iter(identity))] = "tampered"
+        payload[field] = identity
+        payload[f"{field}_hash"] = canonical_payload_hash(identity)
+    _rehash_response_payload(payload)
+
+    with pytest.raises(ValueError, match="binding|script|runtime|model"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=payload,
+            binding=value.execution_binding(),
+        )
+
+
+@pytest.mark.parametrize("field", ["script_hash", "runtime_identity", "model_identity"])
+def test_persisted_response_rejects_independently_tampered_and_rehashed_binding(
+    field: str,
+) -> None:
+    value = adapter()
+    trusted_request = request()
+    original = value.execution_binding()
+    values = {
+        "expected_adapter_kind": original.expected_adapter_kind,
+        "expected_adapter_version": original.expected_adapter_version,
+        "runtime_identity": dict(original.runtime_identity),
+        "model_identity": dict(original.model_identity),
+        "script_hash": original.script_hash,
+        "mock_only": True,
+    }
+    if field == "script_hash":
+        values[field] = "2" * 64
+    else:
+        identity = dict(values[field])  # type: ignore[arg-type]
+        identity[next(iter(identity))] = "tampered"
+        values[field] = identity
+        if field == "runtime_identity":
+            values["expected_adapter_kind"] = identity["adapter"]
+            values["expected_adapter_version"] = identity["adapter_version"]
+    tampered = MockAdapterExecutionBinding.create(**values)  # type: ignore[arg-type]
+
+    with pytest.raises(ValueError, match="binding|script|runtime|model|adapter"):
+        verify_persisted_mock_response(
+            request=trusted_request,
+            response_payload=value.generate(trusted_request).to_payload(),
+            binding=tampered,
+        )
+
+
+def test_persisted_response_rejects_untrusted_and_tampered_request() -> None:
+    value = adapter()
+    trusted = request()
+    response_payload = value.generate(trusted).to_payload()
+    untrusted = AdapterRequest.from_payload(trusted.to_payload())
+    with pytest.raises(ValueError, match="trusted|sealed|capability"):
+        verify_persisted_mock_response(
+            request=untrusted,
+            response_payload=response_payload,
+            binding=value.execution_binding(),
+        )
+
+    object.__setattr__(trusted, "mock_seed", 999)
+    object.__setattr__(trusted, "record_hash", canonical_payload_hash(trusted.content_payload()))
+    with pytest.raises(ValueError, match="trusted|sealed|capability"):
+        verify_persisted_mock_response(
+            request=trusted,
+            response_payload=response_payload,
+            binding=value.execution_binding(),
+        )
+
+
+def test_base_layer_does_not_export_a_public_arbitrary_response_reseal() -> None:
+    assert not hasattr(adapter_base, "reseal_verified_persisted_response")
 
 
 def test_mock_adapter_returns_scripted_malformed_and_timeout_without_retrying() -> None:

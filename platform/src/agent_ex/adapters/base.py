@@ -73,6 +73,24 @@ def _has_trusted_response_seal(response: AdapterResponse) -> bool:
     return _has_bound_seal(response, _verify_response_seal)
 
 
+def _reseal_verified_persisted_response(response: AdapterResponse) -> AdapterResponse:
+    """Restore same-process integrity after a private caller completes causal checks.
+
+    This is an internal integrity boundary, not a security boundary.  It deliberately
+    does not validate provenance itself and must never be exposed as a public response
+    factory; adapter-specific rehydration code owns those checks.
+    """
+
+    if not isinstance(response, AdapterResponse):
+        raise TypeError("persisted response must be a typed AdapterResponse")
+    object.__setattr__(
+        response,
+        "_factory_seal",
+        _issue_response_seal(response.record_hash),  # type: ignore[operator]
+    )
+    return response
+
+
 def _derive_request_id(
     *,
     event_id: str,

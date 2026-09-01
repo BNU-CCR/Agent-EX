@@ -14,12 +14,14 @@ from ..domain import (
     _require_string,
     canonical_payload_hash,
 )
+from ..execution_evidence import MockAdapterExecutionBinding
 from .base import (
     AdapterRequest,
     AdapterResponse,
     ModelAdapter,
     _issue_response_seal,
     _has_trusted_request_seal,
+    _reseal_verified_persisted_response,
 )
 
 
@@ -114,6 +116,18 @@ class MockAdapter(ModelAdapter):
             }
         )
 
+    def execution_binding(self) -> MockAdapterExecutionBinding:
+        """Return immutable execution evidence derived from this frozen adapter."""
+
+        return MockAdapterExecutionBinding.create(
+            expected_adapter_kind=_RUNTIME["adapter"],
+            expected_adapter_version=_RUNTIME["adapter_version"],
+            runtime_identity=dict(self._runtime),
+            model_identity=dict(_MODEL_IDENTITY),
+            script_hash=self._script_hash,
+            mock_only=True,
+        )
+
     def generate(self, request: AdapterRequest) -> AdapterResponse:
         if not isinstance(request, AdapterRequest):
             raise TypeError("request must be an AdapterRequest")
@@ -196,3 +210,80 @@ def validate_adapter_response(
             "adapter response replay does not match trusted request, script, or runtime"
         )
     return expected
+
+
+def verify_persisted_mock_response(
+    *,
+    request: AdapterRequest,
+    response_payload: Mapping[str, object],
+    binding: MockAdapterExecutionBinding,
+) -> AdapterResponse:
+    """Causally verify and reseal persisted mock evidence without invoking an adapter."""
+
+    if not isinstance(request, AdapterRequest):
+        raise TypeError("persisted response verification requires an AdapterRequest")
+    if not _has_trusted_request_seal(request):
+        raise ValueError("adapter request is not a trusted sealed prompt capability")
+    if AdapterRequest.from_payload(request.to_payload()) != request:
+        raise ValueError("adapter request replay does not match its record")
+    if not isinstance(binding, MockAdapterExecutionBinding):
+        raise TypeError("persisted response verification requires a typed execution binding")
+
+    expected_binding = {
+        "expected_adapter_kind": _RUNTIME["adapter"],
+        "expected_adapter_version": _RUNTIME["adapter_version"],
+        "runtime_identity": _RUNTIME,
+        "runtime_identity_hash": canonical_payload_hash(_RUNTIME),
+        "model_identity": _MODEL_IDENTITY,
+        "model_identity_hash": canonical_payload_hash(_MODEL_IDENTITY),
+    }
+    for name, expected in expected_binding.items():
+        if getattr(binding, name) != expected:
+            raise ValueError(f"mock adapter execution binding {name} drifted")
+
+    response = AdapterResponse.from_payload(response_payload)
+    linked_fields = (
+        "request_id",
+        "event_id",
+        "topic_package_id",
+        "topic_package_hash",
+        "attempt_index",
+        "attempt_id",
+        "mock_seed",
+    )
+    if response.request_hash != request.record_hash or any(
+        getattr(response, name) != getattr(request, name) for name in linked_fields
+    ):
+        raise ValueError("persisted response does not completely bind its trusted request")
+    if (
+        response.runtime_identity != binding.runtime_identity
+        or response.runtime_identity_hash != binding.runtime_identity_hash
+    ):
+        raise ValueError("persisted response runtime binding drifted")
+    if (
+        response.model_identity != binding.model_identity
+        or response.model_identity_hash != binding.model_identity_hash
+    ):
+        raise ValueError("persisted response model binding drifted")
+    if response.script_hash != binding.script_hash:
+        raise ValueError("persisted response script binding drifted")
+
+    response_identity = {
+        "request_hash": request.record_hash,
+        "event_id": request.event_id,
+        "topic_package_id": request.topic_package_id,
+        "topic_package_hash": request.topic_package_hash,
+        "attempt_index": request.attempt_index,
+        "attempt_id": request.attempt_id,
+        "mock_seed": request.mock_seed,
+        "script_hash": binding.script_hash,
+    }
+    if response.response_id != "adapter-response-" + canonical_payload_hash(response_identity):
+        raise ValueError("persisted response identity does not match its causal linkage")
+    expected_provider_request_id = "mock-provider-request-" + canonical_payload_hash(
+        {**response_identity, "runtime_identity": binding.runtime_identity}
+    )
+    if response.provider_request_id != expected_provider_request_id:
+        raise ValueError("persisted provider request identity does not match execution binding")
+
+    return _reseal_verified_persisted_response(response)
