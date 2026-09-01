@@ -728,8 +728,13 @@ class FinalizedAttemptEvidence:
         if (
             parse.attempt_id != self.attempt.attempt_id
             or parse.request_id != self.attempt.request_id
+            or getattr(parse, "event_id", self.attempt.event_id) != self.attempt.event_id
+            or getattr(parse, "attempt_index", self.attempt.attempt_index)
+            != self.attempt.attempt_index
         ):
-            raise ValueError("parse evidence attempt or request does not match terminal attempt")
+            raise ValueError(
+                "parse evidence event, attempt index, attempt ID, or request does not match"
+            )
         expected_outcome = (
             "timeout" if isinstance(parse, ParseNotApplicableEvidence) else "response"
         )
@@ -760,6 +765,8 @@ class FinalizedAttemptEvidence:
                 or failure.event_id != self.attempt.event_id
                 or failure.terminal_attempt_hash
                 != canonical_payload_hash(self.attempt.to_payload())
+                or failure.terminal_transition_hash
+                != canonical_payload_hash(self.attempt.to_payload())
                 or derive_event_id(failure.run_id, failure.event_ordinal) != self.attempt.event_id
             ):
                 raise ValueError("terminal failure evidence does not match failed attempt")
@@ -768,11 +775,20 @@ class FinalizedAttemptEvidence:
                     raise ValueError("timeout parse N/A requires failed timeout without response")
                 if self.attempt.error.get("code") != "timeout":
                     raise ValueError("timeout parse N/A requires timeout attempt error")
+                if (
+                    dict(self.attempt.error) != dict(parse.error)
+                    or canonical_payload_hash(self.attempt.error) != parse.error_hash
+                ):
+                    raise ValueError("timeout attempt error must exactly match parse N/A error")
             else:
                 if parse.success:
                     raise ValueError("FAILED response attempt requires failed parse evidence")
                 if self.attempt.raw_response_hash != parse.raw_response_hash:
                     raise ValueError("failed response attempt and parse raw hash do not match")
+                if self.attempt.error is None or dict(self.attempt.error) != dict(
+                    parse.error or {}
+                ):
+                    raise ValueError("failed response attempt error must exactly match parse error")
         expected_id = _derive_record_id(
             "finalized-attempt-", {"attempt_id": self.attempt.attempt_id}
         )
@@ -876,6 +892,7 @@ class EventEvidenceReferences:
     terminal_attempt_hash: str | None
     committed_event_id: str | None
     committed_event_hash: str | None
+    record_hash: str = field(repr=False)
 
     def __post_init__(self) -> None:
         pairs = (
@@ -898,11 +915,55 @@ class EventEvidenceReferences:
             _require_id(f"{name}_id", identity)
             _require_sha256(f"{name}_hash", digest)
 
-    def to_payload(self) -> dict[str, object]:
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
         return {
             "schema_version": _REFERENCES_SCHEMA,
-            **{name: getattr(self, name) for name in self.__dataclass_fields__},
+            **{
+                name: getattr(self, name)
+                for name in self.__dataclass_fields__
+                if name != "record_hash"
+            },
         }
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        event_input_evidence_id: str | None,
+        event_input_evidence_hash: str | None,
+        request_id: str | None,
+        request_hash: str | None,
+        invocation_evidence_id: str | None,
+        invocation_evidence_hash: str | None,
+        parse_evidence_id: str | None,
+        parse_evidence_hash: str | None,
+        terminal_attempt_id: str | None,
+        terminal_attempt_hash: str | None,
+        committed_event_id: str | None,
+        committed_event_hash: str | None,
+    ) -> EventEvidenceReferences:
+        values = {
+            "event_input_evidence_id": event_input_evidence_id,
+            "event_input_evidence_hash": event_input_evidence_hash,
+            "request_id": request_id,
+            "request_hash": request_hash,
+            "invocation_evidence_id": invocation_evidence_id,
+            "invocation_evidence_hash": invocation_evidence_hash,
+            "parse_evidence_id": parse_evidence_id,
+            "parse_evidence_hash": parse_evidence_hash,
+            "terminal_attempt_id": terminal_attempt_id,
+            "terminal_attempt_hash": terminal_attempt_hash,
+            "committed_event_id": committed_event_id,
+            "committed_event_hash": committed_event_hash,
+        }
+        content = {"schema_version": _REFERENCES_SCHEMA, **values}
+        return cls(**values, record_hash=canonical_payload_hash(content))
 
     @classmethod
     def from_payload(cls, payload: Mapping[str, object]) -> EventEvidenceReferences:

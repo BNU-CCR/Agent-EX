@@ -156,6 +156,13 @@ def failure_evidence(attempt: GenerationAttempt) -> TerminalFailureEvidence:
     )
 
 
+def rehash_parse_payload(payload: dict[str, object]) -> dict[str, object]:
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    return payload
+
+
 def test_mock_attempt_policy_is_stable_sorted_strict_and_formal_ineligible() -> None:
     value = policy()
 
@@ -409,8 +416,119 @@ def test_finalized_attempt_enforces_success_failure_and_timeout_consistency() ->
         )
 
 
+@pytest.mark.parametrize(
+    ("field", "value"),
+    (("event_id", "event-other"), ("attempt_index", 2)),
+)
+def test_finalized_attempt_rejects_parse_event_and_attempt_index_mismatch(
+    field: str, value: object
+) -> None:
+    succeeded, parse, _, _ = success_chain()
+    payload = parse.to_payload()
+    payload[field] = value
+    drifted = type(parse).from_payload(rehash_parse_payload(payload))
+
+    with pytest.raises(ValueError, match="event|index"):
+        FinalizedAttemptEvidence.create(
+            attempt=succeeded,
+            parse_evidence=drifted,
+            terminal_failure_evidence=None,
+        )
+
+
+def test_finalized_attempt_rejects_timeout_error_message_or_hash_mismatch() -> None:
+    _, response, failed = timeout_chain()
+    not_applicable = ParseNotApplicableEvidence.create(
+        response=response,
+        parser_limits_hash=parser_limits().record_hash,
+    )
+    payload = failed.to_payload()
+    payload["error"] = {"code": "timeout", "message": "different timeout"}
+    drifted = GenerationAttempt.from_payload(payload)
+
+    with pytest.raises(ValueError, match="timeout.*error|error.*timeout"):
+        FinalizedAttemptEvidence.create(
+            attempt=drifted,
+            parse_evidence=not_applicable,
+            terminal_failure_evidence=failure_evidence(drifted),
+        )
+
+
+def test_finalized_attempt_rejects_failed_parse_structured_error_mismatch() -> None:
+    raw = '{"stance":"label-2","confidence":3}'
+    response, request, _ = parser_response(raw)
+    parse = parse_agent_update(response, topic_package=topic(), limits=parser_limits())
+    assert parse.success is False and parse.error is not None
+    payload = {
+        "attempt_id": request.attempt_id,
+        "event_id": request.event_id,
+        "attempt_index": request.attempt_index,
+        "status": "failed",
+        "request_id": request.request_id,
+        "exposure_id": build_prompt().exposure_id,
+        "rendered_messages": request.to_payload()["rendered_messages"],
+        "rendered_prompt_hash": request.rendered_messages_hash,
+        "request_parameters": {"temperature": 0.0},
+        "request_parameters_hash": canonical_payload_hash({"temperature": 0.0}),
+        "model_identity": dict(response.model_identity),
+        "model_identity_hash": response.model_identity_hash,
+        "model_seed": request.mock_seed,
+        "provider_request_id": response.provider_request_id,
+        "provider_metadata": response_metadata(response),
+        "provider_metadata_hash": canonical_payload_hash(response_metadata(response)),
+        "http_status": 200,
+        "raw_response": response.raw_response,
+        "raw_response_hash": response.raw_response_hash,
+        "parsed_response": None,
+        "parsed_response_hash": None,
+        "usage": {},
+        "usage_hash": canonical_payload_hash({}),
+        "finish_reason": "stop",
+        "error": dict(parse.error),
+        "started_at": NOW,
+        "finished_at": NOW,
+    }
+    failed = GenerationAttempt.from_payload(payload)
+    exact = FinalizedAttemptEvidence.create(
+        attempt=failed,
+        parse_evidence=parse,
+        terminal_failure_evidence=failure_evidence(failed),
+    )
+    assert FinalizedAttemptEvidence.from_payload(exact.to_payload()) == exact
+
+    payload["error"] = {"code": "different", "message": "different parse failure"}
+    failed = GenerationAttempt.from_payload(payload)
+
+    with pytest.raises(ValueError, match="parse.*error|error.*parse"):
+        FinalizedAttemptEvidence.create(
+            attempt=failed,
+            parse_evidence=parse,
+            terminal_failure_evidence=failure_evidence(failed),
+        )
+
+
+@pytest.mark.parametrize("field", ("terminal_transition_hash", "terminal_attempt_hash"))
+def test_finalized_attempt_rejects_terminal_failure_hash_mismatch(field: str) -> None:
+    _, response, failed = timeout_chain()
+    not_applicable = ParseNotApplicableEvidence.create(
+        response=response,
+        parser_limits_hash=parser_limits().record_hash,
+    )
+    evidence = failure_evidence(failed)
+    payload = evidence.to_payload()
+    payload[field] = "f" * 64
+    drifted = TerminalFailureEvidence.from_payload(payload)
+
+    with pytest.raises(ValueError, match="terminal failure|transition|attempt"):
+        FinalizedAttemptEvidence.create(
+            attempt=failed,
+            parse_evidence=not_applicable,
+            terminal_failure_evidence=drifted,
+        )
+
+
 def test_event_evidence_references_validate_pairs_prefixes_round_trip_and_strict_fields() -> None:
-    refs = EventEvidenceReferences(
+    refs = EventEvidenceReferences.create(
         event_input_evidence_id="event-input-1",
         event_input_evidence_hash="a" * 64,
         request_id="adapter-request-1",
@@ -425,6 +543,8 @@ def test_event_evidence_references_validate_pairs_prefixes_round_trip_and_strict
         committed_event_hash=None,
     )
     assert EventEvidenceReferences.from_payload(refs.to_payload()) == refs
+    with pytest.raises(FrozenInstanceError):
+        refs.request_id = "adapter-request-other"  # type: ignore[misc]
     with pytest.raises(ValueError, match="paired"):
         replace(refs, invocation_evidence_hash=None)
     with pytest.raises(ValueError, match="prefix"):
@@ -432,6 +552,34 @@ def test_event_evidence_references_validate_pairs_prefixes_round_trip_and_strict
     payload = refs.to_payload()
     payload["extra"] = None
     with pytest.raises(ValueError, match="fields"):
+        EventEvidenceReferences.from_payload(payload)
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    (("request_id", "adapter-request-tampered"), ("request_hash", "f" * 64)),
+)
+def test_event_evidence_references_reject_tamper_without_root_rehash(
+    field: str, value: str
+) -> None:
+    refs = EventEvidenceReferences.create(
+        event_input_evidence_id="event-input-1",
+        event_input_evidence_hash="a" * 64,
+        request_id="adapter-request-1",
+        request_hash="b" * 64,
+        invocation_evidence_id=None,
+        invocation_evidence_hash=None,
+        parse_evidence_id=None,
+        parse_evidence_hash=None,
+        terminal_attempt_id=None,
+        terminal_attempt_hash=None,
+        committed_event_id=None,
+        committed_event_hash=None,
+    )
+    payload = refs.to_payload()
+    payload[field] = value
+
+    with pytest.raises(ValueError, match="record_hash|canonical"):
         EventEvidenceReferences.from_payload(payload)
 
 
