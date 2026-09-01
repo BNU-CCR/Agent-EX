@@ -9,7 +9,7 @@ import re
 import secrets
 from typing import TYPE_CHECKING, Mapping
 
-from .adapters.base import AdapterResponse
+from .adapters.base import AdapterRequest, AdapterResponse, _has_trusted_request_seal
 from .domain import (
     EventStatus,
     ExposureRecord,
@@ -38,6 +38,7 @@ if TYPE_CHECKING:
 _POLICY_SCHEMA = "paper1.mock-attempt-policy-binding.v1"
 _ADAPTER_BINDING_SCHEMA = "paper1.mock-adapter-execution-binding.v2"
 _EVENT_INPUT_SCHEMA = "paper1.event-input-evidence.v1"
+_ADAPTER_REQUEST_EVIDENCE_SCHEMA = "paper1.adapter-request-evidence.v1"
 _INVOCATION_SCHEMA = "paper1.persisted-invocation-evidence.v1"
 _PARSE_NA_SCHEMA = "paper1.parse-not-applicable-evidence.v1"
 _FINALIZED_SCHEMA = "paper1.finalized-attempt-evidence.v1"
@@ -86,6 +87,9 @@ def _make_binding_capability_authenticator() -> tuple[object, object]:
 
 
 _issue_binding_seal, _verify_binding_seal = _make_binding_capability_authenticator()
+_issue_request_evidence_seal, _verify_request_evidence_seal = (
+    _make_binding_capability_authenticator()
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -567,6 +571,26 @@ class EventInputEvidence:
         ):
             if type(payload[name]) is not dict:
                 raise TypeError(f"{name} must be a JSON object")
+        prompt_payload = dict(payload["prompt_view"])
+        current_private = prompt_payload.get("current_private")
+        memory_items = prompt_payload.get("memory_items")
+        if type(current_private) is not dict or type(memory_items) is not list:
+            raise TypeError("prompt private and memory projections are malformed")
+        prompt_payload["current_private"] = {
+            "stance": current_private.get("stance"),
+            "reason": current_private.get("reason"),
+        }
+        prompt_payload["memory_items"] = [
+            {
+                "stance": item.get("stance"),
+                "reason": item.get("reason"),
+                "published": item.get("published"),
+            }
+            for item in memory_items
+            if type(item) is dict
+        ]
+        if len(prompt_payload["memory_items"]) != len(memory_items):
+            raise TypeError("prompt memory items must be JSON objects")
         return cls(
             evidence_id=payload["evidence_id"],  # type: ignore[arg-type]
             event_id=payload["event_id"],  # type: ignore[arg-type]
@@ -574,12 +598,184 @@ class EventInputEvidence:
             exposure_selection=ExposureSelection.from_payload(payload["exposure_selection"]),  # type: ignore[arg-type]
             exposure_record=ExposureRecord.from_payload(payload["exposure_record"]),  # type: ignore[arg-type]
             memory_view=MemoryView.from_payload(payload["memory_view"]),  # type: ignore[arg-type]
-            prompt_view=PromptView.from_payload(payload["prompt_view"]),  # type: ignore[arg-type]
+            prompt_view=PromptView.from_payload(prompt_payload),
             parser_limits=ParserLimits.from_payload(payload["parser_limits"]),  # type: ignore[arg-type]
             state_context_hash=payload["state_context_hash"],  # type: ignore[arg-type]
             publish_flag=payload["publish_flag"],  # type: ignore[arg-type]
             record_hash=payload["record_hash"],  # type: ignore[arg-type]
         )
+
+
+@dataclass(frozen=True, slots=True)
+class AdapterRequestEvidence:
+    """Complete provider-neutral request row plus explicit authorization bindings."""
+
+    request_id: str
+    request_hash: str
+    event_id: str
+    attempt_id: str
+    attempt_index: int
+    request: AdapterRequest
+    model_identity: Mapping[str, str]
+    model_identity_hash: str
+    request_parameters: Mapping[str, object]
+    request_parameters_hash: str
+    model_seed: int
+    prompt_limits_hash: str
+    parser_limits_hash: str
+    attempt_policy_hash: str
+    adapter_execution_binding_hash: str
+    record_hash: str = field(repr=False)
+    _factory_seal: object = field(default=None, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        for name in ("request_id", "event_id", "attempt_id"):
+            _require_id(name, getattr(self, name))
+        for name in (
+            "request_hash",
+            "model_identity_hash",
+            "request_parameters_hash",
+            "prompt_limits_hash",
+            "parser_limits_hash",
+            "attempt_policy_hash",
+            "adapter_execution_binding_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        _require_int("attempt_index", self.attempt_index, minimum=1)
+        _require_int("model_seed", self.model_seed)
+        if not isinstance(self.request, AdapterRequest):
+            raise TypeError("request must be a typed AdapterRequest")
+        if not isinstance(self.model_identity, Mapping) or not self.model_identity:
+            raise ValueError("model_identity must be a non-empty mapping")
+        if not isinstance(self.request_parameters, Mapping):
+            raise TypeError("request_parameters must be a mapping")
+        if (
+            self.request_id != self.request.request_id
+            or self.request_hash != self.request.record_hash
+            or self.event_id != self.request.event_id
+            or self.attempt_id != self.request.attempt_id
+            or self.attempt_index != self.request.attempt_index
+            or self.model_seed != self.request.mock_seed
+        ):
+            raise ValueError("request envelope identity or model seed does not match request")
+        _require_payload_hash("model_identity_hash", self.model_identity_hash, self.model_identity)
+        _require_payload_hash(
+            "request_parameters_hash", self.request_parameters_hash, self.request_parameters
+        )
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+        object.__setattr__(self, "model_identity", _freeze(self.model_identity))
+        object.__setattr__(self, "request_parameters", _freeze(self.request_parameters))
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": _ADAPTER_REQUEST_EVIDENCE_SCHEMA,
+            "request_id": self.request_id,
+            "request_hash": self.request_hash,
+            "event_id": self.event_id,
+            "attempt_id": self.attempt_id,
+            "attempt_index": self.attempt_index,
+            "request": self.request.to_payload(),
+            "model_identity": self.model_identity,
+            "model_identity_hash": self.model_identity_hash,
+            "request_parameters": self.request_parameters,
+            "request_parameters_hash": self.request_parameters_hash,
+            "model_seed": self.model_seed,
+            "prompt_limits_hash": self.prompt_limits_hash,
+            "parser_limits_hash": self.parser_limits_hash,
+            "attempt_policy_hash": self.attempt_policy_hash,
+            "adapter_execution_binding_hash": self.adapter_execution_binding_hash,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        request: AdapterRequest,
+        model_identity: Mapping[str, str],
+        request_parameters: Mapping[str, object],
+        model_seed: int,
+        prompt_limits_hash: str,
+        parser_limits_hash: str,
+        attempt_policy_hash: str,
+        adapter_execution_binding_hash: str,
+    ) -> AdapterRequestEvidence:
+        if not isinstance(request, AdapterRequest) or not _has_trusted_request_seal(request):
+            raise ValueError("request evidence requires a trusted sealed AdapterRequest")
+        values = {
+            "request_id": request.request_id,
+            "request_hash": request.record_hash,
+            "event_id": request.event_id,
+            "attempt_id": request.attempt_id,
+            "attempt_index": request.attempt_index,
+            "request": request,
+            "model_identity": model_identity,
+            "model_identity_hash": canonical_payload_hash(model_identity),
+            "request_parameters": request_parameters,
+            "request_parameters_hash": canonical_payload_hash(request_parameters),
+            "model_seed": model_seed,
+            "prompt_limits_hash": prompt_limits_hash,
+            "parser_limits_hash": parser_limits_hash,
+            "attempt_policy_hash": attempt_policy_hash,
+            "adapter_execution_binding_hash": adapter_execution_binding_hash,
+        }
+        content = {
+            "schema_version": _ADAPTER_REQUEST_EVIDENCE_SCHEMA,
+            **{key: value for key, value in values.items() if key != "request"},
+            "request": request.to_payload(),
+        }
+        record_hash = canonical_payload_hash(content)
+        return cls(
+            **values,
+            record_hash=record_hash,
+            _factory_seal=_issue_request_evidence_seal(record_hash),  # type: ignore[operator]
+        )
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> AdapterRequestEvidence:
+        expected = {name for name in cls.__dataclass_fields__ if name != "_factory_seal"} | {
+            "schema_version"
+        }
+        _strict_payload(payload, expected, "adapter request evidence")
+        if payload["schema_version"] != _ADAPTER_REQUEST_EVIDENCE_SCHEMA:
+            raise ValueError("adapter request evidence schema is unsupported")
+        if type(payload["request"]) is not dict:
+            raise TypeError("adapter request evidence request must be a JSON object")
+        request_payload = dict(payload["request"])
+        messages = request_payload.get("rendered_messages")
+        if type(messages) is not list or any(type(item) is not dict for item in messages):
+            raise TypeError("adapter request rendered_messages must be a JSON array of objects")
+        request_payload["rendered_messages"] = [
+            {"role": item.get("role"), "content": item.get("content")} for item in messages
+        ]
+        return cls(
+            **{
+                name: (
+                    AdapterRequest.from_payload(request_payload)
+                    if name == "request"
+                    else payload[name]
+                )
+                for name in cls.__dataclass_fields__
+                if name != "_factory_seal"
+            }
+        )  # type: ignore[arg-type]
+
+
+def _has_trusted_adapter_request_evidence(value: AdapterRequestEvidence) -> bool:
+    try:
+        return (
+            isinstance(value, AdapterRequestEvidence)
+            and _has_trusted_request_seal(value.request)
+            and value.record_hash == canonical_payload_hash(value.content_payload())
+            and _verify_request_evidence_seal(  # type: ignore[operator]
+                value._factory_seal, value.record_hash
+            )
+        )
+    except (TypeError, ValueError, UnicodeError, RecursionError):
+        return False
 
 
 def _validate_execution_payload(payload: Mapping[str, object]) -> None:

@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
 from types import MappingProxyType
-from typing import BinaryIO, Callable, Mapping
+from typing import TYPE_CHECKING, BinaryIO, Callable, Mapping
 
 from .artifacts import ArtifactEnvelope
 from .domain import (
@@ -34,6 +34,19 @@ from .domain import (
 from .feed import FeedCursor
 from .network import validate_shadow_artifact, validate_ws_artifact
 from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
+
+if TYPE_CHECKING:
+    from .execution_evidence import (
+        AdapterRequestEvidence,
+        EventEvidenceReferences,
+        EventInputEvidence,
+        FinalizedAttemptEvidence,
+        MockAdapterExecutionBinding,
+        MockAttemptPolicyBinding,
+        ParseNotApplicableEvidence,
+        PersistedInvocationEvidence,
+    )
+    from .parser import ParseEvidence
 
 
 _SCHEMA_VERSION = "paper1.run-storage.v6"
@@ -1651,6 +1664,23 @@ class RunStorage:
                 or replayed.raw_response_hash != external_response.sha256
             ):
                 raise ValueError("external response URI and hash must bind the raw response")
+        self._begin_write()
+        try:
+            self._append_attempt_in_transaction(replayed, external_response=external_response)
+            self._commit_write()
+        except sqlite3.IntegrityError as error:
+            self._connection.rollback()
+            raise ValueError("attempt records are append-only") from error
+        except BaseException:
+            self._connection.rollback()
+            raise
+
+    def _append_attempt_in_transaction(
+        self,
+        replayed: GenerationAttempt,
+        *,
+        external_response: ExternalResponseReference | None = None,
+    ) -> None:
         progress = self.progress
         ordinal = progress.next_event_ordinal
         if not 0 <= ordinal < min(progress.expected_event_count, self._schedule.count):
@@ -1766,54 +1796,44 @@ class RunStorage:
             status_counts=counts,
             failed_event_ids=(),
         )
-        try:
-            self._begin_write()
-            if transition_index == 1:
-                self._assert_retry_authorized(replayed.event_id, replayed.attempt_index)
-            self._connection.execute(
-                """INSERT INTO attempt_transitions
-                   (attempt_id, transition_index, event_id, attempt_index, status,
-                    payload_json, payload_hash, raw_response_uri, raw_response_hash)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                (
-                    replayed.attempt_id,
-                    transition_index,
-                    replayed.event_id,
-                    replayed.attempt_index,
-                    replayed.status.value,
-                    _canonical_json(payload),
-                    canonical_payload_hash(full_payload),
-                    None if external_response is None else external_response.uri,
-                    None if external_response is None else external_response.sha256,
-                ),
-            )
-            self._replace_execution_state(transition_execution)
-            if replayed.status not in {EventStatus.FAILED, EventStatus.SUCCEEDED}:
-                self._commit_write()
-                return
-            self._connection.execute(
-                """INSERT INTO attempts
-                   (attempt_id, event_id, attempt_index, status, payload_json, payload_hash,
-                    raw_response_uri, raw_response_hash)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-                (
-                    replayed.attempt_id,
-                    replayed.event_id,
-                    replayed.attempt_index,
-                    replayed.status.value,
-                    _canonical_json(payload),
-                    canonical_payload_hash(full_payload),
-                    None if external_response is None else external_response.uri,
-                    None if external_response is None else external_response.sha256,
-                ),
-            )
-            self._commit_write()
-        except sqlite3.IntegrityError as error:
-            self._connection.rollback()
-            raise ValueError("attempt records are append-only") from error
-        except BaseException:
-            self._connection.rollback()
-            raise
+        if transition_index == 1:
+            self._assert_retry_authorized(replayed.event_id, replayed.attempt_index)
+        self._connection.execute(
+            """INSERT INTO attempt_transitions
+               (attempt_id, transition_index, event_id, attempt_index, status,
+                payload_json, payload_hash, raw_response_uri, raw_response_hash)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (
+                replayed.attempt_id,
+                transition_index,
+                replayed.event_id,
+                replayed.attempt_index,
+                replayed.status.value,
+                _canonical_json(payload),
+                canonical_payload_hash(full_payload),
+                None if external_response is None else external_response.uri,
+                None if external_response is None else external_response.sha256,
+            ),
+        )
+        self._replace_execution_state(transition_execution)
+        if replayed.status not in {EventStatus.FAILED, EventStatus.SUCCEEDED}:
+            return
+        self._connection.execute(
+            """INSERT INTO attempts
+               (attempt_id, event_id, attempt_index, status, payload_json, payload_hash,
+                raw_response_uri, raw_response_hash)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            (
+                replayed.attempt_id,
+                replayed.event_id,
+                replayed.attempt_index,
+                replayed.status.value,
+                _canonical_json(payload),
+                canonical_payload_hash(full_payload),
+                None if external_response is None else external_response.uri,
+                None if external_response is None else external_response.sha256,
+            ),
+        )
 
     def attempt_transitions(self, attempt_id: str) -> tuple[GenerationAttempt, ...]:
         transitions, _ = self._attempt_transition_chain_entries(attempt_id)
@@ -1872,6 +1892,612 @@ class RunStorage:
             for row, item in zip(rows, replayed)
         ]
         return replayed, entries
+
+    @staticmethod
+    def _changed_request_parameter_paths(
+        before: Mapping[str, object],
+        after: Mapping[str, object],
+        prefix: str = "request_parameters",
+    ) -> set[str]:
+        changed: set[str] = set()
+        for key in set(before) | set(after):
+            path = f"{prefix}.{key}"
+            left = before.get(key, object())
+            right = after.get(key, object())
+            if isinstance(left, Mapping) and isinstance(right, Mapping):
+                changed.update(RunStorage._changed_request_parameter_paths(left, right, path))
+            elif left != right:
+                changed.add(path)
+        return changed
+
+    def _insert_or_exact_match_evidence(
+        self,
+        table: str,
+        key_name: str,
+        key: str,
+        payload: Mapping[str, object],
+        record_hash: str,
+        *,
+        extra_columns: tuple[str, ...] = (),
+        extra_values: tuple[object, ...] = (),
+    ) -> None:
+        existing = self._connection.execute(
+            f"SELECT payload, record_hash FROM {table} WHERE {key_name} = ?", (key,)
+        ).fetchone()
+        encoded = _canonical_json(payload)
+        if existing is not None:
+            if existing != (encoded, record_hash):
+                raise ValueError(f"conflicting immutable {table} replay")
+            return
+        columns = (key_name, *extra_columns, "payload", "record_hash")
+        placeholders = ", ".join("?" for _ in columns)
+        self._connection.execute(
+            f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})",
+            (key, *extra_values, encoded, record_hash),
+        )
+
+    def record_prepared_attempt(
+        self,
+        event_input: EventInputEvidence,
+        *,
+        policy: MockAttemptPolicyBinding,
+        adapter_binding: MockAdapterExecutionBinding,
+        request_evidence: AdapterRequestEvidence,
+        pending_attempt: GenerationAttempt,
+    ) -> None:
+        """Atomically land the immutable input/request prefix and one PENDING transition."""
+
+        from .execution_evidence import (
+            AdapterRequestEvidence,
+            EventInputEvidence,
+            MockAttemptPolicyBinding,
+            _has_trusted_adapter_request_evidence,
+            _has_trusted_mock_adapter_execution_binding,
+        )
+
+        self._assert_not_halted()
+        if self.binding.round0_root is None:
+            raise ValueError("initial state must be sealed before preparing attempts")
+        if not isinstance(event_input, EventInputEvidence):
+            raise TypeError("event_input must be typed EventInputEvidence")
+        if not isinstance(policy, MockAttemptPolicyBinding):
+            raise TypeError("policy must be typed MockAttemptPolicyBinding")
+        if not _has_trusted_mock_adapter_execution_binding(adapter_binding):
+            raise ValueError("adapter binding must be a trusted pre-invocation capability")
+        if not _has_trusted_adapter_request_evidence(request_evidence):
+            raise ValueError("request evidence must preserve a trusted sealed request")
+        if not isinstance(pending_attempt, GenerationAttempt):
+            raise TypeError("pending_attempt must be typed GenerationAttempt")
+        pending = GenerationAttempt.from_payload(pending_attempt.to_payload())
+        if pending.status is not EventStatus.PENDING:
+            raise ValueError("prepared attempt must be PENDING")
+        journal = self.current_event_journal()
+        slot = self.schedule_slot(journal.event_ordinal)
+        request = request_evidence.request
+        if (
+            journal.event_id is None
+            or journal.event_id != event_input.event_id
+            or journal.event_id != request_evidence.event_id
+            or journal.next_attempt_index != request_evidence.attempt_index
+            or event_input.receiver_agent_id != slot.agent_id
+            or event_input.publish_flag != slot.publish_flag
+            or event_input.exposure_record.exposure_mode != self.binding.expected_exposure_mode
+            or event_input.exposure_record.exposure_graph_hash
+            != self.binding.expected_exposure_graph_hash
+        ):
+            raise ValueError("prepared evidence does not bind the current journal and schedule")
+        if (
+            request.prompt_view_id != event_input.prompt_view.view_id
+            or request.prompt_view_hash != event_input.prompt_view.record_hash
+            or request.rendered_messages_hash != pending.rendered_prompt_hash
+            or request.rendered_messages != pending.rendered_messages
+            or pending.exposure_id != event_input.exposure_record.exposure_id
+            or request_evidence.prompt_limits_hash != event_input.prompt_view.limits_hash
+            or request_evidence.parser_limits_hash != event_input.parser_limits.record_hash
+            or request_evidence.attempt_policy_hash != policy.record_hash
+            or request_evidence.adapter_execution_binding_hash != adapter_binding.record_hash
+            or request_evidence.model_identity_hash != adapter_binding.model_identity_hash
+        ):
+            raise ValueError("prepared event, prompt, parser, policy, or binding hash drifted")
+        pending_links = (
+            pending.event_id,
+            pending.attempt_id,
+            pending.attempt_index,
+            pending.request_id,
+            pending.request_parameters,
+            pending.request_parameters_hash,
+            pending.model_identity,
+            pending.model_identity_hash,
+            pending.model_seed,
+        )
+        request_links = (
+            request_evidence.event_id,
+            request_evidence.attempt_id,
+            request_evidence.attempt_index,
+            request_evidence.request_id,
+            request_evidence.request_parameters,
+            request_evidence.request_parameters_hash,
+            request_evidence.model_identity,
+            request_evidence.model_identity_hash,
+            request_evidence.model_seed,
+        )
+        if pending_links != request_links:
+            raise ValueError("PENDING attempt does not exactly bind request authorization")
+        prior_row = self._connection.execute(
+            """SELECT payload FROM adapter_requests
+               WHERE event_id = ? ORDER BY rowid DESC LIMIT 1""",
+            (event_input.event_id,),
+        ).fetchone()
+        if prior_row is not None:
+            prior = AdapterRequestEvidence.from_payload(
+                _load_canonical_json(prior_row[0], "adapter request evidence")
+            )
+            invariant = (
+                prior.request.topic_package_id,
+                prior.request.topic_package_hash,
+                prior.request.prompt_view_id,
+                prior.request.prompt_view_hash,
+                prior.request.rendered_messages,
+                prior.request.rendered_messages_hash,
+                prior.model_identity,
+                prior.model_identity_hash,
+                prior.prompt_limits_hash,
+                prior.parser_limits_hash,
+                prior.attempt_policy_hash,
+                prior.adapter_execution_binding_hash,
+            )
+            current = (
+                request.topic_package_id,
+                request.topic_package_hash,
+                request.prompt_view_id,
+                request.prompt_view_hash,
+                request.rendered_messages,
+                request.rendered_messages_hash,
+                request_evidence.model_identity,
+                request_evidence.model_identity_hash,
+                request_evidence.prompt_limits_hash,
+                request_evidence.parser_limits_hash,
+                request_evidence.attempt_policy_hash,
+                request_evidence.adapter_execution_binding_hash,
+            )
+            if invariant != current:
+                raise ValueError("retry request changed invariant evidence")
+            changed = self._changed_request_parameter_paths(
+                prior.request_parameters, request_evidence.request_parameters
+            )
+            if prior.model_seed != request_evidence.model_seed:
+                changed.add("model_seed")
+            if not changed.issubset(set(policy.allowed_difference_fields)):
+                raise ValueError("retry request changed an unauthorized field")
+        self._begin_write()
+        try:
+            self._insert_or_exact_match_evidence(
+                "event_input_evidence",
+                "event_id",
+                event_input.event_id,
+                event_input.to_payload(),
+                event_input.record_hash,
+            )
+            self._insert_or_exact_match_evidence(
+                "attempt_policy_evidence",
+                "event_id",
+                event_input.event_id,
+                policy.to_payload(),
+                policy.record_hash,
+            )
+            self._insert_or_exact_match_evidence(
+                "adapter_execution_bindings",
+                "binding_id",
+                adapter_binding.binding_id,
+                adapter_binding.to_payload(),
+                adapter_binding.record_hash,
+            )
+            self._insert_or_exact_match_evidence(
+                "adapter_requests",
+                "attempt_id",
+                request_evidence.attempt_id,
+                request_evidence.to_payload(),
+                request_evidence.record_hash,
+                extra_columns=(
+                    "event_id",
+                    "adapter_binding_hash",
+                    "parser_limits_hash",
+                    "policy_hash",
+                ),
+                extra_values=(
+                    event_input.event_id,
+                    adapter_binding.record_hash,
+                    event_input.parser_limits.record_hash,
+                    policy.record_hash,
+                ),
+            )
+            has_landed = self._connection.execute(
+                "SELECT 1 FROM attempt_transitions WHERE attempt_id = ?",
+                (pending.attempt_id,),
+            ).fetchone()
+            if has_landed:
+                landed = self.attempt_transitions(pending.attempt_id)
+                if landed != (pending,):
+                    raise ValueError("conflicting PENDING attempt replay")
+            else:
+                self._append_attempt_in_transaction(pending)
+            self._commit_write()
+        except BaseException:
+            self._connection.rollback()
+            raise
+
+    def _read_evidence_payload(
+        self, table: str, key_name: str, key: str
+    ) -> tuple[dict[str, object], str] | None:
+        row = self._connection.execute(
+            f"SELECT payload, record_hash FROM {table} WHERE {key_name} = ?", (key,)
+        ).fetchone()
+        if row is None:
+            return None
+        payload = _load_canonical_json(row[0], table)
+        if payload.get("record_hash") != row[1]:
+            raise ValueError(f"{table} row hash does not match typed payload")
+        return payload, row[1]
+
+    def event_input_evidence(self, event_id: str) -> EventInputEvidence | None:
+        from .execution_evidence import EventInputEvidence
+
+        _require_id("event_id", event_id)
+        row = self._read_evidence_payload("event_input_evidence", "event_id", event_id)
+        return None if row is None else EventInputEvidence.from_payload(row[0])
+
+    def attempt_policy_evidence(self, event_id: str) -> MockAttemptPolicyBinding | None:
+        from .execution_evidence import MockAttemptPolicyBinding
+
+        _require_id("event_id", event_id)
+        row = self._read_evidence_payload("attempt_policy_evidence", "event_id", event_id)
+        return None if row is None else MockAttemptPolicyBinding.from_payload(row[0])
+
+    def adapter_execution_binding(
+        self, binding_id_or_attempt_id: str
+    ) -> MockAdapterExecutionBinding | None:
+        from .execution_evidence import MockAdapterExecutionBinding
+
+        _require_id("binding_id_or_attempt_id", binding_id_or_attempt_id)
+        row = self._read_evidence_payload(
+            "adapter_execution_bindings", "binding_id", binding_id_or_attempt_id
+        )
+        if row is None:
+            linked = self._connection.execute(
+                "SELECT adapter_binding_hash FROM adapter_requests WHERE attempt_id = ?",
+                (binding_id_or_attempt_id,),
+            ).fetchone()
+            if linked is None:
+                return None
+            raw = self._connection.execute(
+                "SELECT payload, record_hash FROM adapter_execution_bindings WHERE record_hash = ?",
+                (linked[0],),
+            ).fetchone()
+            if raw is None:
+                raise ValueError("adapter request binding row is missing")
+            payload = _load_canonical_json(raw[0], "adapter execution binding")
+            if payload.get("record_hash") != raw[1]:
+                raise ValueError("adapter execution binding row hash mismatch")
+            row = (payload, raw[1])
+        return MockAdapterExecutionBinding.from_payload(row[0])
+
+    def adapter_request_evidence(self, attempt_id: str) -> AdapterRequestEvidence | None:
+        from .execution_evidence import AdapterRequestEvidence
+
+        _require_id("attempt_id", attempt_id)
+        row = self._read_evidence_payload("adapter_requests", "attempt_id", attempt_id)
+        return None if row is None else AdapterRequestEvidence.from_payload(row[0])
+
+    def record_invocation_evidence(self, evidence: PersistedInvocationEvidence) -> None:
+        from .adapters.base import _has_trusted_response_seal
+        from .execution_evidence import PersistedInvocationEvidence
+
+        self._assert_not_halted()
+        if not isinstance(evidence, PersistedInvocationEvidence):
+            raise TypeError("invocation evidence must be typed PersistedInvocationEvidence")
+        if not _has_trusted_response_seal(evidence.response):
+            raise ValueError("invocation evidence requires a trusted sealed adapter response")
+        journal = self.current_event_journal()
+        if (
+            journal.latest_transition is None
+            or journal.latest_transition.status is not EventStatus.IN_PROGRESS
+            or journal.latest_transition.attempt_id != evidence.attempt_id
+        ):
+            raise ValueError("invocation evidence requires the current IN_PROGRESS attempt")
+        request = self.adapter_request_evidence(evidence.attempt_id)
+        if request is None:
+            raise ValueError("invocation evidence requires persisted request evidence")
+        if (
+            evidence.request_id != request.request_id
+            or evidence.request_hash != request.request_hash
+            or evidence.parser_limits_hash != request.parser_limits_hash
+            or evidence.attempt_policy_hash != request.attempt_policy_hash
+            or evidence.adapter_execution_binding_hash != request.adapter_execution_binding_hash
+            or evidence.response.event_id != request.event_id
+            or evidence.response.attempt_index != request.attempt_index
+            or evidence.response.model_identity_hash != request.model_identity_hash
+            or evidence.response.mock_seed != request.model_seed
+        ):
+            raise ValueError("invocation request, policy, parser, or binding evidence drifted")
+        evidence_payload = evidence.to_payload()
+        encoded = _canonical_json(evidence_payload)
+        execution = _canonical_json(evidence_payload["execution_payload"])
+        self._begin_write()
+        try:
+            existing = self._connection.execute(
+                """SELECT response_payload, execution_payload, record_hash
+                   FROM invocation_evidence WHERE attempt_id = ?""",
+                (evidence.attempt_id,),
+            ).fetchone()
+            expected = (encoded, execution, evidence.record_hash)
+            if existing is None:
+                self._connection.execute(
+                    """INSERT INTO invocation_evidence
+                       (attempt_id, response_payload, execution_payload, record_hash)
+                       VALUES (?, ?, ?, ?)""",
+                    (evidence.attempt_id, *expected),
+                )
+            elif existing != expected:
+                raise ValueError("conflicting immutable invocation evidence replay")
+            self._commit_write()
+        except BaseException:
+            self._connection.rollback()
+            raise
+
+    def invocation_evidence(self, attempt_id: str) -> PersistedInvocationEvidence | None:
+        from .execution_evidence import PersistedInvocationEvidence
+
+        _require_id("attempt_id", attempt_id)
+        row = self._connection.execute(
+            """SELECT response_payload, execution_payload, record_hash
+               FROM invocation_evidence WHERE attempt_id = ?""",
+            (attempt_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        payload = _load_canonical_json(row[0], "invocation evidence")
+        execution = _load_canonical_json(row[1], "invocation execution evidence")
+        if payload.get("record_hash") != row[2] or payload.get("execution_payload") != execution:
+            raise ValueError("invocation evidence row envelope is inconsistent")
+        return PersistedInvocationEvidence.from_payload(payload)
+
+    def parse_evidence(self, attempt_id: str) -> ParseEvidence | ParseNotApplicableEvidence | None:
+        from .execution_evidence import ParseNotApplicableEvidence
+        from .parser import ParseEvidence
+
+        _require_id("attempt_id", attempt_id)
+        row = self._connection.execute(
+            "SELECT kind, payload, record_hash FROM parse_evidence WHERE attempt_id = ?",
+            (attempt_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        payload = _load_canonical_json(row[1], "parse evidence")
+        if payload.get("record_hash") != row[2]:
+            raise ValueError("parse evidence row hash mismatch")
+        if row[0] == "parsed":
+            parsed = payload.get("parsed")
+            if parsed is not None:
+                if type(parsed) is not dict:
+                    raise TypeError("parsed response evidence must be a JSON object")
+                payload["parsed"] = {
+                    name: parsed.get(name)
+                    for name in (
+                        "topic_package_id",
+                        "topic_package_hash",
+                        "stance",
+                        "confidence",
+                        "public_reason",
+                    )
+                }
+            return ParseEvidence.from_payload(payload)
+        if row[0] == "not_applicable":
+            return ParseNotApplicableEvidence.from_payload(payload)
+        raise ValueError("parse evidence row kind is unsupported")
+
+    def _insert_terminal_failure_in_transaction(
+        self, evidence: TerminalFailureEvidence, terminal: GenerationAttempt
+    ) -> None:
+        if not isinstance(evidence, TerminalFailureEvidence):
+            raise TypeError("terminal failure evidence must be typed")
+        chain = self.causal_evidence_prefix()
+        expected_previous = None if not chain else chain[-1].payload_hash
+        expected_id_payload = {
+            key: value for key, value in evidence.to_payload().items() if key != "evidence_id"
+        }
+        if (
+            evidence.evidence_sequence != len(chain) + 1
+            or evidence.previous_evidence_hash != expected_previous
+            or evidence.evidence_kind != "failure"
+            or evidence.run_id != self.binding.run_id
+            or evidence.event_id != terminal.event_id
+            or evidence.event_ordinal != self.progress.next_event_ordinal
+            or evidence.attempt_id != terminal.attempt_id
+            or evidence.attempt_index != terminal.attempt_index
+            or evidence.terminal_transition_hash != canonical_payload_hash(terminal.to_payload())
+            or evidence.terminal_attempt_hash != evidence.terminal_transition_hash
+            or evidence.evidence_id != "halt-" + canonical_payload_hash(expected_id_payload)
+        ):
+            raise ValueError("terminal failure evidence causal envelope is inconsistent")
+        self._insert_payload(
+            "terminal_failures",
+            (
+                "evidence_id",
+                "evidence_sequence",
+                "previous_evidence_hash",
+                "evidence_kind",
+                "event_id",
+                "event_ordinal",
+                "attempt_id",
+                "attempt_index",
+                "terminal_transition_hash",
+            ),
+            (
+                evidence.evidence_id,
+                evidence.evidence_sequence,
+                evidence.previous_evidence_hash,
+                evidence.evidence_kind,
+                evidence.event_id,
+                evidence.event_ordinal,
+                evidence.attempt_id,
+                evidence.attempt_index,
+                evidence.terminal_transition_hash,
+            ),
+            evidence.to_payload(),
+        )
+        prior = self.execution_state()
+        if (
+            prior.current_event_id != terminal.event_id
+            or prior.status_counts[EventStatus.FAILED.value] != 1
+        ):
+            raise ValueError("execution state does not bind failed terminal attempt")
+        self._replace_execution_state(
+            ExecutionState(
+                schema_version=prior.schema_version,
+                run_id=prior.run_id,
+                baseline_manifest_hash=prior.baseline_manifest_hash,
+                status=ExecutionStatus.FAILED,
+                next_event_ordinal=prior.next_event_ordinal,
+                expected_event_count=prior.expected_event_count,
+                current_event_id=prior.current_event_id,
+                event_ids=prior.event_ids,
+                status_counts=prior.status_counts,
+                failed_event_ids=(terminal.event_id,),
+            )
+        )
+
+    def record_finalized_attempt(self, evidence: FinalizedAttemptEvidence) -> None:
+        from .execution_evidence import (
+            FinalizedAttemptEvidence,
+            ParseNotApplicableEvidence,
+        )
+
+        if not isinstance(evidence, FinalizedAttemptEvidence):
+            raise TypeError("finalized evidence must be typed FinalizedAttemptEvidence")
+        terminal = GenerationAttempt.from_payload(evidence.attempt.to_payload())
+        journal = self.current_event_journal()
+        invocation = self.invocation_evidence(terminal.attempt_id)
+        request = self.adapter_request_evidence(terminal.attempt_id)
+        if invocation is None or request is None:
+            raise ValueError("finalization requires request and invocation evidence")
+        already_terminal = journal.latest_transition == terminal
+        if not already_terminal and (
+            journal.latest_transition is None
+            or journal.latest_transition.status is not EventStatus.IN_PROGRESS
+            or journal.latest_transition.attempt_id != terminal.attempt_id
+        ):
+            raise ValueError("finalization requires the current exact IN_PROGRESS attempt")
+        parse = evidence.parse_evidence
+        if (
+            evidence.request_hash != request.request_hash
+            or invocation.request_hash != request.request_hash
+            or invocation.response_id != parse.response_id
+            or invocation.response_hash != parse.response_hash
+            or parse.request_id != request.request_id
+            or parse.request_hash != request.request_hash
+            or parse.parser_limits_hash != request.parser_limits_hash
+        ):
+            raise ValueError("finalized request, response, parse, or parser links drifted")
+        if already_terminal:
+            landed_parse = self.parse_evidence(terminal.attempt_id)
+            landed_failure = self.terminal_failure_evidence()
+            if landed_parse != parse or landed_failure != evidence.terminal_failure_evidence:
+                raise ValueError("conflicting finalized attempt replay")
+            return
+        kind = "not_applicable" if isinstance(parse, ParseNotApplicableEvidence) else "parsed"
+        parse_payload = parse.to_payload()
+        self._begin_write()
+        try:
+            existing = self._connection.execute(
+                "SELECT kind, payload, record_hash FROM parse_evidence WHERE attempt_id = ?",
+                (terminal.attempt_id,),
+            ).fetchone()
+            expected = (kind, _canonical_json(parse_payload), parse.record_hash)
+            if existing is None:
+                self._connection.execute(
+                    """INSERT INTO parse_evidence (attempt_id, kind, payload, record_hash)
+                       VALUES (?, ?, ?, ?)""",
+                    (terminal.attempt_id, *expected),
+                )
+            elif existing != expected:
+                raise ValueError("conflicting immutable parse evidence replay")
+            self._append_attempt_in_transaction(terminal)
+            if terminal.status is EventStatus.FAILED:
+                failure = evidence.terminal_failure_evidence
+                if failure is None:
+                    raise ValueError("FAILED finalization requires terminal failure evidence")
+                self._insert_terminal_failure_in_transaction(failure, terminal)
+            elif evidence.terminal_failure_evidence is not None:
+                raise ValueError("SUCCEEDED finalization forbids failure evidence")
+            self._commit_write()
+        except BaseException:
+            self._connection.rollback()
+            raise
+
+    def evidence_references(self, event_id: str) -> EventEvidenceReferences:
+        from .execution_evidence import EventEvidenceReferences
+
+        _require_id("event_id", event_id)
+        event_input = self.event_input_evidence(event_id)
+        request_row = self._connection.execute(
+            """SELECT ar.attempt_id FROM adapter_requests ar
+               JOIN attempt_transitions at ON at.attempt_id = ar.attempt_id
+               WHERE ar.event_id = ?
+               ORDER BY at.attempt_index DESC LIMIT 1""",
+            (event_id,),
+        ).fetchone()
+        request = None if request_row is None else self.adapter_request_evidence(request_row[0])
+        invocation = None if request is None else self.invocation_evidence(request.attempt_id)
+        parsed = None if request is None else self.parse_evidence(request.attempt_id)
+        terminal_row = self._connection.execute(
+            """SELECT attempt_id, payload_json, payload_hash FROM attempts
+               WHERE event_id = ? ORDER BY attempt_index DESC LIMIT 1""",
+            (event_id,),
+        ).fetchone()
+        terminal = None
+        terminal_hash = None
+        if terminal_row is not None:
+            terminal = GenerationAttempt.from_payload(
+                _load_canonical_json(terminal_row[1], "terminal attempt")
+            )
+            terminal_hash = terminal_row[2]
+            if (
+                terminal.attempt_id != terminal_row[0]
+                or canonical_payload_hash(terminal.to_payload()) != terminal_hash
+            ):
+                raise ValueError("terminal attempt row envelope is inconsistent")
+        committed_row = self._connection.execute(
+            "SELECT event_id, payload_json, payload_hash FROM events WHERE event_id = ?",
+            (event_id,),
+        ).fetchone()
+        committed = None
+        committed_hash = None
+        if committed_row is not None:
+            committed = GenerationEvent.from_payload(
+                _load_canonical_json(committed_row[1], "committed event")
+            )
+            committed_hash = committed_row[2]
+            if (
+                committed.event_id != committed_row[0]
+                or canonical_payload_hash(committed.to_payload()) != committed_hash
+            ):
+                raise ValueError("committed event row envelope is inconsistent")
+        return EventEvidenceReferences.create(
+            event_input_evidence_id=(None if event_input is None else event_input.evidence_id),
+            event_input_evidence_hash=(None if event_input is None else event_input.record_hash),
+            request_id=None if request is None else request.request_id,
+            request_hash=None if request is None else request.request_hash,
+            invocation_evidence_id=(None if invocation is None else invocation.evidence_id),
+            invocation_evidence_hash=(None if invocation is None else invocation.record_hash),
+            parse_evidence_id=(
+                None if parsed is None else getattr(parsed, "evidence_id", parsed.attempt_id)
+            ),
+            parse_evidence_hash=None if parsed is None else parsed.record_hash,
+            terminal_attempt_id=None if terminal is None else terminal.attempt_id,
+            terminal_attempt_hash=terminal_hash,
+            committed_event_id=None if committed is None else committed.event_id,
+            committed_event_hash=committed_hash,
+        )
 
     def initialize_agent(
         self,

@@ -10,10 +10,14 @@ import sys
 from contextlib import closing
 from functools import lru_cache
 from pathlib import Path
+from typing import Mapping
 
 import pytest
 import agent_ex.storage as storage_module
+from agent_ex import execution_evidence as execution_evidence_module
 
+from agent_ex.adapters.base import AdapterRequest
+from agent_ex.adapters.mock import MockAdapter, MockScriptStep
 from agent_ex.artifacts import ArtifactEnvelope
 from agent_ex.domain import (
     EventStatus,
@@ -27,7 +31,15 @@ from agent_ex.domain import (
     derive_event_id,
     derive_run_id,
 )
-from agent_ex.feed import FeedCursor
+from agent_ex.execution_evidence import (
+    EventInputEvidence,
+    FinalizedAttemptEvidence,
+    MockAttemptPolicyBinding,
+    ParseNotApplicableEvidence,
+    PersistedInvocationEvidence,
+)
+from agent_ex.feed import FeedCursor, build_exposure_record, select_unread_feed
+from agent_ex.memory import build_memory_view
 from agent_ex.network import build_shadow_artifact, build_ws_artifact
 from agent_ex.state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
 from agent_ex.storage import (
@@ -38,8 +50,14 @@ from agent_ex.storage import (
     ResumeAuthorizationEvidence,
     RunStorage,
     StorageBinding,
+    TerminalFailureEvidence,
 )
 from agent_ex.topic import TopicPackage
+from agent_ex.engine import AttemptExecutionEvidence
+from agent_ex.parser import ParserLimits, parse_agent_update
+from agent_ex.persona import render_persona
+from agent_ex.prompt import PromptLimits, build_prompt_view, validate_prompt_run_context
+from test_prompt import member, persona_template, population_artifact, topic as prompt_topic
 
 
 SHA_A = "a" * 64
@@ -467,6 +485,516 @@ def initial_records(
         mock_only=True,
     )
     return update, state, post, pointer, cursor
+
+
+def prepared_evidence_bundle(
+    tmp_path: Path, *, script_step: MockScriptStep | None = None
+) -> tuple[RunStorage, dict[str, object]]:
+    frozen_schedule = FrozenSchedule(
+        schema_version="paper1.schedule.v2",
+        algorithm_id="mock.weighted-with-replacement",
+        algorithm_version="1.0.0",
+        population_size=2,
+        sweep_count=1,
+        slots=(
+            ScheduleSlot(0, 1, 0, "agent-0001", False),
+            ScheduleSlot(1, 1, 1, "agent-0002", False),
+        ),
+    )
+    run_manifest = manifest(frozen_schedule, cell_id="P1-I0-C0-E0")
+    store = RunStorage.create(
+        tmp_path / "evidence.sqlite",
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=("agent-0001", "agent-0002"),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    round0: dict[
+        str, tuple[PrivateUpdate, PrivateState, PublicPost, LatestPublicPointer, FeedCursor]
+    ] = {}
+    for agent_id in ("agent-0001", "agent-0002"):
+        update = PrivateUpdate.create(
+            topic_package=prompt_topic(),
+            matched_seed=17,
+            agent_id=agent_id,
+            event_id=None,
+            event_ordinal=None,
+            sequence_index=0,
+            stance_label="label-1",
+            reason="private round zero",
+            confidence=None,
+            published=True,
+            source_attempt_id=None,
+            mock_only=True,
+        )
+        state = PrivateState.from_update(update, previous=None, mock_only=True)
+        post = PublicPost.from_private_update(update, mock_only=True)
+        pointer = LatestPublicPointer.from_post(post, previous=None, mock_only=True)
+        cursor = FeedCursor.initial(
+            matched_seed=17,
+            receiver_agent_id=agent_id,
+            exposure_mode="self_history_only",
+            exposure_graph_hash=None,
+            mock_only=True,
+        )
+        round0[agent_id] = (update, state, post, pointer, cursor)
+        store.initialize_agent(update, state, post, pointer, cursor)
+    store.seal_initial_state()
+
+    update, state, _post, _pointer, cursor = round0["agent-0001"]
+    event_id = derive_event_id(run_manifest.run_id, 0)
+    selection = select_unread_feed(
+        unread_public_posts=(),
+        topic_package=prompt_topic(),
+        neighbor_agent_ids=(),
+        cursor=cursor,
+        receiver_event_id=event_id,
+        receiver_event_ordinal=0,
+        matched_seed=17,
+        exposure_mode="self_history_only",
+        exposure_graph_hash=None,
+        capacity=4,
+        mock_only=True,
+    )
+    exposure = build_exposure_record(selection, topic_package=prompt_topic(), mock_only=True)
+    memory = build_memory_view(
+        private_updates=(update,),
+        topic_package=prompt_topic(),
+        matched_seed=17,
+        agent_id="agent-0001",
+        window=3,
+        mock_only=True,
+    )
+    event = GenerationEvent(
+        run_id=run_manifest.run_id,
+        event_id=event_id,
+        event_ordinal=0,
+        sweep_index=1,
+        draw_index=0,
+        agent_id="agent-0001",
+        publish_flag=False,
+        exposure_id="exposure-0",
+        status=EventStatus.PENDING,
+        attempt_ids=(),
+        failure_reason=None,
+    )
+    prompt_limits = PromptLimits.create(
+        max_persona_chars=10_000,
+        max_string_chars=50_000,
+        max_memory_items=10,
+        max_social_messages=10,
+        max_data_chars=100_000,
+        max_total_chars=120_000,
+        mock_only=True,
+    )
+    prompt = build_prompt_view(
+        run_context=validate_prompt_run_context(
+            run_manifest, source_events_by_id={}, source_attempts_by_id={}
+        ),
+        topic=prompt_topic(),
+        persona=render_persona(
+            persona_template(),
+            member(),
+            {"identity_present": False, "continuity_present": False},
+        ),
+        persona_template=persona_template(),
+        population_artifact=population_artifact(),
+        population_member=member(),
+        private_state=state,
+        private_updates=(update,),
+        memory=memory,
+        exposure=exposure,
+        exposure_selection=selection,
+        unread_public_posts=(),
+        neighbor_agent_ids=(),
+        feed_cursor=cursor,
+        public_posts_by_id={},
+        source_private_updates_by_id={},
+        source_events_by_id={},
+        source_attempts_by_id={},
+        event=event,
+        matched_seed=17,
+        cell_id="P1-I0-C0-E0",
+        limits=prompt_limits,
+        mock_only=True,
+    )
+    parser_limits = ParserLimits.create(
+        max_raw_chars=100_000,
+        max_raw_bytes=100_000,
+        max_json_depth=32,
+        max_reason_chars=10_000,
+        mock_only=True,
+    )
+    event_input = EventInputEvidence.create(
+        exposure_selection=selection,
+        exposure_record=exposure,
+        memory_view=memory,
+        prompt_view=prompt,
+        parser_limits=parser_limits,
+        state_context_hash=canonical_payload_hash({"successful_prefix": 0}),
+        publish_flag=False,
+    )
+    policy = MockAttemptPolicyBinding.create(
+        allowed_difference_fields=("model_seed", "request_parameters.temperature"),
+        mock_only=True,
+        formal_eligible=False,
+    )
+    adapter = MockAdapter(
+        script={
+            event_id: (
+                script_step
+                or MockScriptStep.success(
+                    {"stance": "label-2", "confidence": 3, "public_reason": "reason"}
+                ),
+            )
+        },
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    binding = adapter.execution_binding()
+    request = AdapterRequest.create(
+        prompt_view=prompt, attempt_index=1, mock_seed=12345, mock_only=True
+    )
+    request_evidence = execution_evidence_module.AdapterRequestEvidence.create(
+        request=request,
+        model_identity=binding.model_identity,
+        request_parameters={"temperature": 0.0},
+        model_seed=12345,
+        prompt_limits_hash=prompt.limits_hash,
+        parser_limits_hash=parser_limits.record_hash,
+        attempt_policy_hash=policy.record_hash,
+        adapter_execution_binding_hash=binding.record_hash,
+    )
+    pending = GenerationAttempt(
+        attempt_id=request.attempt_id,
+        event_id=event_id,
+        attempt_index=1,
+        status=EventStatus.PENDING,
+        request_id=request.request_id,
+        exposure_id=exposure.exposure_id,
+        rendered_messages=request.rendered_messages,
+        rendered_prompt_hash=request.rendered_messages_hash,
+        request_parameters=request_evidence.request_parameters,
+        request_parameters_hash=request_evidence.request_parameters_hash,
+        model_identity=request_evidence.model_identity,
+        model_identity_hash=request_evidence.model_identity_hash,
+        model_seed=request_evidence.model_seed,
+        provider_request_id=None,
+        provider_metadata={},
+        provider_metadata_hash=canonical_payload_hash({}),
+        http_status=None,
+        raw_response=None,
+        raw_response_hash=None,
+        parsed_response=None,
+        parsed_response_hash=None,
+        usage={},
+        usage_hash=canonical_payload_hash({}),
+        finish_reason=None,
+        error=None,
+        started_at=None,
+        finished_at=None,
+    )
+    return store, {
+        "event_input": event_input,
+        "policy": policy,
+        "binding": binding,
+        "request_evidence": request_evidence,
+        "pending": pending,
+        "adapter": adapter,
+        "parser_limits": parser_limits,
+    }
+
+
+def test_record_prepared_attempt_writes_typed_evidence_and_pending_once(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+
+    assert store.event_input_evidence(values["event_input"].event_id) == values["event_input"]
+    assert store.attempt_policy_evidence(values["event_input"].event_id) == values["policy"]
+    assert store.adapter_execution_binding(values["binding"].binding_id) == values["binding"]
+    assert (
+        store.adapter_request_evidence(values["pending"].attempt_id) == values["request_evidence"]
+    )
+    assert store.attempt_transitions(values["pending"].attempt_id) == (values["pending"],)
+
+
+@pytest.mark.parametrize(
+    "table",
+    (
+        "event_input_evidence",
+        "attempt_policy_evidence",
+        "adapter_execution_bindings",
+        "adapter_requests",
+        "attempt_transitions",
+    ),
+)
+def test_record_prepared_attempt_sql_failure_rolls_back_all_evidence_and_state(
+    tmp_path: Path,
+    table: str,
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    before = store.execution_state()
+    store._connection.execute(
+        f"""CREATE TRIGGER fail_prepared_insert BEFORE INSERT ON {table}
+            BEGIN SELECT RAISE(ABORT, 'injected prepared failure'); END"""
+    )
+
+    with pytest.raises(sqlite3.IntegrityError, match="injected prepared"):
+        store.record_prepared_attempt(
+            values["event_input"],
+            policy=values["policy"],
+            adapter_binding=values["binding"],
+            request_evidence=values["request_evidence"],
+            pending_attempt=values["pending"],
+        )
+
+    assert store.event_input_evidence(values["event_input"].event_id) is None
+    assert store.attempt_policy_evidence(values["event_input"].event_id) is None
+    assert store.adapter_request_evidence(values["pending"].attempt_id) is None
+    assert (
+        store._connection.execute(
+            "SELECT COUNT(*) FROM attempt_transitions WHERE attempt_id = ?",
+            (values["pending"].attempt_id,),
+        ).fetchone()[0]
+        == 0
+    )
+    assert store.execution_state() == before
+
+
+def persisted_invocation(values: Mapping[str, object]) -> PersistedInvocationEvidence:
+    request_evidence = values["request_evidence"]
+    response = values["adapter"].generate(request_evidence.request)
+    metadata = {
+        "adapter_response_id": response.response_id,
+        "adapter_response_hash": response.record_hash,
+        "adapter_outcome": response.outcome,
+        "adapter_error": None if response.error is None else dict(response.error),
+        "runtime_identity": dict(response.runtime_identity),
+        "runtime_identity_hash": response.runtime_identity_hash,
+        "script_hash": response.script_hash,
+    }
+    execution = AttemptExecutionEvidence(
+        started_at=NOW,
+        finished_at=NOW,
+        http_status=200,
+        provider_metadata=metadata,
+        usage={"prompt_tokens": 3, "completion_tokens": 4, "total_tokens": 7},
+        finish_reason="stop",
+    )
+    return PersistedInvocationEvidence.create(
+        response=response,
+        execution_payload={
+            "started_at": execution.started_at,
+            "finished_at": execution.finished_at,
+            "http_status": execution.http_status,
+            "provider_metadata": dict(execution.provider_metadata),
+            "usage": dict(execution.usage),
+            "finish_reason": execution.finish_reason,
+        },
+        request_hash=request_evidence.request_hash,
+        parser_limits_hash=values["parser_limits"].record_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=values["binding"].record_hash,
+    )
+
+
+def test_invocation_evidence_requires_current_in_progress_and_is_idempotent(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    evidence = persisted_invocation(values)
+    with pytest.raises(ValueError, match="IN_PROGRESS"):
+        store.record_invocation_evidence(evidence)
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+    store.append_attempt(attempt_transition(values["pending"], EventStatus.IN_PROGRESS))
+
+    store.record_invocation_evidence(evidence)
+    store.record_invocation_evidence(evidence)
+
+    assert store.invocation_evidence(values["pending"].attempt_id) == evidence
+    assert store.parse_evidence(values["pending"].attempt_id) is None
+    assert store.current_event_journal().latest_transition.status is EventStatus.IN_PROGRESS
+
+
+def land_invocation(store: RunStorage, values: Mapping[str, object]) -> PersistedInvocationEvidence:
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+    store.append_attempt(attempt_transition(values["pending"], EventStatus.IN_PROGRESS))
+    evidence = persisted_invocation(values)
+    store.record_invocation_evidence(evidence)
+    return evidence
+
+
+def finalized_evidence(
+    store: RunStorage,
+    values: Mapping[str, object],
+    invocation_value: PersistedInvocationEvidence,
+) -> FinalizedAttemptEvidence:
+    pending = values["pending"]
+    response = invocation_value.response
+    execution = invocation_value.to_payload()["execution_payload"]
+    payload = pending.to_payload()
+    payload.update(
+        {
+            "provider_request_id": response.provider_request_id,
+            "provider_metadata": dict(execution["provider_metadata"]),
+            "provider_metadata_hash": canonical_payload_hash(execution["provider_metadata"]),
+            "http_status": execution["http_status"],
+            "usage": dict(execution["usage"]),
+            "usage_hash": canonical_payload_hash(execution["usage"]),
+            "finish_reason": execution["finish_reason"],
+            "started_at": execution["started_at"],
+            "finished_at": execution["finished_at"],
+        }
+    )
+    if response.outcome == "timeout":
+        parse = ParseNotApplicableEvidence.create(
+            response=response, parser_limits_hash=values["parser_limits"].record_hash
+        )
+        payload.update(
+            {
+                "status": EventStatus.FAILED.value,
+                "raw_response": None,
+                "raw_response_hash": None,
+                "parsed_response": None,
+                "parsed_response_hash": None,
+                "error": dict(response.error),
+            }
+        )
+        terminal = GenerationAttempt.from_payload(payload)
+        terminal_hash = canonical_payload_hash(terminal.to_payload())
+        failure_without_id = {
+            "evidence_sequence": len(store.causal_evidence_prefix()) + 1,
+            "previous_evidence_hash": None,
+            "evidence_kind": "failure",
+            "run_id": store.binding.run_id,
+            "event_id": terminal.event_id,
+            "event_ordinal": store.progress.next_event_ordinal,
+            "attempt_id": terminal.attempt_id,
+            "attempt_index": terminal.attempt_index,
+            "terminal_transition_hash": terminal_hash,
+            "terminal_attempt_hash": terminal_hash,
+            "reason": "adapter_timeout",
+            "policy_evidence": {
+                "policy_id": values["policy"].policy_id,
+                "policy_hash": values["policy"].record_hash,
+            },
+            "recorded_at": NOW,
+        }
+        failure = TerminalFailureEvidence(
+            evidence_id="halt-" + canonical_payload_hash(failure_without_id),
+            **failure_without_id,
+        )
+    else:
+        parse = parse_agent_update(
+            response, topic_package=prompt_topic(), limits=values["parser_limits"]
+        )
+        assert parse.parsed is not None
+        parsed_payload = parse.parsed.to_payload()
+        payload.update(
+            {
+                "status": EventStatus.SUCCEEDED.value,
+                "raw_response": response.raw_response,
+                "raw_response_hash": response.raw_response_hash,
+                "parsed_response": parsed_payload,
+                "parsed_response_hash": canonical_payload_hash(parsed_payload),
+                "error": None,
+            }
+        )
+        terminal = GenerationAttempt.from_payload(payload)
+        failure = None
+    return FinalizedAttemptEvidence.create(
+        request_hash=values["request_evidence"].request_hash,
+        attempt=terminal,
+        parse_evidence=parse,
+        terminal_failure_evidence=failure,
+    )
+
+
+def test_finalized_attempt_atomically_lands_parse_and_terminal_transition(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+
+    store.record_finalized_attempt(finalized)
+    store.record_finalized_attempt(finalized)
+
+    assert store.parse_evidence(finalized.attempt.attempt_id) == finalized.parse_evidence
+    assert store.current_event_journal().latest_transition == finalized.attempt
+    assert store.terminal_failure_evidence() is None
+    references = store.evidence_references(finalized.attempt.event_id)
+    assert references.event_input_evidence_id == values["event_input"].evidence_id
+    assert references.request_id == values["request_evidence"].request_id
+    assert references.invocation_evidence_id == invocation_value.evidence_id
+    assert references.parse_evidence_id == finalized.parse_evidence.attempt_id
+    assert references.terminal_attempt_id == finalized.attempt.attempt_id
+    assert references.committed_event_id is None
+
+
+def test_failed_finalization_atomically_lands_parse_na_terminal_and_failure(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(
+        tmp_path, script_step=MockScriptStep.timeout("provider timeout")
+    )
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+
+    store.record_finalized_attempt(finalized)
+
+    assert store.parse_evidence(finalized.attempt.attempt_id) == finalized.parse_evidence
+    assert store.current_event_journal().latest_transition == finalized.attempt
+    assert store.terminal_failure_evidence() == finalized.terminal_failure_evidence
+    assert store.execution_state().status is ExecutionStatus.FAILED
+
+
+def test_finalized_failure_sql_error_rolls_back_parse_terminal_failure_and_execution(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(
+        tmp_path, script_step=MockScriptStep.timeout("provider timeout")
+    )
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    before = store.execution_state()
+    store._connection.execute(
+        """CREATE TRIGGER fail_terminal_failure BEFORE INSERT ON terminal_failures
+           BEGIN SELECT RAISE(ABORT, 'injected terminal failure'); END"""
+    )
+
+    with pytest.raises(sqlite3.IntegrityError, match="injected terminal"):
+        store.record_finalized_attempt(finalized)
+
+    assert store.parse_evidence(finalized.attempt.attempt_id) is None
+    assert store.current_event_journal().latest_transition.status is EventStatus.IN_PROGRESS
+    assert store.terminal_failure_evidence() is None
+    assert store.execution_state() == before
 
 
 def successful_event(

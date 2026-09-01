@@ -156,6 +156,43 @@ def rehash_parse_payload(payload: dict[str, object]) -> dict[str, object]:
     return payload
 
 
+def test_adapter_request_evidence_preserves_sealed_request_and_authorization_envelope() -> None:
+    prepared_value = prepared(RUN_ID, ordinal=9)
+    input_value = event_inputs()
+    policy_value = policy()
+    binding_value = adapter_binding(adapter_for(prepared_value.authorization.event_id))
+
+    value = execution_evidence_module.AdapterRequestEvidence.create(
+        request=prepared_value.request,
+        model_identity=prepared_value.authorization.model_identity,
+        request_parameters=prepared_value.authorization.request_parameters,
+        model_seed=prepared_value.authorization.model_seed,
+        prompt_limits_hash=input_value.prompt_view.limits_hash,
+        parser_limits_hash=input_value.parser_limits.record_hash,
+        attempt_policy_hash=policy_value.record_hash,
+        adapter_execution_binding_hash=binding_value.record_hash,
+    )
+
+    assert value.request == prepared_value.request
+    assert value.event_id == prepared_value.authorization.event_id
+    assert value.attempt_id == prepared_value.request.attempt_id
+    assert value.request_hash == prepared_value.request.record_hash
+    assert value.model_identity_hash == canonical_payload_hash(
+        prepared_value.authorization.model_identity
+    )
+    assert value.request_parameters_hash == canonical_payload_hash(
+        prepared_value.authorization.request_parameters
+    )
+    assert (
+        execution_evidence_module.AdapterRequestEvidence.from_payload(value.to_payload()) == value
+    )
+
+    tampered = value.to_payload()
+    tampered["model_seed"] = value.model_seed + 1
+    with pytest.raises(ValueError, match="model seed|hash|request"):
+        execution_evidence_module.AdapterRequestEvidence.from_payload(tampered)
+
+
 def test_mock_attempt_policy_is_stable_sorted_strict_and_formal_ineligible() -> None:
     value = policy()
 
