@@ -2238,6 +2238,10 @@ class RunStorage:
         if (
             row[0] != key
             or payload.get("record_hash") != row[2]
+            or canonical_payload_hash(
+                {name: value for name, value in payload.items() if name != "record_hash"}
+            )
+            != row[2]
             or (payload_key is not None and payload.get(payload_key) != row[0])
         ):
             raise ValueError(f"{table} row key or hash does not match typed payload")
@@ -2289,6 +2293,10 @@ class RunStorage:
             if (
                 payload.get("binding_id") != raw[0]
                 or payload.get("record_hash") != raw[2]
+                or canonical_payload_hash(
+                    {name: value for name, value in payload.items() if name != "record_hash"}
+                )
+                != raw[2]
                 or raw[2] != linked[0]
             ):
                 raise ValueError("adapter execution binding row envelope mismatch")
@@ -2308,6 +2316,13 @@ class RunStorage:
         if row is None:
             return None
         payload = _load_canonical_json(row[5], "adapter request evidence")
+        if (
+            canonical_payload_hash(
+                {name: value for name, value in payload.items() if name != "record_hash"}
+            )
+            != row[6]
+        ):
+            raise ValueError("adapter request raw payload hash drifted")
         value = AdapterRequestEvidence.from_payload(payload)
         if (
             row[0] != attempt_id
@@ -2401,6 +2416,10 @@ class RunStorage:
             row[0] != attempt_id
             or payload.get("attempt_id") != row[0]
             or payload.get("record_hash") != row[3]
+            or canonical_payload_hash(
+                {name: value for name, value in payload.items() if name != "record_hash"}
+            )
+            != row[3]
             or payload.get("execution_payload") != execution
         ):
             raise ValueError("invocation evidence row envelope is inconsistent")
@@ -3957,26 +3976,22 @@ class RunStorage:
                     row[0]
                     for row in self._connection.execute(
                         f"""SELECT record_hash FROM adapter_execution_bindings
-                            WHERE record_hash IN ({','.join('?' for _ in binding_hashes)})
+                            WHERE record_hash IN ({",".join("?" for _ in binding_hashes)})
                             ORDER BY binding_id""",
                         binding_hashes,
                     ).fetchall()
                 ]
             )
             for table in ("invocation_evidence", "parse_evidence"):
-                selected[table] = (
-                    []
-                    if not attempt_ids
-                    else [
-                        row[0]
-                        for row in self._connection.execute(
-                            f"""SELECT record_hash FROM {_quote_sql_identifier(table)}
-                                WHERE attempt_id IN ({','.join('?' for _ in attempt_ids)})
-                                ORDER BY attempt_id""",
-                            attempt_ids,
-                        ).fetchall()
-                    ]
-                )
+                selected[table] = []
+                for attempt_id in attempt_ids:
+                    row = self._connection.execute(
+                        f"""SELECT record_hash FROM {_quote_sql_identifier(table)}
+                            WHERE attempt_id = ?""",
+                        (attempt_id,),
+                    ).fetchone()
+                    if row is not None:
+                        selected[table].append(row[0])
         return {name: tuple(hashes) for name, hashes in selected.items()}
 
     def assert_complete(self) -> None:
@@ -4515,7 +4530,9 @@ class RunStorage:
         }
         request_attempt_ids = {
             row[0]
-            for row in self._connection.execute("SELECT attempt_id FROM adapter_requests").fetchall()
+            for row in self._connection.execute(
+                "SELECT attempt_id FROM adapter_requests"
+            ).fetchall()
         }
         if event_ids != expected_event_ids or policy_event_ids != expected_event_ids:
             raise ValueError("v6 event input and policy evidence are not exact-cover")
@@ -4562,6 +4579,7 @@ class RunStorage:
         failure_by_attempt = {
             item.attempt_id: item for item in self.terminal_failure_evidence_prefix()
         }
+        prior_request_by_event: dict[str, AdapterRequestEvidence] = {}
         for attempt_id, (event_id, attempt_index, status) in latest.items():
             request = self.adapter_request_evidence(attempt_id)
             event_input = self.event_input_evidence(event_id)
@@ -4577,6 +4595,90 @@ class RunStorage:
                 or request.model_identity_hash != binding.model_identity_hash
             ):
                 raise ValueError("v6 request evidence binding drifted")
+            transitions = self.attempt_transitions(attempt_id)
+            if not transitions or transitions[0].status is not EventStatus.PENDING:
+                raise ValueError("v6 request lacks its exact PENDING authorization")
+            pending = transitions[0]
+            adapter_request = request.request
+            slot = self.schedule_slot(event_input.prompt_view.event_ordinal)
+            if (
+                event_input.receiver_agent_id != slot.agent_id
+                or event_input.publish_flag != slot.publish_flag
+                or event_input.exposure_record.exposure_mode != self.binding.expected_exposure_mode
+                or event_input.exposure_record.exposure_graph_hash
+                != self.binding.expected_exposure_graph_hash
+                or adapter_request.prompt_view_id != event_input.prompt_view.view_id
+                or adapter_request.prompt_view_hash != event_input.prompt_view.record_hash
+                or adapter_request.rendered_messages_hash != pending.rendered_prompt_hash
+                or adapter_request.rendered_messages != pending.rendered_messages
+                or pending.exposure_id != event_input.exposure_record.exposure_id
+                or request.prompt_limits_hash != event_input.prompt_view.limits_hash
+            ):
+                raise ValueError("v6 request prompt, schedule, or exposure binding drifted")
+            pending_links = (
+                pending.event_id,
+                pending.attempt_id,
+                pending.attempt_index,
+                pending.request_id,
+                pending.request_parameters,
+                pending.request_parameters_hash,
+                pending.model_identity,
+                pending.model_identity_hash,
+                pending.model_seed,
+            )
+            request_links = (
+                request.event_id,
+                request.attempt_id,
+                request.attempt_index,
+                request.request_id,
+                request.request_parameters,
+                request.request_parameters_hash,
+                request.model_identity,
+                request.model_identity_hash,
+                request.model_seed,
+            )
+            if pending_links != request_links:
+                raise ValueError("v6 PENDING attempt does not bind request authorization")
+            prior = prior_request_by_event.get(event_id)
+            if prior is not None:
+                invariant = (
+                    prior.request.topic_package_id,
+                    prior.request.topic_package_hash,
+                    prior.request.prompt_view_id,
+                    prior.request.prompt_view_hash,
+                    prior.request.rendered_messages,
+                    prior.request.rendered_messages_hash,
+                    prior.model_identity,
+                    prior.model_identity_hash,
+                    prior.prompt_limits_hash,
+                    prior.parser_limits_hash,
+                    prior.attempt_policy_hash,
+                    prior.adapter_execution_binding_hash,
+                )
+                current = (
+                    adapter_request.topic_package_id,
+                    adapter_request.topic_package_hash,
+                    adapter_request.prompt_view_id,
+                    adapter_request.prompt_view_hash,
+                    adapter_request.rendered_messages,
+                    adapter_request.rendered_messages_hash,
+                    request.model_identity,
+                    request.model_identity_hash,
+                    request.prompt_limits_hash,
+                    request.parser_limits_hash,
+                    request.attempt_policy_hash,
+                    request.adapter_execution_binding_hash,
+                )
+                if invariant != current:
+                    raise ValueError("v6 retry request changed invariant evidence")
+                changed = self._changed_request_parameter_paths(
+                    prior.request_parameters, request.request_parameters
+                )
+                if prior.model_seed != request.model_seed:
+                    changed.add("model_seed")
+                if not changed.issubset(set(policy.allowed_difference_fields)):
+                    raise ValueError("v6 retry request changed an unauthorized field")
+            prior_request_by_event[event_id] = request
             invocation = self.invocation_evidence(attempt_id)
             parsed = self.parse_evidence(attempt_id)
             terminal = terminal_by_id.get(attempt_id)

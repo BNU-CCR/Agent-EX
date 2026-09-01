@@ -1521,9 +1521,7 @@ def test_typed_evidence_readers_reject_redundant_row_envelope_tamper(
     "prefix",
     ("pending", "in_progress", "invocation", "terminal"),
 )
-def test_integrity_accepts_every_v6_evidence_durable_prefix(
-    tmp_path: Path, prefix: str
-) -> None:
+def test_integrity_accepts_every_v6_evidence_durable_prefix(tmp_path: Path, prefix: str) -> None:
     store, values = prepared_evidence_bundle(tmp_path)
     store.record_prepared_attempt(
         values["event_input"],
@@ -1572,9 +1570,7 @@ def test_integrity_accepts_response_and_timeout_failed_v6_prefixes(
         "parse_evidence",
     ),
 )
-def test_integrity_rejects_missing_v6_evidence_after_reopen(
-    tmp_path: Path, table: str
-) -> None:
+def test_integrity_rejects_missing_v6_evidence_after_reopen(tmp_path: Path, table: str) -> None:
     store, values = prepared_evidence_bundle(tmp_path)
     invocation_value = land_invocation(store, values)
     store.record_finalized_attempt(finalized_evidence(store, values, invocation_value))
@@ -1640,6 +1636,58 @@ def test_integrity_rejects_unknown_nested_parse_payload_field(tmp_path: Path) ->
     store._connection.commit()
 
     with pytest.raises(ValueError, match="parse evidence row envelope|hash"):
+        store.verify_integrity()
+
+
+@pytest.mark.parametrize("table", ("event_input_evidence", "adapter_requests"))
+def test_integrity_hashes_raw_nested_v6_payload_before_normalization(
+    tmp_path: Path, table: str
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    land_invocation(store, values)
+    key = (
+        values["pending"].event_id
+        if table == "event_input_evidence"
+        else values["pending"].attempt_id
+    )
+    key_column = "event_id" if table == "event_input_evidence" else "attempt_id"
+    row = store._connection.execute(
+        f"SELECT payload FROM {table} WHERE {key_column} = ?", (key,)
+    ).fetchone()
+    payload = json.loads(row[0])
+    if table == "event_input_evidence":
+        payload["prompt_view"]["current_private"]["forged_extra_field"] = True
+    else:
+        payload["request"]["rendered_messages"][0]["forged_extra_field"] = True
+    store._connection.execute(
+        f"UPDATE {table} SET payload = ? WHERE {key_column} = ?",
+        (storage_module._canonical_json(payload), key),
+    )
+    store._connection.commit()
+
+    with pytest.raises(ValueError, match="hash|row|payload"):
+        store.verify_integrity()
+
+
+def test_integrity_rejects_rehashed_request_prompt_limits_drift(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    land_invocation(store, values)
+    attempt_id = values["pending"].attempt_id
+    row = store._connection.execute(
+        "SELECT payload FROM adapter_requests WHERE attempt_id = ?", (attempt_id,)
+    ).fetchone()
+    payload = json.loads(row[0])
+    payload["prompt_limits_hash"] = "f" * 64
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    store._connection.execute(
+        "UPDATE adapter_requests SET payload = ?, record_hash = ? WHERE attempt_id = ?",
+        (storage_module._canonical_json(payload), payload["record_hash"], attempt_id),
+    )
+    store._connection.commit()
+
+    with pytest.raises(ValueError, match="prompt|binding|drift"):
         store.verify_integrity()
 
 

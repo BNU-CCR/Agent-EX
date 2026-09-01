@@ -114,9 +114,7 @@ def test_checkpoint_binds_ordered_v6_evidence_hashes_and_rejects_total_erasure(
         "parse_evidence",
     }
     assert all(len(hashes) == 1 for hashes in checkpoint.v6_evidence_hashes.values())
-    assert checkpoint.v6_evidence_root == canonical_payload_hash(
-        checkpoint.v6_evidence_hashes
-    )
+    assert checkpoint.v6_evidence_root == canonical_payload_hash(checkpoint.v6_evidence_hashes)
     store.close()
     connection = sqlite3.connect(values["path"])
     connection.execute("PRAGMA foreign_keys = OFF")
@@ -151,9 +149,7 @@ def test_checkpoint_rejects_coordinated_v6_hash_prefix_downgrade(tmp_path: Path)
     checkpoint = build_checkpoint(store)
     payload = checkpoint.to_payload()
     body = payload["checkpoint"]
-    body["v6_evidence_hashes"] = {
-        name: [] for name in body["v6_evidence_hashes"]
-    }
+    body["v6_evidence_hashes"] = {name: [] for name in body["v6_evidence_hashes"]}
     body["v6_evidence_root"] = canonical_payload_hash(body["v6_evidence_hashes"])
     payload["checkpoint_hash"] = canonical_payload_hash(body)
     downgraded = Checkpoint.from_payload(payload)
