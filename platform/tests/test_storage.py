@@ -1233,6 +1233,90 @@ def test_failed_finalization_atomically_lands_parse_na_terminal_and_failure(
     assert store.execution_state().status is ExecutionStatus.FAILED
 
 
+def test_finalized_replay_scopes_historical_failure_to_its_attempt(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(
+        tmp_path,
+        script_steps=(
+            MockScriptStep.timeout("provider timeout"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "retry"}
+            ),
+        ),
+    )
+    first_invocation = land_invocation(store, values)
+    failed = finalized_evidence(store, values, first_invocation)
+    store.record_finalized_attempt(failed)
+    store.record_finalized_attempt(failed)
+    first_transitions = store.attempt_transitions(failed.attempt.attempt_id)
+    failure = failed.terminal_failure_evidence
+    assert failure is not None
+    assert store.terminal_failure_evidence() == failure
+    assert len(first_transitions) == 3
+
+    store.authorize_resume(
+        authorization_id="resume-finalized-replay-scope",
+        event_id=failed.attempt.event_id,
+        previous_terminal_failure_hash=failure.payload_hash,
+        policy_evidence_id=values["policy"].policy_id,
+        policy_evidence_hash=values["policy"].record_hash,
+        authorized_at=NOW,
+    )
+    retry_request = AdapterRequest.create(
+        prompt_view=values["event_input"].prompt_view,
+        attempt_index=2,
+        mock_seed=12345,
+        mock_only=True,
+    )
+    retry_request_evidence = execution_evidence_module.AdapterRequestEvidence.create(
+        request=retry_request,
+        model_identity=values["binding"].model_identity,
+        request_parameters={"temperature": 0.0},
+        model_seed=12345,
+        prompt_limits_hash=values["event_input"].prompt_view.limits_hash,
+        parser_limits_hash=values["parser_limits"].record_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=values["binding"].record_hash,
+    )
+    retry_payload = values["pending"].to_payload()
+    retry_payload.update(
+        {
+            "attempt_id": retry_request.attempt_id,
+            "attempt_index": 2,
+            "request_id": retry_request.request_id,
+            "model_seed": retry_request.mock_seed,
+        }
+    )
+    retry_pending = GenerationAttempt.from_payload(retry_payload)
+    retry_values = {
+        **values,
+        "request_evidence": retry_request_evidence,
+        "pending": retry_pending,
+    }
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=retry_request_evidence,
+        pending_attempt=retry_pending,
+    )
+    store.append_attempt(attempt_transition(retry_pending, EventStatus.IN_PROGRESS))
+    retry_invocation = persisted_invocation(retry_values)
+    store.record_invocation_evidence(retry_invocation)
+    succeeded = finalized_evidence(store, retry_values, retry_invocation)
+    store.record_finalized_attempt(succeeded)
+    before_transitions = store.attempt_transitions(succeeded.attempt.attempt_id)
+    before_execution = store.execution_state()
+
+    store.record_finalized_attempt(succeeded)
+
+    assert store.attempt_transitions(failed.attempt.attempt_id) == first_transitions
+    assert store.attempt_transitions(succeeded.attempt.attempt_id) == before_transitions
+    assert len(before_transitions) == 3
+    assert store.terminal_failure_evidence() == failure
+    assert store._connection.execute("SELECT COUNT(*) FROM terminal_failures").fetchone()[0] == 1
+    assert store.execution_state() == before_execution
+
+
 def test_retry_references_follow_only_current_attempt_across_reopen_boundaries(
     tmp_path: Path,
 ) -> None:

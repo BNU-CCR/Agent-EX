@@ -2543,7 +2543,22 @@ class RunStorage:
             raise ValueError("terminal execution projection does not match persisted invocation")
         if already_terminal:
             landed_parse = self.parse_evidence(terminal.attempt_id)
-            landed_failure = self.terminal_failure_evidence()
+            failure_row = self._connection.execute(
+                """SELECT attempt_id, payload_json, payload_hash FROM terminal_failures
+                   WHERE attempt_id = ?""",
+                (terminal.attempt_id,),
+            ).fetchone()
+            landed_failure = None
+            if failure_row is not None:
+                failure_payload = _load_canonical_json(failure_row[1], "terminal failure replay")
+                if (
+                    failure_row[0] != terminal.attempt_id
+                    or canonical_payload_hash(failure_payload) != failure_row[2]
+                ):
+                    raise ValueError("terminal failure replay row envelope is inconsistent")
+                landed_failure = TerminalFailureEvidence.from_payload(failure_payload)
+                if landed_failure.attempt_id != failure_row[0]:
+                    raise ValueError("terminal failure replay attempt identity drifted")
             if landed_parse != parse or landed_failure != evidence.terminal_failure_evidence:
                 raise ValueError("conflicting finalized attempt replay")
             return
