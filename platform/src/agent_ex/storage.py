@@ -54,6 +54,18 @@ _SQLITE_USER_VERSION = 6
 _SQLITE_SIDECAR_SUFFIXES = ("-wal", "-shm", "-journal")
 
 
+def _quote_sql_identifier(identifier: str) -> str:
+    if (
+        type(identifier) is not str
+        or not identifier
+        or not identifier.isascii()
+        or not (identifier[0].isalpha() or identifier[0] == "_")
+        or not all(character.isalnum() or character == "_" for character in identifier)
+    ):
+        raise ValueError("internal SQLite identifier is invalid")
+    return f'"{identifier}"'
+
+
 class ExecutionStatus(StrEnum):
     """Observed run lifecycle; this is not a frozen retry policy."""
 
@@ -1921,19 +1933,27 @@ class RunStorage:
         extra_columns: tuple[str, ...] = (),
         extra_values: tuple[object, ...] = (),
     ) -> None:
+        if len(extra_columns) != len(extra_values):
+            raise ValueError("evidence extra columns and values must have equal lengths")
+        quoted_table = _quote_sql_identifier(table)
+        quoted_key = _quote_sql_identifier(key_name)
+        quoted_extras = tuple(_quote_sql_identifier(name) for name in extra_columns)
+        selected = (*quoted_extras, '"payload"', '"record_hash"')
         existing = self._connection.execute(
-            f"SELECT payload, record_hash FROM {table} WHERE {key_name} = ?", (key,)
+            f"SELECT {', '.join(selected)} FROM {quoted_table} WHERE {quoted_key} = ?",
+            (key,),
         ).fetchone()
         encoded = _canonical_json(payload)
+        expected = (*extra_values, encoded, record_hash)
         if existing is not None:
-            if existing != (encoded, record_hash):
+            if existing != expected:
                 raise ValueError(f"conflicting immutable {table} replay")
             return
-        columns = (key_name, *extra_columns, "payload", "record_hash")
+        columns = (quoted_key, *quoted_extras, '"payload"', '"record_hash"')
         placeholders = ", ".join("?" for _ in columns)
         self._connection.execute(
-            f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})",
-            (key, *extra_values, encoded, record_hash),
+            f"INSERT INTO {quoted_table} ({', '.join(columns)}) VALUES ({placeholders})",
+            (key, *expected),
         )
 
     def record_prepared_attempt(

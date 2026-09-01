@@ -753,6 +753,65 @@ def test_record_prepared_attempt_writes_typed_evidence_and_pending_once(tmp_path
     assert store.attempt_transitions(values["pending"].attempt_id) == (values["pending"],)
 
 
+@pytest.mark.parametrize(
+    ("column", "replacement"),
+    (
+        ("event_id", "event-tampered"),
+        ("adapter_binding_hash", SHA_A),
+        ("parser_limits_hash", SHA_A),
+        ("policy_hash", SHA_A),
+    ),
+)
+def test_prepared_replay_rejects_adapter_request_row_envelope_drift_atomically(
+    tmp_path: Path, column: str, replacement: str
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+    attempt_id = values["pending"].attempt_id
+    store._connection.execute("PRAGMA foreign_keys = OFF")
+    store._connection.execute(
+        f"UPDATE adapter_requests SET {column} = ? WHERE attempt_id = ?",
+        (replacement, attempt_id),
+    )
+    store._connection.commit()
+    store._connection.execute("PRAGMA foreign_keys = ON")
+    before_row = store._connection.execute(
+        """SELECT event_id, adapter_binding_hash, parser_limits_hash, policy_hash,
+                  payload, record_hash
+           FROM adapter_requests WHERE attempt_id = ?""",
+        (attempt_id,),
+    ).fetchone()
+    before_attempts = store.attempt_transitions(attempt_id)
+    before_execution = store.execution_state()
+
+    with pytest.raises(ValueError, match="conflicting immutable adapter_requests replay"):
+        store.record_prepared_attempt(
+            values["event_input"],
+            policy=values["policy"],
+            adapter_binding=values["binding"],
+            request_evidence=values["request_evidence"],
+            pending_attempt=values["pending"],
+        )
+
+    assert (
+        store._connection.execute(
+            """SELECT event_id, adapter_binding_hash, parser_limits_hash, policy_hash,
+                  payload, record_hash
+           FROM adapter_requests WHERE attempt_id = ?""",
+            (attempt_id,),
+        ).fetchone()
+        == before_row
+    )
+    assert store.attempt_transitions(attempt_id) == before_attempts == (values["pending"],)
+    assert store.execution_state() == before_execution
+
+
 def test_run_rejects_second_adapter_attestation_before_request_or_pending_write(
     tmp_path: Path,
 ) -> None:
