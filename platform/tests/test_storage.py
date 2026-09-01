@@ -96,7 +96,7 @@ def real_network_artifacts(matched_seed: int = 17) -> tuple[ArtifactEnvelope, Ar
 def storage_genesis(binding: StorageBinding) -> str:
     return canonical_payload_hash(
         {
-            "schema_version": "paper1.run-storage.v5",
+            "schema_version": "paper1.run-storage.v6",
             "run_id": binding.run_id,
             "run_spec_hash": binding.run_spec_hash,
             "protocol_hash": binding.protocol_hash,
@@ -564,7 +564,7 @@ def test_create_close_and_reopen_binds_run_protocol_schedule_and_artifacts(
         expected_exposure_graph_hash=None,
     ) as store:
         binding = store.binding
-        assert binding.schema_version == "paper1.run-storage.v5"
+        assert binding.schema_version == "paper1.run-storage.v6"
         assert binding.run_id == run_manifest.run_id
         assert binding.run_spec_hash == run_manifest.run_spec_hash
         assert binding.protocol_hash == run_manifest.protocol_hash
@@ -592,6 +592,225 @@ def test_create_close_and_reopen_binds_run_protocol_schedule_and_artifacts(
             expected_exposure_mode="self_history_only",
             expected_exposure_graph_hash=None,
         )
+
+
+def test_new_store_has_v6_evidence_schema_and_constraints(tmp_path: Path) -> None:
+    database = tmp_path / "run.sqlite3"
+    run_manifest = manifest()
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        assert store.binding.schema_version == "paper1.run-storage.v6"
+
+    with sqlite3.connect(database) as connection:
+        assert connection.execute("PRAGMA user_version").fetchone() == (6,)
+        tables = {
+            row[0]
+            for row in connection.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
+        }
+        assert {
+            "event_input_evidence",
+            "attempt_policy_evidence",
+            "adapter_execution_bindings",
+            "adapter_requests",
+            "invocation_evidence",
+            "parse_evidence",
+        } <= tables
+
+        expected_columns = {
+            "event_input_evidence": {"event_id", "payload", "record_hash"},
+            "attempt_policy_evidence": {"event_id", "payload", "record_hash"},
+            "adapter_execution_bindings": {"binding_id", "payload", "record_hash"},
+            "adapter_requests": {
+                "attempt_id",
+                "event_id",
+                "adapter_binding_hash",
+                "parser_limits_hash",
+                "policy_hash",
+                "payload",
+                "record_hash",
+            },
+            "invocation_evidence": {
+                "attempt_id",
+                "response_payload",
+                "execution_payload",
+                "record_hash",
+            },
+            "parse_evidence": {"attempt_id", "kind", "payload", "record_hash"},
+        }
+        for table, columns in expected_columns.items():
+            observed = {row[1] for row in connection.execute(f"PRAGMA table_info({table})")}
+            assert observed == columns
+
+        expected_foreign_keys = {
+            "attempt_policy_evidence": {("event_id", "event_input_evidence", "event_id")},
+            "adapter_requests": {
+                ("event_id", "event_input_evidence", "event_id"),
+                ("adapter_binding_hash", "adapter_execution_bindings", "record_hash"),
+                ("event_id", "attempt_policy_evidence", "event_id"),
+                ("policy_hash", "attempt_policy_evidence", "record_hash"),
+            },
+            "invocation_evidence": {("attempt_id", "adapter_requests", "attempt_id")},
+            "parse_evidence": {("attempt_id", "adapter_requests", "attempt_id")},
+        }
+        for table, expected in expected_foreign_keys.items():
+            observed = {
+                (row[3], row[2], row[4])
+                for row in connection.execute(f"PRAGMA foreign_key_list({table})")
+            }
+            assert observed == expected
+
+        for table in (
+            "event_input_evidence",
+            "adapter_execution_bindings",
+            "adapter_requests",
+            "invocation_evidence",
+            "parse_evidence",
+        ):
+            unique_indexes = {
+                tuple(column[2] for column in connection.execute(f"PRAGMA index_info({index[1]})"))
+                for index in connection.execute(f"PRAGMA index_list({table})")
+                if index[2]
+            }
+            assert ("record_hash",) in unique_indexes
+
+        policy_unique_indexes = {
+            tuple(column[2] for column in connection.execute(f"PRAGMA index_info({index[1]})"))
+            for index in connection.execute("PRAGMA index_list(attempt_policy_evidence)")
+            if index[2]
+        }
+        assert ("event_id", "record_hash") in policy_unique_indexes
+        assert ("record_hash",) not in policy_unique_indexes
+
+        request_indexes = {
+            tuple(column[2] for column in connection.execute(f"PRAGMA index_info({index[1]})"))
+            for index in connection.execute("PRAGMA index_list(adapter_requests)")
+        }
+        assert {
+            ("event_id",),
+            ("adapter_binding_hash",),
+            ("parser_limits_hash",),
+            ("policy_hash",),
+        } <= request_indexes
+
+        connection.execute("PRAGMA foreign_keys = ON")
+        connection.execute(
+            "INSERT INTO event_input_evidence VALUES (?, ?, ?)",
+            ("event-1", "{}", "a" * 64),
+        )
+        connection.execute(
+            "INSERT INTO attempt_policy_evidence VALUES (?, ?, ?)",
+            ("event-1", "{}", "b" * 64),
+        )
+        connection.execute(
+            "INSERT INTO event_input_evidence VALUES (?, ?, ?)",
+            ("event-2", '{"event":2}', "3" * 64),
+        )
+        connection.execute(
+            "INSERT INTO attempt_policy_evidence VALUES (?, ?, ?)",
+            ("event-2", "{}", "b" * 64),
+        )
+        connection.execute(
+            "INSERT INTO adapter_execution_bindings VALUES (?, ?, ?)",
+            ("binding-1", "{}", "c" * 64),
+        )
+        connection.execute(
+            "INSERT INTO adapter_requests VALUES (?, ?, ?, ?, ?, ?, ?)",
+            ("attempt-1", "event-1", "c" * 64, "d" * 64, "b" * 64, "{}", "e" * 64),
+        )
+        connection.execute(
+            "INSERT INTO adapter_requests VALUES (?, ?, ?, ?, ?, ?, ?)",
+            ("attempt-2", "event-2", "c" * 64, "d" * 64, "b" * 64, "{}", "4" * 64),
+        )
+        connection.execute(
+            "INSERT INTO invocation_evidence VALUES (?, ?, ?, ?)",
+            ("attempt-1", "{}", "{}", "f" * 64),
+        )
+        connection.execute(
+            "INSERT INTO parse_evidence VALUES (?, ?, ?, ?)",
+            ("attempt-1", "parsed", "{}", "0" * 64),
+        )
+        with pytest.raises(sqlite3.IntegrityError):
+            connection.execute(
+                "INSERT INTO parse_evidence VALUES (?, ?, ?, ?)",
+                ("attempt-2", "invalid", "{}", "1" * 64),
+            )
+        with pytest.raises(sqlite3.IntegrityError):
+            connection.execute(
+                "INSERT INTO invocation_evidence VALUES (?, ?, ?, ?)",
+                ("missing-attempt", "{}", "{}", "2" * 64),
+            )
+        with pytest.raises(sqlite3.IntegrityError):
+            connection.execute(
+                "INSERT INTO adapter_requests VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (
+                    "attempt-3",
+                    "event-1",
+                    "c" * 64,
+                    "d" * 64,
+                    "b" * 64,
+                    "{}",
+                    "e" * 64,
+                ),
+            )
+        connection.execute(
+            "INSERT INTO event_input_evidence VALUES (?, ?, ?)",
+            ("event-3", '{"event":3}', "5" * 64),
+        )
+        connection.execute(
+            "INSERT INTO attempt_policy_evidence VALUES (?, ?, ?)",
+            ("event-3", '{"policy":3}', "6" * 64),
+        )
+        with pytest.raises(sqlite3.IntegrityError):
+            connection.execute(
+                "INSERT INTO adapter_requests VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (
+                    "attempt-3",
+                    "event-3",
+                    "c" * 64,
+                    "d" * 64,
+                    "b" * 64,
+                    "{}",
+                    "7" * 64,
+                ),
+            )
+
+
+@pytest.mark.parametrize("user_version", (5, 999))
+def test_open_rejects_wrong_user_version_without_any_file_or_sidecar_mutation(
+    tmp_path: Path, user_version: int
+) -> None:
+    database = tmp_path / f"run-v{user_version}.sqlite3"
+    with sqlite3.connect(database) as connection:
+        connection.execute(f"PRAGMA user_version = {user_version}")
+        connection.execute(
+            "CREATE TABLE binding (singleton INTEGER PRIMARY KEY, schema_version TEXT NOT NULL)"
+        )
+        connection.execute(
+            "INSERT INTO binding VALUES (1, ?)",
+            (f"paper1.run-storage.v{user_version}",),
+        )
+
+    before_bytes = database.read_bytes()
+    before_directory = {path.name: path.read_bytes() for path in tmp_path.iterdir()}
+    run_manifest = manifest()
+    with pytest.raises(ValueError, match="storage schema version.*unsupported"):
+        RunStorage.open(
+            database,
+            manifest=run_manifest,
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=expected_agent_ids(run_manifest),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+    assert database.read_bytes() == before_bytes
+    assert {path.name: path.read_bytes() for path in tmp_path.iterdir()} == before_directory
 
 
 def test_failed_attempt_is_append_only_and_does_not_mutate_research_state(

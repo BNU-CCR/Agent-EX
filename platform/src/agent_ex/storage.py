@@ -36,8 +36,8 @@ from .network import validate_shadow_artifact, validate_ws_artifact
 from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
 
 
-_SCHEMA_VERSION = "paper1.run-storage.v5"
-_SQLITE_USER_VERSION = 5
+_SCHEMA_VERSION = "paper1.run-storage.v6"
+_SQLITE_USER_VERSION = 6
 
 
 class ExecutionStatus(StrEnum):
@@ -1042,6 +1042,59 @@ class RunStorage:
                     payload_json TEXT NOT NULL,
                     payload_hash TEXT NOT NULL
                 );
+                CREATE TABLE event_input_evidence (
+                    event_id TEXT PRIMARY KEY,
+                    payload TEXT NOT NULL,
+                    record_hash TEXT NOT NULL UNIQUE
+                );
+                CREATE TABLE attempt_policy_evidence (
+                    event_id TEXT PRIMARY KEY,
+                    payload TEXT NOT NULL,
+                    record_hash TEXT NOT NULL,
+                    UNIQUE (event_id, record_hash),
+                    FOREIGN KEY (event_id) REFERENCES event_input_evidence(event_id)
+                );
+                CREATE TABLE adapter_execution_bindings (
+                    binding_id TEXT PRIMARY KEY,
+                    payload TEXT NOT NULL,
+                    record_hash TEXT NOT NULL UNIQUE
+                );
+                CREATE TABLE adapter_requests (
+                    attempt_id TEXT PRIMARY KEY,
+                    event_id TEXT NOT NULL,
+                    adapter_binding_hash TEXT NOT NULL,
+                    parser_limits_hash TEXT NOT NULL,
+                    policy_hash TEXT NOT NULL,
+                    payload TEXT NOT NULL,
+                    record_hash TEXT NOT NULL UNIQUE,
+                    FOREIGN KEY (event_id) REFERENCES event_input_evidence(event_id),
+                    FOREIGN KEY (adapter_binding_hash)
+                        REFERENCES adapter_execution_bindings(record_hash),
+                    FOREIGN KEY (event_id, policy_hash)
+                        REFERENCES attempt_policy_evidence(event_id, record_hash)
+                );
+                CREATE INDEX idx_adapter_requests_event
+                    ON adapter_requests(event_id);
+                CREATE INDEX idx_adapter_requests_binding
+                    ON adapter_requests(adapter_binding_hash);
+                CREATE INDEX idx_adapter_requests_parser_limits
+                    ON adapter_requests(parser_limits_hash);
+                CREATE INDEX idx_adapter_requests_policy
+                    ON adapter_requests(policy_hash);
+                CREATE TABLE invocation_evidence (
+                    attempt_id TEXT PRIMARY KEY,
+                    response_payload TEXT NOT NULL,
+                    execution_payload TEXT NOT NULL,
+                    record_hash TEXT NOT NULL UNIQUE,
+                    FOREIGN KEY (attempt_id) REFERENCES adapter_requests(attempt_id)
+                );
+                CREATE TABLE parse_evidence (
+                    attempt_id TEXT PRIMARY KEY,
+                    kind TEXT NOT NULL CHECK (kind IN ('parsed', 'not_applicable')),
+                    payload TEXT NOT NULL,
+                    record_hash TEXT NOT NULL UNIQUE,
+                    FOREIGN KEY (attempt_id) REFERENCES adapter_requests(attempt_id)
+                );
                 COMMIT;
                 """
             )
@@ -1204,10 +1257,22 @@ class RunStorage:
         database_uri = database.absolute().as_uri() + "?mode=rw"
         connection: sqlite3.Connection | None = None
         try:
+            read_only_uri = database.absolute().as_uri() + "?mode=ro&immutable=1"
+            version_connection = sqlite3.connect(read_only_uri, uri=True)
+            try:
+                observed_user_version = version_connection.execute(
+                    "PRAGMA user_version"
+                ).fetchone()[0]
+            finally:
+                version_connection.close()
+            if observed_user_version != _SQLITE_USER_VERSION:
+                raise ValueError(
+                    "storage schema version is unsupported: "
+                    f"expected SQLite user_version {_SQLITE_USER_VERSION}, "
+                    f"found {observed_user_version}"
+                )
             connection = sqlite3.connect(database_uri, isolation_level=None, uri=True)
             connection.execute("PRAGMA foreign_keys = ON")
-            if connection.execute("PRAGMA user_version").fetchone()[0] != _SQLITE_USER_VERSION:
-                raise ValueError("storage schema version is unsupported")
             store = cls(
                 database,
                 connection,
