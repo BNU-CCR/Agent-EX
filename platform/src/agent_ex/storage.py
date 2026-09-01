@@ -2423,6 +2423,10 @@ class RunStorage:
             row[0] != attempt_id
             or payload.get("attempt_id") != row[0]
             or payload.get("record_hash") != row[3]
+            or canonical_payload_hash(
+                {name: value for name, value in payload.items() if name != "record_hash"}
+            )
+            != row[3]
         ):
             raise ValueError("parse evidence row envelope mismatch")
         if row[1] == "parsed":

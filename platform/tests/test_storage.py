@@ -1622,6 +1622,27 @@ def test_integrity_rejects_hash_consistent_terminal_projection_tamper(tmp_path: 
         store.verify_integrity()
 
 
+def test_integrity_rejects_unknown_nested_parse_payload_field(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(finalized)
+    row = store._connection.execute(
+        "SELECT payload FROM parse_evidence WHERE attempt_id = ?",
+        (finalized.attempt.attempt_id,),
+    ).fetchone()
+    payload = json.loads(row[0])
+    payload["parsed"]["forged_extra_field"] = "must not be normalized away"
+    store._connection.execute(
+        "UPDATE parse_evidence SET payload = ? WHERE attempt_id = ?",
+        (storage_module._canonical_json(payload), finalized.attempt.attempt_id),
+    )
+    store._connection.commit()
+
+    with pytest.raises(ValueError, match="parse evidence row envelope|hash"):
+        store.verify_integrity()
+
+
 @pytest.mark.parametrize(
     "field",
     (
