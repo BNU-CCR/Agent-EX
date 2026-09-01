@@ -1,9 +1,4 @@
-"""Strictly serial single-event lifecycle kernel for mock Phase 4B execution.
-
-This module intentionally stops at lifecycle orchestration.  Feed construction,
-prompt provenance persistence, retry/timeout policy, and real provider execution
-remain outside this C2 boundary and must be supplied explicitly by later phases.
-"""
+"""Strictly serial, evidence-backed lifecycle kernel for mock Phase 4B execution."""
 
 from __future__ import annotations
 
@@ -18,6 +13,7 @@ from .adapters.base import (
     _has_trusted_request_seal,
     _has_trusted_response_seal,
 )
+from .adapters.mock import verify_persisted_mock_response
 from .checkpoint import build_checkpoint, write_checkpoint_atomic
 from .domain import (
     EventStatus,
@@ -33,6 +29,16 @@ from .domain import (
     derive_event_id,
 )
 from .feed import FeedCursor
+from .execution_evidence import (
+    AdapterRequestEvidence,
+    EventInputEvidence,
+    FinalizedAttemptEvidence,
+    MockAdapterExecutionBinding,
+    MockAttemptPolicyBinding,
+    PersistedInvocationEvidence,
+    _has_trusted_adapter_request_evidence,
+    _has_trusted_mock_adapter_execution_binding,
+)
 from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
 from .storage import EventJournalState, RunLease, RunStorage
 
@@ -154,6 +160,10 @@ class PreparedAttempt:
     pending_attempt: GenerationAttempt
     in_progress_attempt: GenerationAttempt
     context_provenance: Mapping[str, object]
+    event_input: EventInputEvidence
+    policy: MockAttemptPolicyBinding
+    adapter_binding: MockAdapterExecutionBinding
+    request_evidence: AdapterRequestEvidence
 
     def __post_init__(self) -> None:
         if not isinstance(self.authorization, AttemptAuthorization):
@@ -172,6 +182,16 @@ class PreparedAttempt:
             raise ValueError("prepared in-progress attempt must have IN_PROGRESS status")
         if not isinstance(self.context_provenance, Mapping) or not self.context_provenance:
             raise ValueError("prepared attempt requires explicit future-C3 context provenance")
+        if not isinstance(self.event_input, EventInputEvidence):
+            raise TypeError("prepared event input evidence must be typed")
+        if not isinstance(self.policy, MockAttemptPolicyBinding):
+            raise TypeError("prepared attempt policy must be typed")
+        if not _has_trusted_mock_adapter_execution_binding(self.adapter_binding):
+            raise ValueError("prepared adapter binding must be a trusted capability")
+        if not _has_trusted_adapter_request_evidence(self.request_evidence):
+            raise ValueError("prepared request evidence must be a trusted capability")
+        if self.request_evidence.request != self.request:
+            raise ValueError("prepared request evidence does not bind the sealed request")
         object.__setattr__(self, "context_provenance", _deep_freeze(self.context_provenance))
 
 
@@ -220,14 +240,15 @@ class AttemptOutcome:
 
 
 class AttemptLifecycleFailure(RuntimeError):
-    """Typed failure carrying complete, caller-observed terminal attempt evidence."""
+    """Typed failure carrying the complete atomic finalization evidence bundle."""
 
-    def __init__(self, terminal_attempt: GenerationAttempt) -> None:
-        if not isinstance(terminal_attempt, GenerationAttempt):
-            raise TypeError("lifecycle failure requires a typed terminal attempt")
-        if terminal_attempt.status is not EventStatus.FAILED:
+    def __init__(self, finalized_attempt: FinalizedAttemptEvidence) -> None:
+        if not isinstance(finalized_attempt, FinalizedAttemptEvidence):
+            raise TypeError("lifecycle failure requires typed finalized attempt evidence")
+        if finalized_attempt.attempt.status is not EventStatus.FAILED:
             raise ValueError("lifecycle failure requires FAILED attempt evidence")
-        self.terminal_attempt = terminal_attempt
+        self.finalized_attempt = finalized_attempt
+        self.terminal_attempt = finalized_attempt.attempt
         super().__init__("attempt lifecycle failed with explicit terminal evidence")
 
 
@@ -268,7 +289,7 @@ class StrictSerialLifecycleEngine:
         *,
         prepare: Callable[[EventJournalState], PreparedAttempt],
         invoke: Callable[[AdapterRequest], AttemptInvocationResult],
-        finalize: Callable[[PreparedAttempt, AttemptInvocationResult], GenerationAttempt],
+        finalize: Callable[[PreparedAttempt, AttemptInvocationResult], FinalizedAttemptEvidence],
         build_commit: Callable[[GenerationAttempt], SuccessfulEventCommit],
         reconciliation: AttemptInvocationResult | None = None,
     ) -> AttemptOutcome:
@@ -312,46 +333,48 @@ class StrictSerialLifecycleEngine:
             raise ValueError("first or resumed existing attempt cannot carry retry authorization")
 
         invoked = False
-        try:
-            if journal.resume_state in {"new_attempt", "retry_same_event"}:
-                self._storage.append_attempt(value.pending_attempt)
-                self._storage.append_attempt(value.in_progress_attempt)
-                invoked = True
-                result = invoke(value.request)
-            elif journal.resume_state == "pending_attempt_requires_same_request":
-                if journal.latest_transition != value.pending_attempt:
-                    raise ValueError("pending recovery requires the exact sealed request evidence")
-                self._storage.append_attempt(value.in_progress_attempt)
-                invoked = True
-                result = invoke(value.request)
-            elif journal.resume_state == "in_progress_requires_provider_reconciliation":
-                if journal.latest_transition != value.in_progress_attempt:
-                    raise ValueError("in-progress recovery request evidence drifted")
-                if reconciliation is None:
-                    raise RuntimeError(
-                        "in-progress attempt requires explicit provider reconciliation"
+        if journal.resume_state in {"new_attempt", "retry_same_event"}:
+            self._record_prepared(value)
+            self._storage.append_attempt(value.in_progress_attempt)
+            invoked = True
+            result = invoke(value.request)
+        elif journal.resume_state == "pending_attempt_requires_same_request":
+            if journal.latest_transition != value.pending_attempt:
+                raise ValueError("pending recovery requires the exact transition evidence")
+            self._validate_persisted_prepared(value)
+            self._storage.append_attempt(value.in_progress_attempt)
+            invoked = True
+            result = invoke(value.request)
+        elif journal.resume_state == "in_progress_requires_provider_reconciliation":
+            if journal.latest_transition != value.in_progress_attempt:
+                raise ValueError("in-progress recovery request evidence drifted")
+            self._validate_persisted_prepared(value)
+            persisted = self._storage.invocation_evidence(value.request.attempt_id)
+            if persisted is not None:
+                if reconciliation is not None:
+                    raise ValueError(
+                        "persisted invocation forbids conflicting provider reconciliation"
                     )
-                result = reconciliation
+                result = self._rehydrate_invocation(value, persisted)
+            elif reconciliation is None:
+                raise RuntimeError("in-progress attempt requires explicit provider reconciliation")
             else:
-                raise RuntimeError(f"unsupported journal resume state: {journal.resume_state}")
-        except AttemptLifecycleFailure as failure:
-            self._validate_failed_terminal(value, failure.terminal_attempt)
-            self._storage.append_attempt(failure.terminal_attempt)
-            return AttemptOutcome(
-                "failed", value.authorization.event_id, failure.terminal_attempt, invoked
-            )
+                result = reconciliation
+        else:
+            raise RuntimeError(f"unsupported journal resume state: {journal.resume_state}")
 
         self._validate_invocation(value, result)
-        try:
-            terminal = finalize(value, result)
-        except AttemptLifecycleFailure as failure:
-            self._validate_terminal(value, result, failure.terminal_attempt)
-            self._storage.append_attempt(failure.terminal_attempt)
-            return AttemptOutcome(
-                "failed", value.authorization.event_id, failure.terminal_attempt, invoked
+        if self._storage.invocation_evidence(value.request.attempt_id) is None:
+            self._storage.record_invocation_evidence(
+                self._build_persisted_invocation(value, result)
             )
-        self._validate_terminal(value, result, terminal)
-        self._storage.append_attempt(terminal)
+        try:
+            finalized = finalize(value, result)
+        except AttemptLifecycleFailure as failure:
+            finalized = failure.finalized_attempt
+        self._validate_finalized(value, result, finalized)
+        self._storage.record_finalized_attempt(finalized)
+        terminal = finalized.attempt
         if terminal.status is EventStatus.FAILED:
             return AttemptOutcome("failed", terminal.event_id, terminal, invoked)
         self._commit_terminal(terminal, build_commit)
@@ -403,6 +426,17 @@ class StrictSerialLifecycleEngine:
             raise ValueError("prepared request parameters drifted")
         if value.pending_attempt.model_identity != authorization.model_identity:
             raise ValueError("prepared model identity drifted")
+        if (
+            value.event_input.event_id != event_id
+            or value.request_evidence.request != request
+            or value.request_evidence.request_hash != request.record_hash
+            or value.request_evidence.attempt_policy_hash != value.policy.record_hash
+            or value.request_evidence.adapter_execution_binding_hash
+            != value.adapter_binding.record_hash
+            or value.request_evidence.parser_limits_hash
+            != value.event_input.parser_limits.record_hash
+        ):
+            raise ValueError("prepared v6 evidence does not bind the lifecycle request")
         pending_payload = value.pending_attempt.to_payload()
         in_progress_payload = value.in_progress_attempt.to_payload()
         lifecycle_fields = {
@@ -438,6 +472,82 @@ class StrictSerialLifecycleEngine:
             or result.evidence.provider_metadata != _response_provider_metadata(response)
         ):
             raise ValueError("invocation evidence does not bind the prepared attempt")
+
+    def _record_prepared(self, value: PreparedAttempt) -> None:
+        self._storage.record_prepared_attempt(
+            value.event_input,
+            policy=value.policy,
+            adapter_binding=value.adapter_binding,
+            request_evidence=value.request_evidence,
+            pending_attempt=value.pending_attempt,
+        )
+
+    def _validate_persisted_prepared(self, value: PreparedAttempt) -> None:
+        if (
+            self._storage.event_input_evidence(value.authorization.event_id) != value.event_input
+            or self._storage.attempt_policy_evidence(value.authorization.event_id) != value.policy
+            or self._storage.adapter_execution_binding(value.request.attempt_id)
+            != value.adapter_binding
+            or self._storage.adapter_request_evidence(value.request.attempt_id)
+            != value.request_evidence
+        ):
+            raise ValueError("persisted prepared evidence drifted")
+
+    @staticmethod
+    def _execution_payload(evidence: AttemptExecutionEvidence) -> dict[str, object]:
+        return {
+            "started_at": evidence.started_at,
+            "finished_at": evidence.finished_at,
+            "http_status": evidence.http_status,
+            "provider_metadata": dict(evidence.provider_metadata),
+            "usage": dict(evidence.usage),
+            "finish_reason": evidence.finish_reason,
+        }
+
+    def _build_persisted_invocation(
+        self, value: PreparedAttempt, result: AttemptInvocationResult
+    ) -> PersistedInvocationEvidence:
+        return PersistedInvocationEvidence.create(
+            response=result.response,
+            execution_payload=self._execution_payload(result.evidence),
+            request_hash=value.request_evidence.request_hash,
+            parser_limits_hash=value.request_evidence.parser_limits_hash,
+            attempt_policy_hash=value.request_evidence.attempt_policy_hash,
+            adapter_execution_binding_hash=(value.request_evidence.adapter_execution_binding_hash),
+        )
+
+    def _rehydrate_invocation(
+        self, value: PreparedAttempt, persisted: PersistedInvocationEvidence
+    ) -> AttemptInvocationResult:
+        if persisted != self._storage.invocation_evidence(value.request.attempt_id):
+            raise ValueError("persisted invocation replay drifted")
+        response = verify_persisted_mock_response(
+            request=value.request,
+            response_payload=persisted.response.to_payload(),
+            binding=value.adapter_binding,
+        )
+        payload = persisted.execution_payload
+        evidence = AttemptExecutionEvidence(
+            started_at=payload["started_at"],
+            finished_at=payload["finished_at"],
+            http_status=payload["http_status"],
+            provider_metadata=payload["provider_metadata"],
+            usage=payload["usage"],
+            finish_reason=payload["finish_reason"],
+        )
+        return AttemptInvocationResult(response=response, evidence=evidence)
+
+    @staticmethod
+    def _validate_finalized(
+        value: PreparedAttempt,
+        result: AttemptInvocationResult,
+        finalized: FinalizedAttemptEvidence,
+    ) -> None:
+        if not isinstance(finalized, FinalizedAttemptEvidence):
+            raise TypeError("finalize must return FinalizedAttemptEvidence")
+        if finalized.request_hash != value.request_evidence.request_hash:
+            raise ValueError("finalized evidence request hash drifted")
+        StrictSerialLifecycleEngine._validate_terminal(value, result, finalized.attempt)
 
     @staticmethod
     def _validate_terminal(
@@ -507,31 +617,6 @@ class StrictSerialLifecycleEngine:
             or terminal.error != response.error
         ):
             raise ValueError("failed terminal attempt does not preserve timeout evidence")
-
-    @staticmethod
-    def _validate_failed_terminal(value: PreparedAttempt, terminal: GenerationAttempt) -> None:
-        if terminal.status is not EventStatus.FAILED:
-            raise ValueError("typed lifecycle failure must carry FAILED attempt evidence")
-        immutable_fields = (
-            "attempt_id",
-            "event_id",
-            "attempt_index",
-            "request_id",
-            "exposure_id",
-            "rendered_messages",
-            "rendered_prompt_hash",
-            "request_parameters",
-            "request_parameters_hash",
-            "model_identity",
-            "model_identity_hash",
-            "model_seed",
-            "started_at",
-        )
-        if any(
-            getattr(terminal, name) != getattr(value.in_progress_attempt, name)
-            for name in immutable_fields
-        ):
-            raise ValueError("failed terminal attempt changed immutable request evidence")
 
     def _commit_terminal(
         self,
