@@ -1124,20 +1124,55 @@ def finalized_evidence(
         parse = parse_agent_update(
             response, topic_package=prompt_topic(), limits=values["parser_limits"]
         )
-        assert parse.parsed is not None
-        parsed_payload = parse.parsed.to_payload()
-        payload.update(
-            {
-                "status": EventStatus.SUCCEEDED.value,
-                "raw_response": response.raw_response,
-                "raw_response_hash": response.raw_response_hash,
-                "parsed_response": parsed_payload,
-                "parsed_response_hash": canonical_payload_hash(parsed_payload),
-                "error": None,
+        if parse.parsed is not None:
+            parsed_payload = parse.parsed.to_payload()
+            payload.update(
+                {
+                    "status": EventStatus.SUCCEEDED.value,
+                    "raw_response": response.raw_response,
+                    "raw_response_hash": response.raw_response_hash,
+                    "parsed_response": parsed_payload,
+                    "parsed_response_hash": canonical_payload_hash(parsed_payload),
+                    "error": None,
+                }
+            )
+            terminal = GenerationAttempt.from_payload(payload)
+            failure = None
+        else:
+            payload.update(
+                {
+                    "status": EventStatus.FAILED.value,
+                    "raw_response": response.raw_response,
+                    "raw_response_hash": response.raw_response_hash,
+                    "parsed_response": None,
+                    "parsed_response_hash": None,
+                    "error": dict(parse.error),
+                }
+            )
+            terminal = GenerationAttempt.from_payload(payload)
+            terminal_hash = canonical_payload_hash(terminal.to_payload())
+            failure_without_id = {
+                "evidence_sequence": len(store.causal_evidence_prefix()) + 1,
+                "previous_evidence_hash": None,
+                "evidence_kind": "failure",
+                "run_id": store.binding.run_id,
+                "event_id": terminal.event_id,
+                "event_ordinal": store.progress.next_event_ordinal,
+                "attempt_id": terminal.attempt_id,
+                "attempt_index": terminal.attempt_index,
+                "terminal_transition_hash": terminal_hash,
+                "terminal_attempt_hash": terminal_hash,
+                "reason": "parse_failure",
+                "policy_evidence": {
+                    "policy_id": values["policy"].policy_id,
+                    "policy_hash": values["policy"].record_hash,
+                },
+                "recorded_at": NOW,
             }
-        )
-        terminal = GenerationAttempt.from_payload(payload)
-        failure = None
+            failure = TerminalFailureEvidence(
+                evidence_id="halt-" + canonical_payload_hash(failure_without_id),
+                **failure_without_id,
+            )
     return FinalizedAttemptEvidence.create(
         request_hash=values["request_evidence"].request_hash,
         attempt=terminal,
@@ -1493,6 +1528,24 @@ def test_integrity_accepts_every_v6_evidence_durable_prefix(
 
 
 @pytest.mark.parametrize(
+    "step",
+    (
+        MockScriptStep.malformed("not-json"),
+        MockScriptStep.timeout("provider timeout"),
+    ),
+)
+def test_integrity_accepts_response_and_timeout_failed_v6_prefixes(
+    tmp_path: Path, step: MockScriptStep
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path, script_step=step)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(finalized)
+
+    store.verify_integrity()
+
+
+@pytest.mark.parametrize(
     "table",
     (
         "event_input_evidence",
@@ -1524,6 +1577,78 @@ def test_integrity_rejects_missing_v6_evidence_after_reopen(
             expected_exposure_mode="self_history_only",
             expected_exposure_graph_hash=None,
         )
+
+
+def test_integrity_rejects_hash_consistent_terminal_projection_tamper(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(finalized)
+    payload = finalized.attempt.to_payload()
+    parsed = dict(payload["parsed_response"])
+    parsed["public_reason"] = "coordinated terminal tamper"
+    payload["parsed_response"] = parsed
+    payload["parsed_response_hash"] = canonical_payload_hash(parsed)
+    encoded = storage_module._canonical_json(payload)
+    payload_hash = canonical_payload_hash(payload)
+    store._connection.execute(
+        "UPDATE attempts SET payload_json = ?, payload_hash = ? WHERE attempt_id = ?",
+        (encoded, payload_hash, finalized.attempt.attempt_id),
+    )
+    store._connection.execute(
+        """UPDATE attempt_transitions SET payload_json = ?, payload_hash = ?
+           WHERE attempt_id = ? AND status = ?""",
+        (encoded, payload_hash, finalized.attempt.attempt_id, EventStatus.SUCCEEDED.value),
+    )
+    store._connection.commit()
+
+    with pytest.raises(ValueError, match="parse|terminal|payload|response|evidence"):
+        store.verify_integrity()
+
+
+def test_integrity_accepts_committed_v6_success_history(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(finalized)
+    run_manifest = values["manifest"]
+    agent_id = run_manifest.schedule.slots[0].agent_id
+    previous_state = store.private_state(agent_id)
+    previous_cursor = store.feed_cursor(agent_id)
+    previous_pointer = store.latest_public_pointer(agent_id)
+    update = PrivateUpdate.create(
+        topic_package=prompt_topic(),
+        matched_seed=previous_state.matched_seed,
+        agent_id=agent_id,
+        event_id=finalized.attempt.event_id,
+        event_ordinal=0,
+        sequence_index=previous_state.successful_update_count,
+        stance_label=finalized.attempt.parsed_response["stance"],
+        reason=finalized.attempt.parsed_response["public_reason"],
+        confidence=finalized.attempt.parsed_response["confidence"],
+        published=run_manifest.schedule.slots[0].publish_flag,
+        source_attempt_id=finalized.attempt.attempt_id,
+        mock_only=True,
+    )
+    state = PrivateState.from_update(update, previous=previous_state, mock_only=True)
+    cursor = previous_cursor.advance(0)
+    post = PublicPost.from_private_update(update, mock_only=True) if update.published else None
+    pointer = (
+        LatestPublicPointer.from_post(post, previous=previous_pointer, mock_only=True)
+        if post is not None
+        else None
+    )
+    store.commit_success(
+        successful_event(run_manifest, ordinal=0),
+        final_attempt=finalized.attempt,
+        private_update=update,
+        private_state=state,
+        feed_cursor=cursor,
+        public_post=post,
+        latest_public_pointer=pointer,
+    )
+
+    store.verify_integrity()
 
 
 def successful_event(

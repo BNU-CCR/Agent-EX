@@ -144,6 +144,24 @@ def test_checkpoint_binds_ordered_v6_evidence_hashes_and_rejects_total_erasure(
         validate_checkpoint(checkpoint, reopened)
 
 
+def test_checkpoint_rejects_coordinated_v6_hash_prefix_downgrade(tmp_path: Path) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation = land_invocation(store, values)
+    store.record_finalized_attempt(finalized_evidence(store, values, invocation))
+    checkpoint = build_checkpoint(store)
+    payload = checkpoint.to_payload()
+    body = payload["checkpoint"]
+    body["v6_evidence_hashes"] = {
+        name: [] for name in body["v6_evidence_hashes"]
+    }
+    body["v6_evidence_root"] = canonical_payload_hash(body["v6_evidence_hashes"])
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    downgraded = Checkpoint.from_payload(payload)
+
+    with pytest.raises(ValueError, match="checkpoint|evidence|conflict"):
+        validate_checkpoint(downgraded, store)
+
+
 def test_checkpoint_binds_halt_and_explicit_resume_authorization(tmp_path: Path) -> None:
     store, run_manifest, _ = _create_sealed_store(tmp_path / "halted.sqlite3")
     with store:

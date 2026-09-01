@@ -1318,6 +1318,8 @@ def _is_evidence_prefix(candidate: Checkpoint, stored: Checkpoint) -> bool:
             stored_hashes[: len(candidate_hashes)]
         ):
             return False
+    if not _is_status_conditioned_v6_prefix(candidate, stored):
+        return False
     required_committed = tuple(
         item
         for item in stored.causal_evidence_prefix
@@ -1337,6 +1339,63 @@ def _is_evidence_prefix(candidate: Checkpoint, stored: Checkpoint) -> bool:
         ):
             return False
     return True
+
+
+def _current_v6_counts(checkpoint: Checkpoint) -> tuple[int, int, int, int]:
+    """Return current event/request/required invocation/parse row counts."""
+
+    attempts = checkpoint.current_attempt_prefix
+    if not attempts:
+        return (0, 0, 0, 0)
+    terminal = 0
+    in_progress = 0
+    for attempt in attempts:
+        transitions = attempt["transitions"]
+        status = transitions[-1]["status"]
+        if status in {EventStatus.SUCCEEDED.value, EventStatus.FAILED.value}:
+            terminal += 1
+        elif status == EventStatus.IN_PROGRESS.value:
+            in_progress += 1
+    return (1, len(attempts), terminal, in_progress)
+
+
+def _is_status_conditioned_v6_prefix(candidate: Checkpoint, stored: Checkpoint) -> bool:
+    """Prevent independent table-prefix truncation from inventing a lifecycle state."""
+
+    names = candidate.v6_evidence_hashes
+    stored_names = stored.v6_evidence_hashes
+    if not any(stored_names.values()):
+        return not any(names.values())
+    stored_event, stored_requests, stored_terminal, stored_in_progress = _current_v6_counts(stored)
+    candidate_event, candidate_requests, candidate_terminal, candidate_in_progress = (
+        _current_v6_counts(candidate)
+    )
+    base_event = len(stored_names["event_input_evidence"]) - stored_event
+    base_policy = len(stored_names["attempt_policy_evidence"]) - stored_event
+    base_requests = len(stored_names["adapter_requests"]) - stored_requests
+    base_parse = len(stored_names["parse_evidence"]) - stored_terminal
+    stored_current_invocations = stored_terminal + min(stored_in_progress, 1)
+    if len(stored_names["invocation_evidence"]) < base_parse + stored_terminal:
+        return False
+    if len(stored_names["invocation_evidence"]) == base_parse + stored_terminal:
+        stored_current_invocations = stored_terminal
+    base_invocation = len(stored_names["invocation_evidence"]) - stored_current_invocations
+    expected_fixed = {
+        "event_input_evidence": base_event + candidate_event,
+        "attempt_policy_evidence": base_policy + candidate_event,
+        "adapter_requests": base_requests + candidate_requests,
+        "parse_evidence": base_parse + candidate_terminal,
+    }
+    if any(len(names[table]) != count for table, count in expected_fixed.items()):
+        return False
+    invocation_count = len(names["invocation_evidence"])
+    allowed_invocations = {base_invocation + candidate_terminal}
+    if candidate_in_progress:
+        allowed_invocations.add(base_invocation + candidate_terminal + 1)
+    if invocation_count not in allowed_invocations:
+        return False
+    expected_binding = 1 if len(names["adapter_requests"]) else 0
+    return len(names["adapter_execution_bindings"]) == expected_binding
 
 
 def _replace_progress_evidence(expected: Checkpoint, candidate: Checkpoint) -> Checkpoint:

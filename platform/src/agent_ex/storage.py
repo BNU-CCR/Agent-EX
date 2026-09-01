@@ -4538,11 +4538,16 @@ class RunStorage:
             if event_input.event_id != event_id:
                 raise ValueError("v6 event input identity drifted")
 
+        from .execution_evidence import FinalizedAttemptEvidence
+
         terminal_by_id: dict[str, GenerationAttempt] = {}
         for event_id in expected_event_ids:
             terminal_by_id.update(
                 {item.attempt_id: item for item in self.attempts_for_event(event_id)}
             )
+        failure_by_attempt = {
+            item.attempt_id: item for item in self.terminal_failure_evidence_prefix()
+        }
         for attempt_id, (event_id, attempt_index, status) in latest.items():
             request = self.adapter_request_evidence(attempt_id)
             event_input = self.event_input_evidence(event_id)
@@ -4593,6 +4598,14 @@ class RunStorage:
                 or parsed.parser_limits_hash != request.parser_limits_hash
             ):
                 raise ValueError("v6 parse evidence binding drifted")
+            if terminal is not None and parsed is not None:
+                failure = failure_by_attempt.get(attempt_id)
+                FinalizedAttemptEvidence.create(
+                    request_hash=request.request_hash,
+                    attempt=terminal,
+                    parse_evidence=parsed,
+                    terminal_failure_evidence=failure,
+                )
 
     def _verify_attempt_exact_cover(self, progress: StorageProgress) -> None:
         transition_event_ids = {
