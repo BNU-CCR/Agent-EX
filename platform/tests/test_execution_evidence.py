@@ -15,7 +15,7 @@ from agent_ex import (
     PersistedInvocationEvidence,
 )
 from agent_ex.adapters.mock import MockAdapter, MockScriptStep
-from agent_ex.domain import GenerationAttempt, canonical_payload_hash
+from agent_ex.domain import ExposureRecord, GenerationAttempt, canonical_payload_hash
 from agent_ex.engine import AttemptExecutionEvidence, AttemptInvocationResult
 from agent_ex.memory import build_memory_view
 from agent_ex.parser import ParserLimits, parse_agent_update
@@ -270,6 +270,30 @@ def test_event_input_rejects_cross_identity_and_non_boolean_publish_flag() -> No
         replace(value, publish_flag=1)  # type: ignore[arg-type]
 
 
+def test_event_input_rejects_rehashed_exposure_projection_semantic_drift() -> None:
+    value = event_inputs()
+    exposure_payload = value.exposure_record.to_payload()
+    exposure_payload["cursor_before_hash"] = "f" * 64
+    exposure_payload["record_hash"] = canonical_payload_hash(
+        {name: item for name, item in exposure_payload.items() if name != "record_hash"}
+    )
+    exposure = ExposureRecord.from_payload(exposure_payload)
+    prompt_payload = value.prompt_view.to_payload()
+    prompt_payload["exposure_hash"] = exposure.record_hash
+    prompt_payload["record_hash"] = canonical_payload_hash(
+        {name: item for name, item in prompt_payload.items() if name != "record_hash"}
+    )
+    outer = value.to_payload()
+    outer["exposure_record"] = exposure.to_payload()
+    outer["prompt_view"] = prompt_payload
+    outer["record_hash"] = canonical_payload_hash(
+        {name: item for name, item in outer.items() if name != "record_hash"}
+    )
+
+    with pytest.raises(ValueError, match="projection|selection|cursor"):
+        EventInputEvidence.from_payload(outer)
+
+
 def test_persisted_invocation_preserves_complete_response_and_execution_payload() -> None:
     _, _, result, request = success_chain()
     execution = {
@@ -296,6 +320,7 @@ def test_persisted_invocation_preserves_complete_response_and_execution_payload(
     assert evidence.execution_payload["usage"]["total_tokens"] == 7
     with pytest.raises(TypeError):
         evidence.execution_payload["usage"]["total_tokens"] = 1  # type: ignore[index]
+    assert replace(evidence) == evidence
 
 
 def test_persisted_invocation_rejects_cross_bindings_and_payload_tamper() -> None:
@@ -362,6 +387,24 @@ def test_timeout_parse_not_applicable_is_explicit_hash_bound_and_strict() -> Non
     assert evidence.error_hash == canonical_payload_hash(response.error)
     assert evidence.attempt_id == value.request.attempt_id
     assert ParseNotApplicableEvidence.from_payload(evidence.to_payload()) == evidence
+    assert replace(evidence) == evidence
+    mutable_error = dict(evidence.error)
+    copied = ParseNotApplicableEvidence(
+        evidence_id=evidence.evidence_id,
+        attempt_id=evidence.attempt_id,
+        request_id=evidence.request_id,
+        request_hash=evidence.request_hash,
+        response_id=evidence.response_id,
+        response_hash=evidence.response_hash,
+        outcome=evidence.outcome,
+        error=mutable_error,
+        error_hash=evidence.error_hash,
+        parser_limits_hash=evidence.parser_limits_hash,
+        reason=evidence.reason,
+        record_hash=evidence.record_hash,
+    )
+    mutable_error["message"] = "mutated after construction"
+    assert copied.error == evidence.error
     tampered = evidence.to_payload()
     tampered["reason"] = "different"
     with pytest.raises(ValueError):
@@ -371,6 +414,7 @@ def test_timeout_parse_not_applicable_is_explicit_hash_bound_and_strict() -> Non
 def test_finalized_attempt_enforces_success_failure_and_timeout_consistency() -> None:
     succeeded, parse, _, _ = success_chain()
     success = FinalizedAttemptEvidence.create(
+        request_hash=parse.request_hash,
         attempt=succeeded,
         parse_evidence=parse,
         terminal_failure_evidence=None,
@@ -385,6 +429,7 @@ def test_finalized_attempt_enforces_success_failure_and_timeout_consistency() ->
         parser_limits_hash=parser_limits().record_hash,
     )
     failure = FinalizedAttemptEvidence.create(
+        request_hash=not_applicable.request_hash,
         attempt=failed,
         parse_evidence=not_applicable,
         terminal_failure_evidence=failure_evidence(failed),
@@ -392,12 +437,14 @@ def test_finalized_attempt_enforces_success_failure_and_timeout_consistency() ->
     assert FinalizedAttemptEvidence.from_payload(failure.to_payload()) == failure
     with pytest.raises(ValueError, match="failure"):
         FinalizedAttemptEvidence.create(
+            request_hash=not_applicable.request_hash,
             attempt=failed,
             parse_evidence=not_applicable,
             terminal_failure_evidence=None,
         )
     with pytest.raises(ValueError, match="timeout|parse"):
         FinalizedAttemptEvidence.create(
+            request_hash=not_applicable.request_hash,
             attempt=succeeded,
             parse_evidence=not_applicable,
             terminal_failure_evidence=None,
@@ -410,9 +457,43 @@ def test_finalized_attempt_enforces_success_failure_and_timeout_consistency() ->
     forged = GenerationAttempt.from_payload(forged_payload)
     with pytest.raises(ValueError, match="response"):
         FinalizedAttemptEvidence.create(
+            request_hash=not_applicable.request_hash,
             attempt=forged,
             parse_evidence=not_applicable,
             terminal_failure_evidence=failure_evidence(forged),
+        )
+
+
+@pytest.mark.parametrize("kind", ("response", "timeout"))
+def test_finalized_attempt_rejects_rehashed_contradictory_request_hash(kind: str) -> None:
+    if kind == "response":
+        attempt, parse, _, _ = success_chain()
+        payload = parse.to_payload()
+        authoritative_request_hash = parse.request_hash
+        payload["request_hash"] = "f" * 64
+        drifted = type(parse).from_payload(rehash_parse_payload(payload))
+        failure = None
+    else:
+        _, response, attempt = timeout_chain()
+        parse = ParseNotApplicableEvidence.create(
+            response=response,
+            parser_limits_hash=parser_limits().record_hash,
+        )
+        authoritative_request_hash = parse.request_hash
+        payload = parse.to_payload()
+        payload["request_hash"] = "f" * 64
+        payload["record_hash"] = canonical_payload_hash(
+            {name: value for name, value in payload.items() if name != "record_hash"}
+        )
+        drifted = ParseNotApplicableEvidence.from_payload(payload)
+        failure = failure_evidence(attempt)
+
+    with pytest.raises(ValueError, match="request_hash|request hash"):
+        FinalizedAttemptEvidence.create(
+            request_hash=authoritative_request_hash,
+            attempt=attempt,
+            parse_evidence=drifted,
+            terminal_failure_evidence=failure,
         )
 
 
@@ -430,6 +511,7 @@ def test_finalized_attempt_rejects_parse_event_and_attempt_index_mismatch(
 
     with pytest.raises(ValueError, match="event|index"):
         FinalizedAttemptEvidence.create(
+            request_hash=drifted.request_hash,
             attempt=succeeded,
             parse_evidence=drifted,
             terminal_failure_evidence=None,
@@ -448,6 +530,7 @@ def test_finalized_attempt_rejects_timeout_error_message_or_hash_mismatch() -> N
 
     with pytest.raises(ValueError, match="timeout.*error|error.*timeout"):
         FinalizedAttemptEvidence.create(
+            request_hash=not_applicable.request_hash,
             attempt=drifted,
             parse_evidence=not_applicable,
             terminal_failure_evidence=failure_evidence(drifted),
@@ -490,6 +573,7 @@ def test_finalized_attempt_rejects_failed_parse_structured_error_mismatch() -> N
     }
     failed = GenerationAttempt.from_payload(payload)
     exact = FinalizedAttemptEvidence.create(
+        request_hash=parse.request_hash,
         attempt=failed,
         parse_evidence=parse,
         terminal_failure_evidence=failure_evidence(failed),
@@ -501,6 +585,7 @@ def test_finalized_attempt_rejects_failed_parse_structured_error_mismatch() -> N
 
     with pytest.raises(ValueError, match="parse.*error|error.*parse"):
         FinalizedAttemptEvidence.create(
+            request_hash=parse.request_hash,
             attempt=failed,
             parse_evidence=parse,
             terminal_failure_evidence=failure_evidence(failed),
@@ -521,6 +606,7 @@ def test_finalized_attempt_rejects_terminal_failure_hash_mismatch(field: str) ->
 
     with pytest.raises(ValueError, match="terminal failure|transition|attempt"):
         FinalizedAttemptEvidence.create(
+            request_hash=not_applicable.request_hash,
             attempt=failed,
             parse_evidence=not_applicable,
             terminal_failure_evidence=drifted,

@@ -335,6 +335,40 @@ class EventInputEvidence:
             and selection.exposure_graph_hash == exposure.exposure_graph_hash
         ):
             raise ValueError("exposure selection and record bindings do not match")
+        projection = {
+            "exposure_id": f"exposure-{selection.receiver_event_ordinal}",
+            "event_ordinal": selection.receiver_event_ordinal,
+            "cursor_before_id": selection.cursor_before.cursor_id,
+            "cursor_before_hash": selection.cursor_before.record_hash,
+            "cursor_after_id": selection.cursor_after.cursor_id,
+            "cursor_after_hash": selection.cursor_after.record_hash,
+            "candidate_post_ids": tuple(item.post_id for item in selection.candidates),
+            "candidate_post_hashes": tuple(item.post_hash for item in selection.candidates),
+            "selected_post_ids": tuple(item.post_id for item in selection.selected),
+            "expired_post_ids": tuple(item.post_id for item in selection.expired),
+            "round0_candidate_post_ids": tuple(
+                item.post_id for item in selection.candidates if item.is_round0
+            ),
+            "source_post_ids": tuple(item.post_id for item in selection.selected),
+            "source_post_hashes": tuple(item.post_hash for item in selection.selected),
+            "source_update_ids": tuple(item.source_update_id for item in selection.selected),
+            "source_update_hashes": tuple(item.source_update_hash for item in selection.selected),
+            "source_agent_ids": tuple(item.source_agent_id for item in selection.selected),
+            "source_event_ids": tuple(item.source_event_id for item in selection.selected),
+            "message_ages": tuple(item.message_age for item in selection.selected),
+            "original_orders": tuple(item.original_order for item in selection.selected),
+            "display_slots": tuple(item.display_slot for item in selection.selected),
+            "rendered_texts": tuple(item.rendered_text for item in selection.selected),
+            "rendered_hashes": tuple(item.rendered_hash for item in selection.selected),
+            "slot_rng_hash": canonical_payload_hash(selection.slot_rng_provenance.to_payload()),
+            "round0_rng_hash": (
+                None
+                if selection.round0_rng_provenance is None
+                else canonical_payload_hash(selection.round0_rng_provenance.to_payload())
+            ),
+        }
+        if any(getattr(exposure, name) != expected for name, expected in projection.items()):
+            raise ValueError("exposure record is not the deterministic selection projection")
         if not (
             prompt.exposure_id == exposure.exposure_id
             and prompt.exposure_hash == exposure.record_hash
@@ -515,11 +549,14 @@ class PersistedInvocationEvidence:
             or self.response_hash != self.response.record_hash
         ):
             raise ValueError("attempt, request, or response binding does not match response")
-        if type(self.execution_payload) is not dict:
-            raise TypeError("execution_payload must be a strict JSON object")
-        _validate_execution_payload(self.execution_payload)
-        _require_payload_hash("execution_hash", self.execution_hash, self.execution_payload)
-        metadata = self.execution_payload["provider_metadata"]
+        if not isinstance(self.execution_payload, Mapping):
+            raise TypeError("execution_payload must be a mapping")
+        normalized_execution = _json_ready(self.execution_payload)
+        if type(normalized_execution) is not dict:
+            raise TypeError("execution_payload must normalize to a JSON object")
+        _validate_execution_payload(normalized_execution)
+        _require_payload_hash("execution_hash", self.execution_hash, normalized_execution)
+        metadata = normalized_execution["provider_metadata"]
         assert isinstance(metadata, Mapping)
         expected_metadata = {
             "adapter_response_id": self.response.response_id,
@@ -536,7 +573,7 @@ class PersistedInvocationEvidence:
         if self.evidence_id != expected_id:
             raise ValueError("evidence_id does not match invocation attempt identity")
         _require_payload_hash("record_hash", self.record_hash, self.content_payload())
-        object.__setattr__(self, "execution_payload", _freeze(self.execution_payload))
+        object.__setattr__(self, "execution_payload", _freeze(normalized_execution))
 
     def content_payload(self) -> dict[str, object]:
         return {
@@ -633,19 +670,22 @@ class ParseNotApplicableEvidence:
             _require_sha256(name, getattr(self, name))
         if self.outcome != "timeout":
             raise ValueError("parse-not-applicable outcome must be timeout")
-        if type(self.error) is not dict or set(self.error) != {"code", "message"}:
+        if not isinstance(self.error, Mapping):
+            raise TypeError("parse-not-applicable error must be a mapping")
+        normalized_error = _json_ready(self.error)
+        if type(normalized_error) is not dict or set(normalized_error) != {"code", "message"}:
             raise ValueError("parse-not-applicable requires the exact timeout error")
-        if self.error.get("code") != "timeout":
+        if normalized_error.get("code") != "timeout":
             raise ValueError("parse-not-applicable error code must be timeout")
-        _require_string("timeout message", self.error.get("message"))
-        _require_payload_hash("error_hash", self.error_hash, self.error)
+        _require_string("timeout message", normalized_error.get("message"))
+        _require_payload_hash("error_hash", self.error_hash, normalized_error)
         if self.reason != "adapter_timeout_no_response":
             raise ValueError("parse-not-applicable reason is not the fixed timeout reason")
         expected_id = _derive_record_id("parse-not-applicable-", {"attempt_id": self.attempt_id})
         if self.evidence_id != expected_id:
             raise ValueError("evidence_id does not match timeout attempt identity")
         _require_payload_hash("record_hash", self.record_hash, self.content_payload())
-        object.__setattr__(self, "error", _freeze(self.error))
+        object.__setattr__(self, "error", _freeze(normalized_error))
 
     def content_payload(self) -> dict[str, object]:
         return {
@@ -705,6 +745,7 @@ class ParseNotApplicableEvidence:
 @dataclass(frozen=True, slots=True)
 class FinalizedAttemptEvidence:
     evidence_id: str
+    request_hash: str
     attempt: GenerationAttempt
     parse_evidence: ParseEvidence | ParseNotApplicableEvidence
     terminal_failure_evidence: TerminalFailureEvidence | None
@@ -714,6 +755,7 @@ class FinalizedAttemptEvidence:
         from .storage import TerminalFailureEvidence
 
         _require_id("evidence_id", self.evidence_id)
+        _require_sha256("request_hash", self.request_hash)
         if not isinstance(self.attempt, GenerationAttempt):
             raise TypeError("attempt must be a typed GenerationAttempt")
         if self.attempt.status not in {EventStatus.SUCCEEDED, EventStatus.FAILED}:
@@ -725,6 +767,10 @@ class FinalizedAttemptEvidence:
         ):
             raise TypeError("terminal_failure_evidence must be typed or None")
         parse = self.parse_evidence
+        if parse.request_hash != self.request_hash:
+            raise ValueError(
+                "parse evidence request_hash does not match authoritative request hash"
+            )
         if (
             parse.attempt_id != self.attempt.attempt_id
             or parse.request_id != self.attempt.request_id
@@ -801,6 +847,7 @@ class FinalizedAttemptEvidence:
         return {
             "schema_version": _FINALIZED_SCHEMA,
             "evidence_id": self.evidence_id,
+            "request_hash": self.request_hash,
             "attempt": self.attempt.to_payload(),
             "parse_evidence_kind": (
                 "parse" if isinstance(self.parse_evidence, ParseEvidence) else "not_applicable"
@@ -820,6 +867,7 @@ class FinalizedAttemptEvidence:
     def create(
         cls,
         *,
+        request_hash: str,
         attempt: GenerationAttempt,
         parse_evidence: ParseEvidence | ParseNotApplicableEvidence,
         terminal_failure_evidence: TerminalFailureEvidence | None,
@@ -827,6 +875,7 @@ class FinalizedAttemptEvidence:
         evidence_id = _derive_record_id("finalized-attempt-", {"attempt_id": attempt.attempt_id})
         values = {
             "evidence_id": evidence_id,
+            "request_hash": request_hash,
             "attempt": attempt,
             "parse_evidence": parse_evidence,
             "terminal_failure_evidence": terminal_failure_evidence,
@@ -834,6 +883,7 @@ class FinalizedAttemptEvidence:
         content = {
             "schema_version": _FINALIZED_SCHEMA,
             "evidence_id": evidence_id,
+            "request_hash": request_hash,
             "attempt": attempt.to_payload(),
             "parse_evidence_kind": (
                 "parse" if isinstance(parse_evidence, ParseEvidence) else "not_applicable"
@@ -869,6 +919,7 @@ class FinalizedAttemptEvidence:
             raise TypeError("terminal_failure_evidence must be a JSON object or null")
         return cls(
             evidence_id=payload["evidence_id"],  # type: ignore[arg-type]
+            request_hash=payload["request_hash"],  # type: ignore[arg-type]
             attempt=GenerationAttempt.from_payload(payload["attempt"]),
             parse_evidence=parse,
             terminal_failure_evidence=(
