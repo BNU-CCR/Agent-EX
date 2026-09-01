@@ -9,6 +9,7 @@ from agent_ex.adapters.base import AdapterRequest, AdapterResponse, ModelAdapter
 from agent_ex.adapters.mock import (
     MockAdapter,
     MockScriptStep,
+    _validate_mock_response_against_binding,
     validate_adapter_response,
     verify_persisted_mock_response,
 )
@@ -167,6 +168,23 @@ def test_persisted_response_roundtrip_rehydrates_trusted_response_without_genera
     assert restored == response
     assert adapter_base._has_trusted_response_seal(restored)
     assert calls == 0
+
+
+def test_structural_response_validator_rejects_other_script_even_without_capability_check() -> None:
+    trusted_request = request()
+    expected = adapter()
+    other = MockAdapter(
+        script={EVENT_ID: (MockScriptStep.malformed("different raw response"),)},
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+
+    with pytest.raises(ValueError, match="script|step|commit"):
+        _validate_mock_response_against_binding(
+            request=trusted_request,
+            response=other.generate(trusted_request),
+            binding=expected.execution_binding(),
+        )
 
 
 @pytest.mark.parametrize(

@@ -488,7 +488,10 @@ def initial_records(
 
 
 def prepared_evidence_bundle(
-    tmp_path: Path, *, script_step: MockScriptStep | None = None
+    tmp_path: Path,
+    *,
+    script_step: MockScriptStep | None = None,
+    script_steps: tuple[MockScriptStep, ...] | None = None,
 ) -> tuple[RunStorage, dict[str, object]]:
     frozen_schedule = FrozenSchedule(
         schema_version="paper1.schedule.v2",
@@ -642,7 +645,8 @@ def prepared_evidence_bundle(
     )
     adapter = MockAdapter(
         script={
-            event_id: (
+            event_id: script_steps
+            or (
                 script_step
                 or MockScriptStep.success(
                     {"stance": "label-2", "confidence": 3, "public_reason": "reason"}
@@ -696,6 +700,8 @@ def prepared_evidence_bundle(
         finished_at=None,
     )
     return store, {
+        "path": tmp_path / "evidence.sqlite",
+        "manifest": run_manifest,
         "event_input": event_input,
         "policy": policy,
         "binding": binding,
@@ -704,6 +710,20 @@ def prepared_evidence_bundle(
         "adapter": adapter,
         "parser_limits": parser_limits,
     }
+
+
+def reopen_evidence_store(store: RunStorage, values: Mapping[str, object]) -> RunStorage:
+    store.close()
+    reopened = RunStorage.open(
+        values["path"],
+        manifest=values["manifest"],
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=("agent-0001", "agent-0002"),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    reopened.acquire_run_lease().acquire()
+    return reopened
 
 
 def test_record_prepared_attempt_writes_typed_evidence_and_pending_once(tmp_path: Path) -> None:
@@ -731,6 +751,54 @@ def test_record_prepared_attempt_writes_typed_evidence_and_pending_once(tmp_path
         store.adapter_request_evidence(values["pending"].attempt_id) == values["request_evidence"]
     )
     assert store.attempt_transitions(values["pending"].attempt_id) == (values["pending"],)
+
+
+def test_run_rejects_second_adapter_attestation_before_request_or_pending_write(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+    other = MockAdapter(
+        script={
+            values["pending"].event_id: (MockScriptStep.malformed("different run attestation"),)
+        },
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    other_binding = other.execution_binding()
+    other_request = execution_evidence_module.AdapterRequestEvidence.create(
+        request=values["request_evidence"].request,
+        model_identity=other_binding.model_identity,
+        request_parameters=values["request_evidence"].request_parameters,
+        model_seed=values["request_evidence"].model_seed,
+        prompt_limits_hash=values["request_evidence"].prompt_limits_hash,
+        parser_limits_hash=values["request_evidence"].parser_limits_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=other_binding.record_hash,
+    )
+
+    with pytest.raises(ValueError, match="single|sole|run adapter|attestation"):
+        store.record_prepared_attempt(
+            values["event_input"],
+            policy=values["policy"],
+            adapter_binding=other_binding,
+            request_evidence=other_request,
+            pending_attempt=values["pending"],
+        )
+
+    assert (
+        store._connection.execute("SELECT COUNT(*) FROM adapter_execution_bindings").fetchone()[0]
+        == 1
+    )
+    assert (
+        store.adapter_request_evidence(values["pending"].attempt_id) == values["request_evidence"]
+    )
 
 
 @pytest.mark.parametrize(
@@ -773,6 +841,31 @@ def test_record_prepared_attempt_sql_failure_rolls_back_all_evidence_and_state(
         ).fetchone()[0]
         == 0
     )
+    assert store.execution_state() == before
+
+
+def test_prepare_state_dependent_validation_runs_inside_guarded_transaction(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    before = store.execution_state()
+
+    def fail_inside_transaction(_ordinal: int) -> object:
+        assert store._connection.in_transaction is True
+        raise RuntimeError("injected validation failure")
+
+    monkeypatch.setattr(store, "schedule_slot", fail_inside_transaction)
+    with pytest.raises(RuntimeError, match="validation failure"):
+        store.record_prepared_attempt(
+            values["event_input"],
+            policy=values["policy"],
+            adapter_binding=values["binding"],
+            request_evidence=values["request_evidence"],
+            pending_attempt=values["pending"],
+        )
+
+    assert store._connection.in_transaction is False
+    assert store.event_input_evidence(values["event_input"].event_id) is None
     assert store.execution_state() == before
 
 
@@ -835,6 +928,63 @@ def test_invocation_evidence_requires_current_in_progress_and_is_idempotent(
     assert store.invocation_evidence(values["pending"].attempt_id) == evidence
     assert store.parse_evidence(values["pending"].attempt_id) is None
     assert store.current_event_journal().latest_transition.status is EventStatus.IN_PROGRESS
+
+
+@pytest.mark.parametrize(
+    "step",
+    (
+        MockScriptStep.malformed("different raw response"),
+        MockScriptStep.timeout("different timeout"),
+    ),
+)
+def test_invocation_rejects_sealed_response_outside_persisted_script_commitment(
+    tmp_path: Path, step: MockScriptStep
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+    store.append_attempt(attempt_transition(values["pending"], EventStatus.IN_PROGRESS))
+    event_id = values["pending"].event_id
+    other = MockAdapter(
+        script={event_id: (step,)},
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    response = other.generate(values["request_evidence"].request)
+    execution_payload = {
+        "started_at": NOW,
+        "finished_at": NOW,
+        "http_status": None,
+        "provider_metadata": {
+            "adapter_response_id": response.response_id,
+            "adapter_response_hash": response.record_hash,
+            "adapter_outcome": response.outcome,
+            "adapter_error": None if response.error is None else dict(response.error),
+            "runtime_identity": dict(response.runtime_identity),
+            "runtime_identity_hash": response.runtime_identity_hash,
+            "script_hash": response.script_hash,
+        },
+        "usage": {},
+        "finish_reason": None,
+    }
+    forged = PersistedInvocationEvidence.create(
+        response=response,
+        execution_payload=execution_payload,
+        request_hash=values["request_evidence"].request_hash,
+        parser_limits_hash=values["parser_limits"].record_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=values["binding"].record_hash,
+    )
+
+    with pytest.raises(ValueError, match="script|step|commit|binding"):
+        store.record_invocation_evidence(forged)
+
+    assert store.invocation_evidence(values["pending"].attempt_id) is None
 
 
 def land_invocation(store: RunStorage, values: Mapping[str, object]) -> PersistedInvocationEvidence:
@@ -957,6 +1107,56 @@ def test_finalized_attempt_atomically_lands_parse_and_terminal_transition(tmp_pa
     assert references.committed_event_id is None
 
 
+@pytest.mark.parametrize(
+    "field",
+    (
+        "started_at",
+        "finished_at",
+        "provider_request_id",
+        "provider_metadata",
+        "http_status",
+        "usage",
+        "finish_reason",
+    ),
+)
+def test_finalization_rejects_every_forged_execution_projection(tmp_path: Path, field: str) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    payload = finalized.attempt.to_payload()
+    if field == "started_at":
+        payload[field] = "2026-08-17T23:59:59+00:00"
+    elif field == "finished_at":
+        payload[field] = "2026-08-18T00:00:01+00:00"
+    elif field == "provider_request_id":
+        payload[field] = "provider-forged"
+    elif field == "provider_metadata":
+        metadata = dict(payload[field])
+        metadata["extra"] = "forged"
+        payload[field] = metadata
+        payload["provider_metadata_hash"] = canonical_payload_hash(metadata)
+    elif field == "http_status":
+        payload[field] = 201
+    elif field == "usage":
+        payload[field] = {"prompt_tokens": 30, "completion_tokens": 4, "total_tokens": 34}
+        payload["usage_hash"] = canonical_payload_hash(payload[field])
+    else:
+        payload[field] = "length"
+    forged_attempt = GenerationAttempt.from_payload(payload)
+    forged = FinalizedAttemptEvidence.create(
+        request_hash=finalized.request_hash,
+        attempt=forged_attempt,
+        parse_evidence=finalized.parse_evidence,
+        terminal_failure_evidence=None,
+    )
+
+    with pytest.raises(ValueError, match="execution|response|invocation|terminal"):
+        store.record_finalized_attempt(forged)
+
+    assert store.parse_evidence(forged_attempt.attempt_id) is None
+    assert store.current_event_journal().latest_transition.status is EventStatus.IN_PROGRESS
+
+
 def test_failed_finalization_atomically_lands_parse_na_terminal_and_failure(
     tmp_path: Path,
 ) -> None:
@@ -972,6 +1172,87 @@ def test_failed_finalization_atomically_lands_parse_na_terminal_and_failure(
     assert store.current_event_journal().latest_transition == finalized.attempt
     assert store.terminal_failure_evidence() == finalized.terminal_failure_evidence
     assert store.execution_state().status is ExecutionStatus.FAILED
+
+
+def test_retry_references_follow_only_current_attempt_across_reopen_boundaries(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(
+        tmp_path,
+        script_steps=(
+            MockScriptStep.timeout("provider timeout"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "retry"}
+            ),
+        ),
+    )
+    invocation_value = land_invocation(store, values)
+    failed = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(failed)
+    failure = store.terminal_failure_evidence()
+    assert failure is not None
+    authorization = store.authorize_resume(
+        authorization_id="resume-current-prefix",
+        event_id=failed.attempt.event_id,
+        previous_terminal_failure_hash=failure.payload_hash,
+        policy_evidence_id=values["policy"].policy_id,
+        policy_evidence_hash=values["policy"].record_hash,
+        authorized_at=NOW,
+    )
+    store = reopen_evidence_store(store, values)
+    after_authorization = store.evidence_references(failed.attempt.event_id)
+    assert after_authorization.terminal_attempt_id == failed.attempt.attempt_id
+
+    request = AdapterRequest.create(
+        prompt_view=values["event_input"].prompt_view,
+        attempt_index=2,
+        mock_seed=12345,
+        mock_only=True,
+    )
+    request_evidence = execution_evidence_module.AdapterRequestEvidence.create(
+        request=request,
+        model_identity=values["binding"].model_identity,
+        request_parameters={"temperature": 0.0},
+        model_seed=12345,
+        prompt_limits_hash=values["event_input"].prompt_view.limits_hash,
+        parser_limits_hash=values["parser_limits"].record_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=values["binding"].record_hash,
+    )
+    payload = values["pending"].to_payload()
+    payload.update(
+        {
+            "attempt_id": request.attempt_id,
+            "attempt_index": 2,
+            "request_id": request.request_id,
+            "model_seed": request.mock_seed,
+        }
+    )
+    pending = GenerationAttempt.from_payload(payload)
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=request_evidence,
+        pending_attempt=pending,
+    )
+    store = reopen_evidence_store(store, values)
+    retry_pending = store.evidence_references(pending.event_id)
+    assert retry_pending.request_id == request.request_id
+    assert retry_pending.invocation_evidence_id is None
+    assert retry_pending.parse_evidence_id is None
+    assert retry_pending.terminal_attempt_id is None
+
+    in_progress = attempt_transition(pending, EventStatus.IN_PROGRESS)
+    store.append_attempt(in_progress)
+    store = reopen_evidence_store(store, values)
+    retry_running = store.evidence_references(pending.event_id)
+    assert retry_running.request_id == request.request_id
+    assert retry_running.invocation_evidence_id is None
+    assert retry_running.parse_evidence_id is None
+    assert retry_running.terminal_attempt_id is None
+    assert store.terminal_failure_evidence_prefix() == (failure,)
+    assert store.resume_authorization_evidence_prefix() == (authorization,)
 
 
 def test_finalized_failure_sql_error_rolls_back_parse_terminal_failure_and_execution(
@@ -995,6 +1276,51 @@ def test_finalized_failure_sql_error_rolls_back_parse_terminal_failure_and_execu
     assert store.current_event_journal().latest_transition.status is EventStatus.IN_PROGRESS
     assert store.terminal_failure_evidence() is None
     assert store.execution_state() == before
+
+
+@pytest.mark.parametrize(
+    ("table", "column", "reader"),
+    (
+        ("event_input_evidence", "record_hash", "event_input"),
+        ("attempt_policy_evidence", "record_hash", "policy"),
+        ("adapter_execution_bindings", "binding_id", "binding"),
+        ("adapter_requests", "parser_limits_hash", "request"),
+        ("invocation_evidence", "record_hash", "invocation"),
+        ("parse_evidence", "kind", "parse"),
+    ),
+)
+def test_typed_evidence_readers_reject_redundant_row_envelope_tamper(
+    tmp_path: Path, table: str, column: str, reader: str
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(finalized)
+    attempt_id = finalized.attempt.attempt_id
+    event_id = finalized.attempt.event_id
+    store._connection.execute("PRAGMA foreign_keys = OFF")
+    if column == "kind":
+        replacement = "not_applicable"
+    elif column == "binding_id":
+        replacement = "adapter-execution-binding-tampered"
+    else:
+        replacement = "f" * 64
+    store._connection.execute(f"UPDATE {table} SET {column} = ?", (replacement,))
+    store._connection.execute("PRAGMA foreign_keys = ON")
+
+    with pytest.raises(ValueError, match="row|envelope|hash|kind|binding|column|key"):
+        if reader == "event_input":
+            store.event_input_evidence(event_id)
+        elif reader == "policy":
+            store.attempt_policy_evidence(event_id)
+        elif reader == "binding":
+            store.adapter_execution_binding(attempt_id)
+        elif reader == "request":
+            store.adapter_request_evidence(attempt_id)
+        elif reader == "invocation":
+            store.invocation_evidence(attempt_id)
+        else:
+            store.parse_evidence(attempt_id)
 
 
 def successful_event(

@@ -222,25 +222,18 @@ def validate_adapter_response(
     return expected
 
 
-def verify_persisted_mock_response(
+def _validate_mock_response_against_binding(
     *,
     request: AdapterRequest,
-    response_payload: Mapping[str, object],
+    response: AdapterResponse,
     binding: MockAdapterExecutionBinding,
 ) -> AdapterResponse:
-    """Causally verify and reseal persisted mock evidence without invoking an adapter."""
+    """Validate persisted response structure without sealing or provider invocation."""
 
-    if not isinstance(request, AdapterRequest):
-        raise TypeError("persisted response verification requires an AdapterRequest")
-    if not _has_trusted_request_seal(request):
-        raise ValueError("adapter request is not a trusted sealed prompt capability")
-    if AdapterRequest.from_payload(request.to_payload()) != request:
-        raise ValueError("adapter request replay does not match its record")
+    if not isinstance(request, AdapterRequest) or not isinstance(response, AdapterResponse):
+        raise TypeError("structural mock validation requires typed request and response")
     if not isinstance(binding, MockAdapterExecutionBinding):
-        raise TypeError("persisted response verification requires a typed execution binding")
-    if not _has_trusted_mock_adapter_execution_binding(binding):
-        raise ValueError("adapter execution binding is not a trusted sealed capability")
-
+        raise TypeError("structural mock validation requires typed execution binding")
     expected_binding = {
         "expected_adapter_kind": _RUNTIME["adapter"],
         "expected_adapter_version": _RUNTIME["adapter_version"],
@@ -252,8 +245,6 @@ def verify_persisted_mock_response(
     for name, expected in expected_binding.items():
         if getattr(binding, name) != expected:
             raise ValueError(f"mock adapter execution binding {name} drifted")
-
-    response = AdapterResponse.from_payload(response_payload)
     linked_fields = (
         "request_id",
         "event_id",
@@ -279,7 +270,6 @@ def verify_persisted_mock_response(
         raise ValueError("persisted response model binding drifted")
     if response.script_hash != binding.script_hash:
         raise ValueError("persisted response script binding drifted")
-
     committed_steps = binding.script_step_hashes.get(request.event_id)
     committed_index = request.attempt_index - 1
     if committed_steps is None or not 0 <= committed_index < len(committed_steps):
@@ -287,11 +277,10 @@ def verify_persisted_mock_response(
     step_payload = {
         "outcome": response.outcome,
         "raw_response": response.raw_response,
-        "error_message": (None if response.error is None else response.error["message"]),
+        "error_message": None if response.error is None else response.error["message"],
     }
     if canonical_payload_hash(step_payload) != committed_steps[committed_index]:
         raise ValueError("persisted response does not match committed mock script step")
-
     response_identity = {
         "request_hash": request.record_hash,
         "event_id": request.event_id,
@@ -309,5 +298,28 @@ def verify_persisted_mock_response(
     )
     if response.provider_request_id != expected_provider_request_id:
         raise ValueError("persisted provider request identity does not match execution binding")
+    return response
 
+
+def verify_persisted_mock_response(
+    *,
+    request: AdapterRequest,
+    response_payload: Mapping[str, object],
+    binding: MockAdapterExecutionBinding,
+) -> AdapterResponse:
+    """Causally verify and reseal persisted mock evidence without invoking an adapter."""
+
+    if not isinstance(request, AdapterRequest):
+        raise TypeError("persisted response verification requires an AdapterRequest")
+    if not _has_trusted_request_seal(request):
+        raise ValueError("adapter request is not a trusted sealed prompt capability")
+    if AdapterRequest.from_payload(request.to_payload()) != request:
+        raise ValueError("adapter request replay does not match its record")
+    if not isinstance(binding, MockAdapterExecutionBinding):
+        raise TypeError("persisted response verification requires a typed execution binding")
+    if not _has_trusted_mock_adapter_execution_binding(binding):
+        raise ValueError("adapter execution binding is not a trusted sealed capability")
+
+    response = AdapterResponse.from_payload(response_payload)
+    _validate_mock_response_against_binding(request=request, response=response, binding=binding)
     return _reseal_verified_persisted_response(response)
