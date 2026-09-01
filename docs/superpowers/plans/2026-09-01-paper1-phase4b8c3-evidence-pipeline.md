@@ -12,8 +12,8 @@
 
 ## File structure
 
-- Create `platform/src/agent_ex/execution_evidence.py`: immutable policy, adapter attestation, parser-N/A, evidence-reference, and pipeline-outcome contracts.
-- Create `platform/src/agent_ex/pipeline.py`: thin mock event preparation/finalization coordinator.
+- Create `platform/src/agent_ex/execution_evidence.py`: immutable policy, adapter attestation, event-input, invocation/finalization, parser-N/A, and evidence-reference contracts.
+- Create `platform/src/agent_ex/pipeline.py`: thin mock event preparation/finalization coordinator and public pipeline-outcome wrapper.
 - Create `platform/tests/test_execution_evidence.py`: contract, hashing, deep-freeze, and formal-fail-closed tests.
 - Create `platform/tests/test_pipeline.py`: end-to-end, retry, recovery, privacy, and tamper tests.
 - Modify `platform/src/agent_ex/adapters/base.py`: internal persisted-response resealing boundary.
@@ -107,13 +107,20 @@ class EventEvidenceReferences:
 
 
 @dataclass(frozen=True, slots=True)
-class MockEventPipelineOutcome:
-    lifecycle: AttemptOutcome
-    evidence: EventEvidenceReferences
+class FinalizedAttemptEvidence:
+    terminal_attempt: GenerationAttempt
+    parse_or_not_applicable: ParseEvidence | ParseNotApplicableEvidence
+    terminal_failure: TerminalFailureEvidence | None
 ```
 
 Also implement canonical `to_payload`/`from_payload` and strict validation for
-`MockAdapterExecutionBinding`, `ParseNotApplicableEvidence`, and the two result types.
+`MockAdapterExecutionBinding`, `EventInputEvidence`, `PersistedInvocationEvidence`,
+`ParseNotApplicableEvidence`, `FinalizedAttemptEvidence`, and
+`EventEvidenceReferences`. `EventInputEvidence` owns the typed exposure selection,
+exposure record, memory view, prompt view, parser limits, state-context hash, and frozen
+publish flag. Do not define `MockEventPipelineOutcome` here; Task 7 defines it beside
+`MockEventPipeline` to prevent `execution_evidence -> engine -> execution_evidence`
+circular imports.
 Reuse `_freeze`, `_require_payload_hash`, `_require_sha256`, and `_require_json_transport`;
 do not create alternate hashing rules.
 
@@ -556,6 +563,12 @@ class MockEventPipeline:
             lifecycle=lifecycle,
             evidence=self._storage.evidence_references(lifecycle.event_id),
         )
+
+
+@dataclass(frozen=True, slots=True)
+class MockEventPipelineOutcome:
+    lifecycle: AttemptOutcome
+    evidence: EventEvidenceReferences
 ```
 
 `_prepare()` must call only existing public feed, memory, prompt, rendering, and request
@@ -747,6 +760,7 @@ Expected: clean worktree and identical local/upstream commit hashes.
   production error handling remains. The only ellipsis token is Python's concrete
   variable-length tuple annotation `tuple[str, ...]`.
 - Type consistency: `MockAttemptPolicyBinding`, `MockAdapterExecutionBinding`,
-  `ParseNotApplicableEvidence`, `EventEvidenceReferences`,
-  `MockEventPipelineOutcome`, `PreparedAttempt`, and `AttemptOutcome` retain the same
-  names and roles across all tasks.
+  `EventInputEvidence`, `PersistedInvocationEvidence`,
+  `ParseNotApplicableEvidence`, `FinalizedAttemptEvidence`,
+  `EventEvidenceReferences`, `MockEventPipelineOutcome`, `PreparedAttempt`, and
+  `AttemptOutcome` retain the same names and roles across all tasks.
