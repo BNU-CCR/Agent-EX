@@ -17,6 +17,7 @@ from agent_ex import (
 from agent_ex.adapters.mock import MockAdapter, MockScriptStep
 from agent_ex.domain import ExposureRecord, GenerationAttempt, canonical_payload_hash
 from agent_ex.engine import AttemptExecutionEvidence, AttemptInvocationResult
+from agent_ex.feed import build_exposure_record, select_unread_feed
 from agent_ex.memory import build_memory_view
 from agent_ex.parser import ParserLimits, parse_agent_update
 from agent_ex.storage import TerminalFailureEvidence
@@ -292,6 +293,49 @@ def test_event_input_rejects_rehashed_exposure_projection_semantic_drift() -> No
 
     with pytest.raises(ValueError, match="projection|selection|cursor"):
         EventInputEvidence.from_payload(outer)
+
+
+def test_event_input_rejects_cross_ordinal_selection_exposure_and_prompt() -> None:
+    value = event_inputs()
+    from test_prompt import exposure_inputs
+
+    sources = exposure_inputs()
+    selection = select_unread_feed(
+        unread_public_posts=sources["unread_public_posts"],
+        topic_package=topic(),
+        neighbor_agent_ids=sources["neighbor_agent_ids"],
+        cursor=sources["feed_cursor"],
+        receiver_event_id=value.event_id,
+        receiver_event_ordinal=10,
+        matched_seed=17,
+        exposure_mode="ws_neighbors",
+        exposure_graph_hash="b" * 64,
+        capacity=4,
+        mock_only=True,
+    )
+    exposure = build_exposure_record(selection, topic_package=topic(), mock_only=True)
+    prompt_payload = value.prompt_view.to_payload()
+    event_payload = dict(prompt_payload["event_payload"])
+    event_payload["exposure_id"] = exposure.exposure_id
+    prompt_payload["event_payload"] = event_payload
+    prompt_payload["event_hash"] = canonical_payload_hash(event_payload)
+    prompt_payload["exposure_id"] = exposure.exposure_id
+    prompt_payload["exposure_hash"] = exposure.record_hash
+    prompt_payload["record_hash"] = canonical_payload_hash(
+        {name: item for name, item in prompt_payload.items() if name != "record_hash"}
+    )
+    prompt = type(value.prompt_view).from_payload(prompt_payload)
+
+    with pytest.raises(ValueError, match="ordinal"):
+        EventInputEvidence.create(
+            exposure_selection=selection,
+            exposure_record=exposure,
+            memory_view=value.memory_view,
+            prompt_view=prompt,
+            parser_limits=value.parser_limits,
+            state_context_hash=value.state_context_hash,
+            publish_flag=value.publish_flag,
+        )
 
 
 def test_persisted_invocation_preserves_complete_response_and_execution_payload() -> None:

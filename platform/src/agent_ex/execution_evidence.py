@@ -319,6 +319,8 @@ class EventInputEvidence:
             == prompt.event_id
         ):
             raise ValueError("event identities do not match across event input evidence")
+        if not (selection.receiver_event_ordinal == exposure.event_ordinal == prompt.event_ordinal):
+            raise ValueError("event ordinals do not match across event input evidence")
         if not (
             self.receiver_agent_id
             == selection.receiver_agent_id
