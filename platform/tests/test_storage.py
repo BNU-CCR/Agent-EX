@@ -1466,6 +1466,66 @@ def test_typed_evidence_readers_reject_redundant_row_envelope_tamper(
             store.parse_evidence(attempt_id)
 
 
+@pytest.mark.parametrize(
+    "prefix",
+    ("pending", "in_progress", "invocation", "terminal"),
+)
+def test_integrity_accepts_every_v6_evidence_durable_prefix(
+    tmp_path: Path, prefix: str
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=values["request_evidence"],
+        pending_attempt=values["pending"],
+    )
+    if prefix != "pending":
+        store.append_attempt(attempt_transition(values["pending"], EventStatus.IN_PROGRESS))
+    if prefix in {"invocation", "terminal"}:
+        invocation_value = persisted_invocation(values)
+        store.record_invocation_evidence(invocation_value)
+    if prefix == "terminal":
+        store.record_finalized_attempt(finalized_evidence(store, values, invocation_value))
+
+    store.verify_integrity()
+
+
+@pytest.mark.parametrize(
+    "table",
+    (
+        "event_input_evidence",
+        "attempt_policy_evidence",
+        "adapter_execution_bindings",
+        "adapter_requests",
+        "invocation_evidence",
+        "parse_evidence",
+    ),
+)
+def test_integrity_rejects_missing_v6_evidence_after_reopen(
+    tmp_path: Path, table: str
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    store.record_finalized_attempt(finalized_evidence(store, values, invocation_value))
+    store.close()
+    connection = sqlite3.connect(values["path"])
+    connection.execute("PRAGMA foreign_keys = OFF")
+    connection.execute(f"DELETE FROM {table}")
+    connection.commit()
+    connection.close()
+    with pytest.raises(ValueError, match="evidence|cover|binding|request|invocation|parse"):
+        RunStorage.open(
+            values["path"],
+            manifest=values["manifest"],
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=("agent-0001", "agent-0002"),
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+
 def successful_event(
     run_manifest: RunManifest, *, ordinal: int, attempt_count: int = 1
 ) -> GenerationEvent:

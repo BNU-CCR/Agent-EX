@@ -33,7 +33,7 @@ from .storage import (
 )
 
 
-_CHECKPOINT_VERSION = "paper1.checkpoint.v2"
+_CHECKPOINT_VERSION = "paper1.checkpoint.v3"
 _MAX_CHECKPOINT_BYTES = 16 * 1024 * 1024
 _MAX_JSON_DEPTH = 32
 
@@ -349,6 +349,8 @@ class Checkpoint:
     resume_authorization_prefix_hash: str
     causal_evidence_prefix: tuple[Mapping[str, object], ...]
     causal_evidence_root: str
+    v6_evidence_hashes: Mapping[str, tuple[str, ...]]
+    v6_evidence_root: str
 
     @property
     def resume_action(self) -> str:
@@ -428,6 +430,8 @@ class Checkpoint:
             "resume_authorization_prefix_hash": self.resume_authorization_prefix_hash,
             "causal_evidence_prefix": _plain(self.causal_evidence_prefix),
             "causal_evidence_root": self.causal_evidence_root,
+            "v6_evidence_hashes": _plain(self.v6_evidence_hashes),
+            "v6_evidence_root": self.v6_evidence_root,
         }
 
     def to_payload(self) -> dict[str, object]:
@@ -484,6 +488,8 @@ class Checkpoint:
             "resume_authorization_prefix_hash",
             "causal_evidence_prefix",
             "causal_evidence_root",
+            "v6_evidence_hashes",
+            "v6_evidence_root",
         }
         if set(body) != expected_fields:
             raise ValueError("checkpoint body has unexpected fields")
@@ -511,8 +517,27 @@ class Checkpoint:
             "feed_cursor_root",
             "state_collection_root",
             "event_chain_head",
+            "v6_evidence_root",
         ):
             _require_sha256(name, body[name])
+        v6_hashes = body["v6_evidence_hashes"]
+        expected_v6_tables = {
+            "event_input_evidence",
+            "attempt_policy_evidence",
+            "adapter_execution_bindings",
+            "adapter_requests",
+            "invocation_evidence",
+            "parse_evidence",
+        }
+        if type(v6_hashes) is not dict or set(v6_hashes) != expected_v6_tables:
+            raise ValueError("checkpoint v6 evidence hashes do not exact-cover tables")
+        for table, hashes in v6_hashes.items():
+            if type(hashes) is not list:
+                raise TypeError(f"checkpoint {table} hashes must be a JSON array")
+            for item in hashes:
+                _require_sha256(f"checkpoint {table} row hash", item)
+        if canonical_payload_hash(v6_hashes) != body["v6_evidence_root"]:
+            raise ValueError("checkpoint v6 evidence root does not match ordered hashes")
         _require_int("schedule_count", body["schedule_count"])
         _require_int("next_event_ordinal", body["next_event_ordinal"])
         if not 0 <= body["next_event_ordinal"] <= body["schedule_count"]:
@@ -891,6 +916,10 @@ class Checkpoint:
                 _freeze(item) for item in causal_prefix_payload
             ),
             causal_evidence_root=body["causal_evidence_root"],
+            v6_evidence_hashes=MappingProxyType(
+                {name: tuple(hashes) for name, hashes in v6_hashes.items()}
+            ),
+            v6_evidence_root=body["v6_evidence_root"],
         )
 
 
@@ -1181,6 +1210,8 @@ def _build_checkpoint_snapshot(storage: RunStorage) -> Checkpoint:
         resume_authorization_prefix_hash=canonical_payload_hash(authorization_prefix_payload),
         causal_evidence_prefix=tuple(causal_prefix_payload),  # type: ignore[arg-type]
         causal_evidence_root=canonical_payload_hash(causal_prefix_payload),
+        v6_evidence_hashes=evidence["v6_evidence_hashes"],  # type: ignore[arg-type]
+        v6_evidence_root=evidence["v6_evidence_root"],  # type: ignore[arg-type]
     )
     return Checkpoint.from_payload(checkpoint.to_payload())
 
@@ -1279,6 +1310,14 @@ def _candidate_covers_bound_failures(candidate: Checkpoint, stored: Checkpoint) 
 
 
 def _is_evidence_prefix(candidate: Checkpoint, stored: Checkpoint) -> bool:
+    if set(candidate.v6_evidence_hashes) != set(stored.v6_evidence_hashes):
+        return False
+    for table, candidate_hashes in candidate.v6_evidence_hashes.items():
+        stored_hashes = stored.v6_evidence_hashes[table]
+        if len(candidate_hashes) > len(stored_hashes) or tuple(candidate_hashes) != tuple(
+            stored_hashes[: len(candidate_hashes)]
+        ):
+            return False
     required_committed = tuple(
         item
         for item in stored.causal_evidence_prefix
@@ -1367,6 +1406,8 @@ def _replace_progress_evidence(expected: Checkpoint, candidate: Checkpoint) -> C
         resume_authorization_prefix_hash=candidate.resume_authorization_prefix_hash,
         causal_evidence_prefix=candidate.causal_evidence_prefix,
         causal_evidence_root=candidate.causal_evidence_root,
+        v6_evidence_hashes=candidate.v6_evidence_hashes,
+        v6_evidence_root=candidate.v6_evidence_root,
     )
 
 
@@ -1512,5 +1553,7 @@ def _build_checkpoint_from_evidence(
         resume_authorization_prefix_hash=canonical_payload_hash(authorization_prefix_payload),
         causal_evidence_prefix=tuple(causal_prefix_payload),  # type: ignore[arg-type]
         causal_evidence_root=canonical_payload_hash(causal_prefix_payload),
+        v6_evidence_hashes=evidence["v6_evidence_hashes"],  # type: ignore[arg-type]
+        v6_evidence_root=evidence["v6_evidence_root"],  # type: ignore[arg-type]
     )
     return Checkpoint.from_payload(checkpoint.to_payload())

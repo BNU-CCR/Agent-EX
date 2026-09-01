@@ -5,6 +5,7 @@ from dataclasses import replace
 import json
 import os
 from pathlib import Path
+import sqlite3
 import subprocess
 from time import perf_counter
 
@@ -36,6 +37,9 @@ from test_storage import (
     manifest,
     schedule,
     seal_expected_initial_state,
+    finalized_evidence,
+    land_invocation,
+    prepared_evidence_bundle,
     successful_event,
     successful_state_records,
 )
@@ -78,7 +82,7 @@ def test_empty_sealed_run_builds_deterministic_storage_bound_checkpoint(tmp_path
         second = build_checkpoint(store)
 
         assert first == second
-        assert first.version == "paper1.checkpoint.v2"
+        assert first.version == "paper1.checkpoint.v3"
         assert first.run_id == run_manifest.run_id
         assert first.protocol_id == run_manifest.protocol_id
         assert first.protocol_version == run_manifest.protocol_version
@@ -92,6 +96,52 @@ def test_empty_sealed_run_builds_deterministic_storage_bound_checkpoint(tmp_path
         assert first.expected_exposure_graph_hash is None
         assert first.expected_source_ws_artifact_hash is None
         assert validate_checkpoint(first, store) == "current"
+
+
+def test_checkpoint_binds_ordered_v6_evidence_hashes_and_rejects_total_erasure(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation = land_invocation(store, values)
+    store.record_finalized_attempt(finalized_evidence(store, values, invocation))
+    checkpoint = build_checkpoint(store)
+    assert set(checkpoint.v6_evidence_hashes) == {
+        "event_input_evidence",
+        "attempt_policy_evidence",
+        "adapter_execution_bindings",
+        "adapter_requests",
+        "invocation_evidence",
+        "parse_evidence",
+    }
+    assert all(len(hashes) == 1 for hashes in checkpoint.v6_evidence_hashes.values())
+    assert checkpoint.v6_evidence_root == canonical_payload_hash(
+        checkpoint.v6_evidence_hashes
+    )
+    store.close()
+    connection = sqlite3.connect(values["path"])
+    connection.execute("PRAGMA foreign_keys = OFF")
+    for table in (
+        "parse_evidence",
+        "invocation_evidence",
+        "adapter_requests",
+        "adapter_execution_bindings",
+        "attempt_policy_evidence",
+        "event_input_evidence",
+    ):
+        connection.execute(f"DELETE FROM {table}")
+    connection.commit()
+    connection.close()
+    reopened = RunStorage.open(
+        values["path"],
+        manifest=values["manifest"],
+        artifact_hashes={"population": "b" * 64},
+        expected_agent_ids=("agent-0001", "agent-0002"),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    )
+    reopened.acquire_run_lease().acquire()
+    with pytest.raises(ValueError, match="checkpoint|evidence|conflict"):
+        validate_checkpoint(checkpoint, reopened)
 
 
 def test_checkpoint_binds_halt_and_explicit_resume_authorization(tmp_path: Path) -> None:

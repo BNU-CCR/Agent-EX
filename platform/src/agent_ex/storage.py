@@ -3859,6 +3859,7 @@ class RunStorage:
             and terminal_item.event_ordinal == ordinal
             else None
         )
+        v6_evidence_hashes = self._v6_evidence_hashes_snapshot(ordinal)
         return _freeze_recovery_evidence(
             {
                 "next_event_ordinal": ordinal,
@@ -3882,8 +3883,87 @@ class RunStorage:
                     item.to_payload() for item in authorization_prefix
                 ),
                 "causal_evidence_prefix": tuple(item.to_payload() for item in causal_prefix),
+                "v6_evidence_hashes": v6_evidence_hashes,
+                "v6_evidence_root": canonical_payload_hash(v6_evidence_hashes),
             }
         )  # type: ignore[return-value]
+
+    def _v6_evidence_hashes_snapshot(self, ordinal: int) -> dict[str, tuple[str, ...]]:
+        """Hash ordered v6 row hashes visible to a recovery projection."""
+
+        event_ids = tuple(
+            derive_event_id(self.binding.run_id, index)
+            for index in range(
+                min(ordinal + (ordinal < self.binding.schedule_count), self.binding.schedule_count)
+            )
+        )
+        if not event_ids:
+            selected: dict[str, list[str]] = {
+                name: []
+                for name in (
+                    "event_input_evidence",
+                    "attempt_policy_evidence",
+                    "adapter_execution_bindings",
+                    "adapter_requests",
+                    "invocation_evidence",
+                    "parse_evidence",
+                )
+            }
+        else:
+            selected = {}
+            for table in ("event_input_evidence", "attempt_policy_evidence"):
+                selected[table] = []
+                for event_id in event_ids:
+                    row = self._connection.execute(
+                        f"""SELECT record_hash FROM {_quote_sql_identifier(table)}
+                            WHERE event_id = ?""",
+                        (event_id,),
+                    ).fetchone()
+                    if row is not None:
+                        selected[table].append(row[0])
+            request_rows: list[tuple[str, str, str]] = []
+            for event_id in event_ids:
+                request_rows.extend(
+                    self._connection.execute(
+                        """SELECT ar.attempt_id, ar.adapter_binding_hash, ar.record_hash
+                           FROM adapter_requests ar
+                           JOIN attempt_transitions at ON at.attempt_id = ar.attempt_id
+                           WHERE ar.event_id = ? AND at.transition_index = 1
+                           ORDER BY at.attempt_index""",
+                        (event_id,),
+                    ).fetchall()
+                )
+            attempt_ids = tuple(row[0] for row in request_rows)
+            selected["adapter_requests"] = [row[2] for row in request_rows]
+            binding_hashes = tuple(sorted({row[1] for row in request_rows}))
+            selected["adapter_execution_bindings"] = (
+                []
+                if not binding_hashes
+                else [
+                    row[0]
+                    for row in self._connection.execute(
+                        f"""SELECT record_hash FROM adapter_execution_bindings
+                            WHERE record_hash IN ({','.join('?' for _ in binding_hashes)})
+                            ORDER BY binding_id""",
+                        binding_hashes,
+                    ).fetchall()
+                ]
+            )
+            for table in ("invocation_evidence", "parse_evidence"):
+                selected[table] = (
+                    []
+                    if not attempt_ids
+                    else [
+                        row[0]
+                        for row in self._connection.execute(
+                            f"""SELECT record_hash FROM {_quote_sql_identifier(table)}
+                                WHERE attempt_id IN ({','.join('?' for _ in attempt_ids)})
+                                ORDER BY attempt_id""",
+                            attempt_ids,
+                        ).fetchall()
+                    ]
+                )
+        return {name: tuple(hashes) for name, hashes in selected.items()}
 
     def assert_complete(self) -> None:
         self.verify_integrity()
@@ -4144,6 +4224,7 @@ class RunStorage:
             raise ValueError("stored succeeded event prefix has a gap or duplicate")
         self._verify_attempt_exact_cover(progress)
         self._verify_retry_authorization_exact_cover()
+        self._verify_v6_evidence_exact_cover()
         initial_updates: dict[str, PrivateUpdate] = {}
         for update_id, agent_id, payload_json, payload_hash in self._connection.execute(
             """SELECT update_id, agent_id, payload_json, payload_hash FROM private_updates
@@ -4369,6 +4450,149 @@ class RunStorage:
         for agent_id, pointer in expected_pointers.items():
             if self.latest_public_pointer(agent_id) != pointer:
                 raise ValueError("stored latest public pointer does not replay")
+
+    def _verify_v6_evidence_exact_cover(self) -> None:
+        """Replay the opt-in v6 execution-evidence prefix from SQLite truth.
+
+        Task 6 migrates the legacy lifecycle entry point to these tables.  Until
+        then, a store with no v6 rows remains a valid legacy prefix; once any v6
+        row lands, however, all six tables are an indivisible exact-cover graph.
+        """
+
+        tables = (
+            "event_input_evidence",
+            "attempt_policy_evidence",
+            "adapter_execution_bindings",
+            "adapter_requests",
+            "invocation_evidence",
+            "parse_evidence",
+        )
+        counts = {
+            table: self._connection.execute(
+                f"SELECT COUNT(*) FROM {_quote_sql_identifier(table)}"
+            ).fetchone()[0]
+            for table in tables
+        }
+        if not any(counts.values()):
+            return
+
+        transition_rows = self._connection.execute(
+            """SELECT attempt_id, event_id, attempt_index, status
+               FROM attempt_transitions
+               ORDER BY event_id, attempt_index, transition_index"""
+        ).fetchall()
+        latest: dict[str, tuple[str, int, EventStatus]] = {}
+        for attempt_id, event_id, attempt_index, status in transition_rows:
+            latest[attempt_id] = (event_id, attempt_index, EventStatus(status))
+        if not latest:
+            raise ValueError("v6 evidence is orphaned from attempt transitions")
+        expected_event_ids = {item[0] for item in latest.values()}
+        event_ids = {
+            row[0]
+            for row in self._connection.execute(
+                "SELECT event_id FROM event_input_evidence"
+            ).fetchall()
+        }
+        policy_event_ids = {
+            row[0]
+            for row in self._connection.execute(
+                "SELECT event_id FROM attempt_policy_evidence"
+            ).fetchall()
+        }
+        request_attempt_ids = {
+            row[0]
+            for row in self._connection.execute("SELECT attempt_id FROM adapter_requests").fetchall()
+        }
+        if event_ids != expected_event_ids or policy_event_ids != expected_event_ids:
+            raise ValueError("v6 event input and policy evidence are not exact-cover")
+        if request_attempt_ids != set(latest):
+            raise ValueError("v6 adapter request evidence is not exact-cover")
+        if counts["adapter_execution_bindings"] != 1:
+            raise ValueError("v6 adapter execution binding is not sole and exact-cover")
+
+        binding_id = self._connection.execute(
+            "SELECT binding_id FROM adapter_execution_bindings"
+        ).fetchone()[0]
+        binding = self.adapter_execution_binding(binding_id)
+        if binding is None:
+            raise ValueError("v6 adapter execution binding is missing")
+
+        invocation_ids = {
+            row[0]
+            for row in self._connection.execute(
+                "SELECT attempt_id FROM invocation_evidence"
+            ).fetchall()
+        }
+        parse_ids = {
+            row[0]
+            for row in self._connection.execute("SELECT attempt_id FROM parse_evidence").fetchall()
+        }
+        if invocation_ids - request_attempt_ids or parse_ids - invocation_ids:
+            raise ValueError("v6 invocation or parse evidence is orphaned")
+
+        for event_id in sorted(expected_event_ids):
+            event_input = self.event_input_evidence(event_id)
+            policy = self.attempt_policy_evidence(event_id)
+            if event_input is None or policy is None:
+                raise ValueError("v6 event evidence cover is incomplete")
+            if event_input.event_id != event_id:
+                raise ValueError("v6 event input identity drifted")
+
+        terminal_by_id: dict[str, GenerationAttempt] = {}
+        for event_id in expected_event_ids:
+            terminal_by_id.update(
+                {item.attempt_id: item for item in self.attempts_for_event(event_id)}
+            )
+        for attempt_id, (event_id, attempt_index, status) in latest.items():
+            request = self.adapter_request_evidence(attempt_id)
+            event_input = self.event_input_evidence(event_id)
+            policy = self.attempt_policy_evidence(event_id)
+            if request is None or event_input is None or policy is None:
+                raise ValueError("v6 request evidence cover is incomplete")
+            if (
+                request.event_id != event_id
+                or request.attempt_index != attempt_index
+                or request.attempt_policy_hash != policy.record_hash
+                or request.parser_limits_hash != event_input.parser_limits.record_hash
+                or request.adapter_execution_binding_hash != binding.record_hash
+                or request.model_identity_hash != binding.model_identity_hash
+            ):
+                raise ValueError("v6 request evidence binding drifted")
+            invocation = self.invocation_evidence(attempt_id)
+            parsed = self.parse_evidence(attempt_id)
+            terminal = terminal_by_id.get(attempt_id)
+            if status is EventStatus.PENDING:
+                if invocation is not None or parsed is not None or terminal is not None:
+                    raise ValueError("PENDING v6 evidence prefix has future evidence")
+                continue
+            if status is EventStatus.IN_PROGRESS:
+                if parsed is not None or terminal is not None:
+                    raise ValueError("IN_PROGRESS v6 evidence prefix has terminal evidence")
+                if invocation is None:
+                    continue
+            elif invocation is None or parsed is None or terminal is None:
+                raise ValueError("terminal v6 evidence prefix is incomplete")
+            if invocation is None:
+                continue
+            if (
+                invocation.attempt_id != attempt_id
+                or invocation.request_id != request.request_id
+                or invocation.request_hash != request.request_hash
+                or invocation.parser_limits_hash != request.parser_limits_hash
+                or invocation.attempt_policy_hash != request.attempt_policy_hash
+                or invocation.adapter_execution_binding_hash
+                != request.adapter_execution_binding_hash
+            ):
+                raise ValueError("v6 invocation evidence binding drifted")
+            if parsed is not None and (
+                parsed.attempt_id != attempt_id
+                or parsed.request_id != request.request_id
+                or parsed.request_hash != request.request_hash
+                or parsed.response_id != invocation.response_id
+                or parsed.response_hash != invocation.response_hash
+                or parsed.parser_limits_hash != request.parser_limits_hash
+            ):
+                raise ValueError("v6 parse evidence binding drifted")
 
     def _verify_attempt_exact_cover(self, progress: StorageProgress) -> None:
         transition_event_ids = {
