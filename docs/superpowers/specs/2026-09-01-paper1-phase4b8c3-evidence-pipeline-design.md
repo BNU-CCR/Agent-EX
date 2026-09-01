@@ -1,5 +1,5 @@
 ---
-status: user-approved; three written review iterations addressed; pending human release
+status: user-approved; three written review iterations addressed; human-released for implementation
 authority: Phase 4B-8C-3 implementation design; subordinate to the frozen protocol chain
 supersedes: informal Phase 4B-8C-3 handoff notes
 last-verified: 2026-09-01
