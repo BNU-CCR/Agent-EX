@@ -624,9 +624,16 @@ class MockEventPipeline:
     ) -> tuple[dict[str, GenerationEvent], dict[str, GenerationAttempt]]:
         if ordinal != self._storage.progress.next_event_ordinal:
             raise ValueError("source index ordinal drifts from persisted storage progress")
-        if ordinal < self._source_index_ordinal:
+        self._extend_source_indexes(ordinal)
+        return self._source_events_by_id, self._source_attempts_by_id
+
+    def _extend_source_indexes(self, target_ordinal: int) -> None:
+        persisted_ordinal = self._storage.progress.next_event_ordinal
+        if target_ordinal > persisted_ordinal:
+            raise ValueError("source index target exceeds persisted storage progress")
+        if target_ordinal < self._source_index_ordinal:
             raise ValueError("source index ordinal moved behind the verified cache prefix")
-        for prior in range(self._source_index_ordinal, ordinal):
+        for prior in range(self._source_index_ordinal, target_ordinal):
             event = self._storage.event_at(prior)
             if event is None:
                 raise ValueError("committed event prefix is incomplete")
@@ -636,13 +643,14 @@ class MockEventPipeline:
                 raise ValueError("committed event prefix identity drifts from storage ordinal")
             if event.event_id in self._source_events_by_id:
                 raise ValueError("committed event prefix contains a duplicate event identity")
-            self._source_events_by_id[event.event_id] = event
-            for attempt in self._storage.attempts_for_event(event.event_id):
+            event_attempts = self._storage.attempts_for_event(event.event_id)
+            for attempt in event_attempts:
                 if attempt.attempt_id in self._source_attempts_by_id:
                     raise ValueError("committed event prefix contains a duplicate attempt identity")
+            self._source_events_by_id[event.event_id] = event
+            for attempt in event_attempts:
                 self._source_attempts_by_id[attempt.attempt_id] = attempt
             self._source_index_ordinal = prior + 1
-        return self._source_events_by_id, self._source_attempts_by_id
 
     def _ensure_run_context(
         self,
@@ -685,30 +693,36 @@ class MockEventPipeline:
         return self._run_context
 
     def _advance_run_context_after_commit(self, event_id: str) -> None:
-        committed_ordinal = self._storage.progress.next_event_ordinal - 1
-        event = self._storage.event_at(committed_ordinal)
+        persisted_ordinal = self._storage.progress.next_event_ordinal
+        if persisted_ordinal < 1 or self._source_index_ordinal > persisted_ordinal:
+            raise ValueError("source index cache is ahead of persisted storage progress")
+        self._extend_source_indexes(persisted_ordinal)
+        committed_ordinal = persisted_ordinal - 1
+        event = self._source_events_by_id.get(
+            derive_event_id(self._storage.binding.run_id, committed_ordinal)
+        )
         if event is None or event.event_id != event_id:
             raise ValueError("committed event cannot be reloaded for prompt context")
-        attempts = {
-            item.attempt_id: item for item in self._storage.attempts_for_event(event.event_id)
-        }
-        if self._source_index_ordinal != committed_ordinal:
-            raise ValueError("source index cache does not end at the committed event boundary")
-        if event.event_id in self._source_events_by_id or any(
-            attempt_id in self._source_attempts_by_id for attempt_id in attempts
-        ):
-            raise ValueError("committed evidence duplicates the verified source index cache")
-        self._source_events_by_id[event.event_id] = event
-        self._source_attempts_by_id.update(attempts)
-        self._source_index_ordinal = committed_ordinal + 1
         if self._run_context is None:
             return
-        self._run_context = advance_validated_prompt_run_context(
-            self._run_context,
-            event=event,
-            source_attempts_by_id=attempts,
-        )
-        self._run_context_ordinal = event.event_ordinal + 1
+        if not 0 <= self._run_context_ordinal <= committed_ordinal:
+            raise ValueError("validated prompt context is ahead of the committed event prefix")
+        for ordinal in range(self._run_context_ordinal, persisted_ordinal):
+            source_event = self._source_events_by_id.get(
+                derive_event_id(self._storage.binding.run_id, ordinal)
+            )
+            if source_event is None:
+                raise ValueError("committed prompt context prefix is incomplete")
+            attempts = {
+                attempt_id: self._source_attempts_by_id[attempt_id]
+                for attempt_id in source_event.attempt_ids
+            }
+            self._run_context = advance_validated_prompt_run_context(
+                self._run_context,
+                event=source_event,
+                source_attempts_by_id=attempts,
+            )
+            self._run_context_ordinal = ordinal + 1
 
     def _validate_request_parameters(
         self,

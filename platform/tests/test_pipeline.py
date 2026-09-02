@@ -617,6 +617,53 @@ def test_landed_success_rebuilds_commit_from_storage_without_adapter_resend(
     assert outcome.evidence.committed_event_hash is not None
 
 
+def test_new_pipeline_recovers_landed_success_after_prior_committed_event(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E2")
+    first = fixture.pipeline.execute(**fixture.execute_kwargs)
+    assert first.lifecycle.state == "committed"
+
+    original_commit = fixture.store.commit_success
+    with monkeypatch.context() as scoped:
+        scoped.setattr(
+            fixture.store,
+            "commit_success",
+            lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("after-finalize")),
+        )
+        with pytest.raises(RuntimeError, match="after-finalize"):
+            fixture.pipeline.execute(**fixture.execute_kwargs)
+    assert fixture.store.progress.next_event_ordinal == 1
+
+    recovered_pipeline = MockEventPipeline(**fixture.pipeline_kwargs)
+    monkeypatch.setattr(
+        fixture.adapter,
+        "generate",
+        lambda request: (_ for _ in ()).throw(AssertionError("adapter must not be called")),
+    )
+
+    outcome = recovered_pipeline.execute(**fixture.execute_kwargs)
+
+    assert fixture.store.commit_success == original_commit
+    assert outcome.lifecycle.state == "committed"
+    assert outcome.lifecycle.adapter_invoked is False
+    assert fixture.store.progress.next_event_ordinal == 2
+    assert all(
+        (
+            outcome.evidence.event_input_evidence_hash,
+            outcome.evidence.request_hash,
+            outcome.evidence.invocation_evidence_hash,
+            outcome.evidence.parse_evidence_hash,
+            outcome.evidence.terminal_attempt_hash,
+            outcome.evidence.committed_event_hash,
+        )
+    )
+    event = fixture.store.event_at(1)
+    assert event is not None and event.event_id == outcome.lifecycle.event_id
+    assert fixture.store.private_state("agent-0000").reason == "receiver-published-update"
+    assert fixture.store.latest_public_pointer("agent-0000").published_event_ordinal == 1
+
+
 def test_timeout_persists_parse_not_applicable_and_leaves_research_state_unchanged(
     tmp_path: Path,
 ) -> None:
