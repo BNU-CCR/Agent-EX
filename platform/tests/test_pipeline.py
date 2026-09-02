@@ -18,6 +18,7 @@ from agent_ex.domain import (
     RunManifest,
     ScheduleSlot,
     canonical_payload_hash,
+    derive_attempt_id,
     derive_event_id,
     derive_run_id,
 )
@@ -731,6 +732,112 @@ def test_retry_allows_only_the_policy_bound_nested_temperature_leaf(tmp_path: Pa
     )
     assert fixture.store.progress.next_event_ordinal == first_progress.next_event_ordinal + 1
     assert fixture.store.progress.next_event_ordinal == 1
+
+
+def test_retry_allows_explicit_policy_bound_model_seed_change(tmp_path: Path) -> None:
+    fixture = _fixture(
+        tmp_path,
+        exposure="E0",
+        allowed_difference_fields=("model_seed",),
+        e0_script_steps=(
+            MockScriptStep.timeout("retry with authorized seed"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "seed retry"}
+            ),
+        ),
+    )
+    failed = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "http_status": None,
+            "usage": {},
+            "finish_reason": None,
+        }
+    )
+    assert failed.lifecycle.event_id is not None
+    first_request = fixture.store.adapter_request_evidence(failed.lifecycle.attempt.attempt_id)
+    first_input = fixture.store.event_input_evidence(failed.lifecycle.event_id)
+    assert first_request is not None and first_input is not None
+    with fixture.store.acquire_run_lease():
+        _authorize_pipeline_retry(fixture.store, suffix="pipeline-seed-allowed")
+
+    outcome = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "model_seed": 54321,
+        }
+    )
+    attempts = fixture.store.attempts_for_event(failed.lifecycle.event_id)
+    retry_request = fixture.store.adapter_request_evidence(attempts[-1].attempt_id)
+
+    assert outcome.lifecycle.state == "committed"
+    assert outcome.lifecycle.event_id == failed.lifecycle.event_id
+    assert outcome.evidence.event_input_evidence_hash == first_input.record_hash
+    assert tuple(attempt.attempt_index for attempt in attempts) == (1, 2)
+    assert first_request.model_seed == 12345
+    assert retry_request is not None and retry_request.model_seed == 54321
+
+
+def test_retry_rejects_unlisted_model_seed_before_adapter_or_evidence_write(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(
+        tmp_path,
+        exposure="E0",
+        allowed_difference_fields=("request_parameters.temperature",),
+        e0_script_steps=(
+            MockScriptStep.timeout("reject unauthorized seed"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "must not run"}
+            ),
+        ),
+    )
+    failed = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "http_status": None,
+            "usage": {},
+            "finish_reason": None,
+        }
+    )
+    assert failed.lifecycle.event_id is not None
+    with fixture.store.acquire_run_lease():
+        _authorize_pipeline_retry(fixture.store, suffix="pipeline-seed-rejected")
+    event_id = failed.lifecycle.event_id
+    before = (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+        fixture.store.evidence_references(event_id),
+        fixture.store.attempt_transitions(failed.lifecycle.attempt.attempt_id),
+    )
+    adapter_calls = 0
+
+    def counted_generate(request):
+        nonlocal adapter_calls
+        adapter_calls += 1
+        raise AssertionError(f"unauthorized seed reached adapter: {request.request_id}")
+
+    monkeypatch.setattr(fixture.adapter, "generate", counted_generate)
+    with pytest.raises(ValueError, match="model seed|attempt policy|unauthorized"):
+        fixture.pipeline.execute(
+            **{
+                **fixture.execute_kwargs,
+                "model_seed": 54321,
+            }
+        )
+
+    assert adapter_calls == 0
+    assert fixture.store.adapter_request_evidence(derive_attempt_id(event_id, 2)) is None
+    assert (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+        fixture.store.evidence_references(event_id),
+        fixture.store.attempt_transitions(failed.lifecycle.attempt.attempt_id),
+    ) == before
 
 
 @pytest.mark.parametrize(

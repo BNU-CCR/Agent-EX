@@ -1306,6 +1306,68 @@ def finalized_evidence(
     )
 
 
+def land_failed_then_successful_retry(
+    store: RunStorage, values: Mapping[str, object]
+) -> tuple[FinalizedAttemptEvidence, FinalizedAttemptEvidence]:
+    first_invocation = land_invocation(store, values)
+    failed = finalized_evidence(store, values, first_invocation)
+    store.record_finalized_attempt(failed)
+    failure = failed.terminal_failure_evidence
+    assert failure is not None
+    store.authorize_resume(
+        authorization_id="resume-two-attempt-checkpoint",
+        event_id=failed.attempt.event_id,
+        previous_terminal_failure_hash=failure.payload_hash,
+        policy_evidence_id=values["policy"].policy_id,
+        policy_evidence_hash=values["policy"].record_hash,
+        authorized_at=NOW,
+    )
+    retry_request = AdapterRequest.create(
+        prompt_view=values["event_input"].prompt_view,
+        attempt_index=2,
+        mock_seed=12345,
+        mock_only=True,
+    )
+    retry_request_evidence = execution_evidence_module.AdapterRequestEvidence.create(
+        request=retry_request,
+        model_identity=values["binding"].model_identity,
+        request_parameters={"temperature": 0.0},
+        model_seed=12345,
+        prompt_limits_hash=values["event_input"].prompt_view.limits_hash,
+        parser_limits_hash=values["parser_limits"].record_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=values["binding"].record_hash,
+    )
+    retry_payload = values["pending"].to_payload()
+    retry_payload.update(
+        {
+            "attempt_id": retry_request.attempt_id,
+            "attempt_index": 2,
+            "request_id": retry_request.request_id,
+            "model_seed": retry_request.mock_seed,
+        }
+    )
+    retry_pending = GenerationAttempt.from_payload(retry_payload)
+    retry_values = {
+        **values,
+        "request_evidence": retry_request_evidence,
+        "pending": retry_pending,
+    }
+    store.record_prepared_attempt(
+        values["event_input"],
+        policy=values["policy"],
+        adapter_binding=values["binding"],
+        request_evidence=retry_request_evidence,
+        pending_attempt=retry_pending,
+    )
+    store.append_attempt(attempt_transition(retry_pending, EventStatus.IN_PROGRESS))
+    retry_invocation = persisted_invocation(retry_values)
+    store.record_invocation_evidence(retry_invocation)
+    succeeded = finalized_evidence(store, retry_values, retry_invocation)
+    store.record_finalized_attempt(succeeded)
+    return failed, succeeded
+
+
 def test_finalized_attempt_atomically_lands_parse_and_terminal_transition(tmp_path: Path) -> None:
     store, values = prepared_evidence_bundle(tmp_path)
     invocation_value = land_invocation(store, values)
@@ -1786,6 +1848,172 @@ def test_integrity_rejects_missing_v6_evidence_after_reopen(tmp_path: Path, tabl
             expected_exposure_mode="self_history_only",
             expected_exposure_graph_hash=None,
         )
+
+
+@pytest.mark.parametrize(
+    "tamper",
+    ("delete", "orphan", "extra", "wrong_hash", "recomputed_local_hash"),
+)
+def test_reopen_rejects_v6_tamper_without_repairing_file_or_research_state(
+    tmp_path: Path, tamper: str
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    invocation_value = land_invocation(store, values)
+    finalized = finalized_evidence(store, values, invocation_value)
+    store.record_finalized_attempt(finalized)
+    event_id = finalized.attempt.event_id
+    orphan_request = AdapterRequest.create(
+        prompt_view=values["event_input"].prompt_view,
+        attempt_index=2,
+        mock_seed=12345,
+        mock_only=True,
+    )
+    orphan_request_evidence = execution_evidence_module.AdapterRequestEvidence.create(
+        request=orphan_request,
+        model_identity=values["binding"].model_identity,
+        request_parameters={"temperature": 0.0},
+        model_seed=12345,
+        prompt_limits_hash=values["event_input"].prompt_view.limits_hash,
+        parser_limits_hash=values["parser_limits"].record_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=values["binding"].record_hash,
+    )
+    extra_adapter = MockAdapter(
+        script={
+            event_id: (
+                MockScriptStep.success(
+                    {"stance": "label-3", "confidence": 4, "public_reason": "extra binding"}
+                ),
+            )
+        },
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    extra_binding = extra_adapter.execution_binding()
+    store.close()
+
+    connection = sqlite3.connect(values["path"])
+    connection.execute("PRAGMA foreign_keys = OFF")
+    research_before = tuple(
+        (table, connection.execute(f"SELECT * FROM {table} ORDER BY 1").fetchall())
+        for table in (
+            "progress",
+            "private_states",
+            "public_posts",
+            "latest_public_pointers",
+            "feed_cursors",
+        )
+    )
+    if tamper == "delete":
+        connection.execute(
+            "DELETE FROM parse_evidence WHERE attempt_id = ?",
+            (finalized.attempt.attempt_id,),
+        )
+    elif tamper == "orphan":
+        connection.execute(
+            """INSERT INTO adapter_requests
+               (attempt_id, event_id, adapter_binding_hash, parser_limits_hash,
+                policy_hash, payload, record_hash) VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (
+                orphan_request_evidence.attempt_id,
+                orphan_request_evidence.event_id,
+                orphan_request_evidence.adapter_execution_binding_hash,
+                orphan_request_evidence.parser_limits_hash,
+                orphan_request_evidence.attempt_policy_hash,
+                storage_module._canonical_json(orphan_request_evidence.to_payload()),
+                orphan_request_evidence.record_hash,
+            ),
+        )
+    elif tamper == "extra":
+        connection.execute(
+            """INSERT INTO adapter_execution_bindings
+               (binding_id, payload, record_hash) VALUES (?, ?, ?)""",
+            (
+                extra_binding.binding_id,
+                storage_module._canonical_json(extra_binding.to_payload()),
+                extra_binding.record_hash,
+            ),
+        )
+    elif tamper == "wrong_hash":
+        connection.execute(
+            "UPDATE parse_evidence SET record_hash = ? WHERE attempt_id = ?",
+            ("f" * 64, finalized.attempt.attempt_id),
+        )
+    else:
+        row = connection.execute(
+            "SELECT payload FROM parse_evidence WHERE attempt_id = ?",
+            (finalized.attempt.attempt_id,),
+        ).fetchone()
+        payload = json.loads(row[0])
+        payload["raw_response"] = '{"stance":"label-7"}'
+        payload["raw_response_hash"] = canonical_payload_hash(payload["raw_response"])
+        payload["record_hash"] = canonical_payload_hash(
+            {name: value for name, value in payload.items() if name != "record_hash"}
+        )
+        connection.execute(
+            "UPDATE parse_evidence SET payload = ?, record_hash = ? WHERE attempt_id = ?",
+            (
+                storage_module._canonical_json(payload),
+                payload["record_hash"],
+                finalized.attempt.attempt_id,
+            ),
+        )
+    connection.commit()
+    mutated_v6 = tuple(
+        (table, connection.execute(f"SELECT * FROM {table} ORDER BY 1").fetchall())
+        for table in (
+            "event_input_evidence",
+            "attempt_policy_evidence",
+            "adapter_execution_bindings",
+            "adapter_requests",
+            "invocation_evidence",
+            "parse_evidence",
+        )
+    )
+    assert connection.execute("PRAGMA foreign_keys").fetchone()[0] == 0
+    connection.execute("PRAGMA foreign_keys = ON")
+    assert connection.execute("PRAGMA foreign_keys").fetchone()[0] == 1
+    connection.close()
+
+    with pytest.raises(ValueError, match="evidence|cover|hash|binding|parse|request|terminal"):
+        RunStorage.open(
+            values["path"],
+            manifest=values["manifest"],
+            artifact_hashes={"population": SHA_B},
+            expected_agent_ids=values["expected_agent_ids"],
+            expected_exposure_mode="self_history_only",
+            expected_exposure_graph_hash=None,
+        )
+
+    connection = sqlite3.connect(values["path"])
+    assert (
+        tuple(
+            (table, connection.execute(f"SELECT * FROM {table} ORDER BY 1").fetchall())
+            for table in (
+                "event_input_evidence",
+                "attempt_policy_evidence",
+                "adapter_execution_bindings",
+                "adapter_requests",
+                "invocation_evidence",
+                "parse_evidence",
+            )
+        )
+        == mutated_v6
+    )
+    assert (
+        tuple(
+            (table, connection.execute(f"SELECT * FROM {table} ORDER BY 1").fetchall())
+            for table in (
+                "progress",
+                "private_states",
+                "public_posts",
+                "latest_public_pointers",
+                "feed_cursors",
+            )
+        )
+        == research_before
+    )
+    connection.close()
 
 
 def test_integrity_rejects_hash_consistent_terminal_projection_tamper(tmp_path: Path) -> None:

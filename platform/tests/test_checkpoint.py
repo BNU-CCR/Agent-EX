@@ -12,6 +12,7 @@ from time import perf_counter
 import pytest
 import agent_ex.checkpoint as checkpoint_module
 
+from agent_ex.adapters.mock import MockScriptStep
 from agent_ex.checkpoint import (
     Checkpoint,
     build_checkpoint,
@@ -38,6 +39,7 @@ from test_storage import (
     schedule,
     seal_expected_initial_state,
     finalized_evidence,
+    land_failed_then_successful_retry,
     land_invocation,
     prepared_evidence_bundle,
     successful_event,
@@ -156,6 +158,38 @@ def test_checkpoint_rejects_coordinated_v6_hash_prefix_downgrade(tmp_path: Path)
 
     with pytest.raises(ValueError, match="checkpoint|evidence|conflict"):
         validate_checkpoint(downgraded, store)
+
+
+@pytest.mark.parametrize(
+    "table",
+    ("adapter_requests", "invocation_evidence", "parse_evidence"),
+)
+def test_checkpoint_rejects_rehashed_reversal_of_ordered_v6_evidence(
+    tmp_path: Path, table: str
+) -> None:
+    store, values = prepared_evidence_bundle(
+        tmp_path,
+        script_steps=(
+            MockScriptStep.timeout("first attempt"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "retry success"}
+            ),
+        ),
+    )
+    land_failed_then_successful_retry(store, values)
+    checkpoint = build_checkpoint(store)
+    assert len(checkpoint.v6_evidence_hashes[table]) == 2
+    payload = checkpoint.to_payload()
+    body = payload["checkpoint"]
+    ordered = body["v6_evidence_hashes"][table]
+    assert len(ordered) == 2 and ordered[0] != ordered[1]
+    body["v6_evidence_hashes"][table] = list(reversed(ordered))
+    body["v6_evidence_root"] = canonical_payload_hash(body["v6_evidence_hashes"])
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    reordered = Checkpoint.from_payload(payload)
+
+    with pytest.raises(ValueError, match="checkpoint|evidence|conflict|ordered"):
+        validate_checkpoint(reordered, store)
 
 
 def test_checkpoint_binds_halt_and_explicit_resume_authorization(tmp_path: Path) -> None:
