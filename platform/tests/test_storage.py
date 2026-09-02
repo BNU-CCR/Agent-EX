@@ -118,6 +118,32 @@ def test_changed_request_parameter_paths_rejects_ambiguous_key_segments(
         changed_request_parameter_paths({}, parameters)  # type: ignore[arg-type]
 
 
+@pytest.mark.parametrize(
+    ("parameters", "error_type"),
+    (
+        ({"groups": [{"sampling.temperature": 0.0}]}, ValueError),
+        ({"groups": ({"": 0.0},)}, ValueError),
+        ({"groups": ({1: 0.0},)}, TypeError),
+    ),
+)
+def test_changed_request_parameter_paths_validates_mapping_keys_inside_arrays(
+    parameters: Mapping[str, object], error_type: type[Exception]
+) -> None:
+    with pytest.raises(error_type, match="key|segment|text"):
+        changed_request_parameter_paths(parameters, parameters)
+
+
+def test_changed_request_parameter_paths_compares_arrays_canonically_at_parent_path() -> None:
+    before = {"groups": [{"temperature": 0.0}, "stop"]}
+
+    assert (
+        changed_request_parameter_paths(before, {"groups": ({"temperature": 0.0}, "stop")}) == set()
+    )
+    assert changed_request_parameter_paths(before, {"groups": [{"temperature": 0.5}, "stop"]}) == {
+        "request_parameters.groups"
+    }
+
+
 @pytest.fixture(autouse=True)
 def explicitly_lease_created_test_stores(
     monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
@@ -824,6 +850,7 @@ def test_record_prepared_attempt_writes_typed_evidence_and_pending_once(tmp_path
     (
         {"sampling.temperature": 0.0},
         {"sampling": {"   ": 0.0}},
+        {"groups": [{"sampling.temperature": 0.0}]},
     ),
 )
 def test_first_prepared_attempt_rejects_invalid_parameter_paths_without_rows(
@@ -1872,6 +1899,32 @@ def test_reopen_rejects_rehashed_first_request_with_ambiguous_parameter_key(
     ).fetchone()
     payload = json.loads(row[0])
     request_parameters = {"sampling.temperature": 0.0}
+    payload["request_parameters"] = request_parameters
+    payload["request_parameters_hash"] = canonical_payload_hash(request_parameters)
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    store._connection.execute(
+        "UPDATE adapter_requests SET payload = ?, record_hash = ? WHERE attempt_id = ?",
+        (storage_module._canonical_json(payload), payload["record_hash"], attempt_id),
+    )
+    store._connection.commit()
+
+    with pytest.raises(ValueError, match="key|segment|path|request parameter"):
+        reopen_evidence_store(store, values)
+
+
+def test_reopen_rejects_rehashed_first_request_with_ambiguous_array_mapping_key(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    land_invocation(store, values)
+    attempt_id = values["pending"].attempt_id
+    row = store._connection.execute(
+        "SELECT payload FROM adapter_requests WHERE attempt_id = ?", (attempt_id,)
+    ).fetchone()
+    payload = json.loads(row[0])
+    request_parameters = {"groups": [{"sampling.temperature": 0.0}]}
     payload["request_parameters"] = request_parameters
     payload["request_parameters_hash"] = canonical_payload_hash(request_parameters)
     payload["record_hash"] = canonical_payload_hash(

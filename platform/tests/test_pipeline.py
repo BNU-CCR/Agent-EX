@@ -505,6 +505,69 @@ def test_pipeline_rejects_non_text_manifest_request_parameter_path(
         )
 
 
+def test_pipeline_accepts_canonically_equivalent_list_parameters_on_first_attempt(
+    tmp_path: Path,
+) -> None:
+    parameters = {
+        "groups": [{"temperature": 0.0, "stop": ["END", "STOP"]}],
+    }
+    fixture = _fixture(
+        tmp_path,
+        exposure="E0",
+        baseline_request_parameters=parameters,
+    )
+
+    outcome = fixture.pipeline.execute(
+        **{**fixture.execute_kwargs, "request_parameters": parameters}
+    )
+
+    assert outcome.lifecycle.state == "committed"
+    assert fixture.store.progress.next_event_ordinal == 1
+
+
+def test_pipeline_rejects_ambiguous_mapping_key_inside_array_before_first_attempt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(
+        tmp_path,
+        exposure="E0",
+        baseline_request_parameters={"groups": [{"temperature": 0.0}]},
+    )
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    before = (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+    )
+    adapter_calls = 0
+
+    def fail_if_called(request):
+        nonlocal adapter_calls
+        adapter_calls += 1
+        raise AssertionError(f"adapter called for invalid request: {request.request_id}")
+
+    monkeypatch.setattr(fixture.adapter, "generate", fail_if_called)
+
+    with pytest.raises(ValueError, match="key|segment|single path"):
+        fixture.pipeline.execute(
+            **{
+                **fixture.execute_kwargs,
+                "request_parameters": {"groups": [{"sampling.temperature": 0.0}]},
+            }
+        )
+
+    assert adapter_calls == 0
+    assert fixture.store.event_input_evidence(event_id) is None
+    assert fixture.store.attempts_for_event(event_id) == ()
+    assert (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+    ) == before
+
+
 @pytest.mark.parametrize(
     "request_parameters",
     ({"temperature": 0.5}, {"temperature": 0.0, "top_p": 0.9}),

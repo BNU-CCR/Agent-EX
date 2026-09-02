@@ -62,7 +62,28 @@ def changed_request_parameter_paths(
 
     if not isinstance(before, Mapping) or not isinstance(after, Mapping):
         raise TypeError("request parameter path comparison requires mappings")
+    _validate_request_parameter_tree(before)
+    _validate_request_parameter_tree(after)
     return _changed_request_parameter_paths(before, after, prefix="request_parameters")
+
+
+def _validate_request_parameter_tree(value: object) -> None:
+    if isinstance(value, Mapping):
+        keys = tuple(value)
+        if any(not isinstance(key, str) for key in keys):
+            raise TypeError("request parameter keys must be text path segments")
+        if any(not key.strip() or "." in key for key in keys):
+            raise ValueError(
+                "request parameter keys must be non-blank single path segments without dots"
+            )
+        for item in value.values():
+            _validate_request_parameter_tree(item)
+        return
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            _validate_request_parameter_tree(item)
+        return
+    canonical_payload_hash(value)
 
 
 def _changed_request_parameter_paths(
@@ -72,12 +93,6 @@ def _changed_request_parameter_paths(
     prefix: str,
 ) -> set[str]:
     keys = set(before) | set(after)
-    if any(not isinstance(key, str) for key in keys):
-        raise TypeError("request parameter keys must be text path segments")
-    if any(not key.strip() or "." in key for key in keys):
-        raise ValueError(
-            "request parameter keys must be non-blank single path segments without dots"
-        )
     missing = object()
     changed: set[str] = set()
     for key in keys:
@@ -92,13 +107,11 @@ def _changed_request_parameter_paths(
         elif right is missing and isinstance(left, Mapping):
             nested = _changed_request_parameter_paths(left, {}, prefix=path)
             changed.update(nested or {path})
-        elif isinstance(left, Mapping):
-            _changed_request_parameter_paths(left, left, prefix=path)
+        elif left is missing or right is missing:
             changed.add(path)
-        elif isinstance(right, Mapping):
-            _changed_request_parameter_paths(right, right, prefix=path)
+        elif isinstance(left, Mapping) or isinstance(right, Mapping):
             changed.add(path)
-        elif left != right:
+        elif canonical_payload_hash(left) != canonical_payload_hash(right):
             changed.add(path)
     return changed
 

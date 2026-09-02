@@ -739,14 +739,13 @@ class MockEventPipeline:
         policy: MockAttemptPolicyBinding,
     ) -> None:
         supplied = dict(request_parameters)
-        changed_request_parameter_paths(supplied, supplied)
+        changed = changed_request_parameter_paths(self._baseline_request_parameters, supplied)
         if journal.next_attempt_index == 1:
-            if supplied != self._baseline_request_parameters:
+            if changed:
                 raise ValueError(
                     "first-attempt request parameters must exactly match the persisted manifest"
                 )
             return
-        changed = changed_request_parameter_paths(self._baseline_request_parameters, supplied)
         unauthorized = changed - set(policy.allowed_difference_fields)
         if unauthorized:
             raise ValueError("retry request parameters differ outside the frozen attempt policy")
