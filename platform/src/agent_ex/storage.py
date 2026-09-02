@@ -66,8 +66,12 @@ def changed_request_parameter_paths(
     if not isinstance(prefix, str) or not prefix:
         raise ValueError("request parameter path prefix must be non-empty text")
     keys = set(before) | set(after)
-    if any(not isinstance(key, str) or not key for key in keys):
-        raise ValueError("request parameter keys must be non-empty text")
+    if any(not isinstance(key, str) for key in keys):
+        raise TypeError("request parameter keys must be text path segments")
+    if any(not key.strip() or "." in key for key in keys):
+        raise ValueError(
+            "request parameter keys must be non-blank single path segments without dots"
+        )
     missing = object()
     changed: set[str] = set()
     for key in keys:

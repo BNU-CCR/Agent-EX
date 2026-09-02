@@ -600,6 +600,75 @@ def test_retry_rejects_unlisted_nested_or_parent_parameter_changes(
     assert len(fixture.store.attempts_for_event(event_id)) == 1
 
 
+def test_retry_rejects_dotted_key_alias_before_attempt_or_adapter_call(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    baseline = {"sampling": {"temperature": 0.0, "top_p": 1.0}}
+    fixture = _fixture(
+        tmp_path,
+        exposure="E0",
+        baseline_request_parameters=baseline,
+        allowed_difference_fields=(
+            "model_seed",
+            "request_parameters.sampling.temperature",
+        ),
+        e0_script_steps=(
+            MockScriptStep.timeout("reject dotted alias"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "must not run"}
+            ),
+        ),
+    )
+    failed = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "http_status": None,
+            "usage": {},
+            "finish_reason": None,
+        }
+    )
+    assert failed.lifecycle.state == "failed"
+    with fixture.store.acquire_run_lease():
+        _authorize_pipeline_retry(fixture.store, suffix="pipeline-dotted-alias")
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    before = (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+        fixture.store.attempts_for_event(event_id),
+    )
+    adapter_calls = 0
+    original_generate = fixture.adapter.generate
+
+    def counted_generate(request):
+        nonlocal adapter_calls
+        adapter_calls += 1
+        return original_generate(request)
+
+    monkeypatch.setattr(fixture.adapter, "generate", counted_generate)
+
+    with pytest.raises(ValueError, match="key|segment|path|request parameters"):
+        fixture.pipeline.execute(
+            **{
+                **fixture.execute_kwargs,
+                "request_parameters": {
+                    "sampling": {"top_p": 1.0},
+                    "sampling.temperature": 0.5,
+                },
+            }
+        )
+
+    assert adapter_calls == 0
+    assert (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+        fixture.store.attempts_for_event(event_id),
+    ) == before
+
+
 @pytest.mark.parametrize("drift", ("empty", "self", "out_of_roster", "asymmetric"))
 def test_e2_rejects_neighbor_mapping_that_drifts_from_frozen_graph(
     tmp_path: Path, drift: str

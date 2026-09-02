@@ -92,6 +92,22 @@ def test_changed_request_parameter_paths_reports_recursive_leaf_differences() ->
     ) == {"request_parameters.sampling"}
 
 
+@pytest.mark.parametrize(
+    ("parameters", "error_type"),
+    (
+        ({"sampling.temperature": 0.5}, ValueError),
+        ({"sampling": {"": 0.5}}, ValueError),
+        ({"sampling": {"   ": 0.5}}, ValueError),
+        ({"sampling": {1: 0.5}}, TypeError),
+    ),
+)
+def test_changed_request_parameter_paths_rejects_ambiguous_key_segments(
+    parameters: Mapping[object, object], error_type: type[Exception]
+) -> None:
+    with pytest.raises(error_type, match="key|segment|text"):
+        changed_request_parameter_paths({}, parameters)  # type: ignore[arg-type]
+
+
 @pytest.fixture(autouse=True)
 def explicitly_lease_created_test_stores(
     monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
@@ -520,6 +536,8 @@ def prepared_evidence_bundle(
     script_step: MockScriptStep | None = None,
     script_steps: tuple[MockScriptStep, ...] | None = None,
     single_event: bool = False,
+    request_parameters: Mapping[str, object] | None = None,
+    allowed_difference_fields: tuple[str, ...] | None = None,
 ) -> tuple[RunStorage, dict[str, object]]:
     agent_ids = ("agent-0001",) if single_event else ("agent-0001", "agent-0002")
     frozen_schedule = FrozenSchedule(
@@ -670,7 +688,11 @@ def prepared_evidence_bundle(
         publish_flag=False,
     )
     policy = MockAttemptPolicyBinding.create(
-        allowed_difference_fields=("model_seed", "request_parameters.temperature"),
+        allowed_difference_fields=(
+            ("model_seed", "request_parameters.temperature")
+            if allowed_difference_fields is None
+            else allowed_difference_fields
+        ),
         mock_only=True,
         formal_eligible=False,
     )
@@ -694,7 +716,9 @@ def prepared_evidence_bundle(
     request_evidence = execution_evidence_module.AdapterRequestEvidence.create(
         request=request,
         model_identity=binding.model_identity,
-        request_parameters={"temperature": 0.0},
+        request_parameters=(
+            {"temperature": 0.0} if request_parameters is None else dict(request_parameters)
+        ),
         model_seed=12345,
         prompt_limits_hash=prompt.limits_hash,
         parser_limits_hash=parser_limits.record_hash,
@@ -1382,6 +1406,83 @@ def test_finalized_replay_scopes_historical_failure_to_its_attempt(tmp_path: Pat
     assert store.terminal_failure_evidence() == failure
     assert store._connection.execute("SELECT COUNT(*) FROM terminal_failures").fetchone()[0] == 1
     assert store.execution_state() == before_execution
+
+
+def test_storage_retry_rejects_dotted_key_alias_without_pending_write(tmp_path: Path) -> None:
+    baseline = {"sampling": {"temperature": 0.0, "top_p": 1.0}}
+    store, values = prepared_evidence_bundle(
+        tmp_path,
+        script_steps=(
+            MockScriptStep.timeout("reject dotted alias"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "must not land"}
+            ),
+        ),
+        request_parameters=baseline,
+        allowed_difference_fields=(
+            "model_seed",
+            "request_parameters.sampling.temperature",
+        ),
+    )
+    first_invocation = land_invocation(store, values)
+    failed = finalized_evidence(store, values, first_invocation)
+    store.record_finalized_attempt(failed)
+    failure = failed.terminal_failure_evidence
+    assert failure is not None
+    store.authorize_resume(
+        authorization_id="resume-storage-dotted-alias",
+        event_id=failed.attempt.event_id,
+        previous_terminal_failure_hash=failure.payload_hash,
+        policy_evidence_id=values["policy"].policy_id,
+        policy_evidence_hash=values["policy"].record_hash,
+        authorized_at=NOW,
+    )
+    retry_request = AdapterRequest.create(
+        prompt_view=values["event_input"].prompt_view,
+        attempt_index=2,
+        mock_seed=12345,
+        mock_only=True,
+    )
+    alias = {
+        "sampling": {"top_p": 1.0},
+        "sampling.temperature": 0.5,
+    }
+    retry_request_evidence = execution_evidence_module.AdapterRequestEvidence.create(
+        request=retry_request,
+        model_identity=values["binding"].model_identity,
+        request_parameters=alias,
+        model_seed=12345,
+        prompt_limits_hash=values["event_input"].prompt_view.limits_hash,
+        parser_limits_hash=values["parser_limits"].record_hash,
+        attempt_policy_hash=values["policy"].record_hash,
+        adapter_execution_binding_hash=values["binding"].record_hash,
+    )
+    retry_payload = values["pending"].to_payload()
+    retry_payload.update(
+        {
+            "attempt_id": retry_request.attempt_id,
+            "attempt_index": 2,
+            "request_id": retry_request.request_id,
+            "request_parameters": alias,
+            "request_parameters_hash": canonical_payload_hash(alias),
+        }
+    )
+    retry_pending = GenerationAttempt.from_payload(retry_payload)
+    before = (store.current_event_journal(), store.attempts_for_event(failed.attempt.event_id))
+
+    with pytest.raises(ValueError, match="key|segment|path|request parameters"):
+        store.record_prepared_attempt(
+            values["event_input"],
+            policy=values["policy"],
+            adapter_binding=values["binding"],
+            request_evidence=retry_request_evidence,
+            pending_attempt=retry_pending,
+        )
+
+    assert (
+        store.current_event_journal(),
+        store.attempts_for_event(failed.attempt.event_id),
+    ) == before
 
 
 def test_retry_references_follow_only_current_attempt_across_reopen_boundaries(
