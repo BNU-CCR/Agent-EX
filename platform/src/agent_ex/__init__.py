@@ -76,7 +76,15 @@ from .network import (
     validate_ws_artifact,
 )
 from .memory import MemoryItem, MemoryView, build_memory_view, validate_memory_view
-from .mock_matrix import MockScaleCase, load_mock_scale_cases
+from .mock_matrix import (
+    CANONICAL_CELL_IDS,
+    MockCellBinding,
+    MockMatchedSeedMatrix,
+    MockScaleCase,
+    build_mock_matched_seed_matrix,
+    load_mock_scale_cases,
+    validate_mock_matched_seed_matrix,
+)
 from .parser import (
     ParseEvidence,
     ParsedAgentUpdate,
@@ -173,6 +181,9 @@ __all__ = [
     "MockAttemptPolicyBinding",
     "MockScriptStep",
     "MockScaleCase",
+    "MockCellBinding",
+    "MockMatchedSeedMatrix",
+    "CANONICAL_CELL_IDS",
     "ModelAdapter",
     "ParseEvidence",
     "ParseNotApplicableEvidence",
@@ -208,6 +219,7 @@ __all__ = [
     "build_expression_artifact",
     "build_exposure_record",
     "build_memory_view",
+    "build_mock_matched_seed_matrix",
     "build_population_artifact",
     "build_publish_schedule",
     "build_prompt_view",
@@ -238,6 +250,7 @@ __all__ = [
     "validate_matched_schedule_reuse",
     "validate_latest_public_pointer",
     "validate_memory_view",
+    "validate_mock_matched_seed_matrix",
     "validate_private_state",
     "validate_public_post",
     "validate_shadow_artifact",
