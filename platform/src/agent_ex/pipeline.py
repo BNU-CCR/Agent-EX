@@ -123,6 +123,9 @@ class MockEventPipeline:
         cell_id = manifest.run_spec.get("cell_id")
         if not isinstance(cell_id, str):
             raise ValueError("persisted manifest cell_id must be text")
+        request_parameters = manifest.run_spec.get("request_parameters")
+        if not isinstance(request_parameters, Mapping):
+            raise ValueError("persisted manifest request parameters must be a mapping")
         neighbors = self._validate_frozen_neighbors(
             storage=storage,
             matched_seed=matched_seed,
@@ -137,6 +140,8 @@ class MockEventPipeline:
         self._manifest = manifest
         self._matched_seed = matched_seed
         self._cell_id = cell_id
+        self._manifest_model_identity = dict(manifest.model_identity)
+        self._baseline_request_parameters = dict(request_parameters)
         self._topic_package = topic_package
         self._persona_template = persona_template
         self._population_artifact = population_artifact
@@ -144,6 +149,9 @@ class MockEventPipeline:
         self._clock = clock
         self._run_context: ValidatedPromptRunContext | None = None
         self._run_context_ordinal = -1
+        self._source_events_by_id: dict[str, GenerationEvent] = {}
+        self._source_attempts_by_id: dict[str, GenerationAttempt] = {}
+        self._source_index_ordinal = 0
 
     def execute(
         self,
@@ -163,7 +171,18 @@ class MockEventPipeline:
     ) -> MockEventPipelineOutcome:
         binding = adapter.execution_binding()
         if dict(model_identity) != dict(binding.model_identity):
-            raise ValueError("explicit model identity does not match the mock adapter")
+            raise ValueError("explicit model identity must exactly match the adapter binding")
+        complete_adapter_identity = {
+            "provider": binding.runtime_identity["provider"],
+            "model": binding.model_identity["model"],
+            "revision": binding.model_identity["revision"],
+            "runtime": binding.runtime_identity["runtime_version"],
+            "mode": binding.model_identity["mode"],
+        }
+        if self._manifest_model_identity != complete_adapter_identity:
+            raise ValueError(
+                "persisted manifest model identity does not match the complete adapter binding"
+            )
 
         prepared_by_attempt: dict[str, PreparedAttempt] = {}
 
@@ -253,6 +272,11 @@ class MockEventPipeline:
         ordinal = journal.event_ordinal
         if ordinal is None or journal.event_id is None:
             raise ValueError("preparation requires the current journal event")
+        self._validate_request_parameters(
+            journal=journal,
+            request_parameters=request_parameters,
+            policy=policy,
+        )
         slot = self._storage.schedule_slot(ordinal)
         event = GenerationEvent(
             run_id=self._storage.binding.run_id,
@@ -598,16 +622,27 @@ class MockEventPipeline:
     def _source_indexes(
         self, ordinal: int
     ) -> tuple[dict[str, GenerationEvent], dict[str, GenerationAttempt]]:
-        events: dict[str, GenerationEvent] = {}
-        attempts: dict[str, GenerationAttempt] = {}
-        for prior in range(ordinal):
+        if ordinal != self._storage.progress.next_event_ordinal:
+            raise ValueError("source index ordinal drifts from persisted storage progress")
+        if ordinal < self._source_index_ordinal:
+            raise ValueError("source index ordinal moved behind the verified cache prefix")
+        for prior in range(self._source_index_ordinal, ordinal):
             event = self._storage.event_at(prior)
             if event is None:
                 raise ValueError("committed event prefix is incomplete")
-            events[event.event_id] = event
+            if event.event_ordinal != prior or event.event_id != derive_event_id(
+                self._storage.binding.run_id, prior
+            ):
+                raise ValueError("committed event prefix identity drifts from storage ordinal")
+            if event.event_id in self._source_events_by_id:
+                raise ValueError("committed event prefix contains a duplicate event identity")
+            self._source_events_by_id[event.event_id] = event
             for attempt in self._storage.attempts_for_event(event.event_id):
-                attempts[attempt.attempt_id] = attempt
-        return events, attempts
+                if attempt.attempt_id in self._source_attempts_by_id:
+                    raise ValueError("committed event prefix contains a duplicate attempt identity")
+                self._source_attempts_by_id[attempt.attempt_id] = attempt
+            self._source_index_ordinal = prior + 1
+        return self._source_events_by_id, self._source_attempts_by_id
 
     def _ensure_run_context(
         self,
@@ -650,12 +685,22 @@ class MockEventPipeline:
         return self._run_context
 
     def _advance_run_context_after_commit(self, event_id: str) -> None:
-        event = self._storage.event_at(self._storage.progress.next_event_ordinal - 1)
+        committed_ordinal = self._storage.progress.next_event_ordinal - 1
+        event = self._storage.event_at(committed_ordinal)
         if event is None or event.event_id != event_id:
             raise ValueError("committed event cannot be reloaded for prompt context")
         attempts = {
             item.attempt_id: item for item in self._storage.attempts_for_event(event.event_id)
         }
+        if self._source_index_ordinal != committed_ordinal:
+            raise ValueError("source index cache does not end at the committed event boundary")
+        if event.event_id in self._source_events_by_id or any(
+            attempt_id in self._source_attempts_by_id for attempt_id in attempts
+        ):
+            raise ValueError("committed evidence duplicates the verified source index cache")
+        self._source_events_by_id[event.event_id] = event
+        self._source_attempts_by_id.update(attempts)
+        self._source_index_ordinal = committed_ordinal + 1
         if self._run_context is None:
             return
         self._run_context = advance_validated_prompt_run_context(
@@ -664,6 +709,35 @@ class MockEventPipeline:
             source_attempts_by_id=attempts,
         )
         self._run_context_ordinal = event.event_ordinal + 1
+
+    def _validate_request_parameters(
+        self,
+        *,
+        journal: EventJournalState,
+        request_parameters: Mapping[str, object],
+        policy: MockAttemptPolicyBinding,
+    ) -> None:
+        supplied = dict(request_parameters)
+        if journal.next_attempt_index == 1:
+            if supplied != self._baseline_request_parameters:
+                raise ValueError(
+                    "first-attempt request parameters must exactly match the persisted manifest"
+                )
+            return
+        differing_keys = {
+            key
+            for key in set(supplied) | set(self._baseline_request_parameters)
+            if key not in supplied
+            or key not in self._baseline_request_parameters
+            or supplied[key] != self._baseline_request_parameters[key]
+        }
+        unauthorized = {
+            key
+            for key in differing_keys
+            if f"request_parameters.{key}" not in policy.allowed_difference_fields
+        }
+        if unauthorized:
+            raise ValueError("retry request parameters differ outside the frozen attempt policy")
 
     def _unread_public_posts(
         self, neighbors: tuple[str, ...], last_scanned: int | None

@@ -15,8 +15,9 @@ from agent_ex.artifacts import ArtifactEnvelope
 from agent_ex.domain import FrozenSchedule, RunManifest, ScheduleSlot, derive_event_id
 from agent_ex.execution_evidence import MockAttemptPolicyBinding, ParseNotApplicableEvidence
 from agent_ex.feed import FeedCursor
+from agent_ex.initialization import assign_initial_reasons, assign_initial_stances
 from agent_ex.network import build_agent_node_mapping, build_shadow_artifact, build_ws_artifact
-from agent_ex.parser import ParserLimits
+from agent_ex.parser import ParseEvidence, ParserLimits
 from agent_ex.pipeline import MockEventPipeline, MockEventPipelineOutcome
 from agent_ex.population import build_population_artifact
 from agent_ex.prompt import PromptLimits
@@ -74,21 +75,46 @@ def _limits() -> tuple[ParserLimits, PromptLimits]:
     )
 
 
-def _round0_artifact(population: ArtifactEnvelope) -> ArtifactEnvelope:
-    members = population.payload["members"]
-    return ArtifactEnvelope.create(
-        artifact_type="paper1.mock_round0_initialization",
+def _round0_artifacts(
+    population: ArtifactEnvelope,
+) -> tuple[ArtifactEnvelope, ArtifactEnvelope, ArtifactEnvelope]:
+    stances = assign_initial_stances(
+        population_artifact=population,
+        matched_seed=17,
+        orthogonal_fields=("gender", "urban", "education"),
+        max_category_imbalance=float(len(population.payload["members"])),
+        mock_only=True,
+    )
+    entries = tuple(
+        {
+            "reason_id": f"pipeline-reason-{stance}-{variant}",
+            "stance": stance,
+            "text": f"Pipeline round-zero reason {stance}-{variant}.",
+            "argument_family": f"pipeline-family-{variant}",
+        }
+        for stance in range(1, 8)
+        for variant in range(len(population.payload["members"]))
+    )
+    reason_library = ArtifactEnvelope.create(
+        artifact_type="paper1.mock_reason_library",
         schema_version="paper1.artifact-envelope.v1",
-        algorithm_id="paper1.test_round0",
+        algorithm_id="paper1.mock_fixture",
         algorithm_version="1.0.0",
         input_hashes={"population": population.output_hash},
         payload={
-            "matched_seed": 17,
-            "round0_records": tuple({"agent_id": member["agent_id"]} for member in members),
+            "schema_version": "paper1.mock-reason-library.v1",
+            "entries": entries,
             "metadata": {"mock_only": True, "research_parameter_status": "not_frozen"},
         },
         rng_provenance=(),
     )
+    round0 = assign_initial_reasons(
+        stance_artifact=stances,
+        reason_library_artifact=reason_library,
+        matched_seed=17,
+        mock_only=True,
+    )
+    return round0, stances, reason_library
 
 
 def _mapped_neighbors(
@@ -139,7 +165,9 @@ def _initial_records(
     return initial, state, post, pointer, cursor
 
 
-def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
+def _fixture(
+    tmp_path: Path, *, exposure: str, bind_manifest_model_identity: bool = True
+) -> PipelineFixture:
     if exposure == "E0":
         size = 1
         cell_id = "P1-I0-C0-E0"
@@ -232,7 +260,7 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
         artifacts[graph.artifact_id] = graph.output_hash
         if source_ws is not None:
             artifacts[source_ws.artifact_id] = source_ws.output_hash
-        round0 = _round0_artifact(population)
+        round0, stances, reason_library = _round0_artifacts(population)
         mapping = build_agent_node_mapping(
             population_artifact=population,
             round0_initialization_artifact=round0,
@@ -241,8 +269,31 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
             mock_only=True,
         )
         artifacts[round0.artifact_id] = round0.output_hash
+        artifacts[stances.artifact_id] = stances.output_hash
+        artifacts[reason_library.artifact_id] = reason_library.output_hash
         artifacts[mapping.artifact_id] = mapping.output_hash
         neighbors = _mapped_neighbors(graph, mapping)
+    script = {
+        derive_event_id(run_manifest.run_id, index): (MockScriptStep.success(payload),)
+        for index, payload in enumerate(script_payloads)
+    }
+    adapter = MockAdapter(
+        script=script,
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    if bind_manifest_model_identity:
+        binding = adapter.execution_binding()
+        run_manifest = replace(
+            run_manifest,
+            model_identity={
+                "provider": binding.runtime_identity["provider"],
+                "model": binding.model_identity["model"],
+                "revision": binding.model_identity["revision"],
+                "runtime": binding.runtime_identity["runtime_version"],
+                "mode": binding.model_identity["mode"],
+            },
+        )
     store = RunStorage.create(
         tmp_path / f"pipeline-{exposure}.sqlite",
         manifest=run_manifest,
@@ -263,20 +314,6 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
                 )
             )
         store.seal_initial_state()
-    script = {
-        f"event-{run_manifest.run_id}-{index}": (MockScriptStep.success(payload),)
-        for index, payload in enumerate(script_payloads)
-    }
-    # Event IDs are hash-derived rather than human-readable.
-    script = {
-        derive_event_id(run_manifest.run_id, index): (MockScriptStep.success(payload),)
-        for index, payload in enumerate(script_payloads)
-    }
-    adapter = MockAdapter(
-        script=script,
-        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
-        mock_only=True,
-    )
     parser_limits, prompt_limits = _limits()
     policy = MockAttemptPolicyBinding.create(
         allowed_difference_fields=("model_seed", "request_parameters.temperature"),
@@ -345,6 +382,52 @@ def test_pipeline_rejects_hash_cached_schedule_slot_drift(tmp_path: Path) -> Non
 
     with pytest.raises(ValueError, match="schedule|manifest|binding"):
         MockEventPipeline(**{**fixture.pipeline_kwargs, "manifest": drifted})
+
+
+def test_execute_rejects_adapter_identity_drift_from_persisted_manifest(
+    tmp_path: Path,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0", bind_manifest_model_identity=False)
+    before = fixture.store.progress
+
+    with pytest.raises(ValueError, match="model identity|manifest"):
+        fixture.pipeline.execute(**fixture.execute_kwargs)
+
+    assert fixture.store.progress == before
+    assert (
+        fixture.store.event_input_evidence(derive_event_id(fixture.store.binding.run_id, 0)) is None
+    )
+
+
+@pytest.mark.parametrize(
+    "request_parameters",
+    ({"temperature": 0.5}, {"temperature": 0.0, "top_p": 0.9}),
+)
+def test_first_attempt_rejects_request_parameter_drift_without_writing_evidence(
+    tmp_path: Path, request_parameters: dict[str, object]
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    before = (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+    )
+
+    with pytest.raises(ValueError, match="request parameters|manifest"):
+        fixture.pipeline.execute(
+            **{**fixture.execute_kwargs, "request_parameters": request_parameters}
+        )
+
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    assert fixture.store.event_input_evidence(event_id) is None
+    assert fixture.store.attempts_for_event(event_id) == ()
+    assert (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+    ) == before
 
 
 @pytest.mark.parametrize("drift", ("empty", "self", "out_of_roster", "asymmetric"))
@@ -447,14 +530,31 @@ def test_e1_accepts_shadow_neighbors_derived_through_frozen_ws_mapping(
 ) -> None:
     fixture = _fixture(tmp_path, exposure="E1")
 
+    outcome = fixture.pipeline.execute(**fixture.execute_kwargs)
+
     assert fixture.store.binding.expected_exposure_mode == "shuffled_social"
-    assert fixture.pipeline is not None
+    assert outcome.lifecycle.state == "committed"
+    assert all(
+        (
+            outcome.evidence.event_input_evidence_hash,
+            outcome.evidence.request_hash,
+            outcome.evidence.invocation_evidence_hash,
+            outcome.evidence.parse_evidence_hash,
+            outcome.evidence.terminal_attempt_hash,
+            outcome.evidence.committed_event_hash,
+        )
+    )
+    event_input = fixture.store.event_input_evidence(outcome.lifecycle.event_id)
+    assert event_input is not None
+    assert event_input.exposure_selection.selected
+    assert event_input.exposure_selection.exposure_graph_hash == fixture.graph.output_hash
 
 
 def test_social_prompt_never_contains_neighbor_private_reason_or_confidence(
     tmp_path: Path,
 ) -> None:
     fixture = _fixture(tmp_path, exposure="E2")
+    initial_public_reason = fixture.store.public_posts_for_agent("agent-0001")[0].public_reason
     fixture.pipeline.execute(**fixture.execute_kwargs)
     outcome = fixture.pipeline.execute(**fixture.execute_kwargs)
 
@@ -464,7 +564,34 @@ def test_social_prompt_never_contains_neighbor_private_reason_or_confidence(
     social_payload = json.dumps(event_input.prompt_view.social_messages, ensure_ascii=False)
     assert "NEIGHBOR_PRIVATE_SECRET" not in prompt_payload
     assert "confidence" not in social_payload
-    assert "round-zero-public-reason-agent-0001" in social_payload
+    assert initial_public_reason in social_payload
+
+
+def test_consecutive_events_do_not_rescan_the_committed_history_prefix(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E2")
+    fixture.pipeline.execute(**fixture.execute_kwargs)
+    queried_ordinals: list[int] = []
+    original_source_indexes = fixture.pipeline._source_indexes
+    original_event_at = fixture.store.event_at
+
+    def counted_source_indexes(ordinal: int):
+        with monkeypatch.context() as scoped:
+
+            def counted_event_at(event_ordinal: int):
+                queried_ordinals.append(event_ordinal)
+                return original_event_at(event_ordinal)
+
+            scoped.setattr(fixture.store, "event_at", counted_event_at)
+            return original_source_indexes(ordinal)
+
+    monkeypatch.setattr(fixture.pipeline, "_source_indexes", counted_source_indexes)
+
+    outcome = fixture.pipeline.execute(**fixture.execute_kwargs)
+
+    assert outcome.lifecycle.state == "committed"
+    assert 0 not in queried_ordinals
 
 
 def test_landed_success_rebuilds_commit_from_storage_without_adapter_resend(
@@ -522,6 +649,43 @@ def test_timeout_persists_parse_not_applicable_and_leaves_research_state_unchang
         fixture.store.parse_evidence(outcome.lifecycle.attempt.attempt_id),
         ParseNotApplicableEvidence,
     )
+    assert fixture.store.terminal_failure_evidence() is not None
+    assert (
+        fixture.store.private_state(agent_id),
+        fixture.store.latest_public_pointer(agent_id),
+        fixture.store.feed_cursor(agent_id),
+    ) == before
+
+
+def test_malformed_response_persists_typed_parse_failure_without_state_change(
+    tmp_path: Path,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    agent_id = "agent-0000"
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    adapter = MockAdapter(
+        script={event_id: (MockScriptStep.malformed("not-json"),)},
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    before = (
+        fixture.store.private_state(agent_id),
+        fixture.store.latest_public_pointer(agent_id),
+        fixture.store.feed_cursor(agent_id),
+    )
+
+    outcome = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "adapter": adapter,
+            "model_identity": adapter.execution_binding().model_identity,
+        }
+    )
+
+    parse = fixture.store.parse_evidence(outcome.lifecycle.attempt.attempt_id)
+    assert outcome.lifecycle.state == "failed"
+    assert isinstance(parse, ParseEvidence)
+    assert parse.success is False
     assert fixture.store.terminal_failure_evidence() is not None
     assert (
         fixture.store.private_state(agent_id),
