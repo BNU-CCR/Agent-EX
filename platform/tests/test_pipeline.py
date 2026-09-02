@@ -27,6 +27,7 @@ from agent_ex.execution_evidence import (
     MockAttemptPolicyBinding,
     ParseNotApplicableEvidence,
 )
+from agent_ex.engine import AttemptExecutionEvidence, AttemptInvocationResult
 from agent_ex.feed import FeedCursor
 from agent_ex.initialization import assign_initial_reasons, assign_initial_stances
 from agent_ex.network import build_agent_node_mapping, build_shadow_artifact, build_ws_artifact
@@ -436,6 +437,7 @@ def _fixture(
             "http_status": 200,
             "usage": {"prompt_tokens": 3, "completion_tokens": 4, "total_tokens": 7},
             "finish_reason": "stop",
+            "reconciliation": None,
         },
     )
 
@@ -1321,6 +1323,189 @@ def test_reopen_in_progress_without_invocation_requires_explicit_reconciliation(
     assert reopened.store.evidence_references(event_id) == prefix
 
 
+def _crash_after_in_progress(fixture: PipelineFixture, monkeypatch: pytest.MonkeyPatch):
+    original_append = fixture.store.append_attempt
+    original_record_prepared = fixture.store.record_prepared_attempt
+    captured_request = None
+
+    def record_and_capture(*args, **kwargs):
+        nonlocal captured_request
+        captured_request = kwargs["request_evidence"].request
+        return original_record_prepared(*args, **kwargs)
+
+    def append_then_crash(attempt):
+        original_append(attempt)
+        raise RuntimeError("after_in_progress")
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(fixture.store, "record_prepared_attempt", record_and_capture)
+        scoped.setattr(fixture.store, "append_attempt", append_then_crash)
+        with pytest.raises(RuntimeError, match="after_in_progress"):
+            fixture.pipeline.execute(**fixture.execute_kwargs)
+    journal = fixture.store.current_event_journal()
+    assert journal.latest_transition is not None
+    request_evidence = fixture.store.adapter_request_evidence(journal.latest_transition.attempt_id)
+    assert request_evidence is not None
+    assert captured_request == request_evidence.request
+    response = fixture.adapter.generate(captured_request)
+    return (
+        journal,
+        request_evidence,
+        captured_request,
+        AttemptInvocationResult(
+            response=response,
+            evidence=AttemptExecutionEvidence(
+                started_at=journal.latest_transition.started_at,
+                finished_at=NOW,
+                http_status=fixture.execute_kwargs["http_status"],
+                provider_metadata=MockEventPipeline._provider_metadata(response),
+                usage=fixture.execute_kwargs["usage"],
+                finish_reason=fixture.execute_kwargs["finish_reason"],
+            ),
+        ),
+    )
+
+
+def test_reopen_in_progress_accepts_exact_public_reconciliation_without_adapter_call(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    journal, request_evidence, _trusted_request, reconciliation = _crash_after_in_progress(
+        fixture, monkeypatch
+    )
+    before = fixture.store.progress
+    reopened = _reopen_fixture(fixture)
+    pipeline_calls = 0
+
+    def fail_if_called(_request):
+        nonlocal pipeline_calls
+        pipeline_calls += 1
+        raise AssertionError("pipeline adapter must not be called during reconciliation")
+
+    monkeypatch.setattr(reopened.adapter, "generate", fail_if_called)
+    outcome = reopened.pipeline.execute(
+        **{**reopened.execute_kwargs, "reconciliation": reconciliation}
+    )
+
+    assert outcome.lifecycle.state == "committed"
+    assert outcome.lifecycle.adapter_invoked is False
+    assert pipeline_calls == 0
+    assert outcome.lifecycle.event_id == journal.event_id
+    assert reopened.store.progress.next_event_ordinal == before.next_event_ordinal + 1
+    assert reopened.store.invocation_evidence(request_evidence.attempt_id) is not None
+    assert reopened.store.parse_evidence(request_evidence.attempt_id) is not None
+    assert reopened.store.event_at(0) is not None
+
+
+@pytest.mark.parametrize("mismatch", ("request", "attempt", "response", "binding"))
+def test_reconciliation_mismatch_is_rejected_atomically_before_evidence_write(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    mismatch: str,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    journal, request_evidence, trusted_request, reconciliation = _crash_after_in_progress(
+        fixture, monkeypatch
+    )
+    if mismatch in {"request", "attempt"}:
+        response = copy.copy(reconciliation.response)
+        object.__setattr__(
+            response,
+            "request_id" if mismatch == "request" else "attempt_id",
+            "forged-request" if mismatch == "request" else "forged-attempt",
+        )
+        reconciliation = AttemptInvocationResult(response, reconciliation.evidence)
+    elif mismatch == "response":
+        evidence = copy.copy(reconciliation.evidence)
+        object.__setattr__(
+            evidence,
+            "provider_metadata",
+            {**dict(evidence.provider_metadata), "adapter_response_hash": "f" * 64},
+        )
+        reconciliation = AttemptInvocationResult(reconciliation.response, evidence)
+    else:
+        different_adapter = MockAdapter(
+            script={journal.event_id: (MockScriptStep.timeout("different binding"),)},
+            mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+            mock_only=True,
+        )
+        response = different_adapter.generate(trusted_request)
+        reconciliation = AttemptInvocationResult(
+            response,
+            replace(
+                reconciliation.evidence,
+                provider_metadata=MockEventPipeline._provider_metadata(response),
+            ),
+        )
+
+    reopened = _reopen_fixture(fixture)
+    before = (
+        reopened.store.progress,
+        reopened.store.evidence_references(journal.event_id),
+        reopened.store.private_state("agent-0000"),
+        reopened.store.latest_public_pointer("agent-0000"),
+        reopened.store.feed_cursor("agent-0000"),
+    )
+    with pytest.raises(ValueError, match="request|attempt|response|bind|invocation"):
+        reopened.pipeline.execute(**{**reopened.execute_kwargs, "reconciliation": reconciliation})
+
+    assert reopened.store.invocation_evidence(request_evidence.attempt_id) is None
+    assert (
+        reopened.store.progress,
+        reopened.store.evidence_references(journal.event_id),
+        reopened.store.private_state("agent-0000"),
+        reopened.store.latest_public_pointer("agent-0000"),
+        reopened.store.feed_cursor("agent-0000"),
+    ) == before
+
+
+def test_reconciliation_is_rejected_outside_unlanded_in_progress_attempt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source_path = tmp_path / "source"
+    fresh_path = tmp_path / "fresh"
+    source_path.mkdir()
+    fresh_path.mkdir()
+    source = _fixture(source_path, exposure="E0")
+    _, _, _, reconciliation = _crash_after_in_progress(source, monkeypatch)
+    fresh = _fixture(fresh_path, exposure="E0")
+    before = fresh.store.progress
+
+    with pytest.raises(ValueError, match="only valid for an existing IN_PROGRESS"):
+        fresh.pipeline.execute(**{**fresh.execute_kwargs, "reconciliation": reconciliation})
+
+    assert fresh.store.progress == before
+    assert fresh.store.current_event_journal().latest_transition is None
+
+
+def test_reconciliation_conflicts_with_already_persisted_invocation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    original_record_finalized = fixture.store.record_finalized_attempt
+
+    def crash_after_invocation(_evidence):
+        raise RuntimeError("after_invocation")
+
+    monkeypatch.setattr(fixture.store, "record_finalized_attempt", crash_after_invocation)
+    with pytest.raises(RuntimeError, match="after_invocation"):
+        fixture.pipeline.execute(**fixture.execute_kwargs)
+    journal = fixture.store.current_event_journal()
+    assert journal.latest_transition is not None
+    persisted = fixture.store.invocation_evidence(journal.latest_transition.attempt_id)
+    assert persisted is not None
+    reconciliation = AttemptInvocationResult(
+        response=persisted.response,
+        evidence=AttemptExecutionEvidence(**dict(persisted.execution_payload)),
+    )
+    monkeypatch.setattr(fixture.store, "record_finalized_attempt", original_record_finalized)
+    reopened = _reopen_fixture(fixture)
+
+    with pytest.raises(ValueError, match="persisted invocation forbids"):
+        reopened.pipeline.execute(**{**reopened.execute_kwargs, "reconciliation": reconciliation})
+    assert reopened.store.parse_evidence(journal.latest_transition.attempt_id) is None
+
+
 @pytest.mark.parametrize(
     "mismatch",
     (
@@ -1535,6 +1720,7 @@ def test_pipeline_has_no_research_or_runtime_parameter_defaults() -> None:
         "http_status",
         "usage",
         "finish_reason",
+        "reconciliation",
     ):
         assert parameters[name].default is inspect.Parameter.empty
 

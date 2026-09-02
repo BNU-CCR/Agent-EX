@@ -85,7 +85,7 @@ def test_empty_sealed_run_builds_deterministic_storage_bound_checkpoint(tmp_path
         second = build_checkpoint(store)
 
         assert first == second
-        assert first.version == "paper1.checkpoint.v3"
+        assert first.version == "paper1.checkpoint.v4"
         assert first.run_id == run_manifest.run_id
         assert first.protocol_id == run_manifest.protocol_id
         assert first.protocol_version == run_manifest.protocol_version
@@ -237,6 +237,64 @@ def test_checkpoint_rejects_self_consistent_reversal_of_two_event_evidence(
 
     with pytest.raises(ValueError, match="checkpoint|evidence|conflict|ordered"):
         validate_checkpoint(reordered, fixture.store)
+
+
+def _as_legacy_v3_checkpoint(checkpoint: Checkpoint, store: RunStorage) -> Checkpoint:
+    payload = checkpoint.to_payload()
+    body = payload["checkpoint"]
+    body["version"] = "paper1.checkpoint.v3"
+    event_count = min(
+        checkpoint.next_event_ordinal + (checkpoint.next_event_ordinal < checkpoint.schedule_count),
+        checkpoint.schedule_count,
+    )
+    raw_policy_hashes: list[str] = []
+    for ordinal in range(event_count):
+        event_id = derive_event_id(checkpoint.run_id, ordinal)
+        row = store._connection.execute(
+            "SELECT record_hash FROM attempt_policy_evidence WHERE event_id = ?",
+            (event_id,),
+        ).fetchone()
+        if row is not None:
+            raw_policy_hashes.append(row[0])
+    body["v6_evidence_hashes"]["attempt_policy_evidence"] = raw_policy_hashes
+    body["v6_evidence_root"] = canonical_payload_hash(body["v6_evidence_hashes"])
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    return Checkpoint.from_payload(payload)
+
+
+def test_legacy_v3_checkpoint_validates_exact_and_stale_two_event_prefix(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    explicitly_lease_created_checkpoint_stores,
+) -> None:
+    original_create = explicitly_lease_created_checkpoint_stores
+    with monkeypatch.context() as scoped:
+        scoped.setattr(RunStorage, "create", classmethod(original_create))
+        fixture = _fixture(tmp_path, exposure="E2")
+
+    fixture.pipeline.execute(**fixture.execute_kwargs)
+    stale_v3 = _as_legacy_v3_checkpoint(build_checkpoint(fixture.store), fixture.store)
+    fixture.pipeline.execute(**fixture.execute_kwargs)
+    current_v4 = build_checkpoint(fixture.store)
+    current_v3 = _as_legacy_v3_checkpoint(current_v4, fixture.store)
+
+    assert current_v4.version == "paper1.checkpoint.v4"
+    assert current_v3.version == "paper1.checkpoint.v3"
+    assert len(set(current_v4.v6_evidence_hashes["attempt_policy_evidence"])) == 2
+    assert len(set(current_v3.v6_evidence_hashes["attempt_policy_evidence"])) == 1
+    assert validate_checkpoint(stale_v3, fixture.store) == "stale"
+    assert validate_checkpoint(current_v3, fixture.store) == "current"
+
+    payload = current_v3.to_payload()
+    body = payload["checkpoint"]
+    ordered = body["v6_evidence_hashes"]["event_input_evidence"]
+    assert len(ordered) == 2 and ordered[0] != ordered[1]
+    body["v6_evidence_hashes"]["event_input_evidence"] = list(reversed(ordered))
+    body["v6_evidence_root"] = canonical_payload_hash(body["v6_evidence_hashes"])
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    tampered = Checkpoint.from_payload(payload)
+    with pytest.raises(ValueError, match="checkpoint|evidence|conflict|ordered"):
+        validate_checkpoint(tampered, fixture.store)
 
 
 def test_checkpoint_binds_halt_and_explicit_resume_authorization(tmp_path: Path) -> None:
@@ -851,6 +909,7 @@ def test_load_checkpoint_rejects_duplicate_noncanonical_and_hash_tamper(tmp_path
     ("field", "value"),
     [
         ("version", "paper1.checkpoint.v999"),
+        ("version", "paper1.checkpoint.v2"),
         ("storage_schema_version", "paper1.run-storage.v999"),
         ("run_id", "run-forged"),
         ("run_spec_hash", "f" * 64),

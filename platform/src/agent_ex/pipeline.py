@@ -176,6 +176,7 @@ class MockEventPipeline:
         http_status: int | None,
         usage: Mapping[str, object],
         finish_reason: str | None,
+        reconciliation: AttemptInvocationResult | None,
     ) -> MockEventPipelineOutcome:
         binding = adapter.execution_binding()
         if dict(model_identity) != dict(binding.model_identity):
@@ -239,6 +240,7 @@ class MockEventPipeline:
                 invoke=invoke,
                 finalize=finalize,
                 build_commit=self._build_commit,
+                reconciliation=reconciliation,
             )
 
         if lifecycle.state == "committed" and lifecycle.event_id is not None:

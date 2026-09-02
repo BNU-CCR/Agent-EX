@@ -33,7 +33,9 @@ from .storage import (
 )
 
 
-_CHECKPOINT_VERSION = "paper1.checkpoint.v3"
+_LEGACY_CHECKPOINT_VERSION = "paper1.checkpoint.v3"
+_CHECKPOINT_VERSION = "paper1.checkpoint.v4"
+_SUPPORTED_CHECKPOINT_VERSIONS = frozenset({_LEGACY_CHECKPOINT_VERSION, _CHECKPOINT_VERSION})
 _MAX_CHECKPOINT_BYTES = 16 * 1024 * 1024
 _MAX_JSON_DEPTH = 32
 
@@ -496,7 +498,7 @@ class Checkpoint:
         _require_sha256("checkpoint_hash", payload["checkpoint_hash"])
         if canonical_payload_hash(body) != payload["checkpoint_hash"]:
             raise ValueError("checkpoint envelope hash does not match body")
-        if body["version"] != _CHECKPOINT_VERSION:
+        if body["version"] not in _SUPPORTED_CHECKPOINT_VERSIONS:
             raise ValueError("checkpoint version is unsupported")
         _require_id("storage_schema_version", body["storage_schema_version"])
         _require_id("run_id", body["run_id"])
@@ -1118,17 +1120,19 @@ def build_checkpoint(storage: RunStorage) -> Checkpoint:
     if not isinstance(storage, RunStorage):
         raise TypeError("storage must be a RunStorage")
     with storage.consistent_read():
-        return _build_checkpoint_snapshot(storage)
+        return _build_checkpoint_snapshot(storage, version=_CHECKPOINT_VERSION)
 
 
-def _build_checkpoint_snapshot(storage: RunStorage) -> Checkpoint:
+def _build_checkpoint_snapshot(storage: RunStorage, *, version: str) -> Checkpoint:
     """Build while the caller pins one authoritative SQLite read snapshot."""
 
+    if version not in _SUPPORTED_CHECKPOINT_VERSIONS:
+        raise ValueError("checkpoint projection version is unsupported")
     binding = storage.binding
     if binding.round0_root is None:
         raise ValueError("checkpoint requires sealed round-0 state")
     progress = storage.progress
-    evidence = storage._recovery_evidence_snapshot()
+    evidence = storage._recovery_evidence_snapshot(checkpoint_version=version)
     private_root = _root(list(evidence["private_states"]))
     public_root = _root(list(evidence["public_stock"]))
     pointer_root = _root(list(evidence["latest_public_pointers"]))
@@ -1157,7 +1161,7 @@ def _build_checkpoint_snapshot(storage: RunStorage) -> Checkpoint:
     assert type(authorization_prefix_payload) is list
     assert type(causal_prefix_payload) is list
     checkpoint = Checkpoint(
-        version=_CHECKPOINT_VERSION,
+        version=version,
         storage_schema_version=binding.schema_version,
         run_id=binding.run_id,
         run_spec_hash=binding.run_spec_hash,
@@ -1232,8 +1236,15 @@ def _validate_checkpoint_snapshot(checkpoint: Checkpoint, storage: RunStorage) -
     if checkpoint.next_event_ordinal > storage.progress.next_event_ordinal:
         raise ValueError("checkpoint is ahead of SQLite storage")
     if checkpoint.next_event_ordinal < storage.progress.next_event_ordinal:
-        evidence = storage._recovery_evidence_snapshot(checkpoint.next_event_ordinal)
-        expected = _build_checkpoint_from_evidence(storage, evidence)
+        evidence = storage._recovery_evidence_snapshot(
+            checkpoint.next_event_ordinal,
+            checkpoint_version=checkpoint.version,
+        )
+        expected = _build_checkpoint_from_evidence(
+            storage,
+            evidence,
+            version=checkpoint.version,
+        )
         if not _is_attempt_prefix(
             checkpoint.current_attempt_prefix,
             evidence["current_attempt_prefix"],  # type: ignore[arg-type]
@@ -1247,7 +1258,7 @@ def _validate_checkpoint_snapshot(checkpoint: Checkpoint, storage: RunStorage) -
         if checkpoint != expected:
             raise ValueError("stale checkpoint conflicts with SQLite history")
         return "stale"
-    current = _build_checkpoint_snapshot(storage)
+    current = _build_checkpoint_snapshot(storage, version=checkpoint.version)
     if checkpoint == current:
         return "current"
     if (
@@ -1492,10 +1503,15 @@ def _is_attempt_prefix(
 
 
 def _build_checkpoint_from_evidence(
-    storage: RunStorage, evidence: Mapping[str, object]
+    storage: RunStorage,
+    evidence: Mapping[str, object],
+    *,
+    version: str,
 ) -> Checkpoint:
     """Build a historical checkpoint projection for stale validation."""
 
+    if version not in _SUPPORTED_CHECKPOINT_VERSIONS:
+        raise ValueError("checkpoint projection version is unsupported")
     binding = storage.binding
     ordinal = evidence["next_event_ordinal"]
     assert type(ordinal) is int
@@ -1557,7 +1573,7 @@ def _build_checkpoint_from_evidence(
     failure_payload = _plain(evidence["terminal_failure"])
     authorization_payload = _plain(evidence["resume_authorization"])
     checkpoint = Checkpoint(
-        version=_CHECKPOINT_VERSION,
+        version=version,
         storage_schema_version=binding.schema_version,
         run_id=binding.run_id,
         run_spec_hash=binding.run_spec_hash,

@@ -3798,10 +3798,16 @@ class RunStorage:
 
     def recovery_evidence(self, next_event_ordinal: int | None = None) -> Mapping[str, object]:
         with self.consistent_read():
-            return self._recovery_evidence_snapshot(next_event_ordinal)
+            return self._recovery_evidence_snapshot(
+                next_event_ordinal,
+                checkpoint_version="paper1.checkpoint.v4",
+            )
 
     def _recovery_evidence_snapshot(
-        self, next_event_ordinal: int | None = None
+        self,
+        next_event_ordinal: int | None = None,
+        *,
+        checkpoint_version: str,
     ) -> Mapping[str, object]:
         """Return a canonical read-only recovery projection after full integrity replay."""
 
@@ -3947,7 +3953,10 @@ class RunStorage:
             and terminal_item.event_ordinal == ordinal
             else None
         )
-        v6_evidence_hashes = self._v6_evidence_hashes_snapshot(ordinal)
+        v6_evidence_hashes = self._v6_evidence_hashes_snapshot(
+            ordinal,
+            checkpoint_version=checkpoint_version,
+        )
         return _freeze_recovery_evidence(
             {
                 "next_event_ordinal": ordinal,
@@ -3976,8 +3985,19 @@ class RunStorage:
             }
         )  # type: ignore[return-value]
 
-    def _v6_evidence_hashes_snapshot(self, ordinal: int) -> dict[str, tuple[str, ...]]:
+    def _v6_evidence_hashes_snapshot(
+        self,
+        ordinal: int,
+        *,
+        checkpoint_version: str,
+    ) -> dict[str, tuple[str, ...]]:
         """Hash ordered v6 row hashes visible to a recovery projection."""
+
+        if checkpoint_version not in {
+            "paper1.checkpoint.v3",
+            "paper1.checkpoint.v4",
+        }:
+            raise ValueError("checkpoint evidence projection version is unsupported")
 
         event_ids = tuple(
             derive_event_id(self.binding.run_id, index)
@@ -4010,7 +4030,10 @@ class RunStorage:
                     if row is not None:
                         selected[table].append(
                             row[0]
-                            if table == "event_input_evidence"
+                            if (
+                                table == "event_input_evidence"
+                                or checkpoint_version == "paper1.checkpoint.v3"
+                            )
                             else canonical_payload_hash(
                                 {"event_id": event_id, "record_hash": row[0]}
                             )
