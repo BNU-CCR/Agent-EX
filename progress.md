@@ -747,3 +747,25 @@
     版本，append-only indexes不会跨旧cursor可见，不复制完整prefix且不占用全局跨run长锁。
     新增`2 passed in 0.61s`，context focused `17 passed in 1.41s`，扩展focused
     `161 passed in 18.74s`，Ruff/format/diff通过；未跑full/coverage、未提交、未推送、未进入4B-8。
+  - 2026-09-02恢复长线执行。Phase 4B-8C-3 Task 8在公开reconciliation与checkpoint
+    version split修复后通过独立规格和质量复核：新checkpoint写v4，legacy v3按历史policy
+    projection验证exact/stale-prefix；公开pipeline必须显式传reconciliation，真实close/open后
+    zero-resend提交。主会话fresh full为`979 passed, 2 skipped in 162.83s`，Ruff/format/pip/diff
+    全绿；提交`705b9a8`已推送，local/upstream一致。
+  - Task 9新建`logs/2026-09-01-phase4b8c3-evidence-pipeline.md`，记录Task 1-8提交边界、
+    五类durable crash prefix、v6/v4/v3边界、失败/重试/篡改证据与4B-9剩余门禁。三路最终
+    release reviewer启动即被workspace credits阻断；未将该日志或整个4B-8误标为最终批准，
+    主会话转入4B-9既有批准边界的详细规划发现。
+  - 依据07-29已批准Phase 4B计划与`D-2026-07-29-21`，完成4B-9详细设计草案
+    `docs/superpowers/specs/2026-09-02-paper1-phase4b9-mock-integration-design.md`和逐任务TDD计划
+    `docs/superpowers/plans/2026-09-02-paper1-phase4b9-mock-integration.md`。设计只新增pure matrix
+    contract、调用既有pipeline的thin run harness和v6只读process audit；N=100完整执行12 cells，
+    N=1000/T=50分为12-cell shape gate与单stress-cell真实50,000-event mock gate。所有B/K/T/
+    stress cell值只存在版本化mock-only/not-frozen fixture，不进入formal默认。两份文档已通过
+    主会话placeholder/diff自检，仍待额度恢复后的独立规格复核；未开始4B-9生产代码。
+  - 子任务额度恢复后补齐Phase 4B-8C-3 Task 9最终三路release gate。独立verification、
+    specification/anti-pattern和code-quality均`APPROVED`、P0/P1/P2无；三路fresh full分别为
+    `979 passed, 2 skipped in 152.89s`、`172.39s`和`166.74s`，Ruff check/format（47 files）、
+    pip check与diff check全绿。保留P3仅为白盒测试私有helper/connection、少量fixture close
+    维护性，以及checkpoint evidence逐点查询需在4B-9真实50,000-event gate测量。4B-8现可
+    标记`complete / independently reviewed`。

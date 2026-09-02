@@ -4,8 +4,9 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
-阶段 4B实施：执行计划已获用户整包批准；4B-0至4B-6均已完成并通过独立审查；
-Phase 4B-7状态为`in_progress / review repairs implemented / pending independent re-review`
+阶段 4B实施：执行计划已获用户整包批准；4B-0至4B-7已完成并通过独立审查；
+4B-8C-3代码、证据日志、979项全量回归及最终验证/规格/质量三路release复核均已完成；
+4B-9详细设计与TDD计划草案已完成主会话自检，等待独立规格复核后开始生产代码。
 
 ## 各阶段
 
@@ -172,7 +173,7 @@ Phase 4B-7状态为`in_progress / review repairs implemented / pending independe
   verification为`PASS`；最终连续fresh全套459 passed in 68.59s，coverage 459 passed in
   218.13s、3922 statements / 566 missed / 86%；B/K仍为显式mock挑战输入，formal值未冻结，
   draft仍含88个`UNRESOLVED[...]`；Phase 4B-7未开始）
-- [ ] Phase 4B-7：实现prompt/parser/mock adapter
+- [x] Phase 4B-7：实现prompt/parser/mock adapter
   （`in_progress / review repairs implemented / pending independent re-review`；前两轮审查的
   prompt/event/exposure、memory、persona、serialization/budget、adapter capability/response
   replay及parser/evidence P1/P2，以及view/response capability、static system和preflight预算均按
@@ -193,15 +194,19 @@ Phase 4B-7状态为`in_progress / review repairs implemented / pending independe
   （2026-08-28并发P2收尾：每context writer lock + 不可变cursor/prefix版本最后发布；prompt与
   metadata只捕获一次版本，无全局长锁或prefix复制。确定性RED后新增2 passed、context 17 passed、
   扩展focused 161 passed；待独立复审，未跑full/coverage、未提交、未推送、未进入4B-8。）
-- [ ] Phase 4B-8：实现SQLite事务存储、严格串行engine与checkpoint/recovery
+- [x] Phase 4B-8：实现SQLite事务存储、严格串行engine与checkpoint/recovery
+  （4B-8A、8B、8C-1、8C-2、8C-3均完成；最终verification/spec/quality三路复核
+  P0-P2均无，三路fresh full分别为`979 passed, 2 skipped`，证据日志完整保留4B-9门禁。）
 - [ ] Phase 4B-9：完成N=20/100/1000 mock集成与交接
+  （详细设计与逐任务TDD计划草案已写入；主会话自检补齐round-0及逐sweep过程证据，
+  不得在4B-9独立规格复核补齐前开始生产代码。）
 - [ ] 实现 Paper 1 机器可读协议和配置
 - [ ] 完成构念与 prompt Phase 0
 - [ ] 完成 mock N=20/100/1000 验证
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
-- **状态：** in_progress（4B-0至4B-6 complete / independently reviewed；4B-7
-  review repairs implemented / pending independent re-review）
+- **状态：** in_progress（4B-0至4B-8 complete / independently reviewed；4B-9 design/plan
+  drafted / pending independent specification review）
 
 ### 阶段 5：正式实验与分析
 - [ ] 完成 N=200/500/1000 的有限规模检验
@@ -249,6 +254,7 @@ Phase 4B-7状态为`in_progress / review repairs implemented / pending independe
 |------|---------|---------|
 | 并行代码/方法审计发生网络断连 | 1 | 保留已完成结果并重试，第二次成功 |
 | OneDrive 结果文件多次读取超时 | 2 | 停止重复读取，使用已成功读取的汇总表、Notebook 代码和 Notion 交接交叉验证 |
+| Task 9三路最终reviewer启动即提示workspace out of credits | 1 | 保留日志为pending并继续安全规划；额度恢复后重派成功，三路均批准且无P0-P2 |
 
 ## 备注
 - 外部页面内容仅进入 `findings.md`，不直接写入本计划。

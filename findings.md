@@ -1103,3 +1103,26 @@
 - 因此Phase 4A应冻结表达过程、校准统计、候选搜索和失败规则，而把潜水比例、Beta
   参数、注意权重sigma/截断等精确数值留给Phase 0过程校准；若无目标相符的经验参照，
   应报告情景参数而非声称经验复原。
+
+## 2026-09-02：Phase 4B-9实施发现
+
+- 已批准的07-29 Phase 4B计划把4B-9限定为mock-only整合与交接：N=20用于快速故障矩阵，
+  N=100运行完整12-cell集成，N=1000用于确定性、复杂度、存储与恢复门禁；正式规模fixture
+  必须生成N=1000/T=50的50,000-event schedule，但不得调用真实模型。
+- 4B-8C-3已经提供单run严格串行pipeline、v6 SQLite、v4 checkpoint与可恢复证据链；4B-9
+  不应新增第二套event loop。合理边界是矩阵编排、mock fixture factory、跨cell审计、过程指标
+  只读导出、规模/恢复harness和交接文档。
+- 跨cell共享项包括population、初始状态/理由、Agent—node mapping、attention/expression、
+  activation/publish schedule；允许差异仅限persona因素块、E0/E1/E2 exposure图及由这些机制
+  产生的后续状态链。审计不能按输出方向选择参数或cell。
+- 仍为`UNRESOLVED[...]`的B/K、timeout/retry、model seed pairing、checkpoint cadence和正式
+  throughput/memory阈值不能在4B-9由coder填默认；mock规模测量只能报告观测值与结构不变量，
+  不能替代Phase 0冻结或宣称正式实验ready。
+- 4B-9需要把两种N=1000证据严格分名：12-cell `shape gate`只证明50,000连续slot与共享制品；
+  `execution gate`必须有至少一条真实逐事件mock pipeline执行，不能用空state checkpoint、
+  schedule-only或批量SQL代替。为控制release成本，N=1000恢复等价可在显式T=1 fixture验证，
+  而50,000-event stress run只执行一次并报告观测资源，不用未冻结阈值判定。
+- 跨不同launch nonce/run ID比较恢复确定性不能直接比较run-dependent checkpoint hash；需要固定
+  schema的comparable semantic projection，仅排除run ID、路径、URI和wall-clock身份字段，同时
+  保留event ordinal、state/feed、request/model-seed/prompt/response/parse和process evidence。
+  调用方不得传任意ignore-fields列表。
