@@ -51,6 +51,7 @@ from agent_ex.storage import (
     RunStorage,
     StorageBinding,
     TerminalFailureEvidence,
+    changed_request_parameter_paths,
 )
 from agent_ex.topic import TopicPackage
 from agent_ex.engine import AttemptExecutionEvidence
@@ -63,6 +64,32 @@ from test_prompt import member, persona_template, population_artifact, topic as 
 SHA_A = "a" * 64
 SHA_B = "b" * 64
 NOW = "2026-08-18T00:00:00+00:00"
+
+
+def test_changed_request_parameter_paths_reports_recursive_leaf_differences() -> None:
+    before = {
+        "sampling": {"temperature": 0.0, "top_p": 1.0},
+        "legacy": {"penalty": 1},
+        "scalar": 1,
+    }
+    after = {
+        "sampling": {
+            "temperature": 0.5,
+            "top_p": 1.0,
+            "new_group": {"weight": 2},
+        },
+        "scalar": 2,
+    }
+
+    assert changed_request_parameter_paths(before, after) == {
+        "request_parameters.sampling.temperature",
+        "request_parameters.sampling.new_group.weight",
+        "request_parameters.legacy.penalty",
+        "request_parameters.scalar",
+    }
+    assert changed_request_parameter_paths(
+        {"sampling": {"temperature": 0.0}}, {"sampling": 0.5}
+    ) == {"request_parameters.sampling"}
 
 
 @pytest.fixture(autouse=True)

@@ -9,10 +9,18 @@ from typing import Mapping
 
 import pytest
 import agent_ex
+import agent_ex.pipeline as pipeline_module
 
 from agent_ex.adapters.mock import MockAdapter, MockScriptStep
 from agent_ex.artifacts import ArtifactEnvelope
-from agent_ex.domain import FrozenSchedule, RunManifest, ScheduleSlot, derive_event_id
+from agent_ex.domain import (
+    FrozenSchedule,
+    RunManifest,
+    ScheduleSlot,
+    canonical_payload_hash,
+    derive_event_id,
+    derive_run_id,
+)
 from agent_ex.execution_evidence import MockAttemptPolicyBinding, ParseNotApplicableEvidence
 from agent_ex.feed import FeedCursor
 from agent_ex.initialization import assign_initial_reasons, assign_initial_stances
@@ -22,7 +30,7 @@ from agent_ex.pipeline import MockEventPipeline, MockEventPipelineOutcome
 from agent_ex.population import build_population_artifact
 from agent_ex.prompt import PromptLimits
 from agent_ex.state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
-from agent_ex.storage import RunStorage
+from agent_ex.storage import RunStorage, changed_request_parameter_paths
 from test_prompt import member, persona_template, topic
 from test_storage import manifest
 
@@ -39,6 +47,7 @@ class PipelineFixture:
     pipeline_kwargs: Mapping[str, object]
     graph: ArtifactEnvelope | None
     mapping: ArtifactEnvelope | None
+    round0: ArtifactEnvelope
 
 
 def _population(size: int):
@@ -136,8 +145,33 @@ def _mapped_neighbors(
 
 
 def _initial_records(
-    *, agent_id: str, exposure_mode: str, exposure_graph_hash: str | None
+    *,
+    round0_record: Mapping[str, object],
+    exposure_mode: str,
+    exposure_graph_hash: str | None,
 ) -> tuple[PrivateUpdate, PrivateState, PublicPost, LatestPublicPointer, FeedCursor]:
+    agent_id = round0_record["agent_id"]
+    private_state = round0_record["private_state"]
+    public_record = round0_record["public_post"]
+    if not isinstance(agent_id, str):
+        raise TypeError("round-zero agent_id must be text")
+    if not isinstance(private_state, Mapping) or not isinstance(public_record, Mapping):
+        raise TypeError("round-zero private/public records must be mappings")
+    stance = private_state.get("stance")
+    if (
+        not isinstance(stance, int)
+        or isinstance(stance, bool)
+        or not 1 <= stance <= len(topic().stance_labels)
+        or public_record.get("stance") != stance
+    ):
+        raise ValueError("round-zero stance must map to one topic label")
+    private_reason = private_state.get("reason")
+    if (
+        not isinstance(private_reason, str)
+        or public_record.get("public_reason") != private_reason
+        or public_record.get("published") is not True
+    ):
+        raise ValueError("round-zero private/public reason evidence must agree")
     initial = PrivateUpdate.create(
         topic_package=topic(),
         matched_seed=17,
@@ -145,10 +179,10 @@ def _initial_records(
         event_id=None,
         event_ordinal=None,
         sequence_index=0,
-        stance_label="label-1",
-        reason=f"round-zero-public-reason-{agent_id}",
+        stance_label=topic().stance_labels[stance - 1],
+        reason=private_reason,
         confidence=None,
-        published=True,
+        published=public_record["published"],
         source_attempt_id=None,
         mock_only=True,
     )
@@ -165,8 +199,27 @@ def _initial_records(
     return initial, state, post, pointer, cursor
 
 
+def _authorize_pipeline_retry(store: RunStorage, *, suffix: str) -> None:
+    failure = store.terminal_failure_evidence()
+    assert failure is not None
+    store.authorize_resume(
+        authorization_id=f"resume-{suffix}",
+        event_id=failure.event_id,
+        previous_terminal_failure_hash=failure.payload_hash,
+        policy_evidence_id=f"retry-{suffix}",
+        policy_evidence_hash="b" * 64,
+        authorized_at=NOW,
+    )
+
+
 def _fixture(
-    tmp_path: Path, *, exposure: str, bind_manifest_model_identity: bool = True
+    tmp_path: Path,
+    *,
+    exposure: str,
+    bind_manifest_model_identity: bool = True,
+    baseline_request_parameters: Mapping[str, object] | None = None,
+    allowed_difference_fields: tuple[str, ...] | None = None,
+    e0_script_steps: tuple[MockScriptStep, ...] | None = None,
 ) -> PipelineFixture:
     if exposure == "E0":
         size = 1
@@ -252,15 +305,28 @@ def _fixture(
         slots=slots,
     )
     run_manifest = manifest(schedule, cell_id=cell_id)
+    if baseline_request_parameters is not None:
+        run_spec = {
+            **dict(run_manifest.run_spec),
+            "request_parameters": dict(baseline_request_parameters),
+        }
+        run_manifest = replace(
+            run_manifest,
+            run_id=derive_run_id(run_spec, run_manifest.matched_seed, run_manifest.launch_nonce),
+            run_spec=run_spec,
+            run_spec_hash=canonical_payload_hash(run_spec),
+        )
     population = _population(size)
     artifacts = {population.artifact_id: population.output_hash}
-    round0 = None
+    round0, stances, reason_library = _round0_artifacts(population)
+    artifacts[round0.artifact_id] = round0.output_hash
+    artifacts[stances.artifact_id] = stances.output_hash
+    artifacts[reason_library.artifact_id] = reason_library.output_hash
     mapping = None
     if graph is not None:
         artifacts[graph.artifact_id] = graph.output_hash
         if source_ws is not None:
             artifacts[source_ws.artifact_id] = source_ws.output_hash
-        round0, stances, reason_library = _round0_artifacts(population)
         mapping = build_agent_node_mapping(
             population_artifact=population,
             round0_initialization_artifact=round0,
@@ -268,15 +334,14 @@ def _fixture(
             matched_seed=17,
             mock_only=True,
         )
-        artifacts[round0.artifact_id] = round0.output_hash
-        artifacts[stances.artifact_id] = stances.output_hash
-        artifacts[reason_library.artifact_id] = reason_library.output_hash
         artifacts[mapping.artifact_id] = mapping.output_hash
         neighbors = _mapped_neighbors(graph, mapping)
     script = {
         derive_event_id(run_manifest.run_id, index): (MockScriptStep.success(payload),)
         for index, payload in enumerate(script_payloads)
     }
+    if exposure == "E0" and e0_script_steps is not None:
+        script = {derive_event_id(run_manifest.run_id, 0): e0_script_steps}
     adapter = MockAdapter(
         script=script,
         mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
@@ -304,11 +369,12 @@ def _fixture(
         expected_exposure_graph_artifact=graph,
         expected_source_ws_artifact=source_ws,
     )
+    round0_by_agent = {record["agent_id"]: record for record in round0.payload["round0_records"]}
     with store.acquire_run_lease():
         for agent_id in store.binding.expected_agent_ids:
             store.initialize_agent(
                 *_initial_records(
-                    agent_id=agent_id,
+                    round0_record=round0_by_agent[agent_id],
                     exposure_mode=exposure_mode,
                     exposure_graph_hash=None if graph is None else graph.output_hash,
                 )
@@ -316,7 +382,11 @@ def _fixture(
         store.seal_initial_state()
     parser_limits, prompt_limits = _limits()
     policy = MockAttemptPolicyBinding.create(
-        allowed_difference_fields=("model_seed", "request_parameters.temperature"),
+        allowed_difference_fields=(
+            ("model_seed", "request_parameters.temperature")
+            if allowed_difference_fields is None
+            else allowed_difference_fields
+        ),
         mock_only=True,
         formal_eligible=False,
     )
@@ -329,7 +399,7 @@ def _fixture(
         "exposure_graph_artifact": graph,
         "source_ws_artifact": source_ws,
         "agent_node_mapping_artifact": mapping,
-        "round0_initialization_artifact": round0,
+        "round0_initialization_artifact": round0 if graph is not None else None,
         "frozen_neighbor_agent_ids": neighbors,
         "clock": lambda: NOW,
     }
@@ -341,6 +411,7 @@ def _fixture(
         pipeline_kwargs=pipeline_kwargs,
         graph=graph,
         mapping=mapping,
+        round0=round0,
         execute_kwargs={
             "feed_capacity": 4,
             "memory_window": 3,
@@ -348,7 +419,11 @@ def _fixture(
             "prompt_limits": prompt_limits,
             "policy": policy,
             "model_identity": adapter.execution_binding().model_identity,
-            "request_parameters": {"temperature": 0.0},
+            "request_parameters": (
+                {"temperature": 0.0}
+                if baseline_request_parameters is None
+                else dict(baseline_request_parameters)
+            ),
             "model_seed": 12345,
             "adapter": adapter,
             "http_status": 200,
@@ -430,11 +505,110 @@ def test_first_attempt_rejects_request_parameter_drift_without_writing_evidence(
     ) == before
 
 
+def test_retry_allows_only_the_policy_bound_nested_temperature_leaf(tmp_path: Path) -> None:
+    baseline = {"sampling": {"temperature": 0.0, "top_p": 1.0}}
+    fixture = _fixture(
+        tmp_path,
+        exposure="E0",
+        baseline_request_parameters=baseline,
+        allowed_difference_fields=(
+            "model_seed",
+            "request_parameters.sampling.temperature",
+        ),
+        e0_script_steps=(
+            MockScriptStep.timeout("retry nested temperature"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "nested retry"}
+            ),
+        ),
+    )
+    failed = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "http_status": None,
+            "usage": {},
+            "finish_reason": None,
+        }
+    )
+    assert failed.lifecycle.state == "failed"
+    with fixture.store.acquire_run_lease():
+        _authorize_pipeline_retry(fixture.store, suffix="pipeline-nested-allowed")
+    retry_parameters = {"sampling": {"temperature": 0.5, "top_p": 1.0}}
+    assert pipeline_module.changed_request_parameter_paths is changed_request_parameter_paths
+    assert changed_request_parameter_paths(baseline, retry_parameters) == {
+        "request_parameters.sampling.temperature"
+    }
+
+    outcome = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "request_parameters": retry_parameters,
+        }
+    )
+
+    assert outcome.lifecycle.state == "committed"
+    assert fixture.store.progress.next_event_ordinal == 1
+
+
+@pytest.mark.parametrize(
+    "retry_parameters",
+    (
+        {"sampling": {"temperature": 0.0, "top_p": 0.9}},
+        {"sampling": 0.5},
+    ),
+)
+def test_retry_rejects_unlisted_nested_or_parent_parameter_changes(
+    tmp_path: Path, retry_parameters: dict[str, object]
+) -> None:
+    baseline = {"sampling": {"temperature": 0.0, "top_p": 1.0}}
+    fixture = _fixture(
+        tmp_path,
+        exposure="E0",
+        baseline_request_parameters=baseline,
+        allowed_difference_fields=(
+            "model_seed",
+            "request_parameters.sampling.temperature",
+        ),
+        e0_script_steps=(
+            MockScriptStep.timeout("reject nested drift"),
+            MockScriptStep.success(
+                {"stance": "label-2", "confidence": 3, "public_reason": "must not run"}
+            ),
+        ),
+    )
+    failed = fixture.pipeline.execute(
+        **{
+            **fixture.execute_kwargs,
+            "http_status": None,
+            "usage": {},
+            "finish_reason": None,
+        }
+    )
+    assert failed.lifecycle.state == "failed"
+    with fixture.store.acquire_run_lease():
+        _authorize_pipeline_retry(fixture.store, suffix="pipeline-nested-rejected")
+
+    with pytest.raises(ValueError, match="request parameters|attempt policy"):
+        fixture.pipeline.execute(
+            **{
+                **fixture.execute_kwargs,
+                "request_parameters": retry_parameters,
+            }
+        )
+
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    assert len(fixture.store.attempts_for_event(event_id)) == 1
+
+
 @pytest.mark.parametrize("drift", ("empty", "self", "out_of_roster", "asymmetric"))
 def test_e2_rejects_neighbor_mapping_that_drifts_from_frozen_graph(
     tmp_path: Path, drift: str
 ) -> None:
     fixture = _fixture(tmp_path, exposure="E2")
+    assert (
+        fixture.store.binding.artifact_hashes[fixture.round0.artifact_id]
+        == fixture.round0.output_hash
+    )
     wrong = dict(fixture.pipeline_kwargs["frozen_neighbor_agent_ids"])
     first = "agent-0000"
     neighbor = wrong[first][0]
@@ -548,6 +722,26 @@ def test_e1_accepts_shadow_neighbors_derived_through_frozen_ws_mapping(
     assert event_input is not None
     assert event_input.exposure_selection.selected
     assert event_input.exposure_selection.exposure_graph_hash == fixture.graph.output_hash
+
+
+def test_sqlite_round_zero_state_matches_the_bound_initialization_artifact(
+    tmp_path: Path,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E2")
+
+    for record in fixture.round0.payload["round0_records"]:
+        agent_id = record["agent_id"]
+        stance = record["private_state"]["stance"]
+        expected_label = topic().stance_labels[stance - 1]
+        state = fixture.store.private_state(agent_id)
+        posts = fixture.store.public_posts_for_agent(agent_id)
+
+        assert state is not None
+        assert state.stance_label == expected_label
+        assert state.reason == record["private_state"]["reason"]
+        assert len(posts) == 1
+        assert posts[0].stance_label == expected_label
+        assert posts[0].public_reason == record["public_post"]["public_reason"]
 
 
 def test_social_prompt_never_contains_neighbor_private_reason_or_confidence(

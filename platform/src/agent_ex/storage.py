@@ -54,6 +54,39 @@ _SQLITE_USER_VERSION = 6
 _SQLITE_SIDECAR_SUFFIXES = ("-wal", "-shm", "-journal")
 
 
+def changed_request_parameter_paths(
+    before: Mapping[str, object],
+    after: Mapping[str, object],
+    prefix: str = "request_parameters",
+) -> set[str]:
+    """Return the recursive leaf paths whose request-parameter values changed."""
+
+    if not isinstance(before, Mapping) or not isinstance(after, Mapping):
+        raise TypeError("request parameter path comparison requires mappings")
+    if not isinstance(prefix, str) or not prefix:
+        raise ValueError("request parameter path prefix must be non-empty text")
+    keys = set(before) | set(after)
+    if any(not isinstance(key, str) or not key for key in keys):
+        raise ValueError("request parameter keys must be non-empty text")
+    missing = object()
+    changed: set[str] = set()
+    for key in keys:
+        path = f"{prefix}.{key}"
+        left = before[key] if key in before else missing
+        right = after[key] if key in after else missing
+        if isinstance(left, Mapping) and isinstance(right, Mapping):
+            changed.update(changed_request_parameter_paths(left, right, path))
+        elif left is missing and isinstance(right, Mapping):
+            nested = changed_request_parameter_paths({}, right, path)
+            changed.update(nested or {path})
+        elif right is missing and isinstance(left, Mapping):
+            nested = changed_request_parameter_paths(left, {}, path)
+            changed.update(nested or {path})
+        elif left != right:
+            changed.add(path)
+    return changed
+
+
 def _quote_sql_identifier(identifier: str) -> str:
     if (
         type(identifier) is not str
@@ -1951,23 +1984,6 @@ class RunStorage:
         ]
         return replayed, entries
 
-    @staticmethod
-    def _changed_request_parameter_paths(
-        before: Mapping[str, object],
-        after: Mapping[str, object],
-        prefix: str = "request_parameters",
-    ) -> set[str]:
-        changed: set[str] = set()
-        for key in set(before) | set(after):
-            path = f"{prefix}.{key}"
-            left = before.get(key, object())
-            right = after.get(key, object())
-            if isinstance(left, Mapping) and isinstance(right, Mapping):
-                changed.update(RunStorage._changed_request_parameter_paths(left, right, path))
-            elif left != right:
-                changed.add(path)
-        return changed
-
     def _insert_or_exact_match_evidence(
         self,
         table: str,
@@ -2162,7 +2178,7 @@ class RunStorage:
             )
             if invariant != current:
                 raise ValueError("retry request changed invariant evidence")
-            changed = self._changed_request_parameter_paths(
+            changed = changed_request_parameter_paths(
                 prior.request_parameters, request_evidence.request_parameters
             )
             if prior.model_seed != request_evidence.model_seed:
@@ -4671,7 +4687,7 @@ class RunStorage:
                 )
                 if invariant != current:
                     raise ValueError("v6 retry request changed invariant evidence")
-                changed = self._changed_request_parameter_paths(
+                changed = changed_request_parameter_paths(
                     prior.request_parameters, request.request_parameters
                 )
                 if prior.model_seed != request.model_seed:

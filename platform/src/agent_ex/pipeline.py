@@ -51,7 +51,12 @@ from .prompt import (
     validate_prompt_run_context,
 )
 from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
-from .storage import EventJournalState, RunStorage, TerminalFailureEvidence
+from .storage import (
+    EventJournalState,
+    RunStorage,
+    TerminalFailureEvidence,
+    changed_request_parameter_paths,
+)
 from .topic import TopicPackage
 from .artifacts import ArtifactEnvelope
 
@@ -738,18 +743,8 @@ class MockEventPipeline:
                     "first-attempt request parameters must exactly match the persisted manifest"
                 )
             return
-        differing_keys = {
-            key
-            for key in set(supplied) | set(self._baseline_request_parameters)
-            if key not in supplied
-            or key not in self._baseline_request_parameters
-            or supplied[key] != self._baseline_request_parameters[key]
-        }
-        unauthorized = {
-            key
-            for key in differing_keys
-            if f"request_parameters.{key}" not in policy.allowed_difference_fields
-        }
+        changed = changed_request_parameter_paths(self._baseline_request_parameters, supplied)
+        unauthorized = changed - set(policy.allowed_difference_fields)
         if unauthorized:
             raise ValueError("retry request parameters differ outside the frozen attempt policy")
 
