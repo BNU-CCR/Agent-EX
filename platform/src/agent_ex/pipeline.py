@@ -48,6 +48,7 @@ from .prompt import (
     ValidatedPromptRunContext,
     advance_validated_prompt_run_context,
     build_prompt_view,
+    rebuild_validated_prompt_run_context,
     validate_prompt_run_context,
 )
 from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
@@ -668,7 +669,8 @@ class MockEventPipeline:
         if self._run_context is not None and self._run_context_ordinal == ordinal:
             return self._run_context
         if self._run_context is not None:
-            raise ValueError("validated prompt context ordinal drifted from storage progress")
+            self._run_context = None
+            self._run_context_ordinal = -1
         baseline_ordinal = self._manifest.next_event_ordinal
         if baseline_ordinal == ordinal:
             self._run_context = validate_prompt_run_context(
@@ -686,17 +688,18 @@ class MockEventPipeline:
             source_attempts_by_id={},
         )
         self._run_context_ordinal = 0
+        succeeded_events: list[GenerationEvent] = []
         for prior in range(ordinal):
             event = events.get(derive_event_id(self._manifest.run_id, prior))
             if event is None:
                 raise ValueError("storage recovery prefix is missing a committed event")
-            event_attempts = {attempt_id: attempts[attempt_id] for attempt_id in event.attempt_ids}
-            self._run_context = advance_validated_prompt_run_context(
-                self._run_context,
-                event=event,
-                source_attempts_by_id=event_attempts,
-            )
-            self._run_context_ordinal = prior + 1
+            succeeded_events.append(event)
+        self._run_context = rebuild_validated_prompt_run_context(
+            initial_context=self._run_context,
+            succeeded_events=tuple(succeeded_events),
+            source_attempts_by_id=attempts,
+        )
+        self._run_context_ordinal = ordinal
         return self._run_context
 
     def _advance_run_context_after_commit(self, event_id: str) -> None:

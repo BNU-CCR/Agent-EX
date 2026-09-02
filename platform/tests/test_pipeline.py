@@ -21,7 +21,11 @@ from agent_ex.domain import (
     derive_event_id,
     derive_run_id,
 )
-from agent_ex.execution_evidence import MockAttemptPolicyBinding, ParseNotApplicableEvidence
+from agent_ex.execution_evidence import (
+    FinalizedAttemptEvidence,
+    MockAttemptPolicyBinding,
+    ParseNotApplicableEvidence,
+)
 from agent_ex.feed import FeedCursor
 from agent_ex.initialization import assign_initial_reasons, assign_initial_stances
 from agent_ex.network import build_agent_node_mapping, build_shadow_artifact, build_ws_artifact
@@ -40,6 +44,7 @@ NOW = "2026-09-01T00:00:00+00:00"
 
 @dataclass(frozen=True, slots=True)
 class PipelineFixture:
+    database_path: Path
     store: RunStorage
     pipeline: MockEventPipeline
     adapter: MockAdapter
@@ -405,6 +410,7 @@ def _fixture(
     }
     pipeline = MockEventPipeline(**pipeline_kwargs)
     return PipelineFixture(
+        database_path=tmp_path / f"pipeline-{exposure}.sqlite",
         store=store,
         pipeline=pipeline,
         adapter=adapter,
@@ -430,6 +436,28 @@ def _fixture(
             "usage": {"prompt_tokens": 3, "completion_tokens": 4, "total_tokens": 7},
             "finish_reason": "stop",
         },
+    )
+
+
+def _reopen_fixture(fixture: PipelineFixture) -> PipelineFixture:
+    binding = fixture.store.binding
+    fixture.store.close()
+    reopened = RunStorage.open(
+        fixture.database_path,
+        manifest=fixture.pipeline_kwargs["manifest"],
+        artifact_hashes=dict(binding.artifact_hashes),
+        expected_agent_ids=binding.expected_agent_ids,
+        expected_exposure_mode=binding.expected_exposure_mode,
+        expected_exposure_graph_hash=binding.expected_exposure_graph_hash,
+        expected_exposure_graph_artifact=fixture.graph,
+        expected_source_ws_artifact=fixture.pipeline_kwargs["source_ws_artifact"],
+    )
+    pipeline_kwargs = {**fixture.pipeline_kwargs, "storage": reopened}
+    return replace(
+        fixture,
+        store=reopened,
+        pipeline=MockEventPipeline(**pipeline_kwargs),
+        pipeline_kwargs=pipeline_kwargs,
     )
 
 
@@ -676,6 +704,10 @@ def test_retry_allows_only_the_policy_bound_nested_temperature_leaf(tmp_path: Pa
         }
     )
     assert failed.lifecycle.state == "failed"
+    assert failed.lifecycle.event_id is not None
+    first_input = fixture.store.event_input_evidence(failed.lifecycle.event_id)
+    assert first_input is not None
+    first_progress = fixture.store.progress
     with fixture.store.acquire_run_lease():
         _authorize_pipeline_retry(fixture.store, suffix="pipeline-nested-allowed")
     retry_parameters = {"sampling": {"temperature": 0.5, "top_p": 1.0}}
@@ -692,6 +724,12 @@ def test_retry_allows_only_the_policy_bound_nested_temperature_leaf(tmp_path: Pa
     )
 
     assert outcome.lifecycle.state == "committed"
+    assert outcome.lifecycle.event_id == failed.lifecycle.event_id
+    assert outcome.evidence.event_input_evidence_hash == first_input.record_hash
+    assert fixture.store.attempts_for_event(failed.lifecycle.event_id)[0].attempt_id == (
+        failed.lifecycle.attempt.attempt_id
+    )
+    assert fixture.store.progress.next_event_ordinal == first_progress.next_event_ordinal + 1
     assert fixture.store.progress.next_event_ordinal == 1
 
 
@@ -1072,6 +1110,222 @@ def test_new_pipeline_recovers_landed_success_after_prior_committed_event(
     assert fixture.store.latest_public_pointer("agent-0000").published_event_ordinal == 1
 
 
+@pytest.mark.parametrize(
+    "crash_point",
+    (
+        "after_pending",
+        "after_invocation",
+        "after_terminal_success",
+        "after_sqlite_commit_before_context",
+    ),
+)
+def test_reopen_resumes_exact_durable_prefix_without_blind_resend(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    crash_point: str,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    adapter_calls = 0
+    original_generate = fixture.adapter.generate
+
+    def counted_generate(request):
+        nonlocal adapter_calls
+        adapter_calls += 1
+        return original_generate(request)
+
+    monkeypatch.setattr(fixture.adapter, "generate", counted_generate)
+    with monkeypatch.context() as scoped:
+        if crash_point == "after_pending":
+            scoped.setattr(
+                fixture.store,
+                "append_attempt",
+                lambda attempt: (_ for _ in ()).throw(RuntimeError(crash_point)),
+            )
+        elif crash_point == "after_invocation":
+            scoped.setattr(
+                fixture.store,
+                "record_finalized_attempt",
+                lambda evidence: (_ for _ in ()).throw(RuntimeError(crash_point)),
+            )
+        elif crash_point == "after_terminal_success":
+            scoped.setattr(
+                fixture.store,
+                "commit_success",
+                lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError(crash_point)),
+            )
+        else:
+            scoped.setattr(
+                fixture.pipeline,
+                "_advance_run_context_after_commit",
+                lambda committed_event_id: (_ for _ in ()).throw(RuntimeError(crash_point)),
+            )
+        with pytest.raises(RuntimeError, match=crash_point):
+            fixture.pipeline.execute(**fixture.execute_kwargs)
+
+    prefix = fixture.store.evidence_references(event_id)
+    calls_before_reopen = adapter_calls
+    reopened = _reopen_fixture(fixture)
+    outcome = reopened.pipeline.execute(**reopened.execute_kwargs)
+
+    assert outcome.lifecycle.state in {"committed", "complete"}
+    assert reopened.store.evidence_references(event_id).event_input_evidence_hash == (
+        prefix.event_input_evidence_hash
+    )
+    assert reopened.store.evidence_references(event_id).request_hash == prefix.request_hash
+    if crash_point == "after_pending":
+        assert adapter_calls == calls_before_reopen + 1
+    else:
+        assert adapter_calls == calls_before_reopen
+
+
+def test_reopen_in_progress_without_invocation_requires_explicit_reconciliation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    adapter_calls = 0
+    original_generate = fixture.adapter.generate
+    original_append = fixture.store.append_attempt
+
+    def counted_generate(request):
+        nonlocal adapter_calls
+        adapter_calls += 1
+        return original_generate(request)
+
+    def append_then_crash(attempt):
+        original_append(attempt)
+        raise RuntimeError("after_in_progress")
+
+    monkeypatch.setattr(fixture.adapter, "generate", counted_generate)
+    with monkeypatch.context() as scoped:
+        scoped.setattr(fixture.store, "append_attempt", append_then_crash)
+        with pytest.raises(RuntimeError, match="after_in_progress"):
+            fixture.pipeline.execute(**fixture.execute_kwargs)
+    prefix = fixture.store.evidence_references(event_id)
+    assert prefix.invocation_evidence_hash is None
+    assert adapter_calls == 0
+
+    reopened = _reopen_fixture(fixture)
+    with pytest.raises(RuntimeError, match="explicit provider reconciliation"):
+        reopened.pipeline.execute(**reopened.execute_kwargs)
+
+    assert adapter_calls == 0
+    assert reopened.store.evidence_references(event_id) == prefix
+
+
+@pytest.mark.parametrize(
+    "mismatch",
+    (
+        "final_request",
+        "terminal_attempt",
+        "terminal_response",
+        "parse_attempt",
+        "parse_request",
+        "parse_response",
+    ),
+)
+def test_mismatched_finalization_is_rejected_atomically_without_partial_write(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    mismatch: str,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    agent_id = "agent-0000"
+    before = (
+        fixture.store.progress,
+        fixture.store.private_state(agent_id),
+        fixture.store.latest_public_pointer(agent_id),
+        fixture.store.feed_cursor(agent_id),
+    )
+    original_finalize = fixture.pipeline._finalize
+
+    def forged_finalize(prepared, result):
+        finalized = original_finalize(prepared, result)
+        forged = copy.copy(finalized)
+        if mismatch == "final_request":
+            object.__setattr__(forged, "request_hash", "f" * 64)
+        elif mismatch.startswith("terminal_"):
+            terminal = copy.copy(finalized.attempt)
+            if mismatch == "terminal_attempt":
+                object.__setattr__(terminal, "attempt_id", "attempt-forged")
+            else:
+                object.__setattr__(terminal, "raw_response", "forged response")
+            object.__setattr__(forged, "attempt", terminal)
+        else:
+            parse = copy.copy(finalized.parse_evidence)
+            if mismatch == "parse_attempt":
+                object.__setattr__(parse, "attempt_id", "attempt-forged")
+            elif mismatch == "parse_request":
+                object.__setattr__(parse, "request_id", "request-forged")
+            else:
+                object.__setattr__(parse, "response_hash", "f" * 64)
+            object.__setattr__(forged, "parse_evidence", parse)
+        assert isinstance(forged, FinalizedAttemptEvidence)
+        return forged
+
+    monkeypatch.setattr(fixture.pipeline, "_finalize", forged_finalize)
+    with pytest.raises(ValueError, match="request|attempt|response|parse|terminal|bind|drift"):
+        fixture.pipeline.execute(**fixture.execute_kwargs)
+
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    journal = fixture.store.current_event_journal()
+    assert journal.resume_state == "in_progress_requires_provider_reconciliation"
+    assert journal.latest_transition is not None
+    attempt_id = journal.latest_transition.attempt_id
+    assert fixture.store.invocation_evidence(attempt_id) is not None
+    assert fixture.store.parse_evidence(attempt_id) is None
+    assert fixture.store.attempts_for_event(event_id) == ()
+    assert (
+        fixture.store.progress,
+        fixture.store.private_state(agent_id),
+        fixture.store.latest_public_pointer(agent_id),
+        fixture.store.feed_cursor(agent_id),
+    ) == before
+
+
+def test_post_commit_context_cache_failure_rebuilds_identical_next_prompt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    uninterrupted_path = tmp_path / "uninterrupted"
+    interrupted_path = tmp_path / "interrupted"
+    uninterrupted_path.mkdir()
+    interrupted_path.mkdir()
+    uninterrupted = _fixture(uninterrupted_path, exposure="E2")
+    uninterrupted.pipeline.execute(**uninterrupted.execute_kwargs)
+    uninterrupted.pipeline.execute(**uninterrupted.execute_kwargs)
+    expected = uninterrupted.store.event_input_evidence(
+        derive_event_id(uninterrupted.store.binding.run_id, 1)
+    )
+    assert expected is not None
+
+    interrupted = _fixture(interrupted_path, exposure="E2")
+    original_advance = interrupted.pipeline._advance_run_context_after_commit
+    with monkeypatch.context() as scoped:
+        scoped.setattr(
+            interrupted.pipeline,
+            "_advance_run_context_after_commit",
+            lambda event_id: (_ for _ in ()).throw(RuntimeError("post-commit-cache")),
+        )
+        with pytest.raises(RuntimeError, match="post-commit-cache"):
+            interrupted.pipeline.execute(**interrupted.execute_kwargs)
+    assert interrupted.store.progress.next_event_ordinal == 1
+
+    monkeypatch.setattr(
+        interrupted.pipeline,
+        "_advance_run_context_after_commit",
+        original_advance,
+    )
+    outcome = interrupted.pipeline.execute(**interrupted.execute_kwargs)
+    actual = interrupted.store.event_input_evidence(
+        derive_event_id(interrupted.store.binding.run_id, 1)
+    )
+
+    assert outcome.lifecycle.state == "committed"
+    assert actual is not None
+    assert actual.prompt_view == expected.prompt_view
+
+
 def test_timeout_persists_parse_not_applicable_and_leaves_research_state_unchanged(
     tmp_path: Path,
 ) -> None:
@@ -1092,6 +1346,7 @@ def test_timeout_persists_parse_not_applicable_and_leaves_research_state_unchang
         "finish_reason": None,
     }
     before = (
+        fixture.store.progress,
         fixture.store.private_state(agent_id),
         fixture.store.latest_public_pointer(agent_id),
         fixture.store.feed_cursor(agent_id),
@@ -1106,6 +1361,7 @@ def test_timeout_persists_parse_not_applicable_and_leaves_research_state_unchang
     )
     assert fixture.store.terminal_failure_evidence() is not None
     assert (
+        fixture.store.progress,
         fixture.store.private_state(agent_id),
         fixture.store.latest_public_pointer(agent_id),
         fixture.store.feed_cursor(agent_id),
@@ -1124,6 +1380,7 @@ def test_malformed_response_persists_typed_parse_failure_without_state_change(
         mock_only=True,
     )
     before = (
+        fixture.store.progress,
         fixture.store.private_state(agent_id),
         fixture.store.latest_public_pointer(agent_id),
         fixture.store.feed_cursor(agent_id),
@@ -1141,8 +1398,15 @@ def test_malformed_response_persists_typed_parse_failure_without_state_change(
     assert outcome.lifecycle.state == "failed"
     assert isinstance(parse, ParseEvidence)
     assert parse.success is False
+    assert parse.raw_response == "not-json"
+    assert parse.error is not None
+    invocation = fixture.store.invocation_evidence(outcome.lifecycle.attempt.attempt_id)
+    assert invocation is not None
+    assert invocation.response.raw_response == "not-json"
+    assert outcome.lifecycle.attempt.raw_response == "not-json"
     assert fixture.store.terminal_failure_evidence() is not None
     assert (
+        fixture.store.progress,
         fixture.store.private_state(agent_id),
         fixture.store.latest_public_pointer(agent_id),
         fixture.store.feed_cursor(agent_id),

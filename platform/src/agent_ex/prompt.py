@@ -476,6 +476,33 @@ def advance_validated_prompt_run_context(
     return context
 
 
+def rebuild_validated_prompt_run_context(
+    *,
+    initial_context: ValidatedPromptRunContext,
+    succeeded_events: Sequence[GenerationEvent],
+    source_attempts_by_id: Mapping[str, GenerationAttempt],
+) -> ValidatedPromptRunContext:
+    """Linearly rebuild a validated context from one complete succeeded prefix."""
+
+    if not isinstance(succeeded_events, Sequence) or isinstance(succeeded_events, (str, bytes)):
+        raise TypeError("succeeded_events must be an ordered sequence")
+    if not isinstance(source_attempts_by_id, Mapping):
+        raise TypeError("source_attempts_by_id must be a mapping")
+    context = initial_context
+    for event in succeeded_events:
+        if not isinstance(event, GenerationEvent):
+            raise TypeError("succeeded_events must contain typed GenerationEvent values")
+        attempts = {
+            attempt_id: source_attempts_by_id[attempt_id] for attempt_id in event.attempt_ids
+        }
+        context = advance_validated_prompt_run_context(
+            context,
+            event=event,
+            source_attempts_by_id=attempts,
+        )
+    return context
+
+
 @dataclass(frozen=True, slots=True)
 class PromptLimits:
     """Caller-supplied mock-only text budgets; these are not formal parameters."""

@@ -2598,6 +2598,12 @@ class RunStorage:
 
         if not isinstance(evidence, FinalizedAttemptEvidence):
             raise TypeError("finalized evidence must be typed FinalizedAttemptEvidence")
+        try:
+            replayed_evidence = FinalizedAttemptEvidence.from_payload(evidence.to_payload())
+        except (TypeError, ValueError) as error:
+            raise ValueError("finalized attempt evidence fails strict typed replay") from error
+        if replayed_evidence != evidence:
+            raise ValueError("finalized evidence drifts from strict typed replay")
         terminal = GenerationAttempt.from_payload(evidence.attempt.to_payload())
         journal = self.current_event_journal()
         invocation = self.invocation_evidence(terminal.attempt_id)

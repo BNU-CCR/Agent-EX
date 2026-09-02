@@ -34,6 +34,7 @@ from agent_ex.prompt import (
     PromptView,
     build_prompt_view,
     render_messages,
+    rebuild_validated_prompt_run_context,
     validate_prompt_run_context,
     validate_prompt_view,
 )
@@ -1375,6 +1376,45 @@ def test_run_context_prefix_commitment_matches_checkpoint_restore_after_advances
 
     assert restored_metadata["run_prefix_hash"] == live_metadata["run_prefix_hash"]
     assert restored_metadata["context_id"] == live_metadata["context_id"]
+
+
+def test_rebuild_run_context_folds_the_complete_succeeded_prefix_linearly() -> None:
+    baseline = lifecycle_manifest(5)
+    initial = validate_prompt_run_context(
+        baseline,
+        source_events_by_id={},
+        source_attempts_by_id={},
+    )
+    events: list[GenerationEvent] = []
+    attempts: dict[str, GenerationAttempt] = {}
+    for ordinal in range(3):
+        event, attempt = source_event_and_attempt(
+            AGENT_ID,
+            ordinal,
+            source_run_id=baseline.run_id,
+            publish_flag=ordinal % 2 == 1,
+        )
+        attempt = replace(attempt, model_seed=800 + ordinal)
+        events.append(event)
+        attempts[attempt.attempt_id] = attempt
+
+    rebuilt = rebuild_validated_prompt_run_context(
+        initial_context=initial,
+        succeeded_events=tuple(events),
+        source_attempts_by_id=attempts,
+    )
+    restored_manifest = lifecycle_manifest_with_succeeded_prefix(baseline, tuple(events))
+    restored = validate_prompt_run_context(
+        restored_manifest,
+        source_events_by_id={event.event_id: event for event in events},
+        source_attempts_by_id=attempts,
+    )
+
+    assert rebuilt is initial
+    assert (
+        prompt_module.validated_prompt_run_context_metadata(rebuilt)["run_prefix_hash"]
+        == prompt_module.validated_prompt_run_context_metadata(restored)["run_prefix_hash"]
+    )
 
 
 def test_run_context_prefix_commitment_changes_for_any_attempt_content_change() -> None:
