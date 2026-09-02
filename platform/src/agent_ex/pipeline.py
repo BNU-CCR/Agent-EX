@@ -9,6 +9,7 @@ from .adapters.base import AdapterRequest, AdapterResponse
 from .adapters.mock import MockAdapter
 from .domain import (
     EventStatus,
+    FrozenSchedule,
     GenerationAttempt,
     GenerationEvent,
     RunManifest,
@@ -35,6 +36,11 @@ from .execution_evidence import (
 )
 from .feed import build_exposure_record, select_unread_feed
 from .memory import build_memory_view
+from .network import (
+    build_agent_node_mapping,
+    validate_shadow_artifact,
+    validate_ws_artifact,
+)
 from .parser import ParserLimits, parse_agent_update
 from .persona import render_persona
 from .prompt import (
@@ -77,21 +83,64 @@ class MockEventPipeline:
         topic_package: TopicPackage,
         persona_template: ArtifactEnvelope,
         population_artifact: ArtifactEnvelope,
+        exposure_graph_artifact: ArtifactEnvelope | None,
+        source_ws_artifact: ArtifactEnvelope | None,
+        agent_node_mapping_artifact: ArtifactEnvelope | None,
+        round0_initialization_artifact: ArtifactEnvelope | None,
         frozen_neighbor_agent_ids: Mapping[str, tuple[str, ...]],
         clock: Callable[[], str],
     ) -> None:
-        if storage.binding.run_id != manifest.run_id:
-            raise ValueError("storage and manifest run identities do not match")
+        if not isinstance(manifest, RunManifest):
+            raise TypeError("manifest must be a typed RunManifest")
+        try:
+            replayed_schedule = FrozenSchedule.from_payload(manifest.schedule.to_payload())
+            replayed_manifest = RunManifest.from_payload(
+                manifest.to_payload(), schedule=replayed_schedule
+            )
+        except (TypeError, ValueError) as error:
+            raise ValueError("manifest or schedule fails strict typed replay") from error
+        if replayed_manifest != manifest:
+            raise ValueError("manifest or schedule drifts from strict typed replay")
+        binding = storage.binding
+        manifest_hash = canonical_payload_hash(manifest.to_payload())
+        if binding.run_id != manifest.run_id or binding.manifest_hash != manifest_hash:
+            raise ValueError("manifest does not exactly match the persisted storage binding")
+        if (
+            binding.schedule_hash != manifest.schedule_hash
+            or binding.schedule_hash != manifest.schedule.schedule_hash
+            or binding.schedule_count != manifest.schedule.count
+        ):
+            raise ValueError("manifest schedule does not match the persisted storage binding")
         if set(frozen_neighbor_agent_ids) != set(storage.binding.expected_agent_ids):
             raise ValueError("frozen neighbor mapping must exactly cover the run population")
+        if (
+            population_artifact.artifact_id not in binding.artifact_hashes
+            or binding.artifact_hashes[population_artifact.artifact_id]
+            != population_artifact.output_hash
+        ):
+            raise ValueError("population artifact is not hash-bound by storage")
+        matched_seed = manifest.matched_seed
+        cell_id = manifest.run_spec.get("cell_id")
+        if not isinstance(cell_id, str):
+            raise ValueError("persisted manifest cell_id must be text")
+        neighbors = self._validate_frozen_neighbors(
+            storage=storage,
+            matched_seed=matched_seed,
+            population_artifact=population_artifact,
+            exposure_graph_artifact=exposure_graph_artifact,
+            source_ws_artifact=source_ws_artifact,
+            agent_node_mapping_artifact=agent_node_mapping_artifact,
+            round0_initialization_artifact=round0_initialization_artifact,
+            frozen_neighbor_agent_ids=frozen_neighbor_agent_ids,
+        )
         self._storage = storage
         self._manifest = manifest
+        self._matched_seed = matched_seed
+        self._cell_id = cell_id
         self._topic_package = topic_package
         self._persona_template = persona_template
         self._population_artifact = population_artifact
-        self._frozen_neighbor_agent_ids = {
-            agent_id: tuple(neighbors) for agent_id, neighbors in frozen_neighbor_agent_ids.items()
-        }
+        self._frozen_neighbor_agent_ids = neighbors
         self._clock = clock
         self._run_context: ValidatedPromptRunContext | None = None
         self._run_context_ordinal = -1
@@ -204,9 +253,9 @@ class MockEventPipeline:
         ordinal = journal.event_ordinal
         if ordinal is None or journal.event_id is None:
             raise ValueError("preparation requires the current journal event")
-        slot = self._manifest.schedule.slots[ordinal]
+        slot = self._storage.schedule_slot(ordinal)
         event = GenerationEvent(
-            run_id=self._manifest.run_id,
+            run_id=self._storage.binding.run_id,
             event_id=journal.event_id,
             event_ordinal=ordinal,
             sweep_index=slot.sweep_index,
@@ -232,7 +281,7 @@ class MockEventPipeline:
             cursor=cursor,
             receiver_event_id=event.event_id,
             receiver_event_ordinal=ordinal,
-            matched_seed=self._manifest.matched_seed,
+            matched_seed=self._matched_seed,
             exposure_mode=self._storage.binding.expected_exposure_mode,
             exposure_graph_hash=self._storage.binding.expected_exposure_graph_hash,
             capacity=feed_capacity,
@@ -244,7 +293,7 @@ class MockEventPipeline:
         memory = build_memory_view(
             private_updates=private_updates,
             topic_package=self._topic_package,
-            matched_seed=self._manifest.matched_seed,
+            matched_seed=self._matched_seed,
             agent_id=slot.agent_id,
             window=memory_window,
             mock_only=True,
@@ -310,8 +359,8 @@ class MockEventPipeline:
             source_events_by_id=prompt_source_events,
             source_attempts_by_id=prompt_source_attempts,
             event=event,
-            matched_seed=self._manifest.matched_seed,
-            cell_id=self._manifest.run_spec["cell_id"],
+            matched_seed=self._matched_seed,
+            cell_id=self._cell_id,
             limits=prompt_limits,
             mock_only=True,
         )
@@ -380,7 +429,7 @@ class MockEventPipeline:
         authorization = self._storage.resume_authorization_evidence()
         return PreparedAttempt(
             authorization=AttemptAuthorization(
-                run_id=self._manifest.run_id,
+                run_id=self._storage.binding.run_id,
                 event_id=event.event_id,
                 event_ordinal=ordinal,
                 attempt_index=journal.next_attempt_index,
@@ -488,7 +537,7 @@ class MockEventPipeline:
 
     def _build_commit(self, terminal: GenerationAttempt) -> SuccessfulEventCommit:
         ordinal = self._storage.progress.next_event_ordinal
-        slot = self._manifest.schedule.slots[ordinal]
+        slot = self._storage.schedule_slot(ordinal)
         event_input = self._storage.event_input_evidence(terminal.event_id)
         if event_input is None:
             raise ValueError("commit reconstruction requires persisted event input evidence")
@@ -501,7 +550,7 @@ class MockEventPipeline:
             raise ValueError("commit receiver private state is missing")
         update = PrivateUpdate.create(
             topic_package=self._topic_package,
-            matched_seed=self._manifest.matched_seed,
+            matched_seed=self._matched_seed,
             agent_id=slot.agent_id,
             event_id=terminal.event_id,
             event_ordinal=ordinal,
@@ -525,7 +574,7 @@ class MockEventPipeline:
         if terminal.attempt_id not in attempt_ids:
             attempt_ids = (*attempt_ids, terminal.attempt_id)
         event = GenerationEvent(
-            run_id=self._manifest.run_id,
+            run_id=self._storage.binding.run_id,
             event_id=terminal.event_id,
             event_ordinal=ordinal,
             sweep_index=slot.sweep_index,
@@ -639,6 +688,130 @@ class MockEventPipeline:
             )
         )
 
+    @staticmethod
+    def _validate_frozen_neighbors(
+        *,
+        storage: RunStorage,
+        matched_seed: int,
+        population_artifact: ArtifactEnvelope,
+        exposure_graph_artifact: ArtifactEnvelope | None,
+        source_ws_artifact: ArtifactEnvelope | None,
+        agent_node_mapping_artifact: ArtifactEnvelope | None,
+        round0_initialization_artifact: ArtifactEnvelope | None,
+        frozen_neighbor_agent_ids: Mapping[str, tuple[str, ...]],
+    ) -> dict[str, tuple[str, ...]]:
+        binding = storage.binding
+        roster = binding.expected_agent_ids
+        mode = binding.expected_exposure_mode
+        supplied = {
+            agent_id: tuple(neighbors) for agent_id, neighbors in frozen_neighbor_agent_ids.items()
+        }
+
+        if mode == "self_history_only":
+            if any(
+                artifact is not None
+                for artifact in (
+                    exposure_graph_artifact,
+                    source_ws_artifact,
+                    agent_node_mapping_artifact,
+                    round0_initialization_artifact,
+                )
+            ):
+                raise ValueError("E0 forbids graph and agent-node mapping artifacts")
+            if binding.expected_exposure_graph_hash is not None or any(supplied.values()):
+                raise ValueError("E0 requires an explicit empty neighbor mapping and no graph")
+            return supplied
+
+        if mode not in {"ws_neighbors", "shuffled_social"}:
+            raise ValueError("pipeline exposure mode is unsupported")
+        if any(
+            artifact is None
+            for artifact in (
+                exposure_graph_artifact,
+                agent_node_mapping_artifact,
+                round0_initialization_artifact,
+            )
+        ):
+            raise ValueError("social exposure requires graph, mapping, and round-0 artifacts")
+        assert exposure_graph_artifact is not None
+        assert agent_node_mapping_artifact is not None
+        assert round0_initialization_artifact is not None
+
+        def require_bound(artifact: ArtifactEnvelope, label: str) -> None:
+            if binding.artifact_hashes.get(artifact.artifact_id) != artifact.output_hash:
+                raise ValueError(f"{label} artifact is not hash-bound by storage")
+
+        require_bound(exposure_graph_artifact, "exposure graph")
+        require_bound(agent_node_mapping_artifact, "agent-node mapping")
+        require_bound(round0_initialization_artifact, "round-0 initialization")
+        if (
+            binding.expected_exposure_graph_hash != exposure_graph_artifact.output_hash
+            or binding.expected_exposure_graph_artifact_id != exposure_graph_artifact.artifact_id
+            or binding.expected_exposure_graph_artifact_type
+            != exposure_graph_artifact.artifact_type
+        ):
+            raise ValueError("exposure graph artifact drifts from the persisted binding")
+
+        if mode == "ws_neighbors":
+            if source_ws_artifact is not None:
+                raise ValueError("E2 uses its exposure WS graph as the position frame")
+            validate_ws_artifact(exposure_graph_artifact)
+            position_graph = exposure_graph_artifact
+        else:
+            if source_ws_artifact is None:
+                raise ValueError("E1 requires the frozen source WS graph artifact")
+            require_bound(source_ws_artifact, "source WS graph")
+            if (
+                binding.expected_source_ws_artifact_hash != source_ws_artifact.output_hash
+                or binding.expected_source_ws_artifact_id != source_ws_artifact.artifact_id
+                or binding.expected_source_ws_artifact_type != source_ws_artifact.artifact_type
+            ):
+                raise ValueError("source WS graph artifact drifts from the persisted binding")
+            validate_shadow_artifact(exposure_graph_artifact, source_ws_artifact)
+            position_graph = source_ws_artifact
+
+        for label, artifact in (
+            ("exposure graph", exposure_graph_artifact),
+            ("position graph", position_graph),
+            ("agent-node mapping", agent_node_mapping_artifact),
+            ("round-0 initialization", round0_initialization_artifact),
+        ):
+            payload = artifact.payload
+            if not isinstance(payload, Mapping) or payload.get("matched_seed") != matched_seed:
+                raise ValueError(f"{label} matched seed drifts from the persisted manifest")
+
+        replayed_mapping = build_agent_node_mapping(
+            population_artifact=population_artifact,
+            round0_initialization_artifact=round0_initialization_artifact,
+            network_artifact=position_graph,
+            matched_seed=matched_seed,
+            mock_only=True,
+        )
+        if agent_node_mapping_artifact != replayed_mapping:
+            raise ValueError("agent-node mapping does not match deterministic artifact replay")
+
+        assignments = agent_node_mapping_artifact.payload.get("assignments")
+        edges = exposure_graph_artifact.payload.get("edges")
+        if not isinstance(assignments, tuple) or not isinstance(edges, tuple):
+            raise ValueError("graph or agent-node mapping payload is malformed")
+        agent_by_node = {
+            assignment["node_id"]: assignment["agent_id"] for assignment in assignments
+        }
+        if set(agent_by_node.values()) != set(roster) or set(agent_by_node) != set(
+            range(len(roster))
+        ):
+            raise ValueError("agent-node mapping does not exactly cover roster and graph nodes")
+        derived: dict[str, set[str]] = {agent_id: set() for agent_id in roster}
+        for left, right in edges:
+            left_agent = agent_by_node[left]
+            right_agent = agent_by_node[right]
+            derived[left_agent].add(right_agent)
+            derived[right_agent].add(left_agent)
+        expected = {agent_id: tuple(sorted(derived[agent_id])) for agent_id in roster}
+        if supplied != expected:
+            raise ValueError("neighbor mapping drifts from the frozen graph and agent-node mapping")
+        return expected
+
     def _population_member(self, agent_id: str) -> Mapping[str, object]:
         members = self._population_artifact.payload.get("members")
         if not isinstance(members, tuple):
@@ -661,10 +834,7 @@ class MockEventPipeline:
         }
 
     def _persona_condition(self) -> tuple[bool, bool]:
-        cell_id = self._manifest.run_spec.get("cell_id")
-        if not isinstance(cell_id, str):
-            raise ValueError("manifest cell_id must be text")
-        pieces = cell_id.split("-")
+        pieces = self._cell_id.split("-")
         if (
             len(pieces) != 4
             or pieces[1] not in {"I0", "I1"}
@@ -686,7 +856,7 @@ class MockEventPipeline:
             "evidence_sequence": len(chain) + 1,
             "previous_evidence_hash": None if not chain else chain[-1].payload_hash,
             "evidence_kind": "failure",
-            "run_id": self._manifest.run_id,
+            "run_id": self._storage.binding.run_id,
             "event_id": terminal.event_id,
             "event_ordinal": self._storage.progress.next_event_ordinal,
             "attempt_id": terminal.attempt_id,

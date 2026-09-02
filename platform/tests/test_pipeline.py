@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import copy
 import inspect
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Mapping
 
@@ -10,10 +11,11 @@ import pytest
 import agent_ex
 
 from agent_ex.adapters.mock import MockAdapter, MockScriptStep
-from agent_ex.domain import FrozenSchedule, ScheduleSlot, derive_event_id
+from agent_ex.artifacts import ArtifactEnvelope
+from agent_ex.domain import FrozenSchedule, RunManifest, ScheduleSlot, derive_event_id
 from agent_ex.execution_evidence import MockAttemptPolicyBinding, ParseNotApplicableEvidence
 from agent_ex.feed import FeedCursor
-from agent_ex.network import build_ws_artifact
+from agent_ex.network import build_agent_node_mapping, build_shadow_artifact, build_ws_artifact
 from agent_ex.parser import ParserLimits
 from agent_ex.pipeline import MockEventPipeline, MockEventPipelineOutcome
 from agent_ex.population import build_population_artifact
@@ -33,6 +35,9 @@ class PipelineFixture:
     pipeline: MockEventPipeline
     adapter: MockAdapter
     execute_kwargs: Mapping[str, object]
+    pipeline_kwargs: Mapping[str, object]
+    graph: ArtifactEnvelope | None
+    mapping: ArtifactEnvelope | None
 
 
 def _population(size: int):
@@ -67,6 +72,41 @@ def _limits() -> tuple[ParserLimits, PromptLimits]:
             mock_only=True,
         ),
     )
+
+
+def _round0_artifact(population: ArtifactEnvelope) -> ArtifactEnvelope:
+    members = population.payload["members"]
+    return ArtifactEnvelope.create(
+        artifact_type="paper1.mock_round0_initialization",
+        schema_version="paper1.artifact-envelope.v1",
+        algorithm_id="paper1.test_round0",
+        algorithm_version="1.0.0",
+        input_hashes={"population": population.output_hash},
+        payload={
+            "matched_seed": 17,
+            "round0_records": tuple({"agent_id": member["agent_id"]} for member in members),
+            "metadata": {"mock_only": True, "research_parameter_status": "not_frozen"},
+        },
+        rng_provenance=(),
+    )
+
+
+def _mapped_neighbors(
+    graph: ArtifactEnvelope, mapping: ArtifactEnvelope
+) -> dict[str, tuple[str, ...]]:
+    agent_by_node = {
+        assignment["node_id"]: assignment["agent_id"]
+        for assignment in mapping.payload["assignments"]
+    }
+    values = {agent_id: set() for agent_id in agent_by_node.values()}
+    for left, right in graph.payload["edges"]:
+        left_agent = agent_by_node[left]
+        right_agent = agent_by_node[right]
+        values[left_agent].add(right_agent)
+        values[right_agent].add(left_agent)
+    return {
+        agent_id: tuple(sorted(agent_neighbors)) for agent_id, agent_neighbors in values.items()
+    }
 
 
 def _initial_records(
@@ -105,6 +145,7 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
         cell_id = "P1-I0-C0-E0"
         exposure_mode = "self_history_only"
         graph = None
+        source_ws = None
         neighbors = {"agent-0000": ()}
         slots = (ScheduleSlot(0, 1, 0, "agent-0000", False),)
         script_payloads = (
@@ -119,6 +160,7 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
         cell_id = "P1-I0-C0-E2"
         exposure_mode = "ws_neighbors"
         graph = build_ws_artifact(n=4, k=2, p=0.05, matched_seed=17, mock_only=True)
+        source_ws = None
         node_neighbors: dict[int, set[int]] = {index: set() for index in range(size)}
         for left, right in graph.payload["edges"]:
             node_neighbors[left].add(right)
@@ -147,6 +189,29 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
                 "public_reason": "receiver-published-update",
             },
         )
+    elif exposure == "E1":
+        size = 40
+        cell_id = "P1-I0-C0-E1"
+        exposure_mode = "shuffled_social"
+        source_ws = build_ws_artifact(n=size, k=4, p=0.05, matched_seed=17, mock_only=True)
+        graph = build_shadow_artifact(
+            source_ws,
+            matched_seed=17,
+            max_attempts=3,
+            trial_budget_per_edge=300,
+            mock_only=True,
+        )
+        neighbors = {f"agent-{index:04d}": () for index in range(size)}
+        slots = tuple(
+            ScheduleSlot(index, 1, index, f"agent-{index:04d}", False) for index in range(size)
+        )
+        script_payloads = (
+            {
+                "stance": "label-2",
+                "confidence": 3,
+                "public_reason": "unused-e1-construction-response",
+            },
+        )
     else:
         raise ValueError("unsupported test exposure")
 
@@ -161,8 +226,23 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
     run_manifest = manifest(schedule, cell_id=cell_id)
     population = _population(size)
     artifacts = {population.artifact_id: population.output_hash}
+    round0 = None
+    mapping = None
     if graph is not None:
         artifacts[graph.artifact_id] = graph.output_hash
+        if source_ws is not None:
+            artifacts[source_ws.artifact_id] = source_ws.output_hash
+        round0 = _round0_artifact(population)
+        mapping = build_agent_node_mapping(
+            population_artifact=population,
+            round0_initialization_artifact=round0,
+            network_artifact=graph if source_ws is None else source_ws,
+            matched_seed=17,
+            mock_only=True,
+        )
+        artifacts[round0.artifact_id] = round0.output_hash
+        artifacts[mapping.artifact_id] = mapping.output_hash
+        neighbors = _mapped_neighbors(graph, mapping)
     store = RunStorage.create(
         tmp_path / f"pipeline-{exposure}.sqlite",
         manifest=run_manifest,
@@ -171,6 +251,7 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
         expected_exposure_mode=exposure_mode,
         expected_exposure_graph_hash=None if graph is None else graph.output_hash,
         expected_exposure_graph_artifact=graph,
+        expected_source_ws_artifact=source_ws,
     )
     with store.acquire_run_lease():
         for agent_id in store.binding.expected_agent_ids:
@@ -202,19 +283,27 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
         mock_only=True,
         formal_eligible=False,
     )
-    pipeline = MockEventPipeline(
-        storage=store,
-        manifest=run_manifest,
-        topic_package=topic(),
-        persona_template=persona_template(),
-        population_artifact=population,
-        frozen_neighbor_agent_ids=neighbors,
-        clock=lambda: NOW,
-    )
+    pipeline_kwargs = {
+        "storage": store,
+        "manifest": run_manifest,
+        "topic_package": topic(),
+        "persona_template": persona_template(),
+        "population_artifact": population,
+        "exposure_graph_artifact": graph,
+        "source_ws_artifact": source_ws,
+        "agent_node_mapping_artifact": mapping,
+        "round0_initialization_artifact": round0,
+        "frozen_neighbor_agent_ids": neighbors,
+        "clock": lambda: NOW,
+    }
+    pipeline = MockEventPipeline(**pipeline_kwargs)
     return PipelineFixture(
         store=store,
         pipeline=pipeline,
         adapter=adapter,
+        pipeline_kwargs=pipeline_kwargs,
+        graph=graph,
+        mapping=mapping,
         execute_kwargs={
             "feed_capacity": 4,
             "memory_window": 3,
@@ -230,6 +319,84 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
             "finish_reason": "stop",
         },
     )
+
+
+def test_pipeline_rejects_same_run_id_with_manifest_payload_drift(tmp_path: Path) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    manifest_value = fixture.pipeline_kwargs["manifest"]
+    assert isinstance(manifest_value, RunManifest)
+    drifted = replace(manifest_value, updated_at="2026-09-01T00:00:01+00:00")
+
+    with pytest.raises(ValueError, match="manifest|binding"):
+        MockEventPipeline(**{**fixture.pipeline_kwargs, "manifest": drifted})
+
+
+def test_pipeline_rejects_hash_cached_schedule_slot_drift(tmp_path: Path) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    manifest_value = fixture.pipeline_kwargs["manifest"]
+    assert isinstance(manifest_value, RunManifest)
+    schedule = FrozenSchedule.from_payload(manifest_value.schedule.to_payload())
+    object.__setattr__(
+        schedule,
+        "slots",
+        (ScheduleSlot(0, 1, 0, "agent-foreign", True),),
+    )
+    drifted = replace(manifest_value, schedule=schedule)
+
+    with pytest.raises(ValueError, match="schedule|manifest|binding"):
+        MockEventPipeline(**{**fixture.pipeline_kwargs, "manifest": drifted})
+
+
+@pytest.mark.parametrize("drift", ("empty", "self", "out_of_roster", "asymmetric"))
+def test_e2_rejects_neighbor_mapping_that_drifts_from_frozen_graph(
+    tmp_path: Path, drift: str
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E2")
+    wrong = dict(fixture.pipeline_kwargs["frozen_neighbor_agent_ids"])
+    first = "agent-0000"
+    neighbor = wrong[first][0]
+    if drift == "empty":
+        wrong[first] = ()
+    elif drift == "self":
+        wrong[first] = (first,)
+    elif drift == "out_of_roster":
+        wrong[first] = ("agent-foreign",)
+    else:
+        wrong[neighbor] = tuple(item for item in wrong[neighbor] if item != first)
+
+    with pytest.raises(ValueError, match="neighbor|graph|mapping"):
+        MockEventPipeline(**{**fixture.pipeline_kwargs, "frozen_neighbor_agent_ids": wrong})
+
+
+def test_e2_rejects_hash_drifted_agent_node_mapping_artifact(tmp_path: Path) -> None:
+    fixture = _fixture(tmp_path, exposure="E2")
+    mapping = fixture.mapping
+    assert mapping is not None
+    payload = copy.deepcopy(mapping.to_payload()["payload"])
+    payload["assignments"][0]["node_id"], payload["assignments"][1]["node_id"] = (
+        payload["assignments"][1]["node_id"],
+        payload["assignments"][0]["node_id"],
+    )
+    drifted = ArtifactEnvelope.create(
+        artifact_type=mapping.artifact_type,
+        schema_version=mapping.schema_version,
+        algorithm_id=mapping.algorithm_id,
+        algorithm_version=mapping.algorithm_version,
+        input_hashes=mapping.input_hashes,
+        payload=payload,
+        rng_provenance=mapping.rng_provenance,
+    )
+
+    with pytest.raises(ValueError, match="hash-bound|mapping"):
+        MockEventPipeline(**{**fixture.pipeline_kwargs, "agent_node_mapping_artifact": drifted})
+
+
+def test_e0_rejects_nonempty_neighbors_or_network_artifacts(tmp_path: Path) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    wrong = {"agent-0000": ("agent-0000",)}
+
+    with pytest.raises(ValueError, match="E0|self|neighbor|graph"):
+        MockEventPipeline(**{**fixture.pipeline_kwargs, "frozen_neighbor_agent_ids": wrong})
 
 
 def test_e0_mock_pipeline_records_explicit_empty_feed_and_commits(tmp_path: Path) -> None:
@@ -275,6 +442,15 @@ def test_e2_mock_pipeline_persists_complete_chain_and_commits_publish_false_true
     assert pointer.published_event_ordinal == 1
 
 
+def test_e1_accepts_shadow_neighbors_derived_through_frozen_ws_mapping(
+    tmp_path: Path,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E1")
+
+    assert fixture.store.binding.expected_exposure_mode == "shuffled_social"
+    assert fixture.pipeline is not None
+
+
 def test_social_prompt_never_contains_neighbor_private_reason_or_confidence(
     tmp_path: Path,
 ) -> None:
@@ -305,6 +481,7 @@ def test_landed_success_rebuilds_commit_from_storage_without_adapter_resend(
         with pytest.raises(RuntimeError, match="after-finalize"):
             fixture.pipeline.execute(**fixture.execute_kwargs)
 
+    monkeypatch.setattr(fixture.pipeline, "_manifest", object())
     outcome = fixture.pipeline.execute(**fixture.execute_kwargs)
 
     assert fixture.store.commit_success == original
