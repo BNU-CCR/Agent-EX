@@ -1126,3 +1126,14 @@
   schema的comparable semantic projection，仅排除run ID、路径、URI和wall-clock身份字段，同时
   保留event ordinal、state/feed、request/model-seed/prompt/response/parse和process evidence。
   调用方不得传任意ignore-fields列表。
+- 既有pipeline的clock消费是恢复正确性的一部分而非任意测试细节：fresh/retry/pending-resume
+  成功消费started+finished，失败另消费failure `recorded_at`；IN_PROGRESS恢复必须先重放已
+  持久化started并沿用typed/persisted finished；landed-success/already-complete不消费clock。
+  因而重开不能简单从“未使用suffix”续接。
+- checkpoint harness必须在调用pipeline前验证ordinal/path一一对应、ordinal唯一严格递增且在
+  `(start,target]`、path唯一，并在完成后核对written-key exact set；直接`dict(zip(...))`会
+  静默吞掉重复ordinal，不能作为fail-closed合同。
+- `release_scale` marker本身不隔离昂贵测试；pytest默认配置必须排除它，整个Phase 4B release中
+  只用一次显式marker覆盖运行真实50,000-event gate，普通full/coverage只验证其余回归。
+- 术语映射证据必须原样绑定Phase 4A.1批准的中文术语，不能把方便机器使用的英文token当成
+  已批准论文术语；ID、canonical payload与hash三者须共同进入过程审计。

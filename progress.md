@@ -769,3 +769,11 @@
     pip check与diff check全绿。保留P3仅为白盒测试私有helper/connection、少量fixture close
     维护性，以及checkpoint evidence逐点查询需在4B-9真实50,000-event gate测量。4B-8现可
     标记`complete / independently reviewed`。
+  - 4B-9设计规格完成三轮独立复核。首轮修正COMPLETE态审计、
+    `exploratory/process_diagnostic`标签、hash-bound版本化术语映射与pipeline独占时钟；
+    第二轮按现有8C-3实现校准fresh/retry/pending、IN_PROGRESS、failure、landed-success和
+    already-complete的精确clock消费；第三轮`APPROVED`且P0-P3均无。
+  - 4B-9实施计划独立复核发现并关闭4项P1与1项P2：checkpoint ordinal/path及written-key
+    exact-cover、run/audit typed composite边界、50,000-event默认排除与唯一显式执行、每个
+    command block的fresh workdir，以及Phase 4A.1中文术语原文映射。复核最终`APPROVED`，
+    P0-P2均无；唯一P3（Task 4 Files漏列可选窄只读`storage.py`）已补齐。尚未开始生产代码。
