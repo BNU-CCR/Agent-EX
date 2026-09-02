@@ -475,6 +475,37 @@ def test_execute_rejects_adapter_identity_drift_from_persisted_manifest(
 
 
 @pytest.mark.parametrize(
+    "baseline_request_parameters",
+    (
+        {"sampling.temperature": 0.0},
+        {"sampling": {"temperature.value": 0.0}},
+        {"sampling": {"": 0.0}},
+        {"sampling": {"   ": 0.0}},
+    ),
+)
+def test_pipeline_rejects_invalid_manifest_request_parameter_paths_at_construction(
+    tmp_path: Path, baseline_request_parameters: dict[str, object]
+) -> None:
+    with pytest.raises(ValueError, match="key|segment|path|request parameter"):
+        _fixture(
+            tmp_path,
+            exposure="E0",
+            baseline_request_parameters=baseline_request_parameters,
+        )
+
+
+def test_pipeline_rejects_non_text_manifest_request_parameter_path(
+    tmp_path: Path,
+) -> None:
+    with pytest.raises(TypeError, match="key|segment|text|JSON-like"):
+        _fixture(
+            tmp_path,
+            exposure="E0",
+            baseline_request_parameters={"sampling": {1: 0.0}},  # type: ignore[dict-item]
+        )
+
+
+@pytest.mark.parametrize(
     "request_parameters",
     ({"temperature": 0.5}, {"temperature": 0.0, "top_p": 0.9}),
 )
@@ -495,6 +526,57 @@ def test_first_attempt_rejects_request_parameter_drift_without_writing_evidence(
         )
 
     event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    assert fixture.store.event_input_evidence(event_id) is None
+    assert fixture.store.attempts_for_event(event_id) == ()
+    assert (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+    ) == before
+
+
+@pytest.mark.parametrize(
+    ("request_parameters", "error_type"),
+    (
+        ({"sampling.temperature": 0.0}, ValueError),
+        ({"sampling": {"temperature.value": 0.0}}, ValueError),
+        ({"sampling": {"   ": 0.0}}, ValueError),
+        ({"sampling": {1: 0.0}}, TypeError),
+    ),
+)
+def test_first_attempt_rejects_invalid_parameter_paths_before_adapter_or_evidence(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    request_parameters: dict[object, object],
+    error_type: type[Exception],
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    before = (
+        fixture.store.progress,
+        fixture.store.private_state("agent-0000"),
+        fixture.store.latest_public_pointer("agent-0000"),
+        fixture.store.feed_cursor("agent-0000"),
+    )
+    adapter_calls = 0
+
+    def fail_if_called(request):
+        nonlocal adapter_calls
+        adapter_calls += 1
+        raise AssertionError(f"adapter called for invalid request: {request.request_id}")
+
+    monkeypatch.setattr(fixture.adapter, "generate", fail_if_called)
+
+    with pytest.raises(error_type, match="key|segment|text|request parameter"):
+        fixture.pipeline.execute(
+            **{
+                **fixture.execute_kwargs,
+                "request_parameters": request_parameters,
+            }
+        )
+
+    assert adapter_calls == 0
     assert fixture.store.event_input_evidence(event_id) is None
     assert fixture.store.attempts_for_event(event_id) == ()
     assert (

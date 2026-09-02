@@ -57,14 +57,20 @@ _SQLITE_SIDECAR_SUFFIXES = ("-wal", "-shm", "-journal")
 def changed_request_parameter_paths(
     before: Mapping[str, object],
     after: Mapping[str, object],
-    prefix: str = "request_parameters",
 ) -> set[str]:
     """Return the recursive leaf paths whose request-parameter values changed."""
 
     if not isinstance(before, Mapping) or not isinstance(after, Mapping):
         raise TypeError("request parameter path comparison requires mappings")
-    if not isinstance(prefix, str) or not prefix:
-        raise ValueError("request parameter path prefix must be non-empty text")
+    return _changed_request_parameter_paths(before, after, prefix="request_parameters")
+
+
+def _changed_request_parameter_paths(
+    before: Mapping[str, object],
+    after: Mapping[str, object],
+    *,
+    prefix: str,
+) -> set[str]:
     keys = set(before) | set(after)
     if any(not isinstance(key, str) for key in keys):
         raise TypeError("request parameter keys must be text path segments")
@@ -79,13 +85,19 @@ def changed_request_parameter_paths(
         left = before[key] if key in before else missing
         right = after[key] if key in after else missing
         if isinstance(left, Mapping) and isinstance(right, Mapping):
-            changed.update(changed_request_parameter_paths(left, right, path))
+            changed.update(_changed_request_parameter_paths(left, right, prefix=path))
         elif left is missing and isinstance(right, Mapping):
-            nested = changed_request_parameter_paths({}, right, path)
+            nested = _changed_request_parameter_paths({}, right, prefix=path)
             changed.update(nested or {path})
         elif right is missing and isinstance(left, Mapping):
-            nested = changed_request_parameter_paths(left, {}, path)
+            nested = _changed_request_parameter_paths(left, {}, prefix=path)
             changed.update(nested or {path})
+        elif isinstance(left, Mapping):
+            _changed_request_parameter_paths(left, left, prefix=path)
+            changed.add(path)
+        elif isinstance(right, Mapping):
+            _changed_request_parameter_paths(right, right, prefix=path)
+            changed.add(path)
         elif left != right:
             changed.add(path)
     return changed
@@ -2084,6 +2096,10 @@ class RunStorage:
         journal = self.current_event_journal()
         slot = self.schedule_slot(journal.event_ordinal)
         request = request_evidence.request
+        changed_request_parameter_paths(
+            request_evidence.request_parameters,
+            request_evidence.request_parameters,
+        )
         if (
             journal.event_id is None
             or journal.event_id != event_input.event_id
@@ -4606,6 +4622,10 @@ class RunStorage:
             policy = self.attempt_policy_evidence(event_id)
             if request is None or event_input is None or policy is None:
                 raise ValueError("v6 request evidence cover is incomplete")
+            changed_request_parameter_paths(
+                request.request_parameters,
+                request.request_parameters,
+            )
             if (
                 request.event_id != event_id
                 or request.attempt_index != attempt_index

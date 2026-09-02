@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import json
 import os
 import shutil
@@ -67,6 +68,11 @@ NOW = "2026-08-18T00:00:00+00:00"
 
 
 def test_changed_request_parameter_paths_reports_recursive_leaf_differences() -> None:
+    signature = inspect.signature(changed_request_parameter_paths)
+    assert tuple(signature.parameters) == ("before", "after")
+    assert all(
+        parameter.default is inspect.Parameter.empty for parameter in signature.parameters.values()
+    )
     before = {
         "sampling": {"temperature": 0.0, "top_p": 1.0},
         "legacy": {"penalty": 1},
@@ -90,6 +96,10 @@ def test_changed_request_parameter_paths_reports_recursive_leaf_differences() ->
     assert changed_request_parameter_paths(
         {"sampling": {"temperature": 0.0}}, {"sampling": 0.5}
     ) == {"request_parameters.sampling"}
+    with pytest.raises(ValueError, match="key|segment|path"):
+        changed_request_parameter_paths({"sampling": {"bad.key": 0.0}}, {"sampling": 0.5})
+    identical = {"sampling": {"temperature": 0.0, "top_p": 1.0}}
+    assert changed_request_parameter_paths(identical, identical) == set()
 
 
 @pytest.mark.parametrize(
@@ -807,6 +817,38 @@ def test_record_prepared_attempt_writes_typed_evidence_and_pending_once(tmp_path
         store.adapter_request_evidence(values["pending"].attempt_id) == values["request_evidence"]
     )
     assert store.attempt_transitions(values["pending"].attempt_id) == (values["pending"],)
+
+
+@pytest.mark.parametrize(
+    "request_parameters",
+    (
+        {"sampling.temperature": 0.0},
+        {"sampling": {"   ": 0.0}},
+    ),
+)
+def test_first_prepared_attempt_rejects_invalid_parameter_paths_without_rows(
+    tmp_path: Path, request_parameters: dict[str, object]
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path, request_parameters=request_parameters)
+
+    with pytest.raises(ValueError, match="key|segment|path|request parameter"):
+        store.record_prepared_attempt(
+            values["event_input"],
+            policy=values["policy"],
+            adapter_binding=values["binding"],
+            request_evidence=values["request_evidence"],
+            pending_attempt=values["pending"],
+        )
+
+    for table in (
+        "event_input_evidence",
+        "attempt_policy_evidence",
+        "adapter_execution_bindings",
+        "adapter_requests",
+        "attempt_transitions",
+    ):
+        count = store._connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
+        assert count == 0
 
 
 @pytest.mark.parametrize(
@@ -1817,6 +1859,32 @@ def test_integrity_rejects_rehashed_request_prompt_limits_drift(tmp_path: Path) 
 
     with pytest.raises(ValueError, match="prompt|binding|drift"):
         store.verify_integrity()
+
+
+def test_reopen_rejects_rehashed_first_request_with_ambiguous_parameter_key(
+    tmp_path: Path,
+) -> None:
+    store, values = prepared_evidence_bundle(tmp_path)
+    land_invocation(store, values)
+    attempt_id = values["pending"].attempt_id
+    row = store._connection.execute(
+        "SELECT payload FROM adapter_requests WHERE attempt_id = ?", (attempt_id,)
+    ).fetchone()
+    payload = json.loads(row[0])
+    request_parameters = {"sampling.temperature": 0.0}
+    payload["request_parameters"] = request_parameters
+    payload["request_parameters_hash"] = canonical_payload_hash(request_parameters)
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    store._connection.execute(
+        "UPDATE adapter_requests SET payload = ?, record_hash = ? WHERE attempt_id = ?",
+        (storage_module._canonical_json(payload), payload["record_hash"], attempt_id),
+    )
+    store._connection.commit()
+
+    with pytest.raises(ValueError, match="key|segment|path|request parameter"):
+        reopen_evidence_store(store, values)
 
 
 @pytest.mark.parametrize(

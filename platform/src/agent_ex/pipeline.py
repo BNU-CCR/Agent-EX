@@ -131,6 +131,8 @@ class MockEventPipeline:
         request_parameters = manifest.run_spec.get("request_parameters")
         if not isinstance(request_parameters, Mapping):
             raise ValueError("persisted manifest request parameters must be a mapping")
+        baseline_request_parameters = dict(request_parameters)
+        changed_request_parameter_paths(baseline_request_parameters, baseline_request_parameters)
         neighbors = self._validate_frozen_neighbors(
             storage=storage,
             matched_seed=matched_seed,
@@ -146,7 +148,7 @@ class MockEventPipeline:
         self._matched_seed = matched_seed
         self._cell_id = cell_id
         self._manifest_model_identity = dict(manifest.model_identity)
-        self._baseline_request_parameters = dict(request_parameters)
+        self._baseline_request_parameters = baseline_request_parameters
         self._topic_package = topic_package
         self._persona_template = persona_template
         self._population_artifact = population_artifact
@@ -737,6 +739,7 @@ class MockEventPipeline:
         policy: MockAttemptPolicyBinding,
     ) -> None:
         supplied = dict(request_parameters)
+        changed_request_parameter_paths(supplied, supplied)
         if journal.next_attempt_index == 1:
             if supplied != self._baseline_request_parameters:
                 raise ValueError(
