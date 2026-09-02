@@ -1,0 +1,717 @@
+"""Mock-only composition of one complete, evidence-backed event lifecycle."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Callable, Mapping
+
+from .adapters.base import AdapterRequest, AdapterResponse
+from .adapters.mock import MockAdapter
+from .domain import (
+    EventStatus,
+    GenerationAttempt,
+    GenerationEvent,
+    RunManifest,
+    canonical_payload_hash,
+    derive_event_id,
+)
+from .engine import (
+    AttemptAuthorization,
+    AttemptExecutionEvidence,
+    AttemptInvocationResult,
+    AttemptOutcome,
+    PreparedAttempt,
+    StrictSerialLifecycleEngine,
+    SuccessfulEventCommit,
+)
+from .execution_evidence import (
+    AdapterRequestEvidence,
+    EventEvidenceReferences,
+    EventInputEvidence,
+    FinalizedAttemptEvidence,
+    MockAdapterExecutionBinding,
+    MockAttemptPolicyBinding,
+    ParseNotApplicableEvidence,
+)
+from .feed import build_exposure_record, select_unread_feed
+from .memory import build_memory_view
+from .parser import ParserLimits, parse_agent_update
+from .persona import render_persona
+from .prompt import (
+    PromptLimits,
+    ValidatedPromptRunContext,
+    advance_validated_prompt_run_context,
+    build_prompt_view,
+    validate_prompt_run_context,
+)
+from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
+from .storage import EventJournalState, RunStorage, TerminalFailureEvidence
+from .topic import TopicPackage
+from .artifacts import ArtifactEnvelope
+
+
+def _plain_json(value: object) -> object:
+    if isinstance(value, Mapping):
+        return {key: _plain_json(item) for key, item in value.items()}
+    if isinstance(value, (tuple, list)):
+        return [_plain_json(item) for item in value]
+    return value
+
+
+@dataclass(frozen=True, slots=True)
+class MockEventPipelineOutcome:
+    """Lifecycle result paired with the persisted evidence-prefix projection."""
+
+    lifecycle: AttemptOutcome
+    evidence: EventEvidenceReferences
+
+
+class MockEventPipeline:
+    """Compose public Phase 4B factories without selecting research defaults."""
+
+    def __init__(
+        self,
+        *,
+        storage: RunStorage,
+        manifest: RunManifest,
+        topic_package: TopicPackage,
+        persona_template: ArtifactEnvelope,
+        population_artifact: ArtifactEnvelope,
+        frozen_neighbor_agent_ids: Mapping[str, tuple[str, ...]],
+        clock: Callable[[], str],
+    ) -> None:
+        if storage.binding.run_id != manifest.run_id:
+            raise ValueError("storage and manifest run identities do not match")
+        if set(frozen_neighbor_agent_ids) != set(storage.binding.expected_agent_ids):
+            raise ValueError("frozen neighbor mapping must exactly cover the run population")
+        self._storage = storage
+        self._manifest = manifest
+        self._topic_package = topic_package
+        self._persona_template = persona_template
+        self._population_artifact = population_artifact
+        self._frozen_neighbor_agent_ids = {
+            agent_id: tuple(neighbors) for agent_id, neighbors in frozen_neighbor_agent_ids.items()
+        }
+        self._clock = clock
+        self._run_context: ValidatedPromptRunContext | None = None
+        self._run_context_ordinal = -1
+
+    def execute(
+        self,
+        *,
+        feed_capacity: int,
+        memory_window: int,
+        parser_limits: ParserLimits,
+        prompt_limits: PromptLimits,
+        policy: MockAttemptPolicyBinding,
+        model_identity: Mapping[str, str],
+        request_parameters: Mapping[str, object],
+        model_seed: int,
+        adapter: MockAdapter,
+        http_status: int | None,
+        usage: Mapping[str, object],
+        finish_reason: str | None,
+    ) -> MockEventPipelineOutcome:
+        binding = adapter.execution_binding()
+        if dict(model_identity) != dict(binding.model_identity):
+            raise ValueError("explicit model identity does not match the mock adapter")
+
+        prepared_by_attempt: dict[str, PreparedAttempt] = {}
+
+        def prepare(journal: EventJournalState) -> PreparedAttempt:
+            value = self._prepare(
+                journal=journal,
+                feed_capacity=feed_capacity,
+                memory_window=memory_window,
+                parser_limits=parser_limits,
+                prompt_limits=prompt_limits,
+                policy=policy,
+                model_identity=model_identity,
+                request_parameters=request_parameters,
+                model_seed=model_seed,
+                adapter_binding=binding,
+            )
+            prepared_by_attempt[value.request.attempt_id] = value
+            return value
+
+        def invoke(request: AdapterRequest) -> AttemptInvocationResult:
+            response = adapter.generate(request)
+            prepared = prepared_by_attempt[request.attempt_id]
+            started_at = prepared.in_progress_attempt.started_at
+            if started_at is None:
+                raise ValueError("in-progress attempt is missing its explicit start time")
+            return AttemptInvocationResult(
+                response=response,
+                evidence=AttemptExecutionEvidence(
+                    started_at=started_at,
+                    finished_at=self._clock(),
+                    http_status=http_status,
+                    provider_metadata=self._provider_metadata(response),
+                    usage=usage,
+                    finish_reason=finish_reason,
+                ),
+            )
+
+        def finalize(
+            prepared: PreparedAttempt, result: AttemptInvocationResult
+        ) -> FinalizedAttemptEvidence:
+            return self._finalize(prepared, result)
+
+        with StrictSerialLifecycleEngine(self._storage) as engine:
+            lifecycle = engine.execute(
+                prepare=prepare,
+                invoke=invoke,
+                finalize=finalize,
+                build_commit=self._build_commit,
+            )
+
+        if lifecycle.state == "committed" and lifecycle.event_id is not None:
+            self._advance_run_context_after_commit(lifecycle.event_id)
+        evidence = (
+            self._storage.evidence_references(lifecycle.event_id)
+            if lifecycle.event_id is not None
+            else EventEvidenceReferences.create(
+                event_input_evidence_id=None,
+                event_input_evidence_hash=None,
+                request_id=None,
+                request_hash=None,
+                invocation_evidence_id=None,
+                invocation_evidence_hash=None,
+                parse_evidence_id=None,
+                parse_evidence_hash=None,
+                terminal_attempt_id=None,
+                terminal_attempt_hash=None,
+                committed_event_id=None,
+                committed_event_hash=None,
+            )
+        )
+        return MockEventPipelineOutcome(lifecycle=lifecycle, evidence=evidence)
+
+    def _prepare(
+        self,
+        *,
+        journal: EventJournalState,
+        feed_capacity: int,
+        memory_window: int,
+        parser_limits: ParserLimits,
+        prompt_limits: PromptLimits,
+        policy: MockAttemptPolicyBinding,
+        model_identity: Mapping[str, str],
+        request_parameters: Mapping[str, object],
+        model_seed: int,
+        adapter_binding: MockAdapterExecutionBinding,
+    ) -> PreparedAttempt:
+        ordinal = journal.event_ordinal
+        if ordinal is None or journal.event_id is None:
+            raise ValueError("preparation requires the current journal event")
+        slot = self._manifest.schedule.slots[ordinal]
+        event = GenerationEvent(
+            run_id=self._manifest.run_id,
+            event_id=journal.event_id,
+            event_ordinal=ordinal,
+            sweep_index=slot.sweep_index,
+            draw_index=slot.draw_index,
+            agent_id=slot.agent_id,
+            publish_flag=slot.publish_flag,
+            exposure_id=f"exposure-{ordinal}",
+            status=EventStatus.PENDING,
+            attempt_ids=(),
+            failure_reason=None,
+        )
+        state = self._storage.private_state(slot.agent_id)
+        cursor = self._storage.feed_cursor(slot.agent_id)
+        if state is None or cursor is None:
+            raise ValueError("receiver state and feed cursor must be initialized")
+        private_updates = self._storage.private_updates_for_agent(slot.agent_id)
+        neighbors = self._frozen_neighbor_agent_ids[slot.agent_id]
+        unread_posts = self._unread_public_posts(neighbors, cursor.last_scanned_event_ordinal)
+        selection = select_unread_feed(
+            unread_public_posts=unread_posts,
+            topic_package=self._topic_package,
+            neighbor_agent_ids=neighbors,
+            cursor=cursor,
+            receiver_event_id=event.event_id,
+            receiver_event_ordinal=ordinal,
+            matched_seed=self._manifest.matched_seed,
+            exposure_mode=self._storage.binding.expected_exposure_mode,
+            exposure_graph_hash=self._storage.binding.expected_exposure_graph_hash,
+            capacity=feed_capacity,
+            mock_only=True,
+        )
+        exposure = build_exposure_record(
+            selection, topic_package=self._topic_package, mock_only=True
+        )
+        memory = build_memory_view(
+            private_updates=private_updates,
+            topic_package=self._topic_package,
+            matched_seed=self._manifest.matched_seed,
+            agent_id=slot.agent_id,
+            window=memory_window,
+            mock_only=True,
+        )
+        member = self._population_member(slot.agent_id)
+        identity_present, continuity_present = self._persona_condition()
+        persona = render_persona(
+            self._persona_template,
+            member,
+            {
+                "identity_present": identity_present,
+                "continuity_present": continuity_present,
+            },
+        )
+        source_events, source_attempts = self._source_indexes(ordinal)
+        context = self._ensure_run_context(ordinal, source_events, source_attempts)
+        public_posts_by_id = {post.post_id: post for post in unread_posts}
+        all_neighbor_updates = {
+            update.update_id: update
+            for neighbor in neighbors
+            for update in self._storage.private_updates_for_agent(neighbor)
+            if update.published
+        }
+        candidate_update_ids = {candidate.source_update_id for candidate in selection.candidates}
+        source_updates_by_id = {
+            update_id: all_neighbor_updates[update_id] for update_id in candidate_update_ids
+        }
+        evidence_event_ids = {
+            update.event_id for update in private_updates if update.event_id is not None
+        } | {
+            candidate.source_event_id
+            for candidate in selection.candidates
+            if candidate.source_event_id is not None
+        }
+        prompt_source_events = {
+            event_id: source_events[event_id] for event_id in evidence_event_ids
+        }
+        evidence_attempt_ids = {
+            attempt_id
+            for event in prompt_source_events.values()
+            for attempt_id in event.attempt_ids
+        }
+        prompt_source_attempts = {
+            attempt_id: source_attempts[attempt_id] for attempt_id in evidence_attempt_ids
+        }
+        prompt = build_prompt_view(
+            run_context=context,
+            topic=self._topic_package,
+            persona=persona,
+            persona_template=self._persona_template,
+            population_artifact=self._population_artifact,
+            population_member=member,
+            private_state=state,
+            private_updates=private_updates,
+            memory=memory,
+            exposure=exposure,
+            exposure_selection=selection,
+            unread_public_posts=unread_posts,
+            neighbor_agent_ids=neighbors,
+            feed_cursor=cursor,
+            public_posts_by_id=public_posts_by_id,
+            source_private_updates_by_id=source_updates_by_id,
+            source_events_by_id=prompt_source_events,
+            source_attempts_by_id=prompt_source_attempts,
+            event=event,
+            matched_seed=self._manifest.matched_seed,
+            cell_id=self._manifest.run_spec["cell_id"],
+            limits=prompt_limits,
+            mock_only=True,
+        )
+        request = AdapterRequest.create(
+            prompt_view=prompt,
+            attempt_index=journal.next_attempt_index,
+            mock_seed=model_seed,
+            mock_only=True,
+        )
+        request_evidence = AdapterRequestEvidence.create(
+            request=request,
+            model_identity=model_identity,
+            request_parameters=request_parameters,
+            model_seed=model_seed,
+            prompt_limits_hash=prompt_limits.record_hash,
+            parser_limits_hash=parser_limits.record_hash,
+            attempt_policy_hash=policy.record_hash,
+            adapter_execution_binding_hash=adapter_binding.record_hash,
+        )
+        event_input = EventInputEvidence.create(
+            exposure_selection=selection,
+            exposure_record=exposure,
+            memory_view=memory,
+            prompt_view=prompt,
+            parser_limits=parser_limits,
+            state_context_hash=canonical_payload_hash(
+                {
+                    "private_state": state.to_payload(),
+                    "private_updates": tuple(item.to_payload() for item in private_updates),
+                    "feed_cursor": cursor.to_payload(),
+                }
+            ),
+            publish_flag=slot.publish_flag,
+        )
+        base = {
+            "attempt_id": request.attempt_id,
+            "event_id": event.event_id,
+            "attempt_index": journal.next_attempt_index,
+            "request_id": request.request_id,
+            "exposure_id": exposure.exposure_id,
+            "rendered_messages": request.rendered_messages,
+            "rendered_prompt_hash": request.rendered_messages_hash,
+            "request_parameters": request_parameters,
+            "request_parameters_hash": canonical_payload_hash(request_parameters),
+            "model_identity": model_identity,
+            "model_identity_hash": canonical_payload_hash(model_identity),
+            "model_seed": model_seed,
+            "provider_request_id": None,
+            "provider_metadata": {},
+            "provider_metadata_hash": canonical_payload_hash({}),
+            "http_status": None,
+            "raw_response": None,
+            "raw_response_hash": None,
+            "parsed_response": None,
+            "parsed_response_hash": None,
+            "usage": {},
+            "usage_hash": canonical_payload_hash({}),
+            "finish_reason": None,
+            "error": None,
+            "finished_at": None,
+        }
+        pending = GenerationAttempt(status=EventStatus.PENDING, started_at=None, **base)
+        in_progress = GenerationAttempt(
+            status=EventStatus.IN_PROGRESS, started_at=self._clock(), **base
+        )
+        authorization = self._storage.resume_authorization_evidence()
+        return PreparedAttempt(
+            authorization=AttemptAuthorization(
+                run_id=self._manifest.run_id,
+                event_id=event.event_id,
+                event_ordinal=ordinal,
+                attempt_index=journal.next_attempt_index,
+                model_seed=model_seed,
+                model_identity=model_identity,
+                model_identity_hash=canonical_payload_hash(model_identity),
+                request_parameters=request_parameters,
+                request_parameters_hash=canonical_payload_hash(request_parameters),
+                resume_authorization_hash=(
+                    authorization.payload_hash
+                    if journal.resume_state == "retry_same_event"
+                    else None
+                ),
+                mock_only=True,
+            ),
+            request=request,
+            pending_attempt=pending,
+            in_progress_attempt=in_progress,
+            context_provenance={
+                "phase": "4B-8C-3",
+                "event_input_evidence_hash": event_input.record_hash,
+            },
+            event_input=event_input,
+            policy=policy,
+            adapter_binding=adapter_binding,
+            request_evidence=request_evidence,
+        )
+
+    def _finalize(
+        self, prepared: PreparedAttempt, result: AttemptInvocationResult
+    ) -> FinalizedAttemptEvidence:
+        response = result.response
+        execution = result.evidence
+        payload = prepared.pending_attempt.to_payload()
+        payload.update(
+            {
+                "provider_request_id": response.provider_request_id,
+                "provider_metadata": _plain_json(execution.provider_metadata),
+                "provider_metadata_hash": canonical_payload_hash(execution.provider_metadata),
+                "http_status": execution.http_status,
+                "usage": _plain_json(execution.usage),
+                "usage_hash": canonical_payload_hash(execution.usage),
+                "finish_reason": execution.finish_reason,
+                "started_at": execution.started_at,
+                "finished_at": execution.finished_at,
+            }
+        )
+        if response.outcome == "timeout":
+            parse = ParseNotApplicableEvidence.create(
+                response=response,
+                parser_limits_hash=prepared.event_input.parser_limits.record_hash,
+            )
+            payload.update(
+                {
+                    "status": EventStatus.FAILED.value,
+                    "raw_response": None,
+                    "raw_response_hash": None,
+                    "parsed_response": None,
+                    "parsed_response_hash": None,
+                    "error": dict(response.error or {}),
+                }
+            )
+            reason = "adapter_timeout"
+        else:
+            parse = parse_agent_update(
+                response,
+                topic_package=self._topic_package,
+                limits=prepared.event_input.parser_limits,
+            )
+            payload["raw_response"] = response.raw_response
+            payload["raw_response_hash"] = response.raw_response_hash
+            if parse.success:
+                if parse.parsed is None:
+                    raise ValueError("successful parse lacks a typed parsed update")
+                parsed = parse.parsed.to_payload()
+                payload.update(
+                    {
+                        "status": EventStatus.SUCCEEDED.value,
+                        "parsed_response": parsed,
+                        "parsed_response_hash": canonical_payload_hash(parsed),
+                        "error": None,
+                    }
+                )
+                reason = None
+            else:
+                payload.update(
+                    {
+                        "status": EventStatus.FAILED.value,
+                        "parsed_response": None,
+                        "parsed_response_hash": None,
+                        "error": dict(parse.error or {}),
+                    }
+                )
+                reason = "parse_failure"
+        terminal = GenerationAttempt.from_payload(payload)
+        failure = (
+            None if reason is None else self._failure_evidence(terminal, prepared.policy, reason)
+        )
+        return FinalizedAttemptEvidence.create(
+            request_hash=prepared.request_evidence.request_hash,
+            attempt=terminal,
+            parse_evidence=parse,
+            terminal_failure_evidence=failure,
+        )
+
+    def _build_commit(self, terminal: GenerationAttempt) -> SuccessfulEventCommit:
+        ordinal = self._storage.progress.next_event_ordinal
+        slot = self._manifest.schedule.slots[ordinal]
+        event_input = self._storage.event_input_evidence(terminal.event_id)
+        if event_input is None:
+            raise ValueError("commit reconstruction requires persisted event input evidence")
+        parsed = terminal.parsed_response
+        if parsed is None:
+            raise ValueError("successful commit requires persisted parsed response")
+        previous_state = self._storage.private_state(slot.agent_id)
+        previous_pointer = self._storage.latest_public_pointer(slot.agent_id)
+        if previous_state is None:
+            raise ValueError("commit receiver private state is missing")
+        update = PrivateUpdate.create(
+            topic_package=self._topic_package,
+            matched_seed=self._manifest.matched_seed,
+            agent_id=slot.agent_id,
+            event_id=terminal.event_id,
+            event_ordinal=ordinal,
+            sequence_index=previous_state.successful_update_count,
+            stance_label=parsed["stance"],
+            reason=parsed["public_reason"],
+            confidence=parsed["confidence"],
+            published=slot.publish_flag,
+            source_attempt_id=terminal.attempt_id,
+            mock_only=True,
+        )
+        state = PrivateState.from_update(update, previous=previous_state, mock_only=True)
+        post = PublicPost.from_private_update(update, mock_only=True) if slot.publish_flag else None
+        pointer = (
+            LatestPublicPointer.from_post(post, previous=previous_pointer, mock_only=True)
+            if post is not None
+            else None
+        )
+        attempts = self._storage.attempts_for_event(terminal.event_id)
+        attempt_ids = tuple(item.attempt_id for item in attempts)
+        if terminal.attempt_id not in attempt_ids:
+            attempt_ids = (*attempt_ids, terminal.attempt_id)
+        event = GenerationEvent(
+            run_id=self._manifest.run_id,
+            event_id=terminal.event_id,
+            event_ordinal=ordinal,
+            sweep_index=slot.sweep_index,
+            draw_index=slot.draw_index,
+            agent_id=slot.agent_id,
+            publish_flag=slot.publish_flag,
+            exposure_id=event_input.exposure_record.exposure_id,
+            status=EventStatus.SUCCEEDED,
+            attempt_ids=attempt_ids,
+            failure_reason=None,
+        )
+        return SuccessfulEventCommit(
+            event=event,
+            private_update=update,
+            private_state=state,
+            feed_cursor=event_input.exposure_selection.cursor_after,
+            public_post=post,
+            latest_public_pointer=pointer,
+        )
+
+    def _source_indexes(
+        self, ordinal: int
+    ) -> tuple[dict[str, GenerationEvent], dict[str, GenerationAttempt]]:
+        events: dict[str, GenerationEvent] = {}
+        attempts: dict[str, GenerationAttempt] = {}
+        for prior in range(ordinal):
+            event = self._storage.event_at(prior)
+            if event is None:
+                raise ValueError("committed event prefix is incomplete")
+            events[event.event_id] = event
+            for attempt in self._storage.attempts_for_event(event.event_id):
+                attempts[attempt.attempt_id] = attempt
+        return events, attempts
+
+    def _ensure_run_context(
+        self,
+        ordinal: int,
+        events: Mapping[str, GenerationEvent],
+        attempts: Mapping[str, GenerationAttempt],
+    ) -> ValidatedPromptRunContext:
+        if self._run_context is not None and self._run_context_ordinal == ordinal:
+            return self._run_context
+        if self._run_context is not None:
+            raise ValueError("validated prompt context ordinal drifted from storage progress")
+        baseline_ordinal = self._manifest.next_event_ordinal
+        if baseline_ordinal == ordinal:
+            self._run_context = validate_prompt_run_context(
+                self._manifest,
+                source_events_by_id=events,
+                source_attempts_by_id=attempts,
+            )
+            self._run_context_ordinal = ordinal
+            return self._run_context
+        if baseline_ordinal != 0:
+            raise ValueError("manifest recovery cursor does not match storage progress")
+        self._run_context = validate_prompt_run_context(
+            self._manifest,
+            source_events_by_id={},
+            source_attempts_by_id={},
+        )
+        self._run_context_ordinal = 0
+        for prior in range(ordinal):
+            event = events.get(derive_event_id(self._manifest.run_id, prior))
+            if event is None:
+                raise ValueError("storage recovery prefix is missing a committed event")
+            event_attempts = {attempt_id: attempts[attempt_id] for attempt_id in event.attempt_ids}
+            self._run_context = advance_validated_prompt_run_context(
+                self._run_context,
+                event=event,
+                source_attempts_by_id=event_attempts,
+            )
+            self._run_context_ordinal = prior + 1
+        return self._run_context
+
+    def _advance_run_context_after_commit(self, event_id: str) -> None:
+        event = self._storage.event_at(self._storage.progress.next_event_ordinal - 1)
+        if event is None or event.event_id != event_id:
+            raise ValueError("committed event cannot be reloaded for prompt context")
+        attempts = {
+            item.attempt_id: item for item in self._storage.attempts_for_event(event.event_id)
+        }
+        if self._run_context is None:
+            return
+        self._run_context = advance_validated_prompt_run_context(
+            self._run_context,
+            event=event,
+            source_attempts_by_id=attempts,
+        )
+        self._run_context_ordinal = event.event_ordinal + 1
+
+    def _unread_public_posts(
+        self, neighbors: tuple[str, ...], last_scanned: int | None
+    ) -> tuple[PublicPost, ...]:
+        posts = tuple(
+            post
+            for neighbor in neighbors
+            for post in self._storage.public_posts_for_agent(neighbor)
+            if last_scanned is None
+            or (
+                post.published_event_ordinal is not None
+                and post.published_event_ordinal > last_scanned
+            )
+        )
+        return tuple(
+            sorted(
+                posts,
+                key=lambda post: (
+                    -1 if post.published_event_ordinal is None else post.published_event_ordinal,
+                    post.post_id,
+                ),
+            )
+        )
+
+    def _population_member(self, agent_id: str) -> Mapping[str, object]:
+        members = self._population_artifact.payload.get("members")
+        if not isinstance(members, tuple):
+            raise ValueError("population artifact members are malformed")
+        matches = tuple(
+            member
+            for member in members
+            if isinstance(member, Mapping) and member.get("agent_id") == agent_id
+        )
+        if len(matches) != 1:
+            raise ValueError("population artifact must contain the receiver exactly once")
+        member = matches[0]
+        fields = member.get("fields")
+        if not isinstance(fields, Mapping):
+            raise ValueError("population member fields are malformed")
+        return {
+            "agent_id": member.get("agent_id"),
+            "donor_id": member.get("donor_id"),
+            "fields": dict(fields),
+        }
+
+    def _persona_condition(self) -> tuple[bool, bool]:
+        cell_id = self._manifest.run_spec.get("cell_id")
+        if not isinstance(cell_id, str):
+            raise ValueError("manifest cell_id must be text")
+        pieces = cell_id.split("-")
+        if (
+            len(pieces) != 4
+            or pieces[1] not in {"I0", "I1"}
+            or pieces[2]
+            not in {
+                "C0",
+                "C1",
+            }
+        ):
+            raise ValueError("manifest cell_id does not encode frozen persona factors")
+        return pieces[1] == "I1", pieces[2] == "C1"
+
+    def _failure_evidence(
+        self, terminal: GenerationAttempt, policy: MockAttemptPolicyBinding, reason: str
+    ) -> TerminalFailureEvidence:
+        chain = self._storage.causal_evidence_prefix()
+        terminal_hash = canonical_payload_hash(terminal.to_payload())
+        values = {
+            "evidence_sequence": len(chain) + 1,
+            "previous_evidence_hash": None if not chain else chain[-1].payload_hash,
+            "evidence_kind": "failure",
+            "run_id": self._manifest.run_id,
+            "event_id": terminal.event_id,
+            "event_ordinal": self._storage.progress.next_event_ordinal,
+            "attempt_id": terminal.attempt_id,
+            "attempt_index": terminal.attempt_index,
+            "terminal_transition_hash": terminal_hash,
+            "terminal_attempt_hash": terminal_hash,
+            "reason": reason,
+            "policy_evidence": {
+                "policy_id": policy.policy_id,
+                "policy_hash": policy.record_hash,
+            },
+            "recorded_at": self._clock(),
+        }
+        return TerminalFailureEvidence(
+            evidence_id="halt-" + canonical_payload_hash(values), **values
+        )
+
+    @staticmethod
+    def _provider_metadata(response: AdapterResponse) -> dict[str, object]:
+        return {
+            "adapter_response_id": response.response_id,
+            "adapter_response_hash": response.record_hash,
+            "adapter_outcome": response.outcome,
+            "adapter_error": None if response.error is None else dict(response.error),
+            "runtime_identity": dict(response.runtime_identity),
+            "runtime_identity_hash": response.runtime_identity_hash,
+            "script_hash": response.script_hash,
+        }

@@ -10,8 +10,8 @@ import pytest
 import agent_ex
 
 from agent_ex.adapters.mock import MockAdapter, MockScriptStep
-from agent_ex.domain import FrozenSchedule, ScheduleSlot
-from agent_ex.execution_evidence import MockAttemptPolicyBinding
+from agent_ex.domain import FrozenSchedule, ScheduleSlot, derive_event_id
+from agent_ex.execution_evidence import MockAttemptPolicyBinding, ParseNotApplicableEvidence
 from agent_ex.feed import FeedCursor
 from agent_ex.network import build_ws_artifact
 from agent_ex.parser import ParserLimits
@@ -172,22 +172,21 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
         expected_exposure_graph_hash=None if graph is None else graph.output_hash,
         expected_exposure_graph_artifact=graph,
     )
-    for agent_id in store.binding.expected_agent_ids:
-        store.initialize_agent(
-            *_initial_records(
-                agent_id=agent_id,
-                exposure_mode=exposure_mode,
-                exposure_graph_hash=None if graph is None else graph.output_hash,
+    with store.acquire_run_lease():
+        for agent_id in store.binding.expected_agent_ids:
+            store.initialize_agent(
+                *_initial_records(
+                    agent_id=agent_id,
+                    exposure_mode=exposure_mode,
+                    exposure_graph_hash=None if graph is None else graph.output_hash,
+                )
             )
-        )
-    store.seal_initial_state()
+        store.seal_initial_state()
     script = {
         f"event-{run_manifest.run_id}-{index}": (MockScriptStep.success(payload),)
         for index, payload in enumerate(script_payloads)
     }
     # Event IDs are hash-derived rather than human-readable.
-    from agent_ex.domain import derive_event_id
-
     script = {
         derive_event_id(run_manifest.run_id, index): (MockScriptStep.success(payload),)
         for index, payload in enumerate(script_payloads)
@@ -217,8 +216,8 @@ def _fixture(tmp_path: Path, *, exposure: str) -> PipelineFixture:
         pipeline=pipeline,
         adapter=adapter,
         execute_kwargs={
-            "feed_capacity": 3,
-            "memory_window": 2,
+            "feed_capacity": 4,
+            "memory_window": 3,
             "parser_limits": parser_limits,
             "prompt_limits": prompt_limits,
             "policy": policy,
@@ -312,6 +311,46 @@ def test_landed_success_rebuilds_commit_from_storage_without_adapter_resend(
     assert outcome.lifecycle.state == "committed"
     assert outcome.lifecycle.adapter_invoked is False
     assert outcome.evidence.committed_event_hash is not None
+
+
+def test_timeout_persists_parse_not_applicable_and_leaves_research_state_unchanged(
+    tmp_path: Path,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    agent_id = "agent-0000"
+    event_id = derive_event_id(fixture.store.binding.run_id, 0)
+    adapter = MockAdapter(
+        script={event_id: (MockScriptStep.timeout("explicit mock timeout"),)},
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    kwargs = {
+        **fixture.execute_kwargs,
+        "adapter": adapter,
+        "model_identity": adapter.execution_binding().model_identity,
+        "http_status": None,
+        "usage": {},
+        "finish_reason": None,
+    }
+    before = (
+        fixture.store.private_state(agent_id),
+        fixture.store.latest_public_pointer(agent_id),
+        fixture.store.feed_cursor(agent_id),
+    )
+
+    outcome = fixture.pipeline.execute(**kwargs)
+
+    assert outcome.lifecycle.state == "failed"
+    assert isinstance(
+        fixture.store.parse_evidence(outcome.lifecycle.attempt.attempt_id),
+        ParseNotApplicableEvidence,
+    )
+    assert fixture.store.terminal_failure_evidence() is not None
+    assert (
+        fixture.store.private_state(agent_id),
+        fixture.store.latest_public_pointer(agent_id),
+        fixture.store.feed_cursor(agent_id),
+    ) == before
 
 
 def test_pipeline_has_no_research_or_runtime_parameter_defaults() -> None:

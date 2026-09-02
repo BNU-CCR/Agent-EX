@@ -1712,6 +1712,8 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "MemoryItem",
         "MemoryView",
         "MockAdapter",
+        "MockEventPipeline",
+        "MockEventPipelineOutcome",
         "MockAdapterExecutionBinding",
         "MockAttemptPolicyBinding",
         "MockScriptStep",

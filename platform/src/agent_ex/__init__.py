@@ -133,6 +133,7 @@ from .storage import (
     StorageProgress,
     TerminalFailureEvidence,
 )
+from .pipeline import MockEventPipeline, MockEventPipelineOutcome
 from .topic import TopicPackage
 
 __all__ = [
@@ -165,6 +166,8 @@ __all__ = [
     "MemoryItem",
     "MemoryView",
     "MockAdapter",
+    "MockEventPipeline",
+    "MockEventPipelineOutcome",
     "MockAdapterExecutionBinding",
     "MockAttemptPolicyBinding",
     "MockScriptStep",
