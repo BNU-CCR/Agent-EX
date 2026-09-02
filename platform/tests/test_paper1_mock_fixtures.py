@@ -4,6 +4,7 @@ from pathlib import Path
 
 from agent_ex.artifacts import ArtifactEnvelope
 from agent_ex.initialization import assign_initial_reasons, assign_initial_stances
+from agent_ex.mock_matrix import load_mock_scale_cases
 from agent_ex.persona import render_persona, validate_persona_factor_diff
 from agent_ex.population import build_population_artifact
 from agent_ex.topic import TopicPackage
@@ -30,10 +31,13 @@ def test_all_paper1_fixture_files_are_explicit_mock_artifact_envelopes() -> None
     for path in fixture_paths:
         assert "mock" in path.name
         artifact = ArtifactEnvelope.from_payload(json.loads(path.read_text(encoding="utf-8")))
-        assert artifact.payload["metadata"] == {
+        expected_metadata = {
             "mock_only": True,
             "research_parameter_status": "not_frozen",
         }
+        if path.name == "mock_scale_cases.artifact.json":
+            expected_metadata["formal_parameter_authority"] = False
+        assert artifact.payload["metadata"] == expected_metadata
         assert ArtifactEnvelope.from_payload(artifact.to_payload()) == artifact
 
 
@@ -47,12 +51,12 @@ def test_topic_fixture_is_a_strict_topic_package_bound_to_reason_library() -> No
 
 def test_scale_fixtures_build_exact_population_and_initialization_artifacts() -> None:
     frame = load_artifact("mock_population_frame.artifact.json")
-    cases = load_artifact("mock_scale_cases.artifact.json")
+    cases = load_mock_scale_cases(load_artifact("mock_scale_cases.artifact.json"))
     frame_payload = frame.to_payload()["payload"]
     reasons = load_artifact("mock_reason_library.artifact.json")
 
-    for case in cases.payload["cases"]:
-        n = case["n"]
+    for case in cases:
+        n = case.population_size
         population = build_population_artifact(
             donors=tuple(frame_payload["donors"]),
             weights=tuple(frame_payload["weight_profiles"][str(n)]),
@@ -79,7 +83,7 @@ def test_scale_fixtures_build_exact_population_and_initialization_artifacts() ->
 
         counts = Counter(item["stance"] for item in initialized.payload["assignments"])
         assert len(population.payload["members"]) == n
-        assert [counts[stance] for stance in range(1, 8)] == list(case["stance_counts"])
+        assert [counts[stance] for stance in range(1, 8)] == list(case.stance_counts)
         assert len({record["reason_id"] for record in round0.payload["round0_records"]}) == n
 
 

@@ -76,6 +76,7 @@ from .network import (
     validate_ws_artifact,
 )
 from .memory import MemoryItem, MemoryView, build_memory_view, validate_memory_view
+from .mock_matrix import MockScaleCase, load_mock_scale_cases
 from .parser import (
     ParseEvidence,
     ParsedAgentUpdate,
@@ -171,6 +172,7 @@ __all__ = [
     "MockAdapterExecutionBinding",
     "MockAttemptPolicyBinding",
     "MockScriptStep",
+    "MockScaleCase",
     "ModelAdapter",
     "ParseEvidence",
     "ParseNotApplicableEvidence",
@@ -222,6 +224,7 @@ __all__ = [
     "execution_projection",
     "load_protocol",
     "load_checkpoint",
+    "load_mock_scale_cases",
     "parse_agent_update",
     "render_human_protocol_summary",
     "reconstruct_event_rng_provenance",

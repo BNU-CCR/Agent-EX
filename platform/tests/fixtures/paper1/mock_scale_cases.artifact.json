@@ -1,5 +1,5 @@
 {
-  "artifact_id": "artifact-7c21c3057c959a2688384b40aca7db194c0fcac84e3595c24bcab68bc98d26f3",
+  "artifact_id": "artifact-e11a96c6950e93fd95ea9a8786e60191f8b764a73a3946262665e11ce25e5e20",
   "artifact_type": "paper1.mock_scale_cases",
   "schema_version": "paper1.artifact-envelope.v1",
   "algorithm_id": "paper1.mock_fixture",
@@ -7,51 +7,61 @@
   "input_hashes": {
     "fixture_source": "4444444444444444444444444444444444444444444444444444444444444444"
   },
-  "output_hash": "c68558b85c44aaa133fb9a08ecd1b0c08bde52113006f3b82a5e008a2becc908",
+  "output_hash": "49a77751df90b9d510e5223f2f044cca69b07b1c760f37dcc7fdd0540db4d280",
   "rng_provenance": [],
   "payload": {
-    "schema_version": "paper1.mock-scale-cases.v1",
+    "schema_version": "paper1.mock-scale-cases.v2",
     "cases": [
       {
-        "n": 20,
-        "stance_counts": [
-          1,
-          2,
-          4,
-          6,
-          4,
-          2,
-          1
-        ]
+        "case_id": "mock-n20-fault-recovery",
+        "population_size": 20,
+        "stance_counts": [1, 2, 4, 6, 4, 2, 1],
+        "integration_sweeps": 2,
+        "recovery_sweeps": 2,
+        "shape_sweeps": 2,
+        "full_matrix_execution": false,
+        "release_execution": false,
+        "stress_cell_id": null,
+        "mock_feed_capacity": 6,
+        "mock_memory_window": 3,
+        "mock_clock_start": "2040-01-01T00:00:00Z",
+        "mock_clock_step_seconds": 1
       },
       {
-        "n": 100,
-        "stance_counts": [
-          5,
-          10,
-          20,
-          30,
-          20,
-          10,
-          5
-        ]
+        "case_id": "mock-n100-full-matrix",
+        "population_size": 100,
+        "stance_counts": [5, 10, 20, 30, 20, 10, 5],
+        "integration_sweeps": 1,
+        "recovery_sweeps": 1,
+        "shape_sweeps": 1,
+        "full_matrix_execution": true,
+        "release_execution": false,
+        "stress_cell_id": null,
+        "mock_feed_capacity": 6,
+        "mock_memory_window": 3,
+        "mock_clock_start": "2040-01-01T00:00:00Z",
+        "mock_clock_step_seconds": 1
       },
       {
-        "n": 1000,
-        "stance_counts": [
-          50,
-          100,
-          200,
-          300,
-          200,
-          100,
-          50
-        ]
+        "case_id": "mock-n1000-release-shape",
+        "population_size": 1000,
+        "stance_counts": [50, 100, 200, 300, 200, 100, 50],
+        "integration_sweeps": 1,
+        "recovery_sweeps": 1,
+        "shape_sweeps": 50,
+        "full_matrix_execution": false,
+        "release_execution": true,
+        "stress_cell_id": "P1-I1-C1-E2",
+        "mock_feed_capacity": 6,
+        "mock_memory_window": 3,
+        "mock_clock_start": "2040-01-01T00:00:00Z",
+        "mock_clock_step_seconds": 1
       }
     ],
     "metadata": {
       "mock_only": true,
-      "research_parameter_status": "not_frozen"
+      "research_parameter_status": "not_frozen",
+      "formal_parameter_authority": false
     }
   }
 }
