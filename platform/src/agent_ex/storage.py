@@ -4008,7 +4008,13 @@ class RunStorage:
                         (event_id,),
                     ).fetchone()
                     if row is not None:
-                        selected[table].append(row[0])
+                        selected[table].append(
+                            row[0]
+                            if table == "event_input_evidence"
+                            else canonical_payload_hash(
+                                {"event_id": event_id, "record_hash": row[0]}
+                            )
+                        )
             request_rows: list[tuple[str, str, str]] = []
             for event_id in event_ids:
                 request_rows.extend(

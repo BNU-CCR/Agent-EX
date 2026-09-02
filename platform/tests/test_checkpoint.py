@@ -45,6 +45,7 @@ from test_storage import (
     successful_event,
     successful_state_records,
 )
+from test_pipeline import _fixture
 
 
 @pytest.fixture(autouse=True)
@@ -59,7 +60,7 @@ def explicitly_lease_created_checkpoint_stores(monkeypatch: pytest.MonkeyPatch):
         return store
 
     monkeypatch.setattr(RunStorage, "create", classmethod(create_with_explicit_lease))
-    yield
+    yield original
 
 
 def _create_sealed_store(path: Path) -> tuple[RunStorage, object, dict[str, str]]:
@@ -190,6 +191,52 @@ def test_checkpoint_rejects_rehashed_reversal_of_ordered_v6_evidence(
 
     with pytest.raises(ValueError, match="checkpoint|evidence|conflict|ordered"):
         validate_checkpoint(reordered, store)
+
+
+@pytest.mark.parametrize(
+    "table",
+    (
+        "event_input_evidence",
+        "attempt_policy_evidence",
+        "adapter_requests",
+        "invocation_evidence",
+        "parse_evidence",
+    ),
+)
+def test_checkpoint_rejects_self_consistent_reversal_of_two_event_evidence(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    explicitly_lease_created_checkpoint_stores,
+    table: str,
+) -> None:
+    original_create = explicitly_lease_created_checkpoint_stores
+    with monkeypatch.context() as scoped:
+        scoped.setattr(RunStorage, "create", classmethod(original_create))
+        fixture = _fixture(tmp_path, exposure="E2")
+    fixture.pipeline.execute(**fixture.execute_kwargs)
+    fixture.pipeline.execute(**fixture.execute_kwargs)
+    checkpoint = build_checkpoint(fixture.store)
+    ordered_tables = (
+        "event_input_evidence",
+        "attempt_policy_evidence",
+        "adapter_requests",
+        "invocation_evidence",
+        "parse_evidence",
+    )
+    assert all(len(checkpoint.v6_evidence_hashes[name]) >= 2 for name in ordered_tables)
+    assert all(len(set(checkpoint.v6_evidence_hashes[name])) >= 2 for name in ordered_tables)
+    assert len(checkpoint.v6_evidence_hashes["adapter_execution_bindings"]) == 1
+
+    payload = checkpoint.to_payload()
+    body = payload["checkpoint"]
+    ordered = body["v6_evidence_hashes"][table]
+    body["v6_evidence_hashes"][table] = list(reversed(ordered))
+    body["v6_evidence_root"] = canonical_payload_hash(body["v6_evidence_hashes"])
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    reordered = Checkpoint.from_payload(payload)
+
+    with pytest.raises(ValueError, match="checkpoint|evidence|conflict|ordered"):
+        validate_checkpoint(reordered, fixture.store)
 
 
 def test_checkpoint_binds_halt_and_explicit_resume_authorization(tmp_path: Path) -> None:
