@@ -9,6 +9,7 @@ import pytest
 
 import agent_ex.mock_run as mock_run_module
 from agent_ex.adapters import MockAdapter, MockScriptStep
+from agent_ex.artifacts import ArtifactEnvelope
 from agent_ex.checkpoint import (
     Checkpoint,
     build_checkpoint,
@@ -16,7 +17,12 @@ from agent_ex.checkpoint import (
     validate_checkpoint,
     write_checkpoint_atomic,
 )
-from agent_ex.domain import derive_event_id
+from agent_ex.domain import canonical_payload_hash, derive_event_id, derive_run_id
+from agent_ex.mock_matrix import (
+    CANONICAL_CELL_IDS,
+    build_mock_matched_seed_matrix,
+    validate_mock_matched_seed_matrix,
+)
 from agent_ex.engine import AttemptExecutionEvidence, AttemptInvocationResult
 from agent_ex.mock_run import MockEventInvocation, MockRunControl, execute_mock_run
 from agent_ex.process_audit import (
@@ -27,12 +33,15 @@ from agent_ex.process_audit import (
     build_mock_comparable_run_projection,
     build_mock_process_audit,
 )
+from agent_ex.persona import render_persona, validate_persona_factor_diff
 from helpers.mock_matrix import (
     BoundMockMatrixCell,
     build_mock_matrix_fixture,
     build_mock_matrix_fixture_with_steps,
     create_mock_matrix_cell,
+    execute_all_cells,
     explicit_success_invocations,
+    open_completed_mock_matrix_cell,
     reopen_mock_matrix_cell,
 )
 
@@ -489,3 +498,270 @@ def test_n20_checkpoint_tamper_fails_closed_without_changing_storage(
 
     assert _research_snapshot(fixture) == before
     fixture.cell.storage.close()
+
+
+def _mapping_keys(value: object) -> tuple[str, ...]:
+    if isinstance(value, dict):
+        return tuple(str(key) for key in value) + tuple(
+            key for item in value.values() for key in _mapping_keys(item)
+        )
+    if isinstance(value, (list, tuple)):
+        return tuple(key for item in value for key in _mapping_keys(item))
+    return ()
+
+
+@pytest.mark.release_integration
+def test_n100_executes_complete_twelve_cell_matrix_without_result_selection(
+    tmp_path: Path,
+) -> None:
+    fixture = build_mock_matrix_fixture(
+        tmp_path,
+        case_id="mock-n100-full-matrix",
+        sweeps=1,
+    )
+
+    results = execute_all_cells(fixture)
+
+    assert tuple(results) == CANONICAL_CELL_IDS
+    assert all(result.run_report.completed for result in results.values())
+    assert all(result.run_report.executed_event_count == 100 for result in results.values())
+    assert all(
+        result.process_audit.outcome_labels == APPROVED_OUTCOME_LABELS
+        for result in results.values()
+    )
+    assert len({cell.manifest.schedule_hash for cell in fixture.matrix.cells}) == 1
+    assert len({tuple(sorted(cell.artifact_hashes.items())) for cell in fixture.matrix.cells}) == 1
+    assert len({cell.manifest.run_id for cell in fixture.matrix.cells}) == 12
+    expected_graphs = {
+        "self_history_only": None,
+        "shuffled_social": fixture.family.shadow_artifact.output_hash,
+        "ws_neighbors": fixture.family.ws_artifact.output_hash,
+    }
+    assert all(
+        cell.exposure_graph_hash == expected_graphs[cell.exposure_mode]
+        for cell in fixture.matrix.cells
+    )
+    sqlite_paths = tuple(tmp_path.rglob("*.sqlite"))
+    assert len(sqlite_paths) == len(set(path.resolve() for path in sqlite_paths)) == 12
+    forbidden = ("ranking", "effect", "significance", "p_value", "selected_result")
+    assert all(
+        not any(token in key.casefold() for token in forbidden)
+        for result in results.values()
+        for key in _mapping_keys(result.process_audit.to_payload())
+    )
+
+    first_agent = fixture.matrix.cells[0].manifest.schedule.slots[0].agent_id
+    member = next(
+        value
+        for value in fixture.family.population_artifact.payload["members"]
+        if value["agent_id"] == first_agent
+    )
+    expected_personas = {
+        (identity, continuity): render_persona(
+            fixture.family.persona_template,
+            member,
+            {"identity_present": identity, "continuity_present": continuity},
+        )
+        for identity in (False, True)
+        for continuity in (False, True)
+    }
+    assert validate_persona_factor_diff(tuple(expected_personas.values()))["valid"] is True
+    observed_by_condition: dict[tuple[bool, bool], set[str]] = {
+        condition: set() for condition in expected_personas
+    }
+    for cell in fixture.matrix.cells:
+        opened = open_completed_mock_matrix_cell(fixture, cell_id=cell.cell_id)
+        event_input = opened.cell.storage.event_input_evidence(
+            derive_event_id(opened.manifest.run_id, 0)
+        )
+        assert event_input is not None
+        condition = (cell.identity_present, cell.continuity_present)
+        expected_text = expected_personas[condition].payload["rendered_text"]
+        assert event_input.prompt_view.persona_text == expected_text
+        observed_by_condition[condition].add(event_input.prompt_view.persona_text)
+        opened.cell.storage.close()
+    assert all(len(values) == 1 for values in observed_by_condition.values())
+
+
+def _rehash_artifact(artifact: ArtifactEnvelope, payload: dict[str, object]) -> ArtifactEnvelope:
+    return ArtifactEnvelope.create(
+        artifact_type=artifact.artifact_type,
+        schema_version=artifact.schema_version,
+        algorithm_id=artifact.algorithm_id,
+        algorithm_version=artifact.algorithm_version,
+        input_hashes=artifact.input_hashes,
+        payload=payload,
+        rng_provenance=artifact.rng_provenance,
+    )
+
+
+def _matrix_builder_inputs(fixture) -> dict[str, object]:
+    family = fixture.family
+    return {
+        "scale_case": fixture.scale_case,
+        "matched_seed": fixture.matrix.matched_seed,
+        "topic_package": family.topic_package,
+        "population_artifact": family.population_artifact,
+        "initial_stance_artifact": family.initial_stance_artifact,
+        "initial_reason_artifact": family.initial_reason_artifact,
+        "persona_template": family.persona_template,
+        "ws_artifact": family.ws_artifact,
+        "shadow_artifact": family.shadow_artifact,
+        "agent_node_mapping": family.agent_node_mapping,
+        "structural_gate_artifact": family.structural_gate_artifact,
+        "attention_artifact": family.attention_artifact,
+        "expression_artifact": family.expression_artifact,
+        "activation_artifact": family.activation_artifact,
+        "publish_artifact": family.publish_artifact,
+        "schedules_by_cell": family.schedules_by_cell,
+        "manifests_by_cell": family.manifests_by_cell,
+        "adapter_bindings_by_cell": family.adapter_bindings_by_cell,
+    }
+
+
+def _semantic_artifact_attack(fixture, attack: str) -> tuple[str, ArtifactEnvelope]:
+    family = fixture.family
+    field, artifact = {
+        "population": ("population_artifact", family.population_artifact),
+        "stance": ("initial_stance_artifact", family.initial_stance_artifact),
+        "reason": ("initial_reason_artifact", family.initial_reason_artifact),
+        "mapping": ("agent_node_mapping", family.agent_node_mapping),
+        "attention": ("attention_artifact", family.attention_artifact),
+        "expression": ("expression_artifact", family.expression_artifact),
+        "activation": ("activation_artifact", family.activation_artifact),
+        "publish": ("publish_artifact", family.publish_artifact),
+    }[attack]
+    payload = artifact.to_payload()["payload"]
+    if attack == "population":
+        payload["members"][0]["fields"]["occupation"] += "-changed"
+    elif attack == "stance":
+        assignments = payload["assignments"]
+        assignments[0]["stance"], assignments[1]["stance"] = (
+            assignments[1]["stance"],
+            assignments[0]["stance"],
+        )
+    elif attack == "reason":
+        payload["round0_records"][0]["private_state"]["reason"] += " changed"
+    elif attack == "mapping":
+        assignments = payload["assignments"]
+        assignments[0]["node_id"], assignments[1]["node_id"] = (
+            assignments[1]["node_id"],
+            assignments[0]["node_id"],
+        )
+    elif attack == "attention":
+        payload["agents"][0]["raw_weight"] = payload["agents"][0]["weight"] = 1.1
+        payload["agents"][1]["raw_weight"] = payload["agents"][1]["weight"] = 0.9
+    elif attack == "expression":
+        agent = payload["agents"][0]
+        agent["structural_lurker"] = not agent["structural_lurker"]
+        agent["publish_probability"] = 0.0 if agent["structural_lurker"] else 0.5
+    elif attack == "activation":
+        slots = payload["slots"]
+        slots[0]["agent_id"], slots[1]["agent_id"] = (
+            slots[1]["agent_id"],
+            slots[0]["agent_id"],
+        )
+    else:
+        slot = payload["frozen_schedule"]["slots"][0]
+        slot["publish_flag"] = not slot["publish_flag"]
+    changed = _rehash_artifact(artifact, payload)
+    assert changed.output_hash != artifact.output_hash
+    return field, changed
+
+
+@pytest.mark.parametrize(
+    "attack",
+    (
+        "population",
+        "stance",
+        "reason",
+        "mapping",
+        "attention",
+        "expression",
+        "activation",
+        "publish",
+        "graph",
+        "manifest",
+        "script",
+    ),
+)
+def test_n100_cross_cell_attack_fails_before_first_execution(tmp_path: Path, attack: str) -> None:
+    fixture = build_mock_matrix_fixture(
+        tmp_path,
+        case_id="mock-n100-full-matrix",
+        sweeps=1,
+    )
+    cells = list(fixture.matrix.cells)
+    target_index = 1 if attack == "graph" else 0
+    target = cells[target_index]
+    if attack in {
+        "population",
+        "stance",
+        "reason",
+        "mapping",
+        "attention",
+        "expression",
+        "activation",
+        "publish",
+    }:
+        field, artifact = _semantic_artifact_attack(fixture, attack)
+        with pytest.raises(ValueError):
+            build_mock_matched_seed_matrix(**{**_matrix_builder_inputs(fixture), field: artifact})
+    elif attack == "graph":
+        cells[target_index] = replace(target, exposure_graph_hash="f" * 64)
+    elif attack == "manifest":
+        changed_spec = {**target.manifest.run_spec, "cell_id": "P1-I1-C0-E0"}
+        cells[target_index] = replace(
+            target,
+            manifest=replace(
+                target.manifest,
+                run_id=derive_run_id(
+                    changed_spec,
+                    target.manifest.matched_seed,
+                    target.manifest.launch_nonce,
+                ),
+                run_spec=changed_spec,
+                run_spec_hash=canonical_payload_hash(changed_spec),
+            ),
+        )
+    else:
+        changed_adapter = MockAdapter(
+            script={
+                derive_event_id(target.manifest.run_id, ordinal): (
+                    MockScriptStep.success(
+                        {
+                            "stance": "L4",
+                            "confidence": 3,
+                            "public_reason": (
+                                "changed mock script"
+                                if ordinal == 0
+                                else f"mock matrix event {ordinal}"
+                            ),
+                        }
+                    ),
+                )
+                for ordinal in range(target.manifest.schedule.count)
+            },
+            mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+            mock_only=True,
+        )
+        assert changed_adapter.execution_binding() != target.adapter_binding
+        cells[target_index] = replace(
+            target,
+            adapter_binding=changed_adapter.execution_binding(),
+        )
+    if attack not in {
+        "population",
+        "stance",
+        "reason",
+        "mapping",
+        "attention",
+        "expression",
+        "activation",
+        "publish",
+    }:
+        attacked = replace(fixture.matrix, cells=tuple(cells))
+        with pytest.raises(ValueError):
+            validate_mock_matched_seed_matrix(attacked)
+
+    assert not tuple(tmp_path.rglob("*.sqlite"))

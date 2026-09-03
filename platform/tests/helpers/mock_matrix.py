@@ -28,7 +28,7 @@ from agent_ex.mock_matrix import (
     mock_adapter_semantics_hash,
     mock_clock_sequence_binding,
 )
-from agent_ex.mock_run import MockEventInvocation
+from agent_ex.mock_run import MockEventInvocation, MockRunControl, MockRunReport, execute_mock_run
 from agent_ex.network import (
     build_agent_node_mapping,
     build_shadow_artifact,
@@ -39,6 +39,13 @@ from agent_ex.population import build_population_artifact
 from agent_ex.parser import ParserLimits
 from agent_ex.pipeline import MockEventPipeline
 from agent_ex.prompt import PromptLimits
+from agent_ex.process_audit import (
+    APPROVED_OUTCOME_LABELS,
+    APPROVED_TERMINOLOGY_MAP,
+    APPROVED_TERMINOLOGY_MAP_ID,
+    MockProcessAudit,
+    build_mock_process_audit,
+)
 from agent_ex.feed import FeedCursor
 from agent_ex.schedule import (
     build_activation_schedule,
@@ -83,6 +90,7 @@ class MockArtifactFamily:
 
 @dataclass(frozen=True, slots=True)
 class MockMatrixFixture:
+    root: Path
     scale_case: MockScaleCase
     family: MockArtifactFamily
     matrix: MockMatchedSeedMatrix
@@ -118,6 +126,12 @@ class BoundMockMatrixCell:
     agent_node_mapping_artifact: ArtifactEnvelope | None
     round0_initialization_artifact: ArtifactEnvelope | None
     frozen_neighbor_agent_ids: Mapping[str, tuple[str, ...]]
+
+
+@dataclass(frozen=True, slots=True)
+class MockCellExecutionResult:
+    run_report: MockRunReport
+    process_audit: MockProcessAudit
 
 
 class MockClockLedger:
@@ -534,6 +548,101 @@ def reopen_mock_matrix_cell(
     )
 
 
+def open_completed_mock_matrix_cell(
+    fixture: MockMatrixFixture, *, cell_id: str
+) -> BoundMockMatrixCell:
+    """Open a completed cell produced by ``execute_all_cells`` for public evidence reads."""
+
+    family = fixture.family
+    matrix_cell = next(cell for cell in fixture.matrix.cells if cell.cell_id == cell_id)
+    mode, graph, source_ws, _, _, _ = _cell_exposure_wiring(family, cell_id)
+    database_path = fixture.root / cell_id / f"{cell_id}.sqlite"
+    storage = RunStorage.open(
+        database_path,
+        manifest=matrix_cell.manifest,
+        artifact_hashes=_artifact_hashes(family),
+        expected_agent_ids=tuple(
+            record["agent_id"] for record in family.population_artifact.payload["members"]
+        ),
+        expected_exposure_mode=mode,
+        expected_exposure_graph_hash=None if graph is None else graph.output_hash,
+        expected_exposure_graph_artifact=graph,
+        expected_source_ws_artifact=source_ws,
+    )
+    clock = rebuild_mock_clock_ledger(
+        scale_case=fixture.scale_case,
+        storage=storage,
+        manifest=matrix_cell.manifest,
+        reconciliation=None,
+    )
+    return _bind_cell(
+        matrix_fixture=fixture,
+        cell_id=cell_id,
+        database_path=database_path,
+        storage=storage,
+        clock=clock,
+    )
+
+
+def build_cell_process_audit(fixture: BoundMockMatrixCell) -> MockProcessAudit:
+    """Build the fixed mock-only audit for one completed integration cell."""
+
+    return build_mock_process_audit(
+        storage=fixture.cell.storage,
+        cell_id=fixture.cell_id,
+        topic_package=fixture.matrix_fixture.family.topic_package,
+        boundary_event_ordinal=fixture.cell.storage.progress.next_event_ordinal,
+        outcome_labels=APPROVED_OUTCOME_LABELS,
+        terminology_map_id=APPROVED_TERMINOLOGY_MAP_ID,
+        terminology_map=APPROVED_TERMINOLOGY_MAP,
+        model_provenance=fixture.manifest.model_identity,
+        prompt_provenance={
+            "template_id": "paper1.mock_prompt_template",
+            "template_version": "1.0.0",
+            "prompt_limits_hash": fixture.cell.prompt_limits.record_hash,
+        },
+        robustness_provenance={
+            "mock_only": True,
+            "research_parameter_status": "not_frozen",
+        },
+    )
+
+
+def execute_all_cells(
+    fixture: MockMatrixFixture,
+) -> Mapping[str, MockCellExecutionResult]:
+    """Execute each canonical cell independently through the public mock run harness."""
+
+    results: dict[str, MockCellExecutionResult] = {}
+    for cell_id in CANONICAL_CELL_IDS:
+        bound = create_mock_matrix_cell(
+            fixture.root / cell_id,
+            matrix_fixture=fixture,
+            cell_id=cell_id,
+        )
+        target = bound.cell.storage.progress.expected_event_count
+        report = execute_mock_run(
+            pipeline=bound.cell.pipeline,
+            storage=bound.cell.storage,
+            invocations=explicit_success_invocations(
+                bound.cell,
+                start=0,
+                stop=target,
+                feed_capacity=fixture.scale_case.mock_feed_capacity,
+                memory_window=fixture.scale_case.mock_memory_window,
+            ),
+            control=MockRunControl(
+                target_event_ordinal=target,
+                checkpoint_ordinals=(target,),
+                checkpoint_paths=(fixture.root / cell_id / "checkpoint-final.json",),
+            ),
+        )
+        audit = build_cell_process_audit(bound)
+        results[cell_id] = MockCellExecutionResult(report, audit)
+        bound.cell.storage.close()
+    return results
+
+
 def _manifest(
     *,
     cell_id: str,
@@ -665,7 +774,7 @@ def _build_mock_artifact_family(
         mock_only=True,
     )
     structural_gate = build_structural_gate_artifact(
-        ws, matched_seed=matched_seed, random_null_replicates=3, mock_only=True
+        ws, matched_seed=matched_seed, random_null_replicates=1, mock_only=True
     )
     agent_ids = tuple(record["agent_id"] for record in population.payload["members"])
     attention = build_attention_artifact(
@@ -819,7 +928,7 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
 
 
 def _assemble_matrix_fixture(
-    *, scale_case: MockScaleCase, family: MockArtifactFamily
+    *, root: Path, scale_case: MockScaleCase, family: MockArtifactFamily
 ) -> MockMatrixFixture:
     matrix = build_mock_matched_seed_matrix(
         scale_case=scale_case,
@@ -850,7 +959,9 @@ def _assemble_matrix_fixture(
         current += step
         return value
 
-    return MockMatrixFixture(scale_case=scale_case, family=family, matrix=matrix, clock=clock)
+    return MockMatrixFixture(
+        root=root, scale_case=scale_case, family=family, matrix=matrix, clock=clock
+    )
 
 
 def build_mock_matrix_fixture(tmp_path: Path, *, case_id: str, sweeps: int) -> MockMatrixFixture:
@@ -867,7 +978,7 @@ def build_mock_matrix_fixture(tmp_path: Path, *, case_id: str, sweeps: int) -> M
         explicit_steps_by_ordinal=None,
         launch_nonce_namespace=namespace,
     )
-    return _assemble_matrix_fixture(scale_case=scale_case, family=family)
+    return _assemble_matrix_fixture(root=tmp_path, scale_case=scale_case, family=family)
 
 
 def build_mock_matrix_fixture_with_steps(
@@ -893,4 +1004,4 @@ def build_mock_matrix_fixture_with_steps(
             ]
         ),
     )
-    return _assemble_matrix_fixture(scale_case=scale_case, family=family)
+    return _assemble_matrix_fixture(root=tmp_path, scale_case=scale_case, family=family)

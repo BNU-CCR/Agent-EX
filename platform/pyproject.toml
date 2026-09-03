@@ -30,9 +30,13 @@ where = ["src"]
 "agent_ex.schemas" = ["*.json"]
 
 [tool.pytest.ini_options]
-addopts = "--strict-config --strict-markers --basetemp=.pytest-tmp"
+addopts = "--strict-config --strict-markers --basetemp=.pytest-tmp -m 'not release_scale'"
 cache_dir = ".pytest-tmp/cache"
 testpaths = ["tests"]
+markers = [
+    "release_integration: executes the complete N=100 twelve-cell mock matrix",
+    "release_scale: executes the explicit N=1000/T=50 fifty-thousand-event mock gate",
+]
 
 [tool.ruff]
 target-version = "py312"
