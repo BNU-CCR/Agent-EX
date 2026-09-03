@@ -39,6 +39,7 @@ from agent_ex.population import build_population_artifact
 from agent_ex.parser import ParserLimits
 from agent_ex.pipeline import MockEventPipeline
 from agent_ex.prompt import PromptLimits
+from agent_ex.feed import FeedCursor
 from agent_ex.schedule import (
     build_activation_schedule,
     build_attention_artifact,
@@ -48,6 +49,7 @@ from agent_ex.schedule import (
 from agent_ex.topic import TopicPackage
 from agent_ex.execution_evidence import MockAttemptPolicyBinding
 from agent_ex.storage import RunStorage
+from agent_ex.state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
 
 
 FIXTURE_DIR = Path(__file__).parents[1] / "fixtures" / "paper1"
@@ -100,6 +102,22 @@ class MatrixCellFixture:
     usage: Mapping[str, object]
     finish_reason: str | None
     stance_label: str
+
+
+@dataclass(frozen=True, slots=True)
+class BoundMockMatrixCell:
+    """Test-only durable cell wiring used by integration recovery tests."""
+
+    matrix_fixture: MockMatrixFixture
+    cell: MatrixCellFixture
+    cell_id: str
+    database_path: Path
+    manifest: RunManifest
+    exposure_graph_artifact: ArtifactEnvelope | None
+    source_ws_artifact: ArtifactEnvelope | None
+    agent_node_mapping_artifact: ArtifactEnvelope | None
+    round0_initialization_artifact: ArtifactEnvelope | None
+    frozen_neighbor_agent_ids: Mapping[str, tuple[str, ...]]
 
 
 class MockClockLedger:
@@ -273,6 +291,249 @@ def explicit_success_invocations(
     return tuple(values)
 
 
+def _mock_limits() -> tuple[ParserLimits, PromptLimits]:
+    return (
+        ParserLimits.create(
+            max_raw_chars=10_000,
+            max_raw_bytes=20_000,
+            max_json_depth=16,
+            max_reason_chars=2_000,
+            mock_only=True,
+        ),
+        PromptLimits.create(
+            max_persona_chars=10_000,
+            max_string_chars=20_000,
+            max_memory_items=10,
+            max_social_messages=10,
+            max_data_chars=80_000,
+            max_total_chars=100_000,
+            mock_only=True,
+        ),
+    )
+
+
+def _artifact_hashes(family: MockArtifactFamily) -> dict[str, str]:
+    artifacts = (
+        family.population_artifact,
+        family.initial_stance_artifact,
+        family.initial_reason_artifact,
+        family.persona_template,
+        family.ws_artifact,
+        family.shadow_artifact,
+        family.agent_node_mapping,
+        family.structural_gate_artifact,
+        family.attention_artifact,
+        family.expression_artifact,
+        family.activation_artifact,
+        family.publish_artifact,
+    )
+    return {
+        family.topic_package.topic_id: family.topic_package.package_hash,
+        **{artifact.artifact_id: artifact.output_hash for artifact in artifacts},
+    }
+
+
+def _cell_exposure_wiring(
+    family: MockArtifactFamily, cell_id: str
+) -> tuple[
+    str,
+    ArtifactEnvelope | None,
+    ArtifactEnvelope | None,
+    ArtifactEnvelope | None,
+    ArtifactEnvelope | None,
+    dict[str, tuple[str, ...]],
+]:
+    exposure_token = cell_id.rsplit("-", 1)[-1]
+    roster = tuple(record["agent_id"] for record in family.population_artifact.payload["members"])
+    if exposure_token == "E0":
+        return "self_history_only", None, None, None, None, {agent: () for agent in roster}
+    graph = family.shadow_artifact if exposure_token == "E1" else family.ws_artifact
+    source_ws = family.ws_artifact if exposure_token == "E1" else None
+    assignments = family.agent_node_mapping.payload["assignments"]
+    agent_by_node = {record["node_id"]: record["agent_id"] for record in assignments}
+    neighbor_sets = {agent: set() for agent in roster}
+    for left, right in graph.payload["edges"]:
+        left_agent = agent_by_node[left]
+        right_agent = agent_by_node[right]
+        neighbor_sets[left_agent].add(right_agent)
+        neighbor_sets[right_agent].add(left_agent)
+    neighbors = {agent: tuple(sorted(values)) for agent, values in neighbor_sets.items()}
+    return (
+        "shuffled_social" if exposure_token == "E1" else "ws_neighbors",
+        graph,
+        source_ws,
+        family.agent_node_mapping,
+        family.initial_reason_artifact,
+        neighbors,
+    )
+
+
+def _initialize_mock_cell(
+    storage: RunStorage, family: MockArtifactFamily, *, matched_seed: int
+) -> None:
+    round0 = {
+        record["agent_id"]: record
+        for record in family.initial_reason_artifact.payload["round0_records"]
+    }
+    with storage.acquire_run_lease():
+        for agent_id in storage.binding.expected_agent_ids:
+            record = round0[agent_id]
+            stance = record["private_state"]["stance"]
+            update = PrivateUpdate.create(
+                topic_package=family.topic_package,
+                matched_seed=matched_seed,
+                agent_id=agent_id,
+                event_id=None,
+                event_ordinal=None,
+                sequence_index=0,
+                stance_label=family.topic_package.stance_labels[stance - 1],
+                reason=record["private_state"]["reason"],
+                confidence=None,
+                published=True,
+                source_attempt_id=None,
+                mock_only=True,
+            )
+            state = PrivateState.from_update(update, previous=None, mock_only=True)
+            post = PublicPost.from_private_update(update, mock_only=True)
+            pointer = LatestPublicPointer.from_post(post, previous=None, mock_only=True)
+            cursor = FeedCursor.initial(
+                matched_seed=matched_seed,
+                receiver_agent_id=agent_id,
+                exposure_mode=storage.binding.expected_exposure_mode,
+                exposure_graph_hash=storage.binding.expected_exposure_graph_hash,
+                mock_only=True,
+            )
+            storage.initialize_agent(update, state, post, pointer, cursor)
+        storage.seal_initial_state()
+
+
+def _bind_cell(
+    *,
+    matrix_fixture: MockMatrixFixture,
+    cell_id: str,
+    database_path: Path,
+    storage: RunStorage,
+    clock: Callable[[], str],
+) -> BoundMockMatrixCell:
+    family = matrix_fixture.family
+    matrix_cell = next(cell for cell in matrix_fixture.matrix.cells if cell.cell_id == cell_id)
+    mode, graph, source_ws, mapping, round0, neighbors = _cell_exposure_wiring(family, cell_id)
+    if storage.binding.expected_exposure_mode != mode:
+        raise ValueError("opened storage exposure mode differs from requested matrix cell")
+    parser_limits, prompt_limits = _mock_limits()
+    policy = MockAttemptPolicyBinding.create(
+        allowed_difference_fields=("model_seed", "request_parameters.temperature"),
+        mock_only=True,
+        formal_eligible=False,
+    )
+    pipeline = MockEventPipeline(
+        storage=storage,
+        manifest=matrix_cell.manifest,
+        topic_package=family.topic_package,
+        persona_template=family.persona_template,
+        population_artifact=family.population_artifact,
+        exposure_graph_artifact=graph,
+        source_ws_artifact=source_ws,
+        agent_node_mapping_artifact=mapping,
+        round0_initialization_artifact=round0,
+        frozen_neighbor_agent_ids=neighbors,
+        clock=clock,
+    )
+    return BoundMockMatrixCell(
+        matrix_fixture=matrix_fixture,
+        cell=MatrixCellFixture(
+            pipeline=pipeline,
+            storage=storage,
+            parser_limits=parser_limits,
+            prompt_limits=prompt_limits,
+            policy=policy,
+            model_identity=matrix_cell.adapter_binding.model_identity,
+            request_parameters={"temperature": 0.0},
+            http_status=200,
+            usage={"prompt_tokens": 3, "completion_tokens": 4, "total_tokens": 7},
+            finish_reason="stop",
+            stance_label=family.topic_package.stance_labels[3],
+        ),
+        cell_id=cell_id,
+        database_path=database_path,
+        manifest=matrix_cell.manifest,
+        exposure_graph_artifact=graph,
+        source_ws_artifact=source_ws,
+        agent_node_mapping_artifact=mapping,
+        round0_initialization_artifact=round0,
+        frozen_neighbor_agent_ids=neighbors,
+    )
+
+
+def create_mock_matrix_cell(
+    root: Path, *, matrix_fixture: MockMatrixFixture, cell_id: str
+) -> BoundMockMatrixCell:
+    """Create and initialize one real SQLite-backed canonical mock matrix cell."""
+
+    root.mkdir(parents=True, exist_ok=True)
+    family = matrix_fixture.family
+    matrix_cell = next(cell for cell in matrix_fixture.matrix.cells if cell.cell_id == cell_id)
+    mode, graph, source_ws, _, _, _ = _cell_exposure_wiring(family, cell_id)
+    database_path = root / f"{cell_id}.sqlite"
+    storage = RunStorage.create(
+        database_path,
+        manifest=matrix_cell.manifest,
+        artifact_hashes=_artifact_hashes(family),
+        expected_agent_ids=tuple(
+            record["agent_id"] for record in family.population_artifact.payload["members"]
+        ),
+        expected_exposure_mode=mode,
+        expected_exposure_graph_hash=None if graph is None else graph.output_hash,
+        expected_exposure_graph_artifact=graph,
+        expected_source_ws_artifact=source_ws,
+    )
+    _initialize_mock_cell(storage, family, matched_seed=matrix_cell.manifest.matched_seed)
+    clock = MockClockLedger(
+        scale_case=matrix_fixture.scale_case, replay_values=(), next_sequence_index=0
+    )
+    return _bind_cell(
+        matrix_fixture=matrix_fixture,
+        cell_id=cell_id,
+        database_path=database_path,
+        storage=storage,
+        clock=clock,
+    )
+
+
+def reopen_mock_matrix_cell(
+    fixture: BoundMockMatrixCell,
+    *,
+    reconciliation: AttemptInvocationResult | None,
+) -> BoundMockMatrixCell:
+    """Close/open a durable cell and rebuild its clock from public evidence."""
+
+    binding = fixture.cell.storage.binding
+    fixture.cell.storage.close()
+    storage = RunStorage.open(
+        fixture.database_path,
+        manifest=fixture.manifest,
+        artifact_hashes=dict(binding.artifact_hashes),
+        expected_agent_ids=binding.expected_agent_ids,
+        expected_exposure_mode=binding.expected_exposure_mode,
+        expected_exposure_graph_hash=binding.expected_exposure_graph_hash,
+        expected_exposure_graph_artifact=fixture.exposure_graph_artifact,
+        expected_source_ws_artifact=fixture.source_ws_artifact,
+    )
+    clock = rebuild_mock_clock_ledger(
+        scale_case=fixture.matrix_fixture.scale_case,
+        storage=storage,
+        manifest=fixture.manifest,
+        reconciliation=reconciliation,
+    )
+    return _bind_cell(
+        matrix_fixture=fixture.matrix_fixture,
+        cell_id=fixture.cell_id,
+        database_path=fixture.database_path,
+        storage=storage,
+        clock=clock,
+    )
+
+
 def _manifest(
     *,
     cell_id: str,
@@ -280,6 +541,7 @@ def _manifest(
     schedule: FrozenSchedule,
     location: Path,
     mock_matrix_binding: Mapping[str, object],
+    launch_nonce_namespace: str,
 ) -> RunManifest:
     run_spec = {
         "protocol_id": "paper1",
@@ -295,7 +557,7 @@ def _manifest(
         "request_parameters": {"temperature": 0.0},
         "mock_matrix_binding": dict(mock_matrix_binding),
     }
-    launch_nonce = f"mock-matrix-{cell_id.lower()}"
+    launch_nonce = f"{launch_nonce_namespace}-{cell_id.lower()}"
     run_id = derive_run_id(run_spec, matched_seed, launch_nonce)
     return RunManifest(
         run_id=run_id,
@@ -336,11 +598,27 @@ def _manifest(
     )
 
 
-def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> MockArtifactFamily:
+def _build_mock_artifact_family(
+    *,
+    n: int,
+    sweeps: int,
+    matched_seed: int,
+    explicit_steps_by_ordinal: tuple[tuple[MockScriptStep, ...], ...] | None,
+    launch_nonce_namespace: str,
+) -> MockArtifactFamily:
     frame = _load_envelope("mock_population_frame.artifact.json")
     reasons = _load_envelope("mock_reason_library.artifact.json")
     topic_artifact = _load_envelope("mock_topic_package.artifact.json")
-    persona_template = _load_envelope("mock_persona_template.artifact.json")
+    persona_fixture = _load_envelope("mock_persona_template.artifact.json")
+    persona_template = ArtifactEnvelope.create(
+        artifact_type=persona_fixture.artifact_type,
+        schema_version=persona_fixture.schema_version,
+        algorithm_id=persona_fixture.algorithm_id,
+        algorithm_version=persona_fixture.algorithm_version,
+        input_hashes={"fixture": persona_fixture.output_hash},
+        payload=persona_fixture.payload,
+        rng_provenance=(),
+    )
     scale_case = next(
         case
         for case in load_mock_scale_cases(_load_envelope("mock_scale_cases.artifact.json"))
@@ -416,18 +694,24 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
     schedule = FrozenSchedule.from_payload(publish.to_payload()["payload"]["frozen_schedule"])
     schedules = {cell_id: schedule for cell_id in CANONICAL_CELL_IDS}
     location = FIXTURE_DIR.resolve()
-    steps_by_ordinal = tuple(
-        (
-            MockScriptStep.success(
-                {
-                    "stance": topic_package.stance_labels[3],
-                    "confidence": 3,
-                    "public_reason": f"mock matrix event {ordinal}",
-                }
-            ),
+    steps_by_ordinal = (
+        tuple(
+            (
+                MockScriptStep.success(
+                    {
+                        "stance": topic_package.stance_labels[3],
+                        "confidence": 3,
+                        "public_reason": f"mock matrix event {ordinal}",
+                    }
+                ),
+            )
+            for ordinal in range(schedule.count)
         )
-        for ordinal in range(schedule.count)
+        if explicit_steps_by_ordinal is None
+        else explicit_steps_by_ordinal
     )
+    if len(steps_by_ordinal) != schedule.count or any(not steps for steps in steps_by_ordinal):
+        raise ValueError("explicit mock scripts must exact-cover every schedule ordinal")
     semantic_event_ids = tuple(f"semantic-event-{ordinal}" for ordinal in range(schedule.count))
     semantic_adapter = MockAdapter(
         script={
@@ -477,6 +761,7 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
             matched_seed=matched_seed,
             schedule=schedule,
             location=location,
+            launch_nonce_namespace=launch_nonce_namespace,
             mock_matrix_binding={
                 "schema_version": "paper1.mock-cell-run-binding.v1",
                 "scale_case_id": scale_case.case_id,
@@ -523,12 +808,19 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
     )
 
 
-def build_mock_matrix_fixture(tmp_path: Path, *, case_id: str, sweeps: int) -> MockMatrixFixture:
-    cases = load_mock_scale_cases(_load_envelope("mock_scale_cases.artifact.json"))
-    scale_case = next(case for case in cases if case.case_id == case_id)
-    family = build_mock_artifact_family(
-        n=scale_case.population_size, sweeps=sweeps, matched_seed=101
+def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> MockArtifactFamily:
+    return _build_mock_artifact_family(
+        n=n,
+        sweeps=sweeps,
+        matched_seed=matched_seed,
+        explicit_steps_by_ordinal=None,
+        launch_nonce_namespace="mock-matrix",
     )
+
+
+def _assemble_matrix_fixture(
+    *, scale_case: MockScaleCase, family: MockArtifactFamily
+) -> MockMatrixFixture:
     matrix = build_mock_matched_seed_matrix(
         scale_case=scale_case,
         matched_seed=101,
@@ -558,5 +850,47 @@ def build_mock_matrix_fixture(tmp_path: Path, *, case_id: str, sweeps: int) -> M
         current += step
         return value
 
-    del tmp_path
     return MockMatrixFixture(scale_case=scale_case, family=family, matrix=matrix, clock=clock)
+
+
+def build_mock_matrix_fixture(tmp_path: Path, *, case_id: str, sweeps: int) -> MockMatrixFixture:
+    cases = load_mock_scale_cases(_load_envelope("mock_scale_cases.artifact.json"))
+    scale_case = next(case for case in cases if case.case_id == case_id)
+    namespace = (
+        "mock-matrix-"
+        + canonical_payload_hash({"fixture_root": tmp_path.resolve(strict=False).as_posix()})[:16]
+    )
+    family = _build_mock_artifact_family(
+        n=scale_case.population_size,
+        sweeps=sweeps,
+        matched_seed=101,
+        explicit_steps_by_ordinal=None,
+        launch_nonce_namespace=namespace,
+    )
+    return _assemble_matrix_fixture(scale_case=scale_case, family=family)
+
+
+def build_mock_matrix_fixture_with_steps(
+    tmp_path: Path,
+    *,
+    case_id: str,
+    sweeps: int,
+    steps_by_ordinal: tuple[tuple[MockScriptStep, ...], ...],
+) -> MockMatrixFixture:
+    """Build an explicit failure-script matrix without weakening production validation."""
+
+    cases = load_mock_scale_cases(_load_envelope("mock_scale_cases.artifact.json"))
+    scale_case = next(case for case in cases if case.case_id == case_id)
+    family = _build_mock_artifact_family(
+        n=scale_case.population_size,
+        sweeps=sweeps,
+        matched_seed=101,
+        explicit_steps_by_ordinal=steps_by_ordinal,
+        launch_nonce_namespace=(
+            "mock-matrix-"
+            + canonical_payload_hash({"fixture_root": tmp_path.resolve(strict=False).as_posix()})[
+                :16
+            ]
+        ),
+    )
+    return _assemble_matrix_fixture(scale_case=scale_case, family=family)
