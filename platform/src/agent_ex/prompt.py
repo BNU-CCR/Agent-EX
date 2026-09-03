@@ -1213,6 +1213,8 @@ def build_prompt_view(
         ):
             raise ValueError(f"{label} must bind a final successful source attempt")
         expected = {
+            "topic_package_id": update.topic_package_id,
+            "topic_package_hash": update.topic_package_hash,
             "stance": update.stance_label,
             "confidence": update.confidence,
             "public_reason": update.reason,

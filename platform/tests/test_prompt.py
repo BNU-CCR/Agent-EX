@@ -474,12 +474,16 @@ def source_event_and_attempt(
     provider = {"request": "source"}
     if author == AGENT_ID:
         parsed = {
+            "topic_package_id": topic().topic_id,
+            "topic_package_hash": topic().package_hash,
             "stance": f"label-{ordinal + 1}",
             "confidence": 3,
             "public_reason": f"private self reason {ordinal}",
         }
     else:
         parsed = {
+            "topic_package_id": topic().topic_id,
+            "topic_package_hash": topic().package_hash,
             "stance": "label-5",
             "confidence": 5,
             "public_reason": f"public reason {author}",
@@ -1021,6 +1025,8 @@ def test_prompt_serializes_untrusted_natural_text_as_one_json_data_payload() -> 
     evidence = exposure_inputs()
     injected_source = source_event_and_attempt(AGENT_ID, 5, publish_flag=False)
     injected_parsed = {
+        "topic_package_id": topic().topic_id,
+        "topic_package_hash": topic().package_hash,
         "stance": injected.stance_label,
         "confidence": injected.confidence,
         "public_reason": injected.reason,
@@ -1150,6 +1156,8 @@ def test_prompt_binds_private_and_social_updates_to_final_attempt_parsed_content
     original = attempts[own.source_attempt_id]
     assert isinstance(original, GenerationAttempt)
     forged_parsed = {
+        "topic_package_id": topic().topic_id,
+        "topic_package_hash": topic().package_hash,
         "stance": own.stance_label,
         "confidence": own.confidence,
         "public_reason": "different from committed private update",
@@ -1167,6 +1175,8 @@ def test_prompt_binds_private_and_social_updates_to_final_attempt_parsed_content
     attempts = dict(exposure_inputs()["source_attempts_by_id"])  # type: ignore[arg-type]
     original = attempts[social_update.source_attempt_id]
     forged_parsed = {
+        "topic_package_id": topic().topic_id,
+        "topic_package_hash": topic().package_hash,
         "stance": "label-0",
         "confidence": social_update.confidence,
         "public_reason": social_update.reason,
@@ -1180,6 +1190,35 @@ def test_prompt_binds_private_and_social_updates_to_final_attempt_parsed_content
     social_evidence_inputs["source_attempts_by_id"] = attempts
     with pytest.raises(ValueError, match="parsed response|social|private update|content"):
         build(**social_evidence_inputs)
+
+
+@pytest.mark.parametrize(
+    "attack",
+    ("topic_id", "topic_hash", "extra_field", "missing_field"),
+)
+def test_prompt_rejects_non_exact_private_source_topic_provenance(attack: str) -> None:
+    evidence = exposure_inputs()
+    attempts = dict(evidence["source_attempts_by_id"])  # type: ignore[arg-type]
+    own = updates()[-1]
+    original = attempts[own.source_attempt_id]
+    parsed = dict(original.parsed_response)
+    if attack == "topic_id":
+        parsed["topic_package_id"] = "foreign-topic"
+    elif attack == "topic_hash":
+        parsed["topic_package_hash"] = "0" * 64
+    elif attack == "extra_field":
+        parsed["unexpected"] = "not exact cover"
+    else:
+        parsed.pop("topic_package_hash")
+    attempts[own.source_attempt_id] = replace(
+        original,
+        parsed_response=parsed,
+        parsed_response_hash=canonical_payload_hash(parsed),
+    )
+    evidence["source_attempts_by_id"] = attempts
+
+    with pytest.raises(ValueError, match="parsed response|private source|content"):
+        build(**evidence)
 
 
 def test_validated_run_context_scans_manifest_once_then_serves_prompt_lookups(monkeypatch) -> None:

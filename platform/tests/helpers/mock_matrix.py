@@ -17,6 +17,7 @@ from agent_ex.domain import (
     derive_run_id,
 )
 from agent_ex.execution_evidence import MockAdapterExecutionBinding
+from agent_ex.engine import AttemptInvocationResult
 from agent_ex.initialization import assign_initial_reasons, assign_initial_stances
 from agent_ex.mock_matrix import (
     CANONICAL_CELL_IDS,
@@ -24,7 +25,10 @@ from agent_ex.mock_matrix import (
     MockScaleCase,
     build_mock_matched_seed_matrix,
     load_mock_scale_cases,
+    mock_adapter_semantics_hash,
+    mock_clock_sequence_binding,
 )
+from agent_ex.mock_run import MockEventInvocation
 from agent_ex.network import (
     build_agent_node_mapping,
     build_shadow_artifact,
@@ -32,6 +36,9 @@ from agent_ex.network import (
     build_ws_artifact,
 )
 from agent_ex.population import build_population_artifact
+from agent_ex.parser import ParserLimits
+from agent_ex.pipeline import MockEventPipeline
+from agent_ex.prompt import PromptLimits
 from agent_ex.schedule import (
     build_activation_schedule,
     build_attention_artifact,
@@ -39,6 +46,8 @@ from agent_ex.schedule import (
     build_publish_schedule,
 )
 from agent_ex.topic import TopicPackage
+from agent_ex.execution_evidence import MockAttemptPolicyBinding
+from agent_ex.storage import RunStorage
 
 
 FIXTURE_DIR = Path(__file__).parents[1] / "fixtures" / "paper1"
@@ -76,6 +85,192 @@ class MockMatrixFixture:
     family: MockArtifactFamily
     matrix: MockMatchedSeedMatrix
     clock: Callable[[], str]
+
+
+@dataclass(frozen=True, slots=True)
+class MatrixCellFixture:
+    pipeline: MockEventPipeline
+    storage: RunStorage
+    parser_limits: ParserLimits
+    prompt_limits: PromptLimits
+    policy: MockAttemptPolicyBinding
+    model_identity: Mapping[str, str]
+    request_parameters: Mapping[str, object]
+    http_status: int | None
+    usage: Mapping[str, object]
+    finish_reason: str | None
+    stance_label: str
+
+
+class MockClockLedger:
+    """Test-only deterministic clock; never model-seed or formal-time authority."""
+
+    def __init__(
+        self,
+        *,
+        scale_case: MockScaleCase,
+        replay_values: tuple[str, ...],
+        next_sequence_index: int,
+    ) -> None:
+        if type(next_sequence_index) is not int or next_sequence_index < 0:
+            raise ValueError("mock clock next_sequence_index must be nonnegative")
+        self._start = datetime.fromisoformat(scale_case.mock_clock_start.replace("Z", "+00:00"))
+        self._step = timedelta(seconds=scale_case.mock_clock_step_seconds)
+        self._replay = list(replay_values)
+        self._next_sequence_index = next_sequence_index
+        self.calls: list[str] = []
+
+    def __call__(self) -> str:
+        if self._replay:
+            value = self._replay.pop(0)
+        else:
+            value = (
+                (self._start + self._step * self._next_sequence_index)
+                .astimezone(timezone.utc)
+                .isoformat()
+                .replace("+00:00", "Z")
+            )
+            self._next_sequence_index += 1
+        self.calls.append(value)
+        return value
+
+
+def rebuild_mock_clock_ledger(
+    *,
+    scale_case: MockScaleCase,
+    storage: RunStorage,
+    manifest: RunManifest,
+    reconciliation: AttemptInvocationResult | None,
+) -> MockClockLedger:
+    """Rebuild mock clock position from public durable evidence and journal state."""
+
+    if not isinstance(manifest, RunManifest):
+        raise TypeError("mock clock rebuild requires a typed manifest")
+    if (
+        manifest.run_id != storage.binding.run_id
+        or canonical_payload_hash(manifest.to_payload()) != storage.binding.manifest_hash
+    ):
+        raise ValueError("mock clock manifest does not match storage binding")
+    matrix_binding = manifest.run_spec.get("mock_matrix_binding")
+    if matrix_binding is not None:
+        if not isinstance(matrix_binding, Mapping):
+            raise TypeError("mock matrix clock binding must be a mapping")
+        clock_id, clock_hash = mock_clock_sequence_binding(scale_case)
+        if (
+            matrix_binding.get("clock_sequence_id") != clock_id
+            or matrix_binding.get("clock_sequence_hash") != clock_hash
+        ):
+            raise ValueError("scale case clock does not match frozen manifest clock binding")
+    start = datetime.fromisoformat(scale_case.mock_clock_start.replace("Z", "+00:00"))
+    step_seconds = scale_case.mock_clock_step_seconds
+    observed_indexes: list[int] = []
+
+    def observe(value: str) -> None:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        delta = (parsed - start).total_seconds()
+        if delta < 0 or delta % step_seconds != 0:
+            raise ValueError("durable mock timestamp is outside the frozen clock sequence")
+        observed_indexes.append(int(delta // step_seconds))
+
+    journal = storage.current_event_journal()
+    ordinals = set(range(storage.progress.next_event_ordinal))
+    if journal.event_ordinal is not None:
+        ordinals.add(journal.event_ordinal)
+    for ordinal in sorted(ordinals):
+        event_id = derive_event_id(storage.binding.run_id, ordinal)
+        for attempt in storage.attempts_for_event(event_id):
+            if attempt.started_at is not None:
+                observe(attempt.started_at)
+            if attempt.finished_at is not None:
+                observe(attempt.finished_at)
+            invocation = storage.invocation_evidence(attempt.attempt_id)
+            if invocation is not None:
+                observe(invocation.execution_payload["started_at"])  # type: ignore[arg-type]
+                observe(invocation.execution_payload["finished_at"])  # type: ignore[arg-type]
+    for failure in storage.terminal_failure_evidence_prefix():
+        observe(failure.recorded_at)
+    if journal.latest_transition is not None:
+        transition = journal.latest_transition
+        if transition.started_at is not None:
+            observe(transition.started_at)
+        current_invocation = storage.invocation_evidence(transition.attempt_id)
+        if current_invocation is not None:
+            observe(current_invocation.execution_payload["started_at"])  # type: ignore[arg-type]
+            observe(current_invocation.execution_payload["finished_at"])  # type: ignore[arg-type]
+    if reconciliation is not None:
+        observe(reconciliation.evidence.started_at)
+        observe(reconciliation.evidence.finished_at)
+    replay_values: tuple[str, ...] = ()
+    if (
+        journal.resume_state == "in_progress_requires_provider_reconciliation"
+        and journal.latest_transition is not None
+        and journal.latest_transition.started_at is not None
+    ):
+        replay_values = (journal.latest_transition.started_at,)
+    return MockClockLedger(
+        scale_case=scale_case,
+        replay_values=replay_values,
+        next_sequence_index=0 if not observed_indexes else max(observed_indexes) + 1,
+    )
+
+
+def explicit_success_invocations(
+    fixture: MatrixCellFixture,
+    *,
+    start: int,
+    stop: int,
+    feed_capacity: int,
+    memory_window: int,
+) -> tuple[MockEventInvocation, ...]:
+    """Build an explicit mock success ledger without seed-pairing authority."""
+
+    if type(start) is not int or type(stop) is not int or not 0 <= start <= stop:
+        raise ValueError("mock invocation bounds must be strict ordered integers")
+    if start == stop:
+        return ()
+    all_event_ids = tuple(
+        derive_event_id(fixture.storage.binding.run_id, ordinal)
+        for ordinal in range(fixture.storage.progress.expected_event_count)
+    )
+    adapter = MockAdapter(
+        script={
+            event_id: (
+                MockScriptStep.success(
+                    {
+                        "stance": fixture.stance_label,
+                        "confidence": 3,
+                        "public_reason": f"mock matrix event {ordinal}",
+                    }
+                ),
+            )
+            for ordinal, event_id in enumerate(all_event_ids)
+        },
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
+    )
+    values = []
+    for ordinal in range(start, stop):
+        event_id = all_event_ids[ordinal]
+        values.append(
+            MockEventInvocation(
+                event_ordinal=ordinal,
+                event_id=event_id,
+                feed_capacity=feed_capacity,
+                memory_window=memory_window,
+                parser_limits=fixture.parser_limits,
+                prompt_limits=fixture.prompt_limits,
+                policy=fixture.policy,
+                model_identity=adapter.execution_binding().model_identity,
+                request_parameters=fixture.request_parameters,
+                model_seed=10_000 + ordinal,
+                adapter=adapter,
+                reconciliation=None,
+                http_status=fixture.http_status,
+                usage=fixture.usage,
+                finish_reason=fixture.finish_reason,
+            )
+        )
+    return tuple(values)
 
 
 def _manifest(
@@ -119,7 +314,8 @@ def _manifest(
             "provider": "deterministic-mock",
             "model": "deterministic-mock-model",
             "revision": "phase4b7-script-v1",
-            "runtime": "agent_ex.adapters.mock.MockAdapter",
+            "runtime": "1.0.0",
+            "mode": "script_only_no_generation",
         },
         environment={
             "python_version": "3.12.13",
@@ -137,33 +333,6 @@ def _manifest(
         started_at="2040-01-01T00:00:00Z",
         updated_at="2040-01-01T00:00:00Z",
         archive={"status": "pending", "uri": None, "hash": None},
-    )
-
-
-def _adapter_semantics_hash(
-    ordered_script_step_hashes: tuple[tuple[str, ...], ...],
-) -> str:
-    return canonical_payload_hash(
-        {
-            "expected_adapter_kind": "agent_ex.adapters.mock.MockAdapter",
-            "expected_adapter_version": "1.0.0",
-            "runtime_identity_hash": canonical_payload_hash(
-                {
-                    "adapter": "agent_ex.adapters.mock.MockAdapter",
-                    "adapter_version": "1.0.0",
-                    "provider": "deterministic-mock",
-                    "runtime_version": "1.0.0",
-                }
-            ),
-            "model_identity_hash": canonical_payload_hash(
-                {
-                    "model": "deterministic-mock-model",
-                    "revision": "phase4b7-script-v1",
-                    "mode": "script_only_no_generation",
-                }
-            ),
-            "ordered_script_step_hashes": ordered_script_step_hashes,
-        }
     )
 
 
@@ -251,7 +420,7 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
         (
             MockScriptStep.success(
                 {
-                    "stance": "label-4",
+                    "stance": topic_package.stance_labels[3],
                     "confidence": 3,
                     "public_reason": f"mock matrix event {ordinal}",
                 }
@@ -259,11 +428,18 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
         )
         for ordinal in range(schedule.count)
     )
-    ordered_step_hashes = tuple(
-        tuple(canonical_payload_hash(step.to_payload()) for step in steps)
-        for steps in steps_by_ordinal
+    semantic_event_ids = tuple(f"semantic-event-{ordinal}" for ordinal in range(schedule.count))
+    semantic_adapter = MockAdapter(
+        script={
+            event_id: steps_by_ordinal[ordinal]
+            for ordinal, event_id in enumerate(semantic_event_ids)
+        },
+        mock_runtime={"provider": "deterministic-mock", "runtime_version": "1.0.0"},
+        mock_only=True,
     )
-    adapter_semantics_hash = _adapter_semantics_hash(ordered_step_hashes)
+    adapter_semantics_hash = mock_adapter_semantics_hash(
+        semantic_adapter.execution_binding(), semantic_event_ids
+    )
     artifact_hashes = {
         "topic": topic_package.package_hash,
         "population": population.output_hash,
@@ -280,12 +456,7 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
         "publish": publish.output_hash,
         "schedule": schedule.schedule_hash,
     }
-    clock_payload = {
-        "schema_version": "paper1.mock-clock-sequence.v1",
-        "mock_clock_start": scale_case.mock_clock_start,
-        "mock_clock_step_seconds": scale_case.mock_clock_step_seconds,
-    }
-    clock_hash = canonical_payload_hash(clock_payload)
+    clock_id, clock_hash = mock_clock_sequence_binding(scale_case)
     manifests = {}
     for cell_id in CANONICAL_CELL_IDS:
         _, identity_token, continuity_token, exposure_token = cell_id.split("-")
@@ -316,7 +487,7 @@ def build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int) -> Moc
                 "exposure_mode": exposure_mode,
                 "exposure_graph_hash": exposure_graph_hash,
                 "artifact_hashes": artifact_hashes,
-                "clock_sequence_id": "mock-clock-" + clock_hash,
+                "clock_sequence_id": clock_id,
                 "clock_sequence_hash": clock_hash,
                 "adapter_semantics_hash": adapter_semantics_hash,
             },

@@ -5,6 +5,7 @@ import json
 import pytest
 
 from agent_ex.adapters import base as adapter_base
+from agent_ex.adapters import mock as mock_adapter_module
 from agent_ex.adapters.base import AdapterRequest, AdapterResponse, ModelAdapter
 from agent_ex.adapters.mock import (
     MockAdapter,
@@ -142,6 +143,30 @@ def test_execution_binding_is_available_before_generate_and_matches_response() -
             {"stance": "label-2", "confidence": 4, "public_reason": "scripted"}
         ).to_payload()
     )
+
+
+def test_execution_binding_is_built_once_and_structural_state_cannot_be_reassigned(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls = 0
+    original = mock_adapter_module._script_step_commitments
+
+    def counted(script):
+        nonlocal calls
+        calls += 1
+        return original(script)
+
+    monkeypatch.setattr(mock_adapter_module, "_script_step_commitments", counted)
+    value = adapter()
+    first = value.execution_binding()
+    for _ in range(50):
+        assert value.execution_binding() is first
+
+    assert calls == 1
+    with pytest.raises(AttributeError):
+        value._script = {}  # type: ignore[attr-defined]
+    with pytest.raises(AttributeError):
+        value._execution_binding = first  # type: ignore[attr-defined]
 
 
 def test_persisted_response_roundtrip_rehydrates_trusted_response_without_generate(

@@ -36,6 +36,7 @@ from .execution_evidence import (
 )
 from .feed import build_exposure_record, select_unread_feed
 from .memory import build_memory_view
+from .mock_matrix import mock_adapter_semantics_hash
 from .network import (
     build_agent_node_mapping,
     validate_shadow_artifact,
@@ -160,6 +161,28 @@ class MockEventPipeline:
         self._source_events_by_id: dict[str, GenerationEvent] = {}
         self._source_attempts_by_id: dict[str, GenerationAttempt] = {}
         self._source_index_ordinal = 0
+        self._validated_matrix_adapter_binding: MockAdapterExecutionBinding | None = None
+        matrix_binding = manifest.run_spec.get("mock_matrix_binding")
+        if matrix_binding is None:
+            self._matrix_adapter_semantics_hash = None
+            self._matrix_expected_event_ids: tuple[str, ...] = ()
+        else:
+            if not isinstance(matrix_binding, Mapping):
+                raise TypeError("mock matrix binding must be a mapping")
+            semantics_hash = matrix_binding.get("adapter_semantics_hash")
+            if type(semantics_hash) is not str:
+                raise ValueError("mock matrix adapter semantics hash must be text")
+            self._matrix_adapter_semantics_hash = semantics_hash
+            self._matrix_expected_event_ids = tuple(
+                derive_event_id(manifest.run_id, ordinal)
+                for ordinal in range(manifest.schedule.count)
+            )
+
+    @property
+    def run_id(self) -> str:
+        """Return the immutable constructor-bound run identity."""
+
+        return self._manifest.run_id
 
     def execute(
         self,
@@ -179,6 +202,18 @@ class MockEventPipeline:
         reconciliation: AttemptInvocationResult | None,
     ) -> MockEventPipelineOutcome:
         binding = adapter.execution_binding()
+        if (
+            self._matrix_adapter_semantics_hash is not None
+            and binding is not self._validated_matrix_adapter_binding
+        ):
+            if (
+                mock_adapter_semantics_hash(binding, self._matrix_expected_event_ids)
+                != self._matrix_adapter_semantics_hash
+            ):
+                raise ValueError(
+                    "runtime adapter semantics do not match the frozen mock matrix binding"
+                )
+            self._validated_matrix_adapter_binding = binding
         if dict(model_identity) != dict(binding.model_identity):
             raise ValueError("explicit model identity must exactly match the adapter binding")
         complete_adapter_identity = {

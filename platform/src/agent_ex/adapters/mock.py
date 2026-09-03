@@ -95,6 +95,15 @@ class MockScriptStep:
 
 
 class MockAdapter(ModelAdapter):
+    _STRUCTURAL_ATTRIBUTES = frozenset(
+        {"_script", "_runtime", "_script_hash", "_execution_binding"}
+    )
+
+    def __setattr__(self, name: str, value: object) -> None:
+        if name in self._STRUCTURAL_ATTRIBUTES and hasattr(self, name):
+            raise AttributeError(f"{name} is immutable after adapter construction")
+        object.__setattr__(self, name, value)
+
     def __init__(
         self,
         *,
@@ -122,21 +131,23 @@ class MockAdapter(ModelAdapter):
             normalized[event_id] = values
         self._script = MappingProxyType(dict(normalized))
         self._runtime = _freeze(dict(_RUNTIME))
-        self._script_hash = canonical_payload_hash(_script_step_commitments(self._script))
-
-    def execution_binding(self) -> MockAdapterExecutionBinding:
-        """Return immutable execution evidence derived from this frozen adapter."""
-
-        return _seal_mock_adapter_execution_binding(
+        commitments = _script_step_commitments(self._script)
+        self._execution_binding = _seal_mock_adapter_execution_binding(
             MockAdapterExecutionBinding.create(
                 expected_adapter_kind=_RUNTIME["adapter"],
                 expected_adapter_version=_RUNTIME["adapter_version"],
                 runtime_identity=dict(self._runtime),
                 model_identity=dict(_MODEL_IDENTITY),
-                script_step_hashes=_script_step_commitments(self._script),
+                script_step_hashes=commitments,
                 mock_only=True,
             )
         )
+        self._script_hash = self._execution_binding.script_hash
+
+    def execution_binding(self) -> MockAdapterExecutionBinding:
+        """Return immutable execution evidence derived from this frozen adapter."""
+
+        return self._execution_binding
 
     def generate(self, request: AdapterRequest) -> AdapterResponse:
         if not isinstance(request, AdapterRequest):

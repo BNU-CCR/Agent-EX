@@ -7,7 +7,9 @@ import hashlib
 import hmac
 import re
 import secrets
+import threading
 from typing import TYPE_CHECKING, Mapping
+import weakref
 
 from .adapters.base import AdapterRequest, AdapterResponse, _has_trusted_request_seal
 from .domain import (
@@ -90,6 +92,10 @@ _issue_binding_seal, _verify_binding_seal = _make_binding_capability_authenticat
 _issue_request_evidence_seal, _verify_request_evidence_seal = (
     _make_binding_capability_authenticator()
 )
+_TRUSTED_BINDING_REGISTRY: dict[
+    int, tuple[weakref.ReferenceType[object], object, tuple[object, ...]]
+] = {}
+_TRUSTED_BINDING_REGISTRY_LOCK = threading.Lock()
 
 
 @dataclass(frozen=True, slots=True)
@@ -184,7 +190,7 @@ class MockAttemptPolicyBinding:
         )
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, weakref_slot=True)
 class MockAdapterExecutionBinding:
     binding_id: str
     expected_adapter_kind: str
@@ -357,16 +363,55 @@ def _seal_mock_adapter_execution_binding(
         "_factory_seal",
         _issue_binding_seal(binding.record_hash),  # type: ignore[operator]
     )
+    key = id(binding)
+
+    def remove(reference: weakref.ReferenceType[object]) -> None:
+        with _TRUSTED_BINDING_REGISTRY_LOCK:
+            current = _TRUSTED_BINDING_REGISTRY.get(key)
+            if current is not None and current[0] is reference:
+                _TRUSTED_BINDING_REGISTRY.pop(key, None)
+
+    reference = weakref.ref(binding, remove)
+    with _TRUSTED_BINDING_REGISTRY_LOCK:
+        _TRUSTED_BINDING_REGISTRY[key] = (
+            reference,
+            binding._factory_seal,
+            _trusted_binding_snapshot(binding),
+        )
     return binding
+
+
+def _trusted_binding_snapshot(binding: MockAdapterExecutionBinding) -> tuple[object, ...]:
+    """Capture O(1)-comparable fields for a deeply immutable in-process binding."""
+
+    return (
+        binding.binding_id,
+        binding.expected_adapter_kind,
+        binding.expected_adapter_version,
+        id(binding.runtime_identity),
+        binding.runtime_identity_hash,
+        id(binding.model_identity),
+        binding.model_identity_hash,
+        id(binding.script_step_hashes),
+        binding.script_hash,
+        binding.mock_only,
+        binding.record_hash,
+    )
 
 
 def _has_trusted_mock_adapter_execution_binding(
     binding: MockAdapterExecutionBinding,
 ) -> bool:
     try:
+        if not isinstance(binding, MockAdapterExecutionBinding):
+            return False
+        with _TRUSTED_BINDING_REGISTRY_LOCK:
+            entry = _TRUSTED_BINDING_REGISTRY.get(id(binding))
         return (
-            isinstance(binding, MockAdapterExecutionBinding)
-            and binding.record_hash == canonical_payload_hash(binding.content_payload())
+            entry is not None
+            and entry[0]() is binding
+            and entry[1] == binding._factory_seal
+            and entry[2] == _trusted_binding_snapshot(binding)
             and _verify_binding_seal(  # type: ignore[operator]
                 binding._factory_seal, binding.record_hash
             )

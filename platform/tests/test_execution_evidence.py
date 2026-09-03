@@ -295,6 +295,32 @@ def test_adapter_binding_capability_is_private_and_not_serialized() -> None:
     assert not hasattr(execution_evidence_module, "seal_mock_adapter_execution_binding")
 
 
+def test_trusted_adapter_binding_check_is_constant_time_and_identity_bound(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    binding = adapter_for(prepared(RUN_ID, ordinal=9).authorization.event_id).execution_binding()
+    calls = 0
+    original = execution_evidence_module.canonical_payload_hash
+
+    def counted(value):
+        nonlocal calls
+        calls += 1
+        return original(value)
+
+    monkeypatch.setattr(execution_evidence_module, "canonical_payload_hash", counted)
+    for _ in range(50):
+        assert execution_evidence_module._has_trusted_mock_adapter_execution_binding(binding)
+    assert calls == 0
+
+    restored = MockAdapterExecutionBinding.from_payload(binding.to_payload())
+    assert not execution_evidence_module._has_trusted_mock_adapter_execution_binding(restored)
+    original_script_hash = binding.script_hash
+    object.__setattr__(binding, "script_hash", "f" * 64)
+    assert not execution_evidence_module._has_trusted_mock_adapter_execution_binding(binding)
+    object.__setattr__(binding, "script_hash", original_script_hash)
+    assert execution_evidence_module._has_trusted_mock_adapter_execution_binding(binding)
+
+
 def test_public_adapter_binding_factory_is_structural_but_untrusted() -> None:
     trusted = adapter_for(prepared(RUN_ID, ordinal=9).authorization.event_id).execution_binding()
     public = MockAdapterExecutionBinding.create(

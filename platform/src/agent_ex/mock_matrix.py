@@ -252,7 +252,11 @@ def _require_hash(name: str, value: object) -> str:
     return value
 
 
-def _clock_binding(scale_case: MockScaleCase) -> tuple[str, str]:
+def mock_clock_sequence_binding(scale_case: MockScaleCase) -> tuple[str, str]:
+    """Derive the explicit deterministic clock identity for one mock scale case."""
+
+    if not isinstance(scale_case, MockScaleCase):
+        raise TypeError("mock clock binding requires a MockScaleCase")
     payload = {
         "schema_version": "paper1.mock-clock-sequence.v1",
         "mock_clock_start": scale_case.mock_clock_start,
@@ -262,10 +266,22 @@ def _clock_binding(scale_case: MockScaleCase) -> tuple[str, str]:
     return "mock-clock-" + digest, digest
 
 
-def _adapter_semantics_hash(
+def mock_adapter_semantics_hash(
     binding: MockAdapterExecutionBinding,
     expected_event_ids: tuple[str, ...],
 ) -> str:
+    """Bind a complete ordered mock script to its runtime and model identity."""
+
+    if not isinstance(binding, MockAdapterExecutionBinding):
+        raise TypeError("mock adapter semantics require a typed execution binding")
+    if (
+        type(expected_event_ids) is not tuple
+        or any(type(event_id) is not str or not event_id for event_id in expected_event_ids)
+        or len(set(expected_event_ids)) != len(expected_event_ids)
+    ):
+        raise ValueError("expected mock event IDs must be a unique ordered tuple")
+    if set(binding.script_step_hashes) != set(expected_event_ids):
+        raise ValueError("mock adapter script must exactly cover the expected event IDs")
     return canonical_payload_hash(
         {
             "expected_adapter_kind": binding.expected_adapter_kind,
@@ -303,7 +319,7 @@ def _expected_run_binding(
         "artifact_hashes": dict(artifact_hashes),
         "clock_sequence_id": clock_sequence_id,
         "clock_sequence_hash": clock_sequence_hash,
-        "adapter_semantics_hash": _adapter_semantics_hash(adapter_binding, expected_event_ids),
+        "adapter_semantics_hash": mock_adapter_semantics_hash(adapter_binding, expected_event_ids),
     }
 
 
@@ -648,7 +664,7 @@ def build_mock_matched_seed_matrix(
         expected_matched_seed=matched_seed,
     )
     expected_schedule_hash = schedule_hashes["frozen_schedule"]
-    clock_id, clock_hash = _clock_binding(scale_case)
+    clock_id, clock_hash = mock_clock_sequence_binding(scale_case)
     artifact_hashes = {
         "topic": topic_package.package_hash,
         **{name: artifact.output_hash for name, artifact in artifacts.items()},
@@ -675,7 +691,7 @@ def build_mock_matched_seed_matrix(
             raise TypeError("adapter bindings must be typed")
         if (
             manifest.model_identity["provider"] != binding.runtime_identity.get("provider")
-            or manifest.model_identity["runtime"] != binding.expected_adapter_kind
+            or manifest.model_identity["runtime"] != binding.runtime_identity.get("runtime_version")
             or manifest.model_identity["model"] != binding.model_identity.get("model")
             or manifest.model_identity["revision"] != binding.model_identity.get("revision")
         ):
@@ -754,7 +770,7 @@ def validate_mock_matched_seed_matrix(matrix: MockMatchedSeedMatrix) -> None:
         raise TypeError("matrix matched seed must be a strict integer")
     if tuple(cell.cell_id for cell in matrix.cells) != CANONICAL_CELL_IDS:
         raise ValueError("matrix cells must be the canonical ordered exact cover")
-    clock_id, clock_hash = _clock_binding(matrix.scale_case)
+    clock_id, clock_hash = mock_clock_sequence_binding(matrix.scale_case)
     allowed_sweep_counts = {
         matrix.scale_case.integration_sweeps,
         matrix.scale_case.recovery_sweeps,
@@ -808,7 +824,7 @@ def validate_mock_matched_seed_matrix(matrix: MockMatchedSeedMatrix) -> None:
         binding = cell.adapter_binding
         if (
             manifest.model_identity["provider"] != binding.runtime_identity.get("provider")
-            or manifest.model_identity["runtime"] != binding.expected_adapter_kind
+            or manifest.model_identity["runtime"] != binding.runtime_identity.get("runtime_version")
             or manifest.model_identity["model"] != binding.model_identity.get("model")
             or manifest.model_identity["revision"] != binding.model_identity.get("revision")
         ):
