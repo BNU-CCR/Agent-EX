@@ -4,10 +4,13 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
+import time
+import tracemalloc
 from typing import Callable, Mapping
 
 from agent_ex.adapters import MockAdapter, MockScriptStep
 from agent_ex.artifacts import ArtifactEnvelope
+from agent_ex.checkpoint import Checkpoint, build_checkpoint, load_checkpoint, validate_checkpoint
 from agent_ex.domain import (
     EventStatus,
     FrozenSchedule,
@@ -60,6 +63,7 @@ from agent_ex.state import LatestPublicPointer, PrivateState, PrivateUpdate, Pub
 
 
 FIXTURE_DIR = Path(__file__).parents[1] / "fixtures" / "paper1"
+MOCK_WS_K_BY_POPULATION = {20: 4, 100: 4, 1000: 10}
 
 
 def _load_envelope(name: str) -> ArtifactEnvelope:
@@ -132,6 +136,31 @@ class BoundMockMatrixCell:
 class MockCellExecutionResult:
     run_report: MockRunReport
     process_audit: MockProcessAudit
+
+
+@dataclass(frozen=True, slots=True)
+class MockPrefixMeasurement:
+    report: MockRunReport
+    final_checkpoint: Checkpoint
+    adapter_calls: int
+    elapsed_seconds: float
+    peak_memory_bytes: int
+    sqlite_bytes: int
+    checkpoint_bytes: int
+
+
+@dataclass(frozen=True, slots=True)
+class MockReleaseMeasurement:
+    report: MockRunReport
+    final_checkpoint: Checkpoint
+    audit: MockProcessAudit
+    adapter_calls: int
+    elapsed_seconds: float
+    peak_memory_bytes: int
+    sqlite_bytes: int
+    checkpoint_count: int
+    checkpoint_bytes: int
+    audit_bytes: int
 
 
 class MockClockLedger:
@@ -643,6 +672,144 @@ def execute_all_cells(
     return results
 
 
+def build_stress_cell_fixture(root: Path, *, case_id: str, cell_id: str) -> BoundMockMatrixCell:
+    """Build the single explicitly designated release cell from the full shape fixture."""
+
+    cases = load_mock_scale_cases(_load_envelope("mock_scale_cases.artifact.json"))
+    scale_case = next(case for case in cases if case.case_id == case_id)
+    if scale_case.release_execution is not True or scale_case.stress_cell_id != cell_id:
+        raise ValueError("stress execution must use the explicit release case and cell")
+    matrix = build_mock_matrix_fixture(
+        root,
+        case_id=case_id,
+        sweeps=scale_case.shape_sweeps,
+    )
+    return create_mock_matrix_cell(root, matrix_fixture=matrix, cell_id=cell_id)
+
+
+def measure_mock_prefix(
+    fixture: BoundMockMatrixCell, *, target_event_ordinal: int
+) -> MockPrefixMeasurement:
+    """Measure an exact stress prefix without declaring an unfrozen performance threshold."""
+
+    start = fixture.cell.storage.progress.next_event_ordinal
+    if not start < target_event_ordinal <= fixture.cell.storage.progress.expected_event_count:
+        raise ValueError("measured prefix target must advance within the frozen schedule")
+    checkpoint_path = fixture.database_path.parent / f"checkpoint-{target_event_ordinal}.json"
+    adapter_calls = 0
+    tracemalloc.start()
+    started = time.perf_counter()
+    try:
+        invocations = explicit_success_invocations(
+            fixture.cell,
+            start=start,
+            stop=target_event_ordinal,
+            feed_capacity=fixture.matrix_fixture.scale_case.mock_feed_capacity,
+            memory_window=fixture.matrix_fixture.scale_case.mock_memory_window,
+        )
+        adapter = invocations[0].adapter
+        original_generate = adapter.generate
+
+        def counted_generate(request):
+            nonlocal adapter_calls
+            adapter_calls += 1
+            return original_generate(request)
+
+        adapter.generate = counted_generate  # type: ignore[method-assign]
+        report = execute_mock_run(
+            pipeline=fixture.cell.pipeline,
+            storage=fixture.cell.storage,
+            invocations=invocations,
+            control=MockRunControl(
+                target_event_ordinal=target_event_ordinal,
+                checkpoint_ordinals=(target_event_ordinal,),
+                checkpoint_paths=(checkpoint_path,),
+            ),
+        )
+        checkpoint = build_checkpoint(fixture.cell.storage)
+    finally:
+        elapsed = time.perf_counter() - started
+        _, peak_memory = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+    return MockPrefixMeasurement(
+        report=report,
+        final_checkpoint=checkpoint,
+        adapter_calls=adapter_calls,
+        elapsed_seconds=elapsed,
+        peak_memory_bytes=peak_memory,
+        sqlite_bytes=fixture.database_path.stat().st_size,
+        checkpoint_bytes=checkpoint_path.stat().st_size,
+    )
+
+
+def measure_mock_release_run(fixture: BoundMockMatrixCell) -> MockReleaseMeasurement:
+    """Execute and measure the complete explicit release cell."""
+
+    start = fixture.cell.storage.progress.next_event_ordinal
+    target = fixture.cell.storage.progress.expected_event_count
+    checkpoint_ordinals = (target,)
+    checkpoint_paths = (fixture.database_path.parent / "checkpoint-final-sweep.json",)
+    adapter_calls = 0
+    tracemalloc.start()
+    started = time.perf_counter()
+    reopened: BoundMockMatrixCell | None = None
+    try:
+        invocations = explicit_success_invocations(
+            fixture.cell,
+            start=start,
+            stop=target,
+            feed_capacity=fixture.matrix_fixture.scale_case.mock_feed_capacity,
+            memory_window=fixture.matrix_fixture.scale_case.mock_memory_window,
+        )
+        adapter = invocations[0].adapter
+        original_generate = adapter.generate
+
+        def counted_generate(request):
+            nonlocal adapter_calls
+            adapter_calls += 1
+            return original_generate(request)
+
+        adapter.generate = counted_generate  # type: ignore[method-assign]
+        report = execute_mock_run(
+            pipeline=fixture.cell.pipeline,
+            storage=fixture.cell.storage,
+            invocations=invocations,
+            control=MockRunControl(
+                target_event_ordinal=target,
+                checkpoint_ordinals=checkpoint_ordinals,
+                checkpoint_paths=checkpoint_paths,
+            ),
+        )
+        reopened = reopen_mock_matrix_cell(fixture, reconciliation=None)
+        final_checkpoint = load_checkpoint(checkpoint_paths[-1])
+        if validate_checkpoint(final_checkpoint, reopened.cell.storage) != "current":
+            raise RuntimeError("release final checkpoint does not validate after reopen")
+        audit = build_cell_process_audit(reopened)
+        audit_bytes = len(
+            json.dumps(
+                audit.to_payload(), ensure_ascii=False, sort_keys=True, separators=(",", ":")
+            ).encode("utf-8")
+        )
+    finally:
+        elapsed = time.perf_counter() - started
+        _, peak_memory = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        if reopened is not None:
+            reopened.cell.storage.close()
+    return MockReleaseMeasurement(
+        report=report,
+        final_checkpoint=final_checkpoint,
+        audit=audit,
+        adapter_calls=adapter_calls,
+        elapsed_seconds=elapsed,
+        peak_memory_bytes=peak_memory,
+        sqlite_bytes=fixture.database_path.stat().st_size,
+        checkpoint_count=len(checkpoint_paths),
+        checkpoint_bytes=sum(path.stat().st_size for path in checkpoint_paths),
+        audit_bytes=audit_bytes,
+    )
+
+
 def _manifest(
     *,
     cell_id: str,
@@ -758,7 +925,19 @@ def _build_mock_artifact_family(
         matched_seed=matched_seed,
         mock_only=True,
     )
-    ws = build_ws_artifact(n=n, k=4, p=0.05, matched_seed=matched_seed, mock_only=True)
+    try:
+        mock_ws_k = MOCK_WS_K_BY_POPULATION[n]
+    except KeyError as error:
+        raise ValueError(
+            "mock artifact family population has no explicit WS fixture degree"
+        ) from error
+    ws = build_ws_artifact(
+        n=n,
+        k=mock_ws_k,
+        p=0.05,
+        matched_seed=matched_seed,
+        mock_only=True,
+    )
     shadow = build_shadow_artifact(
         ws,
         matched_seed=matched_seed,

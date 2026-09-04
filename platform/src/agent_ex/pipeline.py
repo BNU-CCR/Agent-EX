@@ -380,16 +380,10 @@ class MockEventPipeline:
         source_events, source_attempts = self._source_indexes(ordinal)
         context = self._ensure_run_context(ordinal, source_events, source_attempts)
         public_posts_by_id = {post.post_id: post for post in unread_posts}
-        all_neighbor_updates = {
-            update.update_id: update
-            for neighbor in neighbors
-            for update in self._storage.private_updates_for_agent(neighbor)
-            if update.published
-        }
-        candidate_update_ids = {candidate.source_update_id for candidate in selection.candidates}
-        source_updates_by_id = {
-            update_id: all_neighbor_updates[update_id] for update_id in candidate_update_ids
-        }
+        candidate_update_ids = tuple(
+            dict.fromkeys(candidate.source_update_id for candidate in selection.candidates)
+        )
+        source_updates_by_id = self._storage.private_updates_by_id(candidate_update_ids)
         evidence_event_ids = {
             update.event_id for update in private_updates if update.event_id is not None
         } | {
@@ -793,24 +787,9 @@ class MockEventPipeline:
     def _unread_public_posts(
         self, neighbors: tuple[str, ...], last_scanned: int | None
     ) -> tuple[PublicPost, ...]:
-        posts = tuple(
-            post
-            for neighbor in neighbors
-            for post in self._storage.public_posts_for_agent(neighbor)
-            if last_scanned is None
-            or (
-                post.published_event_ordinal is not None
-                and post.published_event_ordinal > last_scanned
-            )
-        )
-        return tuple(
-            sorted(
-                posts,
-                key=lambda post: (
-                    -1 if post.published_event_ordinal is None else post.published_event_ordinal,
-                    post.post_id,
-                ),
-            )
+        return self._storage.unread_public_posts_for_agents(
+            neighbors,
+            last_scanned,
         )
 
     @staticmethod

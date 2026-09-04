@@ -52,6 +52,7 @@ if TYPE_CHECKING:
 _SCHEMA_VERSION = "paper1.run-storage.v6"
 _SQLITE_USER_VERSION = 6
 _SQLITE_SIDECAR_SUFFIXES = ("-wal", "-shm", "-journal")
+_EXECUTION_STATE_STORAGE_SCHEMA_VERSION = "paper1.execution-state-storage.v1"
 
 
 def changed_request_parameter_paths(
@@ -245,6 +246,78 @@ class ExecutionState:
             status_counts=payload["status_counts"],  # type: ignore[arg-type]
             failed_event_ids=tuple(payload["failed_event_ids"]),  # type: ignore[arg-type]
         )
+
+
+def _execution_state_storage_payload(value: ExecutionState) -> dict[str, object]:
+    """Encode only irreducible execution state; the event IDs are a derived prefix."""
+
+    event_id_count = len(value.event_ids)
+    if event_id_count and (
+        value.event_ids[0] != derive_event_id(value.run_id, 0)
+        or value.event_ids[-1] != derive_event_id(value.run_id, event_id_count - 1)
+    ):
+        raise ValueError("execution event ID boundaries must match the ordinal prefix")
+    return {
+        "storage_schema_version": _EXECUTION_STATE_STORAGE_SCHEMA_VERSION,
+        "execution_schema_version": value.schema_version,
+        "run_id": value.run_id,
+        "baseline_manifest_hash": value.baseline_manifest_hash,
+        "status": value.status.value,
+        "next_event_ordinal": value.next_event_ordinal,
+        "expected_event_count": value.expected_event_count,
+        "current_event_id": value.current_event_id,
+        "event_id_count": event_id_count,
+        "status_counts": dict(value.status_counts),
+        "failed_event_ids": list(value.failed_event_ids),
+    }
+
+
+def _execution_state_from_storage_payload(payload: Mapping[str, object]) -> ExecutionState:
+    """Replay compact v1 storage or the legacy full execution-state representation."""
+
+    if "storage_schema_version" not in payload:
+        return ExecutionState.from_payload(payload)
+    fields = {
+        "storage_schema_version",
+        "execution_schema_version",
+        "run_id",
+        "baseline_manifest_hash",
+        "status",
+        "next_event_ordinal",
+        "expected_event_count",
+        "current_event_id",
+        "event_id_count",
+        "status_counts",
+        "failed_event_ids",
+    }
+    if type(payload) is not dict or set(payload) != fields:
+        raise ValueError("stored execution state payload fields do not match")
+    if payload["storage_schema_version"] != _EXECUTION_STATE_STORAGE_SCHEMA_VERSION:
+        raise ValueError("stored execution state schema version is unsupported")
+    if type(payload["event_id_count"]) is not int or payload["event_id_count"] < 0:
+        raise TypeError("stored execution event_id_count must be a non-negative integer")
+    if type(payload["status_counts"]) is not dict:
+        raise TypeError("stored execution status_counts must be a mapping")
+    if type(payload["failed_event_ids"]) is not list:
+        raise TypeError("stored failed event IDs must be an array")
+    run_id = payload["run_id"]
+    if type(run_id) is not str:
+        raise TypeError("stored execution run_id must be text")
+    event_ids = tuple(
+        derive_event_id(run_id, ordinal) for ordinal in range(payload["event_id_count"])
+    )
+    return ExecutionState(
+        schema_version=payload["execution_schema_version"],  # type: ignore[arg-type]
+        run_id=run_id,
+        baseline_manifest_hash=payload["baseline_manifest_hash"],  # type: ignore[arg-type]
+        status=ExecutionStatus(payload["status"]),  # type: ignore[arg-type]
+        next_event_ordinal=payload["next_event_ordinal"],  # type: ignore[arg-type]
+        expected_event_count=payload["expected_event_count"],  # type: ignore[arg-type]
+        current_event_id=payload["current_event_id"],  # type: ignore[arg-type]
+        event_ids=event_ids,
+        status_counts=payload["status_counts"],  # type: ignore[arg-type]
+        failed_event_ids=tuple(payload["failed_event_ids"]),  # type: ignore[arg-type]
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -943,8 +1016,26 @@ class RunStorage:
             identity_value.st_dev,
             identity_value.st_ino,
         )
+        self._verified_connection_signature: tuple[int, int] | None = None
+        self._adapter_execution_binding_cache: MockAdapterExecutionBinding | None = None
+        self._execution_state_cache: ExecutionState | None = None
+        self._pending_execution_state: ExecutionState | None = None
+        self._trusted_write_transaction = False
         self._assert_database_single_link(capture_identity=True)
         self._binding = self._read_binding()
+
+    def _connection_signature(self) -> tuple[int, int]:
+        data_version = self._connection.execute("PRAGMA data_version").fetchone()[0]
+        if type(data_version) is not int:
+            raise RuntimeError("SQLite data_version must be a strict integer")
+        return data_version, self._connection.total_changes
+
+    def _mark_validated_connection_state(self) -> None:
+        if self._verified_connection_signature is not None:
+            self._verified_connection_signature = self._connection_signature()
+
+    def _connection_state_is_verified(self) -> bool:
+        return self._verified_connection_signature == self._connection_signature()
 
     @staticmethod
     def _open_database_identity_handle(database: Path) -> BinaryIO:
@@ -1127,6 +1218,8 @@ class RunStorage:
                 );
                 CREATE INDEX idx_private_updates_event
                     ON private_updates(event_ordinal);
+                CREATE INDEX idx_private_updates_agent_event
+                    ON private_updates(agent_id, event_ordinal);
                 CREATE TABLE private_states (
                     agent_id TEXT PRIMARY KEY,
                     payload_json TEXT NOT NULL,
@@ -1311,7 +1404,10 @@ class RunStorage:
             )
             connection.execute(
                 "INSERT INTO execution_state VALUES (1, ?, ?)",
-                (_canonical_json(initial_execution.to_payload()), initial_execution.payload_hash),
+                (
+                    _canonical_json(_execution_state_storage_payload(initial_execution)),
+                    canonical_payload_hash(_execution_state_storage_payload(initial_execution)),
+                ),
             )
             connection.commit()
             connection.close()
@@ -1580,6 +1676,8 @@ class RunStorage:
     def _begin_write(self) -> None:
         """Open a write transaction only after revalidating the writer capability."""
 
+        self._trusted_write_transaction = self._connection_state_is_verified()
+        self._pending_execution_state = None
         self._connection.execute("BEGIN IMMEDIATE")
         try:
             self.assert_run_lease_owned()
@@ -1592,6 +1690,11 @@ class RunStorage:
 
         self.assert_run_lease_owned()
         self._connection.commit()
+        self._mark_validated_connection_state()
+        if self._pending_execution_state is not None:
+            self._execution_state_cache = self._pending_execution_state
+            self._pending_execution_state = None
+        self._trusted_write_transaction = False
 
     def _assert_retry_authorized(self, event_id: str, attempt_index: int) -> None:
         """Require the immediately preceding FAILED attempt's exact causal pair."""
@@ -1680,6 +1783,13 @@ class RunStorage:
                 )
 
     def execution_state(self) -> ExecutionState:
+        if self._connection.in_transaction and self._trusted_write_transaction:
+            if self._pending_execution_state is not None:
+                return self._pending_execution_state
+            if self._execution_state_cache is not None:
+                return self._execution_state_cache
+        if self._execution_state_cache is not None and self._connection_state_is_verified():
+            return self._execution_state_cache
         row = self._connection.execute(
             "SELECT payload_json, payload_hash FROM execution_state WHERE singleton = 1"
         ).fetchone()
@@ -1688,9 +1798,11 @@ class RunStorage:
         payload = _load_canonical_json(row[0], "execution state")
         if canonical_payload_hash(payload) != row[1]:
             raise ValueError("stored execution state payload hash does not match")
-        value = ExecutionState.from_payload(payload)  # type: ignore[arg-type]
-        if value.payload_hash != row[1] or value.run_id != self.binding.run_id:
+        value = _execution_state_from_storage_payload(payload)  # type: ignore[arg-type]
+        if value.run_id != self.binding.run_id:
             raise ValueError("stored execution state identity does not match")
+        if self._connection_state_is_verified():
+            self._execution_state_cache = value
         return value
 
     def current_event_journal(self) -> EventJournalState:
@@ -1759,10 +1871,12 @@ class RunStorage:
         )
 
     def _replace_execution_state(self, value: ExecutionState) -> None:
+        payload = _execution_state_storage_payload(value)
         self._connection.execute(
             "UPDATE execution_state SET payload_json = ?, payload_hash = ? WHERE singleton = 1",
-            (_canonical_json(value.to_payload()), value.payload_hash),
+            (_canonical_json(payload), canonical_payload_hash(payload)),
         )
+        self._pending_execution_state = value
 
     def append_attempt(
         self,
@@ -2068,6 +2182,7 @@ class RunStorage:
                 pending_attempt=pending_attempt,
             )
             self._commit_write()
+            self._adapter_execution_binding_cache = adapter_binding
         except BaseException:
             self._connection.rollback()
             raise
@@ -2162,16 +2277,24 @@ class RunStorage:
         )
         if pending_links != request_links:
             raise ValueError("PENDING attempt does not exactly bind request authorization")
-        binding_rows = self._connection.execute(
-            "SELECT binding_id, payload, record_hash FROM adapter_execution_bindings"
-        ).fetchall()
-        expected_binding_row = (
-            adapter_binding.binding_id,
-            _canonical_json(adapter_binding.to_payload()),
-            adapter_binding.record_hash,
+        cached_binding = self._adapter_execution_binding_cache
+        trusted_existing_binding = (
+            cached_binding is not None
+            and self._connection_state_is_verified()
+            and cached_binding.binding_id == adapter_binding.binding_id
+            and cached_binding.record_hash == adapter_binding.record_hash
         )
-        if binding_rows and (len(binding_rows) != 1 or binding_rows[0] != expected_binding_row):
-            raise ValueError("one run requires one exact adapter attestation")
+        if not trusted_existing_binding:
+            binding_rows = self._connection.execute(
+                "SELECT binding_id, payload, record_hash FROM adapter_execution_bindings"
+            ).fetchall()
+            expected_binding_row = (
+                adapter_binding.binding_id,
+                _canonical_json(adapter_binding.to_payload()),
+                adapter_binding.record_hash,
+            )
+            if binding_rows and (len(binding_rows) != 1 or binding_rows[0] != expected_binding_row):
+                raise ValueError("one run requires one exact adapter attestation")
         prior_row = self._connection.execute(
             """SELECT payload FROM adapter_requests
                WHERE event_id = ? ORDER BY rowid DESC LIMIT 1""",
@@ -2232,13 +2355,14 @@ class RunStorage:
             policy.to_payload(),
             policy.record_hash,
         )
-        self._insert_or_exact_match_evidence(
-            "adapter_execution_bindings",
-            "binding_id",
-            adapter_binding.binding_id,
-            adapter_binding.to_payload(),
-            adapter_binding.record_hash,
-        )
+        if not trusted_existing_binding:
+            self._insert_or_exact_match_evidence(
+                "adapter_execution_bindings",
+                "binding_id",
+                adapter_binding.binding_id,
+                adapter_binding.to_payload(),
+                adapter_binding.record_hash,
+            )
         self._insert_or_exact_match_evidence(
             "adapter_requests",
             "attempt_id",
@@ -2318,6 +2442,18 @@ class RunStorage:
         from .execution_evidence import MockAdapterExecutionBinding
 
         _require_id("binding_id_or_attempt_id", binding_id_or_attempt_id)
+        cached = self._adapter_execution_binding_cache
+        if cached is not None and self._connection_state_is_verified():
+            if binding_id_or_attempt_id == cached.binding_id:
+                return cached
+            linked = self._connection.execute(
+                "SELECT adapter_binding_hash FROM adapter_requests WHERE attempt_id = ?",
+                (binding_id_or_attempt_id,),
+            ).fetchone()
+            if linked is not None:
+                if linked[0] != cached.record_hash:
+                    raise ValueError("adapter request binding row does not match cached binding")
+                return cached
         row = self._read_evidence_payload(
             "adapter_execution_bindings",
             "binding_id",
@@ -2350,7 +2486,10 @@ class RunStorage:
             ):
                 raise ValueError("adapter execution binding row envelope mismatch")
             row = (payload, raw[2])
-        return MockAdapterExecutionBinding.from_payload(row[0])
+        binding = MockAdapterExecutionBinding.from_payload(row[0])
+        if self._connection_state_is_verified():
+            self._adapter_execution_binding_cache = binding
+        return binding
 
     def adapter_request_evidence(self, attempt_id: str) -> AdapterRequestEvidence | None:
         from .execution_evidence import AdapterRequestEvidence
@@ -3474,6 +3613,53 @@ class RunStorage:
             result.append(PublicPost.from_payload(payload))
         return tuple(result)
 
+    def unread_public_posts_for_agents(
+        self,
+        agent_ids: tuple[str, ...],
+        last_scanned_event_ordinal: int | None,
+    ) -> tuple[PublicPost, ...]:
+        """Read only the public rows that can enter one finite unread feed."""
+
+        if type(agent_ids) is not tuple:
+            raise TypeError("agent_ids must be a tuple")
+        for agent_id in agent_ids:
+            _require_id("agent_id", agent_id)
+        if len(set(agent_ids)) != len(agent_ids):
+            raise ValueError("agent_ids must not contain duplicates")
+        if last_scanned_event_ordinal is not None:
+            _require_int("last_scanned_event_ordinal", last_scanned_event_ordinal)
+        if not agent_ids:
+            return ()
+        placeholders = ", ".join("?" for _ in agent_ids)
+        if last_scanned_event_ordinal is None:
+            predicate = ""
+            parameters: tuple[object, ...] = agent_ids
+        else:
+            predicate = "AND event_ordinal IS NOT NULL AND event_ordinal > ?"
+            parameters = (*agent_ids, last_scanned_event_ordinal)
+        rows = self._connection.execute(
+            f"""SELECT post_id, agent_id, event_ordinal, payload_json, payload_hash
+                FROM public_posts
+                WHERE agent_id IN ({placeholders}) {predicate}
+                ORDER BY CASE WHEN event_ordinal IS NULL THEN -1 ELSE event_ordinal END,
+                         post_id""",
+            parameters,
+        ).fetchall()
+        result: list[PublicPost] = []
+        for post_id, agent_id, event_ordinal, payload_json, payload_hash in rows:
+            payload = _load_canonical_json(payload_json, "unread public post")
+            if canonical_payload_hash(payload) != payload_hash:
+                raise ValueError("stored unread public post hash does not match")
+            post = PublicPost.from_payload(payload)
+            if (
+                post.post_id != post_id
+                or post.author_agent_id != agent_id
+                or post.published_event_ordinal != event_ordinal
+            ):
+                raise ValueError("unread public post row identity does not match")
+            result.append(post)
+        return tuple(result)
+
     def private_updates_for_agent(self, agent_id: str) -> tuple[PrivateUpdate, ...]:
         """Strictly replay one agent's full private history, including round 0."""
 
@@ -3515,6 +3701,44 @@ class RunStorage:
         if current != previous_state:
             raise ValueError("private update history does not replay current private state")
         return tuple(values)
+
+    def private_updates_by_id(self, update_ids: tuple[str, ...]) -> Mapping[str, PrivateUpdate]:
+        """Read an exact, typed source-update subset for already verified prompt evidence."""
+
+        if type(update_ids) is not tuple:
+            raise TypeError("update_ids must be a tuple")
+        for update_id in update_ids:
+            _require_id("update_id", update_id)
+        if len(set(update_ids)) != len(update_ids):
+            raise ValueError("update_ids must not contain duplicates")
+        if not update_ids:
+            return MappingProxyType({})
+        placeholders = ", ".join("?" for _ in update_ids)
+        rows = self._connection.execute(
+            f"""SELECT update_id, event_ordinal, payload_json, payload_hash
+                FROM private_updates WHERE update_id IN ({placeholders})""",
+            update_ids,
+        ).fetchall()
+        values: dict[str, PrivateUpdate] = {}
+        for update_id, event_ordinal, payload_json, payload_hash in rows:
+            payload = _load_canonical_json(payload_json, "private update source")
+            if canonical_payload_hash(payload) != payload_hash:
+                raise ValueError("stored private update source hash does not match")
+            value = PrivateUpdate.from_payload(payload)
+            if value.update_id != update_id or value.event_ordinal != event_ordinal:
+                raise ValueError("private update source row identity does not match")
+            if event_ordinal is not None:
+                event = self.event_at(event_ordinal)
+                if (
+                    event is None
+                    or event.event_id != value.event_id
+                    or event.agent_id != value.agent_id
+                ):
+                    raise ValueError("private update source lacks its committed event")
+            values[update_id] = value
+        if set(values) != set(update_ids):
+            raise ValueError("private update source subset is not exact-cover")
+        return MappingProxyType(values)
 
     def _assert_not_halted(self) -> None:
         chain = self.causal_evidence_prefix()
@@ -4094,6 +4318,9 @@ class RunStorage:
                 raise ValueError("main-path complete requires all expected events succeeded")
 
     def verify_integrity(self) -> None:
+        self._assert_database_single_link()
+        if self._verified_connection_signature == self._connection_signature():
+            return
         binding_row = self._connection.execute(
             """SELECT schedule_payload_json, manifest_payload_json
                FROM binding WHERE singleton = 1"""
@@ -4563,6 +4790,8 @@ class RunStorage:
         for agent_id, pointer in expected_pointers.items():
             if self.latest_public_pointer(agent_id) != pointer:
                 raise ValueError("stored latest public pointer does not replay")
+        self._verified_connection_signature = self._connection_signature()
+        self._execution_state_cache = execution
 
     def _verify_v6_evidence_exact_cover(self) -> None:
         """Replay the opt-in v6 execution-evidence prefix from SQLite truth.

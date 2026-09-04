@@ -1608,6 +1608,29 @@ def test_load_checkpoint_reads_at_most_max_plus_one_bytes(
     assert read_sizes == [checkpoint_module._MAX_CHECKPOINT_BYTES + 1]
 
 
+def test_checkpoint_io_accepts_release_scale_v4_evidence_payload(tmp_path: Path) -> None:
+    """The bounded reader/writer must still admit the approved 50k-event shape."""
+
+    store, _, _ = _create_sealed_store(tmp_path / "run.sqlite3")
+    target = tmp_path / "release-scale-checkpoint.json"
+    with store:
+        baseline = build_checkpoint(store)
+    release_hashes = {
+        name: (("f" * 64,) * 51_000 if name != "adapter_execution_bindings" else ("f" * 64,))
+        for name in baseline.v6_evidence_hashes
+    }
+    checkpoint = replace(
+        baseline,
+        v6_evidence_hashes=release_hashes,
+        v6_evidence_root=canonical_payload_hash(release_hashes),
+    )
+
+    write_checkpoint_atomic(target, checkpoint)
+
+    assert target.stat().st_size > 16 * 1024 * 1024
+    assert load_checkpoint(target) == checkpoint
+
+
 def test_load_checkpoint_normalizes_extreme_json_depth_to_value_error(tmp_path: Path) -> None:
     target = tmp_path / "deep.json"
     target.write_text("[" * 100_000 + "0" + "]" * 100_000, encoding="utf-8")

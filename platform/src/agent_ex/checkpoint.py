@@ -36,7 +36,9 @@ from .storage import (
 _LEGACY_CHECKPOINT_VERSION = "paper1.checkpoint.v3"
 _CHECKPOINT_VERSION = "paper1.checkpoint.v4"
 _SUPPORTED_CHECKPOINT_VERSIONS = frozenset({_LEGACY_CHECKPOINT_VERSION, _CHECKPOINT_VERSION})
-_MAX_CHECKPOINT_BYTES = 16 * 1024 * 1024
+# Checkpoint v4 carries ordered evidence hashes.  The approved 50,000-event
+# release shape exceeds the earlier 16 MiB ceiling while remaining bounded.
+_MAX_CHECKPOINT_BYTES = 32 * 1024 * 1024
 _MAX_JSON_DEPTH = 32
 
 
