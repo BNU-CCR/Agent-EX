@@ -1135,5 +1135,22 @@
   静默吞掉重复ordinal，不能作为fail-closed合同。
 - `release_scale` marker本身不隔离昂贵测试；pytest默认配置必须排除它，整个Phase 4B release中
   只用一次显式marker覆盖运行真实50,000-event gate，普通full/coverage只验证其余回归。
+
+## 2026-09-04：4B-9规模执行发现
+
+- 事件主循环在N=1000/T=50下保持严格串行并完成50,000次真实mock调用；此前消除每事件
+  全历史重放、完整邻居历史读取和线性execution-state写放大后，5,000-event无tracemalloc
+  工程段约为0.0839秒/事件。正式Qwen吞吐仍须在Phase 0B重新测量，mock数字不得成为阈值。
+- checkpoint v4携带五组每事件有序v6证据哈希，另含可重放execution event ID；因此旧的
+  16 MiB文件上限与已批准50,000-event结构不相容。实测最终checkpoint为20,405,320 bytes。
+  仅升至32 MiB只能覆盖全成功路径，无法覆盖合法retry历史。最终方案为compact v5：完整
+  failure/authorization typed记录留在SQLite，checkpoint只保存有序内容hash与可核验的最小
+  因果引用，legacy v3/v4继续按原投影验证。真实50k×每event一次授权retry合成envelope为
+  81,119,908 bytes，并完成atomic write/load typed round-trip；I/O上限为96 MiB、验证峰值预算
+  为1.5 GiB，均属工程容量合同而非retry policy或研究参数默认值。
+- 完整process audit为98,414,822 bytes，说明正式归档不能把audit正文塞入Git或普通Markdown；
+  应保存hash、归档URI和简洁measurement，原始SQLite/checkpoint/audit仍走外部受控归档。
+- Windows close/open、原子替换和重放已通过，但不能外推Linux容器、CUDA/vLLM或云盘语义；
+  Phase 0B必须在最终云镜像上复跑安装、恢复与有限真实模型gate。
 - 术语映射证据必须原样绑定Phase 4A.1批准的中文术语，不能把方便机器使用的英文token当成
   已批准论文术语；ID、canonical payload与hash三者须共同进入过程审计。

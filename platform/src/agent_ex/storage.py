@@ -1676,13 +1676,18 @@ class RunStorage:
     def _begin_write(self) -> None:
         """Open a write transaction only after revalidating the writer capability."""
 
-        self._trusted_write_transaction = self._connection_state_is_verified()
+        self._trusted_write_transaction = False
         self._pending_execution_state = None
         self._connection.execute("BEGIN IMMEDIATE")
         try:
             self.assert_run_lease_owned()
+            if not self._connection_state_is_verified():
+                self.verify_integrity()
+            self._trusted_write_transaction = True
         except BaseException:
             self._connection.rollback()
+            self._pending_execution_state = None
+            self._trusted_write_transaction = False
             raise
 
     def _commit_write(self) -> None:
@@ -4024,7 +4029,7 @@ class RunStorage:
         with self.consistent_read():
             return self._recovery_evidence_snapshot(
                 next_event_ordinal,
-                checkpoint_version="paper1.checkpoint.v4",
+                checkpoint_version="paper1.checkpoint.v5",
             )
 
     def _recovery_evidence_snapshot(
@@ -4220,6 +4225,7 @@ class RunStorage:
         if checkpoint_version not in {
             "paper1.checkpoint.v3",
             "paper1.checkpoint.v4",
+            "paper1.checkpoint.v5",
         }:
             raise ValueError("checkpoint evidence projection version is unsupported")
 

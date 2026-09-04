@@ -94,7 +94,7 @@ def test_validated_commits_do_not_trigger_full_static_replay_per_event(
         control=MockRunControl(5, (), ()),
     )
 
-    assert calls == 2
+    assert calls == 1
     assert binding_reads <= 1
     assert private_history_reads == 5
     assert full_public_history_reads == 0

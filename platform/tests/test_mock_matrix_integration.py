@@ -583,6 +583,73 @@ def test_n100_executes_complete_twelve_cell_matrix_without_result_selection(
     assert all(len(values) == 1 for values in observed_by_condition.values())
 
 
+def run_n100_t1_recovery_pair(root: Path) -> tuple[str, str, int]:
+    cell_id = "P1-I1-C1-E2"
+
+    uninterrupted_matrix = build_mock_matrix_fixture(
+        root / "continuous",
+        case_id="mock-n100-full-matrix",
+        sweeps=1,
+    )
+    uninterrupted = create_mock_matrix_cell(
+        root / "continuous" / cell_id,
+        matrix_fixture=uninterrupted_matrix,
+        cell_id=cell_id,
+    )
+    _execute_prefix(uninterrupted, root / "continuous", 100)
+    uninterrupted.cell.storage.assert_complete()
+    uninterrupted_hash = _audit_projection(uninterrupted).projection_hash
+    uninterrupted.cell.storage.close()
+
+    recovered_matrix = build_mock_matrix_fixture(
+        root / "recovered",
+        case_id="mock-n100-full-matrix",
+        sweeps=1,
+    )
+    recovered = create_mock_matrix_cell(
+        root / "recovered" / cell_id,
+        matrix_fixture=recovered_matrix,
+        cell_id=cell_id,
+    )
+    _execute_prefix(recovered, root / "recovered", 50)
+    recovered = reopen_mock_matrix_cell(recovered, reconciliation=None)
+
+    resumed = explicit_success_invocations(
+        recovered.cell,
+        start=50,
+        stop=100,
+        feed_capacity=6,
+        memory_window=3,
+    )
+    resumed_adapter_calls = 0
+    adapter = resumed[0].adapter
+    original_generate = adapter.generate
+
+    def counted_generate(request):
+        nonlocal resumed_adapter_calls
+        resumed_adapter_calls += 1
+        return original_generate(request)
+
+    adapter.generate = counted_generate  # type: ignore[method-assign]
+    execute_mock_run(
+        pipeline=recovered.cell.pipeline,
+        storage=recovered.cell.storage,
+        invocations=resumed,
+        control=MockRunControl(100, (), ()),
+    )
+    recovered.cell.storage.assert_complete()
+    recovered_hash = _audit_projection(recovered).projection_hash
+    recovered.cell.storage.close()
+    return uninterrupted_hash, recovered_hash, resumed_adapter_calls
+
+
+def test_n100_t1_close_open_recovery_matches_uninterrupted_projection(tmp_path: Path) -> None:
+    uninterrupted_hash, recovered_hash, resumed_adapter_calls = run_n100_t1_recovery_pair(tmp_path)
+
+    assert recovered_hash == uninterrupted_hash
+    assert resumed_adapter_calls == 50
+
+
 def _rehash_artifact(artifact: ArtifactEnvelope, payload: dict[str, object]) -> ArtifactEnvelope:
     return ArtifactEnvelope.create(
         artifact_type=artifact.artifact_type,

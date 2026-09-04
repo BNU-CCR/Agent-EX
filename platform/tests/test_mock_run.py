@@ -261,6 +261,31 @@ def test_run_harness_delegates_event_and_writes_exact_checkpoint(
     assert len(report.final_storage_projection_hash) == 64
 
 
+def test_target_checkpoint_reuses_one_authoritative_recovery_snapshot(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E0")
+    calls = 0
+    original_snapshot = fixture.store._recovery_evidence_snapshot
+
+    def counted_snapshot(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        return original_snapshot(*args, **kwargs)
+
+    monkeypatch.setattr(fixture.store, "_recovery_evidence_snapshot", counted_snapshot)
+
+    report = execute_mock_run(
+        pipeline=fixture.pipeline,
+        storage=fixture.store,
+        invocations=(invocation(fixture),),
+        control=control(tmp_path),
+    )
+
+    assert report.final_checkpoint_hash == report.checkpoint_hashes[1]
+    assert calls == 1
+
+
 def test_run_harness_delegates_every_event_with_deterministic_clock(
     tmp_path: Path,
 ) -> None:

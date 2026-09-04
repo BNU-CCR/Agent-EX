@@ -777,3 +777,40 @@
     exact-cover、run/audit typed composite边界、50,000-event默认排除与唯一显式执行、每个
     command block的fresh workdir，以及Phase 4A.1中文术语原文映射。复核最终`APPROVED`，
     P0-P2均无；唯一P3（Task 4 Files漏列可选窄只读`storage.py`）已补齐。尚未开始生产代码。
+  - 2026-09-04完成4B-9 Tasks 1--7。提交链为`9011cd3`、`c76c294`、`44ef94c`、
+    `0c4ec46`、`c128ca8`、`c5e071f`、`7749609`，均已推送到
+    `origin/codex/paper1-phase4b`。N=20覆盖六类durable crash prefix；N=100完整12 cells
+    共1,200事件；N=1000/T=1恢复在post-invocation断点证明zero-resend并与连续run投影一致。
+  - N=1000/T=50的12-cell shape通过；显式`P1-I1-C1-E2` release run真实调用mock pipeline
+    50,000次，最终`1 passed, 4 deselected in 20708.39s`。观测为执行计时20555.347秒、
+    Python tracemalloc峰值3,236,920,043 bytes、SQLite 2,969,907,200 bytes、单checkpoint
+    20,405,320 bytes、audit 98,414,822 bytes。临时数据库与checkpoint在SHA-256核验后删除，
+    未进入Git。
+  - 首次50,000-event运行在事件全部提交后发现checkpoint v4有序证据payload超过旧16 MiB
+    I/O上限。新增RED稳定复现，最小GREEN将仍有界上限调整为32 MiB；checkpoint全套
+    `101 passed`，原2.9 GB数据库重开并生成`complete/current` checkpoint，随后干净重跑
+    端到端通过。Task 7 focused为`4 passed, 1 deselected`，matrix/run/audit为`130 passed`，
+    Ruff/format/pip/diff通过。现进入Task 8最终full/coverage、文档、协议/安装/Git门与三路终审。
+  - 2026-09-04 Task 8规格终审指出N=100仍缺独立close/open恢复比较。已按严格TDD先得到
+    `NameError` RED，再新增单cell 0--49执行、close/open、50--99续跑门禁；恢复阶段恰好
+    50次adapter调用且最终投影等于连续100-event control，定向`1 passed in 19.72s`。
+    同步修正reproducibility与handoff，明确N=20六断点恢复调用数，避免把50,000-event
+    release gate误述为自身包含close/open。
+  - Task 8代码质量终审发现外部SQLite篡改可能在下一写事务被错误重新认证、终点重复三次
+    全量recovery replay，以及checkpoint v4对合法retry历史容量不足。三项均先复现RED：
+    篡改后写入曾继续提交、snapshot计数为3、按50k×每event一次retry估算远超32 MiB。
+    修复后`BEGIN IMMEDIATE`锁定快照内强制重验，终点snapshot计数降为1；新写compact
+    checkpoint v5只保留历史证据有序hash与最小因果引用，legacy v3/v4继续验证。真实构造的
+    50k个连续event identity×每event一次授权retry envelope为81,119,908 bytes，在96 MiB
+    文件上限与1.5 GiB峰值预算下完成typed构造、atomic write/load round-trip；并直接验证
+    legacy full-history v4 stale prefix（合计`2 passed in 94.19s`）。checkpoint全套
+    `102 passed in 89.92s`，storage/mock-run/N100 recovery交叉套件`250 passed, 2 skipped`。
+  - Task 8稳定快照的串行最终full为`1124 passed, 2 skipped, 1 deselected in 1031.80s`；
+    coverage为`1124 passed, 2 skipped, 1 deselected in 2940.43s`，production
+    `10,795 statements / 1,589 missed / 85%`。六个协议/schema/summary/formal/wheel
+    精确节点最终独立复验为`6 passed in 6.39s`，tracked-artifact hygiene无命中。规格与代码质量复审均
+    `APPROVED`且P0-P2无；尚待最终verification reviewer对稳定快照复核后提交推送。
+  - 最终verification reviewer复核Task 8完成标准、提交清单、文档边界与Git卫生后为`PASS`，
+    P0-P3均无；其发现的旧09-02 handoff路径和漏列checkpoint/storage修复文件已更正并复审关闭。
+    Phase 4B-9及整个Phase 4B现达到`complete / independently reviewed`工程边界；下一步进入
+    Phase 0A/0B与真实模型N=20/50/100校准，formal矩阵仍保持fail closed。

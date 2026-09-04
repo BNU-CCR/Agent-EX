@@ -915,7 +915,10 @@ def test_prepared_replay_rejects_adapter_request_row_envelope_drift_atomically(
     before_attempts = store.attempt_transitions(attempt_id)
     before_execution = store.execution_state()
 
-    with pytest.raises(ValueError, match="conflicting immutable adapter_requests replay"):
+    with pytest.raises(
+        ValueError,
+        match="conflicting immutable adapter_requests replay|row envelope columns drifted",
+    ):
         store.record_prepared_attempt(
             values["event_input"],
             policy=values["policy"],
@@ -6848,3 +6851,37 @@ def test_commit_rejects_external_terminal_uri_tamper_without_state_advance(
         assert store.private_state("agent-0") == initial[1]
         assert store.latest_public_pointer("agent-0") == initial[3]
         assert store.feed_cursor("agent-0") == initial[4]
+
+
+def test_write_after_external_tamper_cannot_reauthenticate_unverified_database(
+    tmp_path: Path,
+) -> None:
+    database = tmp_path / "run.sqlite3"
+    run_manifest = manifest(schedule(publish_flags=(False, False)))
+    with RunStorage.create(
+        database,
+        manifest=run_manifest,
+        artifact_hashes={"population": SHA_B},
+        expected_agent_ids=expected_agent_ids(run_manifest),
+        expected_exposure_mode="self_history_only",
+        expected_exposure_graph_hash=None,
+    ) as store:
+        seal_expected_initial_state(store, run_manifest)
+        commit_fixture_event(store, run_manifest, 0)
+        store.verify_integrity()
+        with sqlite3.connect(database) as connection:
+            connection.execute(
+                "UPDATE events SET payload_hash = ? WHERE event_ordinal = 0",
+                ("0" * 64,),
+            )
+
+        with pytest.raises(ValueError, match="hash|integrity|external|verified"):
+            store.append_attempt(
+                attempt_transition(
+                    attempt(run_manifest, ordinal=1, status=EventStatus.SUCCEEDED),
+                    EventStatus.PENDING,
+                )
+            )
+
+        with pytest.raises(ValueError, match="hash|integrity"):
+            store.verify_integrity()

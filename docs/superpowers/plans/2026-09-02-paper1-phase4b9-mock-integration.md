@@ -12,7 +12,7 @@ date: 2026-09-02
 
 **Architecture:** Add a pure matrix-contract module, a thin run-level orchestrator that only calls the existing `MockEventPipeline`, and a read-only process-audit module over authoritative v6 storage. Keep all mock execution inputs explicit and versioned; use test helpers to assemble deterministic inputs, never add runtime defaults for B/K/retry/timeout/model seeds/checkpoint cadence. Separate N=1000/T=50 shape validation from one genuine 50,000-event mock execution gate.
 
-**Tech Stack:** Python 3.12, frozen dataclasses, existing `agent_ex` typed contracts, SQLite v6 storage, checkpoint v4 with legacy v3 validation, pytest, pytest-cov, Ruff.
+**Tech Stack:** Python 3.12, frozen dataclasses, existing `agent_ex` typed contracts, SQLite v6 storage, compact checkpoint v5 with legacy v3/v4 validation, pytest, pytest-cov, Ruff.
 
 **Approved specification:** `docs/superpowers/specs/2026-09-02-paper1-phase4b9-mock-integration-design.md`, subordinate to the approved 2026-07-29 Phase 4B plan and frozen protocol chain.
 
@@ -36,7 +36,7 @@ date: 2026-09-02
 - Modify `platform/tests/test_paper1_mock_fixtures.py`: strict v2 fixture validation.
 - Modify `platform/src/agent_ex/__init__.py` and `platform/tests/test_domain.py`: public exports and exact API surface.
 - Modify `docs/paper1-protocol.md`, `docs/reproducibility.md`, `docs/project-overview.md`, `task_plan.md`, `progress.md`, `findings.md`: verified Phase 4B boundary and next gates.
-- Create `logs/2026-09-02-phase4b-handoff.md`: exact release evidence and desktop/cloud recovery instructions.
+- Create `logs/2026-09-04-phase4b-handoff.md`: exact release evidence and desktop/cloud recovery instructions.
 
 ## Task 0: Close the Phase 4B-8C-3 release gate
 
@@ -95,7 +95,7 @@ Expected: local HEAD and `@{u}` are identical and the worktree is clean before T
 - Modify: `platform/src/agent_ex/__init__.py`
 - Modify: `platform/tests/test_domain.py`
 
-- [ ] **Step 1: Write strict v2 fixture RED tests**
+- [x] **Step 1: Write strict v2 fixture RED tests**
 
 Add tests asserting exact fields and values:
 
@@ -161,7 +161,7 @@ def test_scale_fixture_v2_is_explicit_mock_only_and_has_no_runtime_defaults():
 
 Also parameterize missing/extra/bool-for-int/invalid stance counts/invalid UTC clock/duplicate case ID/unknown cell attacks against `MockScaleCase.from_payload`. Update the existing all-fixtures metadata test so the scale artifact alone requires the additional `formal_parameter_authority: false` marker while every other checked mock artifact retains its exact existing metadata; do not weaken the test to a subset assertion.
 
-- [ ] **Step 2: Run the RED tests**
+- [x] **Step 2: Run the RED tests**
 
 Run:
 
@@ -171,7 +171,7 @@ Run:
 
 Expected: FAIL because the fixture is v1 and `agent_ex.mock_matrix` does not exist.
 
-- [ ] **Step 3: Add the immutable scale contract**
+- [x] **Step 3: Add the immutable scale contract**
 
 Implement the public shape without defaults:
 
@@ -260,11 +260,11 @@ def load_mock_scale_cases(artifact: ArtifactEnvelope) -> tuple[MockScaleCase, ..
 
 The loader must require artifact type `paper1.mock_scale_cases`, algorithm `paper1.mock_fixture`, exact v2 fields, `mock_only is True`, `not_frozen`, `formal_parameter_authority is False`, unique case IDs, the exact population set `{20, 100, 1000}`, seven stance counts summing to each population, and a parseable UTC clock start. It must not expose module constants as execution defaults; values only come from the validated artifact. The clock fields are mock evidence controls, not formal cadence or model parameters. Update the existing population/initialization fixture test to consume `population_size` while preserving its exact stance-count assertion.
 
-- [ ] **Step 4: Update the fixture and artifact envelope hash**
+- [x] **Step 4: Update the fixture and artifact envelope hash**
 
 Replace the payload with the exact three cases above, set schema v2 metadata, recompute `output_hash` and `artifact_id` using `ArtifactEnvelope`, and keep the file small enough for Git review.
 
-- [ ] **Step 5: Export and verify**
+- [x] **Step 5: Export and verify**
 
 Export `MockScaleCase` and `load_mock_scale_cases` from package root, extend the exact public API test, then run:
 
@@ -277,7 +277,7 @@ git diff --check
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/tests/fixtures/paper1/mock_scale_cases.artifact.json platform/tests/test_paper1_mock_fixtures.py platform/src/agent_ex/mock_matrix.py platform/tests/test_mock_matrix.py platform/src/agent_ex/__init__.py platform/tests/test_domain.py
@@ -293,7 +293,7 @@ git commit -m "feat(platform): define explicit mock scale cases"
 - Modify: `platform/src/agent_ex/__init__.py`
 - Modify: `platform/tests/test_domain.py`
 
-- [ ] **Step 1: Write canonical exact-cover RED tests**
+- [x] **Step 1: Write canonical exact-cover RED tests**
 
 Create one fully typed N=20 artifact family and assert:
 
@@ -324,7 +324,7 @@ validate_mock_matched_seed_matrix(matrix)
 
 Add one attack per invariant: missing/duplicate cell, foreign seed, changed population/stance/reason/mapping/schedule, swapped E1/E2 graph, E0 graph present, persona/exposure mismatch, changed publish flag, changed runtime/script binding and manifest cell drift. Each attack must fail before any SQLite file is created.
 
-- [ ] **Step 2: Run RED**
+- [x] **Step 2: Run RED**
 
 Run:
 
@@ -334,7 +334,7 @@ Run:
 
 Expected: FAIL because matrix types and validator do not exist.
 
-- [ ] **Step 3: Implement typed bindings and validator**
+- [x] **Step 3: Implement typed bindings and validator**
 
 Use immutable types:
 
@@ -365,13 +365,13 @@ class MockMatchedSeedMatrix:
 Derive the canonical IDs mechanically from `(I0/I1, C0/C1, E0/E1/E2)` in fixed order. Replay all typed artifacts with their existing validators. Compare only approved shared hashes. Validate each manifest and binding against its cell and graph. Return `None` on success; do not return a score or outcomes.
 Implement `build_mock_matched_seed_matrix` with the exact keyword arguments used in the RED test and implement `validate_mock_matched_seed_matrix(matrix)` as the only public validator. Neither function accepts a variadic keyword bag or an optional default.
 
-- [ ] **Step 4: Build reusable test-only factories**
+- [x] **Step 4: Build reusable test-only factories**
 
 In `tests/helpers/mock_matrix.py`, load the five checked-in mock artifacts and expose test-only `build_mock_artifact_family(*, n: int, sweeps: int, matched_seed: int)` and `build_mock_matrix_fixture(tmp_path: Path, *, case_id: str, sweeps: int)`. Build a replayable callable clock from the scale case's explicit start/step, give the sequence a canonical ID/hash, bind those fields into each `MockCellBinding`, and pass the callable only through the existing `MockEventPipeline(..., clock=...)` constructor. Matrix validation rejects missing/drifted clock bindings before storage creation.
 
 Every helper argument is required. Test helpers may derive deterministic mock-only graph/schedule inputs, but must preserve artifact metadata and never be imported by production modules.
 
-- [ ] **Step 5: Run matrix/public suites**
+- [x] **Step 5: Run matrix/public suites**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_matrix.py tests\test_paper1_mock_fixtures.py tests\test_domain.py
@@ -382,7 +382,7 @@ git diff --check
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/src/agent_ex/mock_matrix.py platform/tests/test_mock_matrix.py platform/tests/helpers/mock_matrix.py platform/src/agent_ex/__init__.py platform/tests/test_domain.py
@@ -399,7 +399,7 @@ git commit -m "feat(platform): audit canonical mock matrices"
 - Modify: `platform/src/agent_ex/__init__.py`
 - Modify: `platform/tests/test_domain.py`
 
-- [ ] **Step 1: Write no-default and delegation RED tests**
+- [x] **Step 1: Write no-default and delegation RED tests**
 
 Assert the exact required signature and that every event delegates once to the pipeline:
 
@@ -430,7 +430,7 @@ def test_run_harness_delegates_each_event_and_never_writes_storage_directly(
 
 Add RED tests for invocation gap/duplicate/foreign event, target behind/ahead, mismatched checkpoint arrays, duplicate/unordered checkpoint ordinals, checkpoint ordinal `<= start` or `> target`, duplicate checkpoint paths, non-committed outcome stop, propagated lifecycle failure, no auto-retry, and exact checkpoint write ordinals. Assert `MockEventInvocation` has no timestamp field and that the harness neither accepts nor consumes a clock; all timestamp evidence must come from the constructor-bound pipeline clock or a typed reconciliation result.
 
-- [ ] **Step 2: Run RED**
+- [x] **Step 2: Run RED**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_run.py
@@ -438,7 +438,7 @@ Add RED tests for invocation gap/duplicate/foreign event, target behind/ahead, m
 
 Expected: collection FAIL because `agent_ex.mock_run` does not exist.
 
-- [ ] **Step 3: Implement explicit invocation/control/report types**
+- [x] **Step 3: Implement explicit invocation/control/report types**
 
 ```python
 @dataclass(frozen=True, slots=True)
@@ -551,13 +551,13 @@ def execute_mock_run(
 Deep-freeze mappings, reject bool-as-int, and exact-cover ordinals from current storage progress to target. Checkpoint arrays must be one-to-one, unique, strictly increasing and wholly inside `(start, target]`; after the loop the written-key set must equal the requested set exactly. The loop calls only `pipeline.execute`; checkpoint calls use `build_checkpoint`/`write_checkpoint_atomic`. If an outcome is not `committed` or final `complete`, raise without consuming the next invocation.
 Add a read-only `MockEventPipeline.run_id` property returning the constructor-bound manifest run ID; it must not expose mutable storage or lifecycle controls.
 
-- [ ] **Step 4: Add deterministic test ledger builder**
+- [x] **Step 4: Add deterministic test ledger builder**
 
 In tests only, add `explicit_success_invocations(fixture: MatrixCellFixture, *, start: int, stop: int, feed_capacity: int, memory_window: int) -> tuple[MockEventInvocation, ...]`.
 
 Build one invocation per ordinal with explicit model seed, response script, request parameters and policy. Construct the run-level deterministic clock separately from the versioned scale case and inject it when the pipeline is built. Add call-sequence tests for the exact existing behavior: fresh/retry/pending-resume success consumes started + finished; the corresponding failure additionally consumes failure `recorded_at`; IN_PROGRESS reconciliation/rehydration success replays the persisted started value only and uses the typed/persisted finished value, while failure additionally consumes failure `recorded_at`; landed-success and already-complete consume zero. Close/open recovery must rebuild the state-dependent position—not merely take an unused suffix, because IN_PROGRESS must first return the persisted started value—and reproduce timestamp evidence/hash without a second per-invocation time channel. The helper name and metadata must contain `mock`; it must not claim model-seed pairing authority.
 
-- [ ] **Step 5: Run focused and combined suites**
+- [x] **Step 5: Run focused and combined suites**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_run.py tests\test_pipeline.py tests\test_engine.py tests\test_checkpoint.py
@@ -568,7 +568,7 @@ git diff --check
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/src/agent_ex/mock_run.py platform/src/agent_ex/pipeline.py platform/tests/test_mock_run.py platform/tests/helpers/mock_matrix.py platform/src/agent_ex/__init__.py platform/tests/test_domain.py
@@ -586,7 +586,7 @@ git commit -m "feat(platform): orchestrate explicit mock runs"
 - Modify: `platform/src/agent_ex/__init__.py`
 - Modify: `platform/tests/test_domain.py`
 
-- [ ] **Step 1: Write process-boundary RED tests**
+- [x] **Step 1: Write process-boundary RED tests**
 
 Execute a small E2 run containing empty feed, repeated sender, expired candidate and publish-false events. Assert:
 
@@ -626,7 +626,7 @@ assert "effect" not in audit.to_payload()
 
 Add attacks for boundary beyond committed prefix, failed/current attempt, missing evidence, non-positive event-backed age, altered sender IDs, reordered event evidence, wrong outcome labels, changed/incomplete terminology mapping and any raw private-state leak into public stock. Include positive cases for a legal `RUNNING` sweep prefix with no unresolved attempt and the exact final `COMPLETE` prefix; reject FAILED, mid-sweep and nonterminal-at-boundary states.
 
-- [ ] **Step 2: Write comparable projection RED tests**
+- [x] **Step 2: Write comparable projection RED tests**
 
 Run two semantically identical tiny runs with different launch nonce, paths and timestamps. Assert raw checkpoint hashes differ but:
 
@@ -638,7 +638,7 @@ assert left.projection_hash == right.projection_hash
 
 Then alter a prompt response, publish flag, feed cursor, model seed or parsed update and assert hashes differ. Add an exact field-set test proving callers cannot supply arbitrary ignored fields.
 
-- [ ] **Step 3: Run RED**
+- [x] **Step 3: Run RED**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_process_audit.py tests\test_mock_run.py -k "audit or projection"
@@ -646,7 +646,7 @@ Then alter a prompt response, publish flag, feed cursor, model seed or parsed up
 
 Expected: FAIL because the audit/projection APIs do not exist.
 
-- [ ] **Step 4: Implement immutable audit types**
+- [x] **Step 4: Implement immutable audit types**
 
 ```python
 @dataclass(frozen=True, slots=True)
@@ -708,7 +708,7 @@ Read only committed evidence via public `RunStorage` methods inside one explicit
 Implement `build_mock_process_audit` with exactly the required keyword arguments shown in the RED test: `storage`, `cell_id`, `topic_package`, `boundary_event_ordinal`, `outcome_labels`, `terminology_map_id`, `terminology_map`, `model_provenance`, `prompt_provenance`, and `robustness_provenance`. It accepts no defaults or extra keyword mapping. Require the exact approved Chinese mappings copied verbatim from the 07-29 Phase 4A.1 table for `identity`, `continuity`, `private_state`, and `public_post`; do not substitute machine-friendly English tokens. Compute `terminology_map_hash` from the canonical payload and bind ID/hash/payload into the audit.
 Require `boundary_event_ordinal` to be a committed multiple of population size. Accept either a verified `RUNNING` prefix with no unresolved/nonterminal attempt at that boundary or a verified `COMPLETE` exact full-schedule prefix; reject `FAILED`, tampered/incomplete and non-sweep prefixes. Rebuild round 0 once, then emit exactly sweeps `1..boundary/population_size`; compute only integer seven-label count deltas from round 0. Set both the exposure summary and mechanical delta label to the exact constant `exploratory/process_diagnostic`; tests reject any primary/secondary promotion.
 
-- [ ] **Step 5: Implement fixed comparable projection schema**
+- [x] **Step 5: Implement fixed comparable projection schema**
 
 ```python
 @dataclass(frozen=True, slots=True)
@@ -728,7 +728,7 @@ class MockComparableRunProjection:
 The schema itself excludes run ID, launch nonce, URI/path and wall-clock timestamps. It retains event ordinals, agent IDs, statuses, published flags, request/model-seed/prompt/response/parse semantic hashes and process evidence. No `ignore_fields` parameter is allowed.
 Implement `build_mock_comparable_run_projection(storage: RunStorage, audit: MockProcessAudit) -> MockComparableRunProjection` with those two required positional arguments only.
 
-- [ ] **Step 6: Run focused and storage suites**
+- [x] **Step 6: Run focused and storage suites**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_process_audit.py tests\test_mock_run.py tests\test_storage.py tests\test_checkpoint.py
@@ -739,7 +739,7 @@ git diff --check
 
 Expected: PASS.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```powershell
 git add platform/src/agent_ex/process_audit.py platform/tests/test_process_audit.py platform/src/agent_ex/mock_run.py platform/tests/test_mock_run.py platform/src/agent_ex/storage.py platform/src/agent_ex/__init__.py platform/tests/test_domain.py
@@ -753,7 +753,7 @@ git commit -m "feat(platform): audit mock process evidence"
 - Modify: `platform/tests/helpers/mock_matrix.py`
 - Modify: `platform/src/agent_ex/mock_run.py` only if a RED proves a generic harness defect.
 
-- [ ] **Step 1: Add uninterrupted/reopened RED matrix**
+- [x] **Step 1: Add uninterrupted/reopened RED matrix**
 
 Parameterize explicit prefixes:
 
@@ -790,11 +790,11 @@ def test_n20_recovery_matches_uninterrupted_semantics(
 
 For each branch, run the explicit N=20/T=2 fixture to completion both uninterrupted and with real close/open at the prefix. Compare `MockComparableRunProjection.projection_hash`, not raw run IDs. Instrument adapter calls: after invocation and later must be zero-resend; IN_PROGRESS/no-invocation requires exact explicit reconciliation.
 
-- [ ] **Step 2: Add failure/atomicity RED matrix**
+- [x] **Step 2: Add failure/atomicity RED matrix**
 
 Cover timeout, malformed response, request drift, unauthorized model-seed change, finalization mismatch, checkpoint tamper and retry authorization. Assert failed attempt changes no private/public/cursor/event progress and the run stops at the same event. No test helper may silently auto-authorize retry.
 
-- [ ] **Step 3: Run RED against current generic APIs**
+- [x] **Step 3: Run RED against current generic APIs**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_matrix_integration.py -k "n20"
@@ -802,11 +802,11 @@ Cover timeout, malformed response, request drift, unauthorized model-seed change
 
 Expected: at least one integration branch fails until the fixture/harness wiring is complete.
 
-- [ ] **Step 4: Add only minimal generic fixes**
+- [x] **Step 4: Add only minimal generic fixes**
 
 Fix production code only when a failure applies to all callers. Fixture-specific crash injection, mock response scripts and reconciliation construction remain in test helpers. Do not add sleeps or monkeypatch private storage state to simulate a durable prefix; use existing public operations plus narrowly scoped fault injection at established transaction boundaries.
 
-- [ ] **Step 5: Verify N=20 plus full regression**
+- [x] **Step 5: Verify N=20 plus full regression**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_matrix_integration.py -k "n20"
@@ -818,7 +818,7 @@ git diff --check
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/tests/test_mock_matrix_integration.py platform/tests/helpers/mock_matrix.py platform/src/agent_ex/mock_run.py
@@ -834,7 +834,7 @@ git commit -m "test(platform): integrate N20 mock recovery"
 - Modify: `platform/src/agent_ex/mock_matrix.py` only for proven matrix-validator defects.
 - Modify: `platform/src/agent_ex/process_audit.py` only for proven audit defects.
 
-- [ ] **Step 1: Write full matrix RED test**
+- [x] **Step 1: Write full matrix RED test**
 
 First register the two release markers under `[tool.pytest.ini_options]` so strict-marker collection remains fail closed:
 
@@ -863,11 +863,11 @@ def test_n100_executes_complete_twelve_cell_matrix_without_result_selection(tmp_
 
 Define a test-helper-only frozen `MockCellExecutionResult(run_report: MockRunReport, process_audit: MockProcessAudit)` and type `execute_all_cells` as `Mapping[str, MockCellExecutionResult]`; do not add audit state to the production run report. Add assertions that all shared artifact/schedule hashes are equal, E0/E1/E2 graph bindings are exact, persona blocks differ only as approved, each SQLite path is unique, and audit payloads contain no ranking/effect/significance fields.
 
-- [ ] **Step 2: Add pre-execution cross-cell attack tests**
+- [x] **Step 2: Add pre-execution cross-cell attack tests**
 
 Parameterize one changed population member, stance/reason, mapping edge, attention weight, expression flag, activation slot, publish flag, graph hash, manifest cell and mock script. Each must fail matrix validation before the first `MockEventPipeline.execute` call.
 
-- [ ] **Step 3: Run RED**
+- [x] **Step 3: Run RED**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_matrix_integration.py -k "n100"
@@ -875,11 +875,11 @@ Parameterize one changed population member, stance/reason, mapping edge, attenti
 
 Expected: FAIL until complete fixture assembly and cell execution are connected.
 
-- [ ] **Step 4: Complete fixture assembly without production shortcuts**
+- [x] **Step 4: Complete fixture assembly without production shortcuts**
 
 Use the existing artifact builders and one independent `RunStorage`/pipeline per cell. `execute_all_cells` lives in test helpers and calls `execute_mock_run`; it must not write storage directly. Reuse the same typed schedule/artifact objects where the protocol requires sharing, but create distinct manifests/run IDs/databases.
 
-- [ ] **Step 5: Verify N=100 and all matrix modules**
+- [x] **Step 5: Verify N=100 and all matrix modules**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_matrix.py tests\test_mock_run.py tests\test_process_audit.py tests\test_mock_matrix_integration.py -k "not n1000"
@@ -890,7 +890,7 @@ git diff --check
 
 Expected: PASS with 1,200 actual mock events in the N=100 full matrix test.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/tests/test_mock_matrix_integration.py platform/tests/helpers/mock_matrix.py platform/src/agent_ex/mock_matrix.py platform/src/agent_ex/process_audit.py platform/pyproject.toml
@@ -908,7 +908,7 @@ The `release_scale` marker is default-excluded by the Task 6 `addopts`; ordinary
 - Modify: `platform/src/agent_ex/process_audit.py` only for measured generic complexity defects.
 - Modify: `platform/pyproject.toml` to register an explicit release marker if needed.
 
-- [ ] **Step 1: Write the 12-cell shape gate**
+- [x] **Step 1: Write the 12-cell shape gate**
 
 ```python
 def test_n1000_t50_builds_twelve_bound_50000_event_shapes(tmp_path):
@@ -927,7 +927,7 @@ def test_n1000_t50_builds_twelve_bound_50000_event_shapes(tmp_path):
 
 Avoid materializing twelve duplicate ordinal tuples in the final implementation: test first/last/count and stream the sequence comparison. Assert schedule/artifact reuse and unique cell run IDs.
 
-- [ ] **Step 2: Write a genuine marked 50,000-event gate**
+- [x] **Step 2: Write a genuine marked 50,000-event gate**
 
 ```python
 @pytest.mark.release_scale
@@ -948,11 +948,11 @@ def test_n1000_t50_stress_cell_executes_50000_real_mock_events(tmp_path):
 
 Measure elapsed monotonic seconds, Python peak memory with `tracemalloc`, SQLite bytes, checkpoint bytes and audit bytes. Record values but do not assert unfrozen throughput/memory/duration thresholds. Build the final audit from the authoritative `COMPLETE` storage and assert the versioned terminology mapping and exploratory/process-diagnostic labels survive canonical replay.
 
-- [ ] **Step 3: Write one-sweep N=1000 recovery equivalence gate**
+- [x] **Step 3: Write one-sweep N=1000 recovery equivalence gate**
 
 Execute N=1000/T=1 uninterrupted and close/open at explicit ordinals `(1, 500, 1000)`. Assert the final comparable projection hashes match and post-invocation recovery has zero adapter resend. This satisfies the N=1000 recovery comparison without duplicating two full 50,000-event runs.
 
-- [ ] **Step 4: Run shape and recovery RED/GREEN first**
+- [x] **Step 4: Run shape and recovery RED/GREEN first**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_scale_release.py -k "shape or recovery"
@@ -960,11 +960,11 @@ Execute N=1000/T=1 uninterrupted and close/open at explicit ordinals `(1, 500, 1
 
 Expected: PASS after fixture wiring; do not start the expensive release gate until these structural tests are green.
 
-- [ ] **Step 5: Profile a bounded prefix before optimizing**
+- [x] **Step 5: Profile a bounded prefix before optimizing**
 
 Run 100, then 1,000, then 5,000 events with the same stress fixture and record elapsed/memory/SQLite growth. If growth is superlinear, use profiler evidence to locate repeated full-history scans. Add a regression that counts the offending public call or measures normalized operation count; do not weaken validation or batch-write state.
 
-- [ ] **Step 6: Run the explicit 50,000-event release gate once**
+- [x] **Step 6: Run the explicit 50,000-event release gate once**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q -o addopts="--strict-config --strict-markers" -m release_scale tests\test_mock_scale_release.py --basetemp="$env:TEMP\phase4b9-n1000-t50"
@@ -972,7 +972,7 @@ Run 100, then 1,000, then 5,000 events with the same stress fixture and record e
 
 Expected: one complete 50,000-event test passes. Preserve only the concise measurement output in the handoff log; delete the temporary SQLite/checkpoints after verifying their hashes.
 
-- [ ] **Step 7: Run focused regression and static gates**
+- [x] **Step 7: Run focused regression and static gates**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_mock_scale_release.py -m "not release_scale"
@@ -985,7 +985,7 @@ git diff --check
 
 Expected: PASS.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```powershell
 git add platform/tests/test_mock_scale_release.py platform/tests/helpers/mock_matrix.py platform/src/agent_ex/mock_run.py platform/src/agent_ex/process_audit.py platform/pyproject.toml
@@ -995,16 +995,24 @@ git commit -m "test(platform): pass Phase 4B mock scale gates"
 ## Task 8: Documentation, independent review and Phase 4B handoff
 
 **Files:**
+- Modify: `platform/src/agent_ex/checkpoint.py`
+- Modify: `platform/src/agent_ex/mock_run.py`
+- Modify: `platform/src/agent_ex/storage.py`
+- Modify: `platform/tests/test_checkpoint.py`
+- Modify: `platform/tests/test_mock_matrix_integration.py`
+- Modify: `platform/tests/test_mock_run.py`
+- Modify: `platform/tests/test_mock_scale_release.py`
+- Modify: `platform/tests/test_storage.py`
 - Modify: `docs/paper1-protocol.md`
 - Modify: `docs/reproducibility.md`
 - Modify: `docs/project-overview.md`
-- Create: `logs/2026-09-02-phase4b-handoff.md`
+- Create: `logs/2026-09-04-phase4b-handoff.md`
 - Modify: `task_plan.md`
 - Modify: `progress.md`
 - Modify: `findings.md`
 - Modify: `docs/superpowers/specs/2026-09-02-paper1-phase4b9-mock-integration-design.md`
 
-- [ ] **Step 1: Write exact implementation evidence**
+- [x] **Step 1: Write exact implementation evidence**
 
 Record:
 
@@ -1015,16 +1023,16 @@ Record:
 - N=1000/T=50 shape count and genuine execution measurement;
 - constructor-bound deterministic clock-sequence identity/hash plus retry/reconciliation timestamp replay evidence;
 - process-diagnostic exploratory labels and versioned terminology-map ID/hash/payload;
-- storage v6/checkpoint v4 plus legacy v3 boundary;
+- storage v6/compact checkpoint v5 plus legacy v3/v4 boundary;
 - Windows limitations and required Linux/cloud rerun;
 - mock-only/not-frozen limitation and remaining Phase 0A/0B/formal gates;
 - exact local/remote branch and resume commands without secrets.
 
-- [ ] **Step 2: Update durable project documents**
+- [x] **Step 2: Update durable project documents**
 
 Update protocol/reproducibility/overview only with verified engineering facts. Keep every `UNRESOLVED[...]` token and formal fail-closed statement. Mark Phase 4B complete only after all release reviews pass. Do not write raw performance databases or response content into Markdown.
 
-- [ ] **Step 3: Run all release gates in fresh locations**
+- [x] **Step 3: Run all release gates in fresh locations**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q --basetemp="$env:TEMP\phase4b9-final-full"
@@ -1037,7 +1045,7 @@ git diff --check
 
 The configured default exclusion means both full and coverage runs above skip `release_scale`; they must report that deselection. Do not override it here and do not execute the 50,000-event gate again. Then run the existing schema byte-identity, generated human summary, draft validation, formal fail-closed, isolated wheel install and Git hygiene tests by their exact pytest node IDs discovered in the current suite.
 
-- [ ] **Step 4: Request three bounded independent reviews**
+- [x] **Step 4: Request three bounded independent reviews**
 
 Dispatch:
 
@@ -1047,7 +1055,7 @@ Dispatch:
 
 Require exact P0–P3. Fix every P0–P2 with a new RED/GREEN test and re-run the affected reviewer. Keep non-blocking P3 in the handoff with an owner or explicit rationale.
 
-- [ ] **Step 5: Final completion audit**
+- [x] **Step 5: Final completion audit**
 
 Map each numbered Phase 4B completion criterion to an authoritative test, file, reviewer result or measured run. Treat missing/indirect evidence as incomplete. Confirm:
 
@@ -1059,10 +1067,10 @@ git ls-files | Select-String -Pattern '\.sqlite|checkpoint|raw.response|\.codex|
 
 Expected: only intended source/docs/tests/fixtures are staged; no raw runtime artifact is tracked.
 
-- [ ] **Step 6: Commit and push**
+- [x] **Step 6: Commit and push**
 
 ```powershell
-git add platform/src/agent_ex/mock_matrix.py platform/src/agent_ex/mock_run.py platform/src/agent_ex/process_audit.py platform/src/agent_ex/pipeline.py platform/src/agent_ex/storage.py platform/src/agent_ex/__init__.py platform/tests/helpers/mock_matrix.py platform/tests/test_mock_matrix.py platform/tests/test_mock_run.py platform/tests/test_process_audit.py platform/tests/test_mock_matrix_integration.py platform/tests/test_mock_scale_release.py platform/tests/test_paper1_mock_fixtures.py platform/tests/test_domain.py platform/tests/fixtures/paper1/mock_scale_cases.artifact.json platform/pyproject.toml docs/paper1-protocol.md docs/reproducibility.md docs/project-overview.md logs/2026-09-02-phase4b-handoff.md task_plan.md progress.md findings.md docs/superpowers/specs/2026-09-02-paper1-phase4b9-mock-integration-design.md docs/superpowers/plans/2026-09-02-paper1-phase4b9-mock-integration.md
+git add platform/src/agent_ex/checkpoint.py platform/src/agent_ex/mock_run.py platform/src/agent_ex/storage.py platform/tests/test_checkpoint.py platform/tests/test_mock_matrix_integration.py platform/tests/test_mock_run.py platform/tests/test_mock_scale_release.py platform/tests/test_storage.py docs/paper1-protocol.md docs/reproducibility.md docs/project-overview.md logs/2026-09-04-phase4b-handoff.md task_plan.md progress.md findings.md docs/superpowers/specs/2026-09-02-paper1-phase4b9-mock-integration-design.md docs/superpowers/plans/2026-09-02-paper1-phase4b9-mock-integration.md
 git commit -m "feat(platform): complete Phase 4B mock integration"
 git push origin codex/paper1-phase4b
 git status --short --branch

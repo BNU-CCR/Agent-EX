@@ -8,8 +8,12 @@ from types import MappingProxyType
 from typing import Mapping, Sequence
 
 from .adapters.mock import MockAdapter
-from .checkpoint import build_checkpoint, write_checkpoint_atomic
-from .domain import _freeze, canonical_payload_hash, derive_event_id
+from .checkpoint import (
+    build_checkpoint,
+    build_checkpoint_with_projection,
+    write_checkpoint_atomic,
+)
+from .domain import _freeze, derive_event_id
 from .engine import AttemptInvocationResult
 from .execution_evidence import MockAttemptPolicyBinding
 from .parser import ParserLimits
@@ -186,6 +190,8 @@ def execute_mock_run(
         raise ValueError("checkpoint paths must be unique after resolution")
     targets = dict(zip(ordinals, paths, strict=True))
     checkpoint_hashes: dict[int, str] = {}
+    final_checkpoint = None
+    final_storage_projection_hash = None
     executed = 0
     for invocation in invocation_values:
         outcome = pipeline.execute(
@@ -210,11 +216,19 @@ def execute_mock_run(
         if next_ordinal != invocation.event_ordinal + 1:
             raise RuntimeError("pipeline did not commit the exact invocation ordinal")
         if next_ordinal in targets:
-            checkpoint = build_checkpoint(storage)
+            if next_ordinal == target:
+                checkpoint, final_storage_projection_hash = build_checkpoint_with_projection(
+                    storage
+                )
+                final_checkpoint = checkpoint
+            else:
+                checkpoint = build_checkpoint(storage)
             checkpoint_hashes[next_ordinal] = write_checkpoint_atomic(
                 targets[next_ordinal], checkpoint
             )
-    final_checkpoint = build_checkpoint(storage)
+    if final_checkpoint is None:
+        final_checkpoint, final_storage_projection_hash = build_checkpoint_with_projection(storage)
+    assert final_storage_projection_hash is not None
     if storage.progress.next_event_ordinal != target:
         raise RuntimeError("mock run did not reach the requested target ordinal")
     if set(checkpoint_hashes) != set(targets):
@@ -227,5 +241,5 @@ def execute_mock_run(
         completed=final_checkpoint.resume_action == "complete",
         checkpoint_hashes=checkpoint_hashes,
         final_checkpoint_hash=final_checkpoint.checkpoint_hash,
-        final_storage_projection_hash=canonical_payload_hash(storage.recovery_evidence()),
+        final_storage_projection_hash=final_storage_projection_hash,
     )

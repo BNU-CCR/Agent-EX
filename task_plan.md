@@ -4,9 +4,9 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
-阶段 4B实施：执行计划已获用户整包批准；4B-0至4B-7已完成并通过独立审查；
-4B-8C-3代码、证据日志、979项全量回归及最终验证/规格/质量三路release复核均已完成；
-4B-9详细设计与TDD计划均已通过独立复核；开工基线待提交后进入Task 1严格TDD。
+阶段 4B实施已完成并通过独立审查：4B-0至4B-9全部实现、验证并进入最终提交推送边界。
+N=100完整12-cell与N=1000/T=50单cell 50,000-event mock gate均已通过；下一阶段为
+Phase 0A/0B研究决策/真实模型小规模校准，不是直接启动正式主实验。
 
 ## 各阶段
 
@@ -197,17 +197,16 @@
 - [x] Phase 4B-8：实现SQLite事务存储、严格串行engine与checkpoint/recovery
   （4B-8A、8B、8C-1、8C-2、8C-3均完成；最终verification/spec/quality三路复核
   P0-P2均无，三路fresh full分别为`979 passed, 2 skipped`，证据日志完整保留4B-9门禁。）
-- [ ] Phase 4B-9：完成N=20/100/1000 mock集成与交接
-  （详细设计经三轮独立规格复核后P0-P3均无；逐任务TDD计划经独立可执行性复核后
-  P0-P2均无，checkpoint exact-cover、clock恢复状态表、release-scale隔离、术语映射与
-  命令workdir已闭合。下一步从版本化mock scale cases开始RED。）
+- [x] Phase 4B-9：完成N=20/100/1000 mock集成与交接
+  （Tasks 1--7完成至`7749609`并推送；50,000-event release gate为1 passed，最终full为
+  1124 passed/2 skipped/1 deselected，coverage为85%；Task 8三路终审P0-P3均无。）
 - [ ] 实现 Paper 1 机器可读协议和配置
 - [ ] 完成构念与 prompt Phase 0
 - [ ] 完成 mock N=20/100/1000 验证
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
-- **状态：** in_progress（4B-0至4B-8 complete / independently reviewed；4B-9 design/plan
-  approved / independently reviewed，implementation pending Task 1 RED）
+- **状态：** complete / independently reviewed（4B-0至4B-9全部完成；formal仍由Phase 0A/0B
+  未冻结研究/模型参数fail closed）
 
 ### 阶段 5：正式实验与分析
 - [ ] 完成 N=200/500/1000 的有限规模检验

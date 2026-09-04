@@ -8,6 +8,7 @@ from pathlib import Path
 import sqlite3
 import subprocess
 from time import perf_counter
+import tracemalloc
 
 import pytest
 import agent_ex.checkpoint as checkpoint_module
@@ -34,6 +35,7 @@ from test_storage import (
     append_terminal_attempt,
     attempt,
     attempt_transition,
+    commit_fixture_event,
     expected_agent_ids,
     manifest,
     schedule,
@@ -78,6 +80,14 @@ def _create_sealed_store(path: Path) -> tuple[RunStorage, object, dict[str, str]
     return store, run_manifest, artifacts
 
 
+def _build_full_history_checkpoint(store: RunStorage) -> Checkpoint:
+    with store.consistent_read():
+        return checkpoint_module._build_checkpoint_snapshot(
+            store,
+            version="paper1.checkpoint.v4",
+        )
+
+
 def test_empty_sealed_run_builds_deterministic_storage_bound_checkpoint(tmp_path: Path) -> None:
     store, run_manifest, _ = _create_sealed_store(tmp_path / "run.sqlite3")
     with store:
@@ -85,7 +95,7 @@ def test_empty_sealed_run_builds_deterministic_storage_bound_checkpoint(tmp_path
         second = build_checkpoint(store)
 
         assert first == second
-        assert first.version == "paper1.checkpoint.v4"
+        assert first.version == "paper1.checkpoint.v5"
         assert first.run_id == run_manifest.run_id
         assert first.protocol_id == run_manifest.protocol_id
         assert first.protocol_version == run_manifest.protocol_version
@@ -240,6 +250,8 @@ def test_checkpoint_rejects_self_consistent_reversal_of_two_event_evidence(
 
 
 def _as_legacy_v3_checkpoint(checkpoint: Checkpoint, store: RunStorage) -> Checkpoint:
+    if checkpoint.version == "paper1.checkpoint.v5":
+        checkpoint = _build_full_history_checkpoint(store)
     payload = checkpoint.to_payload()
     body = payload["checkpoint"]
     body["version"] = "paper1.checkpoint.v3"
@@ -274,15 +286,20 @@ def test_legacy_v3_checkpoint_validates_exact_and_stale_two_event_prefix(
 
     fixture.pipeline.execute(**fixture.execute_kwargs)
     stale_v3 = _as_legacy_v3_checkpoint(build_checkpoint(fixture.store), fixture.store)
+    stale_v4 = _build_full_history_checkpoint(fixture.store)
     fixture.pipeline.execute(**fixture.execute_kwargs)
-    current_v4 = build_checkpoint(fixture.store)
+    current_v5 = build_checkpoint(fixture.store)
+    current_v4 = _build_full_history_checkpoint(fixture.store)
     current_v3 = _as_legacy_v3_checkpoint(current_v4, fixture.store)
 
     assert current_v4.version == "paper1.checkpoint.v4"
+    assert current_v5.version == "paper1.checkpoint.v5"
     assert current_v3.version == "paper1.checkpoint.v3"
     assert len(set(current_v4.v6_evidence_hashes["attempt_policy_evidence"])) == 2
     assert len(set(current_v3.v6_evidence_hashes["attempt_policy_evidence"])) == 1
     assert validate_checkpoint(stale_v3, fixture.store) == "stale"
+    assert validate_checkpoint(stale_v4, fixture.store) == "stale"
+    assert validate_checkpoint(current_v4, fixture.store) == "current"
     assert validate_checkpoint(current_v3, fixture.store) == "current"
 
     payload = current_v3.to_payload()
@@ -333,7 +350,7 @@ def test_checkpoint_binds_halt_and_explicit_resume_authorization(tmp_path: Path)
         body["resume_authorization"] = None
         body["resume_authorization_hash"] = None
         tampered["checkpoint_hash"] = canonical_payload_hash(body)
-        with pytest.raises(ValueError, match="execution state disagrees|authorization"):
+        with pytest.raises(ValueError, match="causal|authorization|missing"):
             Checkpoint.from_payload(tampered)
 
 
@@ -379,6 +396,9 @@ def test_checkpoint_binds_full_multiple_halt_authorization_prefix(tmp_path: Path
         checkpoint = build_checkpoint(store)
         assert len(checkpoint.terminal_failure_prefix) == 2
         assert len(checkpoint.resume_authorization_prefix) == 2
+        assert all(isinstance(item, str) for item in checkpoint.terminal_failure_prefix)
+        assert all(isinstance(item, str) for item in checkpoint.resume_authorization_prefix)
+        assert all(isinstance(item, Mapping) for item in checkpoint.causal_evidence_prefix)
         assert Checkpoint.from_payload(checkpoint.to_payload()) == checkpoint
         assert validate_checkpoint(checkpoint, store) == "current"
 
@@ -420,7 +440,7 @@ def test_checkpoint_cannot_hide_authorized_failure_by_truncating_causal_evidence
         body["causal_evidence_prefix"] = []
         body["causal_evidence_root"] = canonical_payload_hash([])
         payload["checkpoint_hash"] = canonical_payload_hash(body)
-        with pytest.raises(ValueError, match="causal|authorization|failure|attempt"):
+        with pytest.raises(ValueError, match="causal|authorization|failure|checkpoint|retry"):
             Checkpoint.from_payload(payload)
 
 
@@ -447,7 +467,7 @@ def test_checkpoint_from_payload_rejects_causal_chain_tamper(tmp_path: Path, tam
                 policy_evidence_hash="b" * 64,
                 authorized_at=f"2026-08-30T1{index}:00:00+00:00",
             )
-        payload = build_checkpoint(store).to_payload()
+        payload = _build_full_history_checkpoint(store).to_payload()
     body = payload["checkpoint"]
     assert isinstance(body, dict)
     causal = body["causal_evidence_prefix"]
@@ -1120,7 +1140,7 @@ def test_checkpoint_replays_every_failed_attempt_causal_stage_as_a_stale_prefix(
             causal_evidence_prefix=(),
             causal_evidence_root=canonical_payload_hash([]),
         )
-        with pytest.raises(ValueError, match="causal|failed|conflict"):
+        with pytest.raises(ValueError, match="causal|failed|conflict|retry|authorization"):
             validate_checkpoint(forged, store)
 
 
@@ -1454,7 +1474,8 @@ def test_load_checkpoint_enforces_local_path_size_and_depth_boundaries(tmp_path:
         load_checkpoint(tmp_path / "missing.json")
 
     oversized = tmp_path / "oversized.json"
-    oversized.write_bytes(b"x" * (checkpoint_module._MAX_CHECKPOINT_BYTES + 1))
+    with oversized.open("wb") as stream:
+        stream.truncate(checkpoint_module._MAX_CHECKPOINT_BYTES + 1)
     with pytest.raises(ValueError, match="byte size"):
         load_checkpoint(oversized)
 
@@ -1614,7 +1635,7 @@ def test_checkpoint_io_accepts_release_scale_v4_evidence_payload(tmp_path: Path)
     store, _, _ = _create_sealed_store(tmp_path / "run.sqlite3")
     target = tmp_path / "release-scale-checkpoint.json"
     with store:
-        baseline = build_checkpoint(store)
+        baseline = _build_full_history_checkpoint(store)
     release_hashes = {
         name: (("f" * 64,) * 51_000 if name != "adapter_execution_bindings" else ("f" * 64,))
         for name in baseline.v6_evidence_hashes
@@ -1629,6 +1650,136 @@ def test_checkpoint_io_accepts_release_scale_v4_evidence_payload(tmp_path: Path)
 
     assert target.stat().st_size > 16 * 1024 * 1024
     assert load_checkpoint(target) == checkpoint
+
+
+def test_checkpoint_bound_covers_release_scale_with_one_authorized_retry_per_event(
+    tmp_path: Path,
+) -> None:
+    """Actually round-trip the 50k-event, one-retry-per-event compact envelope."""
+
+    store, run_manifest, _ = _create_sealed_store(tmp_path / "run.sqlite3")
+    with store:
+        commit_fixture_event(store, run_manifest, 0)
+        commit_fixture_event(store, run_manifest, 1)
+        baseline = build_checkpoint(store)
+
+    def digest(namespace: int, index: int) -> str:
+        return f"{namespace * 200_000 + index + 1:064x}"
+
+    failures: list[str] = []
+    authorizations: list[str] = []
+    causal: list[dict[str, object]] = []
+    previous: str | None = None
+    for index in range(50_000):
+        event_id = derive_event_id(run_manifest.run_id, index)
+        attempt_index = 1
+        failure_hash = digest(1, index)
+        authorization_hash = digest(2, index)
+        failures.append(failure_hash)
+        authorizations.append(authorization_hash)
+        causal.append(
+            {
+                "evidence_kind": "failure",
+                "evidence_sequence": 2 * index + 1,
+                "previous_evidence_hash": previous,
+                "event_id": event_id,
+                "event_ordinal": index,
+                "attempt_id": derive_attempt_id(event_id, attempt_index),
+                "attempt_index": attempt_index,
+                "payload_hash": failure_hash,
+            }
+        )
+        causal.append(
+            {
+                "evidence_kind": "authorization",
+                "evidence_sequence": 2 * index + 2,
+                "previous_evidence_hash": failure_hash,
+                "event_id": event_id,
+                "event_ordinal": index,
+                "previous_terminal_failure_hash": failure_hash,
+                "payload_hash": authorization_hash,
+            }
+        )
+        previous = authorization_hash
+
+    payload = baseline.to_payload()
+    body = payload["checkpoint"]
+    assert isinstance(body, dict)
+    event_ids = [derive_event_id(run_manifest.run_id, index) for index in range(50_000)]
+    body["schedule_count"] = 50_000
+    body["next_event_ordinal"] = 50_000
+    body["current_event_id"] = None
+    execution_state = body["execution_state"]
+    assert isinstance(execution_state, dict)
+    execution_state.update(
+        {
+            "status": "complete",
+            "next_event_ordinal": 50_000,
+            "expected_event_count": 50_000,
+            "current_event_id": None,
+            "event_ids": event_ids,
+            "status_counts": {
+                "pending": 0,
+                "in_progress": 0,
+                "succeeded": 50_000,
+                "failed": 0,
+            },
+            "failed_event_ids": [],
+        }
+    )
+    body["execution_state_hash"] = canonical_payload_hash(execution_state)
+    body["terminal_failure_prefix"] = failures
+    body["terminal_failure_prefix_hash"] = canonical_payload_hash(failures)
+    body["resume_authorization_prefix"] = authorizations
+    body["resume_authorization_prefix_hash"] = canonical_payload_hash(authorizations)
+    body["causal_evidence_prefix"] = causal
+    body["causal_evidence_root"] = canonical_payload_hash(causal)
+    v6_hashes = {
+        name: (
+            [digest(9, 0)]
+            if name == "adapter_execution_bindings"
+            else [
+                digest(namespace, index)
+                for index in range(
+                    100_000
+                    if name in {"adapter_requests", "invocation_evidence", "parse_evidence"}
+                    else 50_000
+                )
+            ]
+        )
+        for namespace, name in enumerate(baseline.v6_evidence_hashes, start=3)
+    }
+    body["v6_evidence_hashes"] = v6_hashes
+    body["v6_evidence_root"] = canonical_payload_hash(v6_hashes)
+    payload["checkpoint_hash"] = canonical_payload_hash(body)
+    release_shape = Checkpoint.from_payload(payload)
+    target = tmp_path / "release-retry-envelope.json"
+    encoded_size = len(
+        checkpoint_module._canonical_json(release_shape.to_payload()).encode("utf-8")
+    )
+
+    assert release_shape.schedule_count == 50_000
+    assert release_shape.next_event_ordinal == 50_000
+    assert len(release_shape.execution_state["event_ids"]) == 50_000
+    assert all(
+        failure["event_ordinal"] == index
+        and failure["event_id"] == derive_event_id(run_manifest.run_id, index)
+        and failure["attempt_index"] == 1
+        and failure["attempt_id"] == derive_attempt_id(failure["event_id"], 1)
+        for index, failure in enumerate(release_shape.causal_evidence_prefix[::2])
+    )
+    assert encoded_size <= checkpoint_module._MAX_CHECKPOINT_BYTES
+    tracemalloc.start()
+    try:
+        write_checkpoint_atomic(target, release_shape)
+        loaded = load_checkpoint(target)
+        _, peak_bytes = tracemalloc.get_traced_memory()
+    finally:
+        tracemalloc.stop()
+
+    assert target.stat().st_size <= checkpoint_module._MAX_CHECKPOINT_BYTES
+    assert peak_bytes <= checkpoint_module._RELEASE_CHECKPOINT_IO_PEAK_MEMORY_BUDGET
+    assert loaded == release_shape
 
 
 def test_load_checkpoint_normalizes_extreme_json_depth_to_value_error(tmp_path: Path) -> None:

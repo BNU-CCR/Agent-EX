@@ -1,5 +1,5 @@
 ---
-status: approved implementation design; independently reviewed with no P0-P3 on 2026-09-02
+status: complete / independently reviewed; implementation evidence verified 2026-09-04
 authority: Phase 4B-9 engineering design; subordinate to frozen protocol, 2026-07-29 Phase 4A completion design, and approved 2026-07-29 Phase 4B plan
 date: 2026-09-02
 ---
@@ -278,3 +278,11 @@ Phase 4B-9及整个Phase 4B只有在以下证据全部存在时才完成：
 - Git不含原始大结果、SQLite、checkpoint、cache或`.codex/`。
 
 满足这些条件后，下一步是Phase 0A/0B与真实模型小规模校准，而不是直接开始正式主实验。
+
+## 11. Implementation evidence（2026-09-04 release candidate）
+
+Tasks 1--7已实现并推送至`7749609`。N=20六类恢复、N=100完整12-cell、N=1000/T=1
+恢复等价、N=1000/T=50 12-cell shape和单cell 50,000-event真实mock execution均通过。
+规模门实测与哈希见`logs/2026-09-04-phase4b-handoff.md`。Task 8的full、coverage、protocol、
+install、hygiene及规格/代码质量/最终验证三路独立终审均已通过且无P0--P3；本设计的Phase 4B
+工程完成边界已满足。下一步仍是Phase 0A/0B，而非直接启动正式主实验。

@@ -2,7 +2,7 @@
 status: active navigation baseline
 authority: project scope and evidence map; not an execution protocol
 supersedes: README.md and logs/notion-2026-05-31.md as the entry point for work after 2026-07-14
-last-verified: 2026-07-29
+last-verified: 2026-09-04
 ---
 
 # Agent-EX 项目总览
@@ -22,8 +22,10 @@ Agent-EX 研究 LLM-agent 在多轮在线讨论中的意见与理由演化。现
 - 研究对象：异质初始立场的 LLM-agent 讨论网络。
 - 因素：身份信息、身份连续性要求、社会暴露。
 - 社会暴露：self-history only、degree-matched shuffled social、固定 WS 邻居。
-- 主要结果：`ΔS_T = Δ log((B+ε)/(W+ε))`，并同时报告 B 与 W。
-- 主要 estimand：continuity 对 `WS - shuffled` 的 matched-seed DiD 调节，跨两个 identity 水平等权平均。
+- 结果层级：`private_state`是唯一primary；`public_stock`、`public_flow`和
+  `expression_gap`是强制预注册secondary。精确primary公式仍须在Phase 0冻结。
+- 主要 estimand：在四个identity×continuity条件上等权平均的`WS - shuffled`
+  matched-seed差异；continuity对该差异的DiD调节是关键secondary。
 - 正式矩阵：N=1000、T=50、12 cells、10 matched seeds，按一次盲态 nuisance-variance 重估最多扩至20个。
 - 主模型路线：Qwen3-8B BF16、non-thinking、固定 revision、自部署 vLLM；API 只作外部稳健性子集。
 
@@ -45,9 +47,12 @@ pilot-3.0 的 weak 条件出现高分端集中，lifelong strong 条件保留较
 
 ## 当前实现 checkpoint
 
-- 当前主入口分支：`main`；来源实现分支为 `codex/paper1-platform`。
-- Phase 3A 提交：`7e5731b`。
-- 本地 `main` 已于 2026-07-29 快进集成 `codex/paper1-platform`，主目录现已包含 `platform/`。
-- `codex/paper1-platform` worktree 暂时保留为已验证来源，不再是唯一代码入口。
-- 恢复开发前先读 `logs/2026-07-29-phase3a-handoff.md`。
-- formal 仍被未冻结研究决策阻断；当前通过的是平台基础验证，不是正式实验结果。
+- Phase 4B release-candidate分支：`codex/paper1-phase4b`，Task 7提交`7749609`已与远端一致。
+- `platform/`已组合12-cell mock矩阵、严格串行pipeline、SQLite v6、compact checkpoint v5、
+  close/open恢复与只读process audit；N=20/100/1000和50,000-event mock规模门已通过。
+- 精确提交、哈希、资源测量和跨Windows/Linux恢复说明见
+  `logs/2026-09-04-phase4b-handoff.md`。
+- Phase 4B已通过最终full/coverage、协议/安装/Git门及规格、代码质量、最终验证三路独立终审，
+  状态为`complete / independently reviewed`。
+- 即使Phase 4B完成，formal仍被未冻结研究决策阻断；下一步是Phase 0A/0B与真实模型
+  小规模校准，不是直接运行正式主实验。

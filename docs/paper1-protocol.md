@@ -69,13 +69,15 @@ model_route:
 status: draft; not confirmed or frozen
 authority: human-readable protocol draft derived from the approved focused spec; machine execution is forbidden until unresolved fields are frozen
 supersedes: pilot-3.0 four-condition design for future formal Paper 1 runs; does not supersede pilot evidence
-last-verified: 2026-07-29
+last-verified: 2026-09-04
 ---
 
-> **2026-07-29 Phase 4B状态：** schema、draft YAML与页首generated summary已完成
-> Phase 4A/4A.1协议迁移。当前草案仍不可用于formal run：event ordinal、private/public
-> 与checkpoint的domain记录将在Phase 4B-2迁移，且机器协议仍含未冻结研究参数、
-> `decision_provenance`尚无正式审批记录。上述任一阻断未关闭时都必须fail closed。
+> **2026-09-04 Phase 4B状态：** event ordinal、private/public、有限未读feed、严格串行
+> lifecycle、SQLite v6、compact checkpoint v5（含legacy v3/v4验证）、mock矩阵与N=20/100/1000
+> 恢复/规模门均已实现；单cell 50,000-event mock gate已通过。该证据仅证明工程实现，
+> 不冻结研究参数、不接入真实模型、不产生论文结果。当前草案仍不可用于formal run：
+> 机器协议仍含未冻结研究参数，且`decision_provenance`尚无正式审批记录。上述任一阻断
+> 未关闭时都必须fail closed。
 
 # Paper 1 研究协议草案
 
