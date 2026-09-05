@@ -330,7 +330,7 @@ git commit -m "feat(platform): expand deterministic Phase 0A cases"
 - Create: `platform/src/agent_ex/calibration/parser.py`
 - Create: `platform/tests/test_calibration_adapter_parser.py`
 
-- [ ] **Step 1: Write RED request/response/parser tests**
+- [x] **Step 1: Write RED request/response/parser tests**
 
 ```python
 def test_scripted_response_binds_case_request_runtime_and_raw_hash(probe_case):
@@ -358,7 +358,7 @@ def test_probe_parser_fails_closed(raw, code, probe_request):
 Also cover duplicate keys, raw char/byte bounds, JSON depth, 0--10 range, field-order variants,
 provider seed support/echo, timeout/OOM/provider-error responses, and strict round trips.
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_adapter_parser.py
@@ -366,7 +366,7 @@ provider seed support/echo, timeout/OOM/provider-error responses, and strict rou
 
 Expected: FAIL on missing request/response/parser symbols.
 
-- [ ] **Step 3: Implement the probe adapter contract**
+- [x] **Step 3: Implement the probe adapter contract**
 
 Add `ProbeRequest`, `ProbeResponse`, and `ProbeParseEvidence` frozen records to `contracts.py`.
 Their identities bind case hash, attempt index/kind, rendered messages, generation settings,
@@ -414,14 +414,14 @@ class ScriptedProbeAdapter(ProbeAdapter):
 The scripted adapter consumes the exact step for `(probe_case_id, attempt_index)` and never
 uses the Phase 4B `MockAdapter` or its seals.
 
-- [ ] **Step 4: Implement the bounded strict parser**
+- [x] **Step 4: Implement the bounded strict parser**
 
 `parse_probe_response` must use `json.loads` with duplicate-key and NaN/Infinity rejection,
 check exact field set and declared field order, reject bool-as-int, enforce the case scale,
 confidence 1--5, nonblank bounded public reason, and bind evidence to request/response hashes.
 It returns evidence for invalid responses; resource-limit violations raise before unbounded encoding.
 
-- [ ] **Step 5: Run GREEN and event-parser regressions**
+- [x] **Step 5: Run GREEN and event-parser regressions**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_adapter_parser.py tests\test_parser.py tests\test_mock_adapter.py
@@ -429,7 +429,7 @@ It returns evidence for invalid responses; resource-limit violations raise befor
 
 Expected: all pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration/contracts.py platform/src/agent_ex/calibration/adapters.py platform/src/agent_ex/calibration/parser.py platform/tests/test_calibration_adapter_parser.py
