@@ -1,8 +1,9 @@
 ---
-status: approved design; pending independent review and written-spec review
+status: approved design; independently reviewed; pending user written-spec review
 authority: Phase 0A no-network topic/persona probe design; subordinate to frozen machine protocol, schema, and 2026-07-29 Phase 4A completion design
 approved-by: user
 approved-date: 2026-09-05
+independent-review: approved; 0 P0, 0 P1, 0 P2, 0 P3
 supersedes: none
 ---
 
