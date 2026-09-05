@@ -1,0 +1,75 @@
+{
+  "schema_version": "paper1.calibration.probe-specification.v1",
+  "metadata": {
+    "calibration_only": true,
+    "formal_parameter_authority": false,
+    "research_parameter_status": "not_frozen"
+  },
+  "candidate_order": ["retirement-delay", "gm-soybean-oil", "ai-net-employment"],
+  "preselection_priority": ["retirement-delay", "gm-soybean-oil", "ai-net-employment"],
+  "topic_candidates": [
+    {
+      "candidate_key": "retirement-delay",
+      "construct": "synthetic retirement-delay attitude",
+      "fact_card": "MOCK fact card: synthetic retirement-delay context only.",
+      "statements": ["MOCK retirement statement A", "MOCK retirement statement B", "MOCK retirement statement C"],
+      "stance_labels_1_7": ["1 strongly oppose", "2 oppose", "3 somewhat oppose", "4 neutral", "5 somewhat support", "6 support", "7 strongly support"]
+    },
+    {
+      "candidate_key": "gm-soybean-oil",
+      "construct": "synthetic labelled GM soybean-oil attitude",
+      "fact_card": "MOCK fact card: synthetic labelled GM soybean-oil context only.",
+      "statements": ["MOCK soybean-oil statement A", "MOCK soybean-oil statement B", "MOCK soybean-oil statement C"],
+      "stance_labels_1_7": ["1 strongly oppose", "2 oppose", "3 somewhat oppose", "4 neutral", "5 somewhat support", "6 support", "7 strongly support"]
+    },
+    {
+      "candidate_key": "ai-net-employment",
+      "construct": "synthetic AI net-employment judgment",
+      "fact_card": "MOCK fact card: synthetic AI net-employment context only.",
+      "statements": ["MOCK AI employment statement A", "MOCK AI employment statement B", "MOCK AI employment statement C"],
+      "stance_labels_1_7": ["1 strongly disagree", "2 disagree", "3 somewhat disagree", "4 uncertain", "5 somewhat agree", "6 agree", "7 strongly agree"]
+    }
+  ],
+  "scales": [
+    {"scale_id": "stance-1-7", "minimum": 1, "maximum": 7, "role": "main"},
+    {"scale_id": "stance-0-10", "minimum": 0, "maximum": 10, "role": "challenger"}
+  ],
+  "field_orders": [
+    {"field_order_id": "stance-confidence-reason", "fields": ["stance", "confidence", "public_reason"]},
+    {"field_order_id": "reason-confidence-stance", "fields": ["public_reason", "confidence", "stance"]}
+  ],
+  "persona": {
+    "common_skeleton": "MOCK calibration task.\n{factor_blocks}\nAnswer the synthetic item only.",
+    "identity_block": "MOCK identity card: adult group; survey field values only; no inferred biography.",
+    "continuity_blocks": [
+      {"wording_id": "continuity-balanced-a", "text": "Relate this answer to the prior answer. You may keep or change it when warranted, and explain the current basis."},
+      {"wording_id": "continuity-balanced-b", "text": "Explain how the current judgment follows from the earlier one. Either retaining or revising it is permitted when justified."}
+    ]
+  },
+  "persona_conditions": [
+    {"condition_id": "i0-c0", "identity_present": false, "continuity_present": false},
+    {"condition_id": "i0-c1", "identity_present": false, "continuity_present": true},
+    {"condition_id": "i1-c0", "identity_present": true, "continuity_present": false},
+    {"condition_id": "i1-c1", "identity_present": true, "continuity_present": true}
+  ],
+  "factor_orders": [
+    {"factor_order_id": "identity-continuity", "factors": ["identity", "continuity"]},
+    {"factor_order_id": "continuity-identity", "factors": ["continuity", "identity"]}
+  ],
+  "continuity_scenarios": [
+    {"scenario_id": "reasonable-hold", "history": "MOCK prior stance and evidence that support reasonable retention."},
+    {"scenario_id": "warranted-update", "history": "MOCK prior stance plus strong non-deceptive contrary evidence."},
+    {"scenario_id": "insufficient-information", "history": "MOCK prior stance plus ambiguous information."}
+  ],
+  "replicates": [
+    {"replicate_id": 0, "requested_seed": 1101},
+    {"replicate_id": 1, "requested_seed": 1102}
+  ],
+  "generation_settings": {"temperature": "UNRESOLVED[P1_TEMPERATURE]", "top_p": "UNRESOLVED[P1_TOP_P]", "request_seed": "UNRESOLVED[P1_REQUEST_SEED]"},
+  "policy_hashes": {
+    "gate_algorithm": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "semantic_review_policy": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "runtime_policy": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "decision_ids": ["P1_TOPIC_PRIMARY", "P1_STANCE_SCALE", "P1_PERSONA_TEMPLATES", "P1_CONTINUITY_MC_SCORING", "P1_CONTINUITY_LOCK_THRESHOLD", "P1_REFUSAL_THRESHOLD", "P1_PARSE_FAILURE_THRESHOLD", "P1_TEMPERATURE", "P1_TOP_P", "P1_REQUEST_SEED", "P1_TIMEOUT_RETRY"]
+}
