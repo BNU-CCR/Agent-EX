@@ -130,12 +130,18 @@ def _validate_topic_candidates(payload: dict[str, object]) -> None:
             raise ValueError("every topic candidate must have exactly three statement variants")
         if len(labels) != 7:
             raise ValueError("stance_labels_1_7 must have exactly seven labels")
+        statement_texts = tuple(_nonempty_string(item, "statement") for item in statements)
+        label_texts = tuple(_nonempty_string(item, "stance label") for item in labels)
+        if len(set(statement_texts)) != 3:
+            raise ValueError("topic statement variants must be pairwise distinct")
+        if len(set(label_texts)) != 7:
+            raise ValueError("stance_labels_1_7 must be pairwise distinct")
         records.append(
             ProbeTopicCandidate.create(
                 construct=_nonempty_string(candidate["construct"], "construct"),
                 fact_card=_nonempty_string(candidate["fact_card"], "fact_card"),
-                statements=tuple(_nonempty_string(item, "statement") for item in statements),  # type: ignore[arg-type]
-                stance_labels_1_7=tuple(_nonempty_string(item, "stance label") for item in labels),
+                statements=statement_texts,  # type: ignore[arg-type]
+                stance_labels_1_7=label_texts,
             )
         )
     if len(keys) != len(set(keys)) or len({item.candidate_id for item in records}) != 3:
@@ -194,7 +200,6 @@ def _validate_persona(payload: dict[str, object]) -> None:
 
     conditions = _exact_list(payload["persona_conditions"], "persona_conditions")
     observed_conditions = set()
-    condition_ids = set()
     for raw in conditions:
         condition = _exact_dict(
             raw,
@@ -206,26 +211,37 @@ def _validate_persona(payload: dict[str, object]) -> None:
             or type(condition["continuity_present"]) is not bool
         ):
             raise TypeError("persona condition factors must be booleans")
-        condition_ids.add(_nonempty_string(condition["condition_id"], "condition_id"))
-        observed_conditions.add((condition["identity_present"], condition["continuity_present"]))
-    if (
-        len(conditions) != 4
-        or len(condition_ids) != 4
-        or observed_conditions != {(False, False), (False, True), (True, False), (True, True)}
-    ):
-        raise ValueError("persona_conditions must contain all four factor combinations")
+        observed_conditions.add(
+            (
+                _nonempty_string(condition["condition_id"], "condition_id"),
+                condition["identity_present"],
+                condition["continuity_present"],
+            )
+        )
+    if len(conditions) != 4 or observed_conditions != {
+        ("i0-c0", False, False),
+        ("i0-c1", False, True),
+        ("i1-c0", True, False),
+        ("i1-c1", True, True),
+    }:
+        raise ValueError("persona condition IDs must map to their exact factor combinations")
 
     factor_orders = _exact_list(payload["factor_orders"], "factor_orders")
     observed_orders = set()
     for raw in factor_orders:
         order = _exact_dict(raw, {"factor_order_id", "factors"}, "factor order")
         factors = _exact_list(order["factors"], "factor order factors")
-        observed_orders.add(tuple(factors))
+        observed_orders.add(
+            (
+                _nonempty_string(order["factor_order_id"], "factor_order_id"),
+                tuple(factors),
+            )
+        )
     if len(factor_orders) != 2 or observed_orders != {
-        ("identity", "continuity"),
-        ("continuity", "identity"),
+        ("identity-continuity", ("identity", "continuity")),
+        ("continuity-identity", ("continuity", "identity")),
     }:
-        raise ValueError("factor_orders must contain both identity/continuity orders")
+        raise ValueError("factor order IDs must map to their exact factor sequences")
 
 
 def _validate_scenarios_and_replicates(payload: dict[str, object]) -> None:

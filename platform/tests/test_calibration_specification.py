@@ -79,6 +79,35 @@ def test_specification_rejects_duplicate_or_reordered_candidates() -> None:
             load_probe_specification(payload)
 
 
+def test_specification_binds_persona_condition_ids_to_exact_factor_values() -> None:
+    payload = probe_spec_payload()
+    first = payload["persona_conditions"][0]
+    last = payload["persona_conditions"][-1]
+    first["condition_id"], last["condition_id"] = last["condition_id"], first["condition_id"]
+    with pytest.raises(ValueError, match="condition|mapping|combination"):
+        load_probe_specification(payload)
+
+
+def test_specification_binds_factor_order_ids_to_exact_sequences() -> None:
+    payload = probe_spec_payload()
+    first = payload["factor_orders"][0]
+    second = payload["factor_orders"][1]
+    first["factor_order_id"], second["factor_order_id"] = (
+        second["factor_order_id"],
+        first["factor_order_id"],
+    )
+    with pytest.raises(ValueError, match="factor|order|mapping"):
+        load_probe_specification(payload)
+
+
+@pytest.mark.parametrize("field", ["statements", "stance_labels_1_7"])
+def test_topic_candidate_text_inventory_must_be_pairwise_distinct(field: str) -> None:
+    payload = probe_spec_payload()
+    payload["topic_candidates"][0][field][1] = payload["topic_candidates"][0][field][0]
+    with pytest.raises(ValueError, match="distinct|duplicate"):
+        load_probe_specification(payload)
+
+
 def test_specification_rejects_incomplete_variants_decisions_policies_and_seeds() -> None:
     mutations = []
     payload = probe_spec_payload()
