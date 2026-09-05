@@ -61,20 +61,28 @@ Run from `platform/` on this desktop:
 
 ```powershell
 & '..\..\codex-paper1-phase4b\platform\.venv\Scripts\python.exe' -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pip install --upgrade --force-reinstall -r requirements-dev.lock
+.\.venv\Scripts\python.exe -m pip install --no-deps -e .
 ```
 
-Expected: `.venv\Scripts\python.exe --version` reports Python 3.12.x and installation succeeds with the exact project constraints.
+Expected: `.venv\Scripts\python.exe --version` reports Python 3.12.x and both installation commands succeed.
 
 - [ ] **Step 2: Verify dependency closure and clean baseline**
 
 ```powershell
+.\.venv\Scripts\python.exe -m pip list --format=json
 .\.venv\Scripts\python.exe -m pip check
 .\.venv\Scripts\python.exe -m pytest -q tests\test_topic.py tests\test_persona.py tests\test_parser.py tests\test_mock_adapter.py
 .\.venv\Scripts\python.exe -m ruff check .
 ```
 
-Expected: `pip check` and Ruff pass; the focused inherited suite reports 0 failures.
+Compare `pip list --format=json` against every non-comment `name==version` line in
+`requirements-dev.lock`, normalizing distribution names with the packaging canonical-name rule.
+The gate passes only when every locked distribution is present exactly once at the locked version
+(all 18 distributions in the current lock file, including `coverage==7.15.2`, `packaging==26.2`,
+`Pygments==2.20.0`, and `setuptools==83.0.0`) and no locked version differs. Expected: the complete
+locked distribution set matches exactly; `pip check` and Ruff pass; the focused inherited suite
+reports 0 failures.
 
 - [ ] **Step 3: Prove the environment remains untracked**
 
