@@ -1,6 +1,7 @@
 """Stable public protocol, artifact, RNG, and ordinal evidence primitives."""
 
 from .artifacts import ArtifactEnvelope
+from .calibration import ProbeCase, ProbePersonaView, ProbeTopicCandidate
 from .checkpoint import (
     Checkpoint,
     build_checkpoint,
@@ -213,6 +214,9 @@ __all__ = [
     "PersistedInvocationEvidence",
     "PromptView",
     "PromptLimits",
+    "ProbeCase",
+    "ProbePersonaView",
+    "ProbeTopicCandidate",
     "ValidatedPromptRunContext",
     "PublicPost",
     "RNGProvenance",

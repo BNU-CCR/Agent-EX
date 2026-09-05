@@ -1738,6 +1738,9 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
         "PersistedInvocationEvidence",
         "PromptView",
         "PromptLimits",
+        "ProbeCase",
+        "ProbePersonaView",
+        "ProbeTopicCandidate",
         "ValidatedPromptRunContext",
         "PublicPost",
         "RNGProvenance",
@@ -1822,5 +1825,6 @@ def test_public_api_exports_only_v2_domain_and_artifact_rng_boundaries() -> None
     }
 
     assert set(agent_ex.__all__) == expected
+    assert not issubclass(agent_ex.ProbeCase, agent_ex.GenerationEvent)
     assert not hasattr(agent_ex, "AgentState")
     assert not hasattr(agent_ex, "OpinionRecord")
