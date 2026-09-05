@@ -102,7 +102,7 @@ Expected: no tracked changes and `.gitignore` identifies the venv exclusion. Do 
 - Modify: `platform/src/agent_ex/__init__.py`
 - Modify: `platform/tests/test_domain.py`
 
-- [ ] **Step 1: Write RED tests for authority and identity separation**
+- [x] **Step 1: Write RED tests for authority and identity separation**
 
 Add tests with these exact assertions:
 
@@ -132,7 +132,7 @@ def test_probe_contracts_reject_formal_authority(cls, valid_payloads):
         cls.from_payload(payload)
 ```
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_contracts.py
@@ -140,7 +140,7 @@ def test_probe_contracts_reject_formal_authority(cls, valid_payloads):
 
 Expected: collection fails because `agent_ex.calibration` does not exist.
 
-- [ ] **Step 3: Implement strict frozen records**
+- [x] **Step 3: Implement strict frozen records**
 
 Create frozen/slots dataclasses with no defaults for research-bearing fields:
 
@@ -195,7 +195,7 @@ class ProbeCase:
 
 For each class, implement exact-field `from_payload`, JSON-safe `to_payload`, `content_payload`, canonical record-hash verification, tuple/list transport conversion, strict bool-vs-int rejection, nonempty IDs/text, SHA-256 validation, and exact `CALIBRATION_METADATA`. Derive identities from the full content payload excluding `record_hash`; never accept caller-supplied authority metadata.
 
-- [ ] **Step 4: Export only the three reviewed primitives**
+- [x] **Step 4: Export only the three reviewed primitives**
 
 In `calibration/__init__.py` export `ProbeTopicCandidate`, `ProbePersonaView`, and `ProbeCase`. Add the same names to root `agent_ex.__all__`; update `test_domain.py` to compare the new names and reject accidental `GenerationEvent` inheritance with:
 
@@ -203,7 +203,7 @@ In `calibration/__init__.py` export `ProbeTopicCandidate`, `ProbePersonaView`, a
 assert not issubclass(agent_ex.ProbeCase, agent_ex.GenerationEvent)
 ```
 
-- [ ] **Step 5: Run GREEN and regression tests**
+- [x] **Step 5: Run GREEN and regression tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_contracts.py tests\test_domain.py tests\test_topic.py tests\test_persona.py
@@ -211,7 +211,7 @@ assert not issubclass(agent_ex.ProbeCase, agent_ex.GenerationEvent)
 
 Expected: all pass; existing mock guard tests remain unchanged.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration platform/src/agent_ex/__init__.py platform/tests/test_calibration_contracts.py platform/tests/test_domain.py
