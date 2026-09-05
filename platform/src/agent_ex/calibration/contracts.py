@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Mapping
 
 from ..domain import (
@@ -605,6 +606,18 @@ class ProbeRequest:
     ) -> ProbeRequest:
         if not isinstance(case, ProbeCase):
             raise TypeError("case must be a ProbeCase")
+        rendered_messages = case.rendered_messages
+        if attempt_kind == "format_repair":
+            rendered_messages = rendered_messages + (
+                {
+                    "role": "user",
+                    "content": (
+                        "FORMAT REPAIR ONLY: return exactly the previously requested JSON "
+                        "fields in the declared order; do not change the substantive answer."
+                    ),
+                },
+            )
+        rendered_messages_hash = canonical_payload_hash(rendered_messages)
         settings_hash = canonical_payload_hash(generation_settings)
         identity = {
             "schema_version": cls._SCHEMA_VERSION,
@@ -614,8 +627,8 @@ class ProbeRequest:
             "attempt_kind": attempt_kind,
             "scale_id": case.scale_id,
             "field_order_id": case.field_order_id,
-            "rendered_messages": case.rendered_messages,
-            "rendered_messages_hash": case.rendered_messages_hash,
+            "rendered_messages": rendered_messages,
+            "rendered_messages_hash": rendered_messages_hash,
             "generation_settings": generation_settings,
             "generation_settings_hash": settings_hash,
             "requested_seed": case.requested_seed,
@@ -631,8 +644,8 @@ class ProbeRequest:
             attempt_kind=attempt_kind,
             scale_id=case.scale_id,
             field_order_id=case.field_order_id,
-            rendered_messages=case.rendered_messages,
-            rendered_messages_hash=case.rendered_messages_hash,
+            rendered_messages=rendered_messages,
+            rendered_messages_hash=rendered_messages_hash,
             generation_settings=generation_settings,
             generation_settings_hash=settings_hash,
             requested_seed=case.requested_seed,
@@ -1061,3 +1074,501 @@ class ProbeParseEvidence:
             raise TypeError("probe parse error must use a JSON object or null")
         values = {name: payload[name] for name in cls.__dataclass_fields__}
         return cls(**values)  # type: ignore[arg-type]
+
+
+def _require_finite_number(field_name: str, value: object, *, positive: bool) -> None:
+    if type(value) not in {int, float}:
+        raise TypeError(f"{field_name} must be a finite number")
+    number = float(value)
+    if not math.isfinite(number) or (number <= 0 if positive else number < 0):
+        qualifier = "positive " if positive else "nonnegative "
+        raise ValueError(f"{field_name} must be a finite {qualifier}number")
+
+
+@dataclass(frozen=True, slots=True)
+class ProbeRuntimePolicy:
+    """Hash-bound transport policy for one calibration run."""
+
+    policy_id: str
+    retryable_error_codes: tuple[str, ...]
+    nonretryable_error_codes: tuple[str, ...]
+    max_transport_attempts_by_code: Mapping[str, int]
+    timeout_seconds: float
+    obey_retry_after: bool
+    backoff_seconds: float
+    record_hash: str
+
+    _SCHEMA_VERSION = "paper1.calibration.probe-runtime-policy.v1"
+
+    def __post_init__(self) -> None:
+        _require_id("policy_id", self.policy_id)
+        for field_name, codes in (
+            ("retryable_error_codes", self.retryable_error_codes),
+            ("nonretryable_error_codes", self.nonretryable_error_codes),
+        ):
+            _require_tuple(field_name, codes)
+            if not codes or tuple(sorted(codes)) != codes or len(set(codes)) != len(codes):
+                raise ValueError(f"{field_name} must be non-empty, unique, and canonically sorted")
+            for code in codes:
+                _require_id("error_code", code)
+        retryable = set(self.retryable_error_codes)
+        nonretryable = set(self.nonretryable_error_codes)
+        if retryable & nonretryable:
+            raise ValueError("runtime policy error code partitions must be disjoint")
+        if type(self.max_transport_attempts_by_code) is not dict:
+            raise TypeError("max_transport_attempts_by_code must be an exact mapping")
+        if set(self.max_transport_attempts_by_code) != retryable | nonretryable:
+            raise ValueError("transport budget codes must exactly partition all policy error codes")
+        for code, budget in self.max_transport_attempts_by_code.items():
+            _require_id("transport budget error code", code)
+            _require_int("transport attempt budget", budget, minimum=1)
+        _require_finite_number("timeout_seconds", self.timeout_seconds, positive=True)
+        if type(self.obey_retry_after) is not bool:
+            raise TypeError("obey_retry_after must be a boolean")
+        _require_finite_number("backoff_seconds", self.backoff_seconds, positive=False)
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+        object.__setattr__(
+            self,
+            "max_transport_attempts_by_code",
+            _freeze(dict(sorted(self.max_transport_attempts_by_code.items()))),
+        )
+
+    @property
+    def metadata(self) -> dict[str, object]:
+        return dict(_CALIBRATION_METADATA)
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA_VERSION,
+            "policy_id": self.policy_id,
+            "retryable_error_codes": self.retryable_error_codes,
+            "nonretryable_error_codes": self.nonretryable_error_codes,
+            "max_transport_attempts_by_code": self.max_transport_attempts_by_code,
+            "timeout_seconds": self.timeout_seconds,
+            "obey_retry_after": self.obey_retry_after,
+            "backoff_seconds": self.backoff_seconds,
+            "metadata": self.metadata,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        policy_id: str,
+        retryable_error_codes: tuple[str, ...],
+        nonretryable_error_codes: tuple[str, ...],
+        max_transport_attempts_by_code: Mapping[str, int],
+        timeout_seconds: float,
+        obey_retry_after: bool,
+        backoff_seconds: float,
+    ) -> ProbeRuntimePolicy:
+        content = {
+            "schema_version": cls._SCHEMA_VERSION,
+            "policy_id": policy_id,
+            "retryable_error_codes": tuple(sorted(retryable_error_codes)),
+            "nonretryable_error_codes": tuple(sorted(nonretryable_error_codes)),
+            "max_transport_attempts_by_code": dict(sorted(max_transport_attempts_by_code.items())),
+            "timeout_seconds": timeout_seconds,
+            "obey_retry_after": obey_retry_after,
+            "backoff_seconds": backoff_seconds,
+            "metadata": dict(_CALIBRATION_METADATA),
+        }
+        return cls(
+            policy_id=policy_id,
+            retryable_error_codes=content["retryable_error_codes"],  # type: ignore[arg-type]
+            nonretryable_error_codes=content["nonretryable_error_codes"],  # type: ignore[arg-type]
+            max_transport_attempts_by_code=content["max_transport_attempts_by_code"],  # type: ignore[arg-type]
+            timeout_seconds=timeout_seconds,
+            obey_retry_after=obey_retry_after,
+            backoff_seconds=backoff_seconds,
+            record_hash=canonical_payload_hash(content),
+        )
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> ProbeRuntimePolicy:
+        expected = set(cls.__dataclass_fields__) | {"schema_version", "metadata"}
+        _require_calibration_payload(
+            payload,
+            expected_fields=expected,
+            record_name="probe runtime policy",
+            schema_version=cls._SCHEMA_VERSION,
+        )
+        if (
+            type(payload["retryable_error_codes"]) is not list
+            or type(payload["nonretryable_error_codes"]) is not list
+        ):
+            raise TypeError("runtime policy code fields must use JSON arrays")
+        if type(payload["max_transport_attempts_by_code"]) is not dict:
+            raise TypeError("runtime policy budgets must use a JSON object")
+        return cls(
+            policy_id=payload["policy_id"],
+            retryable_error_codes=tuple(payload["retryable_error_codes"]),
+            nonretryable_error_codes=tuple(payload["nonretryable_error_codes"]),
+            max_transport_attempts_by_code=payload["max_transport_attempts_by_code"],
+            timeout_seconds=payload["timeout_seconds"],
+            obey_retry_after=payload["obey_retry_after"],
+            backoff_seconds=payload["backoff_seconds"],
+            record_hash=payload["record_hash"],
+        )  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class ProbeAttempt:
+    """One replayable request/response transition in a probe run."""
+
+    attempt_id: str
+    probe_run_id: str
+    specification_hash: str
+    case_inventory_hash: str
+    runtime_policy_hash: str
+    probe_case_id: str
+    probe_case_hash: str
+    attempt_index: int
+    attempt_kind: str
+    request: ProbeRequest
+    request_hash: str
+    response: ProbeResponse
+    response_hash: str
+    parse_evidence: ProbeParseEvidence | None
+    parse_evidence_hash: str | None
+    transport_error_code: str | None
+    transport_retryable: bool | None
+    transport_attempt_number_for_code: int | None
+    transport_budget_for_code: int | None
+    retry_delay_seconds: float | None
+    retry_delay_source: str | None
+    case_status_after: str
+    record_hash: str
+
+    _SCHEMA_VERSION = "paper1.calibration.probe-attempt.v1"
+    _ID_PREFIX = "probe-attempt-"
+    _STATUSES = {"pending", "format_pending", "parsed", "parse_failed", "refused", "runtime_failed"}
+
+    def __post_init__(self) -> None:
+        for name in ("probe_run_id", "probe_case_id"):
+            _require_id(name, getattr(self, name))
+        for name in (
+            "specification_hash",
+            "case_inventory_hash",
+            "runtime_policy_hash",
+            "probe_case_hash",
+            "request_hash",
+            "response_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        _require_int("attempt_index", self.attempt_index, minimum=1)
+        if self.attempt_kind not in ProbeRequest._ATTEMPT_KINDS:
+            raise ValueError("attempt_kind is unsupported")
+        if not isinstance(self.request, ProbeRequest) or not isinstance(
+            self.response, ProbeResponse
+        ):
+            raise TypeError("attempt requires bound ProbeRequest and ProbeResponse records")
+        _require_payload_hash("request_hash", self.request_hash, self.request.content_payload())
+        _require_payload_hash("response_hash", self.response_hash, self.response.content_payload())
+        if (
+            self.request.probe_case_id != self.probe_case_id
+            or self.request.probe_case_hash != self.probe_case_hash
+            or self.response.probe_case_id != self.probe_case_id
+            or self.response.probe_case_hash != self.probe_case_hash
+            or self.request.attempt_index != self.attempt_index
+            or self.response.attempt_index != self.attempt_index
+            or self.request.attempt_kind != self.attempt_kind
+            or self.response.attempt_kind != self.attempt_kind
+            or self.response.request_id != self.request.request_id
+            or self.response.request_hash != self.request.record_hash
+        ):
+            raise ValueError("attempt request/response identity chain is inconsistent")
+        if self.parse_evidence is None:
+            if self.parse_evidence_hash is not None:
+                raise ValueError("absent parse evidence cannot have a hash")
+        else:
+            if not isinstance(self.parse_evidence, ProbeParseEvidence):
+                raise TypeError("parse_evidence must be ProbeParseEvidence or null")
+            _require_sha256("parse_evidence_hash", self.parse_evidence_hash)
+            _require_payload_hash(
+                "parse_evidence_hash",
+                self.parse_evidence_hash,
+                self.parse_evidence.content_payload(),
+            )
+            if (
+                self.parse_evidence.response_id != self.response.response_id
+                or self.parse_evidence.response_hash != self.response.record_hash
+            ):
+                raise ValueError("parse evidence is not bound to the attempt response")
+        if self.response.outcome == "response":
+            if any(
+                value is not None
+                for value in (
+                    self.transport_error_code,
+                    self.transport_retryable,
+                    self.transport_attempt_number_for_code,
+                    self.transport_budget_for_code,
+                    self.retry_delay_seconds,
+                    self.retry_delay_source,
+                )
+            ):
+                raise ValueError("semantic response cannot contain transport retry evidence")
+            expected = self._semantic_status()
+        else:
+            _require_id("transport_error_code", self.transport_error_code)
+            if type(self.transport_retryable) is not bool:
+                raise TypeError("transport_retryable must be a boolean for transport errors")
+            _require_int(
+                "transport_attempt_number_for_code",
+                self.transport_attempt_number_for_code,  # type: ignore[arg-type]
+                minimum=1,
+            )
+            _require_int(
+                "transport_budget_for_code",
+                self.transport_budget_for_code,  # type: ignore[arg-type]
+                minimum=1,
+            )
+            if self.transport_error_code != self.response.error_code:
+                raise ValueError("transport error code must match response")
+            exhausted = self.transport_attempt_number_for_code >= self.transport_budget_for_code  # type: ignore[operator]
+            expected = (
+                "runtime_failed"
+                if exhausted or not self.transport_retryable or self.response.outcome == "oom"
+                else "pending"
+            )
+            if expected == "pending":
+                _require_finite_number(
+                    "retry_delay_seconds", self.retry_delay_seconds, positive=False
+                )
+                if self.retry_delay_source not in {"backoff", "retry_after"}:
+                    raise ValueError("retry delay source must be backoff or retry_after")
+            elif self.retry_delay_seconds is not None or self.retry_delay_source is not None:
+                raise ValueError("terminal transport failure cannot schedule another retry")
+        if self.case_status_after != expected or self.case_status_after not in self._STATUSES:
+            raise ValueError("case status is not derived from attempt evidence")
+        _require_derived_id(
+            "attempt_id", self.attempt_id, prefix=self._ID_PREFIX, payload=self._identity_payload()
+        )
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def _semantic_status(self) -> str:
+        if self.parse_evidence is None:
+            return "refused"
+        if self.parse_evidence.success:
+            return "parsed"
+        return "format_pending" if self.attempt_kind == "semantic" else "parse_failed"
+
+    @property
+    def metadata(self) -> dict[str, object]:
+        return dict(_CALIBRATION_METADATA)
+
+    def _identity_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA_VERSION,
+            **{
+                name: (
+                    value.to_payload()
+                    if name in {"request", "response", "parse_evidence"} and value is not None
+                    else value
+                )
+                for name in self.__dataclass_fields__
+                if name not in {"attempt_id", "record_hash"}
+                for value in (getattr(self, name),)
+            },
+            "metadata": self.metadata,
+        }
+
+    def content_payload(self) -> dict[str, object]:
+        return {**self._identity_payload(), "attempt_id": self.attempt_id}
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(cls, **values: object) -> ProbeAttempt:
+        identity = {
+            "schema_version": cls._SCHEMA_VERSION,
+            **values,
+            "metadata": dict(_CALIBRATION_METADATA),
+        }
+        for name in ("request", "response", "parse_evidence"):
+            if identity.get(name) is not None:
+                identity[name] = identity[name].to_payload()
+        attempt_id = _derived_id(cls._ID_PREFIX, identity)
+        content = {**identity, "attempt_id": attempt_id}
+        return cls(attempt_id=attempt_id, **values, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> ProbeAttempt:
+        expected = set(cls.__dataclass_fields__) | {"schema_version", "metadata"}
+        _require_calibration_payload(
+            payload,
+            expected_fields=expected,
+            record_name="probe attempt",
+            schema_version=cls._SCHEMA_VERSION,
+        )
+        values = {name: payload[name] for name in cls.__dataclass_fields__}
+        values["request"] = ProbeRequest.from_payload(payload["request"])  # type: ignore[arg-type]
+        values["response"] = ProbeResponse.from_payload(payload["response"])  # type: ignore[arg-type]
+        if payload["parse_evidence"] is not None:
+            values["parse_evidence"] = ProbeParseEvidence.from_payload(payload["parse_evidence"])  # type: ignore[arg-type]
+        return cls(**values)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class ProbeRunProjection:
+    """Canonical current run state derived exclusively from ordered attempts."""
+
+    probe_run_id: str
+    specification_hash: str
+    case_inventory_hash: str
+    runtime_policy_hash: str
+    case_statuses: Mapping[str, str]
+    attempts: tuple[ProbeAttempt, ...]
+    status: str
+    run_evidence_hash: str
+
+    _SCHEMA_VERSION = "paper1.calibration.probe-run-projection.v1"
+    _ID_PREFIX = "probe-run-"
+
+    def __post_init__(self) -> None:
+        for name in ("specification_hash", "case_inventory_hash", "runtime_policy_hash"):
+            _require_sha256(name, getattr(self, name))
+        expected_run_id = _derived_id(
+            self._ID_PREFIX,
+            {
+                "specification_hash": self.specification_hash,
+                "case_inventory_hash": self.case_inventory_hash,
+                "runtime_policy_hash": self.runtime_policy_hash,
+            },
+        )
+        if self.probe_run_id != expected_run_id:
+            raise ValueError("probe_run_id does not match derived run identity")
+        if type(self.case_statuses) is not dict or not self.case_statuses:
+            raise ValueError("case_statuses must be an explicit non-empty mapping")
+        if tuple(self.case_statuses) != tuple(sorted(self.case_statuses)):
+            raise ValueError("case statuses must use canonical case order")
+        _require_tuple("attempts", self.attempts)
+        if tuple((a.probe_case_id, a.attempt_index) for a in self.attempts) != tuple(
+            sorted((a.probe_case_id, a.attempt_index) for a in self.attempts)
+        ):
+            raise ValueError("attempts must use canonical report order")
+        derived = {case_id: "unstarted" for case_id in self.case_statuses}
+        last_index: dict[str, int] = {}
+        for attempt in self.attempts:
+            if not isinstance(attempt, ProbeAttempt):
+                raise TypeError("attempts must contain ProbeAttempt records")
+            if (
+                attempt.probe_run_id != self.probe_run_id
+                or attempt.specification_hash != self.specification_hash
+                or attempt.case_inventory_hash != self.case_inventory_hash
+                or attempt.runtime_policy_hash != self.runtime_policy_hash
+                or attempt.probe_case_id not in derived
+            ):
+                raise ValueError("attempt identity cannot be mixed across runs")
+            if derived[attempt.probe_case_id] in {
+                "parsed",
+                "parse_failed",
+                "refused",
+                "runtime_failed",
+            }:
+                raise ValueError("terminal case status is irreversible")
+            if attempt.attempt_index != last_index.get(attempt.probe_case_id, 0) + 1:
+                raise ValueError("attempt chain must be contiguous")
+            last_index[attempt.probe_case_id] = attempt.attempt_index
+            derived[attempt.probe_case_id] = attempt.case_status_after
+        if dict(self.case_statuses) != derived:
+            raise ValueError("case statuses must be derived only by replaying attempts")
+        terminal = {"parsed", "parse_failed", "refused"}
+        expected_status = (
+            "complete" if all(value in terminal for value in derived.values()) else "incomplete"
+        )
+        if self.status != expected_status:
+            raise ValueError("run status must be derived from case statuses")
+        expected_evidence_hash = canonical_payload_hash(
+            [item.record_hash for item in self.attempts]
+        )
+        if self.run_evidence_hash != expected_evidence_hash:
+            raise ValueError("run_evidence_hash does not match canonical attempts")
+        object.__setattr__(self, "case_statuses", _freeze(self.case_statuses))
+
+    @property
+    def metadata(self) -> dict[str, object]:
+        return dict(_CALIBRATION_METADATA)
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA_VERSION,
+            "probe_run_id": self.probe_run_id,
+            "specification_hash": self.specification_hash,
+            "case_inventory_hash": self.case_inventory_hash,
+            "runtime_policy_hash": self.runtime_policy_hash,
+            "case_statuses": self.case_statuses,
+            "attempts": tuple(item.to_payload() for item in self.attempts),
+            "status": self.status,
+            "run_evidence_hash": self.run_evidence_hash,
+            "metadata": self.metadata,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready(self.content_payload())
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        specification_hash: str,
+        case_inventory_hash: str,
+        runtime_policy_hash: str,
+        case_ids: tuple[str, ...],
+        attempts: tuple[ProbeAttempt, ...],
+    ) -> ProbeRunProjection:
+        run_id = _derived_id(
+            cls._ID_PREFIX,
+            {
+                "specification_hash": specification_hash,
+                "case_inventory_hash": case_inventory_hash,
+                "runtime_policy_hash": runtime_policy_hash,
+            },
+        )
+        statuses = {case_id: "unstarted" for case_id in sorted(case_ids)}
+        for attempt in sorted(attempts, key=lambda item: (item.probe_case_id, item.attempt_index)):
+            statuses[attempt.probe_case_id] = attempt.case_status_after
+        status = (
+            "complete"
+            if all(value in {"parsed", "parse_failed", "refused"} for value in statuses.values())
+            else "incomplete"
+        )
+        ordered = tuple(sorted(attempts, key=lambda item: (item.probe_case_id, item.attempt_index)))
+        return cls(
+            probe_run_id=run_id,
+            specification_hash=specification_hash,
+            case_inventory_hash=case_inventory_hash,
+            runtime_policy_hash=runtime_policy_hash,
+            case_statuses=statuses,
+            attempts=ordered,
+            status=status,
+            run_evidence_hash=canonical_payload_hash([item.record_hash for item in ordered]),
+        )
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> ProbeRunProjection:
+        expected = set(cls.__dataclass_fields__) | {"schema_version", "metadata"}
+        _require_calibration_payload(
+            payload,
+            expected_fields=expected,
+            record_name="probe run projection",
+            schema_version=cls._SCHEMA_VERSION,
+        )
+        if type(payload["case_statuses"]) is not dict or type(payload["attempts"]) is not list:
+            raise TypeError("projection statuses and attempts require JSON object/array transport")
+        return cls(
+            probe_run_id=payload["probe_run_id"],
+            specification_hash=payload["specification_hash"],
+            case_inventory_hash=payload["case_inventory_hash"],
+            runtime_policy_hash=payload["runtime_policy_hash"],
+            case_statuses=payload["case_statuses"],
+            attempts=tuple(ProbeAttempt.from_payload(item) for item in payload["attempts"]),
+            status=payload["status"],
+            run_evidence_hash=payload["run_evidence_hash"],
+        )  # type: ignore[arg-type]
