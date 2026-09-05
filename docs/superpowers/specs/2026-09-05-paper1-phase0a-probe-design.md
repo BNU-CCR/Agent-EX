@@ -44,11 +44,20 @@ formal authority。
 
 采用“平台内契约优先”的 probe 子系统，而不是 Notebook 主循环或一次性脚本：
 
-- 复用 `TopicPackage`、Persona 渲染、prompt/parser、`ArtifactEnvelope` 和规范化 hash；
-- 为 calibration 单独建立 case、attempt、score、report 和 freeze-proposal 合同；
-- 不把真实模型能力塞进当前 `mock_only` adapter，也不复用正式网络事件身份伪装 probe；
+- 保留现有 `TopicPackage`、Persona、prompt/parser 和 adapter 的全部 `mock_only` guard；
+- 为 calibration 单独建立 topic candidate、persona view、case、request/response、parse
+  evidence、score、report 和 freeze-proposal 合同；
+- 只复用 `ArtifactEnvelope`、canonical JSON/hash、纯文本因素 diff 等不携带运行 authority
+  的基础能力，不把真实模型能力塞进当前 `mock_only` adapter；
+- Phase 0A 类型不得接受或合成 `GenerationEvent`、run、feed cursor、social exposure 或
+  private/public state identity，也不得用正式网络事件身份伪装 probe；
 - 真实 provider adapter 只依赖一个窄的 probe request/response 接口，Phase 0B 再决定它
   是否可安全复用于正式 event pipeline。
+
+具体新合同至少包括 `ProbeTopicCandidate`、`ProbePersonaView`、`ProbeCase`、
+`ProbeRequest`、`ProbeResponse` 和 `ProbeParseEvidence`。它们使用独立 schema/version 和
+`calibration_only: true`、`formal_parameter_authority: false` 元数据。不得通过放宽既有
+mock 类型的 metadata、schema 或 seal 来实现兼容；旧 mock/full 测试必须证明行为不变。
 
 拒绝的替代方案：
 
@@ -100,12 +109,29 @@ runner 逐 case 构造不可变请求并调用 provider-neutral probe adapter。
 - 解析结果、失败原因和 attempt 链。
 
 同一 case 的首次格式失败最多允许一次**仅格式修复重试**。重试保留相同语义内容、
-case identity 和预定模型 seed，只能追加统一格式提醒；第二个 attempt 必须具有独立
-request/response identity。超时、OOM、provider 错误和实质拒答不是格式重试，不能用
-改写问题静默替代。
+case identity 和 probe 专用 requested seed（若 provider 支持），只能追加统一格式提醒；
+第二个 attempt 必须具有独立 request/response identity。超时、OOM、provider 错误和
+实质拒答不是格式重试，不能用改写问题静默替代。
+
+每个真实 probe run 在执行前还必须绑定版本化 runtime-policy artifact。它明确列出
+transport retry 的可重试错误码、不可重试错误、每类最大 attempt 数、timeout、
+Retry-After、backoff、OOM 规则和耗尽终态。transport retry 不改变 rendered prompt，
+也不消费唯一一次 format retry；每个 transport attempt 仍独立记录。策略耗尽后 case
+标记 `runtime_failed`，整个 run 标记 `incomplete`，不得计算候选 pass/fail 或选择结果。
+只有在 specification、case inventory、模型/runtime/chat template 和 generation settings
+完全一致时才能原位补齐未完成 case；否则必须新建 run。
+
+该 runtime policy 仅是本次 calibration 的预登记执行条件，可为 `P1_TIMEOUT_RETRY`
+提供证据和 freeze proposal，但不自动成为正式 event pipeline 的 timeout/retry 决策。
 
 Phase 0A case 彼此独立，因此可在运行层并发；单 case 的 attempt 链严格串行。并发只
-影响调度，不得改变 case、sampling seed、输出顺序或报告 hash。
+影响调度，不得改变 specification、case identity、requested seed 或 canonical 报告排序；
+它可以改变实际时间、provider request ID、响应和 run evidence hash，系统必须忠实记录。
+
+`requested_seed` 属于 Phase 0A 专用 namespace，允许为 `null`。请求与响应还必须记录
+provider 是否声明支持 seed、是否回显/确认 seed，以及可观测的确定性证据。不支持 seed
+时不得伪造回显或确定性；格式/transport retry 的 probe 内复用语义也不得晋升为
+`P1_REQUEST_SEED` 或 `P1_MODEL_SEED_PAIRING` 的正式 event/cell 配对决定。
 
 ### 4.4 Deterministic scorer
 
@@ -126,6 +152,37 @@ Phase 0A case 彼此独立，因此可在运行层并发；单 case 的 attempt 
 统一使用的项目操作规则，不自动成为 formal canonical values；若 dry run 暴露规则缺陷，
 必须在比较任何候选前统一修订、版本化并留痕。
 
+真实响应开始前，specification 必须绑定版本化 `gate_algorithm`，不得由报告器临时解释。
+最低算法合同如下：
+
+- 分析单位是一个预登记 `ProbeCase`。transport attempts 先按 runtime policy 折叠；
+  首个语义响应若格式无效，允许折叠唯一一次 format-repair response。不得从多个有效
+  响应中选择更有利的一个。
+- run 只有在全部 scheduled cases 均获得语义终态时才是 `complete`；存在
+  `runtime_failed` 时不计算候选 pass/fail。对 complete run，解析率分母是该 gate
+  family 的全部 scheduled cases，分子是 format 折叠后有效解析的 cases；拒答率使用
+  相同分母，分子是按冻结拒答规则命中的 cases。未解析与拒答可分别命中并分别报告。
+- 立场分布 universe 是相应 family 中 format 折叠后有效解析且非实质拒答的 cases；
+  必须同时报告 scheduled、parsed、refusal 和 distribution-universe 计数，任一预期层
+  样本不足时 fail closed。
+- “至少使用 4 类”和“单一端点不超过 80%”只作为 1--7 主量表的硬门：类别数为
+  universe 中不同整数 stance 的数量；端点率为 stance 属于 `{1,7}` 的 case 数除以
+  universe 大小。0--10 challenger 单独报告类别覆盖和端点率，不套用“7点中4类”；
+  若它需要淘汰门，必须在真实运行前于 specification 另行冻结。
+- 等义题干和字段顺序比较使用预登记 strata、replicate 与 requested-seed scope 对齐的
+  case pairs。stance 按量表整数编码，对每对计算 `delta_i = stance_a_i - stance_b_i`，
+  再以无偏样本标准差计算
+  `d_z = mean(delta) / sd(delta)`。少于两个有效 pairs 则 fail closed；分母为零且平均差
+  为零记 `d_z=0`，分母为零且平均差非零记 gate failure。边界按
+  `abs(d_z) <= 0.20` 通过；provider 不支持 seed 时仍按预登记 replicate ID 配对，并在
+  报告中明确标记 sampling 未获 provider seed 保证。
+- 完整分布差异使用经验概率的 total-variation distance：
+  `TV = 0.5 * sum_k(abs(p_a[k] - p_b[k]))`，类别为对应量表全部合法值。TV 必须报告；
+  其淘汰阈值若启用，必须在真实响应前写入 specification，未预登记时不得事后成为
+  淘汰理由。
+- 百分比以精确有理计数比较边界，不先四舍五入。分层聚合、缺失、无效值、零方差、
+  多重挑战和候选总体 pass/fail 的布尔组合必须由同一 gate algorithm 版本声明。
+
 ### 4.5 Judge 与人工盲审接口
 
 需要语义判断的项目不交给 deterministic scorer 猜测。系统导出不含候选排名和
@@ -134,7 +191,7 @@ Phase 0A case 彼此独立，因此可在运行层并发；单 case 的 attempt 
 - 理由是否实际回答单一构念；
 - 理由与立场是否一致；
 - identity 是否被合理使用、被忽略、被扩写或刻板化；
-- continuation 是否与历史解释连贯；
+- continuity 是否与历史解释连贯；
 - 在充分反向信息下是否能够可解释改变；
 - 在信息不足情境下是否发生无依据的大幅改变；
 - 是否存在安全模板化、议题无关或隐藏第二构念。
@@ -142,6 +199,16 @@ Phase 0A case 彼此独立，因此可在运行层并发；单 case 的 attempt 
 judge 的模型、revision、prompt、顺序和原始输出必须单独冻结和留痕。人工编码表保存
 匿名 item ID、量表、编码者、时间和 adjudication；精确抽样、量表、一致性门和锁死
 上限在运行真实 probe 前写入 specification，仍由相应 `P1_*` 决策 ID 管理。
+
+真实响应前，specification 还必须冻结 semantic-review policy：抽样 strata 与随机化、
+盲态字段 allowlist、每项独立编码者数量、一致性统计及门槛、judge failure 规则、
+分歧触发 adjudication 的条件和最终聚合函数。审阅者只看完成评分所需的题干、历史、
+身份块和响应文本；不得看到 factor condition 名称、候选优先顺序、sampling settings、
+其他审阅者答案或聚合结果。topic 文本本身无法盲去，但不得显示其预先排名。
+
+缺失或无效 judge/人工记录不计作有利分数；若属于预登记必审项，run/report 状态为
+`review_incomplete`且不得产生候选 pass/fail。adjudication 只能追加最终裁定，不能覆盖
+独立原始编码；最终语义分数必须通过 item ID/hash 回绑全部独立编码和裁定依据。
 
 ### 4.6 Report 与 freeze proposal
 
@@ -166,6 +233,14 @@ schema 或 formal config，也不得把 probe 成功标记成正式审批。
 至少包含 manifest、specification/case inventory、requests、raw responses、parse evidence、
 machine metrics、blind-review export/import、gate report 和 freeze proposal。
 
+hash 分成三个不可混淆的层级：
+
+- `specification_hash` 与 `case_inventory_hash` 只绑定预执行内容，不随调度变化；
+- `report_projection_hash` 绑定按 case/item ID canonical 排序的派生报告；对同一 evidence
+  集合不受文件或完成顺序影响，但响应或评分不同就必须改变；
+- `run_evidence_hash` 绑定实际 attempts、provider IDs、时间、响应、审计导入及其因果顺序，
+  并预期会随真实执行变化。
+
 原始响应和可能较大的运行产物不进入 Git。Git 只提交 schema、代码、测试、脱敏小型
 fixture、manifest/hash 和外部归档定位。任何缺失、重复、hash 漂移或 review item
 无法回绑原始 case 时，报告必须 fail closed。
@@ -188,7 +263,7 @@ Persona 的 stance 变化只在预构造 manipulation scenarios 内用于判断�
 - specification 含未知 placeholder、未登记决策 ID 或未绑定文本/hash：构建前失败；
 - case inventory 不完整、重复或顺序依赖：执行前失败；
 - 模型/runtime/tokenizer/chat template 与运行 manifest 不一致：立即停止该 run；
-- 响应失败：保留证据，按预先分类处理；除一次格式重试外不得现场改 prompt；
+- 响应失败：保留证据，按预登记 runtime policy 处理；除一次格式重试外不得现场改 prompt；
 - 原始响应、parse evidence 或审计导入 hash 不一致：报告失败，不重新解释数据；
 - 任一候选硬门失败：该候选不得进入选择集合；
 - 三个议题均失败：停止并重开题干/量表设计，不按相对最好者强行选主议题；
@@ -207,7 +282,8 @@ Persona 的 stance 变化只在预构造 manipulation scenarios 内用于判断�
 - 首次成功、一次格式修复成功、二次格式失败、拒答、timeout 和 provider error；
 - 缺字段、重复键、NaN、越界、额外 prose、理由矛盾和身份泄漏 fixture；
 - 所有硬门的边界值，尤其 99%、1%、4 类、80%、`|d|=.20`和5%；
-- judge/人工审计导入的盲态、完整性、编码者一致性与 hash 回绑；
+- judge/人工审计导入的盲态 allowlist、缺失/失败、分歧、adjudication、编码者一致性与
+  hash 回绑；
 - 三议题全过、部分通过和全部失败时的确定性选择；
 - freeze proposal 无权修改 decision records 或 formal config；
 - 报告 schema 明确拒绝 forbidden outcome/contrast 字段；
