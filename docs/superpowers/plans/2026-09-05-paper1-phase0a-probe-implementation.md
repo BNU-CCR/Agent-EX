@@ -55,7 +55,7 @@ date: 2026-09-05
 - Create locally, never track: `platform/.venv/`
 - Verify: `platform/requirements-dev.lock`
 
-- [ ] **Step 1: Create the Phase 0 worktree environment**
+- [x] **Step 1: Create the Phase 0 worktree environment**
 
 Run from `platform/` on this desktop:
 
@@ -67,7 +67,7 @@ Run from `platform/` on this desktop:
 
 Expected: `.venv\Scripts\python.exe --version` reports Python 3.12.x and both installation commands succeed.
 
-- [ ] **Step 2: Verify dependency closure and clean baseline**
+- [x] **Step 2: Verify dependency closure and clean baseline**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip list --format=json
@@ -84,7 +84,7 @@ The gate passes only when every locked distribution is present exactly once at t
 locked distribution set matches exactly; `pip check` and Ruff pass; the focused inherited suite
 reports 0 failures.
 
-- [ ] **Step 3: Prove the environment remains untracked**
+- [x] **Step 3: Prove the environment remains untracked**
 
 ```powershell
 git status --short
