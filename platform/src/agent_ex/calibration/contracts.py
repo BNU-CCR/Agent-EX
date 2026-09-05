@@ -941,6 +941,11 @@ class ProbeParseEvidence:
             "raw_response_hash",
         ):
             _require_sha256(name, getattr(self, name))
+        if (
+            self.parser_id != "paper1.calibration.strict-probe-parser"
+            or self.parser_version != "1.0.0"
+        ):
+            raise ValueError("parser declarations must match the versioned strict probe parser")
         _require_probe_declarations(self.scale_id, self.field_order_id)
         if type(self.success) is not bool:
             raise TypeError("success must be a boolean")
@@ -1138,7 +1143,7 @@ class ProbeRuntimePolicy:
             raise TypeError("obey_retry_after must be a boolean")
         _require_tuple("backoff_seconds", self.backoff_seconds)
         expected_backoff_count = max(
-            1,
+            0,
             max(self.max_transport_attempts_by_code[code] for code in retryable) - 1,
         )
         if len(self.backoff_seconds) != expected_backoff_count:
@@ -1305,6 +1310,11 @@ class ProbeAttempt:
             or self.response.attempt_kind != self.attempt_kind
             or self.response.request_id != self.request.request_id
             or self.response.request_hash != self.request.record_hash
+            or self.response.scale_id != self.request.scale_id
+            or self.response.field_order_id != self.request.field_order_id
+            or self.response.generation_settings != self.request.generation_settings
+            or self.response.generation_settings_hash != self.request.generation_settings_hash
+            or self.response.requested_seed != self.request.requested_seed
         ):
             raise ValueError("attempt request/response identity chain is inconsistent")
         if self.parse_evidence is None:
@@ -1322,8 +1332,19 @@ class ProbeAttempt:
             if (
                 self.parse_evidence.response_id != self.response.response_id
                 or self.parse_evidence.response_hash != self.response.record_hash
+                or self.parse_evidence.request_id != self.request.request_id
+                or self.parse_evidence.request_hash != self.request.record_hash
+                or self.parse_evidence.probe_case_id != self.probe_case_id
+                or self.parse_evidence.probe_case_hash != self.probe_case_hash
+                or self.parse_evidence.raw_response_hash != self.response.raw_response_hash
+                or self.parse_evidence.scale_id != self.request.scale_id
+                or self.parse_evidence.field_order_id != self.request.field_order_id
+                or self.parse_evidence.parser_id != "paper1.calibration.strict-probe-parser"
+                or self.parse_evidence.parser_version != "1.0.0"
             ):
-                raise ValueError("parse evidence is not bound to the attempt response")
+                raise ValueError(
+                    "parse evidence is not fully bound to the attempt request and response"
+                )
         if self.response.outcome == "response":
             if any(
                 value is not None
@@ -1456,7 +1477,15 @@ class ProbeRunProjection:
     probe_run_id: str
     specification_hash: str
     case_inventory_hash: str
+    runtime_policy: ProbeRuntimePolicy
     runtime_policy_hash: str
+    generation_settings: Mapping[str, object]
+    generation_settings_hash: str
+    runtime_identity: Mapping[str, str]
+    model_identity: Mapping[str, str]
+    tokenizer_identity: Mapping[str, str]
+    chat_template_hash: str
+    execution_context_hash: str
     case_statuses: Mapping[str, str]
     attempts: tuple[ProbeAttempt, ...]
     status: str
@@ -1466,14 +1495,46 @@ class ProbeRunProjection:
     _ID_PREFIX = "probe-run-"
 
     def __post_init__(self) -> None:
-        for name in ("specification_hash", "case_inventory_hash", "runtime_policy_hash"):
+        for name in (
+            "specification_hash",
+            "case_inventory_hash",
+            "runtime_policy_hash",
+            "generation_settings_hash",
+            "chat_template_hash",
+            "execution_context_hash",
+        ):
             _require_sha256(name, getattr(self, name))
+        if not isinstance(self.runtime_policy, ProbeRuntimePolicy):
+            raise TypeError("runtime_policy must be a ProbeRuntimePolicy")
+        if self.runtime_policy_hash != self.runtime_policy.record_hash:
+            raise ValueError("runtime_policy_hash does not bind the runtime policy artifact")
+        _require_nonempty_json_mapping("generation_settings", self.generation_settings)
+        _require_payload_hash(
+            "generation_settings_hash", self.generation_settings_hash, self.generation_settings
+        )
+        _require_identity_mapping(
+            "runtime_identity",
+            self.runtime_identity,
+            exact_fields=("provider", "runtime_version"),
+        )
+        _require_identity_mapping(
+            "model_identity", self.model_identity, exact_fields=("model", "revision")
+        )
+        _require_identity_mapping(
+            "tokenizer_identity",
+            self.tokenizer_identity,
+            exact_fields=("tokenizer", "revision"),
+        )
+        expected_context_hash = canonical_payload_hash(self.execution_context_payload())
+        if self.execution_context_hash != expected_context_hash:
+            raise ValueError("execution_context_hash does not bind the complete run context")
         expected_run_id = _derived_id(
             self._ID_PREFIX,
             {
                 "specification_hash": self.specification_hash,
                 "case_inventory_hash": self.case_inventory_hash,
                 "runtime_policy_hash": self.runtime_policy_hash,
+                "execution_context_hash": self.execution_context_hash,
             },
         )
         if self.probe_run_id != expected_run_id:
@@ -1487,8 +1548,43 @@ class ProbeRunProjection:
             sorted((a.probe_case_id, a.attempt_index) for a in self.attempts)
         ):
             raise ValueError("attempts must use canonical report order")
+        derived = self._replay_attempts()
+        if dict(self.case_statuses) != derived:
+            raise ValueError("case statuses must be derived only by replaying attempts")
+        terminal = {"parsed", "parse_failed", "refused"}
+        expected_status = (
+            "complete" if all(value in terminal for value in derived.values()) else "incomplete"
+        )
+        if self.status != expected_status:
+            raise ValueError("run status must be derived from replayed case statuses")
+        expected_evidence_hash = canonical_payload_hash(
+            [item.record_hash for item in self.attempts]
+        )
+        if self.run_evidence_hash != expected_evidence_hash:
+            raise ValueError("run_evidence_hash does not match canonical attempts")
+        object.__setattr__(self, "generation_settings", _freeze(self.generation_settings))
+        object.__setattr__(self, "runtime_identity", _freeze(self.runtime_identity))
+        object.__setattr__(self, "model_identity", _freeze(self.model_identity))
+        object.__setattr__(self, "tokenizer_identity", _freeze(self.tokenizer_identity))
+        object.__setattr__(self, "case_statuses", _freeze(self.case_statuses))
+
+    def execution_context_payload(self) -> dict[str, object]:
+        return {
+            "generation_settings": self.generation_settings,
+            "generation_settings_hash": self.generation_settings_hash,
+            "runtime_identity": self.runtime_identity,
+            "model_identity": self.model_identity,
+            "tokenizer_identity": self.tokenizer_identity,
+            "chat_template_hash": self.chat_template_hash,
+        }
+
+    def _replay_attempts(self) -> dict[str, str]:
         derived = {case_id: "unstarted" for case_id in self.case_statuses}
         last_index: dict[str, int] = {}
+        last_kind: dict[str, str] = {}
+        transport_counts: dict[str, dict[str, int]] = {
+            case_id: {} for case_id in self.case_statuses
+        }
         for attempt in self.attempts:
             if not isinstance(attempt, ProbeAttempt):
                 raise TypeError("attempts must contain ProbeAttempt records")
@@ -1500,6 +1596,15 @@ class ProbeRunProjection:
                 or attempt.probe_case_id not in derived
             ):
                 raise ValueError("attempt identity cannot be mixed across runs")
+            if (
+                attempt.request.generation_settings_hash != self.generation_settings_hash
+                or attempt.request.generation_settings != self.generation_settings
+                or attempt.response.runtime_identity != self.runtime_identity
+                or attempt.response.model_identity != self.model_identity
+                or attempt.response.tokenizer_identity != self.tokenizer_identity
+                or attempt.response.chat_template_hash != self.chat_template_hash
+            ):
+                raise ValueError("attempt execution context differs from its probe run")
             if derived[attempt.probe_case_id] in {
                 "parsed",
                 "parse_failed",
@@ -1509,22 +1614,83 @@ class ProbeRunProjection:
                 raise ValueError("terminal case status is irreversible")
             if attempt.attempt_index != last_index.get(attempt.probe_case_id, 0) + 1:
                 raise ValueError("attempt chain must be contiguous")
+            previous_status = derived[attempt.probe_case_id]
+            if previous_status == "format_pending":
+                expected_kind = "format_repair"
+            elif previous_status == "pending":
+                expected_kind = last_kind[attempt.probe_case_id]
+            else:
+                expected_kind = "semantic"
+            if attempt.attempt_kind != expected_kind:
+                raise ValueError("attempt kind is not derived from the prior replay state")
             last_index[attempt.probe_case_id] = attempt.attempt_index
-            derived[attempt.probe_case_id] = attempt.case_status_after
-        if dict(self.case_statuses) != derived:
-            raise ValueError("case statuses must be derived only by replaying attempts")
-        terminal = {"parsed", "parse_failed", "refused"}
-        expected_status = (
-            "complete" if all(value in terminal for value in derived.values()) else "incomplete"
-        )
-        if self.status != expected_status:
-            raise ValueError("run status must be derived from case statuses")
-        expected_evidence_hash = canonical_payload_hash(
-            [item.record_hash for item in self.attempts]
-        )
-        if self.run_evidence_hash != expected_evidence_hash:
-            raise ValueError("run_evidence_hash does not match canonical attempts")
-        object.__setattr__(self, "case_statuses", _freeze(self.case_statuses))
+            last_kind[attempt.probe_case_id] = attempt.attempt_kind
+            if attempt.response.outcome == "response":
+                expected_status = attempt._semantic_status()
+                expected_error_code = None
+                expected_retryable = None
+                expected_ordinal = None
+                expected_budget = None
+                expected_delay = None
+                expected_delay_source = None
+            else:
+                code = attempt.response.error_code
+                if code not in self.runtime_policy.max_transport_attempts_by_code:
+                    raise ValueError("attempt error code is outside the runtime policy")
+                if (
+                    attempt.response.outcome == "oom"
+                    and code not in self.runtime_policy.nonretryable_error_codes
+                ):
+                    raise ValueError("OOM must replay as an explicitly nonretryable error")
+                counts = transport_counts[attempt.probe_case_id]
+                counts[code] = counts.get(code, 0) + 1
+                expected_error_code = code
+                expected_ordinal = counts[code]
+                expected_budget = self.runtime_policy.max_transport_attempts_by_code[code]
+                expected_retryable = code in self.runtime_policy.retryable_error_codes
+                exhausted = expected_ordinal >= expected_budget
+                expected_status = (
+                    "pending"
+                    if expected_retryable and not exhausted and attempt.response.outcome != "oom"
+                    else "runtime_failed"
+                )
+                if expected_status == "pending":
+                    if (
+                        self.runtime_policy.obey_retry_after
+                        and attempt.response.retry_after_seconds is not None
+                    ):
+                        expected_delay = attempt.response.retry_after_seconds
+                        expected_delay_source = "retry_after"
+                    else:
+                        expected_delay = self.runtime_policy.backoff_seconds[expected_ordinal - 1]
+                        expected_delay_source = "backoff"
+                else:
+                    expected_delay = None
+                    expected_delay_source = None
+            observed = (
+                attempt.transport_error_code,
+                attempt.transport_retryable,
+                attempt.transport_attempt_number_for_code,
+                attempt.transport_budget_for_code,
+                attempt.retry_delay_seconds,
+                attempt.retry_delay_source,
+                attempt.case_status_after,
+            )
+            expected = (
+                expected_error_code,
+                expected_retryable,
+                expected_ordinal,
+                expected_budget,
+                expected_delay,
+                expected_delay_source,
+                expected_status,
+            )
+            if observed != expected:
+                raise ValueError(
+                    "attempt transport ordinal, budget, delay, or status disagrees with replay"
+                )
+            derived[attempt.probe_case_id] = expected_status
+        return derived
 
     @property
     def metadata(self) -> dict[str, object]:
@@ -1536,7 +1702,15 @@ class ProbeRunProjection:
             "probe_run_id": self.probe_run_id,
             "specification_hash": self.specification_hash,
             "case_inventory_hash": self.case_inventory_hash,
+            "runtime_policy": self.runtime_policy.to_payload(),
             "runtime_policy_hash": self.runtime_policy_hash,
+            "generation_settings": self.generation_settings,
+            "generation_settings_hash": self.generation_settings_hash,
+            "runtime_identity": self.runtime_identity,
+            "model_identity": self.model_identity,
+            "tokenizer_identity": self.tokenizer_identity,
+            "chat_template_hash": self.chat_template_hash,
+            "execution_context_hash": self.execution_context_hash,
             "case_statuses": self.case_statuses,
             "attempts": tuple(item.to_payload() for item in self.attempts),
             "status": self.status,
@@ -1553,16 +1727,34 @@ class ProbeRunProjection:
         *,
         specification_hash: str,
         case_inventory_hash: str,
-        runtime_policy_hash: str,
+        runtime_policy: ProbeRuntimePolicy,
+        generation_settings: Mapping[str, object],
+        runtime_identity: Mapping[str, str],
+        model_identity: Mapping[str, str],
+        tokenizer_identity: Mapping[str, str],
+        chat_template_hash: str,
         case_ids: tuple[str, ...],
         attempts: tuple[ProbeAttempt, ...],
     ) -> ProbeRunProjection:
+        if len(case_ids) != len(set(case_ids)):
+            raise ValueError("case_ids must be unique")
+        generation_settings_hash = canonical_payload_hash(generation_settings)
+        context = {
+            "generation_settings": generation_settings,
+            "generation_settings_hash": generation_settings_hash,
+            "runtime_identity": runtime_identity,
+            "model_identity": model_identity,
+            "tokenizer_identity": tokenizer_identity,
+            "chat_template_hash": chat_template_hash,
+        }
+        execution_context_hash = canonical_payload_hash(context)
         run_id = _derived_id(
             cls._ID_PREFIX,
             {
                 "specification_hash": specification_hash,
                 "case_inventory_hash": case_inventory_hash,
-                "runtime_policy_hash": runtime_policy_hash,
+                "runtime_policy_hash": runtime_policy.record_hash,
+                "execution_context_hash": execution_context_hash,
             },
         )
         statuses = {case_id: "unstarted" for case_id in sorted(case_ids)}
@@ -1578,7 +1770,15 @@ class ProbeRunProjection:
             probe_run_id=run_id,
             specification_hash=specification_hash,
             case_inventory_hash=case_inventory_hash,
-            runtime_policy_hash=runtime_policy_hash,
+            runtime_policy=runtime_policy,
+            runtime_policy_hash=runtime_policy.record_hash,
+            generation_settings=generation_settings,
+            generation_settings_hash=generation_settings_hash,
+            runtime_identity=runtime_identity,
+            model_identity=model_identity,
+            tokenizer_identity=tokenizer_identity,
+            chat_template_hash=chat_template_hash,
+            execution_context_hash=execution_context_hash,
             case_statuses=statuses,
             attempts=ordered,
             status=status,
@@ -1596,11 +1796,28 @@ class ProbeRunProjection:
         )
         if type(payload["case_statuses"]) is not dict or type(payload["attempts"]) is not list:
             raise TypeError("projection statuses and attempts require JSON object/array transport")
+        for name in (
+            "generation_settings",
+            "runtime_identity",
+            "model_identity",
+            "tokenizer_identity",
+            "runtime_policy",
+        ):
+            if type(payload[name]) is not dict:
+                raise TypeError(f"projection {name} must use a JSON object")
         return cls(
             probe_run_id=payload["probe_run_id"],
             specification_hash=payload["specification_hash"],
             case_inventory_hash=payload["case_inventory_hash"],
+            runtime_policy=ProbeRuntimePolicy.from_payload(payload["runtime_policy"]),  # type: ignore[arg-type]
             runtime_policy_hash=payload["runtime_policy_hash"],
+            generation_settings=payload["generation_settings"],
+            generation_settings_hash=payload["generation_settings_hash"],
+            runtime_identity=payload["runtime_identity"],
+            model_identity=payload["model_identity"],
+            tokenizer_identity=payload["tokenizer_identity"],
+            chat_template_hash=payload["chat_template_hash"],
+            execution_context_hash=payload["execution_context_hash"],
             case_statuses=payload["case_statuses"],
             attempts=tuple(ProbeAttempt.from_payload(item) for item in payload["attempts"]),
             status=payload["status"],

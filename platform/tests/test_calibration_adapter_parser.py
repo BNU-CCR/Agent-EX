@@ -477,6 +477,24 @@ def test_rehashed_parse_evidence_rejects_unsupported_declarations(
 
 @pytest.mark.parametrize(
     ("field", "wrong_value"),
+    [("parser_id", "malicious-parser"), ("parser_version", "9.9.9")],
+)
+def test_rehashed_parse_evidence_rejects_noncanonical_parser_declarations(
+    field: str, wrong_value: str
+) -> None:
+    payload = parse_probe_response(response(valid_raw())).to_payload()
+    payload[field] = wrong_value
+    rehash_record_payload(
+        payload,
+        identity_field="parse_evidence_id",
+        identity_prefix="probe-parse-",
+    )
+    with pytest.raises(ValueError, match="parser"):
+        ProbeParseEvidence.from_payload(payload)
+
+
+@pytest.mark.parametrize(
+    ("field", "wrong_value"),
     [("scale_id", "stance-2-9"), ("field_order_id", "reason-first")],
 )
 def test_rehashed_response_rejects_unsupported_declarations(field: str, wrong_value: str) -> None:

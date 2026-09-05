@@ -39,12 +39,38 @@ def _inventory_hash(cases: tuple[ProbeCase, ...]) -> str:
     )
 
 
-def _run_id(specification_hash: str, inventory_hash: str, policy_hash: str) -> str:
+def _execution_context_hash(
+    *,
+    generation_settings: Mapping[str, object],
+    runtime_identity: Mapping[str, str],
+    model_identity: Mapping[str, str],
+    tokenizer_identity: Mapping[str, str],
+    chat_template_hash: str,
+) -> str:
+    return canonical_payload_hash(
+        {
+            "generation_settings": generation_settings,
+            "generation_settings_hash": canonical_payload_hash(generation_settings),
+            "runtime_identity": runtime_identity,
+            "model_identity": model_identity,
+            "tokenizer_identity": tokenizer_identity,
+            "chat_template_hash": chat_template_hash,
+        }
+    )
+
+
+def _run_id(
+    specification_hash: str,
+    inventory_hash: str,
+    policy_hash: str,
+    execution_context_hash: str,
+) -> str:
     return "probe-run-" + canonical_payload_hash(
         {
             "specification_hash": specification_hash,
             "case_inventory_hash": inventory_hash,
             "runtime_policy_hash": policy_hash,
+            "execution_context_hash": execution_context_hash,
         }
     )
 
@@ -189,7 +215,14 @@ def _continue_run(
     if stop_after_attempts is not None:
         if type(stop_after_attempts) is not int or stop_after_attempts < 0:
             raise ValueError("stop_after_attempts must be a nonnegative integer or null")
-    run_id = _run_id(specification_hash, inventory_hash, runtime_policy.record_hash)
+    context_hash = _execution_context_hash(
+        generation_settings=generation_settings,
+        runtime_identity=runtime_identity,
+        model_identity=model_identity,
+        tokenizer_identity=tokenizer_identity,
+        chat_template_hash=chat_template_hash,
+    )
+    run_id = _run_id(specification_hash, inventory_hash, runtime_policy.record_hash, context_hash)
     attempts = list(existing)
     made = 0
     by_case: dict[str, list[ProbeAttempt]] = {case.probe_case_id: [] for case in cases}
@@ -212,7 +245,12 @@ def _continue_run(
                 return ProbeRunProjection.create(
                     specification_hash=specification_hash,
                     case_inventory_hash=inventory_hash,
-                    runtime_policy_hash=runtime_policy.record_hash,
+                    runtime_policy=runtime_policy,
+                    generation_settings=generation_settings,
+                    runtime_identity=runtime_identity,
+                    model_identity=model_identity,
+                    tokenizer_identity=tokenizer_identity,
+                    chat_template_hash=chat_template_hash,
                     case_ids=tuple(item.probe_case_id for item in cases),
                     attempts=tuple(attempts),
                 )
@@ -228,7 +266,12 @@ def _continue_run(
                 snapshot = ProbeRunProjection.create(
                     specification_hash=specification_hash,
                     case_inventory_hash=inventory_hash,
-                    runtime_policy_hash=runtime_policy.record_hash,
+                    runtime_policy=runtime_policy,
+                    generation_settings=generation_settings,
+                    runtime_identity=runtime_identity,
+                    model_identity=model_identity,
+                    tokenizer_identity=tokenizer_identity,
+                    chat_template_hash=chat_template_hash,
                     case_ids=tuple(item.probe_case_id for item in cases),
                     attempts=tuple(attempts),
                 )
@@ -298,7 +341,12 @@ def _continue_run(
     return ProbeRunProjection.create(
         specification_hash=specification_hash,
         case_inventory_hash=inventory_hash,
-        runtime_policy_hash=runtime_policy.record_hash,
+        runtime_policy=runtime_policy,
+        generation_settings=generation_settings,
+        runtime_identity=runtime_identity,
+        model_identity=model_identity,
+        tokenizer_identity=tokenizer_identity,
+        chat_template_hash=chat_template_hash,
         case_ids=tuple(item.probe_case_id for item in cases),
         attempts=tuple(attempts),
     )
@@ -373,15 +421,39 @@ def resume_probe_run(
         tokenizer_identity=tokenizer_identity,
         chat_template_hash=chat_template_hash,
     )
-    expected_run_id = _run_id(specification_hash, inventory_hash, runtime_policy.record_hash)
+    context_hash = _execution_context_hash(
+        generation_settings=generation_settings,
+        runtime_identity=runtime_identity,
+        model_identity=model_identity,
+        tokenizer_identity=tokenizer_identity,
+        chat_template_hash=chat_template_hash,
+    )
+    expected_run_id = _run_id(
+        specification_hash,
+        inventory_hash,
+        runtime_policy.record_hash,
+        context_hash,
+    )
     if (
         projection.probe_run_id != expected_run_id
         or projection.specification_hash != specification_hash
         or projection.case_inventory_hash != inventory_hash
         or projection.runtime_policy_hash != runtime_policy.record_hash
+        or projection.execution_context_hash != context_hash
     ):
         raise ValueError("probe run specification, inventory, policy, or hash drift detected")
     settings_hash = canonical_payload_hash(generation_settings)
+    if (
+        projection.generation_settings_hash != settings_hash
+        or projection.generation_settings != generation_settings
+        or projection.runtime_identity != runtime_identity
+        or projection.model_identity != model_identity
+        or projection.tokenizer_identity != tokenizer_identity
+        or projection.chat_template_hash != chat_template_hash
+    ):
+        raise ValueError("probe run execution context drift detected")
+    if set(projection.case_statuses) != {case.probe_case_id for case in cases}:
+        raise ValueError("probe run case inventory identities drift detected")
     for attempt in projection.attempts:
         if attempt.request.generation_settings_hash != settings_hash:
             raise ValueError("generation settings drift detected")

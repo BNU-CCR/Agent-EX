@@ -9,9 +9,12 @@ import pytest
 from agent_ex.calibration.adapters import ProbeScriptStep, ScriptedProbeAdapter
 from agent_ex.calibration.contracts import (
     ProbeAttempt,
+    ProbeRequest,
+    ProbeResponse,
     ProbeRunProjection,
     ProbeRuntimePolicy,
 )
+from agent_ex.calibration.parser import parse_probe_response
 from agent_ex.calibration.runner import ProbeRunCrash, execute_probe_run, resume_probe_run
 from agent_ex.calibration.specification import expand_probe_cases, load_probe_specification
 from agent_ex.domain import canonical_payload_hash
@@ -23,6 +26,16 @@ RUNTIME_IDENTITY = {"provider": "scripted-probe", "runtime_version": "1.0.0"}
 MODEL_IDENTITY = {"model": "synthetic", "revision": "offline-v1"}
 TOKENIZER_IDENTITY = {"tokenizer": "synthetic", "revision": "offline-v1"}
 CHAT_TEMPLATE_HASH = canonical_payload_hash("synthetic-chat-template-v1")
+
+
+class CountingAdapter(ScriptedProbeAdapter):
+    def __init__(self, steps):
+        super().__init__(steps)
+        self.calls = 0
+
+    def generate(self, request):
+        self.calls += 1
+        return super().generate(request)
 
 
 def specification_and_cases(count: int = 1):
@@ -52,6 +65,15 @@ def valid_raw(stance: int = 4) -> str:
         {"stance": stance, "confidence": 3, "public_reason": "Synthetic reason."},
         separators=(",", ":"),
     )
+
+
+def rehash_payload(payload: dict[str, object], *, id_field: str, prefix: str) -> dict[str, object]:
+    identity = {
+        key: value for key, value in payload.items() if key not in {id_field, "record_hash"}
+    }
+    payload[id_field] = prefix + canonical_payload_hash(identity)
+    payload["record_hash"] = canonical_payload_hash({**identity, id_field: payload[id_field]})
+    return payload
 
 
 def run(adapter, *, runtime_policy=None, count: int = 1):
@@ -89,6 +111,30 @@ def test_runtime_policy_is_strict_hash_bound_and_round_trips() -> None:
                 **record.max_transport_attempts_by_code,
                 "timeout": True,
             },
+        )
+
+
+def test_backoff_schedule_may_be_empty_only_when_no_retry_transition_exists() -> None:
+    record = policy()
+    no_retry = ProbeRuntimePolicy.create(
+        policy_id="one-attempt-only",
+        retryable_error_codes=("timeout",),
+        nonretryable_error_codes=("oom",),
+        max_transport_attempts_by_code={"timeout": 1, "oom": 1},
+        timeout_seconds=1.0,
+        obey_retry_after=False,
+        backoff_seconds=(),
+    )
+    assert no_retry.backoff_seconds == ()
+    with pytest.raises(ValueError, match="length|schedule|retry"):
+        ProbeRuntimePolicy.create(
+            policy_id="missing-transition",
+            retryable_error_codes=("timeout",),
+            nonretryable_error_codes=("oom",),
+            max_transport_attempts_by_code={"timeout": 2, "oom": 1},
+            timeout_seconds=1.0,
+            obey_retry_after=False,
+            backoff_seconds=(),
         )
     with pytest.raises(ValueError, match="partition|codes"):
         ProbeRuntimePolicy.create(
@@ -335,7 +381,7 @@ def test_resume_skips_runtime_failed_case_and_runs_unstarted_case() -> None:
         max_transport_attempts_by_code={"timeout": 1, "oom": 1},
         timeout_seconds=5.0,
         obey_retry_after=False,
-        backoff_seconds=(0.0,),
+        backoff_seconds=(),
     )
     partial = execute_probe_run(
         specification_hash=specification.output_hash,
@@ -368,6 +414,59 @@ def test_resume_skips_runtime_failed_case_and_runs_unstarted_case() -> None:
     assert resumed.case_statuses[failed.probe_case_id] == "runtime_failed"
     assert resumed.case_statuses[unstarted.probe_case_id] == "parsed"
     assert resumed.status == "incomplete"
+
+
+@pytest.mark.parametrize(
+    "changed",
+    [
+        {"generation_settings": {"temperature": 0.9, "top_p": 0.9, "max_tokens": 128}},
+        {"model_identity": {"model": "other", "revision": "offline-v1"}},
+    ],
+)
+def test_zero_attempt_snapshot_freezes_full_execution_context_before_resume_call(changed) -> None:
+    specification, cases = specification_and_cases()
+    runtime_policy = policy()
+    original = execute_probe_run(
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter({}),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=0,
+    )
+    arguments = {
+        "projection": original,
+        "specification_hash": specification.output_hash,
+        "cases": cases,
+        "runtime_policy": runtime_policy,
+        "adapter": CountingAdapter({}),
+        "generation_settings": GENERATION_SETTINGS,
+        "runtime_identity": RUNTIME_IDENTITY,
+        "model_identity": MODEL_IDENTITY,
+        "tokenizer_identity": TOKENIZER_IDENTITY,
+        "chat_template_hash": CHAT_TEMPLATE_HASH,
+        **changed,
+    }
+    changed_projection = execute_probe_run(
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter({}),
+        generation_settings=arguments["generation_settings"],
+        runtime_identity=arguments["runtime_identity"],
+        model_identity=arguments["model_identity"],
+        tokenizer_identity=arguments["tokenizer_identity"],
+        chat_template_hash=arguments["chat_template_hash"],
+        stop_after_attempts=0,
+    )
+    assert changed_projection.probe_run_id != original.probe_run_id
+    with pytest.raises(ValueError, match="context|drift|run"):
+        resume_probe_run(**arguments)
+    assert arguments["adapter"].calls == 0
 
 
 def test_resume_preserves_consumed_budget_and_continues_budget_remaining_case() -> None:
@@ -529,3 +628,136 @@ def test_attempt_contract_rejects_hash_tampering() -> None:
     assert restored == attempt
     with pytest.raises(ValueError, match="hash"):
         replace(attempt, response_hash=canonical_payload_hash("tampered"))
+
+
+def test_projection_replay_rejects_forged_transport_ordinal_before_third_call() -> None:
+    specification, cases = specification_and_cases()
+    case = cases[0]
+    runtime_policy = policy(timeout_budget=2)
+    first_projection = execute_probe_run(
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter(
+            {(case.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout", None)}
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=1,
+    )
+    second_request = ProbeRequest.create(
+        case,
+        attempt_index=2,
+        attempt_kind="semantic",
+        generation_settings=GENERATION_SETTINGS,
+    )
+    second_response = ScriptedProbeAdapter(
+        {(case.probe_case_id, 2): ProbeScriptStep("timeout", None, "timeout", None)}
+    ).generate(second_request)
+    forged_second = ProbeAttempt.create(
+        probe_run_id=first_projection.probe_run_id,
+        specification_hash=specification.output_hash,
+        case_inventory_hash=first_projection.case_inventory_hash,
+        runtime_policy_hash=runtime_policy.record_hash,
+        probe_case_id=case.probe_case_id,
+        probe_case_hash=case.record_hash,
+        attempt_index=2,
+        attempt_kind="semantic",
+        request=second_request,
+        request_hash=second_request.record_hash,
+        response=second_response,
+        response_hash=second_response.record_hash,
+        parse_evidence=None,
+        parse_evidence_hash=None,
+        transport_error_code="timeout",
+        transport_retryable=True,
+        transport_attempt_number_for_code=1,
+        transport_budget_for_code=2,
+        retry_delay_seconds=0.25,
+        retry_delay_source="backoff",
+        case_status_after="pending",
+    )
+    adapter = CountingAdapter(
+        {(case.probe_case_id, 3): ProbeScriptStep("response", valid_raw(), None, None)}
+    )
+    with pytest.raises(ValueError, match="ordinal|budget|replay|status"):
+        forged_projection = ProbeRunProjection.create(
+            specification_hash=specification.output_hash,
+            case_inventory_hash=first_projection.case_inventory_hash,
+            runtime_policy=runtime_policy,
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+            case_ids=(case.probe_case_id,),
+            attempts=(first_projection.attempts[0], forged_second),
+        )
+        resume_probe_run(
+            projection=forged_projection,
+            specification_hash=specification.output_hash,
+            cases=cases,
+            runtime_policy=runtime_policy,
+            adapter=adapter,
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+        )
+    assert adapter.calls == 0
+
+
+def test_attempt_rejects_independently_hash_valid_response_with_changed_scale() -> None:
+    projection = run(
+        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("response", valid_raw(), None, None)))
+    )
+    honest = projection.attempts[0]
+    payload = honest.response.to_payload()
+    payload["scale_id"] = (
+        "stance-0-10" if honest.response.scale_id == "stance-1-7" else "stance-1-7"
+    )
+    malicious_response = ProbeResponse.from_payload(
+        rehash_payload(payload, id_field="response_id", prefix="probe-response-")
+    )
+    malicious_parse = parse_probe_response(malicious_response)
+    values = {
+        name: getattr(honest, name)
+        for name in honest.__dataclass_fields__
+        if name not in {"attempt_id", "record_hash"}
+    }
+    values.update(
+        response=malicious_response,
+        response_hash=malicious_response.record_hash,
+        parse_evidence=malicious_parse,
+        parse_evidence_hash=malicious_parse.record_hash,
+    )
+    with pytest.raises(ValueError, match="scale|declaration|request|binding"):
+        ProbeAttempt.create(**values)
+
+
+def test_attempt_rejects_hash_valid_parse_evidence_claiming_another_request() -> None:
+    projection = run(
+        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("response", valid_raw(), None, None)))
+    )
+    honest = projection.attempts[0]
+    payload = honest.parse_evidence.to_payload()
+    payload["request_id"] = "probe-request-malicious"
+    payload["request_hash"] = canonical_payload_hash("malicious-request")
+    malicious_parse = type(honest.parse_evidence).from_payload(
+        rehash_payload(payload, id_field="parse_evidence_id", prefix="probe-parse-")
+    )
+    values = {
+        name: getattr(honest, name)
+        for name in honest.__dataclass_fields__
+        if name not in {"attempt_id", "record_hash"}
+    }
+    values.update(
+        parse_evidence=malicious_parse,
+        parse_evidence_hash=malicious_parse.record_hash,
+    )
+    with pytest.raises(ValueError, match="parse|request|binding"):
+        ProbeAttempt.create(**values)
