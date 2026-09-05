@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import FrozenInstanceError, replace
+import inspect
 import json
 import math
 
@@ -26,6 +27,7 @@ RUNTIME_IDENTITY = {"provider": "scripted-probe", "runtime_version": "1.0.0"}
 MODEL_IDENTITY = {"model": "synthetic", "revision": "offline-v1"}
 TOKENIZER_IDENTITY = {"tokenizer": "synthetic", "revision": "offline-v1"}
 CHAT_TEMPLATE_HASH = canonical_payload_hash("synthetic-chat-template-v1")
+RUN_INSTANCE_ID = "phase0a-test-run-001"
 
 
 class CountingAdapter(ScriptedProbeAdapter):
@@ -79,6 +81,7 @@ def rehash_payload(payload: dict[str, object], *, id_field: str, prefix: str) ->
 def run(adapter, *, runtime_policy=None, count: int = 1):
     specification, cases = specification_and_cases(count)
     return execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy or policy(),
@@ -384,6 +387,7 @@ def test_resume_skips_runtime_failed_case_and_runs_unstarted_case() -> None:
         backoff_seconds=(),
     )
     partial = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy,
@@ -427,6 +431,7 @@ def test_zero_attempt_snapshot_freezes_full_execution_context_before_resume_call
     specification, cases = specification_and_cases()
     runtime_policy = policy()
     original = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy,
@@ -452,6 +457,7 @@ def test_zero_attempt_snapshot_freezes_full_execution_context_before_resume_call
         **changed,
     }
     changed_projection = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy,
@@ -469,11 +475,60 @@ def test_zero_attempt_snapshot_freezes_full_execution_context_before_resume_call
     assert arguments["adapter"].calls == 0
 
 
+def test_run_instance_id_is_required_and_distinguishes_otherwise_identical_runs() -> None:
+    assert (
+        inspect.signature(execute_probe_run).parameters["run_instance_id"].default is inspect._empty
+    )
+    specification, cases = specification_and_cases()
+
+    def snapshot(instance_id: str):
+        return execute_probe_run(
+            run_instance_id=instance_id,
+            specification_hash=specification.output_hash,
+            cases=cases,
+            runtime_policy=policy(),
+            adapter=ScriptedProbeAdapter({}),
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+            stop_after_attempts=0,
+        )
+
+    first = snapshot("run-instance-a")
+    repeated = snapshot("run-instance-a")
+    second = snapshot("run-instance-b")
+    assert first.probe_run_id == repeated.probe_run_id
+    assert first.probe_run_id != second.probe_run_id
+    assert first.run_instance_id == "run-instance-a"
+
+
+@pytest.mark.parametrize("bad_id", ["", "   ", None, 1, True])
+def test_run_instance_id_rejects_empty_and_non_string_values(bad_id: object) -> None:
+    specification, cases = specification_and_cases()
+    with pytest.raises((TypeError, ValueError), match="run_instance_id|instance"):
+        execute_probe_run(
+            run_instance_id=bad_id,
+            specification_hash=specification.output_hash,
+            cases=cases,
+            runtime_policy=policy(),
+            adapter=ScriptedProbeAdapter({}),
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+            stop_after_attempts=0,
+        )
+
+
 def test_resume_preserves_consumed_budget_and_continues_budget_remaining_case() -> None:
     specification, cases = specification_and_cases()
     runtime_policy = policy(timeout_budget=2)
     case = cases[0]
     partial = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy,
@@ -525,6 +580,7 @@ def test_resume_rejects_all_bound_drift_before_adapter_call(
     case = cases[0]
     runtime_policy = policy()
     partial = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy,
@@ -561,6 +617,7 @@ def test_resume_rejects_case_inventory_drift_and_cross_run_evidence() -> None:
     specification, cases = specification_and_cases(2)
     first = cases[0]
     partial = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=policy(),
@@ -597,6 +654,7 @@ def test_projection_round_trip_canonicalizes_cases_and_attempts() -> None:
     for case in reversed(cases):
         steps[(case.probe_case_id, 1)] = ProbeScriptStep("response", valid_raw(), None, None)
     projection = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=tuple(reversed(cases)),
         runtime_policy=policy(),
@@ -635,6 +693,7 @@ def test_projection_replay_rejects_forged_transport_ordinal_before_third_call() 
     case = cases[0]
     runtime_policy = policy(timeout_budget=2)
     first_projection = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy,
@@ -659,6 +718,7 @@ def test_projection_replay_rejects_forged_transport_ordinal_before_third_call() 
     ).generate(second_request)
     forged_second = ProbeAttempt.create(
         probe_run_id=first_projection.probe_run_id,
+        run_instance_id=first_projection.run_instance_id,
         specification_hash=specification.output_hash,
         case_inventory_hash=first_projection.case_inventory_hash,
         runtime_policy_hash=runtime_policy.record_hash,
@@ -685,6 +745,7 @@ def test_projection_replay_rejects_forged_transport_ordinal_before_third_call() 
     )
     with pytest.raises(ValueError, match="ordinal|budget|replay|status"):
         forged_projection = ProbeRunProjection.create(
+            run_instance_id=first_projection.run_instance_id,
             specification_hash=specification.output_hash,
             case_inventory_hash=first_projection.case_inventory_hash,
             runtime_policy=runtime_policy,
@@ -761,3 +822,59 @@ def test_attempt_rejects_hash_valid_parse_evidence_claiming_another_request() ->
     )
     with pytest.raises(ValueError, match="parse|request|binding"):
         ProbeAttempt.create(**values)
+
+
+def test_projection_rejects_cross_instance_attempt_with_recomputed_hashes() -> None:
+    specification, cases = specification_and_cases()
+    case = cases[0]
+    runtime_policy = policy()
+    run_a = execute_probe_run(
+        run_instance_id="run-instance-a",
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter(
+            {(case.probe_case_id, 1): ProbeScriptStep("response", valid_raw(), None, None)}
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    run_b = execute_probe_run(
+        run_instance_id="run-instance-b",
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter({}),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=0,
+    )
+    original = run_a.attempts[0]
+    values = {
+        name: getattr(original, name)
+        for name in original.__dataclass_fields__
+        if name not in {"attempt_id", "record_hash"}
+    }
+    values["run_instance_id"] = run_b.run_instance_id
+    values["probe_run_id"] = run_b.probe_run_id
+    injected = ProbeAttempt.create(**values)
+    with pytest.raises(ValueError, match="instance|mixed|run"):
+        ProbeRunProjection.create(
+            run_instance_id=run_a.run_instance_id,
+            specification_hash=specification.output_hash,
+            case_inventory_hash=run_a.case_inventory_hash,
+            runtime_policy=runtime_policy,
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+            case_ids=(case.probe_case_id,),
+            attempts=(injected,),
+        )

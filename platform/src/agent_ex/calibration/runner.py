@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Mapping
 
-from ..domain import _require_json_transport, _require_sha256, canonical_payload_hash
+from ..domain import _require_id, _require_json_transport, _require_sha256, canonical_payload_hash
 from .adapters import ProbeAdapter
 from .contracts import (
     ProbeAttempt,
@@ -60,6 +60,7 @@ def _execution_context_hash(
 
 
 def _run_id(
+    run_instance_id: str,
     specification_hash: str,
     inventory_hash: str,
     policy_hash: str,
@@ -67,6 +68,7 @@ def _run_id(
 ) -> str:
     return "probe-run-" + canonical_payload_hash(
         {
+            "run_instance_id": run_instance_id,
             "specification_hash": specification_hash,
             "case_inventory_hash": inventory_hash,
             "runtime_policy_hash": policy_hash,
@@ -135,6 +137,7 @@ def _validate_response_provenance(
 def _make_attempt(
     *,
     run_id: str,
+    run_instance_id: str,
     specification_hash: str,
     inventory_hash: str,
     runtime_policy: ProbeRuntimePolicy,
@@ -172,6 +175,7 @@ def _make_attempt(
             retry_delay_source = None
     return ProbeAttempt.create(
         probe_run_id=run_id,
+        run_instance_id=run_instance_id,
         specification_hash=specification_hash,
         case_inventory_hash=inventory_hash,
         runtime_policy_hash=runtime_policy.record_hash,
@@ -200,6 +204,7 @@ def _make_attempt(
 def _continue_run(
     *,
     existing: tuple[ProbeAttempt, ...],
+    run_instance_id: str,
     specification_hash: str,
     cases: tuple[ProbeCase, ...],
     inventory_hash: str,
@@ -222,7 +227,13 @@ def _continue_run(
         tokenizer_identity=tokenizer_identity,
         chat_template_hash=chat_template_hash,
     )
-    run_id = _run_id(specification_hash, inventory_hash, runtime_policy.record_hash, context_hash)
+    run_id = _run_id(
+        run_instance_id,
+        specification_hash,
+        inventory_hash,
+        runtime_policy.record_hash,
+        context_hash,
+    )
     attempts = list(existing)
     made = 0
     by_case: dict[str, list[ProbeAttempt]] = {case.probe_case_id: [] for case in cases}
@@ -243,6 +254,7 @@ def _continue_run(
         while current in {"unstarted", "pending", "format_pending"}:
             if stop_after_attempts is not None and made >= stop_after_attempts:
                 return ProbeRunProjection.create(
+                    run_instance_id=run_instance_id,
                     specification_hash=specification_hash,
                     case_inventory_hash=inventory_hash,
                     runtime_policy=runtime_policy,
@@ -264,6 +276,7 @@ def _continue_run(
                 response = adapter.generate(request)
             except Exception as error:
                 snapshot = ProbeRunProjection.create(
+                    run_instance_id=run_instance_id,
                     specification_hash=specification_hash,
                     case_inventory_hash=inventory_hash,
                     runtime_policy=runtime_policy,
@@ -319,6 +332,7 @@ def _continue_run(
                         delay_source = "backoff"
             attempt = _make_attempt(
                 run_id=run_id,
+                run_instance_id=run_instance_id,
                 specification_hash=specification_hash,
                 inventory_hash=inventory_hash,
                 runtime_policy=runtime_policy,
@@ -339,6 +353,7 @@ def _continue_run(
                 # Transport retries retain the semantic/format-repair purpose.
                 next_kind = request.attempt_kind
     return ProbeRunProjection.create(
+        run_instance_id=run_instance_id,
         specification_hash=specification_hash,
         case_inventory_hash=inventory_hash,
         runtime_policy=runtime_policy,
@@ -354,6 +369,7 @@ def _continue_run(
 
 def execute_probe_run(
     *,
+    run_instance_id: str,
     specification_hash: str,
     cases: tuple[ProbeCase, ...],
     runtime_policy: ProbeRuntimePolicy,
@@ -366,6 +382,7 @@ def execute_probe_run(
     stop_after_attempts: int | None = None,
 ) -> ProbeRunProjection:
     """Start one isolated run and execute cases in canonical order."""
+    _require_id("run_instance_id", run_instance_id)
     inventory_hash = _validate_inputs(
         specification_hash=specification_hash,
         cases=cases,
@@ -379,6 +396,7 @@ def execute_probe_run(
     )
     return _continue_run(
         existing=(),
+        run_instance_id=run_instance_id,
         specification_hash=specification_hash,
         cases=cases,
         inventory_hash=inventory_hash,
@@ -429,6 +447,7 @@ def resume_probe_run(
         chat_template_hash=chat_template_hash,
     )
     expected_run_id = _run_id(
+        projection.run_instance_id,
         specification_hash,
         inventory_hash,
         runtime_policy.record_hash,
@@ -471,6 +490,7 @@ def resume_probe_run(
         raise ValueError("runtime_failed is irreversible within the same probe run")
     return _continue_run(
         existing=projection.attempts,
+        run_instance_id=projection.run_instance_id,
         specification_hash=specification_hash,
         cases=cases,
         inventory_hash=inventory_hash,

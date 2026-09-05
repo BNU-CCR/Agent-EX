@@ -1252,6 +1252,7 @@ class ProbeAttempt:
 
     attempt_id: str
     probe_run_id: str
+    run_instance_id: str
     specification_hash: str
     case_inventory_hash: str
     runtime_policy_hash: str
@@ -1279,7 +1280,7 @@ class ProbeAttempt:
     _STATUSES = {"pending", "format_pending", "parsed", "parse_failed", "refused", "runtime_failed"}
 
     def __post_init__(self) -> None:
-        for name in ("probe_run_id", "probe_case_id"):
+        for name in ("probe_run_id", "run_instance_id", "probe_case_id"):
             _require_id(name, getattr(self, name))
         for name in (
             "specification_hash",
@@ -1475,6 +1476,7 @@ class ProbeRunProjection:
     """Canonical current run state derived exclusively from ordered attempts."""
 
     probe_run_id: str
+    run_instance_id: str
     specification_hash: str
     case_inventory_hash: str
     runtime_policy: ProbeRuntimePolicy
@@ -1495,6 +1497,7 @@ class ProbeRunProjection:
     _ID_PREFIX = "probe-run-"
 
     def __post_init__(self) -> None:
+        _require_id("run_instance_id", self.run_instance_id)
         for name in (
             "specification_hash",
             "case_inventory_hash",
@@ -1531,6 +1534,7 @@ class ProbeRunProjection:
         expected_run_id = _derived_id(
             self._ID_PREFIX,
             {
+                "run_instance_id": self.run_instance_id,
                 "specification_hash": self.specification_hash,
                 "case_inventory_hash": self.case_inventory_hash,
                 "runtime_policy_hash": self.runtime_policy_hash,
@@ -1590,6 +1594,7 @@ class ProbeRunProjection:
                 raise TypeError("attempts must contain ProbeAttempt records")
             if (
                 attempt.probe_run_id != self.probe_run_id
+                or attempt.run_instance_id != self.run_instance_id
                 or attempt.specification_hash != self.specification_hash
                 or attempt.case_inventory_hash != self.case_inventory_hash
                 or attempt.runtime_policy_hash != self.runtime_policy_hash
@@ -1700,6 +1705,7 @@ class ProbeRunProjection:
         return {
             "schema_version": self._SCHEMA_VERSION,
             "probe_run_id": self.probe_run_id,
+            "run_instance_id": self.run_instance_id,
             "specification_hash": self.specification_hash,
             "case_inventory_hash": self.case_inventory_hash,
             "runtime_policy": self.runtime_policy.to_payload(),
@@ -1725,6 +1731,7 @@ class ProbeRunProjection:
     def create(
         cls,
         *,
+        run_instance_id: str,
         specification_hash: str,
         case_inventory_hash: str,
         runtime_policy: ProbeRuntimePolicy,
@@ -1751,6 +1758,7 @@ class ProbeRunProjection:
         run_id = _derived_id(
             cls._ID_PREFIX,
             {
+                "run_instance_id": run_instance_id,
                 "specification_hash": specification_hash,
                 "case_inventory_hash": case_inventory_hash,
                 "runtime_policy_hash": runtime_policy.record_hash,
@@ -1768,6 +1776,7 @@ class ProbeRunProjection:
         ordered = tuple(sorted(attempts, key=lambda item: (item.probe_case_id, item.attempt_index)))
         return cls(
             probe_run_id=run_id,
+            run_instance_id=run_instance_id,
             specification_hash=specification_hash,
             case_inventory_hash=case_inventory_hash,
             runtime_policy=runtime_policy,
@@ -1807,6 +1816,7 @@ class ProbeRunProjection:
                 raise TypeError(f"projection {name} must use a JSON object")
         return cls(
             probe_run_id=payload["probe_run_id"],
+            run_instance_id=payload["run_instance_id"],
             specification_hash=payload["specification_hash"],
             case_inventory_hash=payload["case_inventory_hash"],
             runtime_policy=ProbeRuntimePolicy.from_payload(payload["runtime_policy"]),  # type: ignore[arg-type]
