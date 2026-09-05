@@ -168,7 +168,7 @@ def test_request_requires_explicit_generation_settings() -> None:
         )
 
 
-@pytest.mark.parametrize("supported,echo", [(True, None), (False, 17)])
+@pytest.mark.parametrize("supported,echo", [(False, 17), (True, 18)])
 def test_provider_seed_declaration_and_echo_are_consistent(
     supported: bool, echo: int | None
 ) -> None:
@@ -204,6 +204,26 @@ def test_provider_seed_unsupported_requires_no_echo() -> None:
         provider_seed_supported=False,
         provider_seed_echo=None,
     )
+    assert record.provider_seed_echo is None
+
+
+@pytest.mark.parametrize("outcome", ["timeout", "oom", "provider_error"])
+def test_seed_support_without_echo_is_truthful_for_error_responses(outcome: str) -> None:
+    req = request()
+    record = ProbeResponse.from_script_step(
+        request=req,
+        outcome=outcome,
+        raw_response=None,
+        error_code=f"synthetic-{outcome}",
+        adapter_identity=ADAPTER_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        provider_request_id="provider-request",
+        provider_seed_supported=True,
+        provider_seed_echo=None,
+    )
+    assert record.provider_seed_supported is True
     assert record.provider_seed_echo is None
 
 
@@ -352,6 +372,73 @@ def test_parse_evidence_binds_request_and_response_hashes() -> None:
     assert evidence.response_hash == resp.record_hash
     with pytest.raises(ValueError, match="canonical payload|hash|identity"):
         replace(evidence, response_hash="0" * 64)
+
+
+@pytest.mark.parametrize(
+    ("field", "wrong_value"),
+    [("scale_id", "stance-0-10"), ("field_order_id", "reason-confidence-stance")],
+)
+@pytest.mark.parametrize("success", [True, False])
+def test_parse_evidence_create_rejects_declarations_mismatching_response(
+    field: str, wrong_value: str, success: bool
+) -> None:
+    resp = response(valid_raw())
+    arguments = {
+        "response": resp,
+        "scale_id": resp.scale_id,
+        "field_order_id": resp.field_order_id,
+        "stance": 4 if success else None,
+        "confidence": 3 if success else None,
+        "public_reason": "synthetic reason" if success else None,
+        "error": None if success else {"code": "fields", "message": "synthetic failure"},
+    }
+    arguments[field] = wrong_value
+    with pytest.raises(ValueError, match="response|scale|field order"):
+        ProbeParseEvidence.create(**arguments)
+
+
+def rehash_record_payload(
+    payload: dict[str, object], *, identity_field: str, identity_prefix: str
+) -> None:
+    identity = {
+        key: value for key, value in payload.items() if key not in {identity_field, "record_hash"}
+    }
+    payload[identity_field] = identity_prefix + canonical_payload_hash(identity)
+    payload["record_hash"] = canonical_payload_hash(
+        {key: value for key, value in payload.items() if key != "record_hash"}
+    )
+
+
+@pytest.mark.parametrize(
+    ("field", "wrong_value"),
+    [("scale_id", "stance-2-9"), ("field_order_id", "reason-first")],
+)
+@pytest.mark.parametrize("success", [True, False])
+def test_rehashed_parse_evidence_rejects_unsupported_declarations(
+    field: str, wrong_value: str, success: bool
+) -> None:
+    raw = valid_raw() if success else '{"stance":4}'
+    payload = parse_probe_response(response(raw)).to_payload()
+    payload[field] = wrong_value
+    rehash_record_payload(
+        payload,
+        identity_field="parse_evidence_id",
+        identity_prefix="probe-parse-",
+    )
+    with pytest.raises(ValueError, match="scale|field_order|field order|supported"):
+        ProbeParseEvidence.from_payload(payload)
+
+
+@pytest.mark.parametrize(
+    ("field", "wrong_value"),
+    [("scale_id", "stance-2-9"), ("field_order_id", "reason-first")],
+)
+def test_rehashed_response_rejects_unsupported_declarations(field: str, wrong_value: str) -> None:
+    payload = response(valid_raw()).to_payload()
+    payload[field] = wrong_value
+    rehash_record_payload(payload, identity_field="response_id", identity_prefix="probe-response-")
+    with pytest.raises(ValueError, match="scale|field_order|field order|supported"):
+        ProbeResponse.from_payload(payload)
 
 
 @pytest.mark.parametrize(

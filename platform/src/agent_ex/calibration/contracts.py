@@ -25,6 +25,20 @@ _CALIBRATION_METADATA = {
     "formal_parameter_authority": False,
     "research_parameter_status": "not_frozen",
 }
+_PROBE_SCALE_IDS = {"stance-1-7", "stance-0-10"}
+_PROBE_FIELD_ORDER_IDS = {
+    "stance-confidence-reason",
+    "reason-confidence-stance",
+}
+
+
+def _require_probe_declarations(scale_id: object, field_order_id: object) -> None:
+    _require_id("scale_id", scale_id)
+    _require_id("field_order_id", field_order_id)
+    if scale_id not in _PROBE_SCALE_IDS:
+        raise ValueError("scale_id is not supported")
+    if field_order_id not in _PROBE_FIELD_ORDER_IDS:
+        raise ValueError("field_order_id is not supported")
 
 
 def _require_calibration_metadata(value: object, *, record_name: str) -> None:
@@ -523,15 +537,7 @@ class ProbeRequest:
         _require_int("attempt_index", self.attempt_index, minimum=1)
         if type(self.attempt_kind) is not str or self.attempt_kind not in self._ATTEMPT_KINDS:
             raise ValueError("attempt_kind must be semantic or format_repair")
-        _require_id("scale_id", self.scale_id)
-        _require_id("field_order_id", self.field_order_id)
-        if self.scale_id not in {"stance-1-7", "stance-0-10"}:
-            raise ValueError("scale_id is not supported")
-        if self.field_order_id not in {
-            "stance-confidence-reason",
-            "reason-confidence-stance",
-        }:
-            raise ValueError("field_order_id is not supported")
+        _require_probe_declarations(self.scale_id, self.field_order_id)
         _require_tuple("rendered_messages", self.rendered_messages)
         if not self.rendered_messages:
             raise ValueError("rendered_messages must not be empty")
@@ -705,8 +711,7 @@ class ProbeResponse:
             or self.attempt_kind not in ProbeRequest._ATTEMPT_KINDS
         ):
             raise ValueError("attempt_kind must be semantic or format_repair")
-        _require_id("scale_id", self.scale_id)
-        _require_id("field_order_id", self.field_order_id)
+        _require_probe_declarations(self.scale_id, self.field_order_id)
         _require_nonempty_json_mapping("generation_settings", self.generation_settings)
         _require_payload_hash(
             "generation_settings_hash", self.generation_settings_hash, self.generation_settings
@@ -721,9 +726,8 @@ class ProbeResponse:
             raise ValueError("provider seed echo is forbidden when seed support is false")
         if self.requested_seed is None and self.provider_seed_echo is not None:
             raise ValueError("provider seed echo is forbidden without a requested seed")
-        if self.provider_seed_supported and self.requested_seed is not None:
-            if self.provider_seed_echo != self.requested_seed:
-                raise ValueError("provider seed echo must match the requested seed")
+        if self.provider_seed_echo is not None and self.provider_seed_echo != self.requested_seed:
+            raise ValueError("provider seed echo must match the requested seed")
         _require_identity_mapping(
             "runtime_identity", self.runtime_identity, exact_fields=("provider", "runtime_version")
         )
@@ -913,6 +917,7 @@ class ProbeParseEvidence:
             "raw_response_hash",
         ):
             _require_sha256(name, getattr(self, name))
+        _require_probe_declarations(self.scale_id, self.field_order_id)
         if type(self.success) is not bool:
             raise TypeError("success must be a boolean")
         if self.success:
@@ -920,8 +925,6 @@ class ProbeParseEvidence:
             _require_int("confidence", self.confidence, minimum=1)  # type: ignore[arg-type]
             _require_string("public_reason", self.public_reason)
             ranges = {"stance-1-7": (1, 7), "stance-0-10": (0, 10)}
-            if self.scale_id not in ranges:
-                raise ValueError("scale_id is not supported")
             if not ranges[self.scale_id][0] <= self.stance <= ranges[self.scale_id][1]:  # type: ignore[operator]
                 raise ValueError("stance is outside the declared scale")
             if self.confidence > 5:  # type: ignore[operator]
@@ -1003,6 +1006,10 @@ class ProbeParseEvidence:
     ) -> ProbeParseEvidence:
         if not isinstance(response, ProbeResponse):
             raise TypeError("response must be a ProbeResponse")
+        if scale_id != response.scale_id:
+            raise ValueError("scale_id must match the bound response scale")
+        if field_order_id != response.field_order_id:
+            raise ValueError("field_order_id must match the bound response field order")
         success = error is None
         parsed = (
             None
