@@ -702,6 +702,7 @@ class ProbeResponse:
     raw_response: str | None
     raw_response_hash: str | None
     error_code: str | None
+    retry_after_seconds: float | None
     record_hash: str
 
     _SCHEMA_VERSION = "paper1.calibration.probe-response.v1"
@@ -763,12 +764,20 @@ class ProbeResponse:
         if self.outcome == "response":
             if type(self.raw_response) is not str or self.error_code is not None:
                 raise ValueError("response outcome requires raw_response without error_code")
+            if self.retry_after_seconds is not None:
+                raise ValueError("successful response cannot declare Retry-After")
             _require_sha256("raw_response_hash", self.raw_response_hash)
             _require_payload_hash("raw_response_hash", self.raw_response_hash, self.raw_response)
         else:
             if self.raw_response is not None or self.raw_response_hash is not None:
                 raise ValueError("typed error response cannot contain raw response content")
             _require_string("error_code", self.error_code)
+            if self.retry_after_seconds is not None:
+                if type(self.retry_after_seconds) is not float:
+                    raise TypeError("retry_after_seconds must be a float or null")
+                _require_finite_number(
+                    "retry_after_seconds", self.retry_after_seconds, positive=False
+                )
         _require_derived_id(
             "response_id",
             self.response_id,
@@ -818,6 +827,7 @@ class ProbeResponse:
         provider_request_id: str,
         provider_seed_supported: bool,
         provider_seed_echo: int | None,
+        retry_after_seconds: float | None,
     ) -> ProbeResponse:
         if not isinstance(request, ProbeRequest):
             raise TypeError("request must be a ProbeRequest")
@@ -850,6 +860,7 @@ class ProbeResponse:
             "raw_response": raw_response,
             "raw_response_hash": raw_hash,
             "error_code": error_code,
+            "retry_after_seconds": retry_after_seconds,
         }
         identity = {
             "schema_version": cls._SCHEMA_VERSION,
@@ -1095,7 +1106,7 @@ class ProbeRuntimePolicy:
     max_transport_attempts_by_code: Mapping[str, int]
     timeout_seconds: float
     obey_retry_after: bool
-    backoff_seconds: float
+    backoff_seconds: tuple[float, ...]
     record_hash: str
 
     _SCHEMA_VERSION = "paper1.calibration.probe-runtime-policy.v1"
@@ -1125,7 +1136,19 @@ class ProbeRuntimePolicy:
         _require_finite_number("timeout_seconds", self.timeout_seconds, positive=True)
         if type(self.obey_retry_after) is not bool:
             raise TypeError("obey_retry_after must be a boolean")
-        _require_finite_number("backoff_seconds", self.backoff_seconds, positive=False)
+        _require_tuple("backoff_seconds", self.backoff_seconds)
+        expected_backoff_count = max(
+            1,
+            max(self.max_transport_attempts_by_code[code] for code in retryable) - 1,
+        )
+        if len(self.backoff_seconds) != expected_backoff_count:
+            raise ValueError(
+                "backoff_seconds schedule length must cover every retryable attempt transition"
+            )
+        for value in self.backoff_seconds:
+            if type(value) is not float:
+                raise TypeError("backoff_seconds schedule values must be floats")
+            _require_finite_number("backoff_seconds value", value, positive=False)
         _require_sha256("record_hash", self.record_hash)
         _require_payload_hash("record_hash", self.record_hash, self.content_payload())
         object.__setattr__(
@@ -1164,7 +1187,7 @@ class ProbeRuntimePolicy:
         max_transport_attempts_by_code: Mapping[str, int],
         timeout_seconds: float,
         obey_retry_after: bool,
-        backoff_seconds: float,
+        backoff_seconds: tuple[float, ...],
     ) -> ProbeRuntimePolicy:
         content = {
             "schema_version": cls._SCHEMA_VERSION,
@@ -1204,6 +1227,8 @@ class ProbeRuntimePolicy:
             raise TypeError("runtime policy code fields must use JSON arrays")
         if type(payload["max_transport_attempts_by_code"]) is not dict:
             raise TypeError("runtime policy budgets must use a JSON object")
+        if type(payload["backoff_seconds"]) is not list:
+            raise TypeError("runtime policy backoff_seconds must use a JSON array")
         return cls(
             policy_id=payload["policy_id"],
             retryable_error_codes=tuple(payload["retryable_error_codes"]),
@@ -1211,7 +1236,7 @@ class ProbeRuntimePolicy:
             max_transport_attempts_by_code=payload["max_transport_attempts_by_code"],
             timeout_seconds=payload["timeout_seconds"],
             obey_retry_after=payload["obey_retry_after"],
-            backoff_seconds=payload["backoff_seconds"],
+            backoff_seconds=tuple(payload["backoff_seconds"]),
             record_hash=payload["record_hash"],
         )  # type: ignore[arg-type]
 
@@ -1341,6 +1366,13 @@ class ProbeAttempt:
                 )
                 if self.retry_delay_source not in {"backoff", "retry_after"}:
                     raise ValueError("retry delay source must be backoff or retry_after")
+                if self.retry_delay_source == "retry_after" and (
+                    self.response.retry_after_seconds is None
+                    or self.retry_delay_seconds != self.response.retry_after_seconds
+                ):
+                    raise ValueError(
+                        "Retry-After delay must equal the hash-bound response evidence"
+                    )
             elif self.retry_delay_seconds is not None or self.retry_delay_source is not None:
                 raise ValueError("terminal transport failure cannot schedule another retry")
         if self.case_status_after != expected or self.case_status_after not in self._STATUSES:
@@ -1353,6 +1385,8 @@ class ProbeAttempt:
 
     def _semantic_status(self) -> str:
         if self.parse_evidence is None:
+            raise ValueError("semantic response must have hash-bound parse evidence")
+        if not self.parse_evidence.success and self.parse_evidence.error["code"] == "refusal":
             return "refused"
         if self.parse_evidence.success:
             return "parsed"

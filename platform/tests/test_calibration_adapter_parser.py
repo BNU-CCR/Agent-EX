@@ -59,6 +59,7 @@ def response(raw: str, *, scale_id: str = "stance-1-7", field_order_id: str | No
         provider_request_id=f"scripted-{req.request_id}",
         provider_seed_supported=True,
         provider_seed_echo=req.requested_seed,
+        retry_after_seconds=None,
     )
 
 
@@ -102,7 +103,7 @@ def test_scripted_adapter_binds_response_and_consumes_exact_step() -> None:
     req = request()
     raw = valid_raw()
     adapter: ProbeAdapter = ScriptedProbeAdapter(
-        {(req.probe_case_id, req.attempt_index): ProbeScriptStep("response", raw, None)}
+        {(req.probe_case_id, req.attempt_index): ProbeScriptStep("response", raw, None, None)}
     )
     record = adapter.generate(req)
     assert record.probe_case_id == req.probe_case_id
@@ -137,6 +138,46 @@ def test_parse_evidence_strict_json_round_trip_and_hash_binding() -> None:
     restored = ProbeParseEvidence.from_payload(json.loads(json.dumps(record.to_payload())))
     assert restored == record
     assert restored.record_hash == canonical_payload_hash(restored.content_payload())
+
+
+def test_response_retry_after_is_immutable_hash_bound_and_strict() -> None:
+    req = request()
+    record = ProbeResponse.from_script_step(
+        request=req,
+        outcome="timeout",
+        raw_response=None,
+        error_code="timeout",
+        adapter_identity=ADAPTER_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        provider_request_id="provider-request",
+        provider_seed_supported=True,
+        provider_seed_echo=None,
+        retry_after_seconds=1.5,
+    )
+    restored = ProbeResponse.from_payload(json.loads(json.dumps(record.to_payload())))
+    assert restored.retry_after_seconds == 1.5
+    assert restored == record
+    for bad in (True, -0.1, float("nan"), float("inf"), "1.5"):
+        with pytest.raises((TypeError, ValueError)):
+            replace(record, retry_after_seconds=bad)
+
+
+def test_parser_returns_hash_bound_refusal_evidence_for_exact_envelope() -> None:
+    bound_response = response('{"refusal":true}')
+    record = parse_probe_response(bound_response)
+    assert record.success is False
+    assert record.error == {"code": "refusal", "message": "model explicitly refused the probe"}
+    assert record.response_id == bound_response.response_id
+    assert record.response_hash == bound_response.record_hash
+    assert record.raw_response_hash == bound_response.raw_response_hash
+
+
+def test_malformed_or_extended_refusal_envelope_remains_an_ordinary_format_failure() -> None:
+    record = parse_probe_response(response('{"refusal":true,"extra":1}'))
+    assert record.success is False
+    assert record.error["code"] == "fields"
 
 
 @pytest.mark.parametrize("record_factory", [request, lambda: response(valid_raw())])
@@ -186,6 +227,7 @@ def test_provider_seed_declaration_and_echo_are_consistent(
             provider_request_id="provider-request",
             provider_seed_supported=supported,
             provider_seed_echo=echo,
+            retry_after_seconds=None,
         )
 
 
@@ -203,6 +245,7 @@ def test_provider_seed_unsupported_requires_no_echo() -> None:
         provider_request_id="provider-request",
         provider_seed_supported=False,
         provider_seed_echo=None,
+        retry_after_seconds=None,
     )
     assert record.provider_seed_echo is None
 
@@ -222,6 +265,7 @@ def test_seed_support_without_echo_is_truthful_for_error_responses(outcome: str)
         provider_request_id="provider-request",
         provider_seed_supported=True,
         provider_seed_echo=None,
+        retry_after_seconds=None,
     )
     assert record.provider_seed_supported is True
     assert record.provider_seed_echo is None
@@ -261,6 +305,7 @@ def test_absent_requested_seed_cannot_gain_a_provider_echo() -> None:
             provider_request_id="provider-request",
             provider_seed_supported=True,
             provider_seed_echo=17,
+            retry_after_seconds=None,
         )
 
 
@@ -279,6 +324,7 @@ def test_typed_error_responses_exclude_raw_content(outcome: str) -> None:
         provider_request_id="provider-request",
         provider_seed_supported=True,
         provider_seed_echo=req.requested_seed,
+        retry_after_seconds=None,
     )
     assert record.raw_response is None
     assert record.raw_response_hash is None

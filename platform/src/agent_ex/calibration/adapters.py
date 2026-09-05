@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+import math
 from types import MappingProxyType
 from typing import Mapping
 
@@ -16,16 +17,26 @@ class ProbeScriptStep:
     outcome: str
     raw_response: str | None
     error_code: str | None
+    retry_after_seconds: float | None
 
     def __post_init__(self) -> None:
         if self.outcome == "response":
-            if type(self.raw_response) is not str or self.error_code is not None:
+            if (
+                type(self.raw_response) is not str
+                or self.error_code is not None
+                or self.retry_after_seconds is not None
+            ):
                 raise ValueError("response step requires raw_response without error_code")
         elif self.outcome in {"timeout", "oom", "provider_error"}:
             if self.raw_response is not None:
                 raise ValueError("typed error step cannot contain raw_response")
             if type(self.error_code) is not str or not self.error_code.strip():
                 raise ValueError("typed error step requires error_code")
+            if self.retry_after_seconds is not None:
+                if type(self.retry_after_seconds) is not float:
+                    raise TypeError("retry_after_seconds must be a float or null")
+                if self.retry_after_seconds < 0 or not math.isfinite(self.retry_after_seconds):
+                    raise ValueError("retry_after_seconds must be finite and nonnegative")
         else:
             raise ValueError("unsupported scripted probe outcome")
 
@@ -80,4 +91,5 @@ class ScriptedProbeAdapter(ProbeAdapter):
             provider_request_id=f"scripted-{request.request_id}",
             provider_seed_supported=True,
             provider_seed_echo=request.requested_seed,
+            retry_after_seconds=step.retry_after_seconds,
         )

@@ -43,7 +43,7 @@ def policy(*, timeout_budget: int = 2) -> ProbeRuntimePolicy:
         },
         timeout_seconds=30.0,
         obey_retry_after=True,
-        backoff_seconds=0.25,
+        backoff_seconds=tuple(0.25 for _ in range(max(1, timeout_budget - 1))),
     )
 
 
@@ -98,18 +98,31 @@ def test_runtime_policy_is_strict_hash_bound_and_round_trips() -> None:
             max_transport_attempts_by_code={"same": 1},
             timeout_seconds=1.0,
             obey_retry_after=False,
-            backoff_seconds=0.0,
+            backoff_seconds=(0.0,),
         )
+    for bad in ((math.nan,), (math.inf,), (-1.0,), (True,), (), [0.1]):
+        with pytest.raises((TypeError, ValueError)):
+            replace(record, backoff_seconds=bad)
     for bad in (math.nan, math.inf, -1.0, True):
         with pytest.raises((TypeError, ValueError)):
             replace(record, timeout_seconds=bad)
+    with pytest.raises(ValueError, match="length|schedule"):
+        ProbeRuntimePolicy.create(
+            policy_id="wrong-schedule",
+            retryable_error_codes=("timeout",),
+            nonretryable_error_codes=("oom",),
+            max_transport_attempts_by_code={"timeout": 3, "oom": 1},
+            timeout_seconds=1.0,
+            obey_retry_after=False,
+            backoff_seconds=(0.1,),
+        )
 
 
 def test_invalid_format_gets_exactly_one_repair_without_spending_transport_budget() -> None:
     adapter = ScriptedProbeAdapter(
         steps_for_first(
-            ProbeScriptStep("response", "not-json", None),
-            ProbeScriptStep("response", valid_raw(), None),
+            ProbeScriptStep("response", "not-json", None, None),
+            ProbeScriptStep("response", valid_raw(), None, None),
         )
     )
     projection = run(adapter)
@@ -133,8 +146,8 @@ def test_second_invalid_format_is_terminal_and_no_third_call_occurs() -> None:
     projection = run(
         ScriptedProbeAdapter(
             steps_for_first(
-                ProbeScriptStep("response", "not-json", None),
-                ProbeScriptStep("response", "still-not-json", None),
+                ProbeScriptStep("response", "not-json", None, None),
+                ProbeScriptStep("response", "still-not-json", None, None),
             )
         )
     )
@@ -145,10 +158,13 @@ def test_second_invalid_format_is_terminal_and_no_third_call_occurs() -> None:
 
 def test_refusal_is_terminal_and_never_triggers_format_repair() -> None:
     projection = run(
-        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("response", '{"refusal":true}', None)))
+        ScriptedProbeAdapter(
+            steps_for_first(ProbeScriptStep("response", '{"refusal":true}', None, None))
+        )
     )
     assert len(projection.attempts) == 1
-    assert projection.attempts[0].parse_evidence is None
+    assert projection.attempts[0].parse_evidence is not None
+    assert projection.attempts[0].parse_evidence.error["code"] == "refusal"
     assert next(iter(projection.case_statuses.values())) == "refused"
 
 
@@ -156,8 +172,8 @@ def test_retryable_transport_error_records_backoff_then_succeeds() -> None:
     projection = run(
         ScriptedProbeAdapter(
             steps_for_first(
-                ProbeScriptStep("timeout", None, "timeout"),
-                ProbeScriptStep("response", valid_raw(), None),
+                ProbeScriptStep("timeout", None, "timeout", None),
+                ProbeScriptStep("response", valid_raw(), None, None),
             )
         )
     )
@@ -169,18 +185,11 @@ def test_retryable_transport_error_records_backoff_then_succeeds() -> None:
 
 
 def test_retry_after_is_recorded_without_sleeping() -> None:
-    class RetryAfterAdapter(ScriptedProbeAdapter):
-        def generate(self, request):
-            response = super().generate(request)
-            if response.error_code == "provider_busy":
-                object.__setattr__(self, "retry_after_seconds", 1.5)
-            return response
-
     projection = run(
-        RetryAfterAdapter(
+        ScriptedProbeAdapter(
             steps_for_first(
-                ProbeScriptStep("provider_error", None, "provider_busy"),
-                ProbeScriptStep("response", valid_raw(), None),
+                ProbeScriptStep("provider_error", None, "provider_busy", 1.5),
+                ProbeScriptStep("response", valid_raw(), None, None),
             )
         )
     )
@@ -188,9 +197,54 @@ def test_retry_after_is_recorded_without_sleeping() -> None:
     assert projection.attempts[0].retry_delay_source == "retry_after"
 
 
+def test_attempt_replay_rejects_delay_not_bound_to_retry_after_response() -> None:
+    projection = run(
+        ScriptedProbeAdapter(
+            steps_for_first(
+                ProbeScriptStep("provider_error", None, "provider_busy", 1.5),
+                ProbeScriptStep("response", valid_raw(), None, None),
+            )
+        )
+    )
+    attempt = projection.attempts[0]
+    values = {
+        name: getattr(attempt, name)
+        for name in attempt.__dataclass_fields__
+        if name not in {"attempt_id", "record_hash"}
+    }
+    values["retry_delay_seconds"] = 1.0
+    with pytest.raises(ValueError, match="Retry-After|response evidence"):
+        ProbeAttempt.create(**values)
+
+
+def test_backoff_schedule_is_indexed_by_consumed_attempt_for_that_error() -> None:
+    runtime_policy = ProbeRuntimePolicy.create(
+        policy_id="three-timeout-attempts",
+        retryable_error_codes=("timeout",),
+        nonretryable_error_codes=("oom",),
+        max_transport_attempts_by_code={"timeout": 3, "oom": 1},
+        timeout_seconds=5.0,
+        obey_retry_after=False,
+        backoff_seconds=(0.1, 0.2),
+    )
+    projection = run(
+        ScriptedProbeAdapter(
+            steps_for_first(
+                ProbeScriptStep("timeout", None, "timeout", None),
+                ProbeScriptStep("timeout", None, "timeout", None),
+                ProbeScriptStep("response", valid_raw(), None, None),
+            )
+        ),
+        runtime_policy=runtime_policy,
+    )
+    assert [item.retry_delay_seconds for item in projection.attempts] == [0.1, 0.2, None]
+
+
 @pytest.mark.parametrize("outcome,error", [("oom", "oom"), ("provider_error", "provider_fatal")])
 def test_nonretryable_and_oom_fail_immediately(outcome: str, error: str) -> None:
-    projection = run(ScriptedProbeAdapter(steps_for_first(ProbeScriptStep(outcome, None, error))))
+    projection = run(
+        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep(outcome, None, error, None)))
+    )
     assert len(projection.attempts) == 1
     assert next(iter(projection.case_statuses.values())) == "runtime_failed"
     assert projection.status == "incomplete"
@@ -204,11 +258,11 @@ def test_nonretryable_error_ignores_a_larger_bound_budget() -> None:
         max_transport_attempts_by_code={"timeout": 2, "provider_fatal": 3},
         timeout_seconds=5.0,
         obey_retry_after=False,
-        backoff_seconds=0.0,
+        backoff_seconds=(0.0,),
     )
     projection = run(
         ScriptedProbeAdapter(
-            steps_for_first(ProbeScriptStep("provider_error", None, "provider_fatal"))
+            steps_for_first(ProbeScriptStep("provider_error", None, "provider_fatal", None))
         ),
         runtime_policy=runtime_policy,
     )
@@ -224,11 +278,11 @@ def test_oom_code_must_be_declared_nonretryable() -> None:
         max_transport_attempts_by_code={"oom": 2, "provider_fatal": 1},
         timeout_seconds=5.0,
         obey_retry_after=False,
-        backoff_seconds=0.0,
+        backoff_seconds=(0.0,),
     )
     with pytest.raises(ValueError, match="OOM|oom|nonretryable"):
         run(
-            ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("oom", None, "oom"))),
+            ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("oom", None, "oom", None))),
             runtime_policy=bad_policy,
         )
 
@@ -251,7 +305,7 @@ def test_exhausted_runtime_failure_is_irreversible_on_resume() -> None:
     specification, cases = specification_and_cases()
     runtime_policy = policy(timeout_budget=1)
     projection = run(
-        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("timeout", None, "timeout"))),
+        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("timeout", None, "timeout", None))),
         runtime_policy=runtime_policy,
     )
     with pytest.raises(ValueError, match="runtime_failed|irreversible"):
@@ -261,7 +315,7 @@ def test_exhausted_runtime_failure_is_irreversible_on_resume() -> None:
             cases=cases,
             runtime_policy=runtime_policy,
             adapter=ScriptedProbeAdapter(
-                steps_for_first(ProbeScriptStep("response", valid_raw(), None))
+                steps_for_first(ProbeScriptStep("response", valid_raw(), None, None))
             ),
             generation_settings=GENERATION_SETTINGS,
             runtime_identity=RUNTIME_IDENTITY,
@@ -271,16 +325,24 @@ def test_exhausted_runtime_failure_is_irreversible_on_resume() -> None:
         )
 
 
-def test_resume_preserves_consumed_budget_and_continues_budget_remaining_case() -> None:
-    specification, cases = specification_and_cases()
-    runtime_policy = policy(timeout_budget=2)
-    case = cases[0]
+def test_resume_skips_runtime_failed_case_and_runs_unstarted_case() -> None:
+    specification, cases = specification_and_cases(2)
+    failed, unstarted = cases
+    runtime_policy = ProbeRuntimePolicy.create(
+        policy_id="single-timeout-attempt",
+        retryable_error_codes=("timeout",),
+        nonretryable_error_codes=("oom",),
+        max_transport_attempts_by_code={"timeout": 1, "oom": 1},
+        timeout_seconds=5.0,
+        obey_retry_after=False,
+        backoff_seconds=(0.0,),
+    )
     partial = execute_probe_run(
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=runtime_policy,
         adapter=ScriptedProbeAdapter(
-            {(case.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout")}
+            {(failed.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout", None)}
         ),
         generation_settings=GENERATION_SETTINGS,
         runtime_identity=RUNTIME_IDENTITY,
@@ -295,7 +357,44 @@ def test_resume_preserves_consumed_budget_and_continues_budget_remaining_case() 
         cases=cases,
         runtime_policy=runtime_policy,
         adapter=ScriptedProbeAdapter(
-            {(case.probe_case_id, 2): ProbeScriptStep("response", valid_raw(), None)}
+            {(unstarted.probe_case_id, 1): ProbeScriptStep("response", valid_raw(), None, None)}
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    assert resumed.case_statuses[failed.probe_case_id] == "runtime_failed"
+    assert resumed.case_statuses[unstarted.probe_case_id] == "parsed"
+    assert resumed.status == "incomplete"
+
+
+def test_resume_preserves_consumed_budget_and_continues_budget_remaining_case() -> None:
+    specification, cases = specification_and_cases()
+    runtime_policy = policy(timeout_budget=2)
+    case = cases[0]
+    partial = execute_probe_run(
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter(
+            {(case.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout", None)}
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=1,
+    )
+    resumed = resume_probe_run(
+        projection=partial,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter(
+            {(case.probe_case_id, 2): ProbeScriptStep("response", valid_raw(), None, None)}
         ),
         generation_settings=GENERATION_SETTINGS,
         runtime_identity=RUNTIME_IDENTITY,
@@ -331,7 +430,7 @@ def test_resume_rejects_all_bound_drift_before_adapter_call(
         cases=cases,
         runtime_policy=runtime_policy,
         adapter=ScriptedProbeAdapter(
-            {(case.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout")}
+            {(case.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout", None)}
         ),
         generation_settings=GENERATION_SETTINGS,
         runtime_identity=RUNTIME_IDENTITY,
@@ -346,7 +445,7 @@ def test_resume_rejects_all_bound_drift_before_adapter_call(
         "cases": cases,
         "runtime_policy": runtime_policy,
         "adapter": ScriptedProbeAdapter(
-            {(case.probe_case_id, 2): ProbeScriptStep("response", valid_raw(), None)}
+            {(case.probe_case_id, 2): ProbeScriptStep("response", valid_raw(), None, None)}
         ),
         "generation_settings": GENERATION_SETTINGS,
         "runtime_identity": RUNTIME_IDENTITY,
@@ -367,7 +466,7 @@ def test_resume_rejects_case_inventory_drift_and_cross_run_evidence() -> None:
         cases=cases,
         runtime_policy=policy(),
         adapter=ScriptedProbeAdapter(
-            {(first.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout")}
+            {(first.probe_case_id, 1): ProbeScriptStep("timeout", None, "timeout", None)}
         ),
         generation_settings=GENERATION_SETTINGS,
         runtime_identity=RUNTIME_IDENTITY,
@@ -397,7 +496,7 @@ def test_projection_round_trip_canonicalizes_cases_and_attempts() -> None:
     specification, cases = specification_and_cases(2)
     steps = {}
     for case in reversed(cases):
-        steps[(case.probe_case_id, 1)] = ProbeScriptStep("response", valid_raw(), None)
+        steps[(case.probe_case_id, 1)] = ProbeScriptStep("response", valid_raw(), None, None)
     projection = execute_probe_run(
         specification_hash=specification.output_hash,
         cases=tuple(reversed(cases)),
@@ -423,7 +522,7 @@ def test_projection_round_trip_canonicalizes_cases_and_attempts() -> None:
 
 def test_attempt_contract_rejects_hash_tampering() -> None:
     projection = run(
-        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("response", valid_raw(), None)))
+        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("response", valid_raw(), None, None)))
     )
     attempt = projection.attempts[0]
     restored = ProbeAttempt.from_payload(json.loads(json.dumps(attempt.to_payload())))

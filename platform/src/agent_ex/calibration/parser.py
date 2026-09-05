@@ -124,6 +124,14 @@ def parse_probe_response(response: ProbeResponse) -> ProbeParseEvidence:
             message="response must be strict JSON",
         )
     if type(value) is not dict or tuple(value) != _FIELD_ORDERS[field_order_id]:
+        if type(value) is dict and tuple(value) == ("refusal",) and value["refusal"] is True:
+            return _failure(
+                response,
+                scale_id=scale_id,
+                field_order_id=field_order_id,
+                code="refusal",
+                message="model explicitly refused the probe",
+            )
         return _failure(
             response,
             scale_id=scale_id,

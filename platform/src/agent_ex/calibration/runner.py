@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from typing import Mapping
 
 from ..domain import _require_json_transport, _require_sha256, canonical_payload_hash
@@ -48,16 +47,6 @@ def _run_id(specification_hash: str, inventory_hash: str, policy_hash: str) -> s
             "runtime_policy_hash": policy_hash,
         }
     )
-
-
-def _is_refusal(response: ProbeResponse) -> bool:
-    if response.outcome != "response" or type(response.raw_response) is not str:
-        return False
-    try:
-        value = json.loads(response.raw_response)
-    except (ValueError, TypeError):
-        return False
-    return type(value) is dict and value == {"refusal": True} and type(value["refusal"]) is bool
 
 
 def _validate_inputs(
@@ -137,6 +126,8 @@ def _make_attempt(
     )
     if response.outcome == "response":
         if parse_evidence is None:
+            raise ValueError("semantic response requires versioned parse evidence")
+        if not parse_evidence.success and parse_evidence.error["code"] == "refusal":
             status = "refused"
         elif parse_evidence.success:
             status = "parsed"
@@ -255,8 +246,7 @@ def _continue_run(
             delay = None
             delay_source = None
             if response.outcome == "response":
-                if not _is_refusal(response):
-                    parse_evidence = parse_probe_response(response)
+                parse_evidence = parse_probe_response(response)
             else:
                 error_code = response.error_code
                 if error_code not in runtime_policy.max_transport_attempts_by_code:
@@ -275,14 +265,14 @@ def _continue_run(
                     >= runtime_policy.max_transport_attempts_by_code[error_code]
                 )
                 if retryable and not exhausted and response.outcome != "oom":
-                    retry_after = getattr(adapter, "retry_after_seconds", None)
+                    retry_after = response.retry_after_seconds
                     if runtime_policy.obey_retry_after and retry_after is not None:
                         if type(retry_after) not in {int, float} or float(retry_after) < 0:
                             raise ValueError("adapter retry-after evidence must be nonnegative")
                         delay = float(retry_after)
                         delay_source = "retry_after"
                     else:
-                        delay = runtime_policy.backoff_seconds
+                        delay = runtime_policy.backoff_seconds[transport_counts[error_code] - 1]
                         delay_source = "backoff"
             attempt = _make_attempt(
                 run_id=run_id,
@@ -383,8 +373,6 @@ def resume_probe_run(
         tokenizer_identity=tokenizer_identity,
         chat_template_hash=chat_template_hash,
     )
-    if any(value == "runtime_failed" for value in projection.case_statuses.values()):
-        raise ValueError("runtime_failed is irreversible within the same probe run")
     expected_run_id = _run_id(specification_hash, inventory_hash, runtime_policy.record_hash)
     if (
         projection.probe_run_id != expected_run_id
@@ -404,6 +392,11 @@ def resume_probe_run(
             tokenizer_identity=tokenizer_identity,
             chat_template_hash=chat_template_hash,
         )
+    eligible = {"unstarted", "pending", "format_pending"}
+    if any(value == "runtime_failed" for value in projection.case_statuses.values()) and not any(
+        value in eligible for value in projection.case_statuses.values()
+    ):
+        raise ValueError("runtime_failed is irreversible within the same probe run")
     return _continue_run(
         existing=projection.attempts,
         specification_hash=specification_hash,
