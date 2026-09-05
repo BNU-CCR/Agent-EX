@@ -26,6 +26,25 @@ _CALIBRATION_METADATA = {
 }
 
 
+def _require_calibration_metadata(value: object, *, record_name: str) -> None:
+    if type(value) is not dict or set(value) != set(_CALIBRATION_METADATA):
+        raise ValueError(f"{record_name} metadata fields must match the calibration-only contract")
+    if type(value["calibration_only"]) is not bool or value["calibration_only"] is not True:
+        raise ValueError(f"{record_name} metadata must remain calibration-only")
+    if (
+        type(value["formal_parameter_authority"]) is not bool
+        or value["formal_parameter_authority"] is not False
+    ):
+        raise ValueError(
+            f"{record_name} metadata must remain calibration-only without formal authority"
+        )
+    if (
+        type(value["research_parameter_status"]) is not str
+        or value["research_parameter_status"] != "not_frozen"
+    ):
+        raise ValueError(f"{record_name} metadata research parameter status must be not_frozen")
+
+
 def _require_calibration_payload(
     payload: Mapping[str, object],
     *,
@@ -38,10 +57,7 @@ def _require_calibration_payload(
     _require_json_transport(payload, f"{record_name} payload")
     if payload["schema_version"] != schema_version:
         raise ValueError(f"{record_name} schema_version is not supported")
-    if payload["metadata"] != _CALIBRATION_METADATA:
-        raise ValueError(
-            f"{record_name} metadata must remain calibration-only without formal authority"
-        )
+    _require_calibration_metadata(payload["metadata"], record_name=record_name)
 
 
 def _derived_id(prefix: str, payload: Mapping[str, object]) -> str:
@@ -307,7 +323,7 @@ class ProbeCase:
     variant_index: int
     scale_id: str
     field_order_id: str
-    replicate_id: str
+    replicate_id: int
     requested_seed: int | None
     persona_view_id: str
     rendered_messages: tuple[Mapping[str, str], ...]
@@ -324,12 +340,12 @@ class ProbeCase:
             ("scenario_id", self.scenario_id),
             ("scale_id", self.scale_id),
             ("field_order_id", self.field_order_id),
-            ("replicate_id", self.replicate_id),
             ("persona_view_id", self.persona_view_id),
         ):
             _require_id(name, value)
         _require_string("case_family", self.case_family)
         _require_int("variant_index", self.variant_index)
+        _require_int("replicate_id", self.replicate_id)
         if self.requested_seed is not None:
             _require_int("requested_seed", self.requested_seed)
         _require_tuple("rendered_messages", self.rendered_messages)
@@ -393,7 +409,7 @@ class ProbeCase:
         variant_index: int,
         scale_id: str,
         field_order_id: str,
-        replicate_id: str,
+        replicate_id: int,
         requested_seed: int | None,
         persona_view_id: str,
         rendered_messages: tuple[Mapping[str, str], ...],

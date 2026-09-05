@@ -35,7 +35,7 @@ def persona_view() -> ProbePersonaView:
     )
 
 
-def probe_case() -> ProbeCase:
+def probe_case(replicate_id: int = 0) -> ProbeCase:
     candidate = topic_candidate()
     persona = persona_view()
     return ProbeCase.create(
@@ -46,13 +46,54 @@ def probe_case() -> ProbeCase:
         variant_index=1,
         scale_id="stance-1-7",
         field_order_id="stance-confidence-reason",
-        replicate_id="replicate-01",
+        replicate_id=replicate_id,
         requested_seed=17,
         persona_view_id=persona.persona_view_id,
         rendered_messages=(
             {"role": "system", "content": persona.rendered_text},
             {"role": "user", "content": "题干甲"},
         ),
+    )
+
+
+def probe_case_payload_with_replicate(replicate_id: object) -> dict[str, object]:
+    candidate = topic_candidate()
+    persona = persona_view()
+    rendered_messages = [
+        {"role": "system", "content": persona.rendered_text},
+        {"role": "user", "content": "题干甲"},
+    ]
+    payload: dict[str, object] = {
+        "schema_version": "paper1.calibration.probe-case.v1",
+        "probe_case_id": "pending",
+        "specification_hash": SHA_A,
+        "candidate_id": candidate.candidate_id,
+        "case_family": "continuity",
+        "scenario_id": "reasonable-update",
+        "variant_index": 1,
+        "scale_id": "stance-1-7",
+        "field_order_id": "stance-confidence-reason",
+        "replicate_id": replicate_id,
+        "requested_seed": 17,
+        "persona_view_id": persona.persona_view_id,
+        "rendered_messages": rendered_messages,
+        "rendered_messages_hash": canonical_payload_hash(rendered_messages),
+        "metadata": dict(CALIBRATION_METADATA),
+        "record_hash": "pending",
+    }
+    rehash_with_metadata(payload, identity_field="probe_case_id", identity_prefix="probe-case-")
+    return payload
+
+
+def rehash_with_metadata(
+    payload: dict[str, object], *, identity_field: str, identity_prefix: str
+) -> None:
+    identity_payload = {
+        key: value for key, value in payload.items() if key not in {identity_field, "record_hash"}
+    }
+    payload[identity_field] = identity_prefix + canonical_payload_hash(identity_payload)
+    payload["record_hash"] = canonical_payload_hash(
+        {key: value for key, value in payload.items() if key != "record_hash"}
     )
 
 
@@ -93,6 +134,37 @@ def test_payload_rejects_formal_authority(record_factory) -> None:
     payload = record.to_payload()
     payload["metadata"]["formal_parameter_authority"] = True
     with pytest.raises(ValueError, match="calibration-only"):
+        type(record).from_payload(payload)
+
+
+@pytest.mark.parametrize(
+    ("record_factory", "identity_field", "identity_prefix"),
+    [
+        (topic_candidate, "candidate_id", "probe-topic-"),
+        (persona_view, "persona_view_id", "probe-persona-"),
+        (probe_case, "probe_case_id", "probe-case-"),
+    ],
+)
+@pytest.mark.parametrize(
+    ("metadata_field", "illegal_value"),
+    [
+        ("calibration_only", 1),
+        ("formal_parameter_authority", 0),
+        ("research_parameter_status", 7),
+    ],
+)
+def test_metadata_requires_exact_json_types(
+    record_factory,
+    identity_field: str,
+    identity_prefix: str,
+    metadata_field: str,
+    illegal_value: object,
+) -> None:
+    record = record_factory()
+    payload = record.to_payload()
+    payload["metadata"][metadata_field] = illegal_value
+    rehash_with_metadata(payload, identity_field=identity_field, identity_prefix=identity_prefix)
+    with pytest.raises((TypeError, ValueError), match="metadata|calibration-only"):
         type(record).from_payload(payload)
 
 
@@ -175,6 +247,23 @@ def test_persona_rejects_integer_for_boolean(field: str) -> None:
 def test_probe_case_rejects_boolean_for_integer(field: str) -> None:
     with pytest.raises(TypeError, match="integer"):
         replace(probe_case(), **{field: True})
+
+
+def test_probe_case_replicate_id_is_a_nonnegative_integer() -> None:
+    assert probe_case(0).replicate_id == 0
+
+
+@pytest.mark.parametrize("illegal_value", [True, -1, "0"])
+def test_probe_case_payload_rejects_invalid_replicate_id(illegal_value: object) -> None:
+    with pytest.raises((TypeError, ValueError), match="replicate_id|integer"):
+        ProbeCase.from_payload(probe_case_payload_with_replicate(illegal_value))
+
+
+def test_probe_case_identity_and_hash_bind_integer_replicate_id() -> None:
+    first = probe_case(0)
+    second = probe_case(1)
+    assert first.probe_case_id != second.probe_case_id
+    assert first.record_hash != second.record_hash
 
 
 def test_persona_absent_blocks_are_really_absent() -> None:
