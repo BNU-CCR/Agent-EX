@@ -227,7 +227,7 @@ git commit -m "feat(platform): define Phase 0A calibration contracts"
 - Create: `platform/tests/test_calibration_specification.py`
 - Create: `platform/tests/fixtures/paper1/phase0a_probe_spec.mock.json`
 
-- [ ] **Step 1: Write RED tests for the complete synthetic inventory**
+- [x] **Step 1: Write RED tests for the complete synthetic inventory**
 
 The fixture must contain exactly three synthetic-text candidates ordered
 `retirement-delay`, `gm-soybean-oil`, `ai-net-employment`; three statement variants each;
@@ -251,7 +251,7 @@ Add rejection tests for missing/extra fields, duplicate candidates, wrong presel
 statement variants, unknown `P1_*` IDs, missing gate/review/runtime policy hashes, implicit seeds,
 and any event/run/feed/state field.
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_specification.py
@@ -259,7 +259,7 @@ and any event/run/feed/state field.
 
 Expected: FAIL because specification validation and expansion do not exist.
 
-- [ ] **Step 3: Implement specification validation**
+- [x] **Step 3: Implement specification validation**
 
 Implement:
 
@@ -290,7 +290,7 @@ The validator must require exact candidate order, all policy hashes, explicit ar
 and calibration metadata. `expand_probe_cases` derives IDs from semantic dimensions, not iteration
 position, then returns `tuple(sorted(cases, key=attrgetter("probe_case_id")))`.
 
-- [ ] **Step 4: Implement calibration rendering and byte-diff checks**
+- [x] **Step 4: Implement calibration rendering and byte-diff checks**
 
 Implement `render_probe_persona(...) -> ProbePersonaView` so absent blocks are empty and present
 blocks are mechanically inserted. Implement:
@@ -307,7 +307,7 @@ def validate_probe_persona_factor_diff(
 The forbidden phrase list includes the approved Chinese locking language from D-2026-07-29-06.
 Do not call `render_persona`; its mock artifact contract must remain untouched.
 
-- [ ] **Step 5: Run GREEN and mock-guard regressions**
+- [x] **Step 5: Run GREEN and mock-guard regressions**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_specification.py tests\test_persona.py tests\test_topic.py
@@ -315,7 +315,7 @@ Do not call `render_persona`; its mock artifact contract must remain untouched.
 
 Expected: all pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration/specification.py platform/src/agent_ex/calibration/render.py platform/tests/helpers/calibration.py platform/tests/test_calibration_specification.py platform/tests/fixtures/paper1/phase0a_probe_spec.mock.json
