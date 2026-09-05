@@ -191,12 +191,13 @@ def _validate_persona(payload: dict[str, object]) -> None:
     _nonempty_string(persona["identity_block"], "identity_block")
     blocks = _exact_list(persona["continuity_blocks"], "continuity_blocks")
     block_ids = []
+    block_texts = []
     for raw in blocks:
         block = _exact_dict(raw, {"wording_id", "text"}, "continuity wording")
         block_ids.append(_nonempty_string(block["wording_id"], "wording_id"))
-        _nonempty_string(block["text"], "continuity wording text")
-    if len(blocks) != 2 or len(set(block_ids)) != 2:
-        raise ValueError("persona must contain exactly two distinct continuity wordings")
+        block_texts.append(_nonempty_string(block["text"], "continuity wording text"))
+    if len(blocks) != 2 or len(set(block_ids)) != 2 or len(set(block_texts)) != 2:
+        raise ValueError("persona must contain exactly two distinct continuity wording contents")
 
     conditions = _exact_list(payload["persona_conditions"], "persona_conditions")
     observed_conditions = set()
@@ -247,15 +248,14 @@ def _validate_persona(payload: dict[str, object]) -> None:
 def _validate_scenarios_and_replicates(payload: dict[str, object]) -> None:
     scenarios = _exact_list(payload["continuity_scenarios"], "continuity_scenarios")
     scenario_ids = set()
+    scenario_histories = set()
     for raw in scenarios:
         scenario = _exact_dict(raw, {"scenario_id", "history"}, "continuity scenario")
         scenario_ids.add(_nonempty_string(scenario["scenario_id"], "scenario_id"))
-        _nonempty_string(scenario["history"], "scenario history")
-    if len(scenarios) != 3 or scenario_ids != {
-        "reasonable-hold",
-        "warranted-update",
-        "insufficient-information",
-    }:
+        scenario_histories.add(_nonempty_string(scenario["history"], "scenario history"))
+    if len(scenarios) != 3 or len(scenario_histories) != 3:
+        raise ValueError("continuity scenario contents must be pairwise distinct")
+    if scenario_ids != {"reasonable-hold", "warranted-update", "insufficient-information"}:
         raise ValueError("continuity_scenarios must contain the exact three scenario families")
     replicates = _exact_list(payload["replicates"], "replicates")
     ids = set()

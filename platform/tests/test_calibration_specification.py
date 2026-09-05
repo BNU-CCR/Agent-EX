@@ -6,6 +6,7 @@ from agent_ex.calibration.render import (
     render_probe_persona,
     validate_probe_persona_factor_diff,
 )
+from agent_ex.calibration.contracts import ProbePersonaView
 from agent_ex.calibration.specification import (
     ALLOWED_DECISION_IDS,
     EXPECTED_TOPIC_ORDER,
@@ -188,6 +189,38 @@ def test_probe_persona_diff_rejects_nonfactor_drift() -> None:
     )
     with pytest.raises(ValueError, match="invariant|allowed"):
         validate_probe_persona_factor_diff(tuple(drifted))
+
+
+def test_probe_persona_diff_rejects_hash_valid_nonmechanical_rendering() -> None:
+    views = tuple(
+        ProbePersonaView.create(
+            identity_present=identity,
+            continuity_present=continuity,
+            common_skeleton="MOCK {factor_blocks} common",
+            identity_block="identity" if identity else None,
+            continuity_block="continuity" if continuity else None,
+            rendered_text=f"unrelated text {identity}-{continuity}",
+        )
+        for identity, continuity in ((False, False), (False, True), (True, False), (True, True))
+    )
+    with pytest.raises(ValueError, match="mechanical|rendered|factor"):
+        validate_probe_persona_factor_diff(views)
+
+
+@pytest.mark.parametrize(
+    ("collection", "content_field"),
+    [("continuity_blocks", "text"), ("continuity_scenarios", "history")],
+)
+def test_specification_rejects_duplicate_semantic_content_under_distinct_ids(
+    collection: str, content_field: str
+) -> None:
+    payload = probe_spec_payload()
+    records = (
+        payload["persona"][collection] if collection == "continuity_blocks" else payload[collection]
+    )
+    records[1][content_field] = records[0][content_field]
+    with pytest.raises(ValueError, match="distinct|duplicate|content"):
+        load_probe_specification(payload)
 
 
 @pytest.mark.parametrize(

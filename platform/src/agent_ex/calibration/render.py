@@ -36,6 +36,28 @@ def _reject_locking_language(text: str) -> None:
             raise ValueError(f"probe persona contains forbidden locking phrase: {phrase}")
 
 
+def _compose_probe_persona(
+    *,
+    common_skeleton: str,
+    identity_block: str | None,
+    continuity_block: str | None,
+    factor_order: tuple[str, str],
+) -> str:
+    """Compose one view from already-selected optional factor blocks."""
+
+    if not isinstance(common_skeleton, str) or not common_skeleton.strip():
+        raise ValueError("common_skeleton must be a non-empty string")
+    if common_skeleton.count("{factor_blocks}") != 1:
+        raise ValueError("common_skeleton must contain {factor_blocks} exactly once")
+    if type(factor_order) is not tuple or len(factor_order) != 2:
+        raise TypeError("factor_order must be a two-item tuple")
+    if set(factor_order) != _FACTOR_NAMES or len(set(factor_order)) != 2:
+        raise ValueError("factor_order must contain identity and continuity exactly once")
+    selected = {"identity": identity_block, "continuity": continuity_block}
+    factor_text = "\n".join(selected[name] for name in factor_order if selected[name] is not None)
+    return common_skeleton.replace("{factor_blocks}", factor_text)
+
+
 def render_probe_persona(
     *,
     common_skeleton: str,
@@ -47,29 +69,20 @@ def render_probe_persona(
 ) -> ProbePersonaView:
     """Insert the two factors without borrowing the legacy mock renderer."""
 
-    if not isinstance(common_skeleton, str) or not common_skeleton.strip():
-        raise ValueError("common_skeleton must be a non-empty string")
-    if common_skeleton.count("{factor_blocks}") != 1:
-        raise ValueError("common_skeleton must contain {factor_blocks} exactly once")
     if type(identity_present) is not bool or type(continuity_present) is not bool:
         raise TypeError("persona factor conditions must be booleans")
     if not isinstance(identity_block, str) or not identity_block.strip():
         raise ValueError("identity_block candidate must be a non-empty string")
     if not isinstance(continuity_block, str) or not continuity_block.strip():
         raise ValueError("continuity_block candidate must be a non-empty string")
-    if type(factor_order) is not tuple or len(factor_order) != 2:
-        raise TypeError("factor_order must be a two-item tuple")
-    if set(factor_order) != _FACTOR_NAMES or len(set(factor_order)) != 2:
-        raise ValueError("factor_order must contain identity and continuity exactly once")
-
     visible_identity = identity_block if identity_present else None
     visible_continuity = continuity_block if continuity_present else None
-    selected = {
-        "identity": visible_identity,
-        "continuity": visible_continuity,
-    }
-    factor_text = "\n".join(selected[name] for name in factor_order if selected[name] is not None)
-    rendered_text = common_skeleton.replace("{factor_blocks}", factor_text)
+    rendered_text = _compose_probe_persona(
+        common_skeleton=common_skeleton,
+        identity_block=visible_identity,
+        continuity_block=visible_continuity,
+        factor_order=factor_order,
+    )
     _reject_locking_language(common_skeleton + identity_block + continuity_block + rendered_text)
     return ProbePersonaView.create(
         identity_present=identity_present,
@@ -101,6 +114,28 @@ def validate_probe_persona_factor_diff(
         if set(payload) != set(payloads[0]):
             raise ValueError("persona fields differ outside the allowed factor payload")
         _reject_locking_language(payload["rendered_text"])
+    for view in views:
+        if view.identity_present:
+            if not isinstance(view.identity_block, str) or not view.identity_block.strip():
+                raise ValueError("present identity blocks must be nonempty")
+        elif view.identity_block is not None:
+            raise ValueError("absent identity blocks must be empty")
+        if view.continuity_present:
+            if not isinstance(view.continuity_block, str) or not view.continuity_block.strip():
+                raise ValueError("present continuity blocks must be nonempty")
+        elif view.continuity_block is not None:
+            raise ValueError("absent continuity blocks must be empty")
+        mechanical_renderings = {
+            _compose_probe_persona(
+                common_skeleton=view.common_skeleton,
+                identity_block=view.identity_block,
+                continuity_block=view.continuity_block,
+                factor_order=order,
+            )
+            for order in (("identity", "continuity"), ("continuity", "identity"))
+        }
+        if view.rendered_text not in mechanical_renderings:
+            raise ValueError("rendered_text is not a mechanical composition of the factor blocks")
     for field in sorted(invariant_fields):
         baseline = payloads[0][field]
         if any(payload[field] != baseline for payload in payloads[1:]):
