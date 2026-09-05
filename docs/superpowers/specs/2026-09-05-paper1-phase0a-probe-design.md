@@ -118,8 +118,11 @@ transport retry 的可重试错误码、不可重试错误、每类最大 attemp
 Retry-After、backoff、OOM 规则和耗尽终态。transport retry 不改变 rendered prompt，
 也不消费唯一一次 format retry；每个 transport attempt 仍独立记录。策略耗尽后 case
 标记 `runtime_failed`，整个 run 标记 `incomplete`，不得计算候选 pass/fail 或选择结果。
-只有在 specification、case inventory、模型/runtime/chat template 和 generation settings
-完全一致时才能原位补齐未完成 case；否则必须新建 run。
+attempt 预算在同一 probe run 的完整生命周期内累计，恢复不得重置。只有在
+specification、case inventory、模型/runtime/chat template 和 generation settings 完全一致，
+且目标 case 尚未开始，或已开始但仍有预登记 attempt 预算时，才能在同一 run 原位继续。
+`runtime_failed` 是该 run 中不可逆的 case 终态；重新调用已耗尽 case 必须新建 probe run，
+保留旧 run 全部失败 evidence，且不得跨 run 拼接候选 pass/fail。其他输入变化也必须新建 run。
 
 该 runtime policy 仅是本次 calibration 的预登记执行条件，可为 `P1_TIMEOUT_RETRY`
 提供证据和 freeze proposal，但不自动成为正式 event pipeline 的 timeout/retry 决策。
@@ -166,9 +169,10 @@ provider 是否声明支持 seed、是否回显/确认 seed，以及可观测的
   必须同时报告 scheduled、parsed、refusal 和 distribution-universe 计数，任一预期层
   样本不足时 fail closed。
 - “至少使用 4 类”和“单一端点不超过 80%”只作为 1--7 主量表的硬门：类别数为
-  universe 中不同整数 stance 的数量；端点率为 stance 属于 `{1,7}` 的 case 数除以
-  universe 大小。0--10 challenger 单独报告类别覆盖和端点率，不套用“7点中4类”；
-  若它需要淘汰门，必须在真实运行前于 specification 另行冻结。
+  universe 中不同整数 stance 的数量；分别计算 `n(stance=1)/|U|` 和
+  `n(stance=7)/|U|`，两者都必须不高于 80%。`n(stance in {1,7})/|U|` 只作合并端点
+  质量诊断，不得替代单端点硬门。0--10 challenger 单独报告类别覆盖和各端点率，
+  不套用“7点中4类”；若它需要淘汰门，必须在真实运行前于 specification 另行冻结。
 - 等义题干和字段顺序比较使用预登记 strata、replicate 与 requested-seed scope 对齐的
   case pairs。stance 按量表整数编码，对每对计算 `delta_i = stance_a_i - stance_b_i`，
   再以无偏样本标准差计算
@@ -180,6 +184,11 @@ provider 是否声明支持 seed、是否回显/确认 seed，以及可观测的
   `TV = 0.5 * sum_k(abs(p_a[k] - p_b[k]))`，类别为对应量表全部合法值。TV 必须报告；
   其淘汰阈值若启用，必须在真实响应前写入 specification，未预登记时不得事后成为
   淘汰理由。
+- 理由--立场直接矛盾率使用与立场分布相同的有效解析且非拒答 universe `U`；分子是
+  版本化 direct-contradiction rule/classifier 明确判为矛盾的 case 数，按
+  `n(contradiction)/|U| <= 0.05` 通过。rule/classifier 的算法版本、标签合同和 hash
+  必须属于 `gate_algorithm`；任一 case 返回 indeterminate、缺少理由或无法回绑 stance
+  时，相关 gate 状态为 incomplete，不能把它计作非矛盾或产生候选 pass/fail。
 - 百分比以精确有理计数比较边界，不先四舍五入。分层聚合、缺失、无效值、零方差、
   多重挑战和候选总体 pass/fail 的布尔组合必须由同一 gate algorithm 版本声明。
 
