@@ -443,7 +443,7 @@ git commit -m "feat(platform): record Phase 0A probe responses"
 - Create: `platform/src/agent_ex/calibration/runner.py`
 - Create: `platform/tests/test_calibration_runner.py`
 
-- [ ] **Step 1: Write RED lifecycle tests**
+- [x] **Step 1: Write RED lifecycle tests**
 
 ```python
 def test_format_retry_is_once_and_does_not_consume_transport_budget(run_fixture):
@@ -469,7 +469,7 @@ Also test retryable/nonretryable errors, Retry-After/backoff evidence, OOM class
 model/runtime/spec/hash drift, only-unstarted and budget-remaining recovery, canonical report order,
 and refusal not triggering format retry.
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_runner.py
@@ -477,7 +477,7 @@ and refusal not triggering format retry.
 
 Expected: FAIL because runner functions are absent.
 
-- [ ] **Step 3: Implement explicit policy and immutable state projection**
+- [x] **Step 3: Implement explicit policy and immutable state projection**
 
 Add exact records:
 
@@ -509,14 +509,14 @@ class ProbeRunProjection:
 No policy field has a default. Validate that code sets partition all adapter errors and budgets are
 strict positive integers. Derive projection state only by replaying ordered hash-bound attempts.
 
-- [ ] **Step 4: Implement execution and resume rules**
+- [x] **Step 4: Implement execution and resume rules**
 
 Implement `execute_probe_run(...)` and `resume_probe_run(...)`. A semantic response can lead to
 one format repair; transport failures use only the bound policy. `runtime_failed` is irreversible.
 Resume verifies all input hashes and remaining budget before invoking the adapter. Any exhausted
 case forces run `incomplete`; never merge evidence from another run.
 
-- [ ] **Step 5: Run GREEN tests**
+- [x] **Step 5: Run GREEN tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_runner.py tests\test_calibration_adapter_parser.py
@@ -524,7 +524,7 @@ case forces run `incomplete`; never merge evidence from another run.
 
 Expected: all pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration/contracts.py platform/src/agent_ex/calibration/runner.py platform/tests/test_calibration_runner.py
