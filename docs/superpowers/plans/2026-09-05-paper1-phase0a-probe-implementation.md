@@ -626,7 +626,7 @@ git commit -m "feat(platform): score Phase 0A quality gates"
 - Create: `platform/src/agent_ex/calibration/review.py`
 - Create: `platform/tests/test_calibration_review.py`
 
-- [ ] **Step 1: Write RED blind export/import tests**
+- [x] **Step 1: Write RED blind export/import tests**
 
 ```python
 def test_blind_export_contains_only_policy_allowlist(review_fixture):
@@ -650,7 +650,7 @@ Add tests for strata completeness, stable randomized item IDs, judge failure, mi
 invalid label, agreement threshold, disagreement trigger, unauthorized fields, hash drift, and
 `review_incomplete` suppressing gates.
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_review.py
@@ -658,7 +658,7 @@ invalid label, agreement threshold, disagreement trigger, unauthorized fields, h
 
 Expected: FAIL because review contracts are absent.
 
-- [ ] **Step 3: Implement the exact policy-bound review flow**
+- [x] **Step 3: Implement the exact policy-bound review flow**
 
 Create `SemanticReviewPolicy`, `BlindReviewItem`, `IndependentCode`, `Adjudication`, and
 `SemanticReviewBundle` frozen records. Implement stratified deterministic sampling, allowlisted
@@ -666,7 +666,7 @@ exports, exact label validation, the policy-selected agreement statistic, thresh
 adjudication triggers, and final label aggregation. Missing/invalid required evidence sets
 `review_incomplete`; it never becomes a favorable score.
 
-- [ ] **Step 4: Run GREEN tests**
+- [x] **Step 4: Run GREEN tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_review.py tests\test_calibration_gates.py
@@ -674,7 +674,7 @@ adjudication triggers, and final label aggregation. Missing/invalid required evi
 
 Expected: all pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration/review.py platform/tests/test_calibration_review.py
