@@ -500,6 +500,50 @@ def test_sampling_membership_and_order_do_not_depend_on_successful_response_cont
 
 def test_sampling_rank_ignores_non_sampling_policy_fields_and_sample_count():
     _, cases, _, policy = prepared()
+
+    def logical_key(case):
+        return (
+            case.candidate_id,
+            case.case_family,
+            case.scenario_id,
+            case.variant_index,
+            case.scale_id,
+            case.field_order_id,
+            case.replicate_id,
+            case.requested_seed,
+            case.persona_view_id,
+            case.rendered_messages_hash,
+        )
+
+    def rebuilt_human_order(candidate_policy):
+        payload = probe_spec_payload()
+        payload["policy_hashes"]["semantic_review_policy"] = candidate_policy.record_hash
+        specification = load_probe_specification(payload)
+        rebuilt_cases = expand_probe_cases(specification)
+        steps = {
+            (case.probe_case_id, 1): ProbeScriptStep("response", raw_for(case), None, None)
+            for case in rebuilt_cases
+        }
+        run = execute_probe_run(
+            run_instance_id="logical-sampling-" + candidate_policy.record_hash[:12],
+            specification_hash=specification.output_hash,
+            cases=rebuilt_cases,
+            runtime_policy=runtime_policy(),
+            adapter=ScriptedProbeAdapter(steps),
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+        )
+        bundle = export_blind_review(specification, rebuilt_cases, run, candidate_policy)
+        by_id = {case.probe_case_id: case for case in rebuilt_cases}
+        return [
+            logical_key(by_id[binding.probe_case_id])
+            for binding in bundle.hidden_bindings
+            if binding.human_audit_selected
+        ]
+
     changed_judge = replace(
         CODERS[1],
         model_revision="offline-v2",
@@ -512,22 +556,8 @@ def test_sampling_rank_ignores_non_sampling_policy_fields_and_sample_count():
         classifier_version="2.0.0",
         classifier_hash=canonical_payload_hash("different-classifier"),
     )
-    base_order = sorted(
-        cases, key=lambda case: review_module._sampling_rank(policy, policy.strata[0], case)
-    )
-    changed_order = sorted(
-        cases,
-        key=lambda case: review_module._sampling_rank(
-            non_sampling_change, non_sampling_change.strata[0], case
-        ),
-    )
-    assert [case.probe_case_id for case in changed_order] == [
-        case.probe_case_id for case in base_order
-    ]
-    assert [
-        review_module._sampling_rank(non_sampling_change, non_sampling_change.strata[0], case)
-        for case in cases
-    ] == [review_module._sampling_rank(policy, policy.strata[0], case) for case in cases]
+    base_order = rebuilt_human_order(policy)
+    assert rebuilt_human_order(non_sampling_change) == base_order
 
     larger_sample = replace(
         policy,
@@ -539,11 +569,7 @@ def test_sampling_rank_ignores_non_sampling_policy_fields_and_sample_count():
             ),
         ),
     )
-    larger_order = sorted(
-        cases,
-        key=lambda case: review_module._sampling_rank(larger_sample, larger_sample.strata[0], case),
-    )
-    assert larger_order[:3] == base_order[:3]
+    assert rebuilt_human_order(larger_sample)[:3] == base_order
     assert review_module._sampling_rank(
         replace(policy, randomization_seed=policy.randomization_seed + 1),
         policy.strata[0],
@@ -555,6 +581,28 @@ def test_sampling_rank_ignores_non_sampling_policy_fields_and_sample_count():
     assert review_module._sampling_rank(policy, changed_selector, cases[0]) != (
         review_module._sampling_rank(policy, policy.strata[0], cases[0])
     )
+    original = cases[0]
+    changed_messages = tuple(dict(message) for message in original.rendered_messages)
+    changed_messages[-1]["content"] += "\nSynthetic semantic prompt change."
+    changed_logical_case = type(original).create(
+        specification_hash=original.specification_hash,
+        candidate_id=original.candidate_id,
+        case_family=original.case_family,
+        scenario_id=original.scenario_id,
+        variant_index=original.variant_index,
+        scale_id=original.scale_id,
+        field_order_id=original.field_order_id,
+        replicate_id=original.replicate_id,
+        requested_seed=original.requested_seed,
+        persona_view_id=original.persona_view_id,
+        rendered_messages=changed_messages,
+    )
+    assert review_module._logical_case_sampling_hash(changed_logical_case) != (
+        review_module._logical_case_sampling_hash(original)
+    )
+    assert review_module._sampling_rank(
+        policy, policy.strata[0], changed_logical_case
+    ) != review_module._sampling_rank(policy, policy.strata[0], original)
 
 
 def test_strata_are_complete_exact_and_insufficient_fails_closed():

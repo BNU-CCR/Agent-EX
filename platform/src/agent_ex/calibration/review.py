@@ -513,6 +513,7 @@ class HiddenReviewBinding:
     randomization_seed: int
     randomization_domain: str
     stratum_id: str
+    logical_case_sampling_hash: str
     sampling_rank_hash: str
     human_audit_selected: bool
     assigned_coder_ids: tuple[str, ...]
@@ -528,7 +529,7 @@ class HiddenReviewBinding:
     visible_payload_hash: str
     record_hash: str
 
-    _SCHEMA = "paper1.calibration.hidden-review-binding.v3"
+    _SCHEMA = "paper1.calibration.hidden-review-binding.v4"
 
     def __post_init__(self) -> None:
         for name in (
@@ -552,6 +553,7 @@ class HiddenReviewBinding:
             "raw_response_hash",
             "parse_hash",
             "visible_payload_hash",
+            "logical_case_sampling_hash",
             "sampling_rank_hash",
         ):
             _require_sha256(name, getattr(self, name))
@@ -621,6 +623,7 @@ class HiddenReviewBinding:
             "randomization_seed": policy.randomization_seed,
             "randomization_domain": policy.randomization_domain,
             "stratum_id": stratum_id,
+            "logical_case_sampling_hash": _logical_case_sampling_hash(case),
             "sampling_rank_hash": _sampling_rank(policy, stratum, case),
             "human_audit_selected": human_audit_selected,
             "assigned_coder_ids": assigned_coder_ids,
@@ -1071,8 +1074,7 @@ class SemanticReviewBundle:
             != _sampling_rank_fields(
                 self.policy,
                 stratum_map[binding.stratum_id],
-                binding.probe_case_id,
-                binding.probe_case_hash,
+                binding.logical_case_sampling_hash,
             )
             or binding.assigned_coder_ids
             != judge_ids + (human_ids if binding.human_audit_selected else ())
@@ -1277,11 +1279,33 @@ def _case_matches(case: ProbeCase, stratum: ReviewStratum) -> bool:
     return all(getattr(case, key) == value for key, value in stratum.selectors.items())
 
 
+def _logical_case_sampling_payload(case: ProbeCase) -> dict[str, object]:
+    """Return the versioned policy/spec-independent logical identity used for sampling."""
+    if type(case) is not ProbeCase:
+        raise TypeError("logical sampling identity requires a ProbeCase")
+    return {
+        "schema_version": "paper1.calibration.logical-case-sampling.v1",
+        "candidate_id": case.candidate_id,
+        "case_family": case.case_family,
+        "scenario_id": case.scenario_id,
+        "variant_index": case.variant_index,
+        "scale_id": case.scale_id,
+        "field_order_id": case.field_order_id,
+        "replicate_id": case.replicate_id,
+        "requested_seed": case.requested_seed,
+        "persona_view_id": case.persona_view_id,
+        "rendered_messages_hash": case.rendered_messages_hash,
+    }
+
+
+def _logical_case_sampling_hash(case: ProbeCase) -> str:
+    return canonical_payload_hash(_logical_case_sampling_payload(case))
+
+
 def _sampling_rank_fields(
     policy: SemanticReviewPolicy,
     stratum: ReviewStratum,
-    probe_case_id: str,
-    probe_case_hash: str,
+    logical_case_sampling_hash: str,
 ) -> str:
     """Return a pre-execution-only deterministic sampling and assignment rank."""
     return canonical_payload_hash(
@@ -1291,14 +1315,13 @@ def _sampling_rank_fields(
             "randomization_seed": policy.randomization_seed,
             "stratum_id": stratum.stratum_id,
             "stratum_selectors": dict(stratum.selectors),
-            "probe_case_id": probe_case_id,
-            "probe_case_hash": probe_case_hash,
+            "logical_case_sampling_hash": logical_case_sampling_hash,
         }
     )
 
 
 def _sampling_rank(policy: SemanticReviewPolicy, stratum: ReviewStratum, case: ProbeCase) -> str:
-    return _sampling_rank_fields(policy, stratum, case.probe_case_id, case.record_hash)
+    return _sampling_rank_fields(policy, stratum, _logical_case_sampling_hash(case))
 
 
 def _topic_text(spec: Mapping[str, object], case: ProbeCase) -> str:
@@ -1387,6 +1410,9 @@ def _build_expected_review_export(
     folded = fold_case_attempts(cases, run)
     eligible = [(case, folded[case.probe_case_id].final_parse) for case in cases]
     eligible = [(case, parse) for case, parse in eligible if parse is not None and parse.success]
+    logical_hashes = [_logical_case_sampling_hash(case) for case, _ in eligible]
+    if len(set(logical_hashes)) != len(logical_hashes):
+        raise ValueError("eligible logical case sampling identities must be unique")
     classified: list[tuple[ReviewStratum, ProbeCase, ProbeParseEvidence]] = []
     for case, parse in eligible:
         matches = tuple(stratum for stratum in policy.strata if _case_matches(case, stratum))
