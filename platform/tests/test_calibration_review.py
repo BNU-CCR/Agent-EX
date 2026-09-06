@@ -498,6 +498,65 @@ def test_sampling_membership_and_order_do_not_depend_on_successful_response_cont
     )
 
 
+def test_sampling_rank_ignores_non_sampling_policy_fields_and_sample_count():
+    _, cases, _, policy = prepared()
+    changed_judge = replace(
+        CODERS[1],
+        model_revision="offline-v2",
+        judge_prompt_hash=canonical_payload_hash("different-judge-prompt"),
+    )
+    non_sampling_change = replace(
+        policy,
+        agreement_threshold=Fraction(1, 2),
+        coder_contracts=(CODERS[0], changed_judge),
+        classifier_version="2.0.0",
+        classifier_hash=canonical_payload_hash("different-classifier"),
+    )
+    base_order = sorted(
+        cases, key=lambda case: review_module._sampling_rank(policy, policy.strata[0], case)
+    )
+    changed_order = sorted(
+        cases,
+        key=lambda case: review_module._sampling_rank(
+            non_sampling_change, non_sampling_change.strata[0], case
+        ),
+    )
+    assert [case.probe_case_id for case in changed_order] == [
+        case.probe_case_id for case in base_order
+    ]
+    assert [
+        review_module._sampling_rank(non_sampling_change, non_sampling_change.strata[0], case)
+        for case in cases
+    ] == [review_module._sampling_rank(policy, policy.strata[0], case) for case in cases]
+
+    larger_sample = replace(
+        policy,
+        strata=(
+            ReviewStratum(
+                policy.strata[0].stratum_id,
+                dict(policy.strata[0].selectors),
+                4,
+            ),
+        ),
+    )
+    larger_order = sorted(
+        cases,
+        key=lambda case: review_module._sampling_rank(larger_sample, larger_sample.strata[0], case),
+    )
+    assert larger_order[:3] == base_order[:3]
+    assert review_module._sampling_rank(
+        replace(policy, randomization_seed=policy.randomization_seed + 1),
+        policy.strata[0],
+        cases[0],
+    ) != review_module._sampling_rank(policy, policy.strata[0], cases[0])
+    changed_selector = ReviewStratum(
+        policy.strata[0].stratum_id, {"case_family": cases[0].case_family}, 3
+    )
+    assert review_module._sampling_rank(policy, changed_selector, cases[0]) != (
+        review_module._sampling_rank(policy, policy.strata[0], cases[0])
+    )
+
+
 def test_strata_are_complete_exact_and_insufficient_fails_closed():
     strata = (
         ReviewStratum("topic", {"case_family": "topic_quality"}, 2),

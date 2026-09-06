@@ -1289,9 +1289,8 @@ def _sampling_rank_fields(
             "schema_version": "paper1.calibration.review-sampling-rank.v1",
             "randomization_domain": policy.randomization_domain,
             "randomization_seed": policy.randomization_seed,
-            "policy_id": policy.policy_id,
-            "policy_hash": policy.record_hash,
             "stratum_id": stratum.stratum_id,
+            "stratum_selectors": dict(stratum.selectors),
             "probe_case_id": probe_case_id,
             "probe_case_hash": probe_case_hash,
         }
