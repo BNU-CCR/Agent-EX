@@ -2,6 +2,8 @@ from fractions import Fraction
 from dataclasses import replace
 
 import pytest
+from functools import lru_cache
+from itertools import combinations
 
 from agent_ex.calibration.gates import (
     GateAlgorithm,
@@ -142,48 +144,87 @@ def fixture(
     return spec, cases, run, alg, reviews
 
 
-def score(args):
-    return evaluate_quality_gates(*args, candidate_key="retirement-delay")
+def family_metric(args):
+    """Exercise only the internal counting unit, never a candidate report."""
+    from agent_ex.calibration.gates import _score_family
+
+    _, cases, run, alg, reviews = args
+    return _score_family(
+        cases, fold_case_attempts(cases, run), {r.case_id: r for r in reviews}, run, alg
+    )
 
 
 @pytest.mark.parametrize("count,passed", [(1, True), (2, False)])
 def test_parse_and_refusal_scheduled_denominators(count, passed):
-    report = score(fixture([2, 3, 4, 5] * 25, bad=range(count)))
-    assert report.metrics[0]["parse"]["passed"] is passed
-    assert report.metrics[0]["parse"]["denominator"] == 100
-    report = score(fixture([2, 3, 4, 5] * 25, refusals=range(count)))
-    assert report.metrics[0]["refusal"]["passed"] is passed
-    assert report.metrics[0]["distribution_count"] == 100 - count
+    metric = family_metric(fixture([2, 3, 4, 5] * 25, bad=range(count)))
+    assert metric["parse"]["passed"] is passed
+    assert metric["parse"]["denominator"] == 100
+    metric = family_metric(fixture([2, 3, 4, 5] * 25, refusals=range(count)))
+    assert metric["refusal"]["passed"] is passed
+    assert metric["distribution_count"] == 100 - count
 
 
 @pytest.mark.parametrize("count,passed", [(80, True), (81, False)])
 def test_endpoint_threshold_each_endpoint_separately(count, passed):
-    report = score(fixture([1] * count + [2, 3, 4] + [4] * (97 - count)))
-    assert report.metrics[0]["lower_endpoint"]["passed"] is passed
+    metric = family_metric(fixture([1] * count + [2, 3, 4] + [4] * (97 - count)))
+    assert metric["lower_endpoint"]["passed"] is passed
 
 
 def test_combined_endpoint_share_is_only_diagnostic():
-    report = score(fixture([1] * 45 + [7] * 45 + [2] * 5 + [3] * 5))
-    metric = report.metrics[0]
+    metric = family_metric(fixture([1] * 45 + [7] * 45 + [2] * 5 + [3] * 5))
     assert metric["combined_endpoints"]["passed"] is None
     assert metric["lower_endpoint"]["passed"] is True
     assert metric["upper_endpoint"]["passed"] is True
 
 
 def test_challenger_does_not_inherit_main_category_gate():
-    report = score(fixture([5] * 4, scale="stance-0-10"))
-    assert report.metrics[0]["categories_passed"] is None
+    assert family_metric(fixture([5] * 4, scale="stance-0-10"))["categories_passed"] is None
 
 
 @pytest.mark.parametrize("count,passed", [(5, True), (6, False)])
 def test_contradiction_boundary(count, passed):
-    report = score(fixture([2, 3, 4, 5] * 25, contradictions=range(count)))
-    assert report.metrics[0]["contradiction"]["passed"] is passed
+    metric = family_metric(fixture([2, 3, 4, 5] * 25, contradictions=range(count)))
+    assert metric["contradiction"]["passed"] is passed
+
+
+def test_paired_dz_zero_variance_and_insufficient_pairs():
+    assert paired_dz((0, 0)) == 0
+    for values in ((1,), (1, 1)):
+        with pytest.raises(GateFailure):
+            paired_dz(values)
+
+
+def test_exact_dz_boundary():
+    from agent_ex.calibration.gates import _dz_passes
+
+    assert paired_dz((1,) * 15 + (-1,) * 10) == pytest.approx(0.20)
+    assert _dz_passes((1,) * 15 + (-1,) * 10, Fraction(1, 5))
+    assert not _dz_passes((1,) * 16 + (-1,) * 9, Fraction(1, 5))
+
+
+def test_total_variation_uses_full_scale_exactly():
+    assert total_variation((1, 1, 7), (1, 7, 7), tuple(range(1, 8))) == Fraction(1, 3)
+    with pytest.raises(GateFailure):
+        total_variation((), (1,), tuple(range(1, 8)))
+    with pytest.raises(ValueError):
+        total_variation((8,), (1,), tuple(range(1, 8)))
+
+
+def test_one_format_repair_retains_first_parse_provenance():
+    args = fixture([2, 3, 4, 5], repaired=(0,))
+    folded = fold_case_attempts(args[1], args[2])
+    case = folded[args[1][0].probe_case_id]
+    assert case.first_parse.success is False
+    assert case.final_parse.success is True
+    assert len(case.attempt_hashes) == 2
+    metric = family_metric(args)
+    assert metric["first_parse"]["numerator"] == 3
+    assert metric["parse"]["numerator"] == 4
 
 
 @pytest.mark.parametrize("change", ["missing", "indeterminate", "hash", "incomplete"])
 def test_review_missing_or_unbound_suppresses_pass(change):
-    spec, cases, run, alg, reviews = fixture([2, 3, 4, 5])
+    spec, cases, run, alg, reviews = complete_fixture()
     if change == "missing":
         reviews = reviews[:-1]
     elif change == "indeterminate":
@@ -192,83 +233,286 @@ def test_review_missing_or_unbound_suppresses_pass(change):
         reviews = (replace(reviews[0], parse_hash="f" * 64),) + reviews[1:]
     else:
         reviews = (replace(reviews[0], review_complete=False),) + reviews[1:]
-    report = score((spec, cases, run, alg, reviews))
+    report = evaluate_quality_gates(
+        spec, cases, run, alg, reviews, candidate_key="retirement-delay"
+    )
     assert report.status == "review_incomplete"
     assert report.passed is None
 
 
-def test_runtime_incomplete_suppresses_pass():
-    report = score(fixture([2, 3, 4, 5], runtime=(0,)))
-    assert report.status == "runtime_incomplete"
-    assert report.passed is None
+def test_complete_inventory_can_pass_with_all_required_challenges():
+    report = evaluate_quality_gates(*complete_fixture(), candidate_key="retirement-delay")
+    assert report.status == "complete" and report.passed is True
+    assert len(report.challenges) == 8
+    assert all(c["passed"] for c in report.challenges)
+    assert all(c["tv"] == {"numerator": 0, "denominator": 1} for c in report.challenges)
 
 
-def test_algorithm_must_be_bound_before_scoring():
-    spec, cases, run, alg, reviews = fixture([2, 3, 4, 5])
-    with pytest.raises(ValueError, match="algorithm"):
-        score((spec, cases, run, replace(alg, max_refusal=Fraction(1, 2)), reviews))
-
-
-def test_selection_rejects_summaries_and_nested_forbidden_inputs():
-    with pytest.raises((TypeError, ValueError)):
-        select_topic(({"candidate_key": "retirement-delay", "nested": {"p_value": 0.01}},))
-    with pytest.raises(ValueError):
-        select_topic((score(fixture([2, 3, 4, 5])),))
-
-
-def test_exact_dz_boundary():
-    from agent_ex.calibration.gates import _dz_passes
-
-    assert paired_dz((1,) * 15 + (-1,) * 10) == pytest.approx(0.2)
-    assert _dz_passes((1,) * 15 + (-1,) * 10, Fraction(1, 5))
-    assert not _dz_passes((1,) * 16 + (-1,) * 9, Fraction(1, 5))
-
-
-def test_paired_challenge_completeness_and_tv_reporting():
-    alg = algorithm(
-        (PairChallenge("wording", "topic_quality", "stance-1-7", "variant_index", 0, 1),)
+@pytest.mark.parametrize(
+    "failed,primary,robustness",
+    [
+        ((), "retirement-delay", "gm-soybean-oil"),
+        ((0,), "gm-soybean-oil", "ai-net-employment"),
+        ((0, 1, 2), None, None),
+    ],
+)
+def test_fixed_selection_order(failed, primary, robustness):
+    spec, cases, run, alg, reviews = complete_fixture()
+    keys = ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
+    # Contradictions fail registered semantic quality gates, never outcome effects.
+    ids = {
+        c.probe_case_id for c in cases if any(c.scenario_id == "topic-" + keys[i] for i in failed)
+    }
+    reviews = tuple(
+        replace(r, contradiction="contradiction") if r.case_id in ids else r for r in reviews
     )
-    args = fixture([2, 2, 3, 3, 4, 4, 5, 5], variants=[0, 1] * 4, alg=alg)
-    report = score(args)
-    assert report.challenges[0]["passed"] is True
-    assert report.challenges[0]["valid_pairs"] == 4
-    assert report.challenges[0]["tv"] == {"numerator": 0, "denominator": 1}
-    report = score(fixture([2, 2, 3, 3, 4, 4, 5], variants=[0, 1] * 3 + [0], alg=alg))
-    assert report.challenges[0]["passed"] is False
-    assert "pairing incomplete" in report.challenges[0]["failure_reason"]
-
-
-def test_failed_dz_still_reports_complete_distributions():
-    alg = algorithm(
-        (PairChallenge("wording", "topic_quality", "stance-1-7", "variant_index", 0, 1),)
+    reports = tuple(
+        evaluate_quality_gates(spec, cases, run, alg, reviews, candidate_key=k) for k in keys
     )
-    report = score(fixture([3, 2, 4, 3, 5, 4, 6, 5], variants=[0, 1] * 4, alg=alg))
-    challenge = report.challenges[0]
-    assert challenge["passed"] is False
-    assert challenge["tv"] == {"numerator": 1, "denominator": 4}
-    assert set(challenge["left_distribution"]) == set(map(str, range(1, 8)))
+    selected = select_topic(tuple(reversed(reports)))
+    assert (selected.primary, selected.robustness) == (primary, robustness)
+    assert selected.status == ("no_candidate" if primary is None else "proposal_only")
 
 
-def test_paired_scope_missing_from_both_sides_cannot_pass():
-    alg = algorithm(
-        (PairChallenge("wording", "topic_quality", "stance-1-7", "variant_index", 0, 1),)
+def test_selection_rejects_nested_forbidden_metrics():
+    args = complete_fixture()
+    keys = ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
+    reports = tuple(evaluate_quality_gates(*args, candidate_key=k) for k in keys)
+    tampered = replace(reports[0], metrics=({"nested": {"p_value": 0.1}},))
+    with pytest.raises(ValueError, match="differs"):
+        select_topic((tampered,) + reports[1:])
+    with pytest.raises(TypeError):
+        select_topic(({"nested": {"p_value": 0.1}},))
+
+
+def test_selection_rejects_incomplete_review():
+    spec, cases, run, alg, reviews = complete_fixture()
+    reports = tuple(
+        evaluate_quality_gates(spec, cases, run, alg, reviews[:-1], candidate_key=k)
+        for k in ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
     )
-    report = score(
-        fixture([2, 2, 3, 3, 4, 4, 5, 5], variants=[0, 1] * 4, alg=alg, extra_replicate=True)
+    with pytest.raises(ValueError, match="incomplete"):
+        select_topic(reports)
+
+
+def required_challenges():
+    return tuple(
+        PairChallenge(f"{scale}-wording-{a}-{b}", "topic_quality", scale, "variant_index", a, b)
+        for scale in ("stance-1-7", "stance-0-10")
+        for a, b in combinations(range(3), 2)
+    ) + tuple(
+        PairChallenge(
+            f"{scale}-field-order",
+            "topic_quality",
+            scale,
+            "field_order_id",
+            "reason-confidence-stance",
+            "stance-confidence-reason",
+        )
+        for scale in ("stance-1-7", "stance-0-10")
     )
-    assert report.challenges[0]["passed"] is False
 
 
-def test_one_format_repair_is_folded_with_first_response_provenance():
-    args = fixture([2, 3, 4, 5], repaired=(0,))
-    folded = fold_case_attempts(args[1], args[2])
-    repaired = folded[args[1][0].probe_case_id]
-    assert repaired.first_parse.success is False
-    assert repaired.final_parse.success is True
-    assert len(repaired.attempt_hashes) == 2
-    report = score(args)
-    assert report.metrics[0]["first_parse"]["numerator"] == 3
-    assert report.metrics[0]["parse"]["numerator"] == 4
+@lru_cache(maxsize=8)
+def complete_fixture(challenges=None, replicates=4):
+    alg = algorithm(required_challenges() if challenges is None else challenges)
+    payload = probe_spec_payload()
+    payload["policy_hashes"]["gate_algorithm"] = alg.record_hash
+    payload["replicates"] = [
+        {"replicate_id": i, "requested_seed": 100 + i} for i in range(replicates)
+    ]
+    spec = load_probe_specification(payload)
+    cases = expand_probe_cases(spec)
+    steps = {}
+    for c in cases:
+        values = {
+            "stance": 2 + c.replicate_id % 4,
+            "confidence": 3,
+            "public_reason": "Synthetic reason.",
+        }
+        order = (
+            ("stance", "confidence", "public_reason")
+            if c.field_order_id == "stance-confidence-reason"
+            else ("public_reason", "confidence", "stance")
+        )
+        import json
+
+        steps[c.probe_case_id, 1] = ProbeScriptStep(
+            "response", json.dumps({k: values[k] for k in order}), None, None
+        )
+    run = execute_probe_run(
+        run_instance_id="complete-gates",
+        specification_hash=spec.output_hash,
+        cases=cases,
+        runtime_policy=policy(),
+        adapter=ScriptedProbeAdapter(steps),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    case_map = {c.probe_case_id: c for c in cases}
+    reviews = tuple(
+        SemanticGateEvidence(
+            a.probe_case_id,
+            case_map[a.probe_case_id].record_hash,
+            a.parse_evidence_hash,
+            alg.classifier_id,
+            alg.classifier_version,
+            alg.classifier_hash,
+            False,
+            "consistent",
+            True,
+            canonical_payload_hash([a.probe_case_id, "review"]),
+        )
+        for a in run.attempts
+    )
+    return spec, cases, run, alg, reviews
+
+
+@pytest.mark.parametrize("omission", ["family", "scale", "both-sides"])
+def test_public_scoring_rejects_incomplete_authoritative_inventory(omission):
+    spec, cases, run, alg, reviews = complete_fixture()
+    if omission == "family":
+        supplied = tuple(c for c in cases if c.case_family != "identity")
+    elif omission == "scale":
+        supplied = tuple(c for c in cases if c.scale_id != "stance-0-10")
+    else:
+        supplied = tuple(c for c in cases if c.replicate_id != 0)
+    # A newly complete run over the subset cannot redefine the scheduled inventory.
+    from agent_ex.calibration.contracts import ProbeRunProjection
+
+    subset_run = ProbeRunProjection.create(
+        run_instance_id="subset",
+        specification_hash=spec.output_hash,
+        case_inventory_hash=canonical_payload_hash([c.to_payload() for c in supplied]),
+        runtime_policy=policy(),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        case_ids=tuple(c.probe_case_id for c in supplied),
+        attempts=(),
+    )
+    with pytest.raises(ValueError, match="authoritative inventory"):
+        evaluate_quality_gates(
+            spec, supplied, subset_run, alg, (), candidate_key="retirement-delay"
+        )
+
+
+@pytest.mark.parametrize(
+    "challenges",
+    [
+        (),
+        required_challenges()[:6],
+        required_challenges()[6:],
+        (PairChallenge("wrong-level", "topic_quality", "stance-1-7", "variant_index", 0, 7),)
+        + required_challenges()[1:],
+    ],
+)
+def test_public_scoring_rejects_incomplete_required_challenges(challenges):
+    with pytest.raises(ValueError, match="required challenge"):
+        evaluate_quality_gates(*complete_fixture(challenges), candidate_key="retirement-delay")
+
+
+def test_12_self_consistent_cases_cannot_replace_2448_registered_cases(monkeypatch):
+    args = fixture(
+        [2, 3, 4, 5] * 3,
+        keys=["retirement-delay"] * 4 + ["gm-soybean-oil"] * 4 + ["ai-net-employment"] * 4,
+        alg=algorithm(required_challenges()),
+    )
+    assert len(args[1]) == 12 and args[2].status == "complete"
+    assert len(expand_probe_cases(args[0])) == 2448
+
+    def never_score(*args, **kwargs):
+        raise AssertionError("inventory must fail before any favorable metrics")
+
+    monkeypatch.setattr("agent_ex.calibration.gates._score_family", never_score)
+    with pytest.raises(ValueError, match="authoritative inventory"):
+        evaluate_quality_gates(*args, candidate_key="retirement-delay")
+
+
+def test_three_favorable_same_source_partial_reports_cannot_select():
+    complete = complete_fixture()
+    keys = ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
+    good = tuple(evaluate_quality_gates(*complete, candidate_key=k) for k in keys)
+    partial = fixture(
+        [2, 3, 4, 5] * 3,
+        keys=[k for k in keys for _ in range(4)],
+        alg=algorithm(required_challenges()),
+    )
+    forged = tuple(replace(r, source=partial) for r in good)
+    with pytest.raises(ValueError, match="authoritative inventory"):
+        select_topic(forged)
+
+
+@pytest.mark.parametrize(
+    "mutation", ["extra", "duplicate", "replaced", "hash-drift", "content-drift"]
+)
+def test_authoritative_inventory_rejects_add_duplicate_replace_and_hash_drift(mutation):
+    spec, cases, run, alg, reviews = complete_fixture()
+    if mutation == "extra":
+        supplied = cases + (cases[0],)
+    elif mutation == "duplicate":
+        supplied = (cases[1],) + cases[1:]
+    else:
+        c = cases[0]
+        if mutation in {"hash-drift", "content-drift"}:
+            from copy import copy
+
+            changed = copy(c)
+            object.__setattr__(
+                changed,
+                "record_hash" if mutation == "hash-drift" else "variant_index",
+                "f" * 64 if mutation == "hash-drift" else 999,
+            )
+        else:
+            payload = c.to_payload()
+            payload["replicate_id"] = 999
+            changed = ProbeCase.from_payload(
+                rehash_payload(payload, id_field="probe_case_id", prefix="probe-case-")
+            )
+        supplied = (changed,) + cases[1:]
+    with pytest.raises(ValueError, match="authoritative inventory"):
+        evaluate_quality_gates(spec, supplied, run, alg, reviews, candidate_key="retirement-delay")
+
+
+@pytest.mark.parametrize("mutation", ["duplicate", "wrong-family", "wrong-scale", "reverse"])
+def test_required_challenges_reject_wrong_scope_and_duplicate_comparison(mutation):
+    challenges = required_challenges()
+    if mutation == "duplicate":
+        challenges = challenges + (replace(challenges[0], challenge_id="duplicate-comparison"),)
+    elif mutation == "wrong-family":
+        challenges = (replace(challenges[0], case_family="identity"),) + challenges[1:]
+    elif mutation == "wrong-scale":
+        challenges = (replace(challenges[0], scale_id="stance-0-10"),) + challenges[1:]
+    else:
+        challenges = (replace(challenges[0], left=1, right=0),) + challenges[1:]
+    with pytest.raises(ValueError, match="required challenge"):
+        evaluate_quality_gates(*complete_fixture(challenges), candidate_key="retirement-delay")
+
+
+def test_complete_inventory_with_no_runtime_attempts_suppresses_pass():
+    from agent_ex.calibration.contracts import ProbeRunProjection
+
+    spec, cases, run, alg, _ = complete_fixture()
+    empty = ProbeRunProjection.create(
+        run_instance_id="empty",
+        specification_hash=spec.output_hash,
+        case_inventory_hash=run.case_inventory_hash,
+        runtime_policy=policy(),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        case_ids=tuple(c.probe_case_id for c in cases),
+        attempts=(),
+    )
+    report = evaluate_quality_gates(spec, cases, empty, alg, (), candidate_key="retirement-delay")
+    assert report.status == "runtime_incomplete" and report.passed is None
 
 
 def test_provider_unsupported_seed_is_reported_without_fake_guarantee(monkeypatch):
@@ -283,64 +527,31 @@ def test_provider_unsupported_seed_is_reported_without_fake_guarantee(monkeypatc
         )
 
     monkeypatch.setattr(ScriptedProbeAdapter, "generate", unsupported)
-    alg = algorithm(
-        (PairChallenge("wording", "topic_quality", "stance-1-7", "variant_index", 0, 1),)
+    report = evaluate_quality_gates(
+        *complete_fixture.__wrapped__(), candidate_key="retirement-delay"
     )
-    report = score(fixture([2, 2, 3, 3, 4, 4, 5, 5], variants=[0, 1] * 4, alg=alg))
-    assert report.challenges[0]["passed"] is True
-    assert report.challenges[0]["provider_seed_guaranteed"] is False
+    assert report.passed is True
+    assert all(c["provider_seed_guaranteed"] is False for c in report.challenges)
 
 
-@pytest.mark.parametrize(
-    "fail_indices,primary,robustness",
-    [
-        ((), "retirement-delay", "gm-soybean-oil"),
-        ((0,), "gm-soybean-oil", "ai-net-employment"),
-        ((0, 1, 2), None, None),
-    ],
-)
-def test_fixed_selection_order(fail_indices, primary, robustness):
-    keys = ["retirement-delay"] * 4 + ["gm-soybean-oil"] * 4 + ["ai-net-employment"] * 4
-    values = []
-    for i in range(3):
-        values += [4] * 4 if i in fail_indices else [2, 3, 4, 5]
-    args = fixture(values, keys=keys)
-    reports = tuple(
-        evaluate_quality_gates(*args, candidate_key=k) for k in reversed(tuple(dict.fromkeys(keys)))
-    )
-    selected = select_topic(reports)
-    assert (selected.primary, selected.robustness) == (primary, robustness)
-    assert selected.status == ("no_candidate" if primary is None else "proposal_only")
-    assert selected.to_payload()["formal_parameter_authority"] is False
+def test_projection_inventory_hash_cannot_substitute_for_authoritative_cases():
+    from copy import copy
 
-
-def test_selection_rejects_tampered_nested_metrics_and_incomplete_review():
-    keys = ["retirement-delay"] * 4 + ["gm-soybean-oil"] * 4 + ["ai-net-employment"] * 4
-    args = fixture([2, 3, 4, 5] * 3, keys=keys)
-    reports = tuple(evaluate_quality_gates(*args, candidate_key=k) for k in dict.fromkeys(keys))
-    tampered = replace(reports[0], metrics=({"nested": {"p_value": 0.1}},))
-    with pytest.raises(ValueError, match="differs"):
-        select_topic((tampered,) + reports[1:])
-    args = args[:-1] + (args[-1][:-1],)
-    reports = tuple(evaluate_quality_gates(*args, candidate_key=k) for k in dict.fromkeys(keys))
-    with pytest.raises(ValueError, match="incomplete"):
-        select_topic(reports)
-
-
-def test_paired_dz_zero_variance_and_insufficient_pairs():
-    assert paired_dz((0, 0)) == 0
-    for values in ((1,), (1, 1)):
-        with pytest.raises(GateFailure):
-            paired_dz(values)
-
-
-def test_paired_dz_uses_sample_standard_deviation():
-    assert paired_dz((-1, 1, 1, 1)) == pytest.approx(0.5)
-
-
-def test_total_variation_uses_full_scale_exactly():
-    assert total_variation((1, 1, 7), (1, 7, 7), tuple(range(1, 8))) == Fraction(1, 3)
-    with pytest.raises(GateFailure):
-        total_variation((), (1,), tuple(range(1, 8)))
+    spec, cases, run, alg, reviews = complete_fixture()
+    changed = copy(run)
+    object.__setattr__(changed, "case_inventory_hash", "f" * 64)
     with pytest.raises(ValueError):
-        total_variation((8,), (1,), tuple(range(1, 8)))
+        evaluate_quality_gates(spec, cases, changed, alg, reviews, candidate_key="retirement-delay")
+
+
+def test_algorithm_hash_must_bind_coverage_policy_before_run():
+    spec, cases, run, alg, reviews = complete_fixture()
+    with pytest.raises(ValueError, match="algorithm"):
+        evaluate_quality_gates(
+            spec,
+            cases,
+            run,
+            replace(alg, max_refusal=Fraction(1, 2)),
+            reviews,
+            candidate_key="retirement-delay",
+        )

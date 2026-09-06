@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass, fields
 from fractions import Fraction
+from itertools import combinations
 from statistics import mean, stdev
 from types import MappingProxyType
 from typing import Mapping
@@ -139,7 +140,9 @@ class GateAlgorithm:
             if isinstance(value, Fraction):
                 payload[name] = {"numerator": value.numerator, "denominator": value.denominator}
         payload["challenges"] = [c.to_payload() for c in self.challenges]
-        payload["implementation"] = "paper1.calibration.gates.v1"
+        payload["implementation"] = "paper1.calibration.gates.v2"
+        payload["inventory_policy"] = "exact-specification-expansion-before-scoring"
+        payload["challenge_coverage"] = "all-topic-wording-and-field-order-pairs-on-each-scale"
         payload["aggregation"] = "all-family-and-challenge-hard-gates; incomplete-suppresses-all"
         payload["pair_strata"] = [
             "case_family",
@@ -250,6 +253,22 @@ def _rate(n: int, ids: tuple[str, ...], threshold: Fraction | None, *, minimum=F
     return {"numerator": n, "denominator": len(ids), "universe_case_ids": ids, "passed": passed}
 
 
+def _validate_required_challenges(
+    algorithm: GateAlgorithm, authoritative: tuple[ProbeCase, ...]
+) -> None:
+    """All topic wording and field-order pairs, on each predeclared scale."""
+    required = set()
+    topic_cases = tuple(c for c in authoritative if c.case_family == "topic_quality")
+    for scale in {c.scale_id for c in topic_cases}:
+        for axis in ("variant_index", "field_order_id"):
+            levels = sorted({getattr(c, axis) for c in topic_cases if c.scale_id == scale})
+            for left, right in combinations(levels, 2):
+                required.add(("topic_quality", scale, axis, left, right))
+    supplied = [(c.case_family, c.scale_id, c.axis, c.left, c.right) for c in algorithm.challenges]
+    if len(supplied) != len(required) or set(supplied) != required:
+        raise ValueError("gate algorithm must contain the exact required challenge comparisons")
+
+
 @dataclass(frozen=True, slots=True)
 class GateReport:
     candidate_key: str
@@ -283,6 +302,68 @@ class GateReport:
         return canonical_payload_hash(self.to_payload())
 
 
+def _score_family(group, folded, review_map, projection, algorithm):
+    """Count one declared family; public callers must use evaluate_quality_gates."""
+    family, scale_id = group[0].case_family, group[0].scale_id
+    ids = tuple(sorted(c.probe_case_id for c in group))
+    parsed = tuple(
+        i for i in ids if folded[i].final_parse is not None and folded[i].final_parse.success
+    )
+    refused = tuple(
+        i
+        for i in ids
+        if (i in review_map and review_map[i].refusal)
+        or (
+            folded[i].final_parse is not None
+            and not folded[i].final_parse.success
+            and folded[i].final_parse.error["code"] == "refusal"
+        )
+    )
+    universe = tuple(i for i in parsed if i not in refused)
+    values = tuple(folded[i].final_parse.stance for i in universe)
+    counts = Counter(values)
+    scale = SCALES[scale_id]
+    main = scale_id == "stance-1-7"
+    metric = {
+        "case_family": family,
+        "scale_id": scale_id,
+        "scheduled_count": len(ids),
+        "parsed_count": len(parsed),
+        "refusal_count": len(refused),
+        "distribution_count": len(universe),
+        "distribution_universe_case_ids": universe,
+        "distribution": {str(k): counts[k] for k in scale},
+        "categories_used": len(counts),
+        "categories_passed": len(counts) >= algorithm.min_main_categories if main else None,
+        "minimum_sample_passed": len(universe) >= algorithm.minimum_distribution_n,
+        "first_parse": _rate(
+            sum(folded[i].first_parse is not None and folded[i].first_parse.success for i in ids),
+            ids,
+            None,
+        ),
+        "parse": _rate(len(parsed), ids, algorithm.min_parse, minimum=True),
+        "refusal": _rate(len(refused), ids, algorithm.max_refusal),
+        "runtime_failure": _rate(
+            sum(projection.case_statuses[i] == "runtime_failed" for i in ids), ids, None
+        ),
+        "lower_endpoint": _rate(
+            counts[scale[0]], universe, algorithm.max_main_endpoint if main else None
+        ),
+        "upper_endpoint": _rate(
+            counts[scale[-1]], universe, algorithm.max_main_endpoint if main else None
+        ),
+        "combined_endpoints": _rate(counts[scale[0]] + counts[scale[-1]], universe, None),
+        "contradiction": _rate(
+            sum(
+                i in review_map and review_map[i].contradiction == "contradiction" for i in universe
+            ),
+            universe,
+            algorithm.max_contradiction,
+        ),
+    }
+    return metric
+
+
 def evaluate_quality_gates(
     specification: ArtifactEnvelope,
     cases: tuple[ProbeCase, ...],
@@ -294,7 +375,7 @@ def evaluate_quality_gates(
 ) -> GateReport:
     if type(specification) is not ArtifactEnvelope or type(algorithm) is not GateAlgorithm:
         raise TypeError("validated specification and explicit GateAlgorithm required")
-    from .specification import load_probe_specification
+    from .specification import expand_probe_cases, load_probe_specification
 
     # JSON transport restores frozen mappings while the loader validates the complete spec.
     import json
@@ -309,6 +390,22 @@ def evaluate_quality_gates(
         raise ValueError("specification hash mismatch")
     if specification.payload["policy_hashes"]["gate_algorithm"] != algorithm.record_hash:
         raise ValueError("gate algorithm was not bound before execution")
+    authoritative = expand_probe_cases(rebuilt)
+    if type(cases) is not tuple or any(type(c) is not ProbeCase for c in cases):
+        raise ValueError("supplied cases do not match authoritative inventory")
+    expected_inventory = {c.probe_case_id: c.record_hash for c in authoritative}
+    supplied_inventory = {c.probe_case_id: c.record_hash for c in cases}
+    if (
+        len(cases) != len(authoritative)
+        or supplied_inventory != expected_inventory
+        or any(
+            c.specification_hash != rebuilt.output_hash
+            or canonical_payload_hash(c.content_payload()) != c.record_hash
+            for c in cases
+        )
+    ):
+        raise ValueError("supplied cases do not match authoritative inventory")
+    _validate_required_challenges(algorithm, authoritative)
     if candidate_key not in TOPIC_ORDER:
         raise ValueError("unknown candidate")
     raw = next(
@@ -320,8 +417,9 @@ def evaluate_quality_gates(
         statements=tuple(raw["statements"]),
         stance_labels_1_7=tuple(raw["stance_labels_1_7"]),
     )
-    folded = fold_case_attempts(cases, projection)
-    selected = tuple(c for c in cases if c.candidate_id == topic.candidate_id)
+    # Folding also validates the projection inventory/hash and every attempt binding.
+    folded = fold_case_attempts(authoritative, projection)
+    selected = tuple(c for c in authoritative if c.candidate_id == topic.candidate_id)
     if not selected:
         raise ValueError("missing candidate cases")
     if type(reviews) is not tuple or any(type(r) is not SemanticGateEvidence for r in reviews):
@@ -350,65 +448,7 @@ def evaluate_quality_gates(
     all_passed = True
     for family, scale_id in sorted({(c.case_family, c.scale_id) for c in selected}):
         group = tuple(c for c in selected if (c.case_family, c.scale_id) == (family, scale_id))
-        ids = tuple(sorted(c.probe_case_id for c in group))
-        parsed = tuple(
-            i for i in ids if folded[i].final_parse is not None and folded[i].final_parse.success
-        )
-        refused = tuple(
-            i
-            for i in ids
-            if (i in review_map and review_map[i].refusal)
-            or (
-                folded[i].final_parse is not None
-                and not folded[i].final_parse.success
-                and folded[i].final_parse.error["code"] == "refusal"
-            )
-        )
-        universe = tuple(i for i in parsed if i not in refused)
-        values = tuple(folded[i].final_parse.stance for i in universe)
-        counts = Counter(values)
-        scale = SCALES[scale_id]
-        main = scale_id == "stance-1-7"
-        metric = {
-            "case_family": family,
-            "scale_id": scale_id,
-            "scheduled_count": len(ids),
-            "parsed_count": len(parsed),
-            "refusal_count": len(refused),
-            "distribution_count": len(universe),
-            "distribution_universe_case_ids": universe,
-            "distribution": {str(k): counts[k] for k in scale},
-            "categories_used": len(counts),
-            "categories_passed": len(counts) >= algorithm.min_main_categories if main else None,
-            "minimum_sample_passed": len(universe) >= algorithm.minimum_distribution_n,
-            "first_parse": _rate(
-                sum(
-                    folded[i].first_parse is not None and folded[i].first_parse.success for i in ids
-                ),
-                ids,
-                None,
-            ),
-            "parse": _rate(len(parsed), ids, algorithm.min_parse, minimum=True),
-            "refusal": _rate(len(refused), ids, algorithm.max_refusal),
-            "runtime_failure": _rate(
-                sum(projection.case_statuses[i] == "runtime_failed" for i in ids), ids, None
-            ),
-            "lower_endpoint": _rate(
-                counts[scale[0]], universe, algorithm.max_main_endpoint if main else None
-            ),
-            "upper_endpoint": _rate(
-                counts[scale[-1]], universe, algorithm.max_main_endpoint if main else None
-            ),
-            "combined_endpoints": _rate(counts[scale[0]] + counts[scale[-1]], universe, None),
-            "contradiction": _rate(
-                sum(
-                    i in review_map and review_map[i].contradiction == "contradiction"
-                    for i in universe
-                ),
-                universe,
-                algorithm.max_contradiction,
-            ),
-        }
+        metric = _score_family(group, folded, review_map, projection, algorithm)
         checks = [metric["minimum_sample_passed"], metric["categories_passed"]]
         checks += [v["passed"] for v in metric.values() if isinstance(v, dict) and "passed" in v]
         all_passed = all_passed and all(x is not False for x in checks)
