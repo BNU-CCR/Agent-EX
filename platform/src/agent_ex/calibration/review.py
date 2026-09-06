@@ -23,7 +23,13 @@ from ..domain import (
     _require_timestamp,
     canonical_payload_hash,
 )
-from .contracts import ProbeCase, ProbeParseEvidence, ProbeRunProjection, ProbeTopicCandidate
+from .contracts import (
+    ProbeCase,
+    ProbeParseEvidence,
+    ProbeRequest,
+    ProbeRunProjection,
+    ProbeTopicCandidate,
+)
 from .gates import SemanticGateEvidence, fold_case_attempts
 from .specification import expand_probe_cases, load_probe_specification
 
@@ -141,20 +147,70 @@ class ReviewStratum:
 class CoderContract:
     coder_id: str
     role: str
+    model_id: str | None = None
+    model_revision: str | None = None
+    judge_prompt_hash: str | None = None
+    ordering_policy_id: str | None = None
+    ordering_policy_hash: str | None = None
+    runtime_provider: str | None = None
+    runtime_version: str | None = None
+
+    _SCHEMA = "paper1.calibration.coder-contract.v1"
 
     def __post_init__(self) -> None:
         _require_id("coder_id", self.coder_id)
         if self.role not in {"human", "judge"}:
             raise ValueError("coder role must be explicitly human or judge")
+        provenance_fields = (
+            "model_id",
+            "model_revision",
+            "judge_prompt_hash",
+            "ordering_policy_id",
+            "ordering_policy_hash",
+            "runtime_provider",
+            "runtime_version",
+        )
+        if self.role == "human":
+            if any(getattr(self, name) is not None for name in provenance_fields):
+                raise ValueError("human coder judge-provenance fields must be explicitly null")
+        else:
+            if any(getattr(self, name) is None for name in provenance_fields):
+                raise ValueError(
+                    "judge coder requires complete model/prompt/order/runtime provenance"
+                )
+            for name in (
+                "model_id",
+                "model_revision",
+                "ordering_policy_id",
+                "runtime_provider",
+                "runtime_version",
+            ):
+                _require_id(name, getattr(self, name))
+            for name in ("judge_prompt_hash", "ordering_policy_hash"):
+                _require_sha256(name, getattr(self, name))
 
-    def to_payload(self) -> dict[str, str]:
-        return {"coder_id": self.coder_id, "role": self.role}
+    @property
+    def metadata(self) -> dict[str, object]:
+        return _metadata()
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    @property
+    def record_hash(self) -> str:
+        return canonical_payload_hash(self.content_payload())
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
 
     @classmethod
     def from_payload(cls, payload: Mapping[str, object]) -> CoderContract:
-        if type(payload) is not dict or tuple(payload) != ("coder_id", "role"):
-            raise ValueError("coder contract requires exact coder_id/role fields")
-        return cls(payload["coder_id"], payload["role"])  # type: ignore[arg-type]
+        expected = {f.name for f in fields(cls)} | {"schema_version", "metadata", "record_hash"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        value = cls(**{name: payload[name] for name in cls.__dataclass_fields__})  # type: ignore[arg-type]
+        if payload["record_hash"] != value.record_hash:
+            raise ValueError("coder contract record hash differs from content")
+        return value
 
 
 @dataclass(frozen=True, slots=True)
@@ -163,8 +219,11 @@ class SemanticReviewPolicy:
     policy_version: str
     strata: tuple[ReviewStratum, ...]
     randomization_seed: int
+    randomization_domain: str
     visible_field_allowlist: tuple[str, ...]
     coder_contracts: tuple[CoderContract, ...]
+    required_human_coder_count: int
+    required_judge_coder_count: int
     dimension_labels: Mapping[str, tuple[str, ...]]
     agreement_statistic: str
     agreement_threshold: Fraction
@@ -194,6 +253,7 @@ class SemanticReviewPolicy:
         if len({value.stratum_id for value in self.strata}) != len(self.strata):
             raise ValueError("duplicate semantic-review stratum IDs")
         _require_int("randomization_seed", self.randomization_seed)
+        _require_id("randomization_domain", self.randomization_domain)
         if self.visible_field_allowlist != _VISIBLE_FIELDS:
             raise ValueError("visible field allowlist must exactly match the blinded contract")
         if (
@@ -204,6 +264,16 @@ class SemanticReviewPolicy:
             raise TypeError("coder_contracts must be an explicit nonempty tuple")
         if len({value.coder_id for value in self.coder_contracts}) != len(self.coder_contracts):
             raise ValueError("duplicate required coder identities")
+        _require_int("required_human_coder_count", self.required_human_coder_count, minimum=1)
+        _require_int("required_judge_coder_count", self.required_judge_coder_count, minimum=1)
+        if (
+            sum(value.role == "human" for value in self.coder_contracts)
+            != self.required_human_coder_count
+            or sum(value.role == "judge" for value in self.coder_contracts)
+            != self.required_judge_coder_count
+            or len(self.coder_contracts) < 2
+        ):
+            raise ValueError("coder contracts do not match required independent human/judge roles")
         if not isinstance(self.dimension_labels, Mapping) or not self.dimension_labels:
             raise ValueError("dimension_labels must be an explicit nonempty mapping")
         normalized_dimensions: dict[str, tuple[str, ...]] = {}
@@ -286,10 +356,13 @@ class SemanticReviewPolicy:
             policy_version=payload["policy_version"],
             strata=tuple(ReviewStratum.from_payload(x) for x in payload["strata"]),
             randomization_seed=payload["randomization_seed"],
+            randomization_domain=payload["randomization_domain"],
             visible_field_allowlist=tuple(payload["visible_field_allowlist"]),
             coder_contracts=tuple(
                 CoderContract.from_payload(x) for x in payload["coder_contracts"]
             ),
+            required_human_coder_count=payload["required_human_coder_count"],
+            required_judge_coder_count=payload["required_judge_coder_count"],
             dimension_labels={k: tuple(v) for k, v in payload["dimension_labels"].items()},
             agreement_statistic=payload["agreement_statistic"],
             agreement_threshold=_fraction_from_payload(payload["agreement_threshold"]),
@@ -317,6 +390,47 @@ def _require_visible_payload(payload: object, policy: SemanticReviewPolicy) -> N
             raise TypeError(
                 f"visible field {name} must be scalar text; nested values are forbidden"
             )
+
+
+def _opaque_item_id(
+    *,
+    policy_id: str,
+    policy_hash: str,
+    randomization_seed: int,
+    randomization_domain: str,
+    stratum_id: str,
+    probe_case_id: str,
+    probe_case_hash: str,
+    request_id: str,
+    request_hash: str,
+    response_id: str,
+    response_hash: str,
+    raw_response_hash: str,
+    parse_id: str,
+    parse_hash: str,
+    visible_payload_hash: str,
+) -> str:
+    """Derive the one opaque identity shared by export, bindings and bridge."""
+    return "blind-item-" + canonical_payload_hash(
+        {
+            "identity_domain": "paper1.calibration.blind-review-item.v2",
+            "policy_id": policy_id,
+            "policy_hash": policy_hash,
+            "randomization_seed": randomization_seed,
+            "randomization_domain": randomization_domain,
+            "stratum_id": stratum_id,
+            "probe_case_id": probe_case_id,
+            "probe_case_hash": probe_case_hash,
+            "request_id": request_id,
+            "request_hash": request_hash,
+            "response_id": response_id,
+            "response_hash": response_hash,
+            "raw_response_hash": raw_response_hash,
+            "parse_id": parse_id,
+            "parse_hash": parse_hash,
+            "visible_payload_hash": visible_payload_hash,
+        }
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -383,6 +497,10 @@ class BlindReviewItem:
 class HiddenReviewBinding:
     item_id: str
     item_hash: str
+    policy_id: str
+    policy_hash: str
+    randomization_seed: int
+    randomization_domain: str
     stratum_id: str
     probe_case_id: str
     probe_case_hash: str
@@ -390,15 +508,19 @@ class HiddenReviewBinding:
     request_hash: str
     response_id: str
     response_hash: str
+    raw_response_hash: str
     parse_id: str
     parse_hash: str
+    visible_payload_hash: str
     record_hash: str
 
-    _SCHEMA = "paper1.calibration.hidden-review-binding.v1"
+    _SCHEMA = "paper1.calibration.hidden-review-binding.v2"
 
     def __post_init__(self) -> None:
         for name in (
             "item_id",
+            "policy_id",
+            "randomization_domain",
             "stratum_id",
             "probe_case_id",
             "request_id",
@@ -406,13 +528,48 @@ class HiddenReviewBinding:
             "parse_id",
         ):
             _require_id(name, getattr(self, name))
-        for name in ("item_hash", "probe_case_hash", "request_hash", "response_hash", "parse_hash"):
+        _require_int("randomization_seed", self.randomization_seed)
+        for name in (
+            "item_hash",
+            "policy_hash",
+            "probe_case_hash",
+            "request_hash",
+            "response_hash",
+            "raw_response_hash",
+            "parse_hash",
+            "visible_payload_hash",
+        ):
             _require_sha256(name, getattr(self, name))
+        expected_item_id = _opaque_item_id(
+            **{
+                name: getattr(self, name)
+                for name in (
+                    "policy_id",
+                    "policy_hash",
+                    "randomization_seed",
+                    "randomization_domain",
+                    "stratum_id",
+                    "probe_case_id",
+                    "probe_case_hash",
+                    "request_id",
+                    "request_hash",
+                    "response_id",
+                    "response_hash",
+                    "raw_response_hash",
+                    "parse_id",
+                    "parse_hash",
+                    "visible_payload_hash",
+                )
+            }
+        )
+        if self.item_id != expected_item_id:
+            raise ValueError("opaque item identity does not bind hidden upstream hash evidence")
         _validate_record_hash(self, self._SCHEMA)
 
     @classmethod
     def create(
         cls,
+        policy: SemanticReviewPolicy,
         item: BlindReviewItem,
         stratum_id: str,
         case: ProbeCase,
@@ -421,6 +578,10 @@ class HiddenReviewBinding:
         values = {
             "item_id": item.item_id,
             "item_hash": item.record_hash,
+            "policy_id": policy.policy_id,
+            "policy_hash": policy.record_hash,
+            "randomization_seed": policy.randomization_seed,
+            "randomization_domain": policy.randomization_domain,
             "stratum_id": stratum_id,
             "probe_case_id": case.probe_case_id,
             "probe_case_hash": case.record_hash,
@@ -428,8 +589,10 @@ class HiddenReviewBinding:
             "request_hash": parse.request_hash,
             "response_id": parse.response_id,
             "response_hash": parse.response_hash,
+            "raw_response_hash": parse.raw_response_hash,
             "parse_id": parse.parse_evidence_id,
             "parse_hash": parse.record_hash,
+            "visible_payload_hash": item.visible_payload_hash,
         }
         content = {"schema_version": cls._SCHEMA, **values, "metadata": _metadata()}
         return cls(**values, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
@@ -531,8 +694,14 @@ class IndependentCode:
     policy_hash: str
     export_hash: str
     coder_id: str
+    coder_role: str
+    coder_contract_hash: str
     timestamp: str
     evidence_identity: str
+    judge_request_id: str | None
+    judge_order_id: str | None
+    provider_output_artifact_id: str | None
+    provider_output_artifact_hash: str | None
     labels: Mapping[str, str]
     raw_evidence_hash: str
     status: str
@@ -544,8 +713,35 @@ class IndependentCode:
     def __post_init__(self) -> None:
         for name in ("code_id", "item_id", "policy_id", "coder_id", "evidence_identity"):
             _require_id(name, getattr(self, name))
-        for name in ("item_hash", "policy_hash", "export_hash", "raw_evidence_hash"):
+        for name in (
+            "item_hash",
+            "policy_hash",
+            "export_hash",
+            "coder_contract_hash",
+            "raw_evidence_hash",
+        ):
             _require_sha256(name, getattr(self, name))
+        if self.coder_role not in {"human", "judge"}:
+            raise ValueError("independent code role must be human or judge")
+        judge_fields = (
+            "judge_request_id",
+            "judge_order_id",
+            "provider_output_artifact_id",
+            "provider_output_artifact_hash",
+        )
+        if self.coder_role == "human":
+            if any(getattr(self, name) is not None for name in judge_fields):
+                raise ValueError("human code judge provenance must be explicitly null")
+        else:
+            if any(getattr(self, name) is None for name in judge_fields):
+                raise ValueError("judge code requires request/order/provider-output provenance")
+            for name in (
+                "judge_request_id",
+                "judge_order_id",
+                "provider_output_artifact_id",
+            ):
+                _require_id(name, getattr(self, name))
+            _require_sha256("provider_output_artifact_hash", self.provider_output_artifact_hash)
         _require_timestamp("timestamp", self.timestamp)
         if not isinstance(self.labels, Mapping):
             raise TypeError("independent labels must be an exact mapping")
@@ -573,13 +769,19 @@ class IndependentCode:
         coder_id: str,
         timestamp: str,
         evidence_identity: str,
+        judge_request_id: str | None,
+        judge_order_id: str | None,
+        provider_output_artifact_id: str | None,
+        provider_output_artifact_hash: str | None,
         labels: Mapping[str, str],
         raw_evidence_hash: str,
         status: str,
         failure_code: str | None,
     ) -> IndependentCode:
-        if coder_id not in {x.coder_id for x in policy.coder_contracts}:
+        contracts = {x.coder_id: x for x in policy.coder_contracts}
+        if coder_id not in contracts:
             raise ValueError("coder is outside the required coder contract")
+        contract = contracts[coder_id]
         if item.policy_hash != policy.record_hash:
             raise ValueError("item/policy hash mismatch")
         _validate_labels(policy, labels, allow_empty=status == "failed")
@@ -590,8 +792,14 @@ class IndependentCode:
             "policy_hash": policy.record_hash,
             "export_hash": export_hash,
             "coder_id": coder_id,
+            "coder_role": contract.role,
+            "coder_contract_hash": contract.record_hash,
             "timestamp": timestamp,
             "evidence_identity": evidence_identity,
+            "judge_request_id": judge_request_id,
+            "judge_order_id": judge_order_id,
+            "provider_output_artifact_id": provider_output_artifact_id,
+            "provider_output_artifact_hash": provider_output_artifact_hash,
             "labels": dict(sorted(labels.items())),
             "raw_evidence_hash": raw_evidence_hash,
             "status": status,
@@ -797,25 +1005,48 @@ class SemanticReviewBundle:
         item_map = {item.item_id: item for item in self.review_export.items}
         if any(
             binding.item_hash != item_map[binding.item_id].record_hash
+            or binding.policy_id != self.policy.policy_id
+            or binding.policy_hash != self.policy.record_hash
+            or binding.randomization_seed != self.policy.randomization_seed
+            or binding.randomization_domain != self.policy.randomization_domain
+            or binding.visible_payload_hash != item_map[binding.item_id].visible_payload_hash
             for binding in self.hidden_bindings
         ):
-            raise ValueError("hidden binding item hash drift")
-        coder_ids = {contract.coder_id for contract in self.policy.coder_contracts}
+            raise ValueError("hidden binding item/policy/visible hash drift")
+        stratum_counts = {
+            stratum.stratum_id: sum(
+                binding.stratum_id == stratum.stratum_id for binding in self.hidden_bindings
+            )
+            for stratum in self.policy.strata
+        }
+        if set(binding.stratum_id for binding in self.hidden_bindings) != set(
+            stratum_counts
+        ) or any(
+            stratum_counts[stratum.stratum_id] != stratum.sample_count
+            for stratum in self.policy.strata
+        ):
+            raise ValueError("hidden binding strata differ from the frozen sampling policy")
+        coder_contracts = {contract.coder_id: contract for contract in self.policy.coder_contracts}
+        coder_ids = set(coder_contracts)
         code_pairs: set[tuple[str, str]] = set()
         for code in self.independent_codes:
+            IndependentCode.from_payload(code.to_payload())
             pair = (code.item_id, code.coder_id)
             if pair in code_pairs:
                 raise ValueError("duplicate independent coder/item binding")
             code_pairs.add(pair)
             if code.item_id not in item_map or code.coder_id not in coder_ids:
                 raise ValueError("independent code has unexpected item or coder")
+            contract = coder_contracts[code.coder_id]
             if (
                 code.item_hash != item_map[code.item_id].record_hash
                 or code.policy_id != self.policy.policy_id
                 or code.policy_hash != self.policy.record_hash
                 or code.export_hash != self.review_export.export_hash
+                or code.coder_role != contract.role
+                or code.coder_contract_hash != contract.record_hash
             ):
-                raise ValueError("independent code hash binding drift")
+                raise ValueError("independent code item/policy/coder contract hash drift")
             _validate_labels(self.policy, code.labels, allow_empty=code.status == "failed")
         expected_pairs = {(item_id, coder_id) for item_id in item_map for coder_id in coder_ids}
         codes_complete = code_pairs == expected_pairs and all(
@@ -984,11 +1215,47 @@ def _topic_text(spec: Mapping[str, object], case: ProbeCase) -> str:
     raise ValueError("case candidate does not bind a specification topic")
 
 
-def _history_text(spec: Mapping[str, object], case: ProbeCase) -> str:
-    for raw in spec["continuity_scenarios"]:  # type: ignore[union-attr]
-        if case.scenario_id.endswith("-" + raw["scenario_id"]):
-            return raw["history"]
-    return ""
+def _semantic_visible_blocks(spec: Mapping[str, object], case: ProbeCase) -> tuple[str, str]:
+    """Resolve exact identity/history blocks from frozen semantic declarations."""
+    if case.case_family == "topic_quality":
+        if not any(
+            case.scenario_id == "topic-" + raw["candidate_key"]
+            for raw in spec["topic_candidates"]  # type: ignore[union-attr]
+        ):
+            raise ValueError("topic case semantic identity is not declared")
+        return "", ""
+    conditions = spec["persona_conditions"]
+    factor_orders = spec["factor_orders"]
+    if case.case_family == "identity":
+        for condition in conditions:  # type: ignore[union-attr]
+            for factor_order in factor_orders:  # type: ignore[union-attr]
+                expected = f"identity-{condition['condition_id']}-{factor_order['factor_order_id']}"
+                if case.scenario_id == expected:
+                    identity = (
+                        spec["persona"]["identity_block"]  # type: ignore[index]
+                        if condition["identity_present"]
+                        else ""
+                    )
+                    return identity, ""
+        raise ValueError("identity case semantic identity is not declared")
+    if case.case_family == "continuity":
+        for condition in conditions:  # type: ignore[union-attr]
+            for wording in spec["persona"]["continuity_blocks"]:  # type: ignore[index,union-attr]
+                for factor_order in factor_orders:  # type: ignore[union-attr]
+                    for scenario in spec["continuity_scenarios"]:  # type: ignore[union-attr]
+                        expected = (
+                            f"continuity-{condition['condition_id']}-{wording['wording_id']}-"
+                            f"{factor_order['factor_order_id']}-{scenario['scenario_id']}"
+                        )
+                        if case.scenario_id == expected:
+                            identity = (
+                                spec["persona"]["identity_block"]  # type: ignore[index]
+                                if condition["identity_present"]
+                                else ""
+                            )
+                            return identity, scenario["history"]
+        raise ValueError("continuity case semantic identity is not declared")
+    raise ValueError("case family has no semantic-review visible declaration")
 
 
 def export_blind_review(
@@ -1055,21 +1322,31 @@ def export_blind_review(
         )
         if attempt.response.raw_response is None:
             raise ValueError("review-eligible parse lacks bound response text")
+        identity_text, history_text = _semantic_visible_blocks(specification.payload, case)
         visible = {
             "topic_text": _topic_text(specification.payload, case),
-            "history_text": _history_text(specification.payload, case),
-            "identity_text": case.rendered_messages[0]["content"],
+            "history_text": history_text,
+            "identity_text": identity_text,
             "response_text": attempt.response.raw_response,
         }
         _require_visible_payload(visible, policy)
-        item_id = "blind-item-" + canonical_payload_hash(
-            [
-                policy.randomization_seed,
-                policy.record_hash,
-                case.probe_case_id,
-                case.record_hash,
-                parse.record_hash,
-            ]
+        visible_payload_hash = canonical_payload_hash(visible)
+        item_id = _opaque_item_id(
+            policy_id=policy.policy_id,
+            policy_hash=policy.record_hash,
+            randomization_seed=policy.randomization_seed,
+            randomization_domain=policy.randomization_domain,
+            stratum_id=stratum.stratum_id,
+            probe_case_id=case.probe_case_id,
+            probe_case_hash=case.record_hash,
+            request_id=parse.request_id,
+            request_hash=parse.request_hash,
+            response_id=parse.response_id,
+            response_hash=parse.response_hash,
+            raw_response_hash=parse.raw_response_hash,
+            parse_id=parse.parse_evidence_id,
+            parse_hash=parse.record_hash,
+            visible_payload_hash=visible_payload_hash,
         )
         item = BlindReviewItem.create(
             item_id=item_id,
@@ -1077,7 +1354,10 @@ def export_blind_review(
             visible_payload=visible,
         )
         items_and_bindings.append(
-            (item, HiddenReviewBinding.create(item, stratum.stratum_id, case, parse))
+            (
+                item,
+                HiddenReviewBinding.create(policy, item, stratum.stratum_id, case, parse),
+            )
         )
     items_and_bindings.sort(
         key=lambda pair: canonical_payload_hash([policy.randomization_seed, pair[0].item_id])
@@ -1285,24 +1565,140 @@ def append_adjudication(
 
 def to_semantic_gate_evidence(
     bundle: SemanticReviewBundle,
+    specification: ArtifactEnvelope,
     cases: tuple[ProbeCase, ...],
+    run: ProbeRunProjection,
     parses: tuple[ProbeParseEvidence, ...],
 ) -> tuple[SemanticGateEvidence, ...]:
     """Project verified review labels into Task 5 gate evidence without semantic guesses."""
     if type(bundle) is not SemanticReviewBundle:
         raise TypeError("bundle must be a SemanticReviewBundle")
+    SemanticReviewBundle.from_payload(bundle.to_payload())
+    if not isinstance(specification, ArtifactEnvelope):
+        raise TypeError("specification must be an ArtifactEnvelope")
     if type(cases) is not tuple or any(type(x) is not ProbeCase for x in cases):
         raise TypeError("cases must be a ProbeCase tuple")
+    if type(run) is not ProbeRunProjection:
+        raise TypeError("run must be a ProbeRunProjection")
     if type(parses) is not tuple or any(type(x) is not ProbeParseEvidence for x in parses):
         raise TypeError("parses must be a ProbeParseEvidence tuple")
+    validated = load_probe_specification(specification.to_payload()["payload"])
+    if validated.output_hash != specification.output_hash:
+        raise ValueError("bridge specification hash drift")
+    if (
+        specification.payload["policy_hashes"]["semantic_review_policy"]
+        != bundle.policy.record_hash
+        or bundle.review_export.specification_hash != specification.output_hash
+        or bundle.review_export.specification_semantic_review_policy_hash
+        != bundle.policy.record_hash
+        or bundle.review_export.run_id != run.probe_run_id
+        or bundle.review_export.run_evidence_hash != run.run_evidence_hash
+    ):
+        raise ValueError("bridge specification/run/policy hash binding mismatch")
+    authoritative = {case.probe_case_id: case for case in expand_probe_cases(validated)}
+    for case in cases:
+        if (
+            case.probe_case_id not in authoritative
+            or case.to_payload() != authoritative[case.probe_case_id].to_payload()
+        ):
+            raise ValueError("bridge case differs from specification expansion")
+    folded = fold_case_attempts(cases, run)
     case_map = {x.probe_case_id: x for x in cases}
     if len(case_map) != len(cases):
         raise ValueError("duplicate bridge cases")
     parse_map = {x.probe_case_id: x for x in parses}
     if len(parse_map) != len(parses):
         raise ValueError("duplicate bridge parses")
+    attempts_by_parse = {
+        attempt.parse_evidence.record_hash: attempt
+        for attempt in run.attempts
+        if attempt.parse_evidence is not None
+    }
+    for case_id, parse in parse_map.items():
+        ProbeParseEvidence.from_payload(parse.to_payload())
+        case = case_map.get(case_id)
+        if (
+            case is None
+            or parse.probe_case_hash != case.record_hash
+            or folded[case_id].final_parse is None
+            or parse.record_hash != folded[case_id].final_parse.record_hash
+            or parse.record_hash not in attempts_by_parse
+        ):
+            raise ValueError("bridge parse is not the final run-bound case evidence")
+        attempt = attempts_by_parse[parse.record_hash]
+        expected_request = ProbeRequest.create(
+            case,
+            attempt_index=attempt.attempt_index,
+            attempt_kind=attempt.attempt_kind,
+            generation_settings=attempt.request.generation_settings,
+        )
+        if expected_request.to_payload() != attempt.request.to_payload():
+            raise ValueError("bridge rendered request differs from the authoritative case")
+        response = attempt.response
+        if (
+            parse.request_id != attempt.request.request_id
+            or parse.request_hash != attempt.request.record_hash
+            or parse.response_id != response.response_id
+            or parse.response_hash != response.record_hash
+            or parse.raw_response_hash != response.raw_response_hash
+            or parse.scale_id != case.scale_id
+            or parse.field_order_id != case.field_order_id
+        ):
+            raise ValueError("bridge parse request/response/declaration chain mismatch")
     binding_by_case = {x.probe_case_id: x for x in bundle.hidden_bindings}
+    item_by_id = {x.item_id: x for x in bundle.review_export.items}
     final_by_item = {x.item_id: x for x in bundle.final_labels}
+    for binding in bundle.hidden_bindings:
+        case = case_map.get(binding.probe_case_id)
+        parse = parse_map.get(binding.probe_case_id)
+        item = item_by_id.get(binding.item_id)
+        if case is None or parse is None or item is None:
+            raise ValueError("bridge hidden binding has no authoritative upstream evidence")
+        attempt = attempts_by_parse[parse.record_hash]
+        if attempt.response.raw_response is None:
+            raise ValueError("bridge review item lacks a response text artifact")
+        identity_text, history_text = _semantic_visible_blocks(specification.payload, case)
+        visible = {
+            "topic_text": _topic_text(specification.payload, case),
+            "history_text": history_text,
+            "identity_text": identity_text,
+            "response_text": attempt.response.raw_response,
+        }
+        _require_visible_payload(visible, bundle.policy)
+        visible_hash = canonical_payload_hash(visible)
+        expected_item_id = _opaque_item_id(
+            policy_id=bundle.policy.policy_id,
+            policy_hash=bundle.policy.record_hash,
+            randomization_seed=bundle.policy.randomization_seed,
+            randomization_domain=bundle.policy.randomization_domain,
+            stratum_id=binding.stratum_id,
+            probe_case_id=case.probe_case_id,
+            probe_case_hash=case.record_hash,
+            request_id=parse.request_id,
+            request_hash=parse.request_hash,
+            response_id=parse.response_id,
+            response_hash=parse.response_hash,
+            raw_response_hash=parse.raw_response_hash,
+            parse_id=parse.parse_evidence_id,
+            parse_hash=parse.record_hash,
+            visible_payload_hash=visible_hash,
+        )
+        if (
+            item.item_id != expected_item_id
+            or binding.item_id != expected_item_id
+            or dict(item.visible_payload) != visible
+            or item.visible_payload_hash != visible_hash
+            or binding.visible_payload_hash != visible_hash
+            or binding.probe_case_hash != case.record_hash
+            or binding.request_id != parse.request_id
+            or binding.request_hash != parse.request_hash
+            or binding.response_id != parse.response_id
+            or binding.response_hash != parse.response_hash
+            or binding.raw_response_hash != parse.raw_response_hash
+            or binding.parse_id != parse.parse_evidence_id
+            or binding.parse_hash != parse.record_hash
+        ):
+            raise ValueError("bridge item/visible/hidden upstream binding mismatch")
     result = []
     for case_id in sorted(parse_map):
         parse = parse_map[case_id]

@@ -11,6 +11,7 @@ from agent_ex.calibration.gates import evaluate_quality_gates
 from agent_ex.calibration.review import (
     Adjudication,
     CoderContract,
+    HiddenReviewBinding,
     IndependentCode,
     ReviewStratum,
     SemanticReviewPolicy,
@@ -40,7 +41,20 @@ DIMENSIONS = {
     "stance_consistency": ("consistent", "contradiction", "unclear"),
     "single_construct": ("yes", "no", "unclear"),
 }
-CODERS = (CoderContract("coder-a", "human"), CoderContract("coder-b", "judge"))
+CODERS = (
+    CoderContract("coder-a", "human"),
+    CoderContract(
+        "coder-b",
+        "judge",
+        model_id="synthetic-judge",
+        model_revision="offline-v1",
+        judge_prompt_hash=canonical_payload_hash("synthetic-judge-prompt"),
+        ordering_policy_id="synthetic-ordering",
+        ordering_policy_hash=canonical_payload_hash("synthetic-ordering-v1"),
+        runtime_provider="scripted-judge",
+        runtime_version="1.0.0",
+    ),
+)
 
 
 def review_policy(*, strata=None, threshold=Fraction(1, 1)):
@@ -56,6 +70,9 @@ def review_policy(*, strata=None, threshold=Fraction(1, 1)):
             "response_text",
         ),
         coder_contracts=CODERS,
+        required_human_coder_count=1,
+        required_judge_coder_count=1,
+        randomization_domain="phase0a-synthetic-semantic-review",
         dimension_labels=DIMENSIONS,
         agreement_statistic="exact_item_dimension_agreement",
         agreement_threshold=threshold,
@@ -123,6 +140,39 @@ def raw_for(case):
     return json.dumps({name: values[name] for name in order}, separators=(",", ":"))
 
 
+def prepared_exact(policy, scenario_ids):
+    payload = probe_spec_payload()
+    payload["policy_hashes"]["semantic_review_policy"] = policy.record_hash
+    specification = load_probe_specification(payload)
+    expanded = expand_probe_cases(specification)
+    cases = tuple(
+        sorted(
+            (
+                next(case for case in expanded if case.scenario_id == scenario_id)
+                for scenario_id in scenario_ids
+            ),
+            key=lambda item: item.probe_case_id,
+        )
+    )
+    steps = {
+        (case.probe_case_id, 1): ProbeScriptStep("response", raw_for(case), None, None)
+        for case in cases
+    }
+    run = execute_probe_run(
+        run_instance_id="review-exact-test",
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy(),
+        adapter=ScriptedProbeAdapter(steps),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    return specification, cases, run, policy
+
+
 def labels(*, contradiction="consistent"):
     return {
         "refusal": "answered",
@@ -132,6 +182,7 @@ def labels(*, contradiction="consistent"):
 
 
 def code(bundle, item, coder, *, values=None, status="completed", failure_code=None):
+    is_judge = next(x.role for x in bundle.policy.coder_contracts if x.coder_id == coder) == "judge"
     return IndependentCode.create(
         item=item,
         policy=bundle.policy,
@@ -139,6 +190,12 @@ def code(bundle, item, coder, *, values=None, status="completed", failure_code=N
         coder_id=coder,
         timestamp="2026-09-06T00:00:00Z",
         evidence_identity=f"evidence-{coder}",
+        judge_request_id=f"judge-request-{coder}" if is_judge else None,
+        judge_order_id=f"judge-order-{coder}" if is_judge else None,
+        provider_output_artifact_id=f"provider-output-{coder}" if is_judge else None,
+        provider_output_artifact_hash=(
+            canonical_payload_hash([item.item_id, coder, "provider-output"]) if is_judge else None
+        ),
         labels={} if values is None and status == "failed" else (values or labels()),
         raw_evidence_hash=canonical_payload_hash([item.item_id, coder, status]),
         status=status,
@@ -180,6 +237,65 @@ def test_policy_and_records_are_frozen_hash_bound_and_json_safe():
         SemanticReviewBundle.from_payload({**transported, "formal_decision": True})
 
 
+def test_policy_rejects_bare_judge_and_human_only_completion_contract():
+    with pytest.raises(ValueError, match="judge|provenance|model|prompt"):
+        CoderContract("bare-judge", "judge")
+    base = review_policy()
+    with pytest.raises(ValueError, match="judge|human|role|coder"):
+        replace(base, coder_contracts=(CoderContract("only-human", "human"),))
+
+
+def test_judge_code_binds_contract_request_order_provider_and_raw_artifact():
+    bundle = export_blind_review(*prepared())
+    item = bundle.review_export.items[0]
+    judge_code = code(bundle, item, "coder-b")
+    judge_contract = next(x for x in bundle.policy.coder_contracts if x.role == "judge")
+    assert judge_code.coder_contract_hash == judge_contract.record_hash
+    assert judge_code.judge_request_id == "judge-request-coder-b"
+    assert judge_code.judge_order_id == "judge-order-coder-b"
+    assert judge_code.provider_output_artifact_id == "provider-output-coder-b"
+    assert judge_code.provider_output_artifact_hash == canonical_payload_hash(
+        [item.item_id, "coder-b", "provider-output"]
+    )
+    from copy import copy
+
+    drifted = copy(judge_code)
+    object.__setattr__(drifted, "coder_contract_hash", "f" * 64)
+    codes = list(complete_codes(bundle))
+    codes[
+        codes.index(next(x for x in codes if x.item_id == item.item_id and x.coder_id == "coder-b"))
+    ] = drifted
+    with pytest.raises(ValueError, match="contract|judge|provenance|hash"):
+        import_review_codes(bundle, tuple(codes))
+
+    raw_drifted = copy(judge_code)
+    object.__setattr__(raw_drifted, "provider_output_artifact_hash", "e" * 64)
+    codes = list(complete_codes(bundle))
+    codes[
+        codes.index(next(x for x in codes if x.item_id == item.item_id and x.coder_id == "coder-b"))
+    ] = raw_drifted
+    with pytest.raises(ValueError, match="judge|provenance|artifact|record|hash"):
+        import_review_codes(bundle, tuple(codes))
+
+    with pytest.raises(ValueError, match="judge|provenance|request|provider"):
+        IndependentCode.create(
+            item=item,
+            policy=bundle.policy,
+            export_hash=bundle.review_export.export_hash,
+            coder_id="coder-b",
+            timestamp="2026-09-06T00:00:00Z",
+            evidence_identity="missing-judge-provider-output",
+            judge_request_id=None,
+            judge_order_id="judge-order-coder-b",
+            provider_output_artifact_id="provider-output-coder-b",
+            provider_output_artifact_hash="f" * 64,
+            labels=labels(),
+            raw_evidence_hash="f" * 64,
+            status="completed",
+            failure_code=None,
+        )
+
+
 def test_blind_export_has_exact_allowlist_and_separate_hidden_bindings():
     bundle = export_blind_review(*prepared())
     assert bundle.review_export.items
@@ -204,6 +320,49 @@ def test_blind_export_has_exact_allowlist_and_separate_hidden_bindings():
         }
         assert forbidden.isdisjoint(payload) and forbidden.isdisjoint(payload["visible_payload"])
     assert all(binding.probe_case_id for binding in bundle.hidden_bindings)
+
+
+def test_visible_fields_are_exact_semantic_blocks_without_factor_crosstalk():
+    scenario_ids = (
+        "topic-retirement-delay",
+        "identity-i0-c1-identity-continuity",
+        "identity-i1-c0-identity-continuity",
+        "continuity-i0-c1-continuity-balanced-a-identity-continuity-warranted-update",
+    )
+    strata = tuple(
+        ReviewStratum(f"semantic-{index}", {"scenario_id": scenario_id}, 1)
+        for index, scenario_id in enumerate(scenario_ids)
+    )
+    policy = review_policy(strata=strata)
+    specification, cases, run, _ = prepared_exact(policy, scenario_ids)
+    bundle = export_blind_review(specification, cases, run, policy)
+    by_scenario = {
+        next(
+            case.scenario_id for case in cases if case.probe_case_id == binding.probe_case_id
+        ): next(
+            item.visible_payload
+            for item in bundle.review_export.items
+            if item.item_id == binding.item_id
+        )
+        for binding in bundle.hidden_bindings
+    }
+    identity_block = specification.payload["persona"]["identity_block"]
+    history = next(
+        item["history"]
+        for item in specification.payload["continuity_scenarios"]
+        if item["scenario_id"] == "warranted-update"
+    )
+    assert by_scenario[scenario_ids[0]]["identity_text"] == ""
+    assert by_scenario[scenario_ids[0]]["history_text"] == ""
+    assert by_scenario[scenario_ids[1]]["identity_text"] == ""
+    assert by_scenario[scenario_ids[1]]["history_text"] == ""
+    assert by_scenario[scenario_ids[2]]["identity_text"] == identity_block
+    assert by_scenario[scenario_ids[2]]["history_text"] == ""
+    assert by_scenario[scenario_ids[3]]["identity_text"] == ""
+    assert by_scenario[scenario_ids[3]]["history_text"] == history
+    for visible in by_scenario.values():
+        assert identity_block not in visible["topic_text"]
+        assert history not in visible["identity_text"]
 
 
 def test_export_ids_and_order_are_stable_under_input_reordering():
@@ -275,6 +434,10 @@ def test_import_rejects_duplicate_unexpected_coder_item_dimension_and_invalid_ty
             coder_id="coder-a",
             timestamp="2026-09-06T00:00:00Z",
             evidence_identity="bad-dimension",
+            judge_request_id=None,
+            judge_order_id=None,
+            provider_output_artifact_id=None,
+            provider_output_artifact_hash=None,
             labels={**labels(), "extra": "yes"},
             raw_evidence_hash="f" * 64,
             status="completed",
@@ -288,6 +451,10 @@ def test_import_rejects_duplicate_unexpected_coder_item_dimension_and_invalid_ty
             coder_id="coder-a",
             timestamp="2026-09-06T00:00:00Z",
             evidence_identity="bad-label",
+            judge_request_id=None,
+            judge_order_id=None,
+            provider_output_artifact_id=None,
+            provider_output_artifact_hash=None,
             labels={**labels(), "refusal": True},
             raw_evidence_hash="f" * 64,
             status="completed",
@@ -358,12 +525,67 @@ def test_upstream_policy_and_parse_hash_mismatch_are_rejected():
         replace(binding, parse_hash="f" * 64)
 
 
+def test_hash_valid_hidden_binding_swap_and_refusal_transfer_fail_closed():
+    bundle = export_blind_review(*prepared())
+    completed = import_review_codes(bundle, complete_codes(bundle))
+    first, second = completed.hidden_bindings[:2]
+    forged_payload = first.to_payload()
+    second_payload = second.to_payload()
+    for name in (
+        "probe_case_id",
+        "probe_case_hash",
+        "request_id",
+        "request_hash",
+        "response_id",
+        "response_hash",
+        "parse_id",
+        "parse_hash",
+    ):
+        forged_payload[name] = second_payload[name]
+    forged_payload["record_hash"] = canonical_payload_hash(
+        {key: value for key, value in forged_payload.items() if key != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="item|binding|opaque|upstream"):
+        forged = HiddenReviewBinding.from_payload(forged_payload)
+        replace(completed, hidden_bindings=(forged,) + completed.hidden_bindings[1:])
+
+
+def test_bridge_rebuilds_request_response_and_visible_payload_before_labels_transfer():
+    specification, cases, run, policy = prepared()
+    bundle = import_review_codes(
+        export_blind_review(specification, cases, run, policy),
+        complete_codes(export_blind_review(specification, cases, run, policy)),
+    )
+    parses = tuple(a.parse_evidence for a in run.attempts if a.parse_evidence is not None)
+    assert all(
+        item.review_complete
+        for item in to_semantic_gate_evidence(bundle, specification, cases, run, parses)
+        if item.case_id in {binding.probe_case_id for binding in bundle.hidden_bindings}
+    )
+
+    attacked = bundle.review_export.items[0]
+    original_visible_payload = attacked.visible_payload
+    object.__setattr__(
+        attacked,
+        "visible_payload",
+        {**attacked.visible_payload, "response_text": "transferred refusal"},
+    )
+    with pytest.raises(ValueError, match="visible|upstream|binding|hash"):
+        to_semantic_gate_evidence(bundle, specification, cases, run, parses)
+    object.__setattr__(attacked, "visible_payload", original_visible_payload)
+
+    attacked_binding = bundle.hidden_bindings[0]
+    object.__setattr__(attacked_binding, "policy_id", "transferred-policy")
+    with pytest.raises(ValueError, match="policy|binding|hash"):
+        to_semantic_gate_evidence(bundle, specification, cases, run, parses)
+
+
 def test_bridge_uses_only_authorized_labels_and_incomplete_review_suppresses_gates():
     specification, cases, run, policy = prepared()
     bundle = export_blind_review(specification, cases, run, policy)
     imported = import_review_codes(bundle, ())
     parses = tuple(a.parse_evidence for a in run.attempts if a.parse_evidence is not None)
-    evidence = to_semantic_gate_evidence(imported, cases, parses)
+    evidence = to_semantic_gate_evidence(imported, specification, cases, run, parses)
     assert evidence and all(not item.review_complete for item in evidence)
     assert all(item.contradiction == "indeterminate" for item in evidence)
 
@@ -394,7 +616,7 @@ def test_bridge_uses_only_authorized_labels_and_incomplete_review_suppresses_gat
         export_blind_review(full_spec, full_cases, full_run, full_policy), ()
     )
     full_parses = tuple(a.parse_evidence for a in full_run.attempts if a.parse_evidence is not None)
-    bridge = to_semantic_gate_evidence(incomplete, full_cases, full_parses)
+    bridge = to_semantic_gate_evidence(incomplete, full_spec, full_cases, full_run, full_parses)
     report = evaluate_quality_gates(
         full_spec,
         full_cases,
