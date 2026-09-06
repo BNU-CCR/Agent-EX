@@ -12,7 +12,6 @@ from agent_ex.calibration.gates import evaluate_quality_gates
 from agent_ex.calibration.review import (
     Adjudication,
     BlindReviewExport,
-    BlindReviewItem,
     CoderContract,
     HiddenReviewBinding,
     IndependentCode,
@@ -45,10 +44,11 @@ DIMENSIONS = {
     "single_construct": ("yes", "no", "unclear"),
 }
 CODERS = (
-    CoderContract("coder-a", "human"),
+    CoderContract("coder-a", "human", "stratified_sample"),
     CoderContract(
         "coder-b",
         "judge",
+        "all_eligible",
         model_id="synthetic-judge",
         model_revision="offline-v1",
         judge_prompt_hash=canonical_payload_hash("synthetic-judge-prompt"),
@@ -78,6 +78,7 @@ def review_policy(*, strata=None, threshold=Fraction(1, 1)):
         randomization_domain="phase0a-synthetic-semantic-review",
         dimension_labels=DIMENSIONS,
         agreement_statistic="exact_item_dimension_agreement",
+        agreement_scope="all_assigned_codes_on_human_sample",
         agreement_threshold=threshold,
         judge_failure_rule="review_incomplete",
         adjudication_trigger="any_dimension_disagreement",
@@ -208,8 +209,9 @@ def code(bundle, item, coder, *, values=None, status="completed", failure_code=N
 
 def complete_codes(bundle, *, disagreement_item=None):
     result = []
-    for item in bundle.review_export.items:
-        for coder in ("coder-a", "coder-b"):
+    for contract in bundle.policy.coder_contracts:
+        coder = contract.coder_id
+        for item in review_module.items_for_coder(bundle, coder):
             values = labels(
                 contradiction="contradiction"
                 if item.item_id == disagreement_item and coder == "coder-b"
@@ -240,12 +242,87 @@ def test_policy_and_records_are_frozen_hash_bound_and_json_safe():
         SemanticReviewBundle.from_payload({**transported, "formal_decision": True})
 
 
+def test_all_review_records_accept_canonical_sorted_json_object_keys():
+    specification, cases, run, policy = prepared(policy=review_policy(threshold=Fraction(8, 9)))
+    awaiting = export_blind_review(specification, cases, run, policy)
+    disputed = review_module.items_for_coder(awaiting, "coder-a")[0].item_id
+    coded = import_review_codes(awaiting, complete_codes(awaiting, disagreement_item=disputed))
+    item = awaiting.review_export.items[0]
+    adjudication = Adjudication.create(
+        bundle=coded,
+        item_id=item.item_id,
+        adjudicator_id="adjudicator-sorted-json",
+        timestamp="2026-09-06T01:00:00Z",
+        labels=labels(contradiction="consistent"),
+        reason="synthetic disagreement resolution",
+        evidence_hash=canonical_payload_hash("synthetic-adjudication-evidence"),
+    )
+    completed = append_adjudication(coded, adjudication)
+    canonical_json = json.loads(json.dumps(completed.to_payload(), sort_keys=True))
+    assert SemanticReviewBundle.from_payload(canonical_json) == completed
+
+
 def test_policy_rejects_bare_judge_and_human_only_completion_contract():
+    with pytest.raises(ValueError, match="scope|assignment"):
+        CoderContract("bad-human-scope", "human", "all_eligible")
+    with pytest.raises(ValueError, match="scope|assignment"):
+        CoderContract("bad-judge-scope", "judge", "stratified_sample")
     with pytest.raises(ValueError, match="judge|provenance|model|prompt"):
-        CoderContract("bare-judge", "judge")
+        CoderContract("bare-judge", "judge", "all_eligible")
     base = review_policy()
     with pytest.raises(ValueError, match="judge|human|role|coder"):
-        replace(base, coder_contracts=(CoderContract("only-human", "human"),))
+        replace(
+            base,
+            coder_contracts=(CoderContract("only-human", "human", "stratified_sample"),),
+        )
+
+
+def test_judge_reviews_all_eligible_cases_while_human_sees_only_stratified_sample():
+    scoped_coders = (
+        CoderContract("coder-a", "human", assignment_scope="stratified_sample"),
+        CoderContract(
+            "coder-b",
+            "judge",
+            assignment_scope="all_eligible",
+            model_id="synthetic-judge",
+            model_revision="offline-v1",
+            judge_prompt_hash=canonical_payload_hash("synthetic-judge-prompt"),
+            ordering_policy_id="synthetic-ordering",
+            ordering_policy_hash=canonical_payload_hash("synthetic-ordering-v1"),
+            runtime_provider="scripted-judge",
+            runtime_version="1.0.0",
+        ),
+    )
+    policy = replace(
+        review_policy(),
+        coder_contracts=scoped_coders,
+        agreement_scope="all_assigned_codes_on_human_sample",
+    )
+    specification, cases, run, _ = prepared(policy=policy)
+    awaiting = export_blind_review(specification, cases, run, policy)
+    judge_items = review_module.items_for_coder(awaiting, "coder-b")
+    human_items = review_module.items_for_coder(awaiting, "coder-a")
+    assert len(awaiting.review_export.items) == len(cases) == 6
+    assert len(judge_items) == 6
+    assert len(human_items) == 3
+    judge_only_ids = {item.item_id for item in judge_items} - {item.item_id for item in human_items}
+    assert len(judge_only_ids) == 3
+    assert all(item.item_id not in judge_only_ids for item in human_items)
+    codes = tuple(
+        code(awaiting, item, coder.coder_id)
+        for coder in policy.coder_contracts
+        for item in review_module.items_for_coder(awaiting, coder.coder_id)
+    )
+    assert sum(code_record.coder_role == "judge" for code_record in codes) == 6
+    assert sum(code_record.coder_role == "human" for code_record in codes) == 3
+    completed = import_review_codes(awaiting, codes)
+    assert completed.status == "complete"
+    parses = tuple(a.parse_evidence for a in run.attempts if a.parse_evidence is not None)
+    bridge = to_semantic_gate_evidence(completed, specification, cases, run, parses)
+    assert len(bridge) == 6 and all(item.review_complete for item in bridge)
+    unsampled = next(item for item in judge_items if item not in human_items)
+    with pytest.raises(ValueError, match="assigned|unexpected|scope"):
+        import_review_codes(awaiting, codes + (code(awaiting, unsampled, "coder-a"),))
 
 
 def test_judge_code_binds_contract_request_order_provider_and_raw_artifact():
@@ -376,15 +453,73 @@ def test_export_ids_and_order_are_stable_under_input_reordering():
     assert first.hidden_bindings == second.hidden_bindings
 
 
+def test_sampling_membership_and_order_do_not_depend_on_successful_response_content():
+    specification, cases, run_a, policy = prepared()
+    steps = {
+        (case.probe_case_id, 1): ProbeScriptStep(
+            "response",
+            raw_for(case).replace("Synthetic reason.", "Completely different evidence."),
+            None,
+            None,
+        )
+        for case in cases
+    }
+    run_b = execute_probe_run(
+        run_instance_id="review-response-independent-sampling",
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy(),
+        adapter=ScriptedProbeAdapter(steps),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    export_a = export_blind_review(specification, cases, run_a, policy)
+    export_b = export_blind_review(specification, cases, run_b, policy)
+    assert [binding.probe_case_id for binding in export_a.hidden_bindings] == [
+        binding.probe_case_id for binding in export_b.hidden_bindings
+    ]
+    assert [
+        binding.probe_case_id
+        for binding in export_a.hidden_bindings
+        if binding.human_audit_selected
+    ] == [
+        binding.probe_case_id
+        for binding in export_b.hidden_bindings
+        if binding.human_audit_selected
+    ]
+    assert export_a.review_export.export_hash != export_b.review_export.export_hash
+    changed_domain = replace(policy, randomization_domain="different-randomization-domain")
+    assert changed_domain.record_hash != policy.record_hash
+    assert review_module._sampling_rank(changed_domain, changed_domain.strata[0], cases[0]) != (
+        review_module._sampling_rank(policy, policy.strata[0], cases[0])
+    )
+
+
 def test_strata_are_complete_exact_and_insufficient_fails_closed():
     strata = (
         ReviewStratum("topic", {"case_family": "topic_quality"}, 2),
         ReviewStratum("identity", {"case_family": "identity"}, 1),
+        ReviewStratum("continuity", {"case_family": "continuity"}, 1),
     )
     bundle = export_blind_review(*prepared(policy=review_policy(strata=strata)))
-    assert [item.stratum_id for item in bundle.hidden_bindings].count("topic") == 2
-    assert [item.stratum_id for item in bundle.hidden_bindings].count("identity") == 1
-    bad = review_policy(strata=(ReviewStratum("identity", {"case_family": "identity"}, 3),))
+    assert (
+        sum(
+            item.stratum_id == "topic" and item.human_audit_selected
+            for item in bundle.hidden_bindings
+        )
+        == 2
+    )
+    assert (
+        sum(
+            item.stratum_id == "identity" and item.human_audit_selected
+            for item in bundle.hidden_bindings
+        )
+        == 1
+    )
+    bad = review_policy(strata=(ReviewStratum("all", {}, 7),))
     with pytest.raises(ValueError, match="insufficient"):
         export_blind_review(*prepared(policy=bad))
 
@@ -403,13 +538,29 @@ def test_visible_payload_rejects_nested_or_extra_fields_and_hash_drift():
 
 
 def test_import_marks_judge_failure_and_missing_coder_incomplete():
-    bundle = export_blind_review(*prepared())
+    specification, cases, run, policy = prepared()
+    bundle = export_blind_review(specification, cases, run, policy)
     item = bundle.review_export.items[0]
     failed = code(bundle, item, "coder-b", status="failed", failure_code="provider_timeout")
-    partial = tuple(code(bundle, x, "coder-a") for x in bundle.review_export.items) + (failed,)
+    partial = tuple(
+        code(bundle, x, "coder-a") for x in review_module.items_for_coder(bundle, "coder-a")
+    ) + (failed,)
     imported = import_review_codes(bundle, partial)
     assert imported.status == "review_incomplete"
     assert imported.final_labels == ()
+    parses = tuple(a.parse_evidence for a in run.attempts if a.parse_evidence is not None)
+    bridge = to_semantic_gate_evidence(imported, specification, cases, run, parses)
+    assert bridge and all(not evidence.review_complete for evidence in bridge)
+    assert all(evidence.contradiction == "indeterminate" for evidence in bridge)
+    judge_only = tuple(
+        code(bundle, item, "coder-b") for item in review_module.items_for_coder(bundle, "coder-b")
+    )
+    missing_human = import_review_codes(bundle, judge_only)
+    assert missing_human.status == "review_incomplete"
+    assert all(
+        not evidence.review_complete
+        for evidence in to_semantic_gate_evidence(missing_human, specification, cases, run, parses)
+    )
     with pytest.raises(ValueError, match="complete|final|status"):
         replace(imported, status="complete")
 
@@ -471,7 +622,7 @@ def test_import_rejects_duplicate_unexpected_coder_item_dimension_and_invalid_ty
 )
 def test_exact_agreement_boundary_and_disagreement_trigger(threshold, expected):
     bundle = export_blind_review(*prepared(policy=review_policy(threshold=threshold)))
-    disputed = bundle.review_export.items[0].item_id
+    disputed = review_module.items_for_coder(bundle, "coder-a")[0].item_id
     imported = import_review_codes(bundle, complete_codes(bundle, disagreement_item=disputed))
     assert imported.agreement == Fraction(8, 9)
     assert imported.status == expected
@@ -479,7 +630,7 @@ def test_exact_agreement_boundary_and_disagreement_trigger(threshold, expected):
 
 def test_adjudication_is_append_only_required_only_and_final_aggregation_is_bound():
     bundle = export_blind_review(*prepared(policy=review_policy(threshold=Fraction(8, 9))))
-    disputed = bundle.review_export.items[0]
+    disputed = review_module.items_for_coder(bundle, "coder-a")[0]
     imported = import_review_codes(
         bundle, complete_codes(bundle, disagreement_item=disputed.item_id)
     )
@@ -553,73 +704,23 @@ def test_hash_valid_hidden_binding_swap_and_refusal_transfer_fail_closed():
         replace(completed, hidden_bindings=(forged,) + completed.hidden_bindings[1:])
 
 
-def test_bridge_rejects_hash_valid_replacement_of_selected_item_by_unselected_item():
+def test_bridge_rejects_hash_valid_replacement_of_sampled_human_assignment():
     specification, cases, run, policy = prepared()
     original = export_blind_review(specification, cases, run, policy)
-    selected_case_ids = {binding.probe_case_id for binding in original.hidden_bindings}
-    replacement_case = next(case for case in cases if case.probe_case_id not in selected_case_ids)
-    replacement_attempt = next(
-        attempt
-        for attempt in run.attempts
-        if attempt.probe_case_id == replacement_case.probe_case_id
-        and attempt.parse_evidence is not None
-    )
-    replacement_parse = replacement_attempt.parse_evidence
-    assert replacement_parse is not None and replacement_attempt.response.raw_response is not None
-    victim_binding = original.hidden_bindings[0]
-    identity_text, history_text = review_module._semantic_visible_blocks(
-        specification.payload, replacement_case
-    )
-    visible = {
-        "topic_text": review_module._topic_text(specification.payload, replacement_case),
-        "history_text": history_text,
-        "identity_text": identity_text,
-        "response_text": replacement_attempt.response.raw_response,
-    }
-    visible_hash = canonical_payload_hash(visible)
-    replacement_item_id = review_module._opaque_item_id(
-        policy_id=policy.policy_id,
-        policy_hash=policy.record_hash,
-        randomization_seed=policy.randomization_seed,
-        randomization_domain=policy.randomization_domain,
-        stratum_id=victim_binding.stratum_id,
-        probe_case_id=replacement_case.probe_case_id,
-        probe_case_hash=replacement_case.record_hash,
-        request_id=replacement_parse.request_id,
-        request_hash=replacement_parse.request_hash,
-        response_id=replacement_parse.response_id,
-        response_hash=replacement_parse.response_hash,
-        raw_response_hash=replacement_parse.raw_response_hash,
-        parse_id=replacement_parse.parse_evidence_id,
-        parse_hash=replacement_parse.record_hash,
-        visible_payload_hash=visible_hash,
-    )
-    replacement_item = BlindReviewItem.create(
-        item_id=replacement_item_id,
-        policy_hash=policy.record_hash,
-        visible_payload=visible,
-    )
-    replacement_binding = HiddenReviewBinding.create(
-        policy,
-        replacement_item,
-        victim_binding.stratum_id,
-        replacement_case,
-        replacement_parse,
-    )
-    items = list(original.review_export.items)
-    victim_index = items.index(next(x for x in items if x.item_id == victim_binding.item_id))
-    items[victim_index] = replacement_item
-    export_payload = original.review_export.to_payload()
-    export_payload["items"] = [item.to_payload() for item in items]
-    export_payload["export_hash"] = canonical_payload_hash(
-        {key: value for key, value in export_payload.items() if key != "export_hash"}
-    )
-    forged_export = BlindReviewExport.from_payload(export_payload)
+    victim_binding = next(x for x in original.hidden_bindings if x.human_audit_selected)
+    replacement_binding = next(x for x in original.hidden_bindings if not x.human_audit_selected)
     bindings = list(original.hidden_bindings)
-    bindings[bindings.index(victim_binding)] = replacement_binding
+    for binding, selected in ((victim_binding, False), (replacement_binding, True)):
+        payload = binding.to_payload()
+        payload["human_audit_selected"] = selected
+        payload["assigned_coder_ids"] = ["coder-b", "coder-a"] if selected else ["coder-b"]
+        payload["record_hash"] = canonical_payload_hash(
+            {key: value for key, value in payload.items() if key != "record_hash"}
+        )
+        bindings[bindings.index(binding)] = HiddenReviewBinding.from_payload(payload)
     awaiting = SemanticReviewBundle(
         policy,
-        forged_export,
+        original.review_export,
         tuple(bindings),
         (),
         (),

@@ -88,7 +88,7 @@ def _fraction_payload(value: Fraction | None) -> dict[str, int] | None:
 def _fraction_from_payload(value: object) -> Fraction | None:
     if value is None:
         return None
-    if type(value) is not dict or tuple(value) != ("numerator", "denominator"):
+    if type(value) is not dict or set(value) != {"numerator", "denominator"}:
         raise ValueError("fraction payload must contain exact numerator/denominator fields")
     if type(value["numerator"]) is not int or type(value["denominator"]) is not int:
         raise TypeError("fraction numerator and denominator must be integers")
@@ -147,6 +147,7 @@ class ReviewStratum:
 class CoderContract:
     coder_id: str
     role: str
+    assignment_scope: str
     model_id: str | None = None
     model_revision: str | None = None
     judge_prompt_hash: str | None = None
@@ -161,6 +162,9 @@ class CoderContract:
         _require_id("coder_id", self.coder_id)
         if self.role not in {"human", "judge"}:
             raise ValueError("coder role must be explicitly human or judge")
+        expected_scope = "all_eligible" if self.role == "judge" else "stratified_sample"
+        if self.assignment_scope != expected_scope:
+            raise ValueError("coder role assignment scope is invalid")
         provenance_fields = (
             "model_id",
             "model_revision",
@@ -226,6 +230,7 @@ class SemanticReviewPolicy:
     required_judge_coder_count: int
     dimension_labels: Mapping[str, tuple[str, ...]]
     agreement_statistic: str
+    agreement_scope: str
     agreement_threshold: Fraction
     judge_failure_rule: str
     adjudication_trigger: str
@@ -288,6 +293,8 @@ class SemanticReviewPolicy:
             normalized_dimensions[dimension] = labels
         if self.agreement_statistic != "exact_item_dimension_agreement":
             raise ValueError("unsupported agreement statistic")
+        if self.agreement_scope != "all_assigned_codes_on_human_sample":
+            raise ValueError("unsupported agreement scope")
         _require_fraction("agreement_threshold", self.agreement_threshold)
         if self.judge_failure_rule != "review_incomplete":
             raise ValueError("judge failure rule must fail closed as review_incomplete")
@@ -365,6 +372,7 @@ class SemanticReviewPolicy:
             required_judge_coder_count=payload["required_judge_coder_count"],
             dimension_labels={k: tuple(v) for k, v in payload["dimension_labels"].items()},
             agreement_statistic=payload["agreement_statistic"],
+            agreement_scope=payload["agreement_scope"],
             agreement_threshold=_fraction_from_payload(payload["agreement_threshold"]),
             judge_failure_rule=payload["judge_failure_rule"],
             adjudication_trigger=payload["adjudication_trigger"],
@@ -383,8 +391,8 @@ class SemanticReviewPolicy:
 
 
 def _require_visible_payload(payload: object, policy: SemanticReviewPolicy) -> None:
-    if type(payload) is not dict or tuple(payload) != policy.visible_field_allowlist:
-        raise ValueError("visible payload keys must equal the exact blind allowlist in order")
+    if type(payload) is not dict or set(payload) != set(policy.visible_field_allowlist):
+        raise ValueError("visible payload keys must equal the exact blind allowlist")
     for name, value in payload.items():
         if type(value) is not str:
             raise TypeError(
@@ -446,9 +454,8 @@ class BlindReviewItem:
     def __post_init__(self) -> None:
         _require_id("item_id", self.item_id)
         _require_sha256("policy_hash", self.policy_hash)
-        if (
-            not isinstance(self.visible_payload, Mapping)
-            or tuple(self.visible_payload) != _VISIBLE_FIELDS
+        if not isinstance(self.visible_payload, Mapping) or set(self.visible_payload) != set(
+            _VISIBLE_FIELDS
         ):
             raise ValueError("visible payload does not match exact allowlist")
         for value in self.visible_payload.values():
@@ -461,7 +468,11 @@ class BlindReviewItem:
             "visible_payload_hash", self.visible_payload_hash, self.visible_payload
         )
         _validate_record_hash(self, self._SCHEMA)
-        object.__setattr__(self, "visible_payload", _freeze(self.visible_payload))
+        object.__setattr__(
+            self,
+            "visible_payload",
+            _freeze({name: self.visible_payload[name] for name in _VISIBLE_FIELDS}),
+        )
 
     @property
     def metadata(self) -> dict[str, object]:
@@ -502,6 +513,9 @@ class HiddenReviewBinding:
     randomization_seed: int
     randomization_domain: str
     stratum_id: str
+    sampling_rank_hash: str
+    human_audit_selected: bool
+    assigned_coder_ids: tuple[str, ...]
     probe_case_id: str
     probe_case_hash: str
     request_id: str
@@ -514,7 +528,7 @@ class HiddenReviewBinding:
     visible_payload_hash: str
     record_hash: str
 
-    _SCHEMA = "paper1.calibration.hidden-review-binding.v2"
+    _SCHEMA = "paper1.calibration.hidden-review-binding.v3"
 
     def __post_init__(self) -> None:
         for name in (
@@ -538,8 +552,20 @@ class HiddenReviewBinding:
             "raw_response_hash",
             "parse_hash",
             "visible_payload_hash",
+            "sampling_rank_hash",
         ):
             _require_sha256(name, getattr(self, name))
+        if type(self.human_audit_selected) is not bool:
+            raise TypeError("human_audit_selected must be a boolean")
+        if (
+            type(self.assigned_coder_ids) is not tuple
+            or not self.assigned_coder_ids
+            or any(type(value) is not str for value in self.assigned_coder_ids)
+            or len(set(self.assigned_coder_ids)) != len(self.assigned_coder_ids)
+        ):
+            raise ValueError("assigned_coder_ids must be an exact unique tuple")
+        for coder_id in self.assigned_coder_ids:
+            _require_id("assigned_coder_id", coder_id)
         expected_item_id = _opaque_item_id(
             **{
                 name: getattr(self, name)
@@ -574,7 +600,19 @@ class HiddenReviewBinding:
         stratum_id: str,
         case: ProbeCase,
         parse: ProbeParseEvidence,
+        *,
+        human_audit_selected: bool,
     ) -> HiddenReviewBinding:
+        stratum = next((value for value in policy.strata if value.stratum_id == stratum_id), None)
+        if stratum is None:
+            raise ValueError("hidden binding stratum is outside policy")
+        judge_ids = tuple(
+            contract.coder_id for contract in policy.coder_contracts if contract.role == "judge"
+        )
+        human_ids = tuple(
+            contract.coder_id for contract in policy.coder_contracts if contract.role == "human"
+        )
+        assigned_coder_ids = judge_ids + (human_ids if human_audit_selected else ())
         values = {
             "item_id": item.item_id,
             "item_hash": item.record_hash,
@@ -583,6 +621,9 @@ class HiddenReviewBinding:
             "randomization_seed": policy.randomization_seed,
             "randomization_domain": policy.randomization_domain,
             "stratum_id": stratum_id,
+            "sampling_rank_hash": _sampling_rank(policy, stratum, case),
+            "human_audit_selected": human_audit_selected,
+            "assigned_coder_ids": assigned_coder_ids,
             "probe_case_id": case.probe_case_id,
             "probe_case_hash": case.record_hash,
             "request_id": parse.request_id,
@@ -604,7 +645,11 @@ class HiddenReviewBinding:
     def from_payload(cls, payload: Mapping[str, object]) -> HiddenReviewBinding:
         expected = {f.name for f in fields(cls)} | {"schema_version", "metadata"}
         _exact_payload(payload, expected, cls._SCHEMA)
-        return cls(**{name: payload[name] for name in cls.__dataclass_fields__})  # type: ignore[arg-type]
+        values = {name: payload[name] for name in cls.__dataclass_fields__}
+        if type(payload["assigned_coder_ids"]) is not list:
+            raise TypeError("assigned_coder_ids must use a JSON array")
+        values["assigned_coder_ids"] = tuple(payload["assigned_coder_ids"])
+        return cls(**values)  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)
@@ -1003,6 +1048,17 @@ class SemanticReviewBundle:
         }:
             raise ValueError("invalid semantic review bundle status")
         item_map = {item.item_id: item for item in self.review_export.items}
+        stratum_map = {stratum.stratum_id: stratum for stratum in self.policy.strata}
+        judge_ids = tuple(
+            contract.coder_id
+            for contract in self.policy.coder_contracts
+            if contract.role == "judge"
+        )
+        human_ids = tuple(
+            contract.coder_id
+            for contract in self.policy.coder_contracts
+            if contract.role == "human"
+        )
         if any(
             binding.item_hash != item_map[binding.item_id].record_hash
             or binding.policy_id != self.policy.policy_id
@@ -1010,12 +1066,23 @@ class SemanticReviewBundle:
             or binding.randomization_seed != self.policy.randomization_seed
             or binding.randomization_domain != self.policy.randomization_domain
             or binding.visible_payload_hash != item_map[binding.item_id].visible_payload_hash
+            or binding.stratum_id not in stratum_map
+            or binding.sampling_rank_hash
+            != _sampling_rank_fields(
+                self.policy,
+                stratum_map[binding.stratum_id],
+                binding.probe_case_id,
+                binding.probe_case_hash,
+            )
+            or binding.assigned_coder_ids
+            != judge_ids + (human_ids if binding.human_audit_selected else ())
             for binding in self.hidden_bindings
         ):
-            raise ValueError("hidden binding item/policy/visible hash drift")
+            raise ValueError("hidden binding item/policy/sampling/assignment hash drift")
         stratum_counts = {
             stratum.stratum_id: sum(
-                binding.stratum_id == stratum.stratum_id for binding in self.hidden_bindings
+                binding.stratum_id == stratum.stratum_id and binding.human_audit_selected
+                for binding in self.hidden_bindings
             )
             for stratum in self.policy.strata
         }
@@ -1025,7 +1092,7 @@ class SemanticReviewBundle:
             stratum_counts[stratum.stratum_id] != stratum.sample_count
             for stratum in self.policy.strata
         ):
-            raise ValueError("hidden binding strata differ from the frozen sampling policy")
+            raise ValueError("human audit assignments differ from the frozen sampling policy")
         coder_contracts = {contract.coder_id: contract for contract in self.policy.coder_contracts}
         coder_ids = set(coder_contracts)
         code_pairs: set[tuple[str, str]] = set()
@@ -1048,7 +1115,11 @@ class SemanticReviewBundle:
             ):
                 raise ValueError("independent code item/policy/coder contract hash drift")
             _validate_labels(self.policy, code.labels, allow_empty=code.status == "failed")
-        expected_pairs = {(item_id, coder_id) for item_id in item_map for coder_id in coder_ids}
+        expected_pairs = {
+            (binding.item_id, coder_id)
+            for binding in self.hidden_bindings
+            for coder_id in binding.assigned_coder_ids
+        }
         codes_complete = code_pairs == expected_pairs and all(
             code.status == "completed" for code in self.independent_codes
         )
@@ -1056,14 +1127,18 @@ class SemanticReviewBundle:
         disputed: set[str] = set()
         if codes_complete:
             numerator = 0
-            denominator = len(item_map) * len(self.policy.dimension_labels)
+            audited_item_ids = {
+                binding.item_id for binding in self.hidden_bindings if binding.human_audit_selected
+            }
+            denominator = len(audited_item_ids) * len(self.policy.dimension_labels)
             for item_id in item_map:
                 item_codes = [code for code in self.independent_codes if code.item_id == item_id]
                 for dimension in self.policy.dimension_labels:
                     labels = {code.labels[dimension] for code in item_codes}
-                    numerator += len(labels) == 1
                     if len(labels) > 1:
                         disputed.add(item_id)
+                    if item_id in audited_item_ids:
+                        numerator += len(labels) == 1
             derived_agreement = Fraction(numerator, denominator)
         if self.agreement != derived_agreement:
             raise ValueError("agreement does not match exact independent codes")
@@ -1202,6 +1277,31 @@ def _case_matches(case: ProbeCase, stratum: ReviewStratum) -> bool:
     return all(getattr(case, key) == value for key, value in stratum.selectors.items())
 
 
+def _sampling_rank_fields(
+    policy: SemanticReviewPolicy,
+    stratum: ReviewStratum,
+    probe_case_id: str,
+    probe_case_hash: str,
+) -> str:
+    """Return a pre-execution-only deterministic sampling and assignment rank."""
+    return canonical_payload_hash(
+        {
+            "schema_version": "paper1.calibration.review-sampling-rank.v1",
+            "randomization_domain": policy.randomization_domain,
+            "randomization_seed": policy.randomization_seed,
+            "policy_id": policy.policy_id,
+            "policy_hash": policy.record_hash,
+            "stratum_id": stratum.stratum_id,
+            "probe_case_id": probe_case_id,
+            "probe_case_hash": probe_case_hash,
+        }
+    )
+
+
+def _sampling_rank(policy: SemanticReviewPolicy, stratum: ReviewStratum, case: ProbeCase) -> str:
+    return _sampling_rank_fields(policy, stratum, case.probe_case_id, case.record_hash)
+
+
 def _topic_text(spec: Mapping[str, object], case: ProbeCase) -> str:
     for raw in spec["topic_candidates"]:  # type: ignore[union-attr]
         topic = ProbeTopicCandidate.create(
@@ -1288,31 +1388,21 @@ def _build_expected_review_export(
     folded = fold_case_attempts(cases, run)
     eligible = [(case, folded[case.probe_case_id].final_parse) for case in cases]
     eligible = [(case, parse) for case, parse in eligible if parse is not None and parse.success]
-    selected: list[tuple[ReviewStratum, ProbeCase, ProbeParseEvidence]] = []
-    used: set[str] = set()
+    classified: list[tuple[ReviewStratum, ProbeCase, ProbeParseEvidence]] = []
+    for case, parse in eligible:
+        matches = tuple(stratum for stratum in policy.strata if _case_matches(case, stratum))
+        if len(matches) != 1:
+            raise ValueError("every eligible case must match exactly one review stratum")
+        classified.append((matches[0], case, parse))
+    human_selected: set[str] = set()
     for stratum in policy.strata:
-        pool = [(case, parse) for case, parse in eligible if _case_matches(case, stratum)]
-        pool.sort(
-            key=lambda pair: canonical_payload_hash(
-                [
-                    policy.randomization_seed,
-                    stratum.stratum_id,
-                    pair[0].probe_case_id,
-                    pair[0].record_hash,
-                    pair[1].record_hash,
-                ]
-            )
-        )
+        pool = [(case, parse) for assigned, case, parse in classified if assigned == stratum]
+        pool.sort(key=lambda pair: _sampling_rank(policy, stratum, pair[0]))
         if len(pool) < stratum.sample_count:
             raise ValueError(f"insufficient eligible items for stratum {stratum.stratum_id}")
-        chosen = pool[: stratum.sample_count]
-        if any(case.probe_case_id in used for case, _ in chosen):
-            raise ValueError("strata select duplicate cases; sampling without replacement failed")
-        for case, parse in chosen:
-            used.add(case.probe_case_id)
-            selected.append((stratum, case, parse))
+        human_selected.update(case.probe_case_id for case, _ in pool[: stratum.sample_count])
     items_and_bindings: list[tuple[BlindReviewItem, HiddenReviewBinding]] = []
-    for stratum, case, parse in selected:
+    for stratum, case, parse in classified:
         attempt = next(
             a
             for a in run.attempts
@@ -1356,12 +1446,18 @@ def _build_expected_review_export(
         items_and_bindings.append(
             (
                 item,
-                HiddenReviewBinding.create(policy, item, stratum.stratum_id, case, parse),
+                HiddenReviewBinding.create(
+                    policy,
+                    item,
+                    stratum.stratum_id,
+                    case,
+                    parse,
+                    human_audit_selected=case.probe_case_id in human_selected,
+                ),
             )
         )
-    items_and_bindings.sort(
-        key=lambda pair: canonical_payload_hash([policy.randomization_seed, pair[0].item_id])
-    )
+    binding_by_item = {binding.item_id: binding for _, binding in items_and_bindings}
+    items_and_bindings.sort(key=lambda pair: binding_by_item[pair[0].item_id].sampling_rank_hash)
     items = tuple(pair[0] for pair in items_and_bindings)
     bindings = tuple(pair[1] for pair in items_and_bindings)
     export_values = {
@@ -1400,7 +1496,9 @@ def export_blind_review(
 
 
 def _disputed_items(bundle: SemanticReviewBundle) -> set[str]:
-    required_coders = {x.coder_id for x in bundle.policy.coder_contracts}
+    assigned = {
+        binding.item_id: set(binding.assigned_coder_ids) for binding in bundle.hidden_bindings
+    }
     result: set[str] = set()
     for item in bundle.review_export.items:
         codes = [
@@ -1408,7 +1506,7 @@ def _disputed_items(bundle: SemanticReviewBundle) -> set[str]:
             for x in bundle.independent_codes
             if x.item_id == item.item_id and x.status == "completed"
         ]
-        if {x.coder_id for x in codes} != required_coders:
+        if {x.coder_id for x in codes} != assigned[item.item_id]:
             continue
         if any(len({x.labels[d] for x in codes}) > 1 for d in bundle.policy.dimension_labels):
             result.add(item.item_id)
@@ -1436,6 +1534,21 @@ def _final_labels(
     return tuple(result)
 
 
+def items_for_coder(bundle: SemanticReviewBundle, coder_id: str) -> tuple[BlindReviewItem, ...]:
+    """Return only the blinded items assigned to one registered independent coder."""
+    if type(bundle) is not SemanticReviewBundle:
+        raise TypeError("bundle must be a SemanticReviewBundle")
+    _require_id("coder_id", coder_id)
+    if coder_id not in {contract.coder_id for contract in bundle.policy.coder_contracts}:
+        raise ValueError("coder is outside the review policy")
+    assigned = {
+        binding.item_id
+        for binding in bundle.hidden_bindings
+        if coder_id in binding.assigned_coder_ids
+    }
+    return tuple(item for item in bundle.review_export.items if item.item_id in assigned)
+
+
 def import_review_codes(
     bundle: SemanticReviewBundle, codes: tuple[IndependentCode, ...]
 ) -> SemanticReviewBundle:
@@ -1446,6 +1559,11 @@ def import_review_codes(
         raise TypeError("codes must be an exact IndependentCode tuple")
     item_map = {x.item_id: x for x in bundle.review_export.items}
     coder_ids = {x.coder_id for x in bundle.policy.coder_contracts}
+    expected = {
+        (binding.item_id, coder_id)
+        for binding in bundle.hidden_bindings
+        for coder_id in binding.assigned_coder_ids
+    }
     pairs: set[tuple[str, str]] = set()
     for code in codes:
         if code.item_id not in item_map:
@@ -1454,6 +1572,8 @@ def import_review_codes(
             raise ValueError("unexpected coder in independent codes")
         if (code.item_id, code.coder_id) in pairs:
             raise ValueError("duplicate coder/item independent code")
+        if (code.item_id, code.coder_id) not in expected:
+            raise ValueError("independent code is outside its assigned coder scope")
         pairs.add((code.item_id, code.coder_id))
         if (
             code.item_hash != item_map[code.item_id].record_hash
@@ -1463,7 +1583,6 @@ def import_review_codes(
         ):
             raise ValueError("independent code item/policy/export hash drift")
         _validate_labels(bundle.policy, code.labels, allow_empty=code.status == "failed")
-    expected = {(item_id, coder_id) for item_id in item_map for coder_id in coder_ids}
     complete = pairs == expected and all(x.status == "completed" for x in codes)
     ordered = tuple(sorted(codes, key=lambda x: (x.item_id, x.coder_id)))
     if not complete:
@@ -1478,8 +1597,11 @@ def import_review_codes(
             (),
         )
     numerator = 0
-    denominator = len(item_map) * len(bundle.policy.dimension_labels)
-    for item_id in item_map:
+    audited_item_ids = {
+        binding.item_id for binding in bundle.hidden_bindings if binding.human_audit_selected
+    }
+    denominator = len(audited_item_ids) * len(bundle.policy.dimension_labels)
+    for item_id in audited_item_ids:
         item_codes = [x for x in ordered if x.item_id == item_id]
         numerator += sum(
             len({x.labels[dimension] for x in item_codes}) == 1
@@ -1786,5 +1908,6 @@ __all__ = [
     "append_adjudication",
     "export_blind_review",
     "import_review_codes",
+    "items_for_coder",
     "to_semantic_gate_evidence",
 ]
