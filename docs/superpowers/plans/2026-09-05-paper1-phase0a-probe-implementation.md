@@ -537,7 +537,7 @@ git commit -m "feat(platform): execute recoverable Phase 0A probes"
 - Create: `platform/src/agent_ex/calibration/gates.py`
 - Create: `platform/tests/test_calibration_gates.py`
 
-- [ ] **Step 1: Write RED boundary and denominator tests**
+- [x] **Step 1: Write RED boundary and denominator tests**
 
 ```python
 def test_endpoint_gate_checks_each_endpoint_not_combined(valid_evidence):
@@ -565,7 +565,7 @@ Add exact tests for 98/100 parse failure, 2/100 refusal failure, three-versus-fo
 pairs, contradiction 5% pass/6% fail, indeterminate contradiction causing incomplete, 0--10 not
 using the 4-of-7 gate, and runtime/review incomplete suppressing selection.
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_gates.py
@@ -573,14 +573,14 @@ using the 4-of-7 gate, and runtime/review incomplete suppressing selection.
 
 Expected: FAIL because gate symbols are absent.
 
-- [ ] **Step 3: Implement exact metrics**
+- [x] **Step 3: Implement exact metrics**
 
 Implement `paired_dz`, `total_variation`, `fold_case_attempts`, and
 `evaluate_quality_gates`. Use `fractions.Fraction` for threshold comparisons, `statistics.stdev`
 for paired deltas, explicit zero-variance branches, and exact count provenance. Every metric includes
 numerator, denominator, universe case IDs, algorithm ID/version and input hash.
 
-- [ ] **Step 4: Implement deterministic selection**
+- [x] **Step 4: Implement deterministic selection**
 
 ```python
 TOPIC_PRESELECTION = (
@@ -605,7 +605,7 @@ Selection must reject unknown/missing candidates, runtime/review incomplete, and
 forbidden outcome/contrast fields. It never reads means as relative topic quality beyond registered
 invariance gates.
 
-- [ ] **Step 5: Run GREEN tests**
+- [x] **Step 5: Run GREEN tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_gates.py
@@ -613,7 +613,7 @@ invariance gates.
 
 Expected: all pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration/gates.py platform/tests/test_calibration_gates.py
