@@ -6,10 +6,13 @@ import json
 
 import pytest
 
+import agent_ex.calibration.review as review_module
 from agent_ex.calibration.adapters import ProbeScriptStep, ScriptedProbeAdapter
 from agent_ex.calibration.gates import evaluate_quality_gates
 from agent_ex.calibration.review import (
     Adjudication,
+    BlindReviewExport,
+    BlindReviewItem,
     CoderContract,
     HiddenReviewBinding,
     IndependentCode,
@@ -548,6 +551,107 @@ def test_hash_valid_hidden_binding_swap_and_refusal_transfer_fail_closed():
     with pytest.raises(ValueError, match="item|binding|opaque|upstream"):
         forged = HiddenReviewBinding.from_payload(forged_payload)
         replace(completed, hidden_bindings=(forged,) + completed.hidden_bindings[1:])
+
+
+def test_bridge_rejects_hash_valid_replacement_of_selected_item_by_unselected_item():
+    specification, cases, run, policy = prepared()
+    original = export_blind_review(specification, cases, run, policy)
+    selected_case_ids = {binding.probe_case_id for binding in original.hidden_bindings}
+    replacement_case = next(case for case in cases if case.probe_case_id not in selected_case_ids)
+    replacement_attempt = next(
+        attempt
+        for attempt in run.attempts
+        if attempt.probe_case_id == replacement_case.probe_case_id
+        and attempt.parse_evidence is not None
+    )
+    replacement_parse = replacement_attempt.parse_evidence
+    assert replacement_parse is not None and replacement_attempt.response.raw_response is not None
+    victim_binding = original.hidden_bindings[0]
+    identity_text, history_text = review_module._semantic_visible_blocks(
+        specification.payload, replacement_case
+    )
+    visible = {
+        "topic_text": review_module._topic_text(specification.payload, replacement_case),
+        "history_text": history_text,
+        "identity_text": identity_text,
+        "response_text": replacement_attempt.response.raw_response,
+    }
+    visible_hash = canonical_payload_hash(visible)
+    replacement_item_id = review_module._opaque_item_id(
+        policy_id=policy.policy_id,
+        policy_hash=policy.record_hash,
+        randomization_seed=policy.randomization_seed,
+        randomization_domain=policy.randomization_domain,
+        stratum_id=victim_binding.stratum_id,
+        probe_case_id=replacement_case.probe_case_id,
+        probe_case_hash=replacement_case.record_hash,
+        request_id=replacement_parse.request_id,
+        request_hash=replacement_parse.request_hash,
+        response_id=replacement_parse.response_id,
+        response_hash=replacement_parse.response_hash,
+        raw_response_hash=replacement_parse.raw_response_hash,
+        parse_id=replacement_parse.parse_evidence_id,
+        parse_hash=replacement_parse.record_hash,
+        visible_payload_hash=visible_hash,
+    )
+    replacement_item = BlindReviewItem.create(
+        item_id=replacement_item_id,
+        policy_hash=policy.record_hash,
+        visible_payload=visible,
+    )
+    replacement_binding = HiddenReviewBinding.create(
+        policy,
+        replacement_item,
+        victim_binding.stratum_id,
+        replacement_case,
+        replacement_parse,
+    )
+    items = list(original.review_export.items)
+    victim_index = items.index(next(x for x in items if x.item_id == victim_binding.item_id))
+    items[victim_index] = replacement_item
+    export_payload = original.review_export.to_payload()
+    export_payload["items"] = [item.to_payload() for item in items]
+    export_payload["export_hash"] = canonical_payload_hash(
+        {key: value for key, value in export_payload.items() if key != "export_hash"}
+    )
+    forged_export = BlindReviewExport.from_payload(export_payload)
+    bindings = list(original.hidden_bindings)
+    bindings[bindings.index(victim_binding)] = replacement_binding
+    awaiting = SemanticReviewBundle(
+        policy,
+        forged_export,
+        tuple(bindings),
+        (),
+        (),
+        None,
+        "awaiting_codes",
+        (),
+    )
+    forged = import_review_codes(awaiting, complete_codes(awaiting))
+    assert forged.status == "complete"
+    parses = tuple(a.parse_evidence for a in run.attempts if a.parse_evidence is not None)
+    with pytest.raises(ValueError, match="sample|export|selection|expected"):
+        to_semantic_gate_evidence(forged, specification, cases, run, parses)
+
+    reordered_payload = original.review_export.to_payload()
+    reordered_payload["items"] = [
+        item.to_payload() for item in reversed(original.review_export.items)
+    ]
+    reordered_payload["export_hash"] = canonical_payload_hash(
+        {key: value for key, value in reordered_payload.items() if key != "export_hash"}
+    )
+    reordered = SemanticReviewBundle(
+        policy,
+        BlindReviewExport.from_payload(reordered_payload),
+        tuple(reversed(original.hidden_bindings)),
+        (),
+        (),
+        None,
+        "awaiting_codes",
+        (),
+    )
+    with pytest.raises(ValueError, match="sample|export|selection|expected"):
+        to_semantic_gate_evidence(reordered, specification, cases, run, parses)
 
 
 def test_bridge_rebuilds_request_response_and_visible_payload_before_labels_transfer():

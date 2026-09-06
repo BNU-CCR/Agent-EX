@@ -1258,13 +1258,13 @@ def _semantic_visible_blocks(spec: Mapping[str, object], case: ProbeCase) -> tup
     raise ValueError("case family has no semantic-review visible declaration")
 
 
-def export_blind_review(
+def _build_expected_review_export(
     specification: ArtifactEnvelope,
     cases: tuple[ProbeCase, ...],
     run: ProbeRunProjection,
     policy: SemanticReviewPolicy,
-) -> SemanticReviewBundle:
-    """Validate upstream evidence and create a deterministic, strictly blinded export."""
+) -> tuple[BlindReviewExport, tuple[HiddenReviewBinding, ...]]:
+    """Replay the sole deterministic sampling/export algorithm from upstream evidence."""
     if type(policy) is not SemanticReviewPolicy:
         raise TypeError("policy must be a SemanticReviewPolicy")
     if not isinstance(specification, ArtifactEnvelope):
@@ -1385,6 +1385,17 @@ def export_blind_review(
         **export_values,
         export_hash=canonical_payload_hash(export_content),  # type: ignore[arg-type]
     )
+    return review_export, bindings
+
+
+def export_blind_review(
+    specification: ArtifactEnvelope,
+    cases: tuple[ProbeCase, ...],
+    run: ProbeRunProjection,
+    policy: SemanticReviewPolicy,
+) -> SemanticReviewBundle:
+    """Validate upstream evidence and create a deterministic, strictly blinded export."""
+    review_export, bindings = _build_expected_review_export(specification, cases, run, policy)
     return SemanticReviewBundle(policy, review_export, bindings, (), (), None, "awaiting_codes", ())
 
 
@@ -1573,7 +1584,6 @@ def to_semantic_gate_evidence(
     """Project verified review labels into Task 5 gate evidence without semantic guesses."""
     if type(bundle) is not SemanticReviewBundle:
         raise TypeError("bundle must be a SemanticReviewBundle")
-    SemanticReviewBundle.from_payload(bundle.to_payload())
     if not isinstance(specification, ArtifactEnvelope):
         raise TypeError("specification must be an ArtifactEnvelope")
     if type(cases) is not tuple or any(type(x) is not ProbeCase for x in cases):
@@ -1582,6 +1592,16 @@ def to_semantic_gate_evidence(
         raise TypeError("run must be a ProbeRunProjection")
     if type(parses) is not tuple or any(type(x) is not ProbeParseEvidence for x in parses):
         raise TypeError("parses must be a ProbeParseEvidence tuple")
+    expected_export, expected_bindings = _build_expected_review_export(
+        specification, cases, run, bundle.policy
+    )
+    if bundle.review_export.to_payload() != expected_export.to_payload() or tuple(
+        binding.to_payload() for binding in bundle.hidden_bindings
+    ) != tuple(binding.to_payload() for binding in expected_bindings):
+        raise ValueError(
+            "review export/sample selection/visible binding differs from deterministic replay"
+        )
+    SemanticReviewBundle.from_payload(bundle.to_payload())
     validated = load_probe_specification(specification.to_payload()["payload"])
     if validated.output_hash != specification.output_hash:
         raise ValueError("bridge specification hash drift")
