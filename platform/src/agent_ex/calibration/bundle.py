@@ -34,7 +34,7 @@ from .gates import (
     SemanticGateEvidence,
     TopicSelection,
 )
-from .report import FreezeProposal, ProbeReport
+from .report import FreezeProposal, ProbeReport, ProbeReportSource
 from .report import ProposalArtifact, _reject_forbidden, build_probe_report
 from .review import BlindReviewExport, SemanticReviewBundle
 from .specification import load_probe_specification
@@ -69,6 +69,8 @@ _METADATA = {
 }
 _MAX_FILE_BYTES = 128 * 1024 * 1024
 _MAX_JSON_DEPTH = 96
+_MAX_VALIDATED_BUNDLE_CACHE = 8
+_VALIDATED_BUNDLE_CACHE: dict[str, ProbeBundle] = {}
 
 
 def _metadata() -> dict[str, object]:
@@ -405,6 +407,10 @@ class ProbeBundle:
         for payload in payloads.values():
             _require_json_transport(payload, "probe bundle file payload")
             _reject_forbidden(payload)
+        cache_key = canonical_payload_hash(payloads)
+        cached = _VALIDATED_BUNDLE_CACHE.get(cache_key)
+        if cached is not None and cached.to_payloads() == payloads:
+            return cached
         manifest = payloads["manifest.json"]
         manifest_fields = {
             "schema_version",
@@ -558,7 +564,7 @@ class ProbeBundle:
         )
         if rebuilt_report.to_payload() != report_payload:
             raise ValueError("report payload differs from full upstream replay")
-        rebuilt = build_probe_bundle(
+        rebuilt = _assemble_probe_bundle(
             rebuilt_report,
             manifest_algorithms=manifest["algorithms"],  # type: ignore[arg-type]
             external_archive_locator=manifest["external_archive_locator"],  # type: ignore[arg-type]
@@ -571,7 +577,56 @@ class ProbeBundle:
             or counts != rebuilt.payload_for("manifest.json")["inventory_counts"]
         ):  # type: ignore[index]
             raise ValueError("manifest inventory counts differ from reconstructed evidence")
+        _remember_validated_bundle(cache_key, rebuilt)
         return rebuilt
+
+
+def _remember_validated_bundle(cache_key: str, bundle: ProbeBundle) -> None:
+    if cache_key in _VALIDATED_BUNDLE_CACHE:
+        _VALIDATED_BUNDLE_CACHE.pop(cache_key)
+    _VALIDATED_BUNDLE_CACHE[cache_key] = bundle
+    while len(_VALIDATED_BUNDLE_CACHE) > _MAX_VALIDATED_BUNDLE_CACHE:
+        _VALIDATED_BUNDLE_CACHE.pop(next(iter(_VALIDATED_BUNDLE_CACHE)))
+
+
+def _canonical_report_from_source(report: ProbeReport) -> ProbeReport:
+    if type(report.source) is not ProbeReportSource:
+        raise TypeError("probe report source must use the exact source record")
+    source = report.source
+    rebuilt = build_probe_report(
+        specification=source.specification,
+        cases=source.cases,
+        projection=source.projection,
+        parse_evidence=source.parse_evidence,
+        semantic_review=source.semantic_review,
+        semantic_gate_evidence=source.semantic_gate_evidence,
+        gate_algorithm=source.gate_algorithm,
+        gate_reports=source.gate_reports,
+        topic_selection=source.topic_selection,
+        proposed_values=source.proposed_values,
+        proposal_artifacts=source.proposal_artifacts,
+        unresolved_decision_ids=source.unresolved_decision_ids,
+    )
+    if rebuilt != report:
+        raise ValueError("probe report source differs from canonical reconstruction")
+    return rebuilt
+
+
+def _assemble_probe_bundle(
+    report: ProbeReport,
+    *,
+    manifest_algorithms: Mapping[str, str],
+    external_archive_locator: str,
+) -> ProbeBundle:
+    contents = _content_payloads(report)
+    manifest = _manifest(
+        report,
+        contents,
+        manifest_algorithms=dict(sorted(manifest_algorithms.items())),
+        external_archive_locator=external_archive_locator,
+    )
+    payloads = {"manifest.json": manifest, **contents}
+    return ProbeBundle(report, payloads)
 
 
 def build_probe_bundle(
@@ -582,15 +637,14 @@ def build_probe_bundle(
 ) -> ProbeBundle:
     if type(report) is not ProbeReport:
         raise TypeError("build_probe_bundle requires a ProbeReport")
-    contents = _content_payloads(report)
-    manifest = _manifest(
-        report,
-        contents,
-        manifest_algorithms=dict(sorted(manifest_algorithms.items())),
+    checked_report = _canonical_report_from_source(report)
+    bundle = _assemble_probe_bundle(
+        checked_report,
+        manifest_algorithms=manifest_algorithms,
         external_archive_locator=external_archive_locator,
     )
-    payloads = {"manifest.json": manifest, **contents}
-    return ProbeBundle(report, payloads)
+    _remember_validated_bundle(canonical_payload_hash(bundle.to_payloads()), bundle)
+    return bundle
 
 
 def _reject_json_constant(value: str) -> None:
@@ -656,11 +710,14 @@ def write_probe_bundle_atomic(target: Path, bundle: ProbeBundle) -> None:
     staging = target.with_name(target.name + ".partial")
     if staging.exists() or staging.is_symlink():
         raise FileExistsError(staging)
+    checked_bundle = ProbeBundle.from_payloads(bundle.to_payloads())
+    if checked_bundle.report != bundle.report:
+        raise ValueError("probe bundle report source differs from canonical payload reconstruction")
     staging.mkdir(parents=False, exist_ok=False)
     created = True
     try:
         for name in PROBE_BUNDLE_FILES:
-            _write_json_file(staging / name, bundle.payload_for(name))
+            _write_json_file(staging / name, checked_bundle.payload_for(name))
         _fsync_directory(staging)
         os.replace(staging, target)
         created = False

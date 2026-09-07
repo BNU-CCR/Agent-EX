@@ -643,6 +643,48 @@ def test_bundle_write_load_exact_atomic_and_non_overwriting(tmp_path: Path) -> N
         write_probe_bundle_atomic(target, bundle)
 
 
+def test_bundle_build_rejects_report_source_mismatch() -> None:
+    report = complete_inputs()
+    tampered_report = replace(
+        report,
+        source=replace(report.source, cases=tuple(reversed(report.source.cases))),
+    )
+    with pytest.raises(ValueError, match="canonical|source|reconstruction"):
+        build_probe_bundle(
+            tampered_report,
+            manifest_algorithms={"report_builder": "paper1.calibration.report.v1"},
+            external_archive_locator="s3://example-bucket/phase0a/tampered-source",
+        )
+
+
+@pytest.mark.parametrize("mutation", ["report_source", "bundle_payload"])
+def test_bundle_write_validates_in_memory_evidence_before_creating_directories(
+    tmp_path: Path, mutation: str
+) -> None:
+    bundle = complete_bundle()
+    if mutation == "report_source":
+        tampered_report = replace(
+            bundle.report,
+            source=replace(
+                bundle.report.source,
+                cases=tuple(reversed(bundle.report.source.cases)),
+            ),
+        )
+        tampered_bundle = replace(bundle, report=tampered_report)
+    else:
+        payloads = bundle.to_payloads()
+        payloads["gate-report.json"]["status"] = "incomplete"
+        tampered_bundle = replace(bundle, payloads=payloads)
+    target = tmp_path / mutation
+    partial = target.with_name(target.name + ".partial")
+    with pytest.raises(
+        (ValueError, TypeError), match="canonical|source|payload|hash|reconstruction"
+    ):
+        write_probe_bundle_atomic(target, tampered_bundle)
+    assert not partial.exists()
+    assert not target.exists()
+
+
 @pytest.mark.parametrize("mutation", ["missing", "extra", "tampered", "swapped", "manifest"])
 def test_bundle_load_rejects_inventory_hash_and_cross_file_drift(
     tmp_path: Path, mutation: str
