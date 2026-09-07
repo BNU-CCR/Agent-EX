@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+from threading import RLock
 from typing import Mapping
 
 from ..artifacts import ArtifactEnvelope
@@ -71,6 +72,7 @@ _MAX_FILE_BYTES = 128 * 1024 * 1024
 _MAX_JSON_DEPTH = 96
 _MAX_VALIDATED_BUNDLE_CACHE = 8
 _VALIDATED_BUNDLE_CACHE: dict[str, ProbeBundle] = {}
+_VALIDATED_BUNDLE_CACHE_LOCK = RLock()
 
 
 def _metadata() -> dict[str, object]:
@@ -408,7 +410,8 @@ class ProbeBundle:
             _require_json_transport(payload, "probe bundle file payload")
             _reject_forbidden(payload)
         cache_key = canonical_payload_hash(payloads)
-        cached = _VALIDATED_BUNDLE_CACHE.get(cache_key)
+        with _VALIDATED_BUNDLE_CACHE_LOCK:
+            cached = _VALIDATED_BUNDLE_CACHE.get(cache_key)
         if cached is not None and cached.to_payloads() == payloads:
             return cached
         manifest = payloads["manifest.json"]
@@ -582,11 +585,12 @@ class ProbeBundle:
 
 
 def _remember_validated_bundle(cache_key: str, bundle: ProbeBundle) -> None:
-    if cache_key in _VALIDATED_BUNDLE_CACHE:
-        _VALIDATED_BUNDLE_CACHE.pop(cache_key)
-    _VALIDATED_BUNDLE_CACHE[cache_key] = bundle
-    while len(_VALIDATED_BUNDLE_CACHE) > _MAX_VALIDATED_BUNDLE_CACHE:
-        _VALIDATED_BUNDLE_CACHE.pop(next(iter(_VALIDATED_BUNDLE_CACHE)))
+    with _VALIDATED_BUNDLE_CACHE_LOCK:
+        if cache_key in _VALIDATED_BUNDLE_CACHE:
+            _VALIDATED_BUNDLE_CACHE.pop(cache_key)
+        _VALIDATED_BUNDLE_CACHE[cache_key] = bundle
+        while len(_VALIDATED_BUNDLE_CACHE) > _MAX_VALIDATED_BUNDLE_CACHE:
+            _VALIDATED_BUNDLE_CACHE.pop(next(iter(_VALIDATED_BUNDLE_CACHE)))
 
 
 def _canonical_report_from_source(report: ProbeReport) -> ProbeReport:

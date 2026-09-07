@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from functools import lru_cache
 import json
 from pathlib import Path
+import sys
+from threading import Barrier
+import time
 
 import pytest
 
@@ -683,6 +687,49 @@ def test_bundle_write_validates_in_memory_evidence_before_creating_directories(
         write_probe_bundle_atomic(target, tampered_bundle)
     assert not partial.exists()
     assert not target.exists()
+
+
+def test_validated_bundle_cache_is_bounded_and_thread_safe(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import agent_ex.calibration.bundle as bundle_module
+
+    class YieldingIterator:
+        def __init__(self, source: dict[str, ProbeBundle]) -> None:
+            self._iterator = dict.__iter__(source)
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            time.sleep(0)
+            return next(self._iterator)
+
+    class YieldingDict(dict[str, ProbeBundle]):
+        def __iter__(self):
+            return YieldingIterator(self)
+
+    bundle = complete_bundle()
+    cache: dict[str, ProbeBundle] = YieldingDict()
+    monkeypatch.setattr(bundle_module, "_VALIDATED_BUNDLE_CACHE", cache)
+    barrier = Barrier(16)
+
+    def churn(worker: int) -> None:
+        barrier.wait()
+        for index in range(200):
+            bundle_module._remember_validated_bundle(f"{worker:02d}-{index:04d}", bundle)
+
+    previous_interval = sys.getswitchinterval()
+    sys.setswitchinterval(1e-6)
+    try:
+        with ThreadPoolExecutor(max_workers=16) as executor:
+            futures = tuple(executor.submit(churn, worker) for worker in range(16))
+            for future in futures:
+                future.result()
+    finally:
+        sys.setswitchinterval(previous_interval)
+    assert len(cache) <= bundle_module._MAX_VALIDATED_BUNDLE_CACHE
+    assert cache and all(item is bundle for item in cache.values())
 
 
 @pytest.mark.parametrize("mutation", ["missing", "extra", "tampered", "swapped", "manifest"])
