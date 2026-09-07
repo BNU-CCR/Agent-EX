@@ -23,3 +23,15 @@ Task 5 is dispatched to `phase0a_task5_gates`: deterministic gates, provenance, 
 Resume by inspecting the current Git status and worker result, preserving any partial edits. Complete Task 5 specification and quality reviews before checking it complete. Then proceed to Tasks 6–9 (semantic review, report/archive, end-to-end integration and final verification/handoff). Do not reopen already closed reviews without new relevant changes or evidence.
 
 All current Phase 0A checks use synthetic offline fixtures. No real experiment results have been produced by these tasks. Unresolved research parameters remain unresolved; code must not promote proposals to formal authority.
+
+## 2026-09-07 pause checkpoint
+
+Tasks 5–7 are complete, independently reviewed, and checked in the implementation plan. Task 7's final implementation chain ends at `05d1938`, with the checklist checkpoint at `f817d18`. Its final quality review found no P0–P3 findings after the in-memory bundle validation and synchronized bounded-cache fixes.
+
+Task 8 implementation is committed at `029e269`; the format-repair bridge correction is committed separately at `06147fc` and independently approved with no P0–P3 findings. Task 8 specification review is approved with no P0–P2 findings. The authoritative count is 816 logical cases for four replicates (144 topic-quality, 96 identity and 576 continuity cases), yielding 816 requests, 816 responses and 816 parse records in a normal complete run; 2,448 is the combined count of those three evidence-record classes, not a case count.
+
+Task 8 quality review then identified two P2 findings and one P3 finding. Their fixes are committed at `cf60d09`: the public real-draft entry point is now an explicit `NoReturn` fail-closed Phase 0A draft guard; scripted adapters bind run-local target state and remain deterministic when one adapter instance is reused; recursive YAML aliases are rejected with a stable validation error. RED evidence was `5 failed, 14 deselected`; targeted GREEN was `5 passed, 14 deselected`; the fresh complete integration suite was `19 passed in 1132.57s`; the inherited guard/public-surface suite was `308 passed in 3.84s`. Ruff, format and diff checks passed before the commit.
+
+The post-fix calibration regression excluding integration was intentionally interrupted at the user's pause request at approximately 53% with no failures shown. It has no terminal result and must not be reported as passed. There is no remaining Python process, and the worktree was clean immediately after `cf60d09` before this checkpoint edit.
+
+Resume order: (1) independently re-run the focused Task 8 quality review against `cf60d09`; (2) repair any confirmed P0–P2 finding, otherwise mark all five Task 8 plan steps complete and commit the checklist update; (3) execute Task 9 full verification, artifact/authority hygiene gates, three independent final read-only reviews, verified handoff documentation, commit and push. Do not start a real probe, freeze a research parameter, or claim Phase 0A formal readiness.
