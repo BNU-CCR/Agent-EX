@@ -621,10 +621,35 @@ def build_freeze_proposal(
         sorted(proposal_artifacts, key=lambda item: (item.decision_id, item.artifact_id))
     )
     ordered_unresolved = tuple(sorted(unresolved_decision_ids))
-    if completeness.status != "complete" and (
-        topic_selection.primary is not None or ordered_proposals
-    ):
-        raise ValueError("incomplete evidence cannot produce favorable selection or proposals")
+    if gate_report.selection_hash != canonical_payload_hash(topic_selection.to_payload()):
+        raise ValueError("freeze proposal selection differs from its gate report")
+    if completeness.status != "complete":
+        if (
+            topic_selection.status != "suppressed"
+            or topic_selection.primary is not None
+            or topic_selection.robustness is not None
+            or ordered_proposals
+            or ordered_artifacts
+            or set(ordered_unresolved) != registered
+        ):
+            raise ValueError(
+                "incomplete evidence requires suppressed selection and all decisions unresolved"
+            )
+    elif topic_selection.status == "proposal_only":
+        if (
+            topic_selection.primary is None
+            or ordered_proposals.get("P1_TOPIC_PRIMARY") != topic_selection.primary
+        ):
+            raise ValueError("topic proposal must equal the precommitted primary selection")
+    elif topic_selection.status == "no_candidate":
+        if (
+            topic_selection.primary is not None
+            or topic_selection.robustness is not None
+            or "P1_TOPIC_PRIMARY" not in ordered_unresolved
+        ):
+            raise ValueError("no-candidate selection requires the topic decision unresolved")
+    else:
+        raise ValueError("complete evidence requires proposal-only or no-candidate selection")
     return FreezeProposal.create(
         status="proposal_only" if completeness.status == "complete" else "incomplete",
         specification_hash=specification_hash,
@@ -756,17 +781,6 @@ def build_probe_report(
         item.to_payload() for item in expected_reports
     ]:
         raise ValueError("gate report differs from deterministic replay")
-    expected_selection = select_topic(expected_reports)
-    if (
-        type(topic_selection) is not TopicSelection
-        or topic_selection.to_payload() != expected_selection.to_payload()
-    ):
-        raise ValueError("topic selection differs from precommitted deterministic selection")
-    ordered_artifacts = tuple(
-        sorted(proposal_artifacts, key=lambda item: (item.decision_id, item.artifact_id))
-    )
-    ordered_unresolved = tuple(sorted(unresolved_decision_ids))
-    ordered_proposals = dict(sorted(proposed_values.items()))
     attempts = checked_projection.attempts
     actual_attempt_cases = tuple(sorted({attempt.probe_case_id for attempt in attempts}))
     expected_attempt_cases = tuple(sorted(expected_cases))
@@ -783,6 +797,26 @@ def build_probe_report(
         and all(report.status == "complete" for report in ordered_reports)
         else "incomplete"
     )
+    expected_selection = (
+        select_topic(expected_reports)
+        if completeness_status == "complete"
+        else TopicSelection(
+            "suppressed",
+            None,
+            None,
+            tuple(report.record_hash for report in expected_reports),
+        )
+    )
+    if (
+        type(topic_selection) is not TopicSelection
+        or topic_selection.to_payload() != expected_selection.to_payload()
+    ):
+        raise ValueError("topic selection differs from precommitted deterministic selection")
+    ordered_artifacts = tuple(
+        sorted(proposal_artifacts, key=lambda item: (item.decision_id, item.artifact_id))
+    )
+    ordered_unresolved = tuple(sorted(unresolved_decision_ids))
+    ordered_proposals = dict(sorted(proposed_values.items()))
     completeness = ProbeCompletenessReport.create(
         status=completeness_status,
         expected_case_count=len(authoritative),

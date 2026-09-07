@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass, fields
 from fractions import Fraction
 import json
@@ -9,7 +10,6 @@ import os
 from pathlib import Path
 import shutil
 from typing import Mapping
-from copy import deepcopy
 
 from ..artifacts import ArtifactEnvelope
 from ..domain import (
@@ -75,6 +75,16 @@ def _metadata() -> dict[str, object]:
     return dict(_METADATA)
 
 
+def _require_exact_metadata(value: object) -> None:
+    if type(value) is not dict or set(value) != set(_METADATA):
+        raise ValueError("bundle metadata fields do not match the exact contract")
+    if any(
+        type(value[key]) is not type(expected) or value[key] != expected
+        for key, expected in _METADATA.items()
+    ):
+        raise ValueError("bundle metadata must remain calibration-only without authority")
+
+
 def _with_hash(schema: str, values: Mapping[str, object]) -> dict[str, object]:
     content = {"schema_version": schema, **values, "metadata": _metadata()}
     return _json_ready({**content, "content_hash": canonical_payload_hash(content)})
@@ -93,8 +103,9 @@ def _validate_wrapper(
     }:
         raise ValueError("bundle payload fields do not match the exact contract")
     _require_json_transport(payload, "bundle payload")
-    if payload["schema_version"] != schema or payload["metadata"] != _METADATA:
+    if payload["schema_version"] != schema:
         raise ValueError("bundle payload schema or metadata is invalid")
+    _require_exact_metadata(payload["metadata"])
     content = {key: value for key, value in payload.items() if key != "content_hash"}
     if payload["content_hash"] != canonical_payload_hash(content):
         raise ValueError("bundle payload content hash drift")
@@ -413,8 +424,9 @@ class ProbeBundle:
         }
         if type(manifest) is not dict or set(manifest) != manifest_fields:
             raise ValueError("manifest payload fields do not match the exact contract")
-        if manifest["schema_version"] != _SCHEMAS["manifest"] or manifest["metadata"] != _METADATA:
+        if manifest["schema_version"] != _SCHEMAS["manifest"]:
             raise ValueError("manifest schema or metadata is invalid")
+        _require_exact_metadata(manifest["metadata"])
         manifest_content = {key: value for key, value in manifest.items() if key != "manifest_hash"}
         if manifest["manifest_hash"] != canonical_payload_hash(manifest_content):
             raise ValueError("manifest hash drift")

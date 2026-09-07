@@ -10,15 +10,17 @@ import pytest
 from agent_ex.calibration.adapters import ProbeAdapter, ProbeScriptStep, ScriptedProbeAdapter
 from agent_ex.calibration.bundle import (
     PROBE_BUNDLE_FILES,
+    ProbeBundle,
     build_probe_bundle,
     load_probe_bundle,
     write_probe_bundle_atomic,
 )
 from agent_ex.calibration.contracts import ProbeResponse
-from agent_ex.calibration.gates import evaluate_quality_gates, select_topic
+from agent_ex.calibration.gates import TopicSelection, evaluate_quality_gates, select_topic
 from agent_ex.calibration.report import (
     FORBIDDEN_REPORT_KEYS,
     FreezeProposal,
+    ProbeGateReport,
     ProposalArtifact,
     build_freeze_proposal,
     build_probe_report,
@@ -152,6 +154,82 @@ def complete_bundle():
     )
 
 
+@lru_cache(maxsize=2)
+def incomplete_inputs(kind: str):
+    complete = complete_inputs()
+    source = complete.source
+    if kind == "runtime_failed":
+        steps = {
+            (case.probe_case_id, 1): (
+                ProbeScriptStep("provider_error", None, "provider_fatal", None)
+                if index == 0
+                else ProbeScriptStep("response", _raw(case, 4), None, None)
+            )
+            for index, case in enumerate(source.cases)
+        }
+        projection = execute_probe_run(
+            run_instance_id="phase0a-runtime-failed-report-test",
+            specification_hash=source.specification.output_hash,
+            cases=source.cases,
+            runtime_policy=source.projection.runtime_policy,
+            adapter=ScriptedProbeAdapter(steps),
+            generation_settings=dict(source.projection.generation_settings),
+            runtime_identity=dict(source.projection.runtime_identity),
+            model_identity=dict(source.projection.model_identity),
+            tokenizer_identity=dict(source.projection.tokenizer_identity),
+            chat_template_hash=source.projection.chat_template_hash,
+        )
+    elif kind == "review_incomplete":
+        projection = source.projection
+    else:
+        raise AssertionError(f"unknown incomplete test kind: {kind}")
+    parses = tuple(
+        attempt.parse_evidence for attempt in projection.attempts if attempt.parse_evidence
+    )
+    pending = export_blind_review(
+        source.specification, source.cases, projection, source.semantic_review.policy
+    )
+    review = (
+        import_review_codes(pending, complete_codes(pending))
+        if kind == "runtime_failed"
+        else import_review_codes(pending, ())
+    )
+    bridge = to_semantic_gate_evidence(
+        review, source.specification, source.cases, projection, parses
+    )
+    reports = tuple(
+        evaluate_quality_gates(
+            source.specification,
+            source.cases,
+            projection,
+            source.gate_algorithm,
+            bridge,
+            candidate_key=key,
+        )
+        for key in ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
+    )
+    suppressed = TopicSelection(
+        "suppressed",
+        None,
+        None,
+        tuple(report.record_hash for report in reports),
+    )
+    return build_probe_report(
+        specification=source.specification,
+        cases=source.cases,
+        projection=projection,
+        parse_evidence=parses,
+        semantic_review=review,
+        semantic_gate_evidence=bridge,
+        gate_algorithm=source.gate_algorithm,
+        gate_reports=reports,
+        topic_selection=suppressed,
+        proposed_values={},
+        proposal_artifacts=(),
+        unresolved_decision_ids=tuple(sorted(source.specification.payload["decision_ids"])),
+    )
+
+
 def test_freeze_proposal_has_no_decision_authority() -> None:
     report = complete_inputs()
     proposal = report.freeze_proposal
@@ -175,6 +253,93 @@ def test_freeze_proposal_has_no_decision_authority() -> None:
         registered_decision_ids=tuple(report.source.specification.payload["decision_ids"]),
     )
     assert rebuilt == proposal
+
+
+def test_freeze_proposal_binds_topic_value_to_precommitted_primary() -> None:
+    report = complete_inputs()
+    wrong_topic = next(
+        key
+        for key in ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
+        if key != report.topic_selection.primary
+    )
+    artifact = ProposalArtifact(
+        "P1_TOPIC_PRIMARY",
+        "mismatched-topic-artifact",
+        canonical_payload_hash("mismatched-topic-artifact"),
+        "s3://example-bucket/mismatched-topic.json",
+    )
+    with pytest.raises(ValueError, match="selection|primary|topic"):
+        build_freeze_proposal(
+            completeness=report.completeness,
+            specification_hash=report.specification_hash,
+            case_inventory_hash=report.case_inventory_hash,
+            run_evidence_hash=report.run_evidence_hash,
+            gate_report=report.gate_report,
+            topic_selection=report.topic_selection,
+            proposed_values={"P1_TOPIC_PRIMARY": wrong_topic},
+            proposal_artifacts=(artifact,),
+            unresolved_decision_ids=report.source.unresolved_decision_ids,
+            registered_decision_ids=tuple(report.source.specification.payload["decision_ids"]),
+        )
+
+
+def test_no_candidate_requires_topic_decision_to_remain_unresolved() -> None:
+    report = complete_inputs()
+    source = report.source
+    selection = TopicSelection(
+        "no_candidate",
+        None,
+        None,
+        tuple(item.record_hash for item in source.gate_reports),
+    )
+    gate_report = ProbeGateReport.create(source.gate_reports, source.gate_algorithm, selection)
+    artifact = ProposalArtifact(
+        "P1_TOPIC_PRIMARY",
+        "no-candidate-topic-artifact",
+        canonical_payload_hash("no-candidate-topic-artifact"),
+        "s3://example-bucket/no-candidate-topic.json",
+    )
+    with pytest.raises(ValueError, match="no.candidate|unresolved|topic"):
+        build_freeze_proposal(
+            completeness=report.completeness,
+            specification_hash=report.specification_hash,
+            case_inventory_hash=report.case_inventory_hash,
+            run_evidence_hash=report.run_evidence_hash,
+            gate_report=gate_report,
+            topic_selection=selection,
+            proposed_values={"P1_TOPIC_PRIMARY": "gm-soybean-oil"},
+            proposal_artifacts=(artifact,),
+            unresolved_decision_ids=source.unresolved_decision_ids,
+            registered_decision_ids=tuple(source.specification.payload["decision_ids"]),
+        )
+
+
+@pytest.mark.parametrize("kind", ["runtime_failed", "review_incomplete"])
+def test_incomplete_run_is_suppressed_and_archivable(tmp_path: Path, kind: str) -> None:
+    report = incomplete_inputs(kind)
+    assert report.status == "incomplete"
+    assert report.completeness.status == "incomplete"
+    assert report.topic_selection.status == "suppressed"
+    assert report.topic_selection.primary is None
+    assert report.topic_selection.robustness is None
+    assert dict(report.freeze_proposal.proposed_values) == {}
+    assert report.freeze_proposal.supporting_artifacts == ()
+    assert set(report.freeze_proposal.unresolved_decision_ids) == set(
+        report.source.specification.payload["decision_ids"]
+    )
+    if kind == "runtime_failed":
+        assert "runtime_failed" in set(report.source.projection.case_statuses.values())
+    else:
+        assert report.source.semantic_review.status == "review_incomplete"
+    bundle = build_probe_bundle(
+        report,
+        manifest_algorithms={"report_builder": "paper1.calibration.report.v1"},
+        external_archive_locator=f"s3://example-bucket/phase0a/{kind}",
+    )
+    target = tmp_path / kind
+    write_probe_bundle_atomic(target, bundle)
+    restored = load_probe_bundle(target)
+    assert restored.to_payloads() == bundle.to_payloads()
 
 
 def test_report_hash_layers_are_order_invariant_and_distinct() -> None:
@@ -433,6 +598,38 @@ def test_manifest_free_form_recursively_rejects_forbidden_keys() -> None:
             manifest_algorithms={"p_value": "1.0.0"},
             external_archive_locator="s3://example-bucket/phase0a/test",
         )
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "manifest.json",
+        "case-inventory.json",
+        "requests.json",
+        "raw-responses.json",
+        "parse-evidence.json",
+        "machine-metrics.json",
+    ],
+)
+def test_bundle_metadata_rejects_integer_boolean_impersonation(name: str) -> None:
+    payloads = json.loads(json.dumps(complete_bundle().to_payloads()))
+    payload = payloads[name]
+    payload["metadata"]["calibration_only"] = 1
+    if name == "manifest.json":
+        payload["manifest_hash"] = canonical_payload_hash(
+            {key: value for key, value in payload.items() if key != "manifest_hash"}
+        )
+    else:
+        payload["content_hash"] = canonical_payload_hash(
+            {key: value for key, value in payload.items() if key != "content_hash"}
+        )
+        manifest = payloads["manifest.json"]
+        manifest["file_hashes"][name] = canonical_payload_hash(payload)
+        manifest["manifest_hash"] = canonical_payload_hash(
+            {key: value for key, value in manifest.items() if key != "manifest_hash"}
+        )
+    with pytest.raises(ValueError, match="metadata|calibration"):
+        ProbeBundle.from_payloads(payloads)
 
 
 def test_bundle_write_load_exact_atomic_and_non_overwriting(tmp_path: Path) -> None:
