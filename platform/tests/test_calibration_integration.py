@@ -17,7 +17,12 @@ from agent_ex import (
 )
 from agent_ex.calibration.bundle import ProbeBundle, build_probe_bundle
 from agent_ex.calibration.contracts import ProbeTopicCandidate
-from agent_ex.calibration.specification import ALLOWED_DECISION_IDS, load_probe_specification
+from agent_ex.calibration.runner import execute_probe_run
+from agent_ex.calibration.specification import (
+    ALLOWED_DECISION_IDS,
+    expand_probe_cases,
+    load_probe_specification,
+)
 from agent_ex.domain import canonical_payload_hash
 from helpers.calibration import probe_spec_payload, reversed_nonsemantic_arrays
 
@@ -25,10 +30,12 @@ from helpers.calibration import probe_spec_payload, reversed_nonsemantic_arrays
 DRAFT_PATH = Path(__file__).parents[1] / "configs" / "paper1" / "phase0a-probe.draft.yaml"
 
 
-def _mock_probe_specification(*, replicates: int = 4, reordered: bool = False):
+def _mock_probe_specification(
+    *, replicates: int = 4, reordered: bool = False, seed_base: int = 100
+):
     payload = probe_spec_payload()
     payload["replicates"] = [
-        {"replicate_id": index, "requested_seed": 100 + index} for index in range(replicates)
+        {"replicate_id": index, "requested_seed": seed_base + index} for index in range(replicates)
     ]
     payload["policy_hashes"] = offline_module._offline_policy_hashes()
     if reordered:
@@ -122,6 +129,54 @@ def test_one_format_repair_is_preserved_in_end_to_end_report() -> None:
         chains.setdefault(attempt.probe_case_id, []).append(attempt.request.attempt_kind)
     assert list(chains.values()).count(["semantic", "format_repair"]) == 1
     assert report.status == "proposal_only"
+
+
+def _execute_one_case(specification, adapter, run_instance_id: str):
+    case = expand_probe_cases(specification)[0]
+    execution_adapter = adapter.for_cases((case,))
+    return execute_probe_run(
+        run_instance_id=run_instance_id,
+        specification_hash=specification.output_hash,
+        cases=(case,),
+        runtime_policy=offline_module._runtime_policy(),
+        adapter=execution_adapter,
+        generation_settings=offline_module._GENERATION_SETTINGS,
+        runtime_identity=offline_module._RUNTIME_IDENTITY,
+        model_identity=offline_module._MODEL_IDENTITY,
+        tokenizer_identity=offline_module._TOKENIZER_IDENTITY,
+        chat_template_hash=offline_module._CHAT_TEMPLATE_HASH,
+    )
+
+
+@pytest.mark.parametrize("failure_kind", ["runtime", "format_repair"])
+def test_scripted_adapter_reuse_has_no_cross_run_first_case_state(failure_kind: str) -> None:
+    adapter = scripted_probe_adapter(
+        runtime_failure=failure_kind == "runtime",
+        format_repair=failure_kind == "format_repair",
+    )
+    first = _execute_one_case(
+        _mock_probe_specification(replicates=1, seed_base=100),
+        adapter,
+        "adapter-reuse-first",
+    )
+    second = _execute_one_case(
+        _mock_probe_specification(replicates=1, seed_base=200, reordered=True),
+        adapter,
+        "adapter-reuse-second",
+    )
+    if failure_kind == "runtime":
+        assert first.status == second.status == "incomplete"
+        assert set(first.case_statuses.values()) == {"runtime_failed"}
+        assert set(second.case_statuses.values()) == {"runtime_failed"}
+    else:
+        assert [attempt.request.attempt_kind for attempt in first.attempts] == [
+            "semantic",
+            "format_repair",
+        ]
+        assert [attempt.request.attempt_kind for attempt in second.attempts] == [
+            "semantic",
+            "format_repair",
+        ]
 
 
 def test_permanent_runtime_failure_suppresses_selection() -> None:
@@ -226,7 +281,39 @@ def test_real_draft_is_not_runnable_and_keeps_every_research_value_unresolved() 
 def test_runnable_loader_rejects_nested_unresolved_before_partial_validation() -> None:
     payload = deepcopy(probe_spec_payload())
     payload["topic_candidates"][0]["fact_card"] = {"nested": "UNRESOLVED[P1_TOPIC_PRIMARY]"}
-    with pytest.raises(ValueError, match="UNRESOLVED"):
+    with pytest.raises(ValueError, match="draft.*UNRESOLVED|UNRESOLVED.*draft"):
+        load_runnable_probe_specification(payload)
+
+
+def _replace_unresolved_with_manual_values(value):
+    if type(value) is str and "UNRESOLVED[" in value:
+        return "manually-resolved-without-authority"
+    if type(value) is dict:
+        return {key: _replace_unresolved_with_manual_values(child) for key, child in value.items()}
+    if type(value) is list:
+        return [_replace_unresolved_with_manual_values(child) for child in value]
+    return value
+
+
+def test_draft_guard_rejects_manually_replaced_payload_without_implying_runnable_loader() -> None:
+    payload = _replace_unresolved_with_manual_values(probe_spec_payload())
+    with pytest.raises(
+        ValueError,
+        match="draft-only|runnable loader.*not available|formal approval",
+    ):
+        load_runnable_probe_specification(payload)
+
+
+@pytest.mark.parametrize("container", ["mapping", "list"])
+def test_draft_guard_rejects_recursive_yaml_aliases_stably(container: str) -> None:
+    payload: dict[str, object] = {"schema_version": "draft"}
+    if container == "mapping":
+        payload["recursive"] = payload
+    else:
+        recursive: list[object] = []
+        recursive.append(recursive)
+        payload["recursive"] = recursive
+    with pytest.raises(ValueError, match="cyclic|recursive|alias"):
         load_runnable_probe_specification(payload)
 
 

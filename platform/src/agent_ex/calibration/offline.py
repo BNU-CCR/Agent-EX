@@ -6,7 +6,7 @@ from fractions import Fraction
 from itertools import combinations
 import json
 import re
-from typing import Mapping
+from typing import Mapping, NoReturn
 
 from ..artifacts import ArtifactEnvelope
 from ..domain import canonical_payload_hash
@@ -31,7 +31,7 @@ from .review import (
     to_semantic_gate_evidence,
 )
 from .runner import execute_probe_run
-from .specification import expand_probe_cases, load_probe_specification
+from .specification import expand_probe_cases
 
 
 _TOPIC_ORDER = ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
@@ -173,31 +173,38 @@ def _offline_policy_hashes() -> dict[str, str]:
     }
 
 
-def _find_unresolved(value: object) -> str | None:
+def _find_unresolved(value: object, active_container_ids: set[int] | None = None) -> str | None:
     if type(value) is str:
         match = _UNRESOLVED.search(value)
         return None if match is None else match.group(0)
-    if type(value) is dict:
-        for key in sorted(value):
-            found = _find_unresolved(value[key])
+    if type(value) not in {dict, list}:
+        return None
+    active = set() if active_container_ids is None else active_container_ids
+    identity = id(value)
+    if identity in active:
+        raise ValueError("cyclic YAML alias in Phase 0A probe draft is forbidden")
+    active.add(identity)
+    try:
+        children = (value[key] for key in sorted(value)) if type(value) is dict else iter(value)
+        for child in children:
+            found = _find_unresolved(child, active)
             if found is not None:
                 return found
-    elif type(value) is list:
-        for item in value:
-            found = _find_unresolved(item)
-            if found is not None:
-                return found
+    finally:
+        active.remove(identity)
     return None
 
 
-def load_runnable_probe_specification(payload: Mapping[str, object]) -> ArtifactEnvelope:
-    """Load a probe specification only after every research placeholder is resolved."""
+def load_runnable_probe_specification(payload: Mapping[str, object]) -> NoReturn:
+    """Fail closed: Phase 0A currently has only a draft, never a runnable formal loader."""
     if type(payload) is not dict:
         raise TypeError("runnable probe specification must be an exact mapping")
     unresolved = _find_unresolved(payload)
     if unresolved is not None:
-        raise ValueError(f"runnable probe specification contains {unresolved}")
-    return load_probe_specification(payload)
+        raise ValueError(f"Phase 0A draft is not runnable while it contains {unresolved}")
+    raise ValueError(
+        "Phase 0A draft-only guard: a runnable loader is not available before formal approval"
+    )
 
 
 class _OfflineScriptedProbeAdapter(ProbeAdapter):
@@ -208,6 +215,7 @@ class _OfflineScriptedProbeAdapter(ProbeAdapter):
         format_repair: bool,
         runtime_failure: bool,
         review_complete: bool,
+        target_case_id: str | None = None,
     ) -> None:
         if mode not in {"all_pass", "partial_pass", "no_pass"}:
             raise ValueError("unsupported offline scripted mode")
@@ -222,7 +230,24 @@ class _OfflineScriptedProbeAdapter(ProbeAdapter):
         self.format_repair = format_repair
         self.runtime_failure = runtime_failure
         self.review_complete = review_complete
-        self._first_case_id: str | None = None
+        if target_case_id is not None and (
+            type(target_case_id) is not str or not target_case_id.strip()
+        ):
+            raise ValueError("target_case_id must be non-empty text or null")
+        self._target_case_id = target_case_id
+
+    def for_cases(self, cases) -> _OfflineScriptedProbeAdapter:
+        """Return a per-run immutable binding without retaining cross-run case state."""
+        case_ids = tuple(case.probe_case_id for case in cases)
+        if not case_ids or len(set(case_ids)) != len(case_ids):
+            raise ValueError("offline adapter requires a nonempty unique case inventory")
+        return _OfflineScriptedProbeAdapter(
+            mode=self.mode,
+            format_repair=self.format_repair,
+            runtime_failure=self.runtime_failure,
+            review_complete=self.review_complete,
+            target_case_id=min(case_ids),
+        )
 
     @property
     def configuration_hash(self) -> str:
@@ -267,12 +292,10 @@ class _OfflineScriptedProbeAdapter(ProbeAdapter):
     def generate(self, request: ProbeRequest) -> ProbeResponse:
         if not isinstance(request, ProbeRequest):
             raise TypeError("request must be a ProbeRequest")
-        if self._first_case_id is None:
-            self._first_case_id = request.probe_case_id
-        is_first = request.probe_case_id == self._first_case_id
-        if self.runtime_failure and is_first and request.attempt_index == 1:
+        is_target = request.probe_case_id == self._target_case_id
+        if self.runtime_failure and is_target and request.attempt_index == 1:
             outcome, raw, error = "provider_error", None, "provider_fatal"
-        elif self.format_repair and is_first and request.attempt_index == 1:
+        elif self.format_repair and is_target and request.attempt_index == 1:
             outcome, raw, error = "response", "not-json", None
         else:
             values = {
@@ -453,12 +476,13 @@ def run_offline_probe(
     if dict(specification.payload["policy_hashes"]) != expected_hashes:
         raise ValueError("specification policy hashes do not bind the offline policy records")
     cases = expand_probe_cases(specification)
+    execution_adapter = adapter.for_cases(cases)
     projection = execute_probe_run(
         run_instance_id="phase0a-offline-" + adapter.configuration_hash,
         specification_hash=specification.output_hash,
         cases=cases,
         runtime_policy=_runtime_policy(),
-        adapter=adapter,
+        adapter=execution_adapter,
         generation_settings=_GENERATION_SETTINGS,
         runtime_identity=_RUNTIME_IDENTITY,
         model_identity=_MODEL_IDENTITY,
@@ -469,7 +493,7 @@ def run_offline_probe(
         specification=specification,
         cases=cases,
         projection=projection,
-        adapter=adapter,
+        adapter=execution_adapter,
     )
 
 
