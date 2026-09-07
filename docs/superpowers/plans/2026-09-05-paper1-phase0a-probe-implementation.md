@@ -688,7 +688,7 @@ git commit -m "feat(platform): bind blinded Phase 0A review"
 - Create: `platform/src/agent_ex/calibration/bundle.py`
 - Create: `platform/tests/test_calibration_report.py`
 
-- [ ] **Step 1: Write RED authority, hash-layer and forbidden-output tests**
+- [x] **Step 1: Write RED authority, hash-layer and forbidden-output tests**
 
 ```python
 def test_freeze_proposal_has_no_decision_authority(complete_inputs):
@@ -737,7 +737,7 @@ def test_bundle_load_rejects_missing_or_hash_drift(tmp_path, complete_inputs):
         load_probe_bundle(target)
 ```
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_report.py
@@ -745,7 +745,7 @@ def test_bundle_load_rejects_missing_or_hash_drift(tmp_path, complete_inputs):
 
 Expected: FAIL because report builders are absent.
 
-- [ ] **Step 3: Implement the four report layers**
+- [x] **Step 3: Implement the four report layers**
 
 Implement immutable `ProbeCompletenessReport`, `ProbeGateReport`, `TopicSelection`,
 `ProbeReport`, `FreezeProposal`, and `ProbeBundle`. `ProbeBundle.payload_for(name)` maps every
@@ -808,7 +808,7 @@ def load_probe_bundle(target: Path) -> ProbeBundle:
 `ProbeBundle.from_payloads` must revalidate every content hash and the manifest's three hash layers.
 The writer accepts an explicit new target only; it never selects “latest” or overwrites a run.
 
-- [ ] **Step 4: Run GREEN tests**
+- [x] **Step 4: Run GREEN tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_report.py tests\test_calibration_gates.py tests\test_calibration_review.py
@@ -816,7 +816,7 @@ The writer accepts an explicit new target only; it never selects “latest” or
 
 Expected: all pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration/report.py platform/src/agent_ex/calibration/bundle.py platform/tests/test_calibration_report.py
