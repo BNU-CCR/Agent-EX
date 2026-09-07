@@ -1,7 +1,14 @@
 """Stable public protocol, artifact, RNG, and ordinal evidence primitives."""
 
 from .artifacts import ArtifactEnvelope
-from .calibration import ProbeCase, ProbePersonaView, ProbeTopicCandidate
+from .calibration import (
+    ProbeCase,
+    ProbePersonaView,
+    ProbeTopicCandidate,
+    load_runnable_probe_specification,
+    run_offline_probe,
+    scripted_probe_adapter,
+)
 from .checkpoint import (
     Checkpoint,
     build_checkpoint,
@@ -262,6 +269,7 @@ __all__ = [
     "execution_projection",
     "execute_mock_run",
     "load_protocol",
+    "load_runnable_probe_specification",
     "load_checkpoint",
     "load_mock_scale_cases",
     "mock_adapter_semantics_hash",
@@ -271,7 +279,9 @@ __all__ = [
     "reconstruct_event_rng_provenance",
     "render_persona",
     "render_messages",
+    "run_offline_probe",
     "select_unread_feed",
+    "scripted_probe_adapter",
     "trs_integerize",
     "update_human_protocol_summary",
     "validate_human_protocol_reference",
