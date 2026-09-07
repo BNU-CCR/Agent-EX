@@ -1773,22 +1773,30 @@ def to_semantic_gate_evidence(
     case_map = {x.probe_case_id: x for x in cases}
     if len(case_map) != len(cases):
         raise ValueError("duplicate bridge cases")
-    parse_map = {x.probe_case_id: x for x in parses}
-    if len(parse_map) != len(parses):
-        raise ValueError("duplicate bridge parses")
+    expected_parses = tuple(
+        attempt.parse_evidence for attempt in run.attempts if attempt.parse_evidence is not None
+    )
+    supplied_parse_map = {x.parse_evidence_id: x.to_payload() for x in parses}
+    expected_parse_map = {x.parse_evidence_id: x.to_payload() for x in expected_parses}
+    if len(supplied_parse_map) != len(parses) or supplied_parse_map != expected_parse_map:
+        raise ValueError("bridge parse evidence is missing, duplicated, extra, or hash-drifted")
+    for parse in parses:
+        ProbeParseEvidence.from_payload(parse.to_payload())
+    parse_map = {
+        case_id: folded_case.final_parse
+        for case_id, folded_case in folded.items()
+        if folded_case.final_parse is not None and folded_case.final_parse.success
+    }
     attempts_by_parse = {
         attempt.parse_evidence.record_hash: attempt
         for attempt in run.attempts
         if attempt.parse_evidence is not None
     }
     for case_id, parse in parse_map.items():
-        ProbeParseEvidence.from_payload(parse.to_payload())
         case = case_map.get(case_id)
         if (
             case is None
             or parse.probe_case_hash != case.record_hash
-            or folded[case_id].final_parse is None
-            or parse.record_hash != folded[case_id].final_parse.record_hash
             or parse.record_hash not in attempts_by_parse
         ):
             raise ValueError("bridge parse is not the final run-bound case evidence")

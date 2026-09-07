@@ -892,6 +892,126 @@ def test_bridge_rebuilds_request_response_and_visible_payload_before_labels_tran
         to_semantic_gate_evidence(bundle, specification, cases, run, parses)
 
 
+def test_bridge_selects_final_successful_parse_after_format_repair():
+    policy = review_policy(strata=(ReviewStratum("all", {}, 1),))
+    payload = probe_spec_payload()
+    payload["policy_hashes"]["semantic_review_policy"] = policy.record_hash
+    specification = load_probe_specification(payload)
+    case = expand_probe_cases(specification)[0]
+    cases = (case,)
+    run = execute_probe_run(
+        run_instance_id="review-format-repair-test",
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy(),
+        adapter=ScriptedProbeAdapter(
+            {
+                (case.probe_case_id, 1): ProbeScriptStep("response", "not-json", None, None),
+                (case.probe_case_id, 2): ProbeScriptStep("response", raw_for(case), None, None),
+            }
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    awaiting = export_blind_review(specification, cases, run, policy)
+    completed = import_review_codes(awaiting, complete_codes(awaiting))
+    parses = tuple(
+        attempt.parse_evidence for attempt in run.attempts if attempt.parse_evidence is not None
+    )
+
+    assert [parse.success for parse in parses] == [False, True]
+    bridge = to_semantic_gate_evidence(completed, specification, cases, run, parses)
+    assert len(bridge) == 1
+    assert bridge[0].case_id == case.probe_case_id
+    assert bridge[0].parse_hash == parses[-1].record_hash
+    assert bridge[0].review_complete is True
+    assert (
+        to_semantic_gate_evidence(completed, specification, cases, run, tuple(reversed(parses)))
+        == bridge
+    )
+    with pytest.raises(ValueError, match="parse|duplicate|missing|extra"):
+        to_semantic_gate_evidence(completed, specification, cases, run, parses + (parses[-1],))
+    with pytest.raises(ValueError, match="parse|duplicate|missing|extra"):
+        to_semantic_gate_evidence(completed, specification, cases, run, parses[1:])
+
+
+def test_bridge_omits_nonterminal_failed_parse_and_rejects_cross_run_parse():
+    policy = review_policy(strata=(ReviewStratum("all", {}, 1),))
+    payload = probe_spec_payload()
+    payload["policy_hashes"]["semantic_review_policy"] = policy.record_hash
+    specification = load_probe_specification(payload)
+    cases = tuple(sorted(expand_probe_cases(specification)[:2], key=lambda x: x.probe_case_id))
+    successful, nonterminal = cases
+    run = execute_probe_run(
+        run_instance_id="review-nonterminal-parse-test",
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy(),
+        adapter=ScriptedProbeAdapter(
+            {
+                (successful.probe_case_id, 1): ProbeScriptStep(
+                    "response", raw_for(successful), None, None
+                ),
+                (nonterminal.probe_case_id, 1): ProbeScriptStep("response", "not-json", None, None),
+            }
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=2,
+    )
+    assert run.status == "incomplete"
+    assert run.case_statuses[nonterminal.probe_case_id] == "format_pending"
+    awaiting = export_blind_review(specification, cases, run, policy)
+    completed = import_review_codes(awaiting, complete_codes(awaiting))
+    parses = tuple(
+        attempt.parse_evidence for attempt in run.attempts if attempt.parse_evidence is not None
+    )
+
+    bridge = to_semantic_gate_evidence(completed, specification, cases, run, parses)
+    assert tuple(item.case_id for item in bridge) == (successful.probe_case_id,)
+    assert bridge[0].parse_hash == next(parse.record_hash for parse in parses if parse.success)
+
+    alien_case = next(
+        case
+        for case in expand_probe_cases(specification)
+        if case.probe_case_id not in set(run.case_statuses)
+    )
+    alien_run = execute_probe_run(
+        run_instance_id="review-alien-parse-test",
+        specification_hash=specification.output_hash,
+        cases=(alien_case,),
+        runtime_policy=runtime_policy(),
+        adapter=ScriptedProbeAdapter(
+            {
+                (alien_case.probe_case_id, 1): ProbeScriptStep(
+                    "response", raw_for(alien_case), None, None
+                )
+            }
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    alien_parse = alien_run.attempts[0].parse_evidence
+    assert alien_parse is not None
+    with pytest.raises(ValueError, match="parse|missing|extra|run"):
+        to_semantic_gate_evidence(
+            completed,
+            specification,
+            cases,
+            run,
+            (alien_parse,) + parses[1:],
+        )
+
+
 def test_bridge_uses_only_authorized_labels_and_incomplete_review_suppresses_gates():
     specification, cases, run, policy = prepared()
     bundle = export_blind_review(specification, cases, run, policy)
