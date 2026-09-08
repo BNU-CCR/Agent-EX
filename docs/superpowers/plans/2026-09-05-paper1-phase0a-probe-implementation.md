@@ -832,7 +832,7 @@ git commit -m "feat(platform): report Phase 0A probe evidence"
 - Modify: `platform/src/agent_ex/__init__.py`
 - Modify: `platform/tests/test_domain.py`
 
-- [ ] **Step 1: Write RED end-to-end tests**
+- [x] **Step 1: Write RED end-to-end tests**
 
 ```python
 def test_mock_three_topic_four_persona_probe_is_reproducible(mock_probe_spec):
@@ -853,7 +853,7 @@ Add integration cases for all-topics-pass, partial-pass, no-pass, one format rep
 runtime failure, review incomplete, order-independent projection, evidence tamper, and confirmation
 that no SQLite/checkpoint/event/feed/state object is created.
 
-- [ ] **Step 2: Run RED tests**
+- [x] **Step 2: Run RED tests**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_integration.py
@@ -861,7 +861,7 @@ that no SQLite/checkpoint/event/feed/state object is created.
 
 Expected: FAIL because the facade and draft do not exist.
 
-- [ ] **Step 3: Add the facade and draft**
+- [x] **Step 3: Add the facade and draft**
 
 Export one orchestration entry point:
 
@@ -882,7 +882,7 @@ topic text, persona text, generation value, runtime-policy value, semantic-revie
 artifact hash remains its exact `UNRESOLVED[P1_*]` marker. The loader rejects any unresolved runnable
 specification. Do not add network libraries or credentials.
 
-- [ ] **Step 4: Run integration and inherited guard suites**
+- [x] **Step 4: Run integration and inherited guard suites**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_calibration_integration.py tests\test_calibration_contracts.py tests\test_calibration_specification.py tests\test_topic.py tests\test_persona.py tests\test_prompt.py tests\test_parser.py tests\test_mock_adapter.py
@@ -890,7 +890,7 @@ specification. Do not add network libraries or credentials.
 
 Expected: all pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add platform/src/agent_ex/calibration platform/src/agent_ex/__init__.py platform/configs/paper1/phase0a-probe.draft.yaml platform/tests/test_domain.py platform/tests/test_calibration_integration.py
