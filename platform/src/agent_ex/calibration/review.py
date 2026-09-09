@@ -374,6 +374,9 @@ class SemanticReviewPolicy:
             or type(payload["contradiction_label_map"]) is not dict
         ):
             raise TypeError("policy label declarations must use JSON objects")
+        for field in ("dimension_labels", "passing_labels"):
+            if any(type(labels) is not list for labels in payload[field].values()):
+                raise TypeError(f"policy {field} values must use JSON arrays")
         value = cls(
             policy_id=payload["policy_id"],
             policy_version=payload["policy_version"],

@@ -241,6 +241,13 @@ def test_policy_and_records_are_frozen_hash_bound_and_json_safe():
     with pytest.raises(ValueError, match="hash"):
         SemanticReviewPolicy.from_payload({**p.to_payload(), "record_hash": "f" * 64})
 
+    for field in ("dimension_labels", "passing_labels"):
+        for invalid in ({"answered": None}, "answered"):
+            malformed = json.loads(json.dumps(p.to_payload()))
+            malformed[field]["refusal"] = invalid
+            with pytest.raises(TypeError, match="arrays"):
+                SemanticReviewPolicy.from_payload(malformed)
+
     bundle = export_blind_review(*prepared(policy=p))
     transported = json.loads(json.dumps(bundle.to_payload()))
     assert SemanticReviewBundle.from_payload(transported) == bundle
