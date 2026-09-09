@@ -948,7 +948,7 @@ stack, cloud credentials and archive location.
 Update project docs to say `Phase 0A-0 complete / independently reviewed`; do not claim Phase 0A,
 Phase 0B, formal readiness, or experimental results.
 
-- [ ] **Step 5: Commit and push the verified checkpoint**
+- [x] **Step 5: Commit and push the verified checkpoint**
 
 ```powershell
 git add docs/project-overview.md task_plan.md progress.md findings.md logs/2026-09-05-phase0a0-offline-probe.md
