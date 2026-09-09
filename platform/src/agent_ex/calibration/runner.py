@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import time
 from typing import Mapping
 
 from ..domain import _require_id, _require_json_transport, _require_sha256, canonical_payload_hash
@@ -24,6 +25,35 @@ class ProbeRunCrash(RuntimeError):
     def __init__(self, message: str, snapshot: ProbeRunProjection) -> None:
         super().__init__(message)
         self.snapshot = snapshot
+
+
+def _snapshot(
+    *,
+    attempts: list[ProbeAttempt],
+    run_instance_id: str,
+    specification_hash: str,
+    inventory_hash: str,
+    runtime_policy: ProbeRuntimePolicy,
+    generation_settings: Mapping[str, object],
+    runtime_identity: Mapping[str, str],
+    model_identity: Mapping[str, str],
+    tokenizer_identity: Mapping[str, str],
+    chat_template_hash: str,
+    cases: tuple[ProbeCase, ...],
+) -> ProbeRunProjection:
+    return ProbeRunProjection.create(
+        run_instance_id=run_instance_id,
+        specification_hash=specification_hash,
+        case_inventory_hash=inventory_hash,
+        runtime_policy=runtime_policy,
+        generation_settings=generation_settings,
+        runtime_identity=runtime_identity,
+        model_identity=model_identity,
+        tokenizer_identity=tokenizer_identity,
+        chat_template_hash=chat_template_hash,
+        case_ids=tuple(item.probe_case_id for item in cases),
+        attempts=tuple(attempts),
+    )
 
 
 def _inventory_hash(cases: tuple[ProbeCase, ...]) -> str:
@@ -266,83 +296,96 @@ def _continue_run(
                     case_ids=tuple(item.probe_case_id for item in cases),
                     attempts=tuple(attempts),
                 )
-            request = ProbeRequest.create(
-                case,
-                attempt_index=len(chain) + 1,
-                attempt_kind=next_kind,
-                generation_settings=generation_settings,
-            )
             try:
-                response = adapter.generate(request)
-            except Exception as error:
-                snapshot = ProbeRunProjection.create(
+                if current == "pending":
+                    retry_delay = chain[-1].retry_delay_seconds
+                    if retry_delay is None:
+                        raise ValueError("pending transport attempt requires retry delay evidence")
+                    time.sleep(retry_delay)
+                request = ProbeRequest.create(
+                    case,
+                    attempt_index=len(chain) + 1,
+                    attempt_kind=next_kind,
+                    generation_settings=generation_settings,
+                )
+                response = adapter.generate(
+                    request, timeout_seconds=runtime_policy.timeout_seconds
+                )
+                _validate_response_provenance(
+                    response,
+                    runtime_identity=runtime_identity,
+                    model_identity=model_identity,
+                    tokenizer_identity=tokenizer_identity,
+                    chat_template_hash=chat_template_hash,
+                )
+                parse_evidence = None
+                delay = None
+                delay_source = None
+                if response.outcome == "response":
+                    parse_evidence = parse_probe_response(response)
+                else:
+                    error_code = response.error_code
+                    if error_code not in runtime_policy.max_transport_attempts_by_code:
+                        raise ValueError(
+                            "adapter error code is outside the runtime policy partition"
+                        )
+                    if (
+                        response.outcome == "oom"
+                        and error_code not in runtime_policy.nonretryable_error_codes
+                    ):
+                        raise ValueError(
+                            "OOM error codes must be explicitly classified as nonretryable"
+                        )
+                    transport_counts[error_code] = transport_counts.get(error_code, 0) + 1
+                    retryable = error_code in runtime_policy.retryable_error_codes
+                    exhausted = (
+                        transport_counts[error_code]
+                        >= runtime_policy.max_transport_attempts_by_code[error_code]
+                    )
+                    if retryable and not exhausted and response.outcome != "oom":
+                        retry_after = response.retry_after_seconds
+                        if runtime_policy.obey_retry_after and retry_after is not None:
+                            if type(retry_after) not in {int, float} or float(retry_after) < 0:
+                                raise ValueError(
+                                    "adapter retry-after evidence must be nonnegative"
+                                )
+                            delay = float(retry_after)
+                            delay_source = "retry_after"
+                        else:
+                            delay = runtime_policy.backoff_seconds[
+                                transport_counts[error_code] - 1
+                            ]
+                            delay_source = "backoff"
+                attempt = _make_attempt(
+                    run_id=run_id,
                     run_instance_id=run_instance_id,
                     specification_hash=specification_hash,
-                    case_inventory_hash=inventory_hash,
+                    inventory_hash=inventory_hash,
+                    runtime_policy=runtime_policy,
+                    request=request,
+                    response=response,
+                    parse_evidence=parse_evidence,
+                    transport_counts=transport_counts,
+                    retry_delay_seconds=delay,
+                    retry_delay_source=delay_source,
+                )
+            except Exception as error:
+                snapshot = _snapshot(
+                    attempts=attempts,
+                    run_instance_id=run_instance_id,
+                    specification_hash=specification_hash,
+                    inventory_hash=inventory_hash,
                     runtime_policy=runtime_policy,
                     generation_settings=generation_settings,
                     runtime_identity=runtime_identity,
                     model_identity=model_identity,
                     tokenizer_identity=tokenizer_identity,
                     chat_template_hash=chat_template_hash,
-                    case_ids=tuple(item.probe_case_id for item in cases),
-                    attempts=tuple(attempts),
+                    cases=cases,
                 )
                 raise ProbeRunCrash(
-                    "probe adapter crashed before producing response evidence", snapshot
+                    "probe attempt crashed before producing validated evidence", snapshot
                 ) from error
-            _validate_response_provenance(
-                response,
-                runtime_identity=runtime_identity,
-                model_identity=model_identity,
-                tokenizer_identity=tokenizer_identity,
-                chat_template_hash=chat_template_hash,
-            )
-            parse_evidence = None
-            delay = None
-            delay_source = None
-            if response.outcome == "response":
-                parse_evidence = parse_probe_response(response)
-            else:
-                error_code = response.error_code
-                if error_code not in runtime_policy.max_transport_attempts_by_code:
-                    raise ValueError("adapter error code is outside the runtime policy partition")
-                if (
-                    response.outcome == "oom"
-                    and error_code not in runtime_policy.nonretryable_error_codes
-                ):
-                    raise ValueError(
-                        "OOM error codes must be explicitly classified as nonretryable"
-                    )
-                transport_counts[error_code] = transport_counts.get(error_code, 0) + 1
-                retryable = error_code in runtime_policy.retryable_error_codes
-                exhausted = (
-                    transport_counts[error_code]
-                    >= runtime_policy.max_transport_attempts_by_code[error_code]
-                )
-                if retryable and not exhausted and response.outcome != "oom":
-                    retry_after = response.retry_after_seconds
-                    if runtime_policy.obey_retry_after and retry_after is not None:
-                        if type(retry_after) not in {int, float} or float(retry_after) < 0:
-                            raise ValueError("adapter retry-after evidence must be nonnegative")
-                        delay = float(retry_after)
-                        delay_source = "retry_after"
-                    else:
-                        delay = runtime_policy.backoff_seconds[transport_counts[error_code] - 1]
-                        delay_source = "backoff"
-            attempt = _make_attempt(
-                run_id=run_id,
-                run_instance_id=run_instance_id,
-                specification_hash=specification_hash,
-                inventory_hash=inventory_hash,
-                runtime_policy=runtime_policy,
-                request=request,
-                response=response,
-                parse_evidence=parse_evidence,
-                transport_counts=transport_counts,
-                retry_delay_seconds=delay,
-                retry_delay_source=delay_source,
-            )
             attempts.append(attempt)
             chain.append(attempt)
             made += 1

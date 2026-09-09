@@ -7,6 +7,7 @@ import math
 
 import pytest
 
+import agent_ex.calibration.runner as runner_module
 from agent_ex.calibration.adapters import ProbeScriptStep, ScriptedProbeAdapter
 from agent_ex.calibration.contracts import (
     ProbeAttempt,
@@ -35,9 +36,19 @@ class CountingAdapter(ScriptedProbeAdapter):
         super().__init__(steps)
         self.calls = 0
 
-    def generate(self, request):
+    def generate(self, request, *, timeout_seconds=None):
         self.calls += 1
-        return super().generate(request)
+        return super().generate(request, timeout_seconds=timeout_seconds)
+
+
+class TimeoutCapturingAdapter(ScriptedProbeAdapter):
+    def __init__(self, steps):
+        super().__init__(steps)
+        self.timeouts = []
+
+    def generate(self, request, *, timeout_seconds=None):
+        self.timeouts.append(timeout_seconds)
+        return super().generate(request, timeout_seconds=timeout_seconds)
 
 
 def specification_and_cases(count: int = 1):
@@ -233,7 +244,17 @@ def test_retryable_transport_error_records_backoff_then_succeeds() -> None:
     assert next(iter(projection.case_statuses.values())) == "parsed"
 
 
-def test_retry_after_is_recorded_without_sleeping() -> None:
+def test_runtime_timeout_is_applied_at_the_adapter_boundary() -> None:
+    adapter = TimeoutCapturingAdapter(
+        steps_for_first(ProbeScriptStep("response", valid_raw(), None, None))
+    )
+    run(adapter)
+    assert adapter.timeouts == [30.0]
+
+
+def test_retry_after_is_executed_and_recorded(monkeypatch) -> None:
+    sleeps = []
+    monkeypatch.setattr(runner_module.time, "sleep", sleeps.append)
     projection = run(
         ScriptedProbeAdapter(
             steps_for_first(
@@ -244,6 +265,27 @@ def test_retry_after_is_recorded_without_sleeping() -> None:
     )
     assert projection.attempts[0].retry_delay_seconds == 1.5
     assert projection.attempts[0].retry_delay_source == "retry_after"
+    assert sleeps == [1.5]
+
+
+def test_backoff_is_executed_before_the_next_adapter_call(monkeypatch) -> None:
+    events = []
+    monkeypatch.setattr(runner_module.time, "sleep", lambda delay: events.append(("sleep", delay)))
+
+    class OrderedAdapter(ScriptedProbeAdapter):
+        def generate(self, request, *, timeout_seconds=None):
+            events.append(("call", request.attempt_index))
+            return super().generate(request, timeout_seconds=timeout_seconds)
+
+    run(
+        OrderedAdapter(
+            steps_for_first(
+                ProbeScriptStep("timeout", None, "timeout", None),
+                ProbeScriptStep("response", valid_raw(), None, None),
+            )
+        )
+    )
+    assert events == [("call", 1), ("sleep", 0.25), ("call", 2)]
 
 
 def test_attempt_replay_rejects_delay_not_bound_to_retry_after_response() -> None:
@@ -329,16 +371,18 @@ def test_oom_code_must_be_declared_nonretryable() -> None:
         obey_retry_after=False,
         backoff_seconds=(0.0,),
     )
-    with pytest.raises(ValueError, match="OOM|oom|nonretryable"):
+    with pytest.raises(ProbeRunCrash) as raised:
         run(
             ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("oom", None, "oom", None))),
             runtime_policy=bad_policy,
         )
+    assert isinstance(raised.value.__cause__, ValueError)
+    assert "nonretryable" in str(raised.value.__cause__)
 
 
 def test_adapter_crash_exposes_hash_bound_projection_snapshot() -> None:
     class CrashingAdapter(ScriptedProbeAdapter):
-        def generate(self, request):
+        def generate(self, request, *, timeout_seconds=None):
             raise RuntimeError("synthetic crash")
 
     with pytest.raises(ProbeRunCrash) as raised:
@@ -348,6 +392,89 @@ def test_adapter_crash_exposes_hash_bound_projection_snapshot() -> None:
     assert snapshot.attempts == ()
     assert set(snapshot.case_statuses.values()) == {"unstarted"}
     assert snapshot.run_evidence_hash == canonical_payload_hash([])
+
+
+@pytest.mark.parametrize("failure_stage", ["provenance", "parse", "attempt"])
+def test_post_adapter_failures_expose_last_valid_snapshot_and_resume(
+    monkeypatch, failure_stage: str
+) -> None:
+    specification, cases = specification_and_cases(2)
+    first, second = cases
+    steps = {
+        (first.probe_case_id, 1): ProbeScriptStep("response", valid_raw(), None, None),
+        (second.probe_case_id, 1): ProbeScriptStep("response", valid_raw(), None, None),
+    }
+
+    if failure_stage == "provenance":
+        class FaultyAdapter(ScriptedProbeAdapter):
+            def generate(self, request, *, timeout_seconds=None):
+                response = super().generate(request, timeout_seconds=timeout_seconds)
+                if request.probe_case_id == second.probe_case_id:
+                    payload = response.to_payload()
+                    payload["runtime_identity"] = {
+                        "provider": "drift",
+                        "runtime_version": "1.0.0",
+                    }
+                    return ProbeResponse.from_payload(
+                        rehash_payload(
+                            payload,
+                            id_field="response_id",
+                            prefix="probe-response-",
+                        )
+                    )
+                return response
+
+        adapter = FaultyAdapter(steps)
+    else:
+        adapter = ScriptedProbeAdapter(steps)
+        target = "parse_probe_response" if failure_stage == "parse" else "_make_attempt"
+        original = getattr(runner_module, target)
+        calls = 0
+
+        def fail_on_second(*args, **kwargs):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise RuntimeError(f"synthetic {failure_stage} failure")
+            return original(*args, **kwargs)
+
+        monkeypatch.setattr(runner_module, target, fail_on_second)
+
+    with pytest.raises(ProbeRunCrash) as raised:
+        execute_probe_run(
+            run_instance_id=RUN_INSTANCE_ID,
+            specification_hash=specification.output_hash,
+            cases=cases,
+            runtime_policy=policy(),
+            adapter=adapter,
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+        )
+    assert raised.value.__cause__ is not None
+    assert [item.probe_case_id for item in raised.value.snapshot.attempts] == [
+        first.probe_case_id
+    ]
+
+    if failure_stage != "provenance":
+        monkeypatch.setattr(runner_module, target, original)
+    resumed = resume_probe_run(
+        projection=raised.value.snapshot,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=policy(),
+        adapter=ScriptedProbeAdapter(
+            {(second.probe_case_id, 1): ProbeScriptStep("response", valid_raw(), None, None)}
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+    assert resumed.status == "complete"
 
 
 def test_exhausted_runtime_failure_is_irreversible_on_resume() -> None:

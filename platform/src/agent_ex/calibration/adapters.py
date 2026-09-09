@@ -43,8 +43,10 @@ class ProbeScriptStep:
 
 class ProbeAdapter(ABC):
     @abstractmethod
-    def generate(self, request: ProbeRequest) -> ProbeResponse:
-        """Generate exactly one response for an immutable probe request."""
+    def generate(
+        self, request: ProbeRequest, *, timeout_seconds: float | None = None
+    ) -> ProbeResponse:
+        """Generate one response, enforcing the supplied timeout at the provider boundary."""
 
 
 class ScriptedProbeAdapter(ProbeAdapter):
@@ -69,9 +71,16 @@ class ScriptedProbeAdapter(ProbeAdapter):
         self._steps = MappingProxyType(copied)
         self._consumed: set[tuple[str, int]] = set()
 
-    def generate(self, request: ProbeRequest) -> ProbeResponse:
+    def generate(
+        self, request: ProbeRequest, *, timeout_seconds: float | None = None
+    ) -> ProbeResponse:
         if not isinstance(request, ProbeRequest):
             raise TypeError("request must be a ProbeRequest")
+        if timeout_seconds is not None:
+            if type(timeout_seconds) is not float:
+                raise TypeError("timeout_seconds must be a float or null")
+            if timeout_seconds <= 0 or not math.isfinite(timeout_seconds):
+                raise ValueError("timeout_seconds must be finite and positive")
         key = (request.probe_case_id, request.attempt_index)
         if key not in self._steps:
             raise ValueError("missing scripted probe step")

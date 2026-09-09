@@ -5,6 +5,7 @@ from __future__ import annotations
 from fractions import Fraction
 from itertools import combinations
 import json
+import math
 import re
 from typing import Mapping, NoReturn
 
@@ -289,9 +290,16 @@ class _OfflineScriptedProbeAdapter(ProbeAdapter):
             raise ValueError("offline passing fixtures require an explicit requested seed")
         return 2 + seed % 4
 
-    def generate(self, request: ProbeRequest) -> ProbeResponse:
+    def generate(
+        self, request: ProbeRequest, *, timeout_seconds: float | None = None
+    ) -> ProbeResponse:
         if not isinstance(request, ProbeRequest):
             raise TypeError("request must be a ProbeRequest")
+        if timeout_seconds is not None:
+            if type(timeout_seconds) is not float:
+                raise TypeError("timeout_seconds must be a float or null")
+            if timeout_seconds <= 0 or not math.isfinite(timeout_seconds):
+                raise ValueError("timeout_seconds must be finite and positive")
         is_target = request.probe_case_id == self._target_case_id
         if self.runtime_failure and is_target and request.attempt_index == 1:
             outcome, raw, error = "provider_error", None, "provider_fatal"
