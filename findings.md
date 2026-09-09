@@ -1154,3 +1154,27 @@
   Phase 0B必须在最终云镜像上复跑安装、恢复与有限真实模型gate。
 - 术语映射证据必须原样绑定Phase 4A.1批准的中文术语，不能把方便机器使用的英文token当成
   已批准论文术语；ID、canonical payload与hash三者须共同进入过程审计。
+
+## 2026-09-09：Phase 0A-0离线 probe 实施发现
+
+- 4 replicates 的完整预登记展开是816个逻辑 cases：topic quality 144、identity 96、
+  continuity 576。正常all-pass离线run有816 attempts，并分别生成816 request、816 response
+  和816 parse记录，合计2,448条证据；case和证据记录必须分开计数。
+- 仅记录timeout、Retry-After或backoff数值不等于执行了runtime policy。runner必须把
+  timeout明确下推到provider adapter边界，并在下一transport attempt前实际等待；所有等待
+  仍要由测试注入/替换，不能用真实sleep拖慢单元测试。
+- adapter返回之后的provenance、解析和attempt构造异常同样可能中断长run。它们必须保留
+  原cause，并携带最后一份hash-bound有效projection，才能用修正adapter从相同run恢复。
+- 语义盲审不能只把refusal与stance contradiction送进gate。policy声明的每个必审维度都要
+  逐项保留标签、通过判定和policy hash；任一adverse或必审缺失必须阻止候选通过。当前
+  offline policy覆盖single construct、identity use、continuity coherence、warranted/
+  unwarranted change、response relevance、refusal与stance consistency，且仅作mock-only
+  合同，不是正式阈值冻结。
+- freeze proposal只能包含已有确定性、可重放门槛授权的decision。Phase 0A-0当前只对
+  `P1_TOPIC_PRIMARY`具有完整选择门；其他决定必须保持unresolved，不能仅凭有artifact就
+  进入proposal。
+- 严格JSON round-trip必须在tuple转换前检查嵌套值确为JSON array，否则object的键可能被
+  静默转换成同一tuple并绕过原始payload类型合同。
+- 修复后full/coverage均为1463 passed、2 skipped、1显式release-scale deselected，production
+  coverage为86%。三路独立终审P0--P3均为零；这只证明Phase 0A-0离线骨架，不证明真实
+  Qwen/vLLM吞吐、语义质量、云端恢复或正式实验ready。

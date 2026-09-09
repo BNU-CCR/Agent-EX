@@ -2,7 +2,7 @@
 status: active navigation baseline
 authority: project scope and evidence map; not an execution protocol
 supersedes: README.md and logs/notion-2026-05-31.md as the entry point for work after 2026-07-14
-last-verified: 2026-09-04
+last-verified: 2026-09-09
 ---
 
 # Agent-EX 项目总览
@@ -47,6 +47,21 @@ pilot-3.0 的 weak 条件出现高分端集中，lifelong strong 条件保留较
 
 ## 当前实现 checkpoint
 
+- Phase 0A-0 离线 probe 骨架分支：`codex/paper1-phase0`，状态为
+  `complete / independently reviewed`。它已完成严格 specification/case/attempt/
+  semantic-review/gate/report/bundle 合同和确定性离线 facade；真实模型、网络和正式
+  参数权限均未启用。
+- 修复后发布验证为 `1463 passed, 2 skipped, 1 deselected`；coverage 同计数，
+  production `14,600 statements / 2,102 missed / 86%`。计划指定的协议、安装和离线
+  集成专项为 `163 passed`。规格、代码质量和最终验证三路独立复核均为 `APPROVED`，
+  P0--P3 为零。
+- 四 replicate 离线 fixture 产生 816 个逻辑 cases（topic quality 144、identity 96、
+  continuity 576）和 2,448 条 request/response/parse 证据；报告状态仅为
+  `proposal_only`。精确哈希、依赖身份与复核证据见
+  `logs/2026-09-05-phase0a0-offline-probe.md`。
+- 下一步是 Phase 0A-1 云端真实小样本 probe：在 owner 批准候选文本、runtime policy、
+  semantic-review policy、Qwen/vLLM 栈、云端凭据和外部归档位置后执行。它不是正式
+  N=1000/T=50 主实验；其他 Phase 0B 与统计项继续 fail closed。
 - Phase 4B release-candidate分支：`codex/paper1-phase4b`，Task 7提交`7749609`已与远端一致。
 - `platform/`已组合12-cell mock矩阵、严格串行pipeline、SQLite v6、compact checkpoint v5、
   close/open恢复与只读process audit；N=20/100/1000和50,000-event mock规模门已通过。

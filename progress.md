@@ -814,3 +814,29 @@
     P0-P3均无；其发现的旧09-02 handoff路径和漏列checkpoint/storage修复文件已更正并复审关闭。
     Phase 4B-9及整个Phase 4B现达到`complete / independently reviewed`工程边界；下一步进入
     Phase 0A/0B与真实模型N=20/50/100校准，formal矩阵仍保持fail closed。
+
+## 会话：2026-09-05至2026-09-09
+
+### Phase 0A-0：离线 probe 骨架
+
+- **状态：** complete / independently reviewed
+- 按批准规格与逐任务计划完成独立 `agent_ex.calibration` 包：不可变 specification、
+  816-case 确定性展开、request/response/parse attempt 证据、可恢复 runner、质量门、
+  盲态语义复核、precommitted selection、无正式权限的 freeze proposal、11文件不可变
+  bundle 和只接受 scripted adapter 的离线 facade。
+- Tasks 0--8 主提交链从 `ada2f1c` 至 `4fbd193`；Task 9终审修复为 `1ef0946`、
+  `9e998c1`和`6af2ff1`。终审修复实际施行 timeout/Retry-After/backoff、扩展异常
+  snapshot、把全部 policy-bound 语义维度接入 gate、限制无确定性门的 proposal、修正
+  1--7草案长度并严格拒绝非法标签容器。
+- 修复后 full 为 `1463 passed, 2 skipped, 1 deselected in 4601.94s`；coverage 同计数，
+  `14,600 statements / 2,102 missed / 86% in 11635.94s`。计划指定专项为
+  `163 passed in 1606.39s`，最终验证员独立复跑为 `163 passed in 1630.74s`；Ruff、
+  format、pip和diff门均绿。
+- 三路终审均为 `APPROVED`，P0--P3为零。工作只用 scripted synthetic responses，
+  未联网、未调用真实模型、未写入凭据或正式权限，`docs/decisions.md`仍为`records: []`。
+- 四 replicates 共816个逻辑 cases（144 topic quality、96 identity、576 continuity），
+  正常all-pass run为816 attempts和2,448条request/response/parse证据；不得把2,448称为
+  case数。报告状态为`proposal_only`。
+- 下一步为Phase 0A-1。开始前仍需owner批准议题/persona文本候选、runtime policy、
+  semantic-review policy、Qwen/vLLM候选栈、云端凭据和外部归档位置；不得直接进入
+  正式N=1000/T=50主实验。

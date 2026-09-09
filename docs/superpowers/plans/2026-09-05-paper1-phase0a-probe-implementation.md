@@ -906,7 +906,7 @@ git commit -m "feat(platform): complete Phase 0A offline probe dry run"
 - Modify: `findings.md`
 - Create: `logs/2026-09-05-phase0a0-offline-probe.md`
 
-- [ ] **Step 1: Run the complete verification suite**
+- [x] **Step 1: Run the complete verification suite**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
@@ -920,7 +920,7 @@ git diff --check
 Expected: full and coverage suites pass with only documented platform-condition skips and the
 explicit 50,000-event release-scale deselection; static, format, dependency and diff gates pass.
 
-- [ ] **Step 2: Run authority and artifact hygiene gates**
+- [x] **Step 2: Run authority and artifact hygiene gates**
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests\test_protocol.py tests\test_installation.py tests\test_calibration_integration.py
@@ -930,14 +930,14 @@ git ls-files platform | Select-String -Pattern '\.(sqlite|db|checkpoint|raw|cove
 Expected: tests pass; tracked-artifact scan returns no matches. Verify the real draft remains
 unrunnable and `docs/decisions.md` still has `records: []` unless separate owner approval occurred.
 
-- [ ] **Step 3: Perform three independent read-only reviews**
+- [x] **Step 3: Perform three independent read-only reviews**
 
 Dispatch one specification reviewer, one code-quality reviewer, and one final-verification reviewer.
 Give each the approved 2026-09-05 spec, this plan, exact implementation commit range and fresh test
 evidence. Require P0--P3 findings, forbid edits, repair every confirmed P0--P2 with RED/GREEN evidence,
 and re-dispatch the affected reviewer until approved.
 
-- [ ] **Step 4: Record the verified handoff**
+- [x] **Step 4: Record the verified handoff**
 
 Use `logs/2026-09-05-phase0a0-offline-probe.md`. Record commit range, Python and
 dependency identities, exact test counts, fixture/specification/case inventory/report hashes,
