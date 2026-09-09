@@ -308,9 +308,7 @@ def _continue_run(
                     attempt_kind=next_kind,
                     generation_settings=generation_settings,
                 )
-                response = adapter.generate(
-                    request, timeout_seconds=runtime_policy.timeout_seconds
-                )
+                response = adapter.generate(request, timeout_seconds=runtime_policy.timeout_seconds)
                 _validate_response_provenance(
                     response,
                     runtime_identity=runtime_identity,
@@ -346,15 +344,11 @@ def _continue_run(
                         retry_after = response.retry_after_seconds
                         if runtime_policy.obey_retry_after and retry_after is not None:
                             if type(retry_after) not in {int, float} or float(retry_after) < 0:
-                                raise ValueError(
-                                    "adapter retry-after evidence must be nonnegative"
-                                )
+                                raise ValueError("adapter retry-after evidence must be nonnegative")
                             delay = float(retry_after)
                             delay_source = "retry_after"
                         else:
-                            delay = runtime_policy.backoff_seconds[
-                                transport_counts[error_code] - 1
-                            ]
+                            delay = runtime_policy.backoff_seconds[transport_counts[error_code] - 1]
                             delay_source = "backoff"
                 attempt = _make_attempt(
                     run_id=run_id,

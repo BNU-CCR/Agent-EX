@@ -42,7 +42,6 @@ topic_candidates:
       - UNRESOLVED[P1_STANCE_SCALE]
       - UNRESOLVED[P1_STANCE_SCALE]
       - UNRESOLVED[P1_STANCE_SCALE]
-      - UNRESOLVED[P1_STANCE_SCALE]
   - candidate_key: ai-net-employment
     construct: UNRESOLVED[P1_TOPIC_PRIMARY]
     fact_card: UNRESOLVED[P1_TOPIC_PRIMARY]

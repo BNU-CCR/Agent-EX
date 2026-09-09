@@ -616,6 +616,15 @@ def build_freeze_proposal(
         raise ValueError("freeze proposal contains an unknown registered decision ID")
     if set(proposed_values) | set(unresolved_decision_ids) != registered:
         raise ValueError("freeze proposal decision coverage is incomplete")
+    # Phase 0A-0 currently has a deterministic selection gate only for the
+    # primary topic.  Other registered decisions must remain unresolved until
+    # their own policy-bound gate and replay validation are implemented.
+    unauthorized = set(proposed_values) - {"P1_TOPIC_PRIMARY"}
+    if unauthorized:
+        raise ValueError(
+            "proposal lacks deterministic gate authorization for decision IDs: "
+            + ", ".join(sorted(unauthorized))
+        )
     ordered_proposals = dict(sorted(proposed_values.items()))
     ordered_artifacts = tuple(
         sorted(proposal_artifacts, key=lambda item: (item.decision_id, item.artifact_id))

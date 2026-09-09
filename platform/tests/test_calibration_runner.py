@@ -406,6 +406,7 @@ def test_post_adapter_failures_expose_last_valid_snapshot_and_resume(
     }
 
     if failure_stage == "provenance":
+
         class FaultyAdapter(ScriptedProbeAdapter):
             def generate(self, request, *, timeout_seconds=None):
                 response = super().generate(request, timeout_seconds=timeout_seconds)
@@ -454,9 +455,7 @@ def test_post_adapter_failures_expose_last_valid_snapshot_and_resume(
             chat_template_hash=CHAT_TEMPLATE_HASH,
         )
     assert raised.value.__cause__ is not None
-    assert [item.probe_case_id for item in raised.value.snapshot.attempts] == [
-        first.probe_case_id
-    ]
+    assert [item.probe_case_id for item in raised.value.snapshot.attempts] == [first.probe_case_id]
 
     if failure_stage != "provenance":
         monkeypatch.setattr(runner_module, target, original)

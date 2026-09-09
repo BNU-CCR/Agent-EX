@@ -133,6 +133,18 @@ def fixture(
             classifier_id=alg.classifier_id,
             classifier_version=alg.classifier_version,
             classifier_hash=alg.classifier_hash,
+            review_policy_hash=spec.payload["policy_hashes"]["semantic_review_policy"],
+            dimension_labels={
+                "refusal": "answered",
+                "single_construct": "yes",
+                "stance_consistency": "consistent",
+            },
+            dimension_passes={
+                "refusal": True,
+                "single_construct": True,
+                "stance_consistency": True,
+            },
+            semantic_passed=True,
             refusal=i in refusals,
             contradiction="contradiction" if i in contradictions else "consistent",
             review_complete=True,
@@ -232,7 +244,15 @@ def test_review_missing_or_unbound_suppresses_pass(change):
     elif change == "hash":
         reviews = (replace(reviews[0], parse_hash="f" * 64),) + reviews[1:]
     else:
-        reviews = (replace(reviews[0], review_complete=False),) + reviews[1:]
+        reviews = (
+            replace(
+                reviews[0],
+                review_complete=False,
+                dimension_labels={},
+                dimension_passes={},
+                semantic_passed=False,
+            ),
+        ) + reviews[1:]
     report = evaluate_quality_gates(
         spec, cases, run, alg, reviews, candidate_key="retirement-delay"
     )
@@ -355,20 +375,61 @@ def complete_fixture(challenges=None, replicates=4):
     case_map = {c.probe_case_id: c for c in cases}
     reviews = tuple(
         SemanticGateEvidence(
-            a.probe_case_id,
-            case_map[a.probe_case_id].record_hash,
-            a.parse_evidence_hash,
-            alg.classifier_id,
-            alg.classifier_version,
-            alg.classifier_hash,
-            False,
-            "consistent",
-            True,
-            canonical_payload_hash([a.probe_case_id, "review"]),
+            case_id=a.probe_case_id,
+            case_hash=case_map[a.probe_case_id].record_hash,
+            parse_hash=a.parse_evidence_hash,
+            classifier_id=alg.classifier_id,
+            classifier_version=alg.classifier_version,
+            classifier_hash=alg.classifier_hash,
+            review_policy_hash=spec.payload["policy_hashes"]["semantic_review_policy"],
+            dimension_labels={
+                "refusal": "answered",
+                "single_construct": "yes",
+                "stance_consistency": "consistent",
+            },
+            dimension_passes={
+                "refusal": True,
+                "single_construct": True,
+                "stance_consistency": True,
+            },
+            semantic_passed=True,
+            refusal=False,
+            contradiction="consistent",
+            review_complete=True,
+            review_evidence_hash=canonical_payload_hash([a.probe_case_id, "review"]),
         )
         for a in run.attempts
     )
     return spec, cases, run, alg, reviews
+
+
+def test_any_adverse_semantic_dimension_fails_candidate_gate() -> None:
+    spec, cases, run, alg, reviews = complete_fixture()
+    target = reviews[0]
+    adverse = replace(
+        target,
+        dimension_labels={**dict(target.dimension_labels), "single_construct": "no"},
+        dimension_passes={**dict(target.dimension_passes), "single_construct": False},
+        semantic_passed=False,
+    )
+    report = evaluate_quality_gates(
+        spec,
+        cases,
+        run,
+        alg,
+        (adverse,) + reviews[1:],
+        candidate_key="retirement-delay",
+    )
+    assert report.status == "complete"
+    assert report.passed is False
+    semantic = [
+        item
+        for metric in report.metrics
+        for item in metric["semantic_dimensions"]
+        if item["dimension"] == "single_construct"
+    ]
+    assert any(item["passed"] is False for item in semantic)
+    assert any(target.case_id in item["failed_case_ids"] for item in semantic)
 
 
 @pytest.mark.parametrize("omission", ["family", "scale", "both-sides"])
@@ -518,8 +579,8 @@ def test_complete_inventory_with_no_runtime_attempts_suppresses_pass():
 def test_provider_unsupported_seed_is_reported_without_fake_guarantee(monkeypatch):
     original = ScriptedProbeAdapter.generate
 
-    def unsupported(self, request):
-        payload = original(self, request).to_payload()
+    def unsupported(self, request, *, timeout_seconds=None):
+        payload = original(self, request, timeout_seconds=timeout_seconds).to_payload()
         payload["provider_seed_supported"] = False
         payload["provider_seed_echo"] = None
         return ProbeResponse.from_payload(

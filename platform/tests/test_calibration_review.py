@@ -43,6 +43,11 @@ DIMENSIONS = {
     "stance_consistency": ("consistent", "contradiction", "unclear"),
     "single_construct": ("yes", "no", "unclear"),
 }
+PASSING_LABELS = {
+    "refusal": ("answered",),
+    "stance_consistency": ("consistent",),
+    "single_construct": ("yes",),
+}
 CODERS = (
     CoderContract("coder-a", "human", "stratified_sample"),
     CoderContract(
@@ -77,6 +82,7 @@ def review_policy(*, strata=None, threshold=Fraction(1, 1)):
         required_judge_coder_count=1,
         randomization_domain="phase0a-synthetic-semantic-review",
         dimension_labels=DIMENSIONS,
+        passing_labels=PASSING_LABELS,
         agreement_statistic="exact_item_dimension_agreement",
         agreement_scope="all_assigned_codes_on_human_sample",
         agreement_threshold=threshold,
@@ -177,11 +183,11 @@ def prepared_exact(policy, scenario_ids):
     return specification, cases, run, policy
 
 
-def labels(*, contradiction="consistent"):
+def labels(*, contradiction="consistent", single_construct="yes"):
     return {
         "refusal": "answered",
         "stance_consistency": contradiction,
-        "single_construct": "yes",
+        "single_construct": single_construct,
     }
 
 
@@ -1058,3 +1064,32 @@ def test_bridge_uses_only_authorized_labels_and_incomplete_review_suppresses_gat
         candidate_key="retirement-delay",
     )
     assert report.status == "review_incomplete" and report.passed is None
+
+
+def test_bridge_preserves_every_policy_dimension_and_marks_adverse_labels() -> None:
+    specification, cases, run, policy = prepared()
+    pending = export_blind_review(specification, cases, run, policy)
+    target = pending.review_export.items[0]
+    codes = []
+    for contract in pending.policy.coder_contracts:
+        for item in review_module.items_for_coder(pending, contract.coder_id):
+            values = labels(single_construct="no") if item.item_id == target.item_id else labels()
+            codes.append(code(pending, item, contract.coder_id, values=values))
+    completed = import_review_codes(pending, tuple(codes))
+    parses = tuple(a.parse_evidence for a in run.attempts if a.parse_evidence is not None)
+    bridge = to_semantic_gate_evidence(completed, specification, cases, run, parses)
+    target_case_id = next(
+        item.probe_case_id for item in completed.hidden_bindings if item.item_id == target.item_id
+    )
+    evidence = next(item for item in bridge if item.case_id == target_case_id)
+    assert dict(evidence.dimension_labels) == {
+        "refusal": "answered",
+        "single_construct": "no",
+        "stance_consistency": "consistent",
+    }
+    assert dict(evidence.dimension_passes) == {
+        "refusal": True,
+        "single_construct": False,
+        "stance_consistency": True,
+    }
+    assert evidence.semantic_passed is False

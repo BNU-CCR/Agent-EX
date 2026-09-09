@@ -229,6 +229,7 @@ class SemanticReviewPolicy:
     required_human_coder_count: int
     required_judge_coder_count: int
     dimension_labels: Mapping[str, tuple[str, ...]]
+    passing_labels: Mapping[str, tuple[str, ...]]
     agreement_statistic: str
     agreement_scope: str
     agreement_threshold: Fraction
@@ -243,7 +244,7 @@ class SemanticReviewPolicy:
     contradiction_dimension: str
     contradiction_label_map: Mapping[str, str]
 
-    _SCHEMA = "paper1.calibration.semantic-review-policy.v1"
+    _SCHEMA = "paper1.calibration.semantic-review-policy.v2"
 
     def __post_init__(self) -> None:
         for name in ("policy_id", "policy_version", "classifier_id", "classifier_version"):
@@ -291,6 +292,17 @@ class SemanticReviewPolicy:
             if len(set(labels)) != len(labels):
                 raise ValueError("review labels must be unique within each dimension")
             normalized_dimensions[dimension] = labels
+        if not isinstance(self.passing_labels, Mapping) or set(self.passing_labels) != set(
+            normalized_dimensions
+        ):
+            raise ValueError("passing_labels must cover every semantic-review dimension exactly")
+        normalized_passing: dict[str, tuple[str, ...]] = {}
+        for dimension, labels in self.passing_labels.items():
+            if type(labels) is not tuple or not labels or len(set(labels)) != len(labels):
+                raise ValueError("each semantic-review dimension needs unique passing labels")
+            if not set(labels) <= set(normalized_dimensions[dimension]):
+                raise ValueError("passing label is outside its authorized semantic dimension")
+            normalized_passing[dimension] = labels
         if self.agreement_statistic != "exact_item_dimension_agreement":
             raise ValueError("unsupported agreement statistic")
         if self.agreement_scope != "all_assigned_codes_on_human_sample":
@@ -324,6 +336,9 @@ class SemanticReviewPolicy:
             self, "dimension_labels", _freeze(dict(sorted(normalized_dimensions.items())))
         )
         object.__setattr__(
+            self, "passing_labels", _freeze(dict(sorted(normalized_passing.items())))
+        )
+        object.__setattr__(
             self,
             "contradiction_label_map",
             _freeze(dict(sorted(self.contradiction_label_map.items()))),
@@ -355,6 +370,7 @@ class SemanticReviewPolicy:
             raise TypeError("policy repeated records must use JSON arrays")
         if (
             type(payload["dimension_labels"]) is not dict
+            or type(payload["passing_labels"]) is not dict
             or type(payload["contradiction_label_map"]) is not dict
         ):
             raise TypeError("policy label declarations must use JSON objects")
@@ -371,6 +387,7 @@ class SemanticReviewPolicy:
             required_human_coder_count=payload["required_human_coder_count"],
             required_judge_coder_count=payload["required_judge_coder_count"],
             dimension_labels={k: tuple(v) for k, v in payload["dimension_labels"].items()},
+            passing_labels={k: tuple(v) for k, v in payload["passing_labels"].items()},
             agreement_statistic=payload["agreement_statistic"],
             agreement_scope=payload["agreement_scope"],
             agreement_threshold=_fraction_from_payload(payload["agreement_threshold"]),
@@ -1892,6 +1909,12 @@ def to_semantic_gate_evidence(
         complete = complete and final is not None
         if complete:
             assert final is not None
+            dimension_labels = dict(final.labels)
+            dimension_passes = {
+                dimension: label in bundle.policy.passing_labels[dimension]
+                for dimension, label in dimension_labels.items()
+            }
+            semantic_passed = all(dimension_passes.values())
             refusal_label = final.labels[bundle.policy.refusal_dimension]
             contradiction_label = final.labels[bundle.policy.contradiction_dimension]
             refusal = refusal_label in bundle.policy.refusal_positive_labels
@@ -1905,6 +1928,9 @@ def to_semantic_gate_evidence(
                 ]
             )
         else:
+            dimension_labels = {}
+            dimension_passes = {}
+            semantic_passed = False
             refusal = False
             contradiction = "indeterminate"
             evidence_hash = canonical_payload_hash(
@@ -1918,6 +1944,10 @@ def to_semantic_gate_evidence(
                 classifier_id=bundle.policy.classifier_id,
                 classifier_version=bundle.policy.classifier_version,
                 classifier_hash=bundle.policy.classifier_hash,
+                review_policy_hash=bundle.policy.record_hash,
+                dimension_labels=dimension_labels,
+                dimension_passes=dimension_passes,
+                semantic_passed=semantic_passed,
                 refusal=refusal,
                 contradiction=contradiction,
                 review_complete=bool(complete),

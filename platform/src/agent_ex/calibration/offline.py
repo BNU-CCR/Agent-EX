@@ -127,7 +127,7 @@ def _semantic_review_policy() -> SemanticReviewPolicy:
     )
     return SemanticReviewPolicy(
         policy_id="phase0a-offline-semantic-review",
-        policy_version="1.0.0",
+        policy_version="2.0.0",
         strata=(ReviewStratum("all-eligible", {}, 3),),
         randomization_seed=8675309,
         randomization_domain="phase0a-offline-semantic-review",
@@ -141,9 +141,47 @@ def _semantic_review_policy() -> SemanticReviewPolicy:
         required_human_coder_count=1,
         required_judge_coder_count=1,
         dimension_labels={
+            "continuity_coherence": ("coherent", "incoherent", "not_applicable", "unclear"),
+            "identity_use": (
+                "reasonable",
+                "ignored",
+                "elaborated",
+                "stereotyped",
+                "not_applicable",
+                "unclear",
+            ),
             "refusal": ("answered", "refused"),
+            "response_relevance": (
+                "relevant",
+                "safety_template",
+                "topic_irrelevant",
+                "hidden_second_construct",
+                "unclear",
+            ),
             "stance_consistency": ("consistent", "contradiction", "unclear"),
             "single_construct": ("yes", "no", "unclear"),
+            "unwarranted_change": (
+                "no_unwarranted_large_change",
+                "unwarranted_large_change",
+                "not_applicable",
+                "unclear",
+            ),
+            "warranted_change": (
+                "explainable_change",
+                "locked",
+                "not_applicable",
+                "unclear",
+            ),
+        },
+        passing_labels={
+            "continuity_coherence": ("coherent", "not_applicable"),
+            "identity_use": ("reasonable", "not_applicable"),
+            "refusal": ("answered",),
+            "response_relevance": ("relevant",),
+            "stance_consistency": ("consistent",),
+            "single_construct": ("yes",),
+            "unwarranted_change": ("no_unwarranted_large_change", "not_applicable"),
+            "warranted_change": ("explainable_change", "not_applicable"),
         },
         agreement_statistic="exact_item_dimension_agreement",
         agreement_scope="all_assigned_codes_on_human_sample",
@@ -353,9 +391,14 @@ def scripted_probe_adapter(
 
 def _scripted_codes(bundle) -> tuple[IndependentCode, ...]:
     labels = {
+        "continuity_coherence": "coherent",
+        "identity_use": "reasonable",
         "refusal": "answered",
+        "response_relevance": "relevant",
         "single_construct": "yes",
         "stance_consistency": "consistent",
+        "unwarranted_change": "no_unwarranted_large_change",
+        "warranted_change": "explainable_change",
     }
     result = []
     contracts = {contract.coder_id: contract for contract in bundle.policy.coder_contracts}

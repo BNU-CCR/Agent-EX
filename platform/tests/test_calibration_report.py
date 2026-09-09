@@ -234,6 +234,44 @@ def incomplete_inputs(kind: str):
     )
 
 
+def test_non_topic_proposal_requires_a_deterministic_decision_gate() -> None:
+    report = complete_inputs()
+    source = report.source
+    topic_artifact = source.proposal_artifacts[0]
+    scale_artifact = ProposalArtifact(
+        decision_id="P1_STANCE_SCALE",
+        artifact_id="phase0a-scale-report",
+        artifact_hash=canonical_payload_hash("phase0a-scale-report"),
+        evidence_uri="s3://example-bucket/phase0a/scale-report.json",
+    )
+    with pytest.raises(ValueError, match="deterministic gate|authorization"):
+        build_freeze_proposal(
+            completeness=report.completeness,
+            specification_hash=report.specification_hash,
+            case_inventory_hash=report.case_inventory_hash,
+            run_evidence_hash=report.run_evidence_hash,
+            gate_report=report.gate_report,
+            topic_selection=source.topic_selection,
+            proposed_values={
+                "P1_STANCE_SCALE": "stance-1-7",
+                "P1_TOPIC_PRIMARY": source.topic_selection.primary,
+            },
+            proposal_artifacts=tuple(
+                sorted(
+                    (topic_artifact, scale_artifact),
+                    key=lambda item: (item.decision_id, item.artifact_id),
+                )
+            ),
+            unresolved_decision_ids=tuple(
+                sorted(
+                    set(source.specification.payload["decision_ids"])
+                    - {"P1_TOPIC_PRIMARY", "P1_STANCE_SCALE"}
+                )
+            ),
+            registered_decision_ids=tuple(source.specification.payload["decision_ids"]),
+        )
+
+
 def test_freeze_proposal_has_no_decision_authority() -> None:
     report = complete_inputs()
     proposal = report.freeze_proposal
@@ -405,7 +443,7 @@ class _ChangedResponseAdapter(ProbeAdapter):
         self.field = field
         self.value = value
 
-    def generate(self, request):
+    def generate(self, request, *, timeout_seconds=None):
         base = ScriptedProbeAdapter(
             {
                 (request.probe_case_id, request.attempt_index): ProbeScriptStep(

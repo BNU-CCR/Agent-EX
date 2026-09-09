@@ -140,7 +140,7 @@ class GateAlgorithm:
             if isinstance(value, Fraction):
                 payload[name] = {"numerator": value.numerator, "denominator": value.denominator}
         payload["challenges"] = [c.to_payload() for c in self.challenges]
-        payload["implementation"] = "paper1.calibration.gates.v2"
+        payload["implementation"] = "paper1.calibration.gates.v3"
         payload["inventory_policy"] = "exact-specification-expansion-before-scoring"
         payload["challenge_coverage"] = "all-topic-wording-and-field-order-pairs-on-each-scale"
         payload["aggregation"] = "all-family-and-challenge-hard-gates; incomplete-suppresses-all"
@@ -171,6 +171,10 @@ class SemanticGateEvidence:
     classifier_id: str
     classifier_version: str
     classifier_hash: str
+    review_policy_hash: str
+    dimension_labels: Mapping[str, str]
+    dimension_passes: Mapping[str, bool]
+    semantic_passed: bool
     refusal: bool
     contradiction: str
     review_complete: bool
@@ -179,12 +183,41 @@ class SemanticGateEvidence:
     def __post_init__(self):
         for name in ("case_id", "classifier_id", "classifier_version"):
             _require_id(name, getattr(self, name))
-        for name in ("case_hash", "parse_hash", "classifier_hash", "review_evidence_hash"):
+        for name in (
+            "case_hash",
+            "parse_hash",
+            "classifier_hash",
+            "review_policy_hash",
+            "review_evidence_hash",
+        ):
             _require_sha256(name, getattr(self, name))
-        if type(self.refusal) is not bool or type(self.review_complete) is not bool:
+        if (
+            type(self.refusal) is not bool
+            or type(self.review_complete) is not bool
+            or type(self.semantic_passed) is not bool
+        ):
             raise TypeError("review flags must be bool")
+        if not isinstance(self.dimension_labels, Mapping) or not isinstance(
+            self.dimension_passes, Mapping
+        ):
+            raise TypeError("semantic dimensions must use exact mappings")
+        labels = dict(self.dimension_labels)
+        passes = dict(self.dimension_passes)
+        if any(type(key) is not str or type(value) is not str for key, value in labels.items()):
+            raise TypeError("semantic dimension labels must be strings")
+        if any(type(key) is not str or type(value) is not bool for key, value in passes.items()):
+            raise TypeError("semantic dimension pass values must be booleans")
+        if self.review_complete:
+            if not labels or set(labels) != set(passes):
+                raise ValueError("complete semantic evidence requires every dimension verdict")
+            if self.semantic_passed is not all(passes.values()):
+                raise ValueError("semantic aggregate must equal all dimension verdicts")
+        elif labels or passes or self.semantic_passed:
+            raise ValueError("incomplete semantic evidence cannot contain favorable verdicts")
         if self.contradiction not in {"consistent", "contradiction", "indeterminate"}:
             raise ValueError("invalid direct contradiction code")
+        object.__setattr__(self, "dimension_labels", _freeze(dict(sorted(labels.items()))))
+        object.__setattr__(self, "dimension_passes", _freeze(dict(sorted(passes.items()))))
 
     def to_payload(self):
         return {f.name: getattr(self, f.name) for f in fields(self)}
@@ -324,6 +357,31 @@ def _score_family(group, folded, review_map, projection, algorithm):
     counts = Counter(values)
     scale = SCALES[scale_id]
     main = scale_id == "stance-1-7"
+    dimension_names = tuple(
+        sorted(next(iter(review_map.values())).dimension_passes) if review_map else ()
+    )
+    semantic_dimensions = tuple(
+        {
+            "dimension": dimension,
+            "reviewed_case_ids": tuple(
+                i for i in ids if i in review_map and review_map[i].review_complete
+            ),
+            "failed_case_ids": tuple(
+                i
+                for i in ids
+                if i in review_map
+                and review_map[i].review_complete
+                and not review_map[i].dimension_passes[dimension]
+            ),
+            "passed": all(
+                i in review_map
+                and review_map[i].review_complete
+                and review_map[i].dimension_passes[dimension]
+                for i in ids
+            ),
+        }
+        for dimension in dimension_names
+    )
     metric = {
         "case_family": family,
         "scale_id": scale_id,
@@ -360,6 +418,7 @@ def _score_family(group, folded, review_map, projection, algorithm):
             universe,
             algorithm.max_contradiction,
         ),
+        "semantic_dimensions": semantic_dimensions,
     }
     return metric
 
@@ -429,7 +488,11 @@ def evaluate_quality_gates(
     ):
         raise ValueError("duplicate or unknown review case")
     review_map = {r.case_id: r for r in reviews}
+    expected_policy_hash = specification.payload["policy_hashes"]["semantic_review_policy"]
+    complete_dimension_sets = {tuple(r.dimension_labels) for r in reviews if r.review_complete}
     incomplete = False
+    if len(complete_dimension_sets) > 1:
+        incomplete = True
     for case in cases:
         final = folded[case.probe_case_id].final_parse
         r = review_map.get(case.probe_case_id)
@@ -440,7 +503,10 @@ def evaluate_quality_gates(
             or r.classifier_id != algorithm.classifier_id
             or r.classifier_version != algorithm.classifier_version
             or r.classifier_hash != algorithm.classifier_hash
+            or r.review_policy_hash != expected_policy_hash
             or not r.review_complete
+            or not r.dimension_labels
+            or set(r.dimension_labels) != set(r.dimension_passes)
             or (final.success and not r.refusal and r.contradiction == "indeterminate")
         ):
             incomplete = True
@@ -451,6 +517,7 @@ def evaluate_quality_gates(
         metric = _score_family(group, folded, review_map, projection, algorithm)
         checks = [metric["minimum_sample_passed"], metric["categories_passed"]]
         checks += [v["passed"] for v in metric.values() if isinstance(v, dict) and "passed" in v]
+        checks += [v["passed"] for v in metric["semantic_dimensions"]]
         all_passed = all_passed and all(x is not False for x in checks)
         metrics.append(metric)
     challenge_reports = []
@@ -557,11 +624,22 @@ def evaluate_quality_gates(
         else "complete"
     )
     if status != "complete":
+
+        def suppress_passes(value):
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    if key == "passed":
+                        value[key] = None
+                    else:
+                        suppress_passes(child)
+            elif isinstance(value, (list, tuple)):
+                for child in value:
+                    suppress_passes(child)
+
         for metric in metrics:
-            for name, value in metric.items():
-                if isinstance(value, dict) and "passed" in value:
-                    value["passed"] = None
-                elif name.endswith("_passed"):
+            suppress_passes(metric)
+            for name in tuple(metric):
+                if name.endswith("_passed"):
                     metric[name] = None
         for challenge in challenge_reports:
             challenge["passed"] = None
