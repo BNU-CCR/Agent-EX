@@ -315,6 +315,7 @@ class EnvironmentLock:
     schema_version: str
     calibration_only: bool
     formal_parameter_authority: bool
+    authorization_hash: str
     inspection_algorithm: str
     git_commit: str
     git_dirty: bool
@@ -361,6 +362,7 @@ class EnvironmentLock:
             or type(self.formal_parameter_authority) is not bool
         ):
             raise ValueError("environment lock must not grant formal parameter authority")
+        _require_sha256("authorization_hash", self.authorization_hash)
         observation = self._observation()
         package_payload = tuple(item.to_payload() for item in self.package_lock)
         model_payload = tuple(item.to_payload() for item in self.model_artifacts)
@@ -429,6 +431,7 @@ class EnvironmentLock:
             "schema_version": self.schema_version,
             "calibration_only": self.calibration_only,
             "formal_parameter_authority": self.formal_parameter_authority,
+            "authorization_hash": self.authorization_hash,
             "inspection_algorithm": self.inspection_algorithm,
             "git_commit": self.git_commit,
             "git_dirty": self.git_dirty,
@@ -467,9 +470,12 @@ class EnvironmentLock:
         return _json_ready({**self.payload_without_record_hash(), "record_hash": self.record_hash})
 
     @classmethod
-    def create(cls, observation: EnvironmentObservation) -> EnvironmentLock:
+    def create(
+        cls, observation: EnvironmentObservation, *, authorization_hash: str
+    ) -> EnvironmentLock:
         if not isinstance(observation, EnvironmentObservation):
             raise TypeError("environment lock requires EnvironmentObservation")
+        _require_sha256("authorization_hash", authorization_hash)
         packages = tuple(sorted(observation.package_lock, key=lambda item: item.name.casefold()))
         model_artifacts = tuple(
             sorted(observation.model_artifacts, key=lambda item: item.relative_path)
@@ -481,6 +487,7 @@ class EnvironmentLock:
             "schema_version": cls._SCHEMA_VERSION,
             "calibration_only": True,
             "formal_parameter_authority": False,
+            "authorization_hash": authorization_hash,
             "inspection_algorithm": observation.inspection_algorithm,
             "git_commit": observation.git_commit,
             "git_dirty": observation.git_dirty,
@@ -575,7 +582,7 @@ def verify_current_environment(lock: EnvironmentLock, current: EnvironmentObserv
         raise TypeError("lock must be EnvironmentLock")
     if not isinstance(current, EnvironmentObservation):
         raise TypeError("current must be EnvironmentObservation")
-    candidate = EnvironmentLock.create(current)
+    candidate = EnvironmentLock.create(current, authorization_hash=lock.authorization_hash)
     drift_fields = (
         "inspection_algorithm",
         "git_commit",

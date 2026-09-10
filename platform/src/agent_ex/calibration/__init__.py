@@ -2,6 +2,18 @@
 
 from .contracts import ProbeCase, ProbePersonaView, ProbeTopicCandidate
 from .cloud import CloudPreflight, SmokeManifest
+from .cloud_run import (
+    CloudProbeAuditReport,
+    CloudRunArtifacts,
+    CloudRunManifest,
+    build_cloud_probe_report,
+    build_cloud_run_manifest,
+    execute_cloud_probe,
+    load_cloud_run_artifacts,
+    mark_cloud_probe_terminal,
+    resume_cloud_probe,
+    seal_cloud_probe_report,
+)
 from .environment import (
     ArtifactEntry,
     EnvironmentDriftError,
@@ -29,6 +41,16 @@ __all__ = [
     "ProbeTopicCandidate",
     "CloudPreflight",
     "SmokeManifest",
+    "CloudProbeAuditReport",
+    "CloudRunArtifacts",
+    "CloudRunManifest",
+    "build_cloud_probe_report",
+    "build_cloud_run_manifest",
+    "execute_cloud_probe",
+    "load_cloud_run_artifacts",
+    "mark_cloud_probe_terminal",
+    "resume_cloud_probe",
+    "seal_cloud_probe_report",
     "ArtifactEntry",
     "EnvironmentDriftError",
     "EnvironmentLock",

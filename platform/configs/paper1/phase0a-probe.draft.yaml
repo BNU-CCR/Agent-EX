@@ -1,3 +1,6 @@
+# Draft specification only. It is not a six-group cloud authorization packet.
+# Materialization must preserve its hash, then bind separately approved runtime,
+# semantic-review, candidate-stack, credential-boundary, and archive records.
 schema_version: paper1.calibration.probe-specification.v1
 metadata:
   calibration_only: true

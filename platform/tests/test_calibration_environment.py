@@ -22,6 +22,7 @@ from agent_ex.domain import canonical_payload_hash
 
 
 REVISION = "b968826d9c46dd6066d109eabc6255188de91218"
+AUTHORIZATION_HASH = "a" * 64
 
 
 def valid_observation() -> EnvironmentObservation:
@@ -86,7 +87,7 @@ def valid_observation() -> EnvironmentObservation:
 
 def valid_environment_lock_and_observation() -> tuple[EnvironmentLock, EnvironmentObservation]:
     observed = valid_observation()
-    return EnvironmentLock.create(observed), observed
+    return EnvironmentLock.create(observed, authorization_hash=AUTHORIZATION_HASH), observed
 
 
 def mutate_observation(
@@ -200,7 +201,19 @@ def test_environment_lock_canonicalizes_unordered_collections() -> None:
         model_artifacts=tuple(reversed(observed.model_artifacts)),
     )
 
-    assert EnvironmentLock.create(reversed_observation) == EnvironmentLock.create(observed)
+    assert EnvironmentLock.create(
+        reversed_observation, authorization_hash=AUTHORIZATION_HASH
+    ) == EnvironmentLock.create(observed, authorization_hash=AUTHORIZATION_HASH)
+
+
+def test_environment_lock_binds_the_prior_authorization() -> None:
+    observed = valid_observation()
+
+    first = EnvironmentLock.create(observed, authorization_hash="a" * 64)
+    second = EnvironmentLock.create(observed, authorization_hash="b" * 64)
+
+    assert first.authorization_hash == "a" * 64
+    assert first.record_hash != second.record_hash
 
 
 @pytest.mark.parametrize(
@@ -274,7 +287,7 @@ def test_environment_lock_canonicalizes_unordered_collections() -> None:
 )
 def test_environment_lock_rejects_unsafe_observations(mutation, message: str) -> None:
     with pytest.raises((TypeError, ValueError), match=message):
-        EnvironmentLock.create(mutation(valid_observation()))
+        EnvironmentLock.create(mutation(valid_observation()), authorization_hash=AUTHORIZATION_HASH)
 
 
 def test_environment_lock_rejects_secret_in_any_bound_text() -> None:
@@ -287,15 +300,20 @@ def test_environment_lock_rejects_secret_in_any_bound_text() -> None:
                 observed,
                 chat_template_text=text,
                 chat_template_hash=canonical_payload_hash(text),
-            )
+            ),
+            authorization_hash=AUTHORIZATION_HASH,
         )
 
 
 def test_environment_lock_requires_typed_observation_and_exact_payload() -> None:
     with pytest.raises(TypeError, match="EnvironmentObservation"):
-        EnvironmentLock.create({})  # type: ignore[arg-type]
+        EnvironmentLock.create(  # type: ignore[arg-type]
+            {}, authorization_hash=AUTHORIZATION_HASH
+        )
 
-    payload = EnvironmentLock.create(valid_observation()).to_payload()
+    payload = EnvironmentLock.create(
+        valid_observation(), authorization_hash=AUTHORIZATION_HASH
+    ).to_payload()
     payload["extra"] = "not allowed"
     with pytest.raises(ValueError, match="exact fields"):
         EnvironmentLock.from_payload(payload)
