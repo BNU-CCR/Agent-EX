@@ -318,7 +318,7 @@ Use stdlib `http.client.HTTPConnection`; disable redirects; accept only hostname
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_vllm_adapter.py tests/test_calibration_runner.py tests/test_calibration_adapters.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_vllm_adapter.py tests/test_calibration_runner.py tests/test_calibration_adapter_parser.py -q
 & '.\.venv\Scripts\python.exe' -m ruff check src tests
 Set-Location ..
 ```
