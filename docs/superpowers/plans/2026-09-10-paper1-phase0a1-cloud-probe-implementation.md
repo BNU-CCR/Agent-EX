@@ -258,7 +258,7 @@ Every record write must use same-directory temporary creation, file `fsync`, ato
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_store.py tests/test_calibration_bundle.py tests/test_calibration_runner.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_store.py tests/test_calibration_report.py tests/test_calibration_runner.py -q
 Set-Location ..
 ```
 
@@ -524,7 +524,7 @@ Enforce this construction order: approved six-group packet -> fresh `Environment
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cloud_run.py tests/test_calibration_runner.py tests/test_calibration_gates.py tests/test_calibration_review.py tests/test_calibration_report.py tests/test_calibration_bundle.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cloud_run.py tests/test_calibration_runner.py tests/test_calibration_gates.py tests/test_calibration_review.py tests/test_calibration_report.py -q
 Set-Location ..
 ```
 

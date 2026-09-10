@@ -117,7 +117,9 @@ def _projection_payload(
     return {**content, "record_hash": canonical_payload_hash(content)}
 
 
-def _validate_projection(payload: Mapping[str, object]) -> tuple[str, tuple[str, ...], tuple[str, ...]]:
+def _validate_projection(
+    payload: Mapping[str, object],
+) -> tuple[str, tuple[str, ...], tuple[str, ...]]:
     expected = {
         "schema_version",
         "manifest_hash",
@@ -300,15 +302,16 @@ class ProbeRunStore:
         with self._lock:
             staging = self._require_staging()
             digest = _validate_hashed_record(payload, name="attempt")
+            target = staging / "attempts" / f"{digest}.json"
+            if target.exists() or target.is_symlink():
+                raise FileExistsError(target)
             records = self._load_records(staging / "attempts", "attempt")
             candidate = (*records.values(), payload)
             _validate_attempt_sequence(candidate)
             position = _attempt_position(payload)
             if any(_attempt_position(record) == position for record in records.values()):
                 raise ValueError("attempt records contain a duplicate case position")
-            _write_create_only(
-                staging / "attempts" / f"{digest}.json", _json_ready(payload)
-            )
+            _write_create_only(target, _json_ready(payload))
             self.attempt_hashes = (*self.attempt_hashes, digest)
             self._persist_projection(staging)
 
