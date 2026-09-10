@@ -7,6 +7,7 @@ from .offline import (
     run_offline_probe,
     scripted_probe_adapter,
 )
+from .store import ProbeRunStore
 
 __all__ = [
     "ProbeCase",
@@ -14,6 +15,7 @@ __all__ = [
     "ProbeTopicCandidate",
     "CloudPreflight",
     "SmokeManifest",
+    "ProbeRunStore",
     "load_runnable_probe_specification",
     "run_offline_probe",
     "scripted_probe_adapter",
