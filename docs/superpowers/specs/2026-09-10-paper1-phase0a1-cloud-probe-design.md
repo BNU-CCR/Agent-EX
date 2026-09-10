@@ -1,8 +1,9 @@
 ---
-status: approved design; pending independent written-spec review
+status: approved design; independently reviewed; pending user written-spec review
 authority: Paper 1 Phase 0A-1 cloud probe design; subordinate to frozen machine protocol, schema, and the approved Phase 0A probe design
 approved-by: user
 approved-date: 2026-09-10
+independent-review: approved after one repair round; 0 P0, 0 P1, 0 P2, 0 P3
 supersedes: none
 ---
 
