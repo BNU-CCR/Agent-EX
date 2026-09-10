@@ -210,8 +210,6 @@ class ProbeRunStore:
             raise ValueError("store root must be an existing regular directory")
         staging = root / "staging"
         sealed = root / "sealed"
-        if staging.exists() and sealed.exists():
-            raise ValueError("store cannot contain both sealed and staging states")
         if sealed.exists():
             if not sealed.is_dir() or sealed.is_symlink():
                 raise ValueError("sealed store must be a regular directory")
@@ -236,11 +234,60 @@ class ProbeRunStore:
                 seal["bundle_manifest_hash"] != bundle_manifest.get("manifest_hash")
             ):
                 raise ValueError("sealed bundle manifest hash drift")
+            evidence = sealed / "evidence"
+            if not evidence.is_dir() or evidence.is_symlink():
+                raise ValueError("sealed store lacks immutable append-only evidence")
+            evidence_manifest = _read_json(evidence / "manifest.json")
+            evidence_manifest_hash = _validate_hashed_record(
+                evidence_manifest, name="sealed evidence manifest"
+            )
+            if evidence_manifest_hash != seal["staging_manifest_hash"]:
+                raise ValueError("sealed evidence manifest hash drift")
+            evidence_projection = _read_json(evidence / "projection.json")
+            evidence_projection_hash = _validate_hashed_record(
+                evidence_projection, name="sealed evidence projection"
+            )
+            if evidence_projection_hash != seal["staging_projection_hash"]:
+                raise ValueError("sealed evidence projection hash drift")
+            projected_manifest, projected_attempts, projected_reviews = _validate_projection(
+                evidence_projection
+            )
+            if projected_manifest != evidence_manifest_hash:
+                raise ValueError("sealed evidence authorization drift")
+            attempts_by_hash = cls._load_records(evidence / "attempts", "attempt")
+            reviews_by_hash = cls._load_records(evidence / "reviews", "review")
+            if set(attempts_by_hash) != set(projected_attempts) or set(reviews_by_hash) != set(
+                projected_reviews
+            ):
+                raise ValueError("sealed evidence inventory differs from its projection")
+            _validate_attempt_sequence(
+                tuple(attempts_by_hash[digest] for digest in projected_attempts)
+            )
+            if staging.exists():
+                if not staging.is_dir() or staging.is_symlink():
+                    raise ValueError("sealed/staging recovery state is invalid")
+                try:
+                    stale_manifest = _read_json(staging / "manifest.json")
+                    stale_projection = _read_json(staging / "projection.json")
+                    duplicate_differs = (
+                        _validate_hashed_record(stale_manifest, name="stale staging manifest")
+                        != evidence_manifest_hash
+                        or _validate_hashed_record(
+                            stale_projection, name="stale staging projection"
+                        )
+                        != evidence_projection_hash
+                        or cls._load_records(staging / "attempts", "attempt") != attempts_by_hash
+                        or cls._load_records(staging / "reviews", "review") != reviews_by_hash
+                    )
+                except (OSError, TypeError, ValueError) as error:
+                    raise ValueError("sealed and staging evidence differ") from error
+                if duplicate_differs:
+                    raise ValueError("sealed and staging evidence differ")
             return cls(
                 root,
                 seal["staging_manifest_hash"],  # type: ignore[arg-type]
-                (),
-                (),
+                projected_attempts,
+                projected_reviews,
                 True,
                 RLock(),
             )
@@ -339,6 +386,12 @@ class ProbeRunStore:
             if type(bundle) is not ProbeBundle:
                 raise TypeError("seal requires a validated ProbeBundle")
             checked = ProbeBundle.from_payloads(bundle.to_payloads())
+            reopened = type(self).open(self.root)
+            if reopened.manifest_hash != self.manifest_hash:
+                raise ValueError("store authorization changed before sealing")
+            self.attempt_hashes = reopened.attempt_hashes
+            self.review_hashes = reopened.review_hashes
+            self._persist_projection(staging)
             sealed = self.root / "sealed"
             partial = self.root / "sealed.partial"
             if sealed.exists() or sealed.is_symlink() or partial.exists() or partial.is_symlink():
@@ -355,6 +408,24 @@ class ProbeRunStore:
             created = True
             try:
                 write_probe_bundle_atomic(partial / "files", checked)
+                evidence = partial / "evidence"
+                (evidence / "attempts").mkdir(parents=True)
+                (evidence / "reviews").mkdir()
+                _write_create_only(
+                    evidence / "manifest.json", _read_json(staging / "manifest.json")
+                )
+                _write_create_only(
+                    evidence / "projection.json", _read_json(staging / "projection.json")
+                )
+                for kind in ("attempts", "reviews"):
+                    source = staging / kind
+                    target = evidence / kind
+                    for source_path in source.iterdir():
+                        if source_path.name.startswith(".tmp-"):
+                            continue
+                        _write_create_only(target / source_path.name, _read_json(source_path))
+                    _fsync_directory(target)
+                _fsync_directory(evidence)
                 content: dict[str, object] = {
                     "schema_version": _SEAL_SCHEMA,
                     "staging_manifest_hash": self.manifest_hash,

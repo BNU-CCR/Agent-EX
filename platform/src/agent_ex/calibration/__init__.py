@@ -3,6 +3,7 @@
 from .contracts import ProbeCase, ProbePersonaView, ProbeTopicCandidate
 from .cloud import CloudPreflight, SmokeManifest
 from .cloud_run import (
+    AmbiguousCloudDispatchError,
     CloudProbeAuditReport,
     CloudRunArtifacts,
     CloudRunManifest,
@@ -11,6 +12,7 @@ from .cloud_run import (
     execute_cloud_probe,
     load_cloud_run_artifacts,
     mark_cloud_probe_terminal,
+    reconstruct_cloud_projection,
     resume_cloud_probe,
     seal_cloud_probe_report,
 )
@@ -36,6 +38,7 @@ from .smoke import SMOKE_PROMPT_SET_HASH, SmokeFailure, SmokeResult, run_probe_s
 from .vllm_adapter import VllmProbeAdapter, VllmTransportEvidence
 
 __all__ = [
+    "AmbiguousCloudDispatchError",
     "ProbeCase",
     "ProbePersonaView",
     "ProbeTopicCandidate",
@@ -49,6 +52,7 @@ __all__ = [
     "execute_cloud_probe",
     "load_cloud_run_artifacts",
     "mark_cloud_probe_terminal",
+    "reconstruct_cloud_projection",
     "resume_cloud_probe",
     "seal_cloud_probe_report",
     "ArtifactEntry",

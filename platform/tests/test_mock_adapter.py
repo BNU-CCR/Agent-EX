@@ -480,6 +480,15 @@ def test_persisted_response_rejects_untrusted_and_tampered_request() -> None:
         )
 
 
+def test_adapter_request_survives_canonical_sorted_json_transport() -> None:
+    trusted = request()
+    transported = json.loads(json.dumps(trusted.to_payload(), sort_keys=True))
+
+    restored = AdapterRequest.from_payload(transported)
+
+    assert restored.to_payload() == trusted.to_payload()
+
+
 def test_base_layer_does_not_export_a_public_arbitrary_response_reseal() -> None:
     assert not hasattr(adapter_base, "reseal_verified_persisted_response")
 

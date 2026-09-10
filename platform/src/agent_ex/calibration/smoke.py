@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 from dataclasses import dataclass, fields
+import hashlib
 import json
 from pathlib import Path
 from typing import Mapping
@@ -18,10 +19,10 @@ from ..domain import (
     _require_tuple,
     canonical_payload_hash,
 )
-from .adapters import ProbeAdapter
 from .cloud import SmokeManifest
 from .contracts import ProbeCase, ProbeRequest, ProbeRuntimePolicy
 from .store import ProbeRunStore
+from .vllm_adapter import VllmProbeAdapter
 
 
 def _prompt(
@@ -248,15 +249,15 @@ def _thinking_observed(content: str, transport_payload: Mapping[str, object] | N
 
 def run_probe_smoke(
     manifest: SmokeManifest,
-    adapter: ProbeAdapter,
+    adapter: VllmProbeAdapter,
     archive_root: Path,
     runtime_policy: ProbeRuntimePolicy,
 ) -> SmokeResult:
     """Execute only the fixed smoke set and persist each attempt before advancing."""
     if not isinstance(manifest, SmokeManifest):
         raise TypeError("smoke requires a strict SmokeManifest")
-    if not isinstance(adapter, ProbeAdapter):
-        raise TypeError("smoke adapter must implement ProbeAdapter")
+    if not isinstance(adapter, VllmProbeAdapter):
+        raise TypeError("real smoke requires the loopback VllmProbeAdapter")
     if not isinstance(runtime_policy, ProbeRuntimePolicy):
         raise TypeError("smoke runtime policy must be ProbeRuntimePolicy")
     if not isinstance(archive_root, Path) or not archive_root.is_absolute():
@@ -272,6 +273,23 @@ def run_probe_smoke(
         raise ValueError("smoke adapter endpoint does not match the approved manifest")
 
     store = ProbeRunStore.create(archive_root, manifest=manifest.to_payload())
+
+    def before_dispatch(request: ProbeRequest, request_body: bytes) -> None:
+        content: dict[str, object] = {
+            "schema_version": "paper1.calibration.smoke-dispatch-intent.v1",
+            "manifest_hash": manifest.record_hash,
+            "request_id": request.request_id,
+            "request_hash": request.record_hash,
+            "probe_case_id": request.probe_case_id,
+            "attempt_index": request.attempt_index,
+            "request_body_sha256": hashlib.sha256(request_body).hexdigest(),
+            "request_body_bytes": len(request_body),
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        store.append_review({**content, "record_hash": canonical_payload_hash(content)})
+
+    adapter.bind_dispatch_journal(before_dispatch)
     observations: list[Mapping[str, object]] = []
     for index, item in enumerate(smoke_prompt_payload(), start=1):
         if item["smoke_id"] == "service-identity-recovery":
@@ -304,6 +322,35 @@ def run_probe_smoke(
             "record_hash": canonical_payload_hash(attempt_content),
         }
         store.append_attempt(attempt)
+        if transport_payload is None:
+            raise RuntimeError("real smoke lacks immutable vLLM transport evidence")
+        intent_records = store._load_records(  # noqa: SLF001
+            store.root / "staging" / "reviews", "review"
+        )
+        intents = [
+            record
+            for record in intent_records.values()
+            if record.get("schema_version") == "paper1.calibration.smoke-dispatch-intent.v1"
+            and record.get("request_id") == request.request_id
+        ]
+        if len(intents) != 1:
+            raise RuntimeError("real smoke dispatch intent is missing or ambiguous")
+        resolution_content: dict[str, object] = {
+            "schema_version": "paper1.calibration.smoke-dispatch-resolution.v1",
+            "manifest_hash": manifest.record_hash,
+            "request_id": request.request_id,
+            "dispatch_intent_hash": intents[0]["record_hash"],
+            "attempt_record_hash": attempt["record_hash"],
+            "transport_evidence_hash": transport_payload["record_hash"],
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        store.append_review(
+            {
+                **resolution_content,
+                "record_hash": canonical_payload_hash(resolution_content),
+            }
+        )
         observation = {
             "smoke_id": item["smoke_id"],
             "outcome": response.outcome,

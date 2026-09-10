@@ -12,7 +12,7 @@ import math
 import socket
 from threading import RLock
 import time
-from typing import Mapping
+from typing import Callable, Mapping
 from urllib.parse import urlsplit
 
 from ..domain import (
@@ -243,7 +243,19 @@ class VllmProbeAdapter(ProbeAdapter):
         self._max_response_bytes = max_response_bytes
         self._evidence: dict[str, VllmTransportEvidence] = {}
         self._in_flight: set[str] = set()
+        self._before_dispatch: Callable[[ProbeRequest, bytes], None] | None = None
         self._lock = RLock()
+
+    def bind_dispatch_journal(self, callback: Callable[[ProbeRequest, bytes], None]) -> None:
+        """Bind a one-run durable journal hook before any HTTP bytes are sent."""
+        if not callable(callback):
+            raise TypeError("dispatch journal callback must be callable")
+        with self._lock:
+            if self._before_dispatch is not None:
+                raise RuntimeError("dispatch journal is already bound")
+            if self._evidence or self._in_flight:
+                raise RuntimeError("dispatch journal must be bound before adapter use")
+            self._before_dispatch = callback
 
     def evidence_for(self, request_id: str) -> VllmTransportEvidence:
         with self._lock:
@@ -290,6 +302,14 @@ class VllmProbeAdapter(ProbeAdapter):
             if request.request_id in self._evidence or request.request_id in self._in_flight:
                 raise RuntimeError("request already has transport evidence")
             self._in_flight.add(request.request_id)
+            before_dispatch = self._before_dispatch
+        if before_dispatch is not None:
+            try:
+                before_dispatch(request, request_body)
+            except BaseException:
+                with self._lock:
+                    self._in_flight.remove(request.request_id)
+                raise
         started_at = _utc_now()
         started_clock = time.monotonic()
         status: int | None = None

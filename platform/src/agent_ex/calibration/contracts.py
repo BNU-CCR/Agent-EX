@@ -504,7 +504,7 @@ def _require_nonempty_json_mapping(field_name: str, value: object) -> None:
 def _require_identity_mapping(
     field_name: str, value: object, *, exact_fields: tuple[str, ...]
 ) -> None:
-    if not isinstance(value, Mapping) or tuple(value) != exact_fields:
+    if not isinstance(value, Mapping) or set(value) != set(exact_fields):
         raise ValueError(f"{field_name} fields must be exactly {', '.join(exact_fields)}")
     for key in exact_fields:
         _require_string(f"{field_name}[{key}]", value[key])
@@ -543,10 +543,8 @@ class ProbeRequest:
         if not self.rendered_messages:
             raise ValueError("rendered_messages must not be empty")
         for message in self.rendered_messages:
-            if not isinstance(message, Mapping) or tuple(message) != ("role", "content"):
-                raise ValueError(
-                    "rendered_messages must contain exact ordered role/content mappings"
-                )
+            if not isinstance(message, Mapping) or set(message) != {"role", "content"}:
+                raise ValueError("rendered_messages must contain exact role/content mappings")
             _require_string("message role", message["role"])
             _require_string("message content", message["content"])
         _require_sha256("rendered_messages_hash", self.rendered_messages_hash)

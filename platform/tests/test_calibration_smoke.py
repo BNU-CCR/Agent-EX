@@ -17,6 +17,7 @@ from agent_ex.calibration.smoke import (
     run_probe_smoke,
     smoke_prompt_payload,
 )
+from agent_ex.calibration.store import ProbeRunStore
 from agent_ex.domain import canonical_payload_hash
 from test_calibration_cloud import MODEL_REVISION, valid_preflight
 from test_calibration_vllm_adapter import FakeVllmServer, adapter as vllm_adapter
@@ -117,6 +118,13 @@ def test_smoke_never_loads_probe_case_inventory(tmp_path: Path) -> None:
     assert result.smoke_prompt_count == 10
     assert result.status == "passed"
     assert not any((tmp_path / "smoke").rglob("case-inventory.json"))
+    store = ProbeRunStore.open(tmp_path / "smoke")
+    records = store._load_records(  # noqa: SLF001
+        store.root / "staging" / "reviews", "review"
+    )
+    schemas = [record["schema_version"] for record in records.values()]
+    assert schemas.count("paper1.calibration.smoke-dispatch-intent.v1") == 10
+    assert schemas.count("paper1.calibration.smoke-dispatch-resolution.v1") == 10
 
 
 def test_smoke_fails_when_thinking_content_is_observed(tmp_path: Path) -> None:

@@ -10,15 +10,18 @@ from pathlib import Path
 import pytest
 
 from agent_ex.calibration.cloud_run import (
+    AmbiguousCloudDispatchError,
     CloudRunManifest,
     build_cloud_probe_report,
     build_cloud_run_manifest,
     execute_cloud_probe,
     load_cloud_run_artifacts,
     mark_cloud_probe_terminal,
+    reconstruct_cloud_projection,
     resume_cloud_probe,
     seal_cloud_probe_report,
 )
+import agent_ex.calibration.cloud_run as cloud_run_module
 from agent_ex.calibration.environment import EnvironmentDriftError, EnvironmentLock
 from agent_ex.calibration.store import ProbeRunStore
 from agent_ex.calibration.vllm_adapter import VllmProbeAdapter
@@ -29,6 +32,7 @@ from helpers.calibration import probe_spec_payload
 from test_calibration_environment import mutate_observation, valid_observation
 from test_calibration_gates import algorithm, required_challenges
 from test_calibration_review import review_policy
+from test_calibration_report import complete_bundle
 from test_calibration_runner import policy as runtime_policy
 from test_calibration_vllm_adapter import FakeVllmServer
 
@@ -300,6 +304,14 @@ def test_cloud_facade_persists_each_validated_attempt_before_advancing(
     assert stored["transport_evidence"]["request_hash"] == (
         projection.attempts[0].request.record_hash
     )
+    reviews = store._load_records(  # noqa: SLF001
+        store.root / "staging" / "reviews", "review"
+    )
+    schemas = {record["schema_version"] for record in reviews.values()}
+    assert schemas == {
+        "paper1.calibration.cloud-dispatch-intent.v1",
+        "paper1.calibration.cloud-dispatch-resolution.v1",
+    }
     assert len(server.requests) == 1
 
 
@@ -383,8 +395,110 @@ def test_unexpected_adapter_crash_keeps_recoverable_prefix(tmp_path: Path) -> No
         server.close()
 
     assert len(store.attempt_hashes) == 1
+    recovered = reconstruct_cloud_projection(
+        ProbeRunStore.open(tmp_path / "run"),
+        run_artifacts=artifacts,
+        manifest=manifest,
+    )
+    assert len(recovered.attempts) == 1
+    assert recovered.attempts[0].request.request_id == next(iter(adapter._evidence))  # noqa: SLF001
+    resumed_server = FakeVllmServer(port=8000)
+    resumed_adapter = _FailIfSecondRequestAdapter(resumed_server.endpoint)
+    try:
+        resumed = resume_cloud_probe(
+            manifest=manifest,
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            projection=None,
+            adapter=resumed_adapter,
+            store=ProbeRunStore.open(tmp_path / "run"),
+            stop_after_attempts=1,
+        )
+    finally:
+        resumed_server.close()
+    assert len(resumed.attempts) == 2
+    assert len(resumed_server.requests) == 1
     with pytest.raises(RuntimeError, match="recoverable staging"):
         build_cloud_probe_report(store)
+
+
+def test_power_loss_after_response_never_reissues_indeterminate_request(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    adapter = _FailIfSecondRequestAdapter(server.endpoint)
+
+    def lose_power_before_attempt_append(*args: object, **kwargs: object) -> None:
+        raise KeyboardInterrupt("simulated hard power loss")
+
+    monkeypatch.setattr(cloud_run_module, "_persist_projection", lose_power_before_attempt_append)
+    try:
+        with pytest.raises(KeyboardInterrupt, match="hard power loss"):
+            execute_cloud_probe(
+                run_artifacts=artifacts,
+                environment_lock=lock,
+                current_environment=valid_observation(),
+                manifest=manifest,
+                adapter=adapter,
+                store=store,
+                stop_after_attempts=1,
+            )
+    finally:
+        server.close()
+
+    assert len(server.requests) == 1
+    assert len(store.attempt_hashes) == 0
+    resumed_server = FakeVllmServer(port=8000)
+    resumed_adapter = _FailIfSecondRequestAdapter(resumed_server.endpoint)
+    try:
+        with pytest.raises(AmbiguousCloudDispatchError, match="indeterminate"):
+            resume_cloud_probe(
+                manifest=manifest,
+                run_artifacts=artifacts,
+                environment_lock=lock,
+                current_environment=valid_observation(),
+                adapter=resumed_adapter,
+                store=ProbeRunStore.open(tmp_path / "run"),
+                stop_after_attempts=1,
+            )
+    finally:
+        resumed_server.close()
+    assert resumed_server.requests == []
+
+
+def test_seal_rejects_bundle_not_rebuilt_from_this_store(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    try:
+        execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=_FailIfSecondRequestAdapter(server.endpoint),
+            store=store,
+            stop_after_attempts=1,
+        )
+    finally:
+        server.close()
+
+    with pytest.raises(ValueError, match="projection differs"):
+        seal_cloud_probe_report(
+            store,
+            bundle=complete_bundle(),
+            run_artifacts=artifacts,
+            manifest=manifest,
+        )
 
 
 def _store_with_manifest(tmp_path: Path) -> tuple[ProbeRunStore, CloudRunManifest]:
@@ -412,10 +526,34 @@ def test_terminal_incomplete_store_builds_audit_report_without_candidate(
     assert report.selected_candidate is None
 
 
+def test_terminal_complete_store_allows_predeclared_no_candidate(tmp_path: Path) -> None:
+    store, manifest = _store_with_manifest(tmp_path)
+    mark_cloud_probe_terminal(
+        store,
+        manifest=manifest,
+        status="complete",
+        selected_candidate=None,
+        reason="all_topic_candidates_failed_predeclared_gates",
+    )
+
+    report = build_cloud_probe_report(store)
+
+    assert report.status == "complete"
+    assert report.selected_candidate is None
+
+
 def test_recoverable_staging_store_cannot_build_or_seal_report(tmp_path: Path) -> None:
-    store, _ = _store_with_manifest(tmp_path)
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=environment_lock_for(packet))
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
 
     with pytest.raises(RuntimeError, match="recoverable staging"):
         build_cloud_probe_report(store)
-    with pytest.raises(RuntimeError, match="recoverable staging"):
-        seal_cloud_probe_report(store, bundle=None)
+    with pytest.raises(TypeError, match="ProbeBundle"):
+        seal_cloud_probe_report(
+            store,
+            bundle=None,
+            run_artifacts=artifacts,
+            manifest=manifest,
+        )

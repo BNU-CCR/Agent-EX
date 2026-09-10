@@ -104,13 +104,30 @@ def test_attempt_indices_cannot_have_gaps_or_duplicate_case_positions(tmp_path: 
 def test_sealed_store_rejects_all_new_records(tmp_path: Path) -> None:
     store = ProbeRunStore.create(tmp_path / "run", manifest=manifest_payload())
     store.append_attempt(attempt_payload())
+    attempt_hashes = store.attempt_hashes
     store.seal(bundle=complete_bundle())
 
     assert not (store.root / "staging").exists()
     assert (store.root / "sealed" / "manifest.json").is_file()
     assert (store.root / "sealed" / "files" / "gate-report.json").is_file()
+    assert (store.root / "sealed" / "evidence" / "manifest.json").is_file()
+    assert (store.root / "sealed" / "evidence" / "projection.json").is_file()
+    assert len(list((store.root / "sealed" / "evidence" / "attempts").glob("*.json"))) == 1
+    assert ProbeRunStore.open(store.root).attempt_hashes == attempt_hashes
     with pytest.raises(RuntimeError, match="sealed"):
         store.append_review(review_payload())
+
+
+def test_open_rejects_tampered_sealed_append_only_evidence(tmp_path: Path) -> None:
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest_payload())
+    store.append_attempt(attempt_payload())
+    digest = store.attempt_hashes[0]
+    store.seal(bundle=complete_bundle())
+    evidence = store.root / "sealed" / "evidence" / "attempts" / f"{digest}.json"
+    evidence.write_text("{}", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="record_hash"):
+        ProbeRunStore.open(store.root)
 
 
 def test_open_rejects_sealed_plus_staging_conflict(tmp_path: Path) -> None:

@@ -13,6 +13,9 @@ dependencies = [
     "PyYAML==6.0.3",
 ]
 
+[project.scripts]
+agent-ex-phase0a1 = "agent_ex.calibration.cli:main"
+
 [project.optional-dependencies]
 dev = [
     "pytest==9.1.1",

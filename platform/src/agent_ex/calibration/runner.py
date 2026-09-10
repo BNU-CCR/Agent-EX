@@ -136,7 +136,7 @@ def _validate_inputs(
         "tokenizer_identity": (tokenizer_identity, ("tokenizer", "revision")),
     }
     for name, (identity, fields) in expected_identity_fields.items():
-        if not isinstance(identity, Mapping) or tuple(identity) != fields:
+        if not isinstance(identity, Mapping) or set(identity) != set(fields):
             raise ValueError(f"{name} fields do not match the exact identity contract")
         if any(type(identity[field]) is not str or not identity[field].strip() for field in fields):
             raise ValueError(f"{name} values must be non-empty text")

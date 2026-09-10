@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, fields
-from pathlib import PurePosixPath
+import hashlib
+from pathlib import Path, PurePosixPath
 import re
 from typing import Mapping
 
@@ -18,7 +19,13 @@ from ..domain import (
     canonical_payload_hash,
 )
 from .bundle import ProbeBundle
-from .contracts import ProbeCase, ProbeRunProjection, ProbeRuntimePolicy
+from .contracts import (
+    ProbeAttempt,
+    ProbeCase,
+    ProbeRequest,
+    ProbeRunProjection,
+    ProbeRuntimePolicy,
+)
 from .environment import (
     EnvironmentLock,
     EnvironmentObservation,
@@ -28,7 +35,7 @@ from .review import SemanticReviewPolicy
 from .runner import ProbeRunCrash, execute_probe_run, resume_probe_run
 from .specification import expand_probe_cases, load_probe_specification
 from .store import ProbeRunStore
-from .vllm_adapter import VllmProbeAdapter
+from .vllm_adapter import VllmProbeAdapter, VllmTransportEvidence
 
 
 _GROUP_NAMES = frozenset(
@@ -54,6 +61,185 @@ _FORBIDDEN_KEYS = frozenset(
         "network_outcome",
     }
 )
+
+
+class AmbiguousCloudDispatchError(RuntimeError):
+    """A request may have reached vLLM but has no durable terminal evidence."""
+
+
+def _store_evidence_root(store: ProbeRunStore) -> Path:
+    if store._sealed:  # noqa: SLF001 - same-package validated store state
+        return store.root / "sealed" / "evidence"
+    return store.root / "staging"
+
+
+def _append_review_once(store: ProbeRunStore, payload: Mapping[str, object]) -> None:
+    digest = payload.get("record_hash")
+    if not isinstance(digest, str):
+        raise ValueError("dispatch journal record must contain record_hash")
+    records = store._load_records(store.root / "staging" / "reviews", "review")  # noqa: SLF001
+    if digest in records:
+        if records[digest] != payload:
+            raise ValueError("dispatch journal hash collision")
+        return
+    store.append_review(payload)
+
+
+def _dispatch_intent_record(
+    *, store: ProbeRunStore, request: ProbeRequest, request_body: bytes
+) -> Mapping[str, object]:
+    if not isinstance(request, ProbeRequest):
+        raise TypeError("dispatch intent requires ProbeRequest")
+    content: dict[str, object] = {
+        "schema_version": "paper1.calibration.cloud-dispatch-intent.v1",
+        "manifest_hash": store.manifest_hash,
+        "request_id": request.request_id,
+        "request_hash": request.record_hash,
+        "probe_case_id": request.probe_case_id,
+        "attempt_index": request.attempt_index,
+        "request_body_sha256": hashlib.sha256(request_body).hexdigest(),
+        "request_body_bytes": len(request_body),
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+    }
+    return {**content, "record_hash": canonical_payload_hash(content)}
+
+
+def _bind_dispatch_journal(adapter: VllmProbeAdapter, store: ProbeRunStore) -> None:
+    def before_dispatch(request: ProbeRequest, request_body: bytes) -> None:
+        _append_review_once(
+            store,
+            _dispatch_intent_record(store=store, request=request, request_body=request_body),
+        )
+
+    adapter.bind_dispatch_journal(before_dispatch)
+
+
+def _reconcile_dispatch_journal(store: ProbeRunStore, *, reject_unresolved: bool) -> None:
+    """Resolve journaled sends from durable attempts; fail closed on ambiguity."""
+    evidence_root = _store_evidence_root(store)
+    reviews = store._load_records(evidence_root / "reviews", "review")  # noqa: SLF001
+    attempts = store._load_records(evidence_root / "attempts", "attempt")  # noqa: SLF001
+    intents: dict[str, Mapping[str, object]] = {}
+    resolutions: dict[str, Mapping[str, object]] = {}
+    for record in reviews.values():
+        schema = record.get("schema_version")
+        if schema == "paper1.calibration.cloud-dispatch-intent.v1":
+            _exact(
+                record,
+                {
+                    "schema_version",
+                    "manifest_hash",
+                    "request_id",
+                    "request_hash",
+                    "probe_case_id",
+                    "attempt_index",
+                    "request_body_sha256",
+                    "request_body_bytes",
+                    "calibration_only",
+                    "formal_parameter_authority",
+                    "record_hash",
+                },
+                "cloud dispatch intent",
+            )
+            _validated_record(record, name="cloud dispatch intent")
+            request_id = record["request_id"]
+            if (
+                not isinstance(request_id, str)
+                or record["manifest_hash"] != store.manifest_hash
+                or record["calibration_only"] is not True
+                or record["formal_parameter_authority"] is not False
+            ):
+                raise ValueError("cloud dispatch intent authorization drift")
+            if request_id in intents:
+                raise ValueError("duplicate cloud dispatch intent")
+            intents[request_id] = record
+        elif schema == "paper1.calibration.cloud-dispatch-resolution.v1":
+            _exact(
+                record,
+                {
+                    "schema_version",
+                    "manifest_hash",
+                    "request_id",
+                    "dispatch_intent_hash",
+                    "attempt_record_hash",
+                    "transport_evidence_hash",
+                    "calibration_only",
+                    "formal_parameter_authority",
+                    "record_hash",
+                },
+                "cloud dispatch resolution",
+            )
+            _validated_record(record, name="cloud dispatch resolution")
+            request_id = record["request_id"]
+            if (
+                not isinstance(request_id, str)
+                or request_id in resolutions
+                or record["manifest_hash"] != store.manifest_hash
+                or record["calibration_only"] is not True
+                or record["formal_parameter_authority"] is not False
+            ):
+                raise ValueError("duplicate or invalid cloud dispatch resolution")
+            resolutions[request_id] = record
+
+    durable: dict[str, tuple[str, Mapping[str, object]]] = {}
+    for attempt_hash, wrapper in attempts.items():
+        nested = wrapper.get("probe_attempt")
+        transport = wrapper.get("transport_evidence")
+        if type(nested) is not dict or type(transport) is not dict:
+            raise ValueError("durable cloud attempt lacks nested evidence")
+        request = nested.get("request")
+        if type(request) is not dict or not isinstance(request.get("request_id"), str):
+            raise ValueError("durable cloud attempt lacks request identity")
+        request_id = request["request_id"]
+        if request_id in durable:
+            raise ValueError("duplicate durable request identity")
+        durable[request_id] = (attempt_hash, transport)
+
+    for request_id, (attempt_hash, transport) in durable.items():
+        intent = intents.get(request_id)
+        if intent is None:
+            raise ValueError("durable cloud attempt lacks pre-dispatch intent")
+        nested = attempts[attempt_hash]["probe_attempt"]
+        request = nested["request"]  # type: ignore[index]
+        if (
+            intent["request_hash"] != request.get("record_hash")
+            or intent["probe_case_id"] != request.get("probe_case_id")
+            or intent["attempt_index"] != request.get("attempt_index")
+            or intent["request_body_sha256"] != transport.get("request_body_sha256")
+            or intent["request_body_bytes"] != transport.get("request_body_bytes")
+        ):
+            raise ValueError("cloud dispatch intent differs from durable request evidence")
+        transport_hash = transport.get("record_hash")
+        _require_sha256("transport_evidence_hash", transport_hash)
+        content: dict[str, object] = {
+            "schema_version": "paper1.calibration.cloud-dispatch-resolution.v1",
+            "manifest_hash": store.manifest_hash,
+            "request_id": request_id,
+            "dispatch_intent_hash": intent["record_hash"],
+            "attempt_record_hash": attempt_hash,
+            "transport_evidence_hash": transport_hash,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        expected = {**content, "record_hash": canonical_payload_hash(content)}
+        existing = resolutions.get(request_id)
+        if existing is None:
+            if store._sealed:  # noqa: SLF001
+                raise ValueError("sealed evidence lacks cloud dispatch resolution")
+            _append_review_once(store, expected)
+        elif existing != expected:
+            raise ValueError("cloud dispatch resolution differs from durable attempt")
+
+    unresolved = sorted(set(intents) - set(durable))
+    if unresolved and reject_unresolved:
+        raise AmbiguousCloudDispatchError(
+            "indeterminate cloud dispatch has no durable response; automatic retry is forbidden"
+        )
+    if set(resolutions) - set(durable):
+        raise ValueError("cloud dispatch resolution lacks a durable attempt")
+
+
 _SECRET_VALUE = re.compile(
     r"(?i)(?:api[_-]?key|access[_-]?token|auth[_-]?token|password|secret)"
     r"(?:\s*(?:=|:)\s*|\s+)\S+|hf_[A-Za-z0-9]{8,}|BEGIN [A-Z ]*PRIVATE KEY"
@@ -497,6 +683,83 @@ def _execution_inputs(artifacts: CloudRunArtifacts) -> dict[str, object]:
     }
 
 
+def reconstruct_cloud_projection(
+    store: ProbeRunStore,
+    *,
+    run_artifacts: CloudRunArtifacts,
+    manifest: CloudRunManifest,
+) -> ProbeRunProjection:
+    """Rebuild the last validated projection only from durable append-only attempts."""
+    if not isinstance(store, ProbeRunStore):
+        raise TypeError("projection reconstruction requires ProbeRunStore")
+    if not isinstance(run_artifacts, CloudRunArtifacts):
+        raise TypeError("projection reconstruction requires CloudRunArtifacts")
+    if not isinstance(manifest, CloudRunManifest):
+        raise TypeError("projection reconstruction requires CloudRunManifest")
+    if (
+        store.manifest_hash != manifest.record_hash
+        or manifest.approved_artifacts_hash != run_artifacts.record_hash
+    ):
+        raise ValueError("durable projection inputs do not bind the same authorization")
+    _reconcile_dispatch_journal(store, reject_unresolved=True)
+    evidence_root = _store_evidence_root(store)
+    records = store._load_records(evidence_root / "attempts", "attempt")  # noqa: SLF001
+    attempts: list[ProbeAttempt] = []
+    for digest in store.attempt_hashes:
+        record = records[digest]
+        _exact(
+            record,
+            {
+                "schema_version",
+                "probe_case_id",
+                "attempt_index",
+                "probe_attempt",
+                "transport_evidence",
+                "calibration_only",
+                "formal_parameter_authority",
+                "record_hash",
+            },
+            "durable cloud attempt",
+        )
+        _validated_record(record, name="durable cloud attempt")
+        if (
+            record["schema_version"] != "paper1.calibration.cloud-attempt.v1"
+            or record["calibration_only"] is not True
+            or record["formal_parameter_authority"] is not False
+            or type(record["probe_attempt"]) is not dict
+            or type(record["transport_evidence"]) is not dict
+        ):
+            raise ValueError("durable cloud attempt metadata or nested payload is invalid")
+        attempt = ProbeAttempt.from_payload(record["probe_attempt"])
+        transport = VllmTransportEvidence.from_payload(record["transport_evidence"])
+        if (
+            record["probe_case_id"] != attempt.probe_case_id
+            or record["attempt_index"] != attempt.attempt_index
+            or transport.request_id != attempt.request.request_id
+            or transport.request_hash != attempt.request.record_hash
+            or transport.endpoint != run_artifacts.candidate_manifest["endpoint"]
+            or transport.outcome != attempt.response.outcome
+            or transport.error_code != attempt.response.error_code
+            or transport.provider_request_id != attempt.response.provider_request_id
+        ):
+            raise ValueError("durable transport evidence is not bound to its probe attempt")
+        attempts.append(attempt)
+    inputs = _execution_inputs(run_artifacts)
+    return ProbeRunProjection.create(
+        run_instance_id="cloud-probe-" + run_artifacts.record_hash[:16],
+        specification_hash=inputs["specification_hash"],  # type: ignore[arg-type]
+        case_inventory_hash=manifest.case_inventory_hash,
+        runtime_policy=run_artifacts.runtime_policy,
+        generation_settings=inputs["generation_settings"],  # type: ignore[arg-type]
+        runtime_identity=inputs["runtime_identity"],  # type: ignore[arg-type]
+        model_identity=inputs["model_identity"],  # type: ignore[arg-type]
+        tokenizer_identity=inputs["tokenizer_identity"],  # type: ignore[arg-type]
+        chat_template_hash=inputs["chat_template_hash"],  # type: ignore[arg-type]
+        case_ids=tuple(item.probe_case_id for item in run_artifacts.cases),
+        attempts=tuple(attempts),
+    )
+
+
 def _validate_execution(
     *,
     run_artifacts: CloudRunArtifacts,
@@ -552,6 +815,7 @@ def _persist_projection(
             "formal_parameter_authority": False,
         }
         store.append_attempt({**content, "record_hash": canonical_payload_hash(content)})
+    _reconcile_dispatch_journal(store, reject_unresolved=True)
 
 
 def _continue_cloud_probe(
@@ -619,6 +883,8 @@ def execute_cloud_probe(
     )
     if checked_store.attempt_hashes:
         raise ValueError("new cloud execution requires an empty run store")
+    _reconcile_dispatch_journal(checked_store, reject_unresolved=True)
+    _bind_dispatch_journal(checked_adapter, checked_store)
     projection = _continue_cloud_probe(
         run_artifacts=run_artifacts,
         adapter=checked_adapter,
@@ -664,8 +930,16 @@ def resume_cloud_probe(
         manifest=manifest,
         store=store,
     )
-    if not isinstance(projection, ProbeRunProjection):
-        raise ValueError("cloud resume requires the last validated projection")
+    _reconcile_dispatch_journal(checked_store, reject_unresolved=True)
+    _bind_dispatch_journal(checked_adapter, checked_store)
+    if projection is None:
+        projection = reconstruct_cloud_projection(
+            checked_store,
+            run_artifacts=run_artifacts,
+            manifest=manifest,
+        )
+    elif not isinstance(projection, ProbeRunProjection):
+        raise ValueError("cloud resume projection has the wrong type")
     _persist_projection(checked_store, projection, checked_adapter)
     resumed = _continue_cloud_probe(
         run_artifacts=run_artifacts,
@@ -699,8 +973,10 @@ class CloudProbeAuditReport:
             raise ValueError("cloud probe audit status must be terminal")
         if self.status == "incomplete" and self.selected_candidate is not None:
             raise ValueError("incomplete cloud probe cannot select a candidate")
-        if self.status == "complete" and not isinstance(self.selected_candidate, str):
-            raise ValueError("complete cloud probe must identify the selected candidate")
+        if self.selected_candidate is not None and (
+            not isinstance(self.selected_candidate, str) or not self.selected_candidate.strip()
+        ):
+            raise ValueError("selected candidate must be a nonempty string or null")
         for name in ("manifest_hash", "terminal_record_hash", "record_hash"):
             _require_sha256(name, getattr(self, name))
         if type(self.attempt_hashes) is not tuple:
@@ -741,8 +1017,10 @@ def mark_cloud_probe_terminal(
         raise ValueError("terminal marker status is invalid")
     if status == "incomplete" and selected_candidate is not None:
         raise ValueError("terminal incomplete cannot select a candidate")
-    if status == "complete" and not isinstance(selected_candidate, str):
-        raise ValueError("terminal complete requires a selected candidate")
+    if selected_candidate is not None and (
+        not isinstance(selected_candidate, str) or not selected_candidate.strip()
+    ):
+        raise ValueError("terminal selected candidate must be a nonempty string or null")
     if not isinstance(reason, str) or not reason.strip():
         raise ValueError("terminal marker requires a reason")
     content: dict[str, object] = {
@@ -818,14 +1096,75 @@ def build_cloud_probe_report(store: ProbeRunStore) -> CloudProbeAuditReport:
     )
 
 
-def seal_cloud_probe_report(store: ProbeRunStore, *, bundle: ProbeBundle | None) -> None:
-    build_cloud_probe_report(store)
+def seal_cloud_probe_report(
+    store: ProbeRunStore,
+    *,
+    bundle: ProbeBundle | None,
+    run_artifacts: CloudRunArtifacts,
+    manifest: CloudRunManifest,
+) -> None:
+    """Seal only a bundle rebuilt from this store's exact durable evidence."""
     if not isinstance(bundle, ProbeBundle):
         raise TypeError("terminal cloud probe sealing requires ProbeBundle")
+    if not isinstance(run_artifacts, CloudRunArtifacts) or not isinstance(
+        manifest, CloudRunManifest
+    ):
+        raise TypeError("cloud sealing requires authorized artifacts and manifest")
+    if (
+        store.manifest_hash != manifest.record_hash
+        or manifest.approved_artifacts_hash != run_artifacts.record_hash
+    ):
+        raise ValueError("cloud seal authorization drift")
+    projection = reconstruct_cloud_projection(
+        store,
+        run_artifacts=run_artifacts,
+        manifest=manifest,
+    )
+    source = bundle.report.source
+    if source.projection.to_payload() != projection.to_payload():
+        raise ValueError("probe bundle projection differs from durable cloud attempts")
+    if source.specification.to_payload() != run_artifacts.specification.to_payload() or tuple(
+        case.to_payload() for case in source.cases
+    ) != tuple(case.to_payload() for case in run_artifacts.cases):
+        raise ValueError("probe bundle source differs from authorized cloud artifacts")
+    manifest_payload = bundle.to_payloads()["manifest.json"]
+    if (
+        not isinstance(manifest_payload, Mapping)
+        or manifest_payload.get("external_archive_locator") != manifest.archive_uri
+    ):
+        raise ValueError("probe bundle archive locator differs from cloud manifest")
+    review_records = store._load_records(  # noqa: SLF001
+        store.root / "staging" / "reviews", "review"
+    )
+    for payload in (
+        source.semantic_review.review_export.to_payload(),
+        source.semantic_review.to_payload(),
+    ):
+        digest = payload["record_hash"]
+        if review_records.get(digest) != payload:
+            raise ValueError("probe bundle semantic review is not durable run evidence")
+    expected_status = "incomplete" if bundle.report.status == "incomplete" else "complete"
+    expected_candidate = bundle.report.topic_selection.primary
+    try:
+        audit = build_cloud_probe_report(store)
+    except RuntimeError as error:
+        if "recoverable staging" not in str(error):
+            raise
+        mark_cloud_probe_terminal(
+            store,
+            manifest=manifest,
+            status=expected_status,
+            selected_candidate=expected_candidate,
+            reason="bundle_rebuilt_from_exact_durable_cloud_evidence",
+        )
+        audit = build_cloud_probe_report(store)
+    if audit.status != expected_status or audit.selected_candidate != expected_candidate:
+        raise ValueError("terminal audit marker differs from the durable probe bundle")
     store.seal(bundle=bundle)
 
 
 __all__ = [
+    "AmbiguousCloudDispatchError",
     "CloudRunArtifacts",
     "CloudRunManifest",
     "CloudProbeAuditReport",
@@ -834,6 +1173,7 @@ __all__ = [
     "execute_cloud_probe",
     "load_cloud_run_artifacts",
     "mark_cloud_probe_terminal",
+    "reconstruct_cloud_projection",
     "resume_cloud_probe",
     "seal_cloud_probe_report",
 ]

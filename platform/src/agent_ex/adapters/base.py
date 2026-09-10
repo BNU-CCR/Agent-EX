@@ -149,8 +149,8 @@ class AdapterRequest:
         if not isinstance(self.rendered_messages, tuple) or not self.rendered_messages:
             raise ValueError("rendered_messages must be a non-empty tuple")
         for message in self.rendered_messages:
-            if type(message) is not dict or tuple(message) != ("role", "content"):
-                raise ValueError("each rendered message must contain role then content")
+            if type(message) is not dict or set(message) != {"role", "content"}:
+                raise ValueError("each rendered message must contain exact role/content fields")
             if message["role"] not in {"system", "user", "assistant"}:
                 raise ValueError("rendered message role is unsupported")
             _require_string("rendered message content", message["content"])
