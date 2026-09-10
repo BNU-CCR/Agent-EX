@@ -840,3 +840,11 @@
 - 下一步为Phase 0A-1。开始前仍需owner批准议题/persona文本候选、runtime policy、
   semantic-review policy、Qwen/vLLM候选栈、云端凭据和外部归档位置；不得直接进入
   正式N=1000/T=50主实验。
+
+### Phase 0A-1：2026-09-10 checkpoint
+
+- Phase 0A-1 design approved and independently reviewed。
+- 云端只读预检已完成，SSH免密连接通过；观测环境为RTX 5090 32GB、Ubuntu 22.04、
+  Python 3.12.3、PyTorch 2.8.0+cu128及150GB数据盘。
+- 尚无真实模型响应、运行时冻结、decision record或正式实验。
+- Phase 0A-1仍在推进，尚未达到阶段验收边界。

@@ -8,6 +8,14 @@ Phase 0A-0 离线 probe 骨架已完成并通过规格、代码质量和最终�
 修复后 full/coverage 均为1463 passed、2 skipped、1 release-scale deselected，coverage
 为86%；下一阶段是 Phase 0A-1 云端真实小样本校准，不是直接启动正式主实验。
 
+### 2026-09-10 checkpoint
+
+- Phase 0A-1 design approved and independently reviewed。
+- 云端只读预检已完成，SSH免密连接通过；观测环境为RTX 5090 32GB、Ubuntu 22.04、
+  Python 3.12.3、PyTorch 2.8.0+cu128及150GB数据盘。
+- 尚无真实模型响应、运行时冻结、decision record或正式实验。
+- Phase 0A-1仍在推进，尚未达到阶段验收边界。
+
 ## 各阶段
 
 ### 阶段 1：设计固化与规格审阅

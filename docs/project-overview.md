@@ -2,7 +2,7 @@
 status: active navigation baseline
 authority: project scope and evidence map; not an execution protocol
 supersedes: README.md and logs/notion-2026-05-31.md as the entry point for work after 2026-07-14
-last-verified: 2026-09-09
+last-verified: 2026-09-10
 ---
 
 # Agent-EX 项目总览
@@ -46,6 +46,14 @@ pilot-3.0 的 weak 条件出现高分端集中，lifelong strong 条件保留较
 - 历史思路：README、Notion 交接和 `design/`，只作追溯。
 
 ## 当前实现 checkpoint
+
+### 2026-09-10 Phase 0A-1
+
+- Phase 0A-1 design approved and independently reviewed。
+- 云端只读预检已完成，SSH免密连接通过；观测环境为RTX 5090 32GB、Ubuntu 22.04、
+  Python 3.12.3、PyTorch 2.8.0+cu128及150GB数据盘。
+- 尚无真实模型响应、运行时冻结、decision record或正式实验。
+- Phase 0A-1仍在推进，尚未达到阶段验收边界。
 
 - Phase 0A-0 离线 probe 骨架分支：`codex/paper1-phase0`，状态为
   `complete / independently reviewed`。它已完成严格 specification/case/attempt/
