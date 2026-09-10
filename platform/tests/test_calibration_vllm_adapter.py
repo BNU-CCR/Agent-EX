@@ -37,7 +37,7 @@ VALID_RAW_RESPONSE = json.dumps(
 
 
 class FakeVllmServer:
-    def __init__(self) -> None:
+    def __init__(self, *, port: int = 0) -> None:
         self.status = 200
         self.body = VALID_RAW_RESPONSE
         self.headers: dict[str, str] = {"X-Request-Id": "req-test-1"}
@@ -71,7 +71,7 @@ class FakeVllmServer:
             def log_message(self, format: str, *args: object) -> None:
                 return
 
-        self._server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        self._server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
         self._thread = Thread(target=self._server.serve_forever, daemon=True)
         self._thread.start()
 

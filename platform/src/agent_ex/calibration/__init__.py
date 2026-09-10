@@ -8,6 +8,7 @@ from .offline import (
     scripted_probe_adapter,
 )
 from .store import ProbeRunStore
+from .smoke import SMOKE_PROMPT_SET_HASH, SmokeFailure, SmokeResult, run_probe_smoke
 from .vllm_adapter import VllmProbeAdapter, VllmTransportEvidence
 
 __all__ = [
@@ -17,6 +18,10 @@ __all__ = [
     "CloudPreflight",
     "SmokeManifest",
     "ProbeRunStore",
+    "SMOKE_PROMPT_SET_HASH",
+    "SmokeFailure",
+    "SmokeResult",
+    "run_probe_smoke",
     "VllmProbeAdapter",
     "VllmTransportEvidence",
     "load_runnable_probe_specification",
