@@ -126,7 +126,7 @@ Run:
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_cloud.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cloud.py -q
 Set-Location ..
 ```
 
@@ -183,9 +183,9 @@ class SmokeManifest:
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_cloud.py tests/test_calibration_specification.py tests/test_calibration_runner.py -q
-py -3.12 -m ruff check src tests
-py -3.12 -m ruff format --check src tests
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cloud.py tests/test_calibration_specification.py tests/test_calibration_runner.py -q
+& '.\.venv\Scripts\python.exe' -m ruff check src tests
+& '.\.venv\Scripts\python.exe' -m ruff format --check src tests
 Set-Location ..
 ```
 
@@ -231,7 +231,7 @@ def test_sealed_store_rejects_all_new_records(tmp_path: Path) -> None:
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_store.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_store.py -q
 Set-Location ..
 ```
 
@@ -258,7 +258,7 @@ Every record write must use same-directory temporary creation, file `fsync`, ato
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_store.py tests/test_calibration_bundle.py tests/test_calibration_runner.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_store.py tests/test_calibration_bundle.py tests/test_calibration_runner.py -q
 Set-Location ..
 ```
 
@@ -303,7 +303,7 @@ def test_adapter_rejects_non_loopback_endpoint() -> None:
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_vllm_adapter.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_vllm_adapter.py -q
 Set-Location ..
 ```
 
@@ -318,8 +318,8 @@ Use stdlib `http.client.HTTPConnection`; disable redirects; accept only hostname
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_vllm_adapter.py tests/test_calibration_runner.py tests/test_calibration_adapters.py -q
-py -3.12 -m ruff check src tests
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_vllm_adapter.py tests/test_calibration_runner.py tests/test_calibration_adapters.py -q
+& '.\.venv\Scripts\python.exe' -m ruff check src tests
 Set-Location ..
 ```
 
@@ -385,7 +385,7 @@ def test_environment_lock_round_trip_recomputes_nested_hashes() -> None:
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_smoke.py tests/test_calibration_environment.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_smoke.py tests/test_calibration_environment.py -q
 Set-Location ..
 ```
 
@@ -430,7 +430,7 @@ Implement frozen, exact-key `EnvironmentLock` and typed nested records. Its cano
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cloud.py tests/test_calibration_report.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cloud.py tests/test_calibration_report.py -q
 Set-Location ..
 ```
 
@@ -505,7 +505,7 @@ def test_cloud_facade_cannot_accept_formal_engine_types() -> None:
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_cloud_run.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cloud_run.py -q
 Set-Location ..
 ```
 
@@ -524,7 +524,7 @@ Enforce this construction order: approved six-group packet -> fresh `Environment
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_cloud_run.py tests/test_calibration_runner.py tests/test_calibration_gates.py tests/test_calibration_review.py tests/test_calibration_report.py tests/test_calibration_bundle.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cloud_run.py tests/test_calibration_runner.py tests/test_calibration_gates.py tests/test_calibration_review.py tests/test_calibration_report.py tests/test_calibration_bundle.py -q
 Set-Location ..
 ```
 
@@ -576,7 +576,7 @@ def test_manifest_requires_verified_environment_lock() -> None:
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_cli.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cli.py -q
 Set-Location ..
 ```
 
@@ -600,8 +600,8 @@ agent-ex-phase0a1 = "agent_ex.calibration.cli:main"
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_cli.py tests/test_calibration_cloud_run.py -q
-py -3.12 -m ruff check src tests
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cli.py tests/test_calibration_cloud_run.py -q
+& '.\.venv\Scripts\python.exe' -m ruff check src tests
 Set-Location ..
 ```
 
@@ -636,7 +636,7 @@ Set-Location (git rev-parse --show-toplevel)
 $phase0a1Baseline = '672687e765320238bdbeb362b13e66cc43e9bd36'
 git merge-base --is-ancestor $phase0a1Baseline HEAD
 Set-Location platform
-py -3.12 -m pytest tests/test_calibration_cloud.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_cloud_run.py tests/test_calibration_cli.py -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_calibration_cloud.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_cloud_run.py tests/test_calibration_cli.py -q
 Set-Location ..
 ```
 
@@ -648,8 +648,8 @@ Record `672687e765320238bdbeb362b13e66cc43e9bd36` as the Phase 0A-1 comparison b
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m pytest -q
-py -3.12 -m pytest --cov=agent_ex --cov-report=term-missing -q
+& '.\.venv\Scripts\python.exe' -m pytest -q
+& '.\.venv\Scripts\python.exe' -m pytest --cov=agent_ex --cov-report=term-missing -q
 Set-Location ..
 ```
 
@@ -660,9 +660,9 @@ Expected: no failure; record exact pass/skip/deselection and coverage counts rat
 ```powershell
 Set-Location (git rev-parse --show-toplevel)
 Set-Location platform
-py -3.12 -m ruff check src tests
-py -3.12 -m ruff format --check src tests
-py -3.12 -m pip check
+& '.\.venv\Scripts\python.exe' -m ruff check src tests
+& '.\.venv\Scripts\python.exe' -m ruff format --check src tests
+& '.\.venv\Scripts\python.exe' -m pip check
 Set-Location ..
 $phase0a1Baseline = '672687e765320238bdbeb362b13e66cc43e9bd36'
 git diff --check $phase0a1Baseline HEAD
