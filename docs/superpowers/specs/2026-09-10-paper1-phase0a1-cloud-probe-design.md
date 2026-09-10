@@ -19,29 +19,37 @@ Qwen3-8B 系统完成真实模型 probe。它回答：
 
 本阶段只运行相互独立的 calibration cases。它不构造社会网络，不调用正式 event engine，
 不更新 Agent 私人或公开状态，不计算网络处理效应，也不运行 N=1000/T=50 主矩阵。
-输出状态只能是 `proposal_only`、`no_candidate` 或 `incomplete`。程序不得自动修改
-`docs/decisions.md`、正式协议、schema 或 formal config。
+最终 ProbeReport 状态只能是 `proposal_only`、`no_candidate` 或 `incomplete`。语义复核
+子系统可以记录 `review_incomplete`，但它必须投影为整体报告的 `incomplete`，不得成为
+第四种最终报告状态。程序不得自动修改 `docs/decisions.md`、正式协议、schema 或 formal config。
 
 ## 2. 前置条件与权限门
 
-云端执行分为两个权限层：
+云端执行分为三个互不循环的权限层：
 
 1. **只读 preflight**：检查服务器、GPU、driver、CUDA、磁盘、Python 和现有软件状态；
    不下载模型、不安装依赖、不启动服务、不发送生成请求。
-2. **受控执行**：只有六项启动制品全部获批并完成 hash 绑定后，才允许安装锁定环境、
-   获取固定模型、启动本地 vLLM 和执行 probe。
+2. **候选栈 smoke**：只读 preflight 通过后，由 owner 批准一个专用 smoke manifest，
+   其中必须绑定候选 model/runtime、临时 smoke 归档、凭据边界、临时 runtime policy 和
+   固定 smoke prompts。该权限只允许安装候选环境、获取候选模型、启动 loopback vLLM
+   并执行 smoke；不得加载或执行 816-case inventory，也不得生成议题选择。
+3. **816-case 受控执行**：smoke 证据关闭 model/runtime/timeout 等候选值后，只有下列
+   六组正式启动制品全部获批并完成 hash 绑定，才允许执行真实 probe。
 
 六项启动制品是：
 
-- 三个议题的题干、事实卡、量表锚点及 persona 文本候选；
+- 完整 probe specification，包括三个议题的题干、事实卡、量表锚点、persona 文本候选
+  和版本化 `gate_algorithm`；
 - probe runtime policy；
 - semantic-review policy；
 - Qwen revision、tokenizer/chat template、vLLM/Linux/CUDA candidate stack 与 generation manifest；
 - 凭据安全注入方式；
 - 原始响应、review 和 bundle 的外部受控 archive location。
 
-任何制品仍含未知 placeholder、未登记研究 ID、未绑定 hash 或与 manifest 不一致时，
-受控执行必须 fail closed。
+smoke manifest 只能关闭它明确测试的运行时候选，不能产生议题/persona 或 formal authority。
+816-case 启动制品仍含未知 placeholder、未登记研究 ID、未绑定 hash 或与 manifest 不一致时，
+受控执行必须 fail closed。这样 smoke 为冻结运行时候选提供证据，而不是被尚未产生的
+smoke 证据反向阻断。
 
 ## 3. 云端与模型候选栈
 
@@ -76,11 +84,15 @@ GPU 型号、driver、CUDA、Python、PyTorch、镜像 digest、vLLM wheel/hash�
 
 ### 3.3 Generation candidate
 
-Qwen 官方 non-thinking 建议的 `temperature=0.7`、`top_p=0.8`、`top_k=20`、`min_p=0`
-作为 Phase 0A-1 首选候选。实际请求还必须显式传递最大输出 token 数和
-`enable_thinking=false`。这些值在 probe 证据和运行时会审完成前分别继续受
-`UNRESOLVED[P1_TEMPERATURE]`、`UNRESOLVED[P1_TOP_P]` 及相应 runtime 决策约束；
-官方建议本身不构成 formal authority。
+Qwen 官方 non-thinking 建议中的 `temperature=0.7`、`top_p=0.8` 作为 Phase 0A-1 首选
+候选。实际请求还必须显式传递最大输出 token 数和 `enable_thinking=false`。这些值在
+probe 证据和运行时会审完成前分别继续受 `UNRESOLVED[P1_TEMPERATURE]`、
+`UNRESOLVED[P1_TOP_P]` 和 `UNRESOLVED[P1_MAX_TOKENS]` 约束；官方建议本身不构成
+formal authority。
+
+官方文档同时建议 `top_k=20`、`min_p=0`，但项目目前没有对应稳定研究 ID，因此它们只作
+候选依据，不得进入 smoke 或 816-case 请求。若后续决定使用，必须先在
+`docs/research-qa.md` 注册稳定 ID、明确 schema path 和决策者，再经书面修订批准。
 
 requested seed 是否被 vLLM 接受、传播和回显必须通过 smoke 实测。实测不能证明模型
 位级确定性；不支持或不可验证时必须显式记录，不得伪造 seed guarantee，也不得把 probe
@@ -121,10 +133,13 @@ preflight 生成不含凭据的候选环境报告。受控执行前再生成不�
 
 ### 4.3 Artifact store
 
-每个 probe run 使用独立、不可变的外部目录，保存 manifest、specification、case inventory、
-requests、attempts、raw responses、parse evidence、machine metrics、blind-review export/import、
-gate report、freeze proposal 和完整 hash index。目录根由云端环境安全注入，实际解析后的
-绝对 URI 写入 run manifest；`UNRESOLVED[P1_DATA_ARCHIVE_URI]` 关闭前不得开始真实 run。
+每个 probe run 使用独立外部目录。运行中的 staging 区只允许原子追加 attempt、response、
+parse 和 review records，并以版本化 projection/checkpoint 指向当前完整前缀；既有记录不得
+覆盖或原地改写。run 到达终态后生成 sealed bundle 与完整 hash index，此后整个 bundle
+不可变。目录保存 manifest、specification、case inventory、requests、attempts、raw responses、
+parse evidence、machine metrics、blind-review export/import、gate report 和 freeze proposal。
+目录根由云端环境安全注入，实际解析后的绝对 URI 写入 run manifest；
+`UNRESOLVED[P1_DATA_ARCHIVE_URI]` 关闭前不得开始真实 816-case run。
 
 原始响应、数据库、checkpoint、coverage 和大型 bundle 不进入 Git。Git 只允许提交代码、
 schema、测试、小型脱敏 fixture、manifest/hash 和外部归档定位。
@@ -168,6 +183,8 @@ identity 96、continuity 576。case ID 由 specification hash 与全部 case 坐
 transport retry 不改变 prompt、case ID 或 requested seed，也不消费唯一一次 format repair。
 format repair 只能在首次语义响应格式无效时追加统一格式提醒。runtime policy 耗尽后，case
 成为该 run 中不可逆的 `runtime_failed`，run 为 `incomplete`，不得计算候选 pass/fail。
+attempt 使用量属于持久化 run projection；重启和恢复只能追加后续 attempt，不能重置或
+重新解释已经消费的 transport/format attempt 预算。
 
 精确 timeout、attempt 和 backoff 数值属于 `UNRESOLVED[P1_TIMEOUT_RETRY]`，必须由 preflight
 和 adapter smoke 支持后经运行时会审批准；Phase 0A-0 scripted 值不是 coder 默认值。
@@ -184,7 +201,8 @@ format repair 只能在首次语义响应格式无效时追加统一格式提醒
 - 审阅包只显示 `topic_text`、`history_text`、`identity_text` 和 `response_text`；
 - 不显示 factor condition 名称、候选优先级、sampling settings、其他编码或聚合结果；
 - 任一维度分歧触发追加 adjudication；原始编码不可覆盖；
-- 缺失、无效或无法 hash 回绑的必审记录使报告 `review_incomplete`。
+- 缺失、无效或无法 hash 回绑的必审记录使 semantic-review bundle 为
+  `review_incomplete`，并使最终 ProbeReport 为 `incomplete`。
 
 judge 身份、人工编码者数量、精确抽样规模/分层、一致性统计及门槛、标签、passing labels、
 adjudicator 与聚合函数继续属于 `UNRESOLVED[P1_CONTINUITY_MC_SCORING]` 等稳定决策 ID。
@@ -195,11 +213,11 @@ adjudicator 与聚合函数继续属于 `UNRESOLVED[P1_CONTINUITY_MC_SCORING]` �
 
 严格数据流为：
 
-`cloud preflight -> approved decision artifacts -> environment lock -> adapter smoke -> immutable run manifest -> cases -> attempts -> parse evidence -> machine metrics -> blinded semantic review -> gate report -> freeze proposal`
+`cloud preflight -> approved smoke manifest -> adapter smoke -> approved six-group run artifacts -> environment lock -> immutable run manifest -> cases -> append-only attempts -> parse evidence -> machine metrics -> blinded semantic review -> gate report -> sealed bundle -> freeze proposal`
 
-preflight 和 smoke 分属不同权限层。smoke 是真实模型调用，只有候选栈、凭据边界和临时
-smoke 归档位置批准后才能执行。正式 816-case run 只有在 smoke 通过且六项启动制品全部
-绑定后才能开始。
+preflight、smoke 和 816-case run 分属不同权限层。smoke 是真实模型调用，只有专用 smoke
+manifest 批准后才能执行；它不得读取正式 case inventory。正式 816-case run 只有在 smoke
+通过且包含 gate algorithm 的六组启动制品全部绑定后才能开始。
 
 ## 9. Smoke 与停止门
 
@@ -221,7 +239,13 @@ policy 耗尽，或者代码/环境 lock 不一致。
 
 ## 10. 报告、选择与解释边界
 
-完整 run 才能生成候选 gate。确定性硬门与 Phase 0A 总设计一致：至多一次 format repair 后
+完整 run 才能生成候选 gate。真实 response 前，specification 必须绑定 Phase 0A 总设计
+定义的完整版本化 `gate_algorithm`，包括 attempt 折叠、scheduled/parsed/refusal/
+distribution-universe 分母、分层与配对、缺失和无效值、零方差、精确有理边界、完整分布
+TV 报告、direct-contradiction classifier 身份/hash，以及所有挑战和候选总体 pass/fail 的
+布尔聚合。报告器不得临时解释这些规则。
+
+确定性硬门与 Phase 0A 总设计一致：至多一次 format repair 后
 解析率至少 99%，实质拒答率不高于 1%，1--7 主量表至少使用四类，单个端点占比不超过
 80%，等义配对 `abs(d_z) <= 0.20`，理由--立场直接矛盾率不高于 5%。完整分布差异必须
 报告；未预登记阈值不得事后用于淘汰。
@@ -235,16 +259,21 @@ authority。
 
 ## 11. 分级冲刺与下周交付
 
-Phase 0A-1 完成后，后续运行仍按独立 gate 推进：
+Phase 0A-1 完成后不能直接进入 N=200/500。后续运行按人类协议的 Phase 0B 与独立
+scale gate 推进：
 
-1. N=20/100：验证真实 event pipeline、恢复、证据和存储；
-2. N=200/500：完整 12 cells 的有限规模机制趋势，形成明确标注为 preliminary 的图表；
-3. N=1000 单 matched seed：容量与墙钟门；
-4. 正式首批 10 matched seeds：仅在 formal protocol、统计规格、archive、环境锁和成本门
+1. 按人类协议先完成真实 N=20、N=50、N=100 的 Phase 0B 端到端 gate，冻结或明确拒绝
+   B/K、attention/expression、model seed pairing、max tokens、timeout/retry 等机制与运行值；
+2. 由用户+方法会审关闭 `P1_SCALE_GATE_DESIGN`，预先冻结 N=200/500/1000 各级的
+   cells、matched seeds、过程指标、停止规则和禁止读取结果；
+3. N=200/500：只按已冻结 scale-gate 设计运行，形成明确标注为 preliminary 的图表；
+4. N=1000 单 matched seed：容量与墙钟门；
+5. 正式首批 10 matched seeds：仅在 formal protocol、统计规格、archive、环境锁和成本门
    全部关闭后启动。
 
 下周优先交付是：真实 calibration report、主议题/persona freeze proposal、云端吞吐与成本
-基准，以及通过完整性检查的 N=200/500 初步趋势。不能把有限规模趋势写成正式 Paper 1
+基准和 Phase 0B 的 N=20/50/100 证据。只有 `P1_SCALE_GATE_DESIGN` 及时关闭且前述 gates
+全部通过，N=200/500 初步趋势才进入下周条件性交付。不能把有限规模趋势写成正式 Paper 1
 验证结果，也不能承诺在真实吞吐未知时完成约 600 万次生成的正式主矩阵。
 
 ## 12. 验收标准
