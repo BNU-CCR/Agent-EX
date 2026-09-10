@@ -2,14 +2,25 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import base64
+from dataclasses import dataclass, fields
+import json
 from pathlib import Path
 from typing import Mapping
 
-from ..domain import _freeze, _json_ready, canonical_payload_hash
+from ..domain import (
+    _freeze,
+    _json_ready,
+    _require_int,
+    _require_json_transport,
+    _require_payload_hash,
+    _require_sha256,
+    _require_tuple,
+    canonical_payload_hash,
+)
 from .adapters import ProbeAdapter
 from .cloud import SmokeManifest
-from .contracts import ProbeCase, ProbeRequest
+from .contracts import ProbeCase, ProbeRequest, ProbeRuntimePolicy
 from .store import ProbeRunStore
 
 
@@ -120,7 +131,31 @@ class SmokeResult:
     record_hash: str
 
     def __post_init__(self) -> None:
+        if self.status != "passed":
+            raise ValueError("smoke result status must be passed")
+        _require_int("case_count", self.case_count, minimum=0)
+        if self.case_count != 0:
+            raise ValueError("smoke result must not contain probe cases")
+        _require_int("smoke_prompt_count", self.smoke_prompt_count, minimum=1)
+        if self.smoke_prompt_count != len(_SMOKE_PROMPTS):
+            raise ValueError("smoke result must contain the fixed prompt count")
+        _require_sha256("manifest_hash", self.manifest_hash)
+        _require_sha256("prompt_set_hash", self.prompt_set_hash)
+        if self.prompt_set_hash != SMOKE_PROMPT_SET_HASH:
+            raise ValueError("smoke result prompt set hash drift")
+        _require_tuple("attempt_hashes", self.attempt_hashes)
+        if len(self.attempt_hashes) != self.smoke_prompt_count:
+            raise ValueError("smoke result must bind every attempt hash")
+        for digest in self.attempt_hashes:
+            _require_sha256("attempt_hash", digest)
+        if len(set(self.attempt_hashes)) != len(self.attempt_hashes):
+            raise ValueError("smoke result attempt hashes must be unique")
+        _require_tuple("observations", self.observations)
+        if len(self.observations) != self.smoke_prompt_count:
+            raise ValueError("smoke result must contain every operational observation")
         object.__setattr__(self, "observations", _freeze(self.observations))
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
 
     def content_payload(self) -> dict[str, object]:
         return {
@@ -138,6 +173,35 @@ class SmokeResult:
 
     def to_payload(self) -> dict[str, object]:
         return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> SmokeResult:
+        expected = {field.name for field in fields(cls)} | {
+            "schema_version",
+            "calibration_only",
+            "formal_parameter_authority",
+        }
+        if type(payload) is not dict or set(payload) != expected:
+            raise ValueError("smoke result payload must contain exact fields")
+        _require_json_transport(payload, "smoke result payload")
+        if payload["schema_version"] != "paper1.calibration.smoke-result.v1":
+            raise ValueError("smoke result schema_version is not supported")
+        if payload["calibration_only"] is not True:
+            raise ValueError("smoke result must remain calibration-only")
+        if payload["formal_parameter_authority"] is not False:
+            raise ValueError("smoke result must not grant formal parameter authority")
+        if type(payload["attempt_hashes"]) is not list or type(payload["observations"]) is not list:
+            raise TypeError("smoke result collections must use JSON arrays")
+        return cls(
+            status=payload["status"],
+            case_count=payload["case_count"],
+            smoke_prompt_count=payload["smoke_prompt_count"],
+            manifest_hash=payload["manifest_hash"],
+            prompt_set_hash=payload["prompt_set_hash"],
+            attempt_hashes=tuple(payload["attempt_hashes"]),
+            observations=tuple(payload["observations"]),
+            record_hash=payload["record_hash"],
+        )  # type: ignore[arg-type]
 
 
 def _smoke_case(manifest: SmokeManifest, item: Mapping[str, object]) -> ProbeCase:
@@ -162,8 +226,23 @@ def _thinking_observed(content: str, transport_payload: Mapping[str, object] | N
     if "<think" in lowered or "</think>" in lowered or "reasoning_content" in lowered:
         return True
     if transport_payload is not None:
-        raw = str(transport_payload.get("raw_body_base64", ""))
-        return "cmVhc29uaW5nX2NvbnRlbnQ" in raw
+        encoded = transport_payload.get("raw_body_base64")
+        if isinstance(encoded, str):
+            try:
+                raw = base64.b64decode(encoded, validate=True)
+                decoded = json.loads(raw)
+            except (ValueError, json.JSONDecodeError):
+                return False
+            stack: list[object] = [decoded]
+            while stack:
+                value = stack.pop()
+                if isinstance(value, dict):
+                    for key, item in value.items():
+                        if key == "reasoning_content" and item not in {None, ""}:
+                            return True
+                        stack.append(item)
+                elif isinstance(value, list):
+                    stack.extend(value)
     return False
 
 
@@ -171,16 +250,21 @@ def run_probe_smoke(
     manifest: SmokeManifest,
     adapter: ProbeAdapter,
     archive_root: Path,
+    runtime_policy: ProbeRuntimePolicy,
 ) -> SmokeResult:
     """Execute only the fixed smoke set and persist each attempt before advancing."""
     if not isinstance(manifest, SmokeManifest):
         raise TypeError("smoke requires a strict SmokeManifest")
     if not isinstance(adapter, ProbeAdapter):
         raise TypeError("smoke adapter must implement ProbeAdapter")
+    if not isinstance(runtime_policy, ProbeRuntimePolicy):
+        raise TypeError("smoke runtime policy must be ProbeRuntimePolicy")
     if not isinstance(archive_root, Path) or not archive_root.is_absolute():
         raise ValueError("smoke archive root must be an absolute Path")
     if manifest.smoke_prompt_set_hash != SMOKE_PROMPT_SET_HASH:
         raise ValueError("smoke prompt set hash drift")
+    if manifest.runtime_policy_hash != runtime_policy.record_hash:
+        raise ValueError("smoke runtime policy does not match the approved manifest")
     if archive_root.resolve().as_posix() != manifest.archive_uri:
         raise ValueError("smoke archive does not match the approved manifest")
     adapter_endpoint = getattr(adapter, "endpoint", None)
@@ -199,7 +283,7 @@ def run_probe_smoke(
             attempt_kind="semantic",
             generation_settings=item["generation_settings"],  # type: ignore[arg-type]
         )
-        response = adapter.generate(request, timeout_seconds=30.0)
+        response = adapter.generate(request, timeout_seconds=runtime_policy.timeout_seconds)
         evidence_getter = getattr(adapter, "evidence_for", None)
         transport = None if evidence_getter is None else evidence_getter(request.request_id)
         transport_payload = None if transport is None else transport.to_payload()

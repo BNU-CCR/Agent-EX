@@ -2,6 +2,18 @@
 
 from .contracts import ProbeCase, ProbePersonaView, ProbeTopicCandidate
 from .cloud import CloudPreflight, SmokeManifest
+from .environment import (
+    ArtifactEntry,
+    EnvironmentDriftError,
+    EnvironmentLock,
+    EnvironmentObservation,
+    GpuObservation,
+    HealthCheckEvidence,
+    ImageIdentity,
+    PackageEntry,
+    VllmIdentity,
+    verify_current_environment,
+)
 from .offline import (
     load_runnable_probe_specification,
     run_offline_probe,
@@ -17,6 +29,16 @@ __all__ = [
     "ProbeTopicCandidate",
     "CloudPreflight",
     "SmokeManifest",
+    "ArtifactEntry",
+    "EnvironmentDriftError",
+    "EnvironmentLock",
+    "EnvironmentObservation",
+    "GpuObservation",
+    "HealthCheckEvidence",
+    "ImageIdentity",
+    "PackageEntry",
+    "VllmIdentity",
+    "verify_current_environment",
     "ProbeRunStore",
     "SMOKE_PROMPT_SET_HASH",
     "SmokeFailure",
