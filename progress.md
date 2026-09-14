@@ -848,3 +848,18 @@
   Python 3.12.3、PyTorch 2.8.0+cu128及150GB数据盘。
 - 尚无真实模型响应、运行时冻结、decision record或正式实验。
 - Phase 0A-1仍在推进，尚未达到阶段验收边界。
+
+### Phase 0A-1：2026-09-14 本机发布验证
+
+- **状态：** Task 8 complete；Task 9云端预检与10条真实smoke尚未执行。
+- 以`672687e765320238bdbeb362b13e66cc43e9bd36`为比较基线，祖先检查通过；
+  验证实现HEAD为`277f9ef7159759d8d868ce72b6e99a63d741db63`。
+- Phase 0A-1专项为`86 passed in 351.37s`；fresh full为
+  `1580 passed, 2 skipped, 1 deselected in 3815.22s`；fresh coverage为同计数，
+  `16,991 statements / 2,693 missed / 84% in 10743.04s`。
+- Ruff、format（91 files）、pip、baseline/current diff检查均通过；tracked runtime artifact
+  扫描无命中。credential正则仅命中既有内部validation/placeholder `token`变量；经源代码与
+  baseline diff核验，不是凭据或secret value，Phase 0A-1生产代码未引入凭据赋值。
+- 本机发布证据见`logs/2026-09-10-phase0a1-local-release.md`。云服务器继续保持关闭；下一步
+  仅在用户重新开机并提供当前SSH端点后执行Task 9的版本化只读preflight，再安装锁定环境、
+  下载固定revision并运行10条真实smoke。816-case probe仍受六组exact-hash批准门阻断。
