@@ -231,24 +231,34 @@ def test_lazy_registry_exactly_matches_stable_public_api() -> None:
     )
 
 
-def test_lazy_public_exports_resolve_and_cache_exact_defining_objects() -> None:
+@pytest.mark.parametrize(
+    ("name", "module_name", "attribute_name"),
+    PUBLIC_API_CONTRACT,
+)
+def test_lazy_public_export_resolves_and_caches_exact_defining_object(
+    name: str,
+    module_name: str,
+    attribute_name: str,
+) -> None:
     completed = _source_subprocess(
         f"""
         import importlib
         import agent_ex
 
-        contract = {PUBLIC_API_CONTRACT!r}
-        for name, module_name, attribute_name in contract:
-            assert name not in vars(agent_ex), name
-            module = importlib.import_module(module_name, agent_ex.__name__)
-            expected = vars(module)[attribute_name]
-            resolved = getattr(agent_ex, name)
-            assert resolved is expected, name
-            assert vars(agent_ex)[name] is resolved, name
-            assert getattr(agent_ex, name) is resolved, name
-            assert getattr(resolved, "__module__", None) == getattr(
-                expected, "__module__", None
-            ), name
+        name = {name!r}
+        module_name = {module_name!r}
+        attribute_name = {attribute_name!r}
+        importlib.import_module(".adapters", agent_ex.__name__)
+        assert name not in vars(agent_ex), name
+        module = importlib.import_module(module_name, agent_ex.__name__)
+        expected = vars(module)[attribute_name]
+        resolved = getattr(agent_ex, name)
+        assert resolved is expected, name
+        assert vars(agent_ex)[name] is resolved, name
+        assert getattr(agent_ex, name) is resolved, name
+        assert getattr(resolved, "__module__", None) == getattr(
+            expected, "__module__", None
+        ), name
         """,
         include_dependencies=True,
     )
