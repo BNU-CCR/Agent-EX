@@ -1,5 +1,5 @@
 ---
-status: approved design; independently reviewed; pending written specification approval
+status: written specification approved; adapter-cycle amendment pending independent review
 authority: narrow repair to the approved Phase 0A-1 cloud-probe design
 supersedes: none
 last-verified: 2026-09-14
@@ -136,3 +136,60 @@ preflight. A missing or invalid failed-attempt receipt blocks replacement of the
 checkout. A source path outside the exact verified checkout blocks preflight. No
 runtime installation may begin until the repaired authoritative preflight has been
 produced and reopened successfully.
+
+## Adapter package cycle amendment
+
+### Evidence and root cause
+
+The first full-suite release gate after the root-package repair passed 1,726 tests but
+failed two cross-process storage tests. A fresh process running
+`import agent_ex.execution_evidence` deterministically enters this cycle:
+
+`execution_evidence -> adapters.base -> adapters.__init__ -> adapters.mock -> execution_evidence`.
+
+The final edge requests `MockAdapterExecutionBinding` before
+`execution_evidence.py` has defined it. The old root package happened to import the
+whole `adapters` facade before explicitly importing `execution_evidence`, so it masked
+the cycle by priming modules in a favorable order. No file inside this cycle changed in
+the root-package repair; removal of that accidental priming exposed the defect.
+
+### Considered approaches
+
+Root-package preloading of `adapters` is rejected because it restores an implicit
+ordering dependency and imports unrelated prompt/evidence code during preflight.
+Reordering or spelling the import in `execution_evidence` differently is rejected
+because Python must still execute `adapters/__init__.py` before `adapters.base`, and
+moving imports below definitions merely replaces one accidental order with another.
+
+The approved repair makes the adapter facade respect its actual dependency layers.
+`agent_ex.adapters.__init__` eagerly imports only the three acyclic base contracts:
+`AdapterRequest`, `AdapterResponse`, and `ModelAdapter`. Its three mock-layer exports,
+`MockAdapter`, `MockScriptStep`, and `validate_adapter_response`, use a fixed static
+lazy mapping to `agent_ex.adapters.mock`, a module `__getattr__`, successful-value
+caching, and `__dir__`. Eager and lazy name sets must be disjoint and their union must
+exactly equal the existing ordered `agent_ex.adapters.__all__`; drift fails closed.
+
+Because the root resolver deliberately reads the named object's defining module with
+`vars(module)[attribute]` rather than chaining facade-level dynamic lookup, the root
+registry entries for those same three mock objects change from `.adapters` to their
+true defining module `.adapters.mock`. The other adapter exports remain bound to
+`.adapters`. No public name, public import form, object identity, or `__all__` order
+changes.
+
+### Verification amendment
+
+TDD adds a fresh subprocess regression that directly imports
+`agent_ex.execution_evidence`, proves the import succeeds without first priming the
+root package, and proves `agent_ex.adapters.mock` is still absent immediately after the
+direct import. A separate fresh subprocess accesses `agent_ex.MockAdapter` without
+preloading the adapter facade and verifies identity with
+`agent_ex.adapters.mock.MockAdapter`. Another verifies
+`from agent_ex.adapters import MockAdapter, MockScriptStep,
+validate_adapter_response` remains compatible and caches each resolved object.
+
+The independent ordered 142-item root API contract is updated only for the three true
+mock defining-module paths. The two original cross-process storage tests are rerun as
+the integration reproduction, followed by the focused import/install/CLI suites and
+the complete non-release-scale suite. Any direct-import cycle, eager loading of the
+mock module during `execution_evidence` import, facade drift, changed object identity,
+or failure of the storage subprocess exit-code contract blocks release.
