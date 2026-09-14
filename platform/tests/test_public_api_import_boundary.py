@@ -2,17 +2,11 @@
 
 from __future__ import annotations
 
-import importlib
 import os
 from pathlib import Path
 import subprocess
 import sys
 import textwrap
-
-import pytest
-
-import agent_ex
-
 
 PLATFORM_ROOT = Path(__file__).parents[1].resolve()
 SOURCE_ROOT = (PLATFORM_ROOT / "src").resolve()
@@ -33,6 +27,7 @@ def _source_subprocess(script: str, *extra_paths: Path) -> subprocess.CompletedP
         check=False,
         capture_output=True,
         text=True,
+        timeout=30,
     )
 
 
