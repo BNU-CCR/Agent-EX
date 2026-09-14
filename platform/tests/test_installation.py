@@ -116,12 +116,27 @@ from importlib import resources
 from pathlib import Path
 
 import agent_ex
-from agent_ex import validate_protocol
+from importlib.metadata import distribution
+
+from agent_ex import validate_protocol as public_validate_protocol
+from agent_ex.protocol import validate_protocol as defining_validate_protocol
+
+assert public_validate_protocol is defining_validate_protocol
+assert set(agent_ex._LAZY_EXPORTS) == set(agent_ex.__all__)
 
 root = Path(__file__).parent
 installed = Path(agent_ex.__file__).resolve()
 target = (root / "target").resolve()
 assert installed.is_relative_to(target), (installed, target)
+installed_distribution = distribution("agent-ex")
+distribution_root = Path(installed_distribution.locate_file("")).resolve()
+assert distribution_root.is_relative_to(target), (distribution_root, target)
+console_scripts = {
+    entry.name: entry.value
+    for entry in installed_distribution.entry_points
+    if entry.group == "console_scripts"
+}
+assert console_scripts["agent-ex-phase0a1"] == "agent_ex.calibration.cli:main"
 assert json.loads(
     resources.files("agent_ex.schemas").joinpath("paper1.schema.json").read_text("utf-8")
 )["x-formal-required"]
@@ -134,14 +149,14 @@ formal_paths = {
 for omitted in formal_paths:
     supplied = {name: path for name, path in formal_paths.items() if name != omitted}
     try:
-        validate_protocol(formal, mode="formal", **supplied)
+        public_validate_protocol(formal, mode="formal", **supplied)
     except ValueError as error:
         assert omitted in str(error), (omitted, str(error))
     else:
         raise AssertionError(
             f"isolated formal validation must require an explicit {omitted}"
         )
-validate_protocol(
+public_validate_protocol(
     formal,
     mode="formal",
     **formal_paths,

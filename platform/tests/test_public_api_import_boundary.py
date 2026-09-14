@@ -2,11 +2,16 @@
 
 from __future__ import annotations
 
+import importlib
 import os
 from pathlib import Path
 import subprocess
 import sys
 import textwrap
+
+import pytest
+
+import agent_ex
 
 PLATFORM_ROOT = Path(__file__).parents[1].resolve()
 SOURCE_ROOT = (PLATFORM_ROOT / "src").resolve()
@@ -29,6 +34,42 @@ def _source_subprocess(script: str, *extra_paths: Path) -> subprocess.CompletedP
         text=True,
         timeout=30,
     )
+
+
+def test_lazy_registry_exactly_matches_stable_public_api() -> None:
+    assert len(agent_ex.__all__) == len(set(agent_ex.__all__))
+    assert set(agent_ex._LAZY_EXPORTS) == set(agent_ex.__all__)  # noqa: SLF001
+
+
+@pytest.mark.parametrize("name", agent_ex.__all__)
+def test_lazy_public_export_resolves_to_exact_defining_object(name: str) -> None:
+    module_name, attribute_name = agent_ex._LAZY_EXPORTS[name]  # noqa: SLF001
+    module = importlib.import_module(module_name, agent_ex.__name__)
+    expected = vars(module)[attribute_name]
+
+    resolved = getattr(agent_ex, name)
+
+    assert resolved is expected
+    assert getattr(agent_ex, name) is resolved
+    assert getattr(resolved, "__module__", None) == getattr(expected, "__module__", None)
+
+
+def test_dir_covers_every_stable_public_export() -> None:
+    assert set(agent_ex.__all__) <= set(dir(agent_ex))
+
+
+def test_unknown_public_export_raises_standard_attribute_error() -> None:
+    with pytest.raises(
+        AttributeError,
+        match=r"^module 'agent_ex' has no attribute 'not_a_public_export'$",
+    ):
+        agent_ex.not_a_public_export
+
+
+def test_direct_protocol_submodule_import_has_standard_identity() -> None:
+    from agent_ex import protocol
+
+    assert protocol is importlib.import_module("agent_ex.protocol")
 
 
 def test_preinstall_cli_bootstrap_uses_exact_source_without_project_dependencies() -> None:
