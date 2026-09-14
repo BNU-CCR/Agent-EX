@@ -1,169 +1,225 @@
 """Stable public protocol, artifact, RNG, and ordinal evidence primitives."""
 
-from .artifacts import ArtifactEnvelope
-from .calibration import (
-    ProbeCase,
-    ProbePersonaView,
-    ProbeTopicCandidate,
-    load_runnable_probe_specification,
-    run_offline_probe,
-    scripted_probe_adapter,
+from collections.abc import Mapping
+from importlib import import_module
+from types import MappingProxyType
+from typing import Final
+
+_LAZY_EXPORTS: Final[Mapping[str, tuple[str, str]]] = MappingProxyType(
+    {
+        "ArtifactEnvelope": (".artifacts", "ArtifactEnvelope"),
+        "Checkpoint": (".checkpoint", "Checkpoint"),
+        "AdapterRequest": (".adapters", "AdapterRequest"),
+        "AdapterResponse": (".adapters", "AdapterResponse"),
+        "AttemptAuthorization": (".engine", "AttemptAuthorization"),
+        "AttemptExecutionEvidence": (".engine", "AttemptExecutionEvidence"),
+        "AttemptInvocationResult": (".engine", "AttemptInvocationResult"),
+        "AttemptLifecycleFailure": (".engine", "AttemptLifecycleFailure"),
+        "AttemptOutcome": (".engine", "AttemptOutcome"),
+        "EventStatus": (".domain", "EventStatus"),
+        "EventJournalState": (".storage", "EventJournalState"),
+        "EventEvidenceReferences": (".execution_evidence", "EventEvidenceReferences"),
+        "EventInputEvidence": (".execution_evidence", "EventInputEvidence"),
+        "ExecutionState": (".storage", "ExecutionState"),
+        "ExecutionStatus": (".storage", "ExecutionStatus"),
+        "ExposureSelection": (".feed", "ExposureSelection"),
+        "FeedCandidate": (".feed", "FeedCandidate"),
+        "FeedCursor": (".feed", "FeedCursor"),
+        "ExposureRecord": (".domain", "ExposureRecord"),
+        "ExposureProcessSummary": (".process_audit", "ExposureProcessSummary"),
+        "ExternalResponseReference": (".storage", "ExternalResponseReference"),
+        "ResumeAuthorizationEvidence": (".storage", "ResumeAuthorizationEvidence"),
+        "FrozenSchedule": (".domain", "FrozenSchedule"),
+        "FinalizedAttemptEvidence": (".execution_evidence", "FinalizedAttemptEvidence"),
+        "GenerationAttempt": (".domain", "GenerationAttempt"),
+        "GenerationEvent": (".domain", "GenerationEvent"),
+        "LatestPublicPointer": (".state", "LatestPublicPointer"),
+        "MemoryItem": (".memory", "MemoryItem"),
+        "MemoryView": (".memory", "MemoryView"),
+        "MockAdapter": (".adapters", "MockAdapter"),
+        "MockEventPipeline": (".pipeline", "MockEventPipeline"),
+        "MockEventPipelineOutcome": (".pipeline", "MockEventPipelineOutcome"),
+        "MockAdapterExecutionBinding": (
+            ".execution_evidence",
+            "MockAdapterExecutionBinding",
+        ),
+        "MockAttemptPolicyBinding": (
+            ".execution_evidence",
+            "MockAttemptPolicyBinding",
+        ),
+        "MockScriptStep": (".adapters", "MockScriptStep"),
+        "MockScaleCase": (".mock_matrix", "MockScaleCase"),
+        "MockEventInvocation": (".mock_run", "MockEventInvocation"),
+        "MockRunControl": (".mock_run", "MockRunControl"),
+        "MockRunReport": (".mock_run", "MockRunReport"),
+        "MockProcessAudit": (".process_audit", "MockProcessAudit"),
+        "MockComparableRunProjection": (
+            ".process_audit",
+            "MockComparableRunProjection",
+        ),
+        "MockCellBinding": (".mock_matrix", "MockCellBinding"),
+        "MockMatchedSeedMatrix": (".mock_matrix", "MockMatchedSeedMatrix"),
+        "CANONICAL_CELL_IDS": (".mock_matrix", "CANONICAL_CELL_IDS"),
+        "ModelAdapter": (".adapters", "ModelAdapter"),
+        "ParseEvidence": (".parser", "ParseEvidence"),
+        "ParseNotApplicableEvidence": (
+            ".execution_evidence",
+            "ParseNotApplicableEvidence",
+        ),
+        "ParsedAgentUpdate": (".parser", "ParsedAgentUpdate"),
+        "ParserLimits": (".parser", "ParserLimits"),
+        "PrivateState": (".state", "PrivateState"),
+        "PrivateUpdate": (".state", "PrivateUpdate"),
+        "PreparedAttempt": (".engine", "PreparedAttempt"),
+        "PersistedInvocationEvidence": (
+            ".execution_evidence",
+            "PersistedInvocationEvidence",
+        ),
+        "PromptView": (".prompt", "PromptView"),
+        "PromptLimits": (".prompt", "PromptLimits"),
+        "ProbeCase": (".calibration", "ProbeCase"),
+        "ProbePersonaView": (".calibration", "ProbePersonaView"),
+        "ProbeTopicCandidate": (".calibration", "ProbeTopicCandidate"),
+        "ValidatedPromptRunContext": (".prompt", "ValidatedPromptRunContext"),
+        "PublicPost": (".state", "PublicPost"),
+        "RNGProvenance": (".rng", "RNGProvenance"),
+        "RunManifest": (".domain", "RunManifest"),
+        "RunLease": (".storage", "RunLease"),
+        "RunStorage": (".storage", "RunStorage"),
+        "RoundZeroBaseline": (".process_audit", "RoundZeroBaseline"),
+        "ScheduleSlot": (".domain", "ScheduleSlot"),
+        "StorageBinding": (".storage", "StorageBinding"),
+        "StorageProgress": (".storage", "StorageProgress"),
+        "StrictSerialLifecycleEngine": (".engine", "StrictSerialLifecycleEngine"),
+        "SuccessfulEventCommit": (".engine", "SuccessfulEventCommit"),
+        "SweepProcessAudit": (".process_audit", "SweepProcessAudit"),
+        "TerminalFailureEvidence": (".storage", "TerminalFailureEvidence"),
+        "TRSIntegerization": (".population", "TRSIntegerization"),
+        "TopicPackage": (".topic", "TopicPackage"),
+        "assign_initial_reasons": (".initialization", "assign_initial_reasons"),
+        "assign_initial_stances": (".initialization", "assign_initial_stances"),
+        "advance_validated_prompt_run_context": (
+            ".prompt",
+            "advance_validated_prompt_run_context",
+        ),
+        "build_agent_node_mapping": (".network", "build_agent_node_mapping"),
+        "build_checkpoint": (".checkpoint", "build_checkpoint"),
+        "build_activation_schedule": (".schedule", "build_activation_schedule"),
+        "build_attention_artifact": (".schedule", "build_attention_artifact"),
+        "build_expression_artifact": (".schedule", "build_expression_artifact"),
+        "build_exposure_record": (".feed", "build_exposure_record"),
+        "build_memory_view": (".memory", "build_memory_view"),
+        "build_mock_matched_seed_matrix": (
+            ".mock_matrix",
+            "build_mock_matched_seed_matrix",
+        ),
+        "build_mock_process_audit": (".process_audit", "build_mock_process_audit"),
+        "build_mock_comparable_run_projection": (
+            ".process_audit",
+            "build_mock_comparable_run_projection",
+        ),
+        "build_population_artifact": (".population", "build_population_artifact"),
+        "build_publish_schedule": (".schedule", "build_publish_schedule"),
+        "build_prompt_view": (".prompt", "build_prompt_view"),
+        "build_shadow_artifact": (".network", "build_shadow_artifact"),
+        "build_structural_gate_artifact": (
+            ".network",
+            "build_structural_gate_artifact",
+        ),
+        "build_ws_artifact": (".network", "build_ws_artifact"),
+        "canonical_payload_hash": (".domain", "canonical_payload_hash"),
+        "canonical_protocol_hash": (".protocol", "canonical_protocol_hash"),
+        "derive_attempt_id": (".domain", "derive_attempt_id"),
+        "derive_event_id": (".domain", "derive_event_id"),
+        "derive_rng_seed": (".rng", "derive_rng_seed"),
+        "derive_run_id": (".domain", "derive_run_id"),
+        "evaluate_analysis_eligibility": (
+            ".domain",
+            "evaluate_analysis_eligibility",
+        ),
+        "execution_projection": (".protocol", "execution_projection"),
+        "execute_mock_run": (".mock_run", "execute_mock_run"),
+        "load_protocol": (".protocol", "load_protocol"),
+        "load_runnable_probe_specification": (
+            ".calibration",
+            "load_runnable_probe_specification",
+        ),
+        "load_checkpoint": (".checkpoint", "load_checkpoint"),
+        "load_mock_scale_cases": (".mock_matrix", "load_mock_scale_cases"),
+        "mock_adapter_semantics_hash": (
+            ".mock_matrix",
+            "mock_adapter_semantics_hash",
+        ),
+        "mock_clock_sequence_binding": (
+            ".mock_matrix",
+            "mock_clock_sequence_binding",
+        ),
+        "parse_agent_update": (".parser", "parse_agent_update"),
+        "render_human_protocol_summary": (
+            ".validation",
+            "render_human_protocol_summary",
+        ),
+        "reconstruct_event_rng_provenance": (
+            ".schedule",
+            "reconstruct_event_rng_provenance",
+        ),
+        "render_persona": (".persona", "render_persona"),
+        "render_messages": (".prompt", "render_messages"),
+        "run_offline_probe": (".calibration", "run_offline_probe"),
+        "select_unread_feed": (".feed", "select_unread_feed"),
+        "scripted_probe_adapter": (".calibration", "scripted_probe_adapter"),
+        "trs_integerize": (".population", "trs_integerize"),
+        "update_human_protocol_summary": (
+            ".validation",
+            "update_human_protocol_summary",
+        ),
+        "validate_human_protocol_reference": (
+            ".validation",
+            "validate_human_protocol_reference",
+        ),
+        "validate_human_protocol_sync": (
+            ".validation",
+            "validate_human_protocol_sync",
+        ),
+        "validate_matched_schedule_reuse": (
+            ".schedule",
+            "validate_matched_schedule_reuse",
+        ),
+        "validate_latest_public_pointer": (".state", "validate_latest_public_pointer"),
+        "validate_memory_view": (".memory", "validate_memory_view"),
+        "validate_mock_matched_seed_matrix": (
+            ".mock_matrix",
+            "validate_mock_matched_seed_matrix",
+        ),
+        "validate_private_state": (".state", "validate_private_state"),
+        "validate_public_post": (".state", "validate_public_post"),
+        "validate_shadow_artifact": (".network", "validate_shadow_artifact"),
+        "validate_structural_gate_artifact": (
+            ".network",
+            "validate_structural_gate_artifact",
+        ),
+        "validate_ws_artifact": (".network", "validate_ws_artifact"),
+        "validate_persona_factor_diff": (
+            ".persona",
+            "validate_persona_factor_diff",
+        ),
+        "validate_evidence_graph": (".domain", "validate_evidence_graph"),
+        "validate_exposure_record": (".feed", "validate_exposure_record"),
+        "validate_exposure_selection": (".feed", "validate_exposure_selection"),
+        "validate_event_rng_ledger": (".schedule", "validate_event_rng_ledger"),
+        "validate_protocol": (".protocol", "validate_protocol"),
+        "validate_adapter_response": (".adapters", "validate_adapter_response"),
+        "validate_checkpoint": (".checkpoint", "validate_checkpoint"),
+        "validate_parse_evidence": (".parser", "validate_parse_evidence"),
+        "validate_prompt_view": (".prompt", "validate_prompt_view"),
+        "validate_prompt_run_context": (".prompt", "validate_prompt_run_context"),
+        "validated_prompt_run_context_metadata": (
+            ".prompt",
+            "validated_prompt_run_context_metadata",
+        ),
+        "write_checkpoint_atomic": (".checkpoint", "write_checkpoint_atomic"),
+    }
 )
-from .checkpoint import (
-    Checkpoint,
-    build_checkpoint,
-    load_checkpoint,
-    validate_checkpoint,
-    write_checkpoint_atomic,
-)
-from .adapters import (
-    AdapterRequest,
-    AdapterResponse,
-    MockAdapter,
-    MockScriptStep,
-    ModelAdapter,
-    validate_adapter_response,
-)
-from .domain import (
-    EventStatus,
-    ExposureRecord,
-    FrozenSchedule,
-    GenerationAttempt,
-    GenerationEvent,
-    RunManifest,
-    ScheduleSlot,
-    canonical_payload_hash,
-    derive_attempt_id,
-    derive_event_id,
-    derive_run_id,
-    evaluate_analysis_eligibility,
-    validate_evidence_graph,
-)
-from .feed import (
-    ExposureSelection,
-    FeedCandidate,
-    FeedCursor,
-    build_exposure_record,
-    select_unread_feed,
-    validate_exposure_record,
-    validate_exposure_selection,
-)
-from .engine import (
-    AttemptAuthorization,
-    AttemptExecutionEvidence,
-    AttemptInvocationResult,
-    AttemptLifecycleFailure,
-    AttemptOutcome,
-    PreparedAttempt,
-    StrictSerialLifecycleEngine,
-    SuccessfulEventCommit,
-)
-from .execution_evidence import (
-    EventEvidenceReferences,
-    EventInputEvidence,
-    FinalizedAttemptEvidence,
-    MockAdapterExecutionBinding,
-    MockAttemptPolicyBinding,
-    ParseNotApplicableEvidence,
-    PersistedInvocationEvidence,
-)
-from .protocol import (
-    canonical_protocol_hash,
-    execution_projection,
-    load_protocol,
-    validate_protocol,
-)
-from .initialization import assign_initial_reasons, assign_initial_stances
-from .network import (
-    build_agent_node_mapping,
-    build_shadow_artifact,
-    build_structural_gate_artifact,
-    build_ws_artifact,
-    validate_shadow_artifact,
-    validate_structural_gate_artifact,
-    validate_ws_artifact,
-)
-from .memory import MemoryItem, MemoryView, build_memory_view, validate_memory_view
-from .mock_matrix import (
-    CANONICAL_CELL_IDS,
-    MockCellBinding,
-    MockMatchedSeedMatrix,
-    MockScaleCase,
-    build_mock_matched_seed_matrix,
-    load_mock_scale_cases,
-    mock_adapter_semantics_hash,
-    mock_clock_sequence_binding,
-    validate_mock_matched_seed_matrix,
-)
-from .mock_run import MockEventInvocation, MockRunControl, MockRunReport, execute_mock_run
-from .process_audit import (
-    ExposureProcessSummary,
-    MockComparableRunProjection,
-    MockProcessAudit,
-    RoundZeroBaseline,
-    SweepProcessAudit,
-    build_mock_comparable_run_projection,
-    build_mock_process_audit,
-)
-from .parser import (
-    ParseEvidence,
-    ParsedAgentUpdate,
-    ParserLimits,
-    parse_agent_update,
-    validate_parse_evidence,
-)
-from .persona import render_persona, validate_persona_factor_diff
-from .prompt import (
-    PromptLimits,
-    PromptView,
-    ValidatedPromptRunContext,
-    advance_validated_prompt_run_context,
-    build_prompt_view,
-    render_messages,
-    validate_prompt_run_context,
-    validate_prompt_view,
-    validated_prompt_run_context_metadata,
-)
-from .population import TRSIntegerization, build_population_artifact, trs_integerize
-from .validation import (
-    render_human_protocol_summary,
-    update_human_protocol_summary,
-    validate_human_protocol_reference,
-    validate_human_protocol_sync,
-)
-from .rng import RNGProvenance, derive_rng_seed
-from .schedule import (
-    build_activation_schedule,
-    build_attention_artifact,
-    build_expression_artifact,
-    build_publish_schedule,
-    reconstruct_event_rng_provenance,
-    validate_event_rng_ledger,
-    validate_matched_schedule_reuse,
-)
-from .state import (
-    LatestPublicPointer,
-    PrivateState,
-    PrivateUpdate,
-    PublicPost,
-    validate_latest_public_pointer,
-    validate_private_state,
-    validate_public_post,
-)
-from .storage import (
-    EventJournalState,
-    ExecutionState,
-    ExecutionStatus,
-    ExternalResponseReference,
-    ResumeAuthorizationEvidence,
-    RunLease,
-    RunStorage,
-    StorageBinding,
-    StorageProgress,
-    TerminalFailureEvidence,
-)
-from .pipeline import MockEventPipeline, MockEventPipelineOutcome
-from .topic import TopicPackage
 
 __all__ = [
     "ArtifactEnvelope",
@@ -309,3 +365,29 @@ __all__ = [
     "validated_prompt_run_context_metadata",
     "write_checkpoint_atomic",
 ]
+
+if set(_LAZY_EXPORTS) != set(__all__):
+    missing = sorted(set(__all__) - set(_LAZY_EXPORTS))
+    extra = sorted(set(_LAZY_EXPORTS) - set(__all__))
+    raise RuntimeError(f"lazy public API registry drift: missing={missing}, extra={extra}")
+
+
+def __getattr__(name: str) -> object:
+    try:
+        module_name, attribute_name = _LAZY_EXPORTS[name]
+    except KeyError:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}") from None
+
+    module = import_module(module_name, __name__)
+    try:
+        value = vars(module)[attribute_name]
+    except KeyError as error:
+        raise ImportError(
+            f"lazy public API target is missing: {module.__name__}.{attribute_name}"
+        ) from error
+    globals()[name] = value
+    return value
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | set(__all__))
