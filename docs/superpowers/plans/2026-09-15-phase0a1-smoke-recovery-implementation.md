@@ -42,7 +42,7 @@
 - Create: `platform/src/agent_ex/calibration/transport_diagnostics.py`
 - Create: `platform/tests/test_calibration_transport_diagnostics.py`
 
-- [ ] **Step 1: Write strict-record and endpoint-isolation red tests**
+- [x] **Step 1: Write strict-record and endpoint-isolation red tests**
 
 Create `platform/tests/test_calibration_transport_diagnostics.py` with these public-contract tests first:
 
@@ -117,7 +117,7 @@ def test_diagnostics_classify_once_and_do_not_count_as_model_requests(tmp_path: 
     assert all(record.model_request_count == 0 for record in records)
 ```
 
-- [ ] **Step 2: Run the new file and verify red**
+- [x] **Step 2: Run the new file and verify red**
 
 Run:
 
@@ -128,7 +128,7 @@ Set-Location platform
 
 Expected: collection fails because `agent_ex.calibration.transport_diagnostics` does not exist.
 
-- [ ] **Step 3: Implement the complete diagnostic API**
+- [x] **Step 3: Implement the complete diagnostic API**
 
 Create `platform/src/agent_ex/calibration/transport_diagnostics.py` with the exact fields and signatures below. This is an interface map; the behavior immediately after it is mandatory.
 
@@ -200,7 +200,7 @@ def run_transport_diagnostics(
 
 Implement the mapped interface as follows: reserve each port by binding `127.0.0.1:0`; release and verify the closed-port candidate is not listening immediately before its one connection; run the timeout and 429 endpoints with `ThreadingHTTPServer` context managers whose handlers never import or call `VllmProbeAdapter`; use `HTTPConnection` directly; set the controlled delay to `policy.timeout_seconds + 0.05`; return `Retry-After: 17`; always shut down and join endpoint threads in `finally`. `TransportDiagnosticEvidence.__post_init__` must enforce exact schema `paper1.calibration.transport-diagnostic.v1`, exact expected/actual equality, one attempt, zero model requests, loopback-only endpoint, endpoint not equal to port 8000 `/v1/chat/completions`, lowercase string headers, byte/hash agreement, exact keys, calibration-only metadata, and canonical `record_hash`. `run_transport_diagnostics` is the low-level classifier only: it must require strict manifest/lock/observation types, call `verify_current_environment` before and after every diagnostic, assert `environment_lock.authorization_hash == manifest.record_hash`, require the three smoke policy codes, `obey_retry_after is False`, empty backoff, and per-code budget 1. It returns exactly three immutable records but does not know a store. Task 2 adds create-only storage, and Task 3's `run_smoke_diagnostics` rejects pre-existing/partial diagnostics, appends each returned record, reopens all three, and owns the surrounding `ready -> diagnostics_complete` transitions so a crash can never make partial diagnostics look complete.
 
-- [ ] **Step 4: Run diagnostic tests green**
+- [x] **Step 4: Run diagnostic tests green**
 
 Run:
 
@@ -211,20 +211,29 @@ Set-Location platform
 
 Expected: all selected tests pass; the controlled timeout takes only the test policy's 0.05 seconds, not 120 seconds.
 
-- [ ] **Step 5: Commit the diagnostic unit**
+- [x] **Step 5: Commit the diagnostic unit**
 
 ```powershell
 git add platform/src/agent_ex/calibration/transport_diagnostics.py platform/tests/test_calibration_transport_diagnostics.py
 git commit -m "feat(platform): add deterministic smoke diagnostics"
 ```
 
-### Task 2: Add append-only smoke progress and diagnostic replay
+### Task 2: Add strict smoke records and append-only diagnostic replay
 
 **Files:**
+- Modify: `platform/src/agent_ex/calibration/smoke.py`
+- Modify: `platform/tests/test_calibration_smoke.py`
 - Modify: `platform/src/agent_ex/calibration/store.py`
 - Modify: `platform/tests/test_calibration_store.py`
 
-- [ ] **Step 1: Write crash/reopen and immutability red tests**
+**Dependency-order amendment (2026-09-15):** Before Step 1 below, add red tests and then
+implement only the strict, exact-key, canonical-hash `SmokeProgress` and
+`ServiceStopEvidence` record classes mapped in Task 3 Step 3. This moves those two data
+contracts earlier because the store must import and validate them; it does not move any phase
+runner or shell/service lifecycle behavior. Commit the contracts with the recovery storage at
+the end of this task. Task 3 must reuse, not recreate, the two records.
+
+- [x] **Step 1: Write crash/reopen and immutability red tests**
 
 Append these tests to `platform/tests/test_calibration_store.py`:
 
@@ -255,7 +264,7 @@ def test_smoke_progress_is_create_only_and_strictly_contiguous(tmp_path: Path) -
         )
 ```
 
-- [ ] **Step 2: Run both tests and verify red**
+- [x] **Step 2: Run both tests and verify red**
 
 Run:
 
@@ -266,7 +275,7 @@ Set-Location platform
 
 Expected: failures report missing smoke-state and diagnostic store methods.
 
-- [ ] **Step 3: Add dedicated store directories and public replay methods**
+- [x] **Step 3: Add dedicated store directories and public replay methods**
 
 Extend `ProbeRunStore.create` to create `staging/smoke-progress`, `staging/transport-diagnostics`, and `staging/service-stops` before writing the projection. Extend open/seal equivalence checks to include all three directories. Add the progress/diagnostic methods below and parallel `append_service_stop`/`load_service_stops` methods that validate `ServiceStopEvidence`, reject duplicate `record_hash` or `service_start_identity_hash`, and preserve create-only order:
 
@@ -328,7 +337,7 @@ def load_transport_diagnostics(self) -> tuple[TransportDiagnosticEvidence, ...]:
 
 Do not add any of these three record families to `attempt_hashes`; they remain separately inventoried and copied create-only into sealed evidence.
 
-- [ ] **Step 4: Run store and diagnostic recovery tests green**
+- [x] **Step 4: Run store and diagnostic recovery tests green**
 
 Run:
 
@@ -339,7 +348,7 @@ Set-Location platform
 
 Expected: all selected tests pass, including reopen after the original object is discarded.
 
-- [ ] **Step 5: Commit append-only recovery storage**
+- [x] **Step 5: Commit append-only recovery storage**
 
 ```powershell
 git add platform/src/agent_ex/calibration/store.py platform/tests/test_calibration_store.py
@@ -416,9 +425,11 @@ Set-Location platform
 
 Expected: failures report missing explicit phase APIs and the old one-shot behavior sends the tenth request without a real stop boundary.
 
-- [ ] **Step 3: Implement the strict progress contract and phase APIs**
+- [ ] **Step 3: Implement the phase APIs using the strict Task 2 records**
 
-Add this exact public interface map to `smoke.py`; the transition rules below provide the complete required behavior:
+Use this exact public interface map in `smoke.py`; `SmokeProgress` and
+`ServiceStopEvidence` were implemented first in Task 2, while this task adds the five phase
+functions. The transition rules below provide the complete required behavior:
 
 ```text
 @dataclass(frozen=True, slots=True)

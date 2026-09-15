@@ -8,11 +8,15 @@ import os
 from pathlib import Path
 import shutil
 from threading import RLock
-from typing import Mapping
+from typing import TYPE_CHECKING, Mapping
 from uuid import uuid4
 
 from ..domain import _json_ready, _require_json_transport, _require_sha256, canonical_payload_hash
 from .bundle import ProbeBundle, load_probe_bundle, write_probe_bundle_atomic
+
+if TYPE_CHECKING:
+    from .smoke import ServiceStopEvidence, SmokeProgress
+    from .transport_diagnostics import TransportDiagnosticEvidence
 
 
 _PROJECTION_SCHEMA = "paper1.calibration.probe-store-projection.v1"
@@ -191,6 +195,9 @@ class ProbeRunStore:
         try:
             (staging / "attempts").mkdir(parents=True, exist_ok=False)
             (staging / "reviews").mkdir(exist_ok=False)
+            (staging / "smoke-progress").mkdir(exist_ok=False)
+            (staging / "transport-diagnostics").mkdir(exist_ok=False)
+            (staging / "service-stops").mkdir(exist_ok=False)
             _write_create_only(staging / "manifest.json", _json_ready(manifest))
             projection = _projection_payload(
                 manifest_hash=manifest_hash, attempt_hashes=(), review_hashes=()
@@ -256,6 +263,14 @@ class ProbeRunStore:
                 raise ValueError("sealed evidence authorization drift")
             attempts_by_hash = cls._load_records(evidence / "attempts", "attempt")
             reviews_by_hash = cls._load_records(evidence / "reviews", "review")
+            recovery_records = {
+                kind: cls._load_records(evidence / kind, name)
+                for kind, name in (
+                    ("smoke-progress", "smoke progress"),
+                    ("transport-diagnostics", "transport diagnostic"),
+                    ("service-stops", "service stop"),
+                )
+            }
             if set(attempts_by_hash) != set(projected_attempts) or set(reviews_by_hash) != set(
                 projected_reviews
             ):
@@ -278,12 +293,20 @@ class ProbeRunStore:
                         != evidence_projection_hash
                         or cls._load_records(staging / "attempts", "attempt") != attempts_by_hash
                         or cls._load_records(staging / "reviews", "review") != reviews_by_hash
+                        or any(
+                            cls._load_records(staging / kind, name) != recovery_records[kind]
+                            for kind, name in (
+                                ("smoke-progress", "smoke progress"),
+                                ("transport-diagnostics", "transport diagnostic"),
+                                ("service-stops", "service stop"),
+                            )
+                        )
                     )
                 except (OSError, TypeError, ValueError) as error:
                     raise ValueError("sealed and staging evidence differ") from error
                 if duplicate_differs:
                     raise ValueError("sealed and staging evidence differ")
-            return cls(
+            result = cls(
                 root,
                 seal["staging_manifest_hash"],  # type: ignore[arg-type]
                 projected_attempts,
@@ -291,6 +314,10 @@ class ProbeRunStore:
                 True,
                 RLock(),
             )
+            result.load_smoke_progress()
+            result.load_transport_diagnostics()
+            result.load_service_stops()
+            return result
         if not staging.is_dir() or staging.is_symlink():
             raise ValueError("store must contain exactly one staging or sealed state")
         manifest = _read_json(staging / "manifest.json")
@@ -310,7 +337,11 @@ class ProbeRunStore:
         attempt_hashes = (*projected_attempts, *remaining_attempts)
         review_hashes = (*projected_reviews, *remaining_reviews)
         _validate_attempt_sequence(tuple(attempts_by_hash[digest] for digest in attempt_hashes))
-        return cls(root, manifest_hash, attempt_hashes, review_hashes, False, RLock())
+        result = cls(root, manifest_hash, attempt_hashes, review_hashes, False, RLock())
+        result.load_smoke_progress()
+        result.load_transport_diagnostics()
+        result.load_service_stops()
+        return result
 
     @staticmethod
     def _load_records(directory: Path, name: str) -> dict[str, Mapping[str, object]]:
@@ -370,6 +401,113 @@ class ProbeRunStore:
             self.review_hashes = (*self.review_hashes, digest)
             self._persist_projection(staging)
 
+    def append_smoke_progress(self, payload: Mapping[str, object]) -> None:
+        from .smoke import SmokeProgress
+
+        with self._lock:
+            staging = self._require_staging()
+            record = SmokeProgress.from_payload(payload)
+            if record.manifest_hash != self.manifest_hash:
+                raise ValueError("smoke progress manifest does not match store manifest")
+            target = staging / "smoke-progress" / f"{record.record_hash}.json"
+            if target.exists() or target.is_symlink():
+                raise FileExistsError(target)
+            existing = self.load_smoke_progress()
+            if record.sequence != len(existing) + 1:
+                raise ValueError("smoke progress sequence must be contiguous")
+            if existing:
+                previous = existing[-1]
+                if record.previous_progress_hash != previous.record_hash:
+                    raise ValueError("smoke progress previous hash does not match")
+                if record.environment_lock_hash != previous.environment_lock_hash:
+                    raise ValueError("smoke progress environment lock changed")
+            _write_create_only(target, record.to_payload())
+
+    def load_smoke_progress(self) -> tuple[SmokeProgress, ...]:
+        from .smoke import SmokeProgress
+
+        directory = self.root / ("sealed/evidence" if self._sealed else "staging")
+        records = self._load_records(directory / "smoke-progress", "smoke progress")
+        ordered = tuple(
+            sorted(
+                (SmokeProgress.from_payload(item) for item in records.values()),
+                key=lambda item: item.sequence,
+            )
+        )
+        if tuple(item.sequence for item in ordered) != tuple(range(1, len(ordered) + 1)):
+            raise ValueError("smoke progress sequence must be contiguous")
+        for index, item in enumerate(ordered):
+            if item.manifest_hash != self.manifest_hash:
+                raise ValueError("smoke progress manifest does not match store manifest")
+            if index and item.previous_progress_hash != ordered[index - 1].record_hash:
+                raise ValueError("smoke progress previous hash does not match")
+            if index and item.environment_lock_hash != ordered[0].environment_lock_hash:
+                raise ValueError("smoke progress environment lock changed")
+        return ordered
+
+    def append_transport_diagnostic(self, payload: Mapping[str, object]) -> None:
+        from .transport_diagnostics import TransportDiagnosticEvidence
+
+        with self._lock:
+            staging = self._require_staging()
+            record = TransportDiagnosticEvidence.from_payload(payload)
+            target = staging / "transport-diagnostics" / f"{record.record_hash}.json"
+            if target.exists() or target.is_symlink():
+                raise FileExistsError(target)
+            existing = self.load_transport_diagnostics()
+            if any(item.diagnostic_id == record.diagnostic_id for item in existing):
+                raise ValueError("transport diagnostic already complete")
+            _write_create_only(target, record.to_payload())
+
+    def load_transport_diagnostics(self) -> tuple[TransportDiagnosticEvidence, ...]:
+        from .transport_diagnostics import TransportDiagnosticEvidence
+
+        directory = self.root / ("sealed/evidence" if self._sealed else "staging")
+        records = self._load_records(directory / "transport-diagnostics", "transport diagnostic")
+        parsed = tuple(
+            TransportDiagnosticEvidence.from_payload(value) for value in records.values()
+        )
+        if len({item.diagnostic_id for item in parsed}) != len(parsed):
+            raise ValueError("transport diagnostic identity is duplicated")
+        by_id = {item.diagnostic_id: item for item in parsed}
+        order = ("closed-port", "controlled-timeout", "http-429-retry-after")
+        return tuple(by_id[item] for item in order if item in by_id)
+
+    def append_service_stop(self, payload: Mapping[str, object]) -> None:
+        from .smoke import ServiceStopEvidence
+
+        with self._lock:
+            staging = self._require_staging()
+            record = ServiceStopEvidence.from_payload(payload)
+            if record.manifest_hash != self.manifest_hash:
+                raise ValueError("service stop manifest does not match store manifest")
+            target = staging / "service-stops" / f"{record.record_hash}.json"
+            if target.exists() or target.is_symlink():
+                raise FileExistsError(target)
+            existing = self.load_service_stops()
+            if any(
+                item.service_start_identity_hash == record.service_start_identity_hash
+                for item in existing
+            ):
+                raise ValueError("service stop identity already recorded")
+            progress = self.load_smoke_progress()
+            if progress and record.environment_lock_hash != progress[0].environment_lock_hash:
+                raise ValueError("service stop environment lock does not match smoke progress")
+            _write_create_only(target, record.to_payload())
+
+    def load_service_stops(self) -> tuple[ServiceStopEvidence, ...]:
+        from .smoke import ServiceStopEvidence
+
+        directory = self.root / ("sealed/evidence" if self._sealed else "staging")
+        records = self._load_records(directory / "service-stops", "service stop")
+        parsed = tuple(ServiceStopEvidence.from_payload(value) for value in records.values())
+        if len({item.service_start_identity_hash for item in parsed}) != len(parsed):
+            raise ValueError("service stop identity is duplicated")
+        for item in parsed:
+            if item.manifest_hash != self.manifest_hash:
+                raise ValueError("service stop manifest does not match store manifest")
+        return tuple(sorted(parsed, key=lambda item: (item.stopped_at, item.record_hash)))
+
     def consumed_attempts(self, probe_case_id: str) -> int:
         if not isinstance(probe_case_id, str) or not probe_case_id.strip():
             raise ValueError("probe_case_id must be non-empty")
@@ -411,13 +549,22 @@ class ProbeRunStore:
                 evidence = partial / "evidence"
                 (evidence / "attempts").mkdir(parents=True)
                 (evidence / "reviews").mkdir()
+                (evidence / "smoke-progress").mkdir()
+                (evidence / "transport-diagnostics").mkdir()
+                (evidence / "service-stops").mkdir()
                 _write_create_only(
                     evidence / "manifest.json", _read_json(staging / "manifest.json")
                 )
                 _write_create_only(
                     evidence / "projection.json", _read_json(staging / "projection.json")
                 )
-                for kind in ("attempts", "reviews"):
+                for kind in (
+                    "attempts",
+                    "reviews",
+                    "smoke-progress",
+                    "transport-diagnostics",
+                    "service-stops",
+                ):
                     source = staging / kind
                     target = evidence / kind
                     for source_path in source.iterdir():

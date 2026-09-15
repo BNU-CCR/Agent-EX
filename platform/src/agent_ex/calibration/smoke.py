@@ -16,6 +16,7 @@ from ..domain import (
     _require_json_transport,
     _require_payload_hash,
     _require_sha256,
+    _require_timestamp,
     _require_tuple,
     canonical_payload_hash,
 )
@@ -118,6 +119,216 @@ SMOKE_PROMPT_SET_HASH = canonical_payload_hash(smoke_prompt_payload())
 
 class SmokeFailure(RuntimeError):
     """A hard smoke gate failed after its evidence was persisted."""
+
+
+@dataclass(frozen=True, slots=True)
+class SmokeProgress:
+    """One immutable, hash-chained transition in the smoke recovery state machine."""
+
+    schema_version: str
+    manifest_hash: str
+    environment_lock_hash: str
+    sequence: int
+    phase: str
+    completed_ordinals: tuple[int, ...]
+    pending_smoke_ids: tuple[str, ...]
+    attempt_hashes: tuple[str, ...]
+    service_stop_evidence_hash: str | None
+    previous_progress_hash: str | None
+    calibration_only: bool
+    formal_parameter_authority: bool
+    record_hash: str
+
+    _SCHEMA_VERSION = "paper1.calibration.smoke-progress.v1"
+    _PHASE_SEQUENCES = {
+        "ready": 1,
+        "diagnostics_complete": 2,
+        "phase_one_complete": 3,
+        "service_stopped": 4,
+        "phase_two_complete": 5,
+        "finalized": 6,
+    }
+
+    def __post_init__(self) -> None:
+        if self.schema_version != self._SCHEMA_VERSION:
+            raise ValueError("smoke progress schema_version is not supported")
+        _require_sha256("manifest_hash", self.manifest_hash)
+        _require_sha256("environment_lock_hash", self.environment_lock_hash)
+        _require_int("sequence", self.sequence, minimum=1)
+        if self.phase not in self._PHASE_SEQUENCES:
+            raise ValueError("smoke progress phase is not supported")
+        if self.sequence != self._PHASE_SEQUENCES[self.phase]:
+            raise ValueError("smoke progress sequence does not match phase")
+        _require_tuple("completed_ordinals", self.completed_ordinals)
+        _require_tuple("pending_smoke_ids", self.pending_smoke_ids)
+        _require_tuple("attempt_hashes", self.attempt_hashes)
+
+        smoke_ids = tuple(item["smoke_id"] for item in _SMOKE_PROMPTS)
+        if self.phase in {"ready", "diagnostics_complete"}:
+            completed = ()
+        elif self.phase in {"phase_one_complete", "service_stopped"}:
+            completed = tuple(range(1, 10))
+        else:
+            completed = tuple(range(1, 11))
+        pending = smoke_ids[len(completed) :]
+        if self.completed_ordinals != completed or self.pending_smoke_ids != pending:
+            raise ValueError("smoke progress phase shape is invalid")
+        if len(self.attempt_hashes) != len(completed):
+            raise ValueError("smoke progress attempt hashes do not match completed ordinals")
+        for digest in self.attempt_hashes:
+            _require_sha256("attempt_hash", digest)
+        if len(set(self.attempt_hashes)) != len(self.attempt_hashes):
+            raise ValueError("smoke progress attempt hashes must be unique")
+
+        requires_stop = self.phase in {"service_stopped", "phase_two_complete", "finalized"}
+        if requires_stop:
+            _require_sha256("service_stop_evidence_hash", self.service_stop_evidence_hash)
+        elif self.service_stop_evidence_hash is not None:
+            raise ValueError("smoke progress phase must not contain stop evidence")
+        if self.sequence == 1:
+            if self.previous_progress_hash is not None:
+                raise ValueError("initial smoke progress must not have a previous hash")
+        else:
+            _require_sha256("previous_progress_hash", self.previous_progress_hash)
+        if self.calibration_only is not True or self.formal_parameter_authority is not False:
+            raise ValueError("smoke progress must remain calibration-only")
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            name: getattr(self, name)
+            for name in (field.name for field in fields(self))
+            if name != "record_hash"
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        manifest_hash: str,
+        environment_lock_hash: str,
+        sequence: int,
+        phase: str,
+        completed_ordinals: tuple[int, ...],
+        pending_smoke_ids: tuple[str, ...],
+        attempt_hashes: tuple[str, ...],
+        service_stop_evidence_hash: str | None,
+        previous_progress_hash: str | None,
+    ) -> SmokeProgress:
+        content: dict[str, object] = {
+            "schema_version": cls._SCHEMA_VERSION,
+            "manifest_hash": manifest_hash,
+            "environment_lock_hash": environment_lock_hash,
+            "sequence": sequence,
+            "phase": phase,
+            "completed_ordinals": completed_ordinals,
+            "pending_smoke_ids": pending_smoke_ids,
+            "attempt_hashes": attempt_hashes,
+            "service_stop_evidence_hash": service_stop_evidence_hash,
+            "previous_progress_hash": previous_progress_hash,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        return cls(**content, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> SmokeProgress:
+        expected = {field.name for field in fields(cls)}
+        if type(payload) is not dict or set(payload) != expected:
+            raise ValueError("smoke progress payload must contain exact fields")
+        _require_json_transport(payload, "smoke progress payload")
+        for name in ("completed_ordinals", "pending_smoke_ids", "attempt_hashes"):
+            if type(payload[name]) is not list:
+                raise TypeError(f"{name} must use a JSON array")
+        values = dict(payload)
+        values["completed_ordinals"] = tuple(payload["completed_ordinals"])
+        values["pending_smoke_ids"] = tuple(payload["pending_smoke_ids"])
+        values["attempt_hashes"] = tuple(payload["attempt_hashes"])
+        return cls(**values)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class ServiceStopEvidence:
+    """Proof that one approved vLLM process stopped before smoke recovery."""
+
+    schema_version: str
+    manifest_hash: str
+    environment_lock_hash: str
+    service_start_identity_hash: str
+    pid: int
+    process_exit_observed: bool
+    loopback_listener_absent: bool
+    stopped_at: str
+    calibration_only: bool
+    formal_parameter_authority: bool
+    record_hash: str
+
+    _SCHEMA_VERSION = "paper1.calibration.service-stop-evidence.v1"
+
+    def __post_init__(self) -> None:
+        if self.schema_version != self._SCHEMA_VERSION:
+            raise ValueError("service stop evidence schema_version is not supported")
+        _require_sha256("manifest_hash", self.manifest_hash)
+        _require_sha256("environment_lock_hash", self.environment_lock_hash)
+        _require_sha256("service_start_identity_hash", self.service_start_identity_hash)
+        _require_int("pid", self.pid, minimum=1)
+        if self.process_exit_observed is not True:
+            raise ValueError("service stop evidence requires an observed process exit")
+        if self.loopback_listener_absent is not True:
+            raise ValueError("service stop evidence requires an absent loopback listener")
+        _require_timestamp("stopped_at", self.stopped_at)
+        if self.calibration_only is not True or self.formal_parameter_authority is not False:
+            raise ValueError("service stop evidence must remain calibration-only")
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            name: getattr(self, name)
+            for name in (field.name for field in fields(self))
+            if name != "record_hash"
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        manifest_hash: str,
+        environment_lock_hash: str,
+        service_start_identity_hash: str,
+        pid: int,
+        process_exit_observed: bool,
+        loopback_listener_absent: bool,
+        stopped_at: str,
+    ) -> ServiceStopEvidence:
+        content: dict[str, object] = {
+            "schema_version": cls._SCHEMA_VERSION,
+            "manifest_hash": manifest_hash,
+            "environment_lock_hash": environment_lock_hash,
+            "service_start_identity_hash": service_start_identity_hash,
+            "pid": pid,
+            "process_exit_observed": process_exit_observed,
+            "loopback_listener_absent": loopback_listener_absent,
+            "stopped_at": stopped_at,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        return cls(**content, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> ServiceStopEvidence:
+        expected = {field.name for field in fields(cls)}
+        if type(payload) is not dict or set(payload) != expected:
+            raise ValueError("service stop evidence payload must contain exact fields")
+        _require_json_transport(payload, "service stop evidence payload")
+        return cls(**payload)  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)

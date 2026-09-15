@@ -13,7 +13,9 @@ from agent_ex.calibration.contracts import ProbeRuntimePolicy
 from agent_ex.calibration.smoke import (
     SMOKE_PROMPT_SET_HASH,
     SmokeFailure,
+    SmokeProgress,
     SmokeResult,
+    ServiceStopEvidence,
     run_probe_smoke,
     smoke_prompt_payload,
 )
@@ -63,6 +65,81 @@ def manifest(
         credential_boundary_hash="4" * 64,
         archive_uri=archive_root.resolve().as_posix(),
     )
+
+
+def valid_smoke_progress(
+    *,
+    sequence: int = 1,
+    phase: str = "ready",
+    completed_ordinals: tuple[int, ...] = (),
+    manifest_hash: str = "a" * 64,
+    environment_lock_hash: str = "b" * 64,
+    previous_progress_hash: str | None = None,
+) -> SmokeProgress:
+    smoke_ids = tuple(item["smoke_id"] for item in smoke_prompt_payload())
+    completed_count = len(completed_ordinals)
+    stop_hash = (
+        "d" * 64 if phase in {"service_stopped", "phase_two_complete", "finalized"} else None
+    )
+    return SmokeProgress.create(
+        manifest_hash=manifest_hash,
+        environment_lock_hash=environment_lock_hash,
+        sequence=sequence,
+        phase=phase,
+        completed_ordinals=completed_ordinals,
+        pending_smoke_ids=smoke_ids[completed_count:],
+        attempt_hashes=tuple(f"{ordinal:x}" * 64 for ordinal in completed_ordinals),
+        service_stop_evidence_hash=stop_hash,
+        previous_progress_hash=(None if sequence == 1 else previous_progress_hash or "e" * 64),
+    )
+
+
+def valid_service_stop_evidence(
+    *, manifest_hash: str = "a" * 64, environment_lock_hash: str = "b" * 64
+) -> ServiceStopEvidence:
+    return ServiceStopEvidence.create(
+        manifest_hash=manifest_hash,
+        environment_lock_hash=environment_lock_hash,
+        service_start_identity_hash="c" * 64,
+        pid=1234,
+        process_exit_observed=True,
+        loopback_listener_absent=True,
+        stopped_at="2026-09-15T00:00:00Z",
+    )
+
+
+def test_smoke_progress_round_trip_is_strict_and_hash_chained() -> None:
+    progress = valid_smoke_progress()
+
+    assert SmokeProgress.from_payload(progress.to_payload()) == progress
+    with pytest.raises(ValueError, match="phase shape"):
+        SmokeProgress.create(
+            manifest_hash="a" * 64,
+            environment_lock_hash="b" * 64,
+            sequence=1,
+            phase="ready",
+            completed_ordinals=(1,),
+            pending_smoke_ids=tuple(item["smoke_id"] for item in smoke_prompt_payload())[1:],
+            attempt_hashes=("1" * 64,),
+            service_stop_evidence_hash=None,
+            previous_progress_hash=None,
+        )
+
+
+def test_service_stop_evidence_requires_observed_stop_and_round_trips() -> None:
+    evidence = valid_service_stop_evidence()
+
+    assert ServiceStopEvidence.from_payload(evidence.to_payload()) == evidence
+    with pytest.raises(ValueError, match="observed process exit"):
+        ServiceStopEvidence.create(
+            manifest_hash="a" * 64,
+            environment_lock_hash="b" * 64,
+            service_start_identity_hash="c" * 64,
+            pid=1234,
+            process_exit_observed=False,
+            loopback_listener_absent=True,
+            stopped_at="2026-09-15T00:00:00Z",
+        )
 
 
 def test_smoke_prompt_set_is_exactly_ten_and_hash_bound() -> None:
