@@ -22,7 +22,7 @@
 **Files:**
 - Create: `platform/tests/test_public_api_import_boundary.py`
 
-- [ ] **Step 1: Add the isolated source-tree and NetworkX-guard regressions**
+- [x] **Step 1: Add the isolated source-tree and NetworkX-guard regressions**
 
 Create the file with these imports, helper, and tests:
 
@@ -132,7 +132,7 @@ def test_old_networkx_does_not_block_cli_but_still_blocks_network_export(tmp_pat
     assert completed.returncode == 0, completed.stdout + completed.stderr
 ```
 
-- [ ] **Step 2: Run both tests and verify the eager package fails red**
+- [x] **Step 2: Run both tests and verify the eager package fails red**
 
 Run:
 
@@ -143,7 +143,7 @@ Set-Location platform
 
 Expected: both tests fail before assertions complete because importing `agent_ex` reaches `agent_ex.network`; the first reports blocked `networkx`, and the second reports the exact `networkx==3.6.1; found 3.5` guard.
 
-- [ ] **Step 3: Commit the red tests**
+- [x] **Step 3: Commit the red tests**
 
 ```powershell
 git add platform/tests/test_public_api_import_boundary.py
@@ -156,7 +156,7 @@ git commit -m "test(platform): reproduce preinstall import failure"
 - Modify: `platform/src/agent_ex/__init__.py`
 - Test: `platform/tests/test_public_api_import_boundary.py`
 
-- [ ] **Step 1: Replace eager imports with the immutable registry**
+- [x] **Step 1: Replace eager imports with the immutable registry**
 
 Keep the module docstring and the existing `__all__` list with exactly the same 142 strings in exactly the same order. Remove every eager relative import above it. Add these imports and this registry above `__all__`:
 
@@ -348,7 +348,7 @@ _LAZY_EXPORTS: Final[Mapping[str, tuple[str, str]]] = MappingProxyType(
 )
 ```
 
-- [ ] **Step 2: Add drift enforcement and lazy resolution below `__all__`**
+- [x] **Step 2: Add drift enforcement and lazy resolution below `__all__`**
 
 ```python
 if set(_LAZY_EXPORTS) != set(__all__):
@@ -377,7 +377,7 @@ def __dir__() -> list[str]:
     return sorted(set(globals()) | set(__all__))
 ```
 
-- [ ] **Step 3: Run the red tests and verify they pass green**
+- [x] **Step 3: Run the red tests and verify they pass green**
 
 ```powershell
 Set-Location platform
@@ -386,7 +386,7 @@ Set-Location platform
 
 Expected: `2 passed`.
 
-- [ ] **Step 4: Commit the minimal lazy implementation**
+- [x] **Step 4: Commit the minimal lazy implementation**
 
 ```powershell
 git add platform/src/agent_ex/__init__.py
@@ -399,7 +399,7 @@ git commit -m "fix(platform): defer root public API imports"
 - Modify: `platform/tests/test_public_api_import_boundary.py`
 - Modify: `platform/tests/test_installation.py`
 
-- [ ] **Step 1: Add registry, object identity, cache, `dir`, unknown-name, and submodule tests**
+- [x] **Step 1: Add registry, object identity, cache, `dir`, unknown-name, and submodule tests**
 
 Append to `platform/tests/test_public_api_import_boundary.py`:
 
@@ -438,7 +438,7 @@ def test_direct_submodule_import_remains_supported() -> None:
     assert protocol is importlib.import_module("agent_ex.protocol")
 ```
 
-- [ ] **Step 2: Extend the wheel runner with public API and console-entry checks**
+- [x] **Step 2: Extend the wheel runner with public API and console-entry checks**
 
 In the generated `wheel_smoke.py` body in `platform/tests/test_installation.py`, immediately after `import agent_ex`, add:
 
@@ -457,7 +457,7 @@ entry_points = {
 assert entry_points["agent-ex-phase0a1"] == "agent_ex.calibration.cli:main"
 ```
 
-- [ ] **Step 3: Run the complete compatibility tests**
+- [x] **Step 3: Run the complete compatibility tests**
 
 ```powershell
 Set-Location platform
@@ -466,7 +466,7 @@ Set-Location platform
 
 Expected: all selected tests pass, including 142 parameterized export cases and the isolated wheel test.
 
-- [ ] **Step 4: Commit compatibility evidence**
+- [x] **Step 4: Commit compatibility evidence**
 
 ```powershell
 git add platform/tests/test_public_api_import_boundary.py platform/tests/test_installation.py
@@ -481,7 +481,7 @@ git commit -m "test(platform): verify lazy API compatibility"
 - Modify: `platform/src/agent_ex/__init__.py`
 - Test: `platform/tests/test_storage.py`
 
-- [ ] **Step 1: Add fresh-process regressions and correct the independent contract**
+- [x] **Step 1: Add fresh-process regressions and correct the independent contract**
 
 In `PUBLIC_API_CONTRACT`, change only these three tuples so the frozen contract names
 the true defining module rather than the adapter facade:
@@ -557,7 +557,7 @@ def test_adapter_facade_lazily_preserves_mock_exports() -> None:
     assert completed.returncode == 0, completed.stdout + completed.stderr
 ```
 
-- [ ] **Step 2: Run the minimal reproduction and confirm the cycle is red**
+- [x] **Step 2: Run the minimal reproduction and confirm the cycle is red**
 
 ```powershell
 Set-Location platform
@@ -575,7 +575,7 @@ cross-process cases fail through
 The root and facade cases may already pass because the old facade import order happens
 to prime `adapters.base`; they do not replace the direct-import red evidence.
 
-- [ ] **Step 3: Make the adapter facade base-eager and mock-lazy**
+- [x] **Step 3: Make the adapter facade base-eager and mock-lazy**
 
 Replace `platform/src/agent_ex/adapters/__init__.py` with:
 
@@ -637,7 +637,7 @@ def __dir__() -> list[str]:
     return sorted(set(globals()) | set(__all__))
 ```
 
-- [ ] **Step 4: Point the three root mock exports at their true defining module**
+- [x] **Step 4: Point the three root mock exports at their true defining module**
 
 In `platform/src/agent_ex/__init__.py`, change only these registry values:
 
@@ -650,7 +650,7 @@ In `platform/src/agent_ex/__init__.py`, change only these registry values:
 Do not change `agent_ex.__all__`, the other 139 registry entries, or any adapter,
 evidence, storage, protocol, or experiment implementation.
 
-- [ ] **Step 5: Run the cycle and compatibility gates green**
+- [x] **Step 5: Run the cycle and compatibility gates green**
 
 ```powershell
 Set-Location platform
@@ -672,7 +672,7 @@ git -C .. diff --check
 Expected: all selected tests and static checks pass. The two storage subprocess tests
 must reach their intended exit-code assertions rather than fail during import.
 
-- [ ] **Step 6: Commit the cycle repair**
+- [x] **Step 6: Commit the cycle repair**
 
 ```powershell
 git add platform/src/agent_ex/__init__.py platform/src/agent_ex/adapters/__init__.py platform/tests/test_public_api_import_boundary.py
@@ -683,6 +683,13 @@ git commit -m "fix(platform): break adapter facade import cycle"
 
 **Files:**
 - Modify: `docs/superpowers/plans/2026-09-14-phase0a1-preflight-import-boundary-implementation.md`
+
+Execution note (2026-09-15): the first full-suite attempt reached
+`1726 passed, 2 failed, 2 skipped, 1 deselected in 4716.74s`; both failures exposed
+the adapter-facade cycle repaired in Task 3A. After that repair, the five-test minimal
+gate and the 182-test focused gate passed. At the owner's explicit request, the roughly
+80-minute full suite was not rerun before cloud preflight. Therefore the failed first
+attempt is not completion evidence for this task, and the Task 4 checkboxes remain open.
 
 - [ ] **Step 1: Run focused tests and static checks**
 
@@ -733,17 +740,17 @@ git commit -m "docs(platform): record import-boundary verification"
 - Create outside Git: `/root/autodl-tmp/agent-ex-phase0a1-evidence/preflight.json`
 - Create: `logs/2026-09-14-phase0a1-preflight-import-repair.md`
 
-- [ ] **Step 1: Ask the user to start the AutoDL instance and obtain the current SSH endpoint**
+- [x] **Step 1: Ask the user to start the AutoDL instance and obtain the current SSH endpoint**
 
 Do not assume that the previous endpoint `root@connect.bjb2.seetacloud.com:11741` survives a stop/start. Make no cloud call until the user supplies the current endpoint; this step is an external-state gate, not permission for a model request.
 
-- [ ] **Step 2: Reverify the failed checkout before replacing it**
+- [x] **Step 2: Reverify the failed checkout before replacing it**
 
 Over the user-supplied endpoint, run read-only checks against `/root/autodl-tmp/agent-ex-phase0a1`: `hostname`, `/root/miniconda3/bin/python --version`, `git rev-parse HEAD`, `git status --porcelain`, Python's observed `networkx.__version__`, and a file non-existence check for `/root/autodl-tmp/agent-ex-phase0a1-evidence/preflight.json`.
 
 Expected: HEAD `14cffa67bcdc36d2e4f2f8628812259a322bb9d1`, clean checkout, Python 3.12.3, NetworkX 3.5, and absent output. Any mismatch stops this task and requires a revised receipt rather than rewriting history.
 
-- [ ] **Step 3: Write and hash the sanitized failure receipt outside Git**
+- [x] **Step 3: Write and hash the sanitized failure receipt outside Git**
 
 Use `/root/miniconda3/bin/python` with the following script to reproduce the original
 failure against the still-clean old checkout, verify all expected observations, and
@@ -856,15 +863,15 @@ Do not include environment variables, credentials, SSH paths, or passwords. Calc
 the receipt SHA-256 independently, copy it to a local external evidence directory, and
 verify equal hashes.
 
-- [ ] **Step 4: Build and transfer an exact repaired Git bundle**
+- [x] **Step 4: Build and transfer an exact repaired Git bundle**
 
 From the local worktree, create a full bundle containing the current `codex/paper1-phase0` HEAD, calculate its SHA-256, upload it to `/root/autodl-tmp/agent-ex-phase0a1-repaired.bundle`, and verify the remote hash equals the local hash. Do not put GitHub credentials on the cloud host.
 
-- [ ] **Step 5: Replace only the failed checkout with a fresh exact-HEAD clone**
+- [x] **Step 5: Replace only the failed checkout with a fresh exact-HEAD clone**
 
 First resolve and verify that the old checkout is exactly `/root/autodl-tmp/agent-ex-phase0a1` and that the failure receipt is sealed. Rename it to `/root/autodl-tmp/agent-ex-phase0a1-failed-14cffa6`; do not recursively delete it. Clone the verified bundle into `/root/autodl-tmp/agent-ex-phase0a1`, checkout the bundled branch, and verify exact local HEAD and a clean status.
 
-- [ ] **Step 6: Verify source binding and run preflight before installation**
+- [x] **Step 6: Verify source binding and run preflight before installation**
 
 Run the exact source check and bootstrap:
 
@@ -881,11 +888,11 @@ PYTHONPATH=/root/autodl-tmp/agent-ex-phase0a1/platform/src \
 
 Expected: the source check prints a path below the repaired checkout; preflight exits 0 and creates exactly one JSON record. Do not install packages, source network turbo, download a model, start vLLM, or make a model request during this step.
 
-- [ ] **Step 7: Reopen and cross-verify the authoritative record**
+- [x] **Step 7: Reopen and cross-verify the authoritative record**
 
 Copy `preflight.json` to the local external evidence directory, verify equal SHA-256, and use the repaired local source to call `CloudPreflight.from_payload`. Verify the canonical `record_hash`, repaired `git_commit`, `git_dirty is False`, exactly one visible RTX 5090, and all calibration-only/no-formal-authority flags.
 
-- [ ] **Step 8: Commit only the sanitized cloud log**
+- [x] **Step 8: Commit only the sanitized cloud log**
 
 Create `logs/2026-09-14-phase0a1-preflight-import-repair.md` recording the failed receipt hash/external path, repaired bundle hash, exact repaired commit, cloud preflight hash/external path, source-binding result, and explicit statements that no install/model download/server/model request occurred. Do not commit either raw JSON artifact.
 
@@ -894,6 +901,6 @@ git add logs/2026-09-14-phase0a1-preflight-import-repair.md docs/superpowers/pla
 git commit -m "docs(platform): record repaired cloud preflight"
 ```
 
-- [ ] **Step 9: Stop at the existing smoke authorization boundary**
+- [x] **Step 9: Stop at the existing smoke authorization boundary**
 
 The repaired preflight grants no smoke authority. Return to Task 9 Step 2 of `docs/superpowers/plans/2026-09-10-paper1-phase0a1-cloud-probe-implementation.md`; obtain the separately required authorization before dependency installation, immutable Qwen3-8B download, vLLM startup, or any of the ten real smoke requests.
