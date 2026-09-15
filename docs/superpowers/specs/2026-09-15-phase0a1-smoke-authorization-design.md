@@ -252,31 +252,46 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
 4. 确认 smoke archive URI；不存在时创建独立目录，并在任何模型请求前验证 append-only
    写入、持久化、hash evidence 和恢复路径。
 5. 建立 fresh Python 3.12 环境，使用 vLLM `0.23.0` 的 official CUDA 12.9 wheel path；不得
-   复用预装 PyTorch。记录全部 package versions、wheel identities 和 environment hash，
-   并形成不可变 environment lock。安装来源、包版本、wheel identity、PyTorch 来源或 lock
-   任一漂移均 fail closed。
+   复用预装 PyTorch。此时只进行 package/environment preliminary inspection，记录全部
+   package versions、wheel identities、environment/package hash 与安装来源；不得在模型、
+   tokenizer、模板和首次服务 health evidence 尚未齐全时生成或声称已有完整
+   `EnvironmentLock`。安装来源、包版本、wheel identity、PyTorch 来源或 preliminary hash
+   任一不符均 fail closed。
 6. 仅在下载专用 subshell/进程中获取依赖与 pinned model/tokenizer；由 `trap`/`finally`
    清理后完成代理白名单/无代理断言。核对 `tokenizer_config.json` 文件 hash、响应来源
-   headers、chat template 字节长度和 canonical hash。任何不一致或代理残留均不得启服。
-7. 在真实 vLLM 仍关闭时，使用独立 loopback test endpoints/ports 执行并持久化第 6 节三项
-   deterministic transport diagnostics；确认实际分类和必需 evidence 与预期完全一致。
-8. 按 `platform/scripts/phase0a1-serve.sh` 的完全相同锁定合同启动真实 loopback vLLM；验证
-   endpoint、served name、BF16、max model length、generation config、non-thinking、
-   request-ID headers、model/tokenizer/template identity、environment lock 和健康状态。
-9. 第一阶段仅依次执行固定 prompts 的前九条。每条必须首次成功并立即追加完整请求、响应、
-   解析、身份和 hash evidence；任一失败立即结束整体 smoke，不得重复 prompt。
-10. 前九条全部成功后，持久化 projection/checkpoint，明确记录九条 terminal-success 与
+   headers、全部 model/tokenizer artifact hashes、chat template text/字节长度/canonical hash，
+   并完成 rendered non-thinking 观察及其 hash。任何不一致或代理残留均不得启服。
+7. 按 `platform/scripts/phase0a1-serve.sh` 的精确 serve contract 首次启动真实 loopback vLLM；
+   验证 endpoint、served name、BF16、max model length、generation config、non-thinking、
+   request-ID headers、model/tokenizer/template identity、vLLM/image identity、serve arguments
+   和 health check。此时仍不得把不完整的先前记录称为 `EnvironmentLock`。
+8. 首次真实服务通过 health/identity 后，才将同一次完整环境观察一次性提交给现有严格
+   `EnvironmentLock` 合同，生成完整不可变锁。该锁必须同时绑定 source/host/package
+   inspection、model/tokenizer artifacts 与 hashes、chat template text/hash、rendered
+   non-thinking hash、vLLM identity、image identity、serve arguments 和 `health_check`；生成
+   后禁止补写、替换或原地修订。缺少任一字段都不得继续。
+9. 对刚生成的 `EnvironmentLock` 做只读复验；然后在真实 vLLM 不被诊断调用的前提下，
+   使用独立 loopback test endpoints/ports 执行并持久化第 6 节三项 deterministic transport
+   diagnostics。每项诊断前后都重新验证当前环境与该 lock 一致，并确认实际分类和必需
+   evidence 与预期完全一致。
+10. 再次验证同一 `EnvironmentLock` 后，第一阶段仅依次执行固定 prompts 的前九条。每条
+    必须首次成功并立即追加完整请求、响应、解析、身份和 hash evidence；任一失败立即
+    结束整体 smoke，不得重复 prompt。
+11. 前九条全部成功后，持久化 projection/checkpoint，明确记录九条 terminal-success 与
     `service-identity-recovery` 仍为 `pending`。干净关闭客户端，关闭 store 的进程与文件句柄，
     并停止真实 vLLM；磁盘上的 append-only evidence 不得删除或改写。
-11. 使用与第一次完全相同的锁定 serve contract 重启真实 vLLM，并重新验证服务身份、模型、
-    tokenizer、chat template、runtime、environment lock、endpoint 和健康状态。
-12. 从 append-only store 新开客户端恢复，重新验证前九条 evidence 与 projection 不可变，
-    确认没有重复/跳过且只有第十条 `service-identity-recovery` 为 `pending`；然后仅执行该
-    第十条一次。它必须首次成功并追加完整 evidence。
-13. 验证恰好十条唯一 prompts、恰好十次成功 Qwen 生成、三项独立 diagnostics、全部
-    identity/hash bindings 和 archive 完整性，然后停止 vLLM。无论成功或失败，服务都不得
-    因本授权继续驻留。
-14. 保留并标记 smoke evidence。成功时只准备六组 816-case 审批包；失败时记录失败边界与
+12. 使用与第一次完全相同且已由 `EnvironmentLock` 绑定的 serve contract 重启真实 vLLM；
+    重新观察全部严格 lock 字段，并通过现有验证合同确认 model/tokenizer artifacts、chat
+    template、rendered non-thinking、vLLM/image identity、serve arguments、health response、
+    packages、source 与 host 均和同一 lock 一致。不得生成第二份 lock 或更新原 lock。
+13. 从 append-only store 新开客户端恢复，再次验证当前环境与同一 `EnvironmentLock` 一致，
+    并确认前九条 evidence 与 projection 不可变、没有重复/跳过且只有第十条
+    `service-identity-recovery` 为 `pending`；然后仅执行该第十条一次。它必须首次成功并
+    追加完整 evidence。
+14. 最后重新验证同一 `EnvironmentLock`，并核对恰好十条唯一 prompts、恰好十次成功 Qwen
+    生成、三项独立 diagnostics、全部 identity/hash bindings 和 archive 完整性，然后停止
+    vLLM。无论成功或失败，服务都不得因本授权继续驻留。
+15. 保留并标记 smoke evidence。成功时只准备六组 816-case 审批包；失败时记录失败边界与
     新候选需求。两种结果都不得自动进入 816-case。
 
 ## 8. 失败与停止规则
@@ -300,7 +315,10 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
   重排或执行超过一次；
 - 最终不是恰好十次成功的 Qwen 模型生成请求，或 diagnostics 被计入模型请求；
 - fresh Python 3.12、official CUDA 12.9 wheel path、不得复用预装 PyTorch、package/wheel
-  identities 或 environment lock 任一安装门不满足；
+  identities 或 preliminary environment/package hash 任一安装门不满足；
+- 在 model/tokenizer artifacts、chat template/rendered non-thinking、首次真实 vLLM
+  identity/health 证据齐全前提前生成 `EnvironmentLock`，完整 lock 缺字段，生成后被补写，
+  或 diagnostics/前九条/重启恢复第十条任一阶段无法验证同一 lock；
 - 下载作用域未隔离，代理清理/无代理断言失败，或 vLLM 继承任何未批准代理；
 - archive 无法创建、追加、校验或保留，或任何原始 evidence 被要求写入 Git；
 - 任一未授权 artifact、816-case inventory、formal config 或主实验路径被加载或调用。
@@ -330,10 +348,13 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
 - append-only store 跨客户端、store handle 和真实服务关闭后的恢复与不可变性；
 - 三种独立 loopback diagnostics 的确定性分类、429 `Retry-After` capture 与模型请求计数
   隔离；
-- exact serve/environment identity 重启复验与漂移停止；
+- preliminary package/environment inspection 与完整 `EnvironmentLock` 的时序隔离，以及完整
+  lock 只能在 model/tokenizer/template/rendered non-thinking 和首次真实服务 health/identity
+  齐全后一次性生成；
+- diagnostics、前九条、exact serve 重启恢复与第十条均复验同一 lock，并在漂移时停止；
 - 下载专用作用域的成功、失败、中断清理，以及 vLLM 无代理启动断言；
-- fresh Python 3.12、official CUDA 12.9 wheel、package/wheel identities 和 environment lock
-  的 fail-closed gates；
+- fresh Python 3.12、official CUDA 12.9 wheel、package/wheel identities、preliminary hashes
+  和后置完整 environment lock 的 fail-closed gates；
 - 旧 preflight/旧 SmokeManifest 被拒绝，新 source-bound preflight 与 manifest 审批门生效。
 
 实现阶段运行与变更直接相关的针对性测试并记录精确命令与结果；不会自动运行当前约
