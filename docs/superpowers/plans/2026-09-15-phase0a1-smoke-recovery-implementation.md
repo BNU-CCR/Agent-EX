@@ -81,7 +81,7 @@ def test_diagnostic_cases_are_fixed_and_never_name_vllm() -> None:
 
 def test_diagnostic_record_round_trip_rejects_hash_or_classification_drift() -> None:
     case = DiagnosticCase.closed_port(port=65431)
-    evidence = TransportDiagnosticEvidence.create_for_test(
+    evidence = TransportDiagnosticEvidence.create(
         case=case,
         actual_error_code="provider_unreachable",
         started_at="2026-09-15T00:00:00Z",
@@ -182,7 +182,7 @@ class TransportDiagnosticEvidence:
     record_hash: str
 
     @classmethod
-    def create_for_test(
+    def create(
         cls, *, case: DiagnosticCase, actual_error_code: str, started_at: str,
         ended_at: str, duration_seconds: float, response_headers: Mapping[str, str],
         raw_body: bytes, raw_error: str | None, http_status: int | None = None,
