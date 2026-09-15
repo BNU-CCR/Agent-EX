@@ -45,12 +45,12 @@ PUBLIC_API_CONTRACT = (
     ("LatestPublicPointer", ".state", "LatestPublicPointer"),
     ("MemoryItem", ".memory", "MemoryItem"),
     ("MemoryView", ".memory", "MemoryView"),
-    ("MockAdapter", ".adapters", "MockAdapter"),
+    ("MockAdapter", ".adapters.mock", "MockAdapter"),
     ("MockEventPipeline", ".pipeline", "MockEventPipeline"),
     ("MockEventPipelineOutcome", ".pipeline", "MockEventPipelineOutcome"),
     ("MockAdapterExecutionBinding", ".execution_evidence", "MockAdapterExecutionBinding"),
     ("MockAttemptPolicyBinding", ".execution_evidence", "MockAttemptPolicyBinding"),
-    ("MockScriptStep", ".adapters", "MockScriptStep"),
+    ("MockScriptStep", ".adapters.mock", "MockScriptStep"),
     ("MockScaleCase", ".mock_matrix", "MockScaleCase"),
     ("MockEventInvocation", ".mock_run", "MockEventInvocation"),
     ("MockRunControl", ".mock_run", "MockRunControl"),
@@ -179,7 +179,11 @@ PUBLIC_API_CONTRACT = (
     ("validate_exposure_selection", ".feed", "validate_exposure_selection"),
     ("validate_event_rng_ledger", ".schedule", "validate_event_rng_ledger"),
     ("validate_protocol", ".protocol", "validate_protocol"),
-    ("validate_adapter_response", ".adapters", "validate_adapter_response"),
+    (
+        "validate_adapter_response",
+        ".adapters.mock",
+        "validate_adapter_response",
+    ),
     ("validate_checkpoint", ".checkpoint", "validate_checkpoint"),
     ("validate_parse_evidence", ".parser", "validate_parse_evidence"),
     ("validate_prompt_view", ".prompt", "validate_prompt_view"),
@@ -306,6 +310,74 @@ def test_direct_protocol_submodule_import_has_standard_identity() -> None:
         expected = importlib.import_module("agent_ex.protocol")
         assert protocol is expected
         assert vars(agent_ex)["protocol"] is expected
+        """,
+        include_dependencies=True,
+    )
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_direct_execution_evidence_import_does_not_load_mock_adapter() -> None:
+    completed = _source_subprocess(
+        """
+        import sys
+
+        import agent_ex.execution_evidence
+
+        assert "agent_ex.adapters.base" in sys.modules
+        assert "agent_ex.adapters.mock" not in sys.modules
+        """,
+        include_dependencies=True,
+    )
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_root_mock_export_lazily_resolves_exact_defining_object() -> None:
+    completed = _source_subprocess(
+        """
+        import sys
+
+        import agent_ex
+
+        assert "MockAdapter" not in vars(agent_ex)
+        assert "agent_ex.adapters.mock" not in sys.modules
+        resolved = agent_ex.MockAdapter
+        from agent_ex.adapters.mock import MockAdapter
+
+        assert resolved is MockAdapter
+        assert vars(agent_ex)["MockAdapter"] is MockAdapter
+        """,
+        include_dependencies=True,
+    )
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_adapter_facade_lazily_resolves_and_caches_mock_exports() -> None:
+    completed = _source_subprocess(
+        """
+        import sys
+
+        import agent_ex.adapters as adapters
+
+        assert "agent_ex.adapters.mock" not in sys.modules
+        from agent_ex.adapters import (
+            MockAdapter,
+            MockScriptStep,
+            validate_adapter_response,
+        )
+        from agent_ex.adapters import mock
+
+        assert MockAdapter is mock.MockAdapter
+        assert MockScriptStep is mock.MockScriptStep
+        assert validate_adapter_response is mock.validate_adapter_response
+        assert vars(adapters)["MockAdapter"] is MockAdapter
+        assert vars(adapters)["MockScriptStep"] is MockScriptStep
+        assert (
+            vars(adapters)["validate_adapter_response"]
+            is validate_adapter_response
+        )
         """,
         include_dependencies=True,
     )
