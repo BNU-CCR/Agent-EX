@@ -401,6 +401,15 @@ class ProbeRunStore:
             self.review_hashes = (*self.review_hashes, digest)
             self._persist_projection(staging)
 
+    def load_attempt_records(self) -> tuple[Mapping[str, object], ...]:
+        directory = self.root / ("sealed/evidence" if self._sealed else "staging")
+        records = self._load_records(directory / "attempts", "attempt")
+        if set(records) != set(self.attempt_hashes):
+            raise ValueError("attempt evidence inventory differs from store projection")
+        ordered = tuple(records[digest] for digest in self.attempt_hashes)
+        _validate_attempt_sequence(ordered)
+        return ordered
+
     def append_smoke_progress(self, payload: Mapping[str, object]) -> None:
         from .smoke import SmokeProgress
 

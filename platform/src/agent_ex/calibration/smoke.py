@@ -22,7 +22,9 @@ from ..domain import (
 )
 from .cloud import SmokeManifest
 from .contracts import ProbeCase, ProbeRequest, ProbeRuntimePolicy
+from .environment import EnvironmentLock, EnvironmentObservation, verify_current_environment
 from .store import ProbeRunStore
+from .transport_diagnostics import run_transport_diagnostics
 from .vllm_adapter import VllmProbeAdapter
 
 
@@ -458,7 +460,7 @@ def _thinking_observed(content: str, transport_payload: Mapping[str, object] | N
     return False
 
 
-def run_probe_smoke(
+def _run_probe_smoke_legacy(
     manifest: SmokeManifest,
     adapter: VllmProbeAdapter,
     archive_root: Path,
@@ -612,3 +614,405 @@ def run_probe_smoke(
     )
     store.append_review(result.to_payload())
     return result
+
+
+def _check_boundary(
+    manifest: SmokeManifest,
+    lock: EnvironmentLock,
+    archive_root: Path,
+    *,
+    observation: EnvironmentObservation | None = None,
+    policy: ProbeRuntimePolicy | None = None,
+    adapter: VllmProbeAdapter | None = None,
+) -> None:
+    if not isinstance(manifest, SmokeManifest) or not isinstance(lock, EnvironmentLock):
+        raise TypeError("smoke requires a strict manifest and environment lock")
+    if not isinstance(archive_root, Path) or not archive_root.is_absolute():
+        raise ValueError("smoke archive root must be an absolute Path")
+    if archive_root.resolve().as_posix() != manifest.archive_uri:
+        raise ValueError("smoke archive does not match the approved manifest")
+    if manifest.smoke_prompt_set_hash != SMOKE_PROMPT_SET_HASH:
+        raise ValueError("smoke prompt set hash drift")
+    if lock.authorization_hash != manifest.record_hash:
+        raise ValueError("environment lock authorization does not match smoke manifest")
+    if observation is not None:
+        verify_current_environment(lock, observation)
+    if policy is not None:
+        if not isinstance(policy, ProbeRuntimePolicy):
+            raise TypeError("smoke runtime policy must be ProbeRuntimePolicy")
+        if policy.record_hash != manifest.runtime_policy_hash:
+            raise ValueError("smoke runtime policy does not match the approved manifest")
+    if adapter is not None:
+        if not isinstance(adapter, VllmProbeAdapter) or adapter.endpoint != manifest.endpoint:
+            raise ValueError("smoke adapter does not match the approved endpoint")
+
+
+def _latest_phase(
+    store: ProbeRunStore, manifest: SmokeManifest, lock: EnvironmentLock, phase: str
+) -> SmokeProgress:
+    progress = store.load_smoke_progress()
+    if not progress or progress[-1].phase != phase:
+        raise RuntimeError(f"smoke phase must be {phase}")
+    if any(
+        item.manifest_hash != manifest.record_hash or item.environment_lock_hash != lock.record_hash
+        for item in progress
+    ):
+        raise ValueError("smoke progress identity drift")
+    return progress[-1]
+
+
+def _attempts(store: ProbeRunStore, count: int) -> tuple[Mapping[str, object], ...]:
+    records = store.load_attempt_records()
+    if len(records) != count:
+        raise RuntimeError("smoke attempt count does not match the required phase")
+    expected_ids = tuple(item["smoke_id"] for item in _SMOKE_PROMPTS[:count])
+    if tuple(item.get("ordinal") for item in records) != tuple(range(1, count + 1)):
+        raise ValueError("smoke attempt ordinals are duplicated, skipped, or reordered")
+    if tuple(item.get("smoke_id") for item in records) != expected_ids:
+        raise ValueError("smoke prompt identities are duplicated, skipped, or reordered")
+    if any(item.get("schema_version") != "paper1.calibration.smoke-attempt.v1" for item in records):
+        raise ValueError("smoke attempt schema drift")
+    for item in records:
+        response = item.get("response")
+        if not isinstance(response, Mapping) or response.get("outcome") != "response":
+            raise SmokeFailure("completed smoke progress contains a failed attempt")
+    return records
+
+
+def _progress(
+    store: ProbeRunStore,
+    manifest: SmokeManifest,
+    lock: EnvironmentLock,
+    phase: str,
+    completed: tuple[int, ...],
+    stop_hash: str | None,
+) -> SmokeProgress:
+    history = store.load_smoke_progress()
+    record = SmokeProgress.create(
+        manifest_hash=manifest.record_hash,
+        environment_lock_hash=lock.record_hash,
+        sequence=len(history) + 1,
+        phase=phase,
+        completed_ordinals=completed,
+        pending_smoke_ids=tuple(item["smoke_id"] for item in _SMOKE_PROMPTS[len(completed) :]),
+        attempt_hashes=store.attempt_hashes,
+        service_stop_evidence_hash=stop_hash,
+        previous_progress_hash=None if not history else history[-1].record_hash,
+    )
+    store.append_smoke_progress(record.to_payload())
+    return record
+
+
+def _run_items(
+    manifest: SmokeManifest,
+    adapter: VllmProbeAdapter,
+    store: ProbeRunStore,
+    policy: ProbeRuntimePolicy,
+    items: tuple[Mapping[str, object], ...],
+    first_ordinal: int,
+) -> None:
+    intent_hashes: dict[str, str] = {}
+
+    def before_dispatch(request: ProbeRequest, request_body: bytes) -> None:
+        content: dict[str, object] = {
+            "schema_version": "paper1.calibration.smoke-dispatch-intent.v1",
+            "manifest_hash": manifest.record_hash,
+            "request_id": request.request_id,
+            "request_hash": request.record_hash,
+            "probe_case_id": request.probe_case_id,
+            "attempt_index": request.attempt_index,
+            "request_body_sha256": hashlib.sha256(request_body).hexdigest(),
+            "request_body_bytes": len(request_body),
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        digest = canonical_payload_hash(content)
+        store.append_review({**content, "record_hash": digest})
+        intent_hashes[request.request_id] = digest
+
+    adapter.bind_dispatch_journal(before_dispatch)
+    for ordinal, item in enumerate(items, start=first_ordinal):
+        case = _smoke_case(manifest, item)
+        request = ProbeRequest.create(
+            case,
+            attempt_index=1,
+            attempt_kind="semantic",
+            generation_settings=item["generation_settings"],  # type: ignore[arg-type]
+        )
+        response = adapter.generate(request, timeout_seconds=policy.timeout_seconds)
+        transport = adapter.evidence_for(request.request_id).to_payload()
+        content = {
+            "schema_version": "paper1.calibration.smoke-attempt.v1",
+            "probe_case_id": case.probe_case_id,
+            "attempt_index": 1,
+            "smoke_id": item["smoke_id"],
+            "ordinal": ordinal,
+            "request": request.to_payload(),
+            "response": response.to_payload(),
+            "transport_evidence": transport,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        attempt = {**content, "record_hash": canonical_payload_hash(content)}
+        store.append_attempt(attempt)
+        resolution = {
+            "schema_version": "paper1.calibration.smoke-dispatch-resolution.v1",
+            "manifest_hash": manifest.record_hash,
+            "request_id": request.request_id,
+            "dispatch_intent_hash": intent_hashes[request.request_id],
+            "attempt_record_hash": attempt["record_hash"],
+            "transport_evidence_hash": transport["record_hash"],
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        store.append_review({**resolution, "record_hash": canonical_payload_hash(resolution)})
+        if response.outcome != "response" or response.raw_response is None:
+            raise SmokeFailure(f"smoke request failed: {item['smoke_id']}")
+        if response.model_identity != {
+            "model": manifest.served_model_name,
+            "revision": manifest.model_revision_candidate,
+        }:
+            raise SmokeFailure("smoke model identity drift")
+        if response.tokenizer_identity["revision"] != manifest.tokenizer_revision_candidate:
+            raise SmokeFailure("smoke tokenizer identity drift")
+        if response.runtime_identity["runtime_version"] != manifest.vllm_version_candidate:
+            raise SmokeFailure("smoke runtime identity drift")
+        if response.chat_template_hash != manifest.chat_template_hash:
+            raise SmokeFailure("smoke chat template identity drift")
+        if _thinking_observed(response.raw_response, transport):
+            raise SmokeFailure("non-thinking smoke observed thinking content")
+
+
+def run_smoke_diagnostics(
+    manifest: SmokeManifest,
+    environment_lock: EnvironmentLock,
+    archive_root: Path,
+    runtime_policy: ProbeRuntimePolicy,
+    *,
+    current_observation: EnvironmentObservation,
+) -> SmokeProgress:
+    _check_boundary(
+        manifest,
+        environment_lock,
+        archive_root,
+        observation=current_observation,
+        policy=runtime_policy,
+    )
+    store = ProbeRunStore.create(archive_root, manifest=manifest.to_payload())
+    _progress(store, manifest, environment_lock, "ready", (), None)
+    records = run_transport_diagnostics(
+        manifest=manifest,
+        environment_lock=environment_lock,
+        current_observation=current_observation,
+        policy=runtime_policy,
+        vllm_endpoint=manifest.endpoint,
+    )
+    if len(records) != 3:
+        raise RuntimeError("smoke requires exactly three transport diagnostics")
+    for record in records:
+        store.append_transport_diagnostic(record.to_payload())
+    if len(store.load_transport_diagnostics()) != 3:
+        raise RuntimeError("transport diagnostic replay is incomplete")
+    _check_boundary(
+        manifest,
+        environment_lock,
+        archive_root,
+        observation=current_observation,
+        policy=runtime_policy,
+    )
+    return _progress(store, manifest, environment_lock, "diagnostics_complete", (), None)
+
+
+def run_smoke_phase_one(
+    manifest: SmokeManifest,
+    environment_lock: EnvironmentLock,
+    adapter: VllmProbeAdapter,
+    archive_root: Path,
+    runtime_policy: ProbeRuntimePolicy,
+    *,
+    current_observation: EnvironmentObservation,
+) -> SmokeProgress:
+    _check_boundary(
+        manifest,
+        environment_lock,
+        archive_root,
+        observation=current_observation,
+        policy=runtime_policy,
+        adapter=adapter,
+    )
+    store = ProbeRunStore.open(archive_root)
+    _latest_phase(store, manifest, environment_lock, "diagnostics_complete")
+    if len(store.load_transport_diagnostics()) != 3 or store.load_service_stops():
+        raise RuntimeError("smoke diagnostic or stop boundary is invalid")
+    _attempts(store, 0)
+    _run_items(manifest, adapter, store, runtime_policy, _SMOKE_PROMPTS[:9], 1)
+    _attempts(store, 9)
+    _check_boundary(
+        manifest,
+        environment_lock,
+        archive_root,
+        observation=current_observation,
+        policy=runtime_policy,
+        adapter=adapter,
+    )
+    return _progress(
+        store, manifest, environment_lock, "phase_one_complete", tuple(range(1, 10)), None
+    )
+
+
+def mark_smoke_service_stopped(
+    manifest: SmokeManifest,
+    environment_lock: EnvironmentLock,
+    archive_root: Path,
+    *,
+    stop_evidence: ServiceStopEvidence,
+) -> SmokeProgress:
+    _check_boundary(manifest, environment_lock, archive_root)
+    if not isinstance(stop_evidence, ServiceStopEvidence):
+        raise TypeError("smoke stop requires ServiceStopEvidence")
+    if (
+        stop_evidence.manifest_hash != manifest.record_hash
+        or stop_evidence.environment_lock_hash != environment_lock.record_hash
+    ):
+        raise ValueError("service stop evidence identity does not match smoke")
+    store = ProbeRunStore.open(archive_root)
+    prior = _latest_phase(store, manifest, environment_lock, "phase_one_complete")
+    _attempts(store, 9)
+    if prior.attempt_hashes != store.attempt_hashes or store.load_service_stops():
+        raise RuntimeError("smoke stop boundary is duplicated or attempts changed")
+    store.append_service_stop(stop_evidence.to_payload())
+    return _progress(
+        store,
+        manifest,
+        environment_lock,
+        "service_stopped",
+        tuple(range(1, 10)),
+        stop_evidence.record_hash,
+    )
+
+
+def run_smoke_phase_two(
+    manifest: SmokeManifest,
+    environment_lock: EnvironmentLock,
+    adapter: VllmProbeAdapter,
+    archive_root: Path,
+    runtime_policy: ProbeRuntimePolicy,
+    *,
+    current_observation: EnvironmentObservation,
+) -> SmokeProgress:
+    _check_boundary(
+        manifest,
+        environment_lock,
+        archive_root,
+        observation=current_observation,
+        policy=runtime_policy,
+        adapter=adapter,
+    )
+    store = ProbeRunStore.open(archive_root)
+    prior = _latest_phase(store, manifest, environment_lock, "service_stopped")
+    _attempts(store, 9)
+    first_nine = store.attempt_hashes
+    stops = store.load_service_stops()
+    if len(stops) != 1 or stops[0].record_hash != prior.service_stop_evidence_hash:
+        raise ValueError("smoke service stop evidence is absent or ambiguous")
+    _run_items(manifest, adapter, store, runtime_policy, _SMOKE_PROMPTS[9:], 10)
+    _attempts(store, 10)
+    if store.attempt_hashes[:9] != first_nine:
+        raise ValueError("phase one attempt hashes changed during recovery")
+    _check_boundary(
+        manifest,
+        environment_lock,
+        archive_root,
+        observation=current_observation,
+        policy=runtime_policy,
+        adapter=adapter,
+    )
+    return _progress(
+        store,
+        manifest,
+        environment_lock,
+        "phase_two_complete",
+        tuple(range(1, 11)),
+        stops[0].record_hash,
+    )
+
+
+def finalize_probe_smoke(
+    manifest: SmokeManifest,
+    environment_lock: EnvironmentLock,
+    archive_root: Path,
+    *,
+    current_observation: EnvironmentObservation,
+) -> SmokeResult:
+    _check_boundary(manifest, environment_lock, archive_root, observation=current_observation)
+    store = ProbeRunStore.open(archive_root)
+    prior = _latest_phase(store, manifest, environment_lock, "phase_two_complete")
+    attempts = _attempts(store, 10)
+    stops = store.load_service_stops()
+    if (
+        prior.attempt_hashes != store.attempt_hashes
+        or len(store.load_transport_diagnostics()) != 3
+        or len(stops) != 1
+        or stops[0].record_hash != prior.service_stop_evidence_hash
+    ):
+        raise RuntimeError("smoke final evidence is incomplete or changed")
+    observations = tuple(
+        {
+            "smoke_id": item["smoke_id"],
+            **{
+                key: item["response"].get(key)  # type: ignore[union-attr]
+                for key in (
+                    "outcome",
+                    "error_code",
+                    "termination_reason",
+                    "provider_request_id",
+                    "provider_seed_supported",
+                    "provider_seed_echo",
+                )
+            },
+        }
+        for item in attempts
+    )
+    content: dict[str, object] = {
+        "schema_version": "paper1.calibration.smoke-result.v1",
+        "status": "passed",
+        "case_count": 0,
+        "smoke_prompt_count": 10,
+        "manifest_hash": manifest.record_hash,
+        "prompt_set_hash": SMOKE_PROMPT_SET_HASH,
+        "attempt_hashes": store.attempt_hashes,
+        "observations": observations,
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+    }
+    result = SmokeResult(
+        status="passed",
+        case_count=0,
+        smoke_prompt_count=10,
+        manifest_hash=manifest.record_hash,
+        prompt_set_hash=SMOKE_PROMPT_SET_HASH,
+        attempt_hashes=store.attempt_hashes,
+        observations=observations,
+        record_hash=canonical_payload_hash(content),
+    )
+    store.append_review(result.to_payload())
+    _progress(
+        store,
+        manifest,
+        environment_lock,
+        "finalized",
+        tuple(range(1, 11)),
+        prior.service_stop_evidence_hash,
+    )
+    _check_boundary(manifest, environment_lock, archive_root, observation=current_observation)
+    return result
+
+
+def run_probe_smoke(
+    manifest: SmokeManifest,
+    adapter: VllmProbeAdapter,
+    archive_root: Path,
+    runtime_policy: ProbeRuntimePolicy,
+) -> SmokeResult:
+    """Reject the superseded unsafe one-shot smoke entry point."""
+    raise RuntimeError("one-shot smoke is disabled; use the explicit recovery phases")

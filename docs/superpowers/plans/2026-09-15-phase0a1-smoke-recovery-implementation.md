@@ -226,6 +226,12 @@ git commit -m "feat(platform): add deterministic smoke diagnostics"
 - Modify: `platform/src/agent_ex/calibration/store.py`
 - Modify: `platform/tests/test_calibration_store.py`
 
+**Public-replay amendment (2026-09-15):** Task 2's no-private-recovery rule also requires a
+public `ProbeRunStore.load_attempt_records()` projection-ordered replay API. Add and test that
+API in this task before the phase runners use it; smoke recovery must never call `_load_records`.
+- Modify: `platform/src/agent_ex/calibration/store.py`
+- Modify: `platform/tests/test_calibration_store.py`
+
 **Dependency-order amendment (2026-09-15):** Before Step 1 below, add red tests and then
 implement only the strict, exact-key, canonical-hash `SmokeProgress` and
 `ServiceStopEvidence` record classes mapped in Task 3 Step 3. This moves those two data
@@ -361,7 +367,7 @@ git commit -m "feat(platform): persist recoverable smoke progress"
 - Modify: `platform/src/agent_ex/calibration/smoke.py`
 - Modify: `platform/tests/test_calibration_smoke.py`
 
-- [ ] **Step 1: Write exact phase and fail-closed red tests**
+- [x] **Step 1: Write exact phase and fail-closed red tests**
 
 Replace calls to the one-shot `run_probe_smoke` in `platform/tests/test_calibration_smoke.py` with tests that use these signatures:
 
@@ -414,7 +420,7 @@ def test_smoke_rejects_duplicate_skip_or_early_finalize(tmp_path: Path, operatio
 
 Also add assertions that every transition rejects a lock whose `authorization_hash` differs from `approved.record_hash`, that ordinals 1–9 hashes are byte-for-byte unchanged after phase 2, and that the only pending ID at `service_stopped` is `service-identity-recovery`.
 
-- [ ] **Step 2: Run the phase tests and verify red**
+- [x] **Step 2: Run the phase tests and verify red**
 
 Run:
 
@@ -425,7 +431,7 @@ Set-Location platform
 
 Expected: failures report missing explicit phase APIs and the old one-shot behavior sends the tenth request without a real stop boundary.
 
-- [ ] **Step 3: Implement the phase APIs using the strict Task 2 records**
+- [x] **Step 3: Implement the phase APIs using the strict Task 2 records**
 
 Use this exact public interface map in `smoke.py`; `SmokeProgress` and
 `ServiceStopEvidence` were implemented first in Task 2, while this task adds the five phase
@@ -518,7 +524,7 @@ def finalize_probe_smoke(
 
 Implement `SmokeProgress.__post_init__` with exact schema `paper1.calibration.smoke-progress.v1`; allowed phases and exact shapes are `ready/()/all ten pending/no stop hash`, `diagnostics_complete/()/all ten pending/no stop hash`, `phase_one_complete/(1..9)/(only recovery pending)/no stop hash`, `service_stopped/(1..9)/(only recovery pending)/one stop hash`, `phase_two_complete/(1..10)/()/the same stop hash`, and `finalized/(1..10)/()/the same stop hash`. Require contiguous sequence, hash chaining, attempt hashes aligned with completed ordinals, and exact manifest/lock hashes. `run_smoke_diagnostics` alone creates the absent store, appends `ready`, executes and reopens the three diagnostics, and appends `diagnostics_complete`; phase 1 requires that terminal progress and cannot create or bypass it. `ServiceStopEvidence` must be exact-key, canonical-hash bound, require both stop booleans true, bind the same manifest and lock, and bind the verified start identity and positive PID produced by the lifecycle script. `mark_smoke_service_stopped` rejects an absent, mismatched, or replayed stop record and persists its hash in the next progress record. Extract the current single-request body into `_execute_smoke_item`; phase 1 iterates `_SMOKE_PROMPTS[:9]`, phase 2 executes only `_SMOKE_PROMPTS[9]`; no function opens subprocesses or invokes shell. Before and after diagnostics, phase 1, phase 2, restart recovery, and finalization call one helper that performs `verify_current_environment(environment_lock, current_observation)` and asserts `environment_lock.authorization_hash == manifest.record_hash`. Reopen `ProbeRunStore` at the start of every public phase, replay progress plus attempts and stop evidence, and reject any mismatch before constructing an adapter call.
 
-- [ ] **Step 4: Run smoke, store, adapter, and diagnostic tests green**
+- [x] **Step 4: Run smoke, store, adapter, and diagnostic tests green**
 
 Run:
 
@@ -529,7 +535,7 @@ Set-Location platform
 
 Expected: all selected tests pass; request counts are 9 then 1; no diagnostic appears in `attempt_hashes`.
 
-- [ ] **Step 5: Commit the two-phase smoke state machine**
+- [x] **Step 5: Commit the two-phase smoke state machine**
 
 ```powershell
 git add platform/src/agent_ex/calibration/smoke.py platform/tests/test_calibration_smoke.py

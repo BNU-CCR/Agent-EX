@@ -141,6 +141,7 @@ def test_attempt_records_are_create_only_and_budget_survives_reopen(tmp_path: Pa
 
     reopened = ProbeRunStore.open(tmp_path / "run")
     assert reopened.consumed_attempts("case-1") == 1
+    assert reopened.load_attempt_records() == (attempt_payload(),)
 
 
 def test_reviews_are_content_addressed_and_reopenable(tmp_path: Path) -> None:
