@@ -1,5 +1,24 @@
 # Phase 0A-1 Smoke Recovery Implementation Plan
 
+## Fast-track execution amendment (2026-09-15)
+
+The owner has made time-to-first-formal-experiment the primary objective. Tasks 5–7 are
+therefore one continuous local release batch, followed immediately by Task 8 and the already
+specified 816/Phase 0B gates. Only evidence needed to block unsafe or scientifically invalid
+execution remains on the critical path.
+
+The following are **deferred, not treated as preconditions**: the approximately 80-minute full
+historical suite, cosmetic documentation work, removal of unreachable compatibility internals,
+nonessential refactors, and duplicate slow checks already covered by a fresh focused gate. Each
+changed component still requires its red/green test, lint/format check, a combined focused release
+gate, a clean commit, and an exact deployment hash.
+
+The amendment does **not** waive the new clean preflight, exact owner-approved complete
+`SmokeManifest.record_hash`, manifest-authorized complete environment lock, 9+stop+restart+1
+real smoke boundary, raw append-only evidence, separate authorization for the 816 probes, Phase
+0B N=20/50/100 and scale gate, or the frozen N=1000/T=50 formal protocol. Those are the shortest
+valid route to a reportable formal result and remain fail-closed.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a fail-closed, hash-bound ten-request smoke that proves deterministic loopback transport classification and a real vLLM stop/restart recovery boundary without granting authority to the 816-case probe.
@@ -659,7 +678,7 @@ git commit -m "feat(platform): bind smoke lock to owner manifest"
 - Modify: `platform/src/agent_ex/calibration/cli.py`
 - Modify: `platform/tests/test_calibration_cli.py`
 
-- [ ] **Step 1: Write parser, manifest, and command-isolation red tests**
+- [x] **Step 1: Write parser, manifest, and command-isolation red tests**
 
 Add tests asserting the smoke command family is exactly `smoke-manifest`, `smoke-preliminary-inspection`, `smoke-lock`, `smoke-diagnostics`, `smoke-phase-one`, `smoke-mark-stopped`, `smoke-phase-two`, and `smoke-finalize`. Add this manifest gate:
 
@@ -677,7 +696,7 @@ def test_smoke_manifest_materialization_requires_new_clean_preflight(tmp_path: P
 
 For each phase command, monkeypatch all other phase functions to raise if called and assert only the named function runs. Assert `smoke-manifest` and preflight never call package managers, network, vLLM, store creation, or model adapters.
 
-- [ ] **Step 2: Run CLI tests and verify red**
+- [x] **Step 2: Run CLI tests and verify red**
 
 Run:
 
@@ -688,7 +707,7 @@ Set-Location platform
 
 Expected: failures show the old single `smoke` command and missing manifest/phase handlers.
 
-- [ ] **Step 3: Implement exact CLI boundaries**
+- [x] **Step 3: Implement exact CLI boundaries**
 
 Replace the old `smoke` parser/handler with the eight commands named above. Every command takes absolute `--archive-root`, strict hashed input files, and a create-only `--output`. Use these handler signatures:
 
@@ -705,7 +724,7 @@ def _smoke_finalize_command(args: argparse.Namespace) -> int
 
 `_smoke_manifest_command` must reopen `CloudPreflight.from_payload`, require `git_dirty is False`, independently compare `preflight.git_commit` with the exact clean checkout's current 40-character Git identity, reject source commit `6711a6d767cc1993db1d823d183bb125070c107e`, construct `SmokeManifest` with the approved model/revision/service fields and these invariant hashes: chat template `41d5929bf73796beb66809ac700b2cf3ff81694f933e5c14d52b7fd6963c947d`, runtime policy `e0c72256eb39927f0e76565bb95b7b570c5930c22c40a28267ec872d97af0f13`, prompt set `da354eaeda9d83a018d6022a6e094cf03f4a461cc5576ea0c339fc8555608ea5`, credential boundary `4522015a0a1aaf3d1fc14ad295d88bd4e1bd519bb9abf2f23ff29ade0cd8fffa`; it accepts one explicit new empty archive URI and writes the full canonical manifest create-only. `smoke-preliminary-inspection` runs under the new environment's Python with the exact checkout on `PYTHONPATH`, reads an affirmatively hashed wheel manifest plus local installed-package metadata, proves Python 3.12/vLLM 0.23.0/fresh PyTorch provenance, and writes exactly one `PreliminaryEnvironmentInspection`; it performs no network or model call. `smoke-lock` reopens the owner-approved manifest by its affirmative full hash, binds the affirmative preliminary inspection, collects the complete post-health observation, and calls `EnvironmentLock.create_for_smoke`. Every later command reopens both records, verifies their affirmative hashes and equality, collects a fresh complete observation where the service must be live, and calls exactly one phase function. `smoke-mark-stopped` is the only exception: it requires and strictly reopens the lifecycle script's create-only `ServiceStopEvidence`, passes it to `mark_smoke_service_stopped`, and reads no live health endpoint. No handler imports `subprocess`, calls `os.system`, or starts/stops a service.
 
-- [ ] **Step 4: Run focused CLI integration green**
+- [x] **Step 4: Run focused CLI integration green**
 
 Run:
 
@@ -716,7 +735,7 @@ Set-Location platform
 
 Expected: all selected tests pass, old manifest/preflight hashes fail closed, and no command crosses its phase boundary.
 
-- [ ] **Step 5: Commit the CLI authorization surface**
+- [x] **Step 5: Commit the CLI authorization surface**
 
 ```powershell
 git add platform/src/agent_ex/calibration/cli.py platform/tests/test_calibration_cli.py
@@ -730,24 +749,24 @@ git commit -m "feat(platform): expose recoverable smoke phases"
 - Create: `platform/scripts/phase0a1-download.sh`
 - Create: `platform/scripts/phase0a1-install.sh`
 - Create: `platform/scripts/phase0a1-service.sh`
-- Modify: `platform/tests/test_calibration_cli.py`
+- Create: `platform/tests/test_phase0a1_cloud_scripts.py`
 
-- [ ] **Step 1: Write static and controlled-process red tests**
+- [x] **Step 1: Write static and controlled-process red tests**
 
-Add platform-neutral static tests that require: `phase0a1-download.sh` contains `source /etc/network_turbo` only inside a child subshell, installs cleanup traps, and exposes only `packages` and `model` modes; `phase0a1-install.sh` has no network-turbo or index URL and accepts only an absent environment plus an affirmatively hashed wheel manifest; `phase0a1-serve.sh` and `phase0a1-service.sh` fail if any proxy variable is set; service inputs and PID/evidence paths must be absolute, existing, non-symlink, and equal to `realpath -e`; stop refuses stale PID or command-line mismatch and emits a strict `ServiceStopEvidence`. These Windows tests inspect exact script tokens/branches and use Python fake-process fixtures; they do not claim Bash syntax or Linux lifecycle execution. The existing preflight wrapper remains untouched and remains forbidden before installation.
+Add platform-neutral static tests that require: `phase0a1-download.sh` contains `source /etc/network_turbo` only inside a child subshell, installs cleanup traps, and exposes only `packages` and `model` modes; `phase0a1-install.sh` has no network-turbo or index URL and accepts only an absent environment plus an affirmatively hashed wheel manifest; `phase0a1-serve.sh` and `phase0a1-service.sh` fail if any proxy variable is set; service inputs and PID/evidence paths must be absolute, existing, non-symlink, and equal to `realpath -e`; stop refuses stale PID or command-line mismatch and emits a strict `ServiceStopEvidence`. These Windows tests inspect exact script tokens/branches and execute the embedded wheel-manifest producer/verifier against disposable files, including tamper rejection; they do not claim Bash syntax or Linux lifecycle execution. The existing preflight wrapper remains untouched and remains forbidden before installation.
 
-- [ ] **Step 2: Run script tests and verify red**
+- [x] **Step 2: Run script tests and verify red**
 
 Run:
 
 ```powershell
 Set-Location platform
-& .\.venv\Scripts\python.exe -m pytest -q tests/test_calibration_cli.py -k "download_script or service_script or serve_script or preflight_script"
+& .\.venv\Scripts\python.exe -m pytest -q tests/test_phase0a1_cloud_scripts.py
 ```
 
 Expected: failures report missing scripts and missing proxy/output assertions.
 
-- [ ] **Step 3: Implement the fixed script contracts**
+- [x] **Step 3: Implement the fixed script contracts**
 
 `phase0a1-download.sh` must accept exactly `packages ABSOLUTE_PYTHON ABSOLUTE_WHEELHOUSE` or `model ABSOLUTE_PYTHON ABSOLUTE_MODEL_DIR`, start a child subshell whose EXIT trap clears `http_proxy`, `https_proxy`, `HTTP_PROXY`, `HTTPS_PROXY`, `ALL_PROXY`, `all_proxy`, and any additional variable whose name matches `proxy` case-insensitively, install separate HUP/INT/TERM traps that preserve the nonzero signal exit, source `/etc/network_turbo`, and run only the reviewed fixed downloader for that mode. Package mode downloads vLLM `0.23.0` and its resolved CUDA 12.9 wheel set into the absent wheelhouse and writes a sorted SHA-256 wheel manifest create-only; model mode downloads `Qwen/Qwen3-8B` at revision `b968826d9c46dd6066d109eabc6255188de91218` into the absent model directory without a token. Because the accelerated environment exists only in the child process, it cannot mutate the caller; the separate install and service scripts must independently fail if any proxy-named variable is present.
 
@@ -755,21 +774,21 @@ Expected: failures report missing scripts and missing proxy/output assertions.
 
 `phase0a1-service.sh` must accept only `start-first ABSOLUTE_SERVE_SCRIPT ABSOLUTE_VLLM ABSOLUTE_MODEL ABSOLUTE_EVIDENCE_DIR MANIFEST_HASH PRELIMINARY_INSPECTION_HASH`, `start-recovery ABSOLUTE_SERVE_SCRIPT ABSOLUTE_VLLM ABSOLUTE_MODEL ABSOLUTE_EVIDENCE_DIR MANIFEST_HASH LOCK_HASH`, `status ABSOLUTE_EVIDENCE_DIR`, or `stop ABSOLUTE_EVIDENCE_DIR MANIFEST_HASH LOCK_HASH`; this avoids requiring an EnvironmentLock before the first health observation needed to create it. Serialize lifecycle changes with `flock` on one fixed file, create a new exclusive `service-generations/0001` for `start-first` and `0002` for `start-recovery`, and reject mode/generation mismatches or more than two generations. `status` and `stop` must discover exactly one generation that has start evidence but no stop evidence and fail on zero or multiple active generations; they may not use a mutable PID pointer. Each generation stores create-only PID and identity JSON, hashes the exact `/proc/$pid/cmdline`, requires the listener only on `127.0.0.1:8000`, and polls `/health` without redirects. Generation 1 binds the owner-approved manifest plus preliminary inspection; after first health the CLI creates the immutable lock. `stop` then requires that lock hash, verifies PID, start time, executable, command hash, listener, manifest hash, preliminary evidence where applicable, and lock authorization before sending TERM. It must wait for exit and listener absence, write canonical create-only `ServiceStopEvidence` in that generation containing the verified start identity/PID and manifest/lock hashes, and never use `pkill`, wildcard process selection, or an unverified PID. The first generation's stop evidence is the only record accepted by `smoke-mark-stopped`; the second is terminal service cleanup evidence. `phase0a1-serve.sh` must check the proxy-name set immediately before `exec`.
 
-- [ ] **Step 4: Run script syntax and lifecycle tests green**
+- [x] **Step 4: Run script syntax and lifecycle tests green**
 
 Run:
 
 ```powershell
 Set-Location platform
-& .\.venv\Scripts\python.exe -m pytest -q tests/test_calibration_cli.py -k "script"
+& .\.venv\Scripts\python.exe -m pytest -q tests/test_phase0a1_cloud_scripts.py
 ```
 
-Expected: all platform-neutral static and fake-process tests pass. Do not claim Bash syntax or Linux process-lifecycle verification on this Windows host; Task 8 performs those checks on the exact cloud checkout before any installation or model access.
+Expected: all platform-neutral static and embedded manifest tests pass. Do not claim Bash syntax or Linux process-lifecycle verification on this Windows host; Task 8 performs those checks on the exact cloud checkout before any installation or model access.
 
-- [ ] **Step 5: Commit lifecycle boundaries**
+- [x] **Step 5: Commit lifecycle boundaries**
 
 ```powershell
-git add platform/scripts/phase0a1-download.sh platform/scripts/phase0a1-install.sh platform/scripts/phase0a1-serve.sh platform/scripts/phase0a1-service.sh platform/tests/test_calibration_cli.py
+git add platform/scripts/phase0a1-download.sh platform/scripts/phase0a1-install.sh platform/scripts/phase0a1-serve.sh platform/scripts/phase0a1-service.sh platform/tests/test_phase0a1_cloud_scripts.py
 git commit -m "feat(platform): constrain smoke host lifecycle"
 ```
 
@@ -779,33 +798,32 @@ git commit -m "feat(platform): constrain smoke host lifecycle"
 - Create: `logs/2026-09-15-phase0a1-smoke-recovery-local-release.md`
 - Modify: `docs/superpowers/plans/2026-09-15-phase0a1-smoke-recovery-implementation.md`
 - Create outside Git: an exact Git bundle and SHA-256 receipt in the user's external evidence directory.
-- Create outside Git: an exact Git bundle and SHA-256 receipt in the user's external evidence directory.
 
-- [ ] **Step 1: Run the complete smoke-recovery focused test set**
+- [x] **Step 1: Run the complete smoke-recovery focused test set**
 
 ```powershell
 Set-Location platform
-& .\.venv\Scripts\python.exe -m pytest -q tests/test_calibration_transport_diagnostics.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cloud.py tests/test_calibration_cli.py tests/test_public_api_import_boundary.py tests/test_installation.py
+& .\.venv\Scripts\python.exe -m pytest -q tests/test_calibration_transport_diagnostics.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cloud.py tests/test_calibration_cli.py tests/test_phase0a1_cloud_scripts.py tests/test_public_api_import_boundary.py tests/test_installation.py
 ```
 
 Expected: every selected test passes. Record the exact count and duration; do not label this the full suite.
 
-- [ ] **Step 2: Run focused static and package checks**
+- [x] **Step 2: Run focused static and package checks**
 
 ```powershell
 Set-Location platform
-& .\.venv\Scripts\python.exe -m ruff check src/agent_ex/calibration tests/test_calibration_transport_diagnostics.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cli.py
-& .\.venv\Scripts\python.exe -m ruff format --check src/agent_ex/calibration tests/test_calibration_transport_diagnostics.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cli.py
+& .\.venv\Scripts\python.exe -m ruff check src/agent_ex/calibration tests/test_calibration_transport_diagnostics.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cli.py tests/test_phase0a1_cloud_scripts.py
+& .\.venv\Scripts\python.exe -m ruff format --check src/agent_ex/calibration tests/test_calibration_transport_diagnostics.py tests/test_calibration_store.py tests/test_calibration_vllm_adapter.py tests/test_calibration_smoke.py tests/test_calibration_environment.py tests/test_calibration_cli.py tests/test_phase0a1_cloud_scripts.py
 & .\.venv\Scripts\python.exe -m pip check
 ```
 
 Expected: every Windows-available command exits 0. Bash syntax and Linux lifecycle checks are explicitly deferred to Task 8 on the exact cloud checkout because this host has no Bash runtime.
 
-- [ ] **Step 3: Explicitly record the deferred full gate**
+- [x] **Step 3: Explicitly record the deferred full gate**
 
 Do not run `python -m pytest -q` over the full suite. Record: `Full approximately 80-minute suite: DEFERRED by owner request; no pass claim.` The earlier `1726 passed, 2 failed, 2 skipped, 1 deselected` attempt remains historical failed evidence and is not reused as a pass.
 
-- [ ] **Step 4: Record focused evidence, verify hygiene, and commit the release checkpoint**
+- [x] **Step 4: Record focused evidence, verify hygiene, and commit the release checkpoint**
 
 ```powershell
 Set-Location ..
@@ -818,7 +836,7 @@ git commit -m "test(platform): verify smoke recovery release"
 
 Expected: no whitespace errors or tracked SSH material; Tasks 1–6 already have their own reviewed implementation commits, while this commit contains only the sanitized test record and accurate checklist updates. Capture the new exact 40-character release commit.
 
-- [ ] **Step 5: Build and hash an exact clean deployment bundle**
+- [x] **Step 5: Build and hash an exact clean deployment bundle**
 
 ```powershell
 git status --porcelain=v1 --untracked-files=all
