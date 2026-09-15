@@ -115,7 +115,10 @@ SmokeManifest 的 `chat_template_hash` 字段绑定最后一项 canonical hash�
 - `credential_boundary_hash`：`4522015a0a1aaf3d1fc14ad295d88bd4e1bd519bb9abf2f23ff29ade0cd8fffa`。
 
 新 manifest 获批后，执行器必须通过 `SmokeManifest.from_payload` 或等价的严格 schema/hash
-校验重新打开它。任一字段或 canonical `record_hash` 不匹配时不得启动 smoke。
+校验重新打开它。该 owner-approved 全长 `SmokeManifest.record_hash` 是本次 smoke 唯一的
+环境锁授权哈希；后续必须满足精确等式
+`EnvironmentLock.authorization_hash == SmokeManifest.record_hash`。任一字段、canonical
+`record_hash` 或该等式不匹配时不得启动 smoke。
 
 ## 3. Smoke-only runtime policy
 
@@ -246,7 +249,8 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
 2. 将实现代码提交部署为 exact clean commit，再次执行只读 preflight。由新的 preflight
    `record_hash` 材料化新完整 SmokeManifest，取得 owner 对新 manifest 全长
    `record_hash` 的明确批准；旧 `9e6e738346508c005486cc8b3a01cb2ab55849b48eac0415774b355c82497304`
-   不可执行。
+   不可执行。记录这个 owner-approved 全长值，作为后续
+   `EnvironmentLock.authorization_hash` 的唯一允许输入。
 3. 保持服务器关闭，严格重新验证 credential-boundary declaration、runtime policy、固定
    十条 prompt set、新 preflight 和新 SmokeManifest 的 canonical hashes。
 4. 确认 smoke archive URI；不存在时创建独立目录，并在任何模型请求前验证 append-only
@@ -266,31 +270,41 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
    request-ID headers、model/tokenizer/template identity、vLLM/image identity、serve arguments
    和 health check。此时仍不得把不完整的先前记录称为 `EnvironmentLock`。
 8. 首次真实服务通过 health/identity 后，才将同一次完整环境观察一次性提交给现有严格
-   `EnvironmentLock` 合同，生成完整不可变锁。该锁必须同时绑定 source/host/package
-   inspection、model/tokenizer artifacts 与 hashes、chat template text/hash、rendered
-   non-thinking hash、vLLM identity、image identity、serve arguments 和 `health_check`；生成
-   后禁止补写、替换或原地修订。缺少任一字段都不得继续。
-9. 对刚生成的 `EnvironmentLock` 做只读复验；然后在真实 vLLM 不被诊断调用的前提下，
-   使用独立 loopback test endpoints/ports 执行并持久化第 6 节三项 deterministic transport
-   diagnostics。每项诊断前后都重新验证当前环境与该 lock 一致，并确认实际分类和必需
-   evidence 与预期完全一致。
-10. 再次验证同一 `EnvironmentLock` 后，第一阶段仅依次执行固定 prompts 的前九条。每条
-    必须首次成功并立即追加完整请求、响应、解析、身份和 hash evidence；任一失败立即
-    结束整体 smoke，不得重复 prompt。
+   `EnvironmentLock` 合同，生成完整不可变锁。构造参数 `authorization_hash` 必须逐字符
+   精确等于第 2 步 owner-approved 的新 `SmokeManifest.record_hash`，不得使用 preflight、
+   runtime policy、prompt set、credential boundary、旧 manifest 或任何其他 hash。该锁必须
+   同时绑定 source/host/package inspection、model/tokenizer artifacts 与 hashes、chat
+   template text/hash、rendered non-thinking hash、vLLM identity、image identity、serve
+   arguments 和 `health_check`；生成后禁止补写、替换或原地修订。缺少任一字段或等式不成立
+   都不得继续。
+9. 对刚生成的 `EnvironmentLock` 做只读复验，包括重新断言
+   `EnvironmentLock.authorization_hash == owner-approved SmokeManifest.record_hash`；然后在
+   真实 vLLM 不被诊断调用的前提下，使用独立 loopback test endpoints/ports 执行并持久化
+   第 6 节三项 deterministic transport diagnostics。每项诊断前后都重新验证当前环境与该
+   lock 一致，并确认实际分类和必需 evidence 与预期完全一致；每次 lock 复验都必须同时
+   重验上述授权哈希等式。
+10. 再次验证同一 `EnvironmentLock` 及其授权哈希等式后，第一阶段仅依次执行固定 prompts
+    的前九条。每条必须首次成功并立即追加完整请求、响应、解析、身份和 hash evidence；
+    任一失败立即结束整体 smoke，不得重复 prompt。
 11. 前九条全部成功后，持久化 projection/checkpoint，明确记录九条 terminal-success 与
     `service-identity-recovery` 仍为 `pending`。干净关闭客户端，关闭 store 的进程与文件句柄，
     并停止真实 vLLM；磁盘上的 append-only evidence 不得删除或改写。
 12. 使用与第一次完全相同且已由 `EnvironmentLock` 绑定的 serve contract 重启真实 vLLM；
     重新观察全部严格 lock 字段，并通过现有验证合同确认 model/tokenizer artifacts、chat
     template、rendered non-thinking、vLLM/image identity、serve arguments、health response、
-    packages、source 与 host 均和同一 lock 一致。不得生成第二份 lock 或更新原 lock。
+    packages、source 与 host 均和同一 lock 一致，同时重验
+    `EnvironmentLock.authorization_hash == owner-approved SmokeManifest.record_hash`。不得生成
+    第二份 lock 或更新原 lock。
 13. 从 append-only store 新开客户端恢复，再次验证当前环境与同一 `EnvironmentLock` 一致，
-    并确认前九条 evidence 与 projection 不可变、没有重复/跳过且只有第十条
+    且其 `authorization_hash` 仍精确等于 owner-approved `SmokeManifest.record_hash`；并确认
+    前九条 evidence 与 projection 不可变、没有重复/跳过且只有第十条
     `service-identity-recovery` 为 `pending`；然后仅执行该第十条一次。它必须首次成功并
     追加完整 evidence。
-14. 最后重新验证同一 `EnvironmentLock`，并核对恰好十条唯一 prompts、恰好十次成功 Qwen
-    生成、三项独立 diagnostics、全部 identity/hash bindings 和 archive 完整性，然后停止
-    vLLM。无论成功或失败，服务都不得因本授权继续驻留。
+14. 最后重新验证同一 `EnvironmentLock` 及
+    `EnvironmentLock.authorization_hash == owner-approved SmokeManifest.record_hash`，并核对
+    恰好十条唯一 prompts、恰好十次成功 Qwen 生成、三项独立 diagnostics、全部
+    identity/hash bindings 和 archive 完整性，然后停止 vLLM。无论成功或失败，服务都不得
+    因本授权继续驻留。
 15. 保留并标记 smoke evidence。成功时只准备六组 816-case 审批包；失败时记录失败边界与
     新候选需求。两种结果都不得自动进入 816-case。
 
@@ -319,6 +333,8 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
 - 在 model/tokenizer artifacts、chat template/rendered non-thinking、首次真实 vLLM
   identity/health 证据齐全前提前生成 `EnvironmentLock`，完整 lock 缺字段，生成后被补写，
   或 diagnostics/前九条/重启恢复第十条任一阶段无法验证同一 lock；
+- `EnvironmentLock.authorization_hash` 不精确等于 owner-approved 新
+  `SmokeManifest.record_hash`，被设置为任何其他 hash，或任一后续复验未重验该等式；
 - 下载作用域未隔离，代理清理/无代理断言失败，或 vLLM 继承任何未批准代理；
 - archive 无法创建、追加、校验或保留，或任何原始 evidence 被要求写入 Git；
 - 任一未授权 artifact、816-case inventory、formal config 或主实验路径被加载或调用。
@@ -351,7 +367,12 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
 - preliminary package/environment inspection 与完整 `EnvironmentLock` 的时序隔离，以及完整
   lock 只能在 model/tokenizer/template/rendered non-thinking 和首次真实服务 health/identity
   齐全后一次性生成；
+- `EnvironmentLock` 构造只接受 owner-approved 新 `SmokeManifest.record_hash` 作为
+  `authorization_hash`，并拒绝 preflight/runtime/prompt/credential/旧 manifest 或任意其他
+  hash；
 - diagnostics、前九条、exact serve 重启恢复与第十条均复验同一 lock，并在漂移时停止；
+- diagnostics、前九条、重启恢复、第十条与最终核验每一阶段都重新断言
+  `EnvironmentLock.authorization_hash == owner-approved SmokeManifest.record_hash`；
 - 下载专用作用域的成功、失败、中断清理，以及 vLLM 无代理启动断言；
 - fresh Python 3.12、official CUDA 12.9 wheel、package/wheel identities、preliminary hashes
   和后置完整 environment lock 的 fail-closed gates；
@@ -367,6 +388,10 @@ canonical hash 都必须追加到 smoke 专属 append-only store；已有诊断�
 针对性测试，提交并部署 exact clean commit，再生成新的只读 preflight 与完整
 SmokeManifest。只有 owner 明确批准新 manifest 全长 `record_hash` 后，才可按第 7 节执行
 十请求 smoke。
+
+此授权链不存在时序循环：owner 在安装前批准新 source-bound SmokeManifest 的全长
+`record_hash`；完整 `EnvironmentLock` 只在安装、artifact 检查和首次真实服务 health/identity
+通过后创建，并把早已批准的 manifest hash 作为其 `authorization_hash`。
 
 若 smoke 任一检查、diagnostic、恢复门或模型请求失败，停止服务、保留失败 evidence，后续
 需针对新候选重新授权。若恰好十次 Qwen 请求全部成功且 diagnostics 与 evidence 完整，只
