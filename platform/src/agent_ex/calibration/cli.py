@@ -39,7 +39,9 @@ from .environment import (
     HealthCheckEvidence,
     ImageIdentity,
     PackageEntry,
+    PreliminaryEnvironmentInspection,
     VllmIdentity,
+    WheelEntry,
 )
 from .contracts import ProbeRunProjection, ProbeRuntimePolicy
 from .runner import ProbeRunCrash
@@ -52,7 +54,14 @@ from .review import (
     import_review_codes,
     items_for_coder,
 )
-from .smoke import run_probe_smoke
+from .smoke import (
+    ServiceStopEvidence,
+    finalize_probe_smoke,
+    mark_smoke_service_stopped,
+    run_smoke_diagnostics,
+    run_smoke_phase_one,
+    run_smoke_phase_two,
+)
 from .store import ProbeRunStore
 from .vllm_adapter import VllmProbeAdapter
 from ..domain import canonical_payload_hash
@@ -72,6 +81,12 @@ _COMMANDS = (
 )
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _MAX_CONTROL_FILE_BYTES = 16 * 1024 * 1024
+_SUPERSEDED_SMOKE_SOURCE = "6711a6d767cc1993db1d823d183bb125070c107e"
+_SMOKE_MODEL_REVISION = "b968826d9c46dd6066d109eabc6255188de91218"
+_SMOKE_CHAT_TEMPLATE_HASH = "41d5929bf73796beb66809ac700b2cf3ff81694f933e5c14d52b7fd6963c947d"
+_SMOKE_RUNTIME_POLICY_HASH = "e0c72256eb39927f0e76565bb95b7b570c5930c22c40a28267ec872d97af0f13"
+_SMOKE_PROMPT_SET_HASH = "da354eaeda9d83a018d6022a6e094cf03f4a461cc5576ea0c339fc8555608ea5"
+_SMOKE_CREDENTIAL_BOUNDARY_HASH = "4522015a0a1aaf3d1fc14ad295d88bd4e1bd519bb9abf2f23ff29ade0cd8fffa"
 
 
 def _absolute_path(value: str) -> Path:
@@ -158,11 +173,46 @@ def build_parser() -> argparse.ArgumentParser:
     preflight = commands.add_parser("preflight")
     preflight.add_argument("--output", required=True, type=_output_path)
 
-    smoke = commands.add_parser("smoke")
-    _add_archive_root(smoke)
-    _add_hashed_file(smoke, "manifest")
-    _add_hashed_file(smoke, "runtime_policy")
-    smoke.add_argument("--output", required=True, type=_output_path)
+    smoke_manifest = commands.add_parser("smoke-manifest")
+    _add_archive_root(smoke_manifest)
+    _add_hashed_file(smoke_manifest, "preflight")
+    smoke_manifest.add_argument("--run-archive", required=True, type=_new_directory)
+    smoke_manifest.add_argument("--output", required=True, type=_output_path)
+
+    smoke_preliminary = commands.add_parser("smoke-preliminary-inspection")
+    _add_archive_root(smoke_preliminary)
+    _add_hashed_file(smoke_preliminary, "wheel_manifest")
+    smoke_preliminary.add_argument("--output", required=True, type=_output_path)
+
+    smoke_lock = commands.add_parser("smoke-lock")
+    _add_archive_root(smoke_lock)
+    _add_hashed_file(smoke_lock, "manifest")
+    _add_hashed_file(smoke_lock, "preliminary_inspection")
+    _add_hashed_file(smoke_lock, "inspection_inputs")
+    smoke_lock.add_argument("--output", required=True, type=_output_path)
+
+    for name in ("smoke-diagnostics", "smoke-phase-one", "smoke-phase-two"):
+        command = commands.add_parser(name)
+        _add_archive_root(command)
+        _add_hashed_file(command, "manifest")
+        _add_hashed_file(command, "environment_lock")
+        _add_hashed_file(command, "inspection_inputs")
+        _add_hashed_file(command, "runtime_policy")
+        command.add_argument("--output", required=True, type=_output_path)
+
+    smoke_stopped = commands.add_parser("smoke-mark-stopped")
+    _add_archive_root(smoke_stopped)
+    _add_hashed_file(smoke_stopped, "manifest")
+    _add_hashed_file(smoke_stopped, "environment_lock")
+    _add_hashed_file(smoke_stopped, "service_stop_evidence")
+    smoke_stopped.add_argument("--output", required=True, type=_output_path)
+
+    smoke_finalize = commands.add_parser("smoke-finalize")
+    _add_archive_root(smoke_finalize)
+    _add_hashed_file(smoke_finalize, "manifest")
+    _add_hashed_file(smoke_finalize, "environment_lock")
+    _add_hashed_file(smoke_finalize, "inspection_inputs")
+    smoke_finalize.add_argument("--output", required=True, type=_output_path)
 
     lock = commands.add_parser("lock")
     _add_archive_root(lock)
@@ -576,6 +626,35 @@ def collect_environment_observation(
     """Freshly inspect the current host and hash every approved runtime artifact."""
     if not isinstance(artifacts, CloudRunArtifacts):
         raise TypeError("environment inspection requires approved cloud artifacts")
+    return _collect_environment_observation(
+        artifacts.candidate_manifest,
+        inputs,
+        archive_root,
+    )
+
+
+def collect_smoke_environment_observation(
+    manifest: SmokeManifest,
+    inputs: Mapping[str, object],
+    archive_root: Path,
+) -> EnvironmentObservation:
+    """Collect the same complete observation under a strict smoke manifest."""
+    if not isinstance(manifest, SmokeManifest):
+        raise TypeError("smoke environment inspection requires a strict SmokeManifest")
+    candidate: dict[str, object] = {
+        "model_repository": manifest.model_repository,
+        "model_revision": manifest.model_revision_candidate,
+        "tokenizer_repository": manifest.model_repository,
+        "tokenizer_revision": manifest.tokenizer_revision_candidate,
+    }
+    return _collect_environment_observation(candidate, inputs, archive_root)
+
+
+def _collect_environment_observation(
+    candidate: Mapping[str, object],
+    inputs: Mapping[str, object],
+    archive_root: Path,
+) -> EnvironmentObservation:
     checked = _inspection_inputs(inputs)
     artifact_root = Path(checked["artifact_root"])  # type: ignore[arg-type]
     if not artifact_root.is_absolute() or not artifact_root.is_dir() or artifact_root.is_symlink():
@@ -611,7 +690,6 @@ def collect_environment_observation(
     elif archived_diff_file is not None:
         raise ValueError("archived diff is forbidden for a clean Git checkout")
     gpu, driver, cuda = _single_gpu_observation()
-    candidate = artifacts.candidate_manifest
     return EnvironmentObservation(
         inspection_algorithm="agent-ex.environment-inspection.v1",
         git_commit=git_commit,
@@ -691,18 +769,189 @@ def _run_archive_path(archive_uri: str, archive_root: Path, *, must_exist: bool)
     return resolved
 
 
-def _smoke_command(args: argparse.Namespace) -> int:
-    for path in (args.manifest, args.runtime_policy, args.output):
+def _smoke_manifest_command(args: argparse.Namespace) -> int:
+    for path in (args.preflight, args.run_archive, args.output):
         _require_within_archive(path, args.archive_root)
-    manifest_payload = _read_json_record(args.manifest, affirmative_hash=args.manifest_hash)
-    policy_payload = _read_json_record(
-        args.runtime_policy,
-        affirmative_hash=args.runtime_policy_hash,
+    payload = _read_json_record(args.preflight, affirmative_hash=args.preflight_hash)
+    preflight = CloudPreflight.from_payload(payload)
+    current_commit, current_dirty = _git_identity()
+    if preflight.git_commit == _SUPERSEDED_SMOKE_SOURCE:
+        raise ValueError("superseded source cannot authorize a new smoke")
+    if preflight.git_dirty or current_dirty:
+        raise ValueError("smoke manifest requires a clean preflight and checkout")
+    if preflight.git_commit != current_commit:
+        raise ValueError("preflight source differs from the running checkout")
+    manifest = SmokeManifest.create(
+        preflight_hash=preflight.record_hash,
+        model_repository="Qwen/Qwen3-8B",
+        model_revision_candidate=_SMOKE_MODEL_REVISION,
+        tokenizer_revision_candidate=_SMOKE_MODEL_REVISION,
+        vllm_version_candidate="0.23.0",
+        endpoint="http://127.0.0.1:8000/v1/chat/completions",
+        served_model_name="qwen3-8b-paper1",
+        chat_template_hash=_SMOKE_CHAT_TEMPLATE_HASH,
+        runtime_policy_hash=_SMOKE_RUNTIME_POLICY_HASH,
+        smoke_prompt_set_hash=_SMOKE_PROMPT_SET_HASH,
+        credential_boundary_hash=_SMOKE_CREDENTIAL_BOUNDARY_HASH,
+        archive_uri=args.run_archive.resolve(strict=False).as_posix(),
     )
-    manifest = SmokeManifest.from_payload(manifest_payload)
-    policy = ProbeRuntimePolicy.from_payload(policy_payload)
-    run_root = _run_archive_path(manifest.archive_uri, args.archive_root, must_exist=False)
-    adapter = VllmProbeAdapter(
+    _write_json_create_only(args.output, manifest.to_payload())
+    return 0
+
+
+def _wheel_manifest(payload: Mapping[str, object]) -> tuple[WheelEntry, ...]:
+    expected = {"schema_version", "wheel_entries", "record_hash"}
+    if type(payload) is not dict or set(payload) != expected:
+        raise ValueError("wheel manifest must contain exact fields")
+    if payload["schema_version"] != "paper1.calibration.wheel-manifest.v1":
+        raise ValueError("wheel manifest schema is not supported")
+    values = payload["wheel_entries"]
+    if type(values) is not list or not values:
+        raise TypeError("wheel manifest requires a nonempty wheel_entries array")
+    entries = tuple(WheelEntry.from_payload(item) for item in values)
+    normalized = tuple(item.name.casefold().replace("_", "-") for item in entries)
+    if len(normalized) != len(set(normalized)):
+        raise ValueError("wheel manifest contains duplicate distributions")
+    if entries != tuple(sorted(entries, key=lambda item: item.name.casefold())):
+        raise ValueError("wheel manifest entries must be canonically sorted")
+    return entries
+
+
+def _distribution_is_in_current_environment(name: str) -> bool:
+    root = Path(importlib.metadata.distribution(name).locate_file("")).resolve(strict=True)
+    return root.is_relative_to(Path(sys.prefix).resolve(strict=True))
+
+
+def _smoke_preliminary_inspection_command(args: argparse.Namespace) -> int:
+    for path in (args.wheel_manifest, args.output):
+        _require_within_archive(path, args.archive_root)
+    payload = _read_json_record(
+        args.wheel_manifest,
+        affirmative_hash=args.wheel_manifest_hash,
+    )
+    wheels = _wheel_manifest(payload)
+    packages = _package_lock()
+    installed = {item.name.casefold().replace("_", "-"): item.version for item in packages}
+    for wheel in wheels:
+        name = wheel.name.casefold().replace("_", "-")
+        if installed.get(name) != wheel.version:
+            raise ValueError(f"installed package differs from wheel manifest: {wheel.name}")
+    if installed.get("vllm") != "0.23.0":
+        raise ValueError("preliminary inspection requires installed vLLM 0.23.0")
+    if "torch" not in installed:
+        raise ValueError("preliminary inspection requires installed PyTorch")
+    if not _distribution_is_in_current_environment("vllm") or not (
+        _distribution_is_in_current_environment("torch")
+    ):
+        raise ValueError("vLLM and PyTorch must originate in the fresh environment")
+    result = PreliminaryEnvironmentInspection.create(
+        python_version=platform.python_version(),
+        package_lock=packages,
+        wheel_entries=wheels,
+        torch_source="fresh-vllm-environment",
+    )
+    _write_json_create_only(args.output, result.to_payload())
+    return 0
+
+
+def _load_smoke_manifest_and_lock(
+    args: argparse.Namespace,
+) -> tuple[SmokeManifest, EnvironmentLock]:
+    manifest = SmokeManifest.from_payload(
+        _read_json_record(args.manifest, affirmative_hash=args.manifest_hash)
+    )
+    lock = EnvironmentLock.from_payload(
+        _read_json_record(
+            args.environment_lock,
+            affirmative_hash=args.environment_lock_hash,
+        )
+    )
+    if lock.authorization_hash != manifest.record_hash:
+        raise ValueError("environment lock is not authorized by the smoke manifest")
+    return manifest, lock
+
+
+def _load_smoke_observation(
+    args: argparse.Namespace,
+    manifest: SmokeManifest,
+) -> EnvironmentObservation:
+    payload = _read_json_record(
+        args.inspection_inputs,
+        affirmative_hash=args.inspection_inputs_hash,
+    )
+    return collect_smoke_environment_observation(
+        manifest,
+        _inspection_inputs(payload),
+        args.archive_root,
+    )
+
+
+def _smoke_lock_command(args: argparse.Namespace) -> int:
+    for path in (
+        args.manifest,
+        args.preliminary_inspection,
+        args.inspection_inputs,
+        args.output,
+    ):
+        _require_within_archive(path, args.archive_root)
+    manifest = SmokeManifest.from_payload(
+        _read_json_record(args.manifest, affirmative_hash=args.manifest_hash)
+    )
+    preliminary = PreliminaryEnvironmentInspection.from_payload(
+        _read_json_record(
+            args.preliminary_inspection,
+            affirmative_hash=args.preliminary_inspection_hash,
+        )
+    )
+    observation = _load_smoke_observation(args, manifest)
+    if observation.python_version != preliminary.python_version:
+        raise ValueError("complete observation differs from preliminary Python")
+    if observation.package_lock != preliminary.package_lock:
+        raise ValueError("complete observation differs from preliminary packages")
+    vllm_wheels = tuple(
+        item for item in preliminary.wheel_entries if item.name.casefold() == "vllm"
+    )
+    if len(vllm_wheels) != 1 or observation.vllm_identity.wheel_hash != vllm_wheels[0].sha256:
+        raise ValueError("complete observation differs from preliminary vLLM wheel")
+    lock = EnvironmentLock.create_for_smoke(
+        observation,
+        manifest=manifest,
+        authorization_hash=manifest.record_hash,
+    )
+    _write_json_create_only(args.output, lock.to_payload())
+    return 0
+
+
+def _load_smoke_live_context(
+    args: argparse.Namespace,
+) -> tuple[SmokeManifest, EnvironmentLock, Path, EnvironmentObservation]:
+    for path in (args.manifest, args.environment_lock, args.inspection_inputs, args.output):
+        _require_within_archive(path, args.archive_root)
+    manifest, lock = _load_smoke_manifest_and_lock(args)
+    observation = _load_smoke_observation(args, manifest)
+    run_root = _run_archive_path(
+        manifest.archive_uri,
+        args.archive_root,
+        must_exist=args.command != "smoke-diagnostics",
+    )
+    return manifest, lock, run_root, observation
+
+
+def _load_smoke_policy(args: argparse.Namespace, manifest: SmokeManifest) -> ProbeRuntimePolicy:
+    _require_within_archive(args.runtime_policy, args.archive_root)
+    policy = ProbeRuntimePolicy.from_payload(
+        _read_json_record(
+            args.runtime_policy,
+            affirmative_hash=args.runtime_policy_hash,
+        )
+    )
+    if policy.record_hash != manifest.runtime_policy_hash:
+        raise ValueError("runtime policy does not match the smoke manifest")
+    return policy
+
+
+def _smoke_adapter(manifest: SmokeManifest) -> VllmProbeAdapter:
+    return VllmProbeAdapter(
         manifest.endpoint,
         expected_model=manifest.served_model_name,
         model_revision=manifest.model_revision_candidate,
@@ -711,7 +960,86 @@ def _smoke_command(args: argparse.Namespace) -> int:
         runtime_version=manifest.vllm_version_candidate,
         chat_template_hash=manifest.chat_template_hash,
     )
-    result = run_probe_smoke(manifest, adapter, run_root, policy)
+
+
+def _smoke_diagnostics_command(args: argparse.Namespace) -> int:
+    manifest, lock, run_root, observation = _load_smoke_live_context(args)
+    policy = _load_smoke_policy(args, manifest)
+    result = run_smoke_diagnostics(
+        manifest,
+        lock,
+        run_root,
+        policy,
+        current_observation=observation,
+    )
+    _write_json_create_only(args.output, result.to_payload())
+    return 0
+
+
+def _smoke_phase_one_command(args: argparse.Namespace) -> int:
+    manifest, lock, run_root, observation = _load_smoke_live_context(args)
+    policy = _load_smoke_policy(args, manifest)
+    result = run_smoke_phase_one(
+        manifest,
+        lock,
+        _smoke_adapter(manifest),
+        run_root,
+        policy,
+        current_observation=observation,
+    )
+    _write_json_create_only(args.output, result.to_payload())
+    return 0
+
+
+def _smoke_mark_stopped_command(args: argparse.Namespace) -> int:
+    for path in (
+        args.manifest,
+        args.environment_lock,
+        args.service_stop_evidence,
+        args.output,
+    ):
+        _require_within_archive(path, args.archive_root)
+    manifest, lock = _load_smoke_manifest_and_lock(args)
+    stop = ServiceStopEvidence.from_payload(
+        _read_json_record(
+            args.service_stop_evidence,
+            affirmative_hash=args.service_stop_evidence_hash,
+        )
+    )
+    run_root = _run_archive_path(manifest.archive_uri, args.archive_root, must_exist=True)
+    result = mark_smoke_service_stopped(
+        manifest,
+        lock,
+        run_root,
+        stop_evidence=stop,
+    )
+    _write_json_create_only(args.output, result.to_payload())
+    return 0
+
+
+def _smoke_phase_two_command(args: argparse.Namespace) -> int:
+    manifest, lock, run_root, observation = _load_smoke_live_context(args)
+    policy = _load_smoke_policy(args, manifest)
+    result = run_smoke_phase_two(
+        manifest,
+        lock,
+        _smoke_adapter(manifest),
+        run_root,
+        policy,
+        current_observation=observation,
+    )
+    _write_json_create_only(args.output, result.to_payload())
+    return 0
+
+
+def _smoke_finalize_command(args: argparse.Namespace) -> int:
+    manifest, lock, run_root, observation = _load_smoke_live_context(args)
+    result = finalize_probe_smoke(
+        manifest,
+        lock,
+        run_root,
+        current_observation=observation,
+    )
     _write_json_create_only(args.output, result.to_payload())
     return 0
 
@@ -1095,12 +1423,22 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = collect_cloud_preflight()
         _write_json_create_only(args.output, result.to_payload())
         return 0
+    smoke_handlers = {
+        "smoke-manifest": _smoke_manifest_command,
+        "smoke-preliminary-inspection": _smoke_preliminary_inspection_command,
+        "smoke-lock": _smoke_lock_command,
+        "smoke-diagnostics": _smoke_diagnostics_command,
+        "smoke-phase-one": _smoke_phase_one_command,
+        "smoke-mark-stopped": _smoke_mark_stopped_command,
+        "smoke-phase-two": _smoke_phase_two_command,
+        "smoke-finalize": _smoke_finalize_command,
+    }
+    if args.command in smoke_handlers:
+        return smoke_handlers[args.command](args)
     if args.command == "manifest":
         return _manifest_command(args)
     if args.command == "lock":
         return _lock_command(args)
-    if args.command == "smoke":
-        return _smoke_command(args)
     if args.command == "run":
         return _run_command(args)
     if args.command == "resume":
