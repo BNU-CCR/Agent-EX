@@ -20,6 +20,17 @@ if [[ "$model_path" != /* || ! -d "$model_path" || -L "$model_path" || "$model_r
   exit 2
 fi
 
+for variable in $(compgen -e); do
+  case "$variable" in
+    *[Pp][Rr][Oo][Xx][Yy]*)
+      if [[ -n "${!variable-}" ]]; then
+        echo "proxy variable $variable must be unset before vLLM startup" >&2
+        exit 2
+      fi
+      ;;
+  esac
+done
+
 exec "$vllm_executable" serve "$model_path" \
   --host 127.0.0.1 \
   --port 8000 \
