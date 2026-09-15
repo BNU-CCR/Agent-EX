@@ -1,5 +1,5 @@
 ---
-status: written specification approved; adapter-cycle amendment pending independent review
+status: written specification approved; adapter-cycle amendment independently reviewed
 authority: narrow repair to the approved Phase 0A-1 cloud-probe design
 supersedes: none
 last-verified: 2026-09-14

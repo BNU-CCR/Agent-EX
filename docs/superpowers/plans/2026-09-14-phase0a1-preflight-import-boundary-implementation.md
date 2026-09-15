@@ -198,12 +198,12 @@ _LAZY_EXPORTS: Final[Mapping[str, tuple[str, str]]] = MappingProxyType(
         "LatestPublicPointer": (".state", "LatestPublicPointer"),
         "MemoryItem": (".memory", "MemoryItem"),
         "MemoryView": (".memory", "MemoryView"),
-        "MockAdapter": (".adapters", "MockAdapter"),
+        "MockAdapter": (".adapters.mock", "MockAdapter"),
         "MockEventPipeline": (".pipeline", "MockEventPipeline"),
         "MockEventPipelineOutcome": (".pipeline", "MockEventPipelineOutcome"),
         "MockAdapterExecutionBinding": (".execution_evidence", "MockAdapterExecutionBinding"),
         "MockAttemptPolicyBinding": (".execution_evidence", "MockAttemptPolicyBinding"),
-        "MockScriptStep": (".adapters", "MockScriptStep"),
+        "MockScriptStep": (".adapters.mock", "MockScriptStep"),
         "MockScaleCase": (".mock_matrix", "MockScaleCase"),
         "MockEventInvocation": (".mock_run", "MockEventInvocation"),
         "MockRunControl": (".mock_run", "MockRunControl"),
@@ -334,7 +334,7 @@ _LAZY_EXPORTS: Final[Mapping[str, tuple[str, str]]] = MappingProxyType(
         "validate_exposure_selection": (".feed", "validate_exposure_selection"),
         "validate_event_rng_ledger": (".schedule", "validate_event_rng_ledger"),
         "validate_protocol": (".protocol", "validate_protocol"),
-        "validate_adapter_response": (".adapters", "validate_adapter_response"),
+        "validate_adapter_response": (".adapters.mock", "validate_adapter_response"),
         "validate_checkpoint": (".checkpoint", "validate_checkpoint"),
         "validate_parse_evidence": (".parser", "validate_parse_evidence"),
         "validate_prompt_view": (".prompt", "validate_prompt_view"),
@@ -471,6 +471,212 @@ Expected: all selected tests pass, including 142 parameterized export cases and 
 ```powershell
 git add platform/tests/test_public_api_import_boundary.py platform/tests/test_installation.py
 git commit -m "test(platform): verify lazy API compatibility"
+```
+
+### Task 3A: Remove the adapter-facade circular import
+
+**Files:**
+- Modify: `platform/tests/test_public_api_import_boundary.py`
+- Modify: `platform/src/agent_ex/adapters/__init__.py`
+- Modify: `platform/src/agent_ex/__init__.py`
+- Test: `platform/tests/test_storage.py`
+
+- [ ] **Step 1: Add fresh-process regressions and correct the independent contract**
+
+In `PUBLIC_API_CONTRACT`, change only these three tuples so the frozen contract names
+the true defining module rather than the adapter facade:
+
+```python
+    ("MockAdapter", ".adapters.mock", "MockAdapter"),
+    ("MockScriptStep", ".adapters.mock", "MockScriptStep"),
+    ("validate_adapter_response", ".adapters.mock", "validate_adapter_response"),
+```
+
+Append these tests to `platform/tests/test_public_api_import_boundary.py`:
+
+```python
+def test_direct_execution_evidence_import_does_not_prime_mock_adapter() -> None:
+    completed = _source_subprocess(
+        """
+        import sys
+
+        import agent_ex.execution_evidence
+
+        assert "agent_ex.adapters.base" in sys.modules
+        assert "agent_ex.adapters.mock" not in sys.modules
+        """,
+        include_dependencies=True,
+    )
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_root_mock_adapter_export_loads_true_defining_object_from_fresh_process() -> None:
+    completed = _source_subprocess(
+        """
+        import sys
+
+        import agent_ex
+
+        assert "MockAdapter" not in vars(agent_ex)
+        assert "agent_ex.adapters.mock" not in sys.modules
+        resolved = agent_ex.MockAdapter
+        from agent_ex.adapters.mock import MockAdapter
+
+        assert resolved is MockAdapter
+        assert vars(agent_ex)["MockAdapter"] is MockAdapter
+        """,
+        include_dependencies=True,
+    )
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_adapter_facade_lazily_preserves_mock_exports() -> None:
+    completed = _source_subprocess(
+        """
+        import sys
+
+        import agent_ex.adapters as adapters
+
+        assert "agent_ex.adapters.mock" not in sys.modules
+        from agent_ex.adapters import MockAdapter, MockScriptStep, validate_adapter_response
+        from agent_ex.adapters import mock
+
+        assert "agent_ex.adapters.mock" in sys.modules
+        assert MockAdapter is mock.MockAdapter
+        assert MockScriptStep is mock.MockScriptStep
+        assert validate_adapter_response is mock.validate_adapter_response
+        assert vars(adapters)["MockAdapter"] is MockAdapter
+        assert vars(adapters)["MockScriptStep"] is MockScriptStep
+        assert vars(adapters)["validate_adapter_response"] is validate_adapter_response
+        """,
+        include_dependencies=True,
+    )
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+```
+
+- [ ] **Step 2: Run the minimal reproduction and confirm the cycle is red**
+
+```powershell
+Set-Location platform
+& .\.venv\Scripts\python.exe -m pytest -q `
+  tests/test_public_api_import_boundary.py::test_direct_execution_evidence_import_does_not_prime_mock_adapter `
+  tests/test_public_api_import_boundary.py::test_root_mock_adapter_export_loads_true_defining_object_from_fresh_process `
+  tests/test_public_api_import_boundary.py::test_adapter_facade_lazily_preserves_mock_exports `
+  tests/test_storage.py::test_second_process_direct_mutator_is_rejected_and_crash_releases_lease `
+  tests/test_storage.py::test_hardlink_alias_blocks_every_preopened_writer_and_cross_process_owner
+```
+
+Expected before the repair: the direct `execution_evidence` case and both storage
+cross-process cases fail through
+`execution_evidence -> adapters.__init__ -> adapters.mock -> execution_evidence`.
+The root and facade cases may already pass because the old facade import order happens
+to prime `adapters.base`; they do not replace the direct-import red evidence.
+
+- [ ] **Step 3: Make the adapter facade base-eager and mock-lazy**
+
+Replace `platform/src/agent_ex/adapters/__init__.py` with:
+
+```python
+"""Model adapter contracts and mock-only Phase 4B-7 implementation."""
+
+from collections.abc import Mapping
+from importlib import import_module
+from types import MappingProxyType
+from typing import Final
+
+from .base import AdapterRequest, AdapterResponse, ModelAdapter
+
+
+_EAGER_EXPORTS: Final = frozenset({"AdapterRequest", "AdapterResponse", "ModelAdapter"})
+_LAZY_EXPORTS: Final[Mapping[str, tuple[str, str]]] = MappingProxyType(
+    {
+        "MockAdapter": (".mock", "MockAdapter"),
+        "MockScriptStep": (".mock", "MockScriptStep"),
+        "validate_adapter_response": (".mock", "validate_adapter_response"),
+    }
+)
+
+__all__ = [
+    "AdapterRequest",
+    "AdapterResponse",
+    "MockAdapter",
+    "MockScriptStep",
+    "ModelAdapter",
+    "validate_adapter_response",
+]
+
+
+if _EAGER_EXPORTS & set(_LAZY_EXPORTS):
+    raise RuntimeError("adapter facade eager and lazy exports overlap")
+if _EAGER_EXPORTS | set(_LAZY_EXPORTS) != set(__all__):
+    missing = sorted(set(__all__) - (_EAGER_EXPORTS | set(_LAZY_EXPORTS)))
+    extra = sorted((_EAGER_EXPORTS | set(_LAZY_EXPORTS)) - set(__all__))
+    raise RuntimeError(f"adapter facade export drift: missing={missing}, extra={extra}")
+
+
+def __getattr__(name: str) -> object:
+    try:
+        module_name, attribute_name = _LAZY_EXPORTS[name]
+    except KeyError:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}") from None
+    module = import_module(module_name, __name__)
+    try:
+        value = vars(module)[attribute_name]
+    except KeyError as error:
+        raise ImportError(
+            f"lazy adapter facade target is missing: {module.__name__}.{attribute_name}"
+        ) from error
+    globals()[name] = value
+    return value
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | set(__all__))
+```
+
+- [ ] **Step 4: Point the three root mock exports at their true defining module**
+
+In `platform/src/agent_ex/__init__.py`, change only these registry values:
+
+```python
+        "MockAdapter": (".adapters.mock", "MockAdapter"),
+        "MockScriptStep": (".adapters.mock", "MockScriptStep"),
+        "validate_adapter_response": (".adapters.mock", "validate_adapter_response"),
+```
+
+Do not change `agent_ex.__all__`, the other 139 registry entries, or any adapter,
+evidence, storage, protocol, or experiment implementation.
+
+- [ ] **Step 5: Run the cycle and compatibility gates green**
+
+```powershell
+Set-Location platform
+& .\.venv\Scripts\python.exe -m pytest -q `
+  tests/test_public_api_import_boundary.py `
+  tests/test_installation.py `
+  tests/test_calibration_cli.py `
+  tests/test_storage.py::test_second_process_direct_mutator_is_rejected_and_crash_releases_lease `
+  tests/test_storage.py::test_hardlink_alias_blocks_every_preopened_writer_and_cross_process_owner
+& .\.venv\Scripts\python.exe -m ruff check `
+  src/agent_ex/__init__.py src/agent_ex/adapters/__init__.py `
+  tests/test_public_api_import_boundary.py
+& .\.venv\Scripts\python.exe -m ruff format --check `
+  src/agent_ex/__init__.py src/agent_ex/adapters/__init__.py `
+  tests/test_public_api_import_boundary.py
+git -C .. diff --check
+```
+
+Expected: all selected tests and static checks pass. The two storage subprocess tests
+must reach their intended exit-code assertions rather than fail during import.
+
+- [ ] **Step 6: Commit the cycle repair**
+
+```powershell
+git add platform/src/agent_ex/__init__.py platform/src/agent_ex/adapters/__init__.py platform/tests/test_public_api_import_boundary.py
+git commit -m "fix(platform): break adapter facade import cycle"
 ```
 
 ### Task 4: Run local release gates and record the repair checkpoint
