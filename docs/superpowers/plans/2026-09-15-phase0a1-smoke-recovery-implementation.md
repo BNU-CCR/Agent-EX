@@ -60,7 +60,6 @@ from agent_ex.calibration.transport_diagnostics import (
     diagnostic_cases,
     run_transport_diagnostics,
 )
-from agent_ex.calibration.store import ProbeRunStore
 from test_calibration_smoke import manifest, runtime_policy
 
 
@@ -96,17 +95,15 @@ def test_diagnostic_record_round_trip_rejects_hash_or_classification_drift() -> 
         replace(evidence, actual_error_code="timeout")
 
 
-def test_diagnostics_append_once_and_do_not_count_as_model_requests(tmp_path: Path) -> None:
+def test_diagnostics_classify_once_and_do_not_count_as_model_requests(tmp_path: Path) -> None:
     policy = runtime_policy(timeout_seconds=0.05)
     run_root = tmp_path / "smoke"
     approved = manifest(run_root, policy_hash=policy.record_hash)
     lock = environment_lock_for_smoke(approved)
-    store = ProbeRunStore.create(run_root, manifest=approved.to_payload())
     records = run_transport_diagnostics(
         manifest=approved,
         environment_lock=lock,
         current_observation=valid_observation(),
-        store=store,
         policy=policy,
         vllm_endpoint="http://127.0.0.1:8000/v1/chat/completions",
     )
@@ -117,11 +114,7 @@ def test_diagnostics_append_once_and_do_not_count_as_model_requests(tmp_path: Pa
     )
     assert records[2].response_headers["retry-after"] == "17"
     assert all(record.transport_attempt_count == 1 for record in records)
-    assert store.attempt_hashes == ()
-    reopened = ProbeRunStore.open(run_root)
-    assert reopened.load_transport_diagnostics() == records
-    with pytest.raises(ValueError, match="already complete"):
-        run_transport_diagnostics(store=reopened, policy=policy, vllm_endpoint="http://127.0.0.1:8000/v1/chat/completions")
+    assert all(record.model_request_count == 0 for record in records)
 ```
 
 - [ ] **Step 2: Run the new file and verify red**
@@ -200,12 +193,12 @@ def diagnostic_cases(*, timeout_seconds: float) -> tuple[DiagnosticCase, ...]
 
 def run_transport_diagnostics(
     *, manifest: SmokeManifest, environment_lock: EnvironmentLock,
-    current_observation: EnvironmentObservation, store: ProbeRunStore,
-    policy: ProbeRuntimePolicy, vllm_endpoint: str,
+    current_observation: EnvironmentObservation, policy: ProbeRuntimePolicy,
+    vllm_endpoint: str,
 ) -> tuple[TransportDiagnosticEvidence, ...]
 ```
 
-Implement the mapped interface as follows: reserve each port by binding `127.0.0.1:0`; release and verify the closed-port candidate is not listening immediately before its one connection; run the timeout and 429 endpoints with `ThreadingHTTPServer` context managers whose handlers never import or call `VllmProbeAdapter`; use `HTTPConnection` directly; set the controlled delay to `policy.timeout_seconds + 0.05`; return `Retry-After: 17`; always shut down and join endpoint threads in `finally`. `TransportDiagnosticEvidence.__post_init__` must enforce exact schema `paper1.calibration.transport-diagnostic.v1`, exact expected/actual equality, one attempt, zero model requests, loopback-only endpoint, endpoint not equal to port 8000 `/v1/chat/completions`, lowercase string headers, byte/hash agreement, exact keys, calibration-only metadata, and canonical `record_hash`. `run_transport_diagnostics` must require strict manifest/lock/observation types, call `verify_current_environment` before and after every diagnostic, assert `environment_lock.authorization_hash == manifest.record_hash`, require the three smoke policy codes, `obey_retry_after is False`, empty backoff, per-code budget 1, reject existing diagnostic records, append each record with `store.append_transport_diagnostic`, and verify all three by reopening them before returning. The CLI owns the surrounding `ready -> diagnostics_complete` progress transitions so a crash can never make partial diagnostics look complete.
+Implement the mapped interface as follows: reserve each port by binding `127.0.0.1:0`; release and verify the closed-port candidate is not listening immediately before its one connection; run the timeout and 429 endpoints with `ThreadingHTTPServer` context managers whose handlers never import or call `VllmProbeAdapter`; use `HTTPConnection` directly; set the controlled delay to `policy.timeout_seconds + 0.05`; return `Retry-After: 17`; always shut down and join endpoint threads in `finally`. `TransportDiagnosticEvidence.__post_init__` must enforce exact schema `paper1.calibration.transport-diagnostic.v1`, exact expected/actual equality, one attempt, zero model requests, loopback-only endpoint, endpoint not equal to port 8000 `/v1/chat/completions`, lowercase string headers, byte/hash agreement, exact keys, calibration-only metadata, and canonical `record_hash`. `run_transport_diagnostics` is the low-level classifier only: it must require strict manifest/lock/observation types, call `verify_current_environment` before and after every diagnostic, assert `environment_lock.authorization_hash == manifest.record_hash`, require the three smoke policy codes, `obey_retry_after is False`, empty backoff, and per-code budget 1. It returns exactly three immutable records but does not know a store. Task 2 adds create-only storage, and Task 3's `run_smoke_diagnostics` rejects pre-existing/partial diagnostics, appends each returned record, reopens all three, and owns the surrounding `ready -> diagnostics_complete` transitions so a crash can never make partial diagnostics look complete.
 
 - [ ] **Step 4: Run diagnostic tests green**
 
