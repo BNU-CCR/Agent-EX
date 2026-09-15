@@ -548,7 +548,7 @@ git commit -m "feat(platform): enforce smoke restart recovery"
 - Modify: `platform/src/agent_ex/calibration/environment.py`
 - Modify: `platform/tests/test_calibration_environment.py`
 
-- [ ] **Step 1: Write red tests for lock timing and authorization equality**
+- [x] **Step 1: Write red tests for lock timing and authorization equality**
 
 Append:
 
@@ -573,7 +573,7 @@ def test_smoke_lock_requires_exact_owner_approved_manifest_hash() -> None:
             EnvironmentLock.create_for_smoke(observation, manifest=approved, authorization_hash=wrong)
 ```
 
-- [ ] **Step 2: Run timing tests and verify red**
+- [x] **Step 2: Run timing tests and verify red**
 
 Run:
 
@@ -584,7 +584,7 @@ Set-Location platform
 
 Expected: collection fails on missing preliminary/wheel records and `create_for_smoke`.
 
-- [ ] **Step 3: Implement strict preliminary records and smoke lock constructor**
+- [x] **Step 3: Implement strict preliminary records and smoke lock constructor**
 
 Add frozen, exact-key, canonical-hash `WheelEntry` and `PreliminaryEnvironmentInspection` records with these signatures:
 
@@ -635,7 +635,7 @@ def create_for_smoke(
 
 Keep the existing generic `EnvironmentLock.create` for the separately authorized six-group path; smoke CLI code must call only `create_for_smoke`. A complete `EnvironmentObservation` remains impossible until model/tokenizer artifacts, chat template and rendered non-thinking hashes, vLLM/image identity, exact serve arguments, and first HTTP 200 health evidence all exist.
 
-- [ ] **Step 4: Run environment and smoke authorization tests green**
+- [x] **Step 4: Run environment and smoke authorization tests green**
 
 Run:
 
@@ -646,7 +646,7 @@ Set-Location platform
 
 Expected: all selected tests pass and every wrong hash is rejected before smoke progress changes.
 
-- [ ] **Step 5: Commit lock-order enforcement**
+- [x] **Step 5: Commit lock-order enforcement**
 
 ```powershell
 git add platform/src/agent_ex/calibration/environment.py platform/tests/test_calibration_environment.py

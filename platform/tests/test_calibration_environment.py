@@ -15,14 +15,63 @@ from agent_ex.calibration.environment import (
     HealthCheckEvidence,
     ImageIdentity,
     PackageEntry,
+    PreliminaryEnvironmentInspection,
     VllmIdentity,
+    WheelEntry,
     verify_current_environment,
 )
 from agent_ex.domain import canonical_payload_hash
+from test_calibration_cloud import valid_smoke_manifest
 
 
 REVISION = "b968826d9c46dd6066d109eabc6255188de91218"
 AUTHORIZATION_HASH = "a" * 64
+
+
+def test_preliminary_inspection_cannot_be_promoted_to_environment_lock() -> None:
+    preliminary = PreliminaryEnvironmentInspection.create(
+        python_version="3.12.3",
+        package_lock=valid_observation().package_lock,
+        wheel_entries=(
+            WheelEntry(
+                name="vllm",
+                version="0.23.0",
+                sha256="5" * 64,
+                source="official-cuda-12.9",
+            ),
+        ),
+        torch_source="fresh-vllm-environment",
+    )
+    assert PreliminaryEnvironmentInspection.from_payload(preliminary.to_payload()) == preliminary
+    with pytest.raises(TypeError, match="EnvironmentObservation"):
+        EnvironmentLock.create(preliminary, authorization_hash="a" * 64)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="Python 3.12"):
+        PreliminaryEnvironmentInspection.create(
+            python_version="3.11.9",
+            package_lock=valid_observation().package_lock,
+            wheel_entries=preliminary.wheel_entries,
+            torch_source="fresh-vllm-environment",
+        )
+
+
+def test_smoke_lock_requires_exact_owner_approved_manifest_hash() -> None:
+    approved = valid_smoke_manifest()
+    observation = valid_observation()
+    lock = EnvironmentLock.create_for_smoke(
+        observation, manifest=approved, authorization_hash=approved.record_hash
+    )
+    assert lock.authorization_hash == approved.record_hash
+    for wrong in (
+        approved.preflight_hash,
+        approved.runtime_policy_hash,
+        approved.smoke_prompt_set_hash,
+        approved.credential_boundary_hash,
+        "9e6e738346508c005486cc8b3a01cb2ab55849b48eac0415774b355c82497304",
+    ):
+        with pytest.raises(ValueError, match="manifest record_hash"):
+            EnvironmentLock.create_for_smoke(
+                observation, manifest=approved, authorization_hash=wrong
+            )
 
 
 def valid_observation() -> EnvironmentObservation:

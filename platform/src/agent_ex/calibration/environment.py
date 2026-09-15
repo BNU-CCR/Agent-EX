@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, fields
 from pathlib import PurePosixPath
 import re
-from typing import ClassVar, Mapping
+from typing import TYPE_CHECKING, ClassVar, Mapping
 from urllib.parse import urlparse
 
 from ..domain import (
@@ -18,6 +18,9 @@ from ..domain import (
     _require_tuple,
     canonical_payload_hash,
 )
+
+if TYPE_CHECKING:
+    from .cloud import SmokeManifest
 
 
 _GIT_COMMIT = re.compile(r"^[0-9a-f]{40}$")
@@ -64,6 +67,143 @@ class PackageEntry:
     def from_payload(cls, payload: Mapping[str, object]) -> PackageEntry:
         _exact(payload, {"name", "version"}, "package entry")
         return cls(name=payload["name"], version=payload["version"])  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class WheelEntry:
+    name: str
+    version: str
+    sha256: str
+    source: str
+
+    def __post_init__(self) -> None:
+        for label, value in (
+            ("wheel name", self.name),
+            ("wheel version", self.version),
+            ("wheel source", self.source),
+        ):
+            _require_string(label, value)
+            if value != value.strip():
+                raise ValueError(f"{label} must be canonical")
+            _no_secret(label, value)
+        _require_sha256("wheel sha256", self.sha256)
+
+    def to_payload(self) -> dict[str, object]:
+        return {
+            "name": self.name,
+            "version": self.version,
+            "sha256": self.sha256,
+            "source": self.source,
+        }
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> WheelEntry:
+        _exact(payload, {"name", "version", "sha256", "source"}, "wheel entry")
+        return cls(**payload)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class PreliminaryEnvironmentInspection:
+    schema_version: str
+    python_version: str
+    package_lock: tuple[PackageEntry, ...]
+    wheel_entries: tuple[WheelEntry, ...]
+    torch_source: str
+    calibration_only: bool
+    formal_parameter_authority: bool
+    record_hash: str
+
+    _SCHEMA_VERSION: ClassVar[str] = "paper1.calibration.preliminary-environment-inspection.v1"
+
+    def __post_init__(self) -> None:
+        if self.schema_version != self._SCHEMA_VERSION:
+            raise ValueError("preliminary inspection schema_version is not supported")
+        if re.fullmatch(r"3\.12\.\d+", self.python_version) is None:
+            raise ValueError("preliminary inspection requires Python 3.12.x")
+        _require_tuple("package_lock", self.package_lock)
+        _require_tuple("wheel_entries", self.wheel_entries)
+        if not self.package_lock or not all(
+            isinstance(item, PackageEntry) for item in self.package_lock
+        ):
+            raise TypeError("preliminary package_lock requires PackageEntry values")
+        if not self.wheel_entries or not all(
+            isinstance(item, WheelEntry) for item in self.wheel_entries
+        ):
+            raise TypeError("preliminary wheel_entries requires WheelEntry values")
+        if self.package_lock != tuple(
+            sorted(self.package_lock, key=lambda item: item.name.casefold())
+        ):
+            raise ValueError("preliminary package_lock must be canonically sorted")
+        if self.wheel_entries != tuple(
+            sorted(self.wheel_entries, key=lambda item: item.name.casefold())
+        ):
+            raise ValueError("preliminary wheel_entries must be canonically sorted")
+        vllm = tuple(item for item in self.wheel_entries if item.name.casefold() == "vllm")
+        if len(vllm) != 1 or vllm[0].version != "0.23.0":
+            raise ValueError("preliminary inspection requires exactly one vLLM 0.23.0 wheel")
+        if vllm[0].source != "official-cuda-12.9":
+            raise ValueError("vLLM wheel must use the official CUDA 12.9 source")
+        if self.torch_source != "fresh-vllm-environment":
+            raise ValueError("torch must come from the fresh vLLM environment")
+        _no_secret("torch source", self.torch_source)
+        if self.calibration_only is not True or self.formal_parameter_authority is not False:
+            raise ValueError("preliminary inspection must remain calibration-only")
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self.schema_version,
+            "python_version": self.python_version,
+            "package_lock": tuple(item.to_payload() for item in self.package_lock),
+            "wheel_entries": tuple(item.to_payload() for item in self.wheel_entries),
+            "torch_source": self.torch_source,
+            "calibration_only": self.calibration_only,
+            "formal_parameter_authority": self.formal_parameter_authority,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        python_version: str,
+        package_lock: tuple[PackageEntry, ...],
+        wheel_entries: tuple[WheelEntry, ...],
+        torch_source: str,
+    ) -> PreliminaryEnvironmentInspection:
+        packages = tuple(sorted(package_lock, key=lambda item: item.name.casefold()))
+        wheels = tuple(sorted(wheel_entries, key=lambda item: item.name.casefold()))
+        content: dict[str, object] = {
+            "schema_version": cls._SCHEMA_VERSION,
+            "python_version": python_version,
+            "package_lock": packages,
+            "wheel_entries": wheels,
+            "torch_source": torch_source,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        hash_content = dict(content)
+        hash_content["package_lock"] = tuple(item.to_payload() for item in packages)
+        hash_content["wheel_entries"] = tuple(item.to_payload() for item in wheels)
+        return cls(**content, record_hash=canonical_payload_hash(hash_content))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> PreliminaryEnvironmentInspection:
+        expected = {field.name for field in fields(cls)}
+        _exact(payload, expected, "preliminary environment inspection")
+        values = dict(payload)
+        values["package_lock"] = tuple(
+            PackageEntry.from_payload(item)
+            for item in payload["package_lock"]  # type: ignore[union-attr]
+        )
+        values["wheel_entries"] = tuple(
+            WheelEntry.from_payload(item)
+            for item in payload["wheel_entries"]  # type: ignore[union-attr]
+        )
+        return cls(**values)  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)
@@ -529,6 +669,24 @@ class EnvironmentLock:
         }
         hash_payload = _content_payload(content)
         return cls(**content, record_hash=canonical_payload_hash(hash_payload))  # type: ignore[arg-type]
+
+    @classmethod
+    def create_for_smoke(
+        cls,
+        observation: EnvironmentObservation,
+        *,
+        manifest: SmokeManifest,
+        authorization_hash: str,
+    ) -> EnvironmentLock:
+        from .cloud import SmokeManifest
+
+        if not isinstance(manifest, SmokeManifest):
+            raise TypeError("smoke lock requires a strict SmokeManifest")
+        if authorization_hash != manifest.record_hash:
+            raise ValueError(
+                "authorization_hash must equal the owner-approved manifest record_hash"
+            )
+        return cls.create(observation, authorization_hash=authorization_hash)
 
     @classmethod
     def from_payload(cls, payload: Mapping[str, object]) -> EnvironmentLock:
