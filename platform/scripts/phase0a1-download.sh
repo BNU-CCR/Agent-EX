@@ -75,7 +75,7 @@ for wheel in sorted(wheelhouse.glob("*.whl"), key=lambda path: path.name.casefol
     entries.append(
         {
             "name": name,
-            "version": str(version),
+            "version": version.public if name == "vllm" else str(version),
             "sha256": hashlib.sha256(wheel.read_bytes()).hexdigest(),
             "source": source,
         }

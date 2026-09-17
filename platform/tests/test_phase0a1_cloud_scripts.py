@@ -62,7 +62,7 @@ def test_download_manifest_and_install_verifier_share_canonical_json_contract(
 ) -> None:
     wheelhouse = tmp_path / "wheels"
     wheelhouse.mkdir()
-    vllm_wheel = wheelhouse / "vllm-0.23.0-py3-none-any.whl"
+    vllm_wheel = wheelhouse / "vllm-0.23.0+cu129-py3-none-any.whl"
     dependency_wheel = wheelhouse / "idna-3.10-py3-none-any.whl"
     vllm_wheel.write_bytes(b"vllm")
     dependency_wheel.write_bytes(b"dependency")
@@ -79,6 +79,7 @@ def test_download_manifest_and_install_verifier_share_canonical_json_contract(
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
     assert set(payload) == {"schema_version", "wheel_entries", "record_hash"}
     assert [entry["name"] for entry in payload["wheel_entries"]] == ["idna", "vllm"]
+    assert payload["wheel_entries"][1]["version"] == "0.23.0"
     assert payload["wheel_entries"][1]["source"] == "official-cuda-12.9"
     content = {key: value for key, value in payload.items() if key != "record_hash"}
     encoded = json.dumps(
