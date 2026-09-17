@@ -206,3 +206,17 @@ def test_service_script_owns_and_reaps_the_whole_vllm_process_group() -> None:
     assert 'kill -KILL -- "-$pid"' in script
     assert 'kill -0 -- "-$pid"' in script
     assert "for _ in $(seq 1 300)" in script
+
+
+def test_service_script_uses_an_explicit_recorded_control_python() -> None:
+    script = _script("phase0a1-service.sh")
+
+    assert "SERVE VLLM PYTHON MODEL" in script
+    assert "status PYTHON EVIDENCE_DIR" in script
+    assert "stop PYTHON EVIDENCE_DIR" in script
+    assert 'require_exact_file "$python_executable" "ABSOLUTE_PYTHON"' in script
+    assert '"$python_executable" -c' in script
+    assert '"$python_executable" - "$1" "$2"' in script
+    assert '"$python_executable" - "$output" "$@"' in script
+    assert '"control_python"' in script
+    assert "python3" not in script

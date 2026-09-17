@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  echo "usage: phase0a1-service.sh start-first SERVE VLLM MODEL EVIDENCE_DIR MANIFEST_HASH PRELIMINARY_HASH | start-recovery SERVE VLLM MODEL EVIDENCE_DIR MANIFEST_HASH LOCK_HASH | status EVIDENCE_DIR | stop EVIDENCE_DIR MANIFEST_HASH LOCK_HASH" >&2
+  echo "usage: phase0a1-service.sh start-first SERVE VLLM PYTHON MODEL EVIDENCE_DIR MANIFEST_HASH PRELIMINARY_HASH | start-recovery SERVE VLLM PYTHON MODEL EVIDENCE_DIR MANIFEST_HASH LOCK_HASH | status PYTHON EVIDENCE_DIR | stop PYTHON EVIDENCE_DIR MANIFEST_HASH LOCK_HASH" >&2
   exit 2
 }
 
@@ -48,11 +48,11 @@ require_exact_dir() {
 }
 
 json_field() {
-  python3 -c 'import json,sys; value=json.load(open(sys.argv[1], encoding="utf-8"))[sys.argv[2]]; print(str(value).lower() if isinstance(value,bool) else value)' "$1" "$2"
+  "$python_executable" -c 'import json,sys; value=json.load(open(sys.argv[1], encoding="utf-8"))[sys.argv[2]]; print(str(value).lower() if isinstance(value,bool) else value)' "$1" "$2"
 }
 
 verify_service_record() {
-  python3 - "$1" "$2" <<'PY'
+  "$python_executable" - "$1" "$2" <<'PY'
 import hashlib, json, sys
 
 path, expected_schema = sys.argv[1:]
@@ -61,7 +61,7 @@ fields = {
     "paper1.calibration.service-start-identity.v1": {
         "schema_version", "generation", "mode", "manifest_hash", "binding_kind",
         "binding_hash", "pid", "executable", "cmdline_sha256", "proc_start_time",
-        "serve_script", "model_path", "started_at", "calibration_only",
+        "serve_script", "control_python", "model_path", "started_at", "calibration_only",
         "formal_parameter_authority", "record_hash",
     },
     "paper1.calibration.service-stop-evidence.v1": {
@@ -132,6 +132,10 @@ verify_active_identity() {
     echo "command-line identity mismatch" >&2
     exit 1
   }
+  [[ "$(json_field "$identity" control_python)" == "$python_executable" ]] || {
+    echo "control Python identity mismatch" >&2
+    exit 1
+  }
   listener_owned_by_pid "$pid" || {
     echo "expected loopback listener is absent or owned by another process" >&2
     exit 1
@@ -163,11 +167,11 @@ find_active_generation() {
 write_start_identity() {
   local output="$1"
   shift
-  python3 - "$output" "$@" <<'PY'
+  "$python_executable" - "$output" "$@" <<'PY'
 import hashlib, json, os, sys
 from datetime import datetime, timezone
 
-output, generation, mode, manifest_hash, binding_kind, binding_hash, pid, executable, command_hash, start_time, serve_script, model_path = sys.argv[1:]
+output, generation, mode, manifest_hash, binding_kind, binding_hash, pid, executable, command_hash, start_time, serve_script, control_python, model_path = sys.argv[1:]
 content = {
     "schema_version": "paper1.calibration.service-start-identity.v1",
     "generation": generation,
@@ -180,6 +184,7 @@ content = {
     "cmdline_sha256": command_hash,
     "proc_start_time": start_time,
     "serve_script": serve_script,
+    "control_python": control_python,
     "model_path": model_path,
     "started_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     "calibration_only": True,
@@ -199,7 +204,7 @@ PY
 write_stop_evidence() {
   local output="$1"
   shift
-  python3 - "$output" "$@" <<'PY'
+  "$python_executable" - "$output" "$@" <<'PY'
 import hashlib, json, os, sys
 from datetime import datetime, timezone
 
@@ -234,31 +239,39 @@ shift
 
 case "$mode" in
   start-first|start-recovery)
-    [[ "$#" -eq 6 ]] || usage
+    [[ "$#" -eq 7 ]] || usage
     serve_script="$1"
     vllm_executable="$2"
-    model_path="$3"
-    evidence_dir="$4"
-    manifest_hash="$5"
-    binding_hash="$6"
+    python_executable="$3"
+    model_path="$4"
+    evidence_dir="$5"
+    manifest_hash="$6"
+    binding_hash="$7"
     require_exact_file "$serve_script" "ABSOLUTE_SERVE_SCRIPT"
     require_exact_file "$vllm_executable" "ABSOLUTE_VLLM"
-    [[ -x "$serve_script" && -x "$vllm_executable" ]] || usage
+    require_exact_file "$python_executable" "ABSOLUTE_PYTHON"
+    [[ -x "$serve_script" && -x "$vllm_executable" && -x "$python_executable" ]] || usage
     require_exact_dir "$model_path" "ABSOLUTE_MODEL"
     require_exact_dir "$evidence_dir" "ABSOLUTE_EVIDENCE_DIR"
     require_sha256 "$manifest_hash" "MANIFEST_HASH"
     require_sha256 "$binding_hash" "binding hash"
     ;;
   status)
-    [[ "$#" -eq 1 ]] || usage
-    evidence_dir="$1"
+    [[ "$#" -eq 2 ]] || usage
+    python_executable="$1"
+    evidence_dir="$2"
+    require_exact_file "$python_executable" "ABSOLUTE_PYTHON"
+    [[ -x "$python_executable" ]] || usage
     require_exact_dir "$evidence_dir" "ABSOLUTE_EVIDENCE_DIR"
     ;;
   stop)
-    [[ "$#" -eq 3 ]] || usage
-    evidence_dir="$1"
-    manifest_hash="$2"
-    lock_hash="$3"
+    [[ "$#" -eq 4 ]] || usage
+    python_executable="$1"
+    evidence_dir="$2"
+    manifest_hash="$3"
+    lock_hash="$4"
+    require_exact_file "$python_executable" "ABSOLUTE_PYTHON"
+    [[ -x "$python_executable" ]] || usage
     require_exact_dir "$evidence_dir" "ABSOLUTE_EVIDENCE_DIR"
     require_sha256 "$manifest_hash" "MANIFEST_HASH"
     require_sha256 "$lock_hash" "LOCK_HASH"
@@ -342,7 +355,7 @@ case "$mode" in
     command_hash="$(proc_cmdline_sha256 "$pid")"
     start_time="$(proc_start_time "$pid")"
     identity="$generation_dir/start-identity.json"
-    write_start_identity "$identity" "$generation" "$mode" "$manifest_hash" "$binding_kind" "$binding_hash" "$pid" "$executable" "$command_hash" "$start_time" "$serve_script" "$model_path"
+    write_start_identity "$identity" "$generation" "$mode" "$manifest_hash" "$binding_kind" "$binding_hash" "$pid" "$executable" "$command_hash" "$start_time" "$serve_script" "$python_executable" "$model_path"
     verify_active_identity "$identity"
     start_committed=true
     trap - EXIT HUP INT TERM
