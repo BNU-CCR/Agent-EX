@@ -9,7 +9,7 @@ from itertools import combinations, product
 from pathlib import Path
 
 from agent_ex.calibration.cloud_run import load_cloud_run_artifacts
-from agent_ex.calibration.contracts import ProbeRuntimePolicy, ProbeTopicCandidate
+from agent_ex.calibration.contracts import CloudProbeRuntimePolicy, ProbeTopicCandidate
 from agent_ex.calibration.gates import GateAlgorithm, PairChallenge
 from agent_ex.calibration.review import (
     CoderContract,
@@ -170,14 +170,16 @@ def _gate_algorithm() -> GateAlgorithm:
     )
 
 
-def _runtime_policy() -> ProbeRuntimePolicy:
-    return ProbeRuntimePolicy.create(
-        policy_id="phase0a1-probe-runtime-v1",
+def _runtime_policy() -> CloudProbeRuntimePolicy:
+    return CloudProbeRuntimePolicy.create(
+        policy_id="phase0a1-probe-runtime-v2",
         retryable_error_codes=("provider_busy", "provider_unreachable", "timeout"),
         nonretryable_error_codes=(
             "oom",
             "provider_fatal",
             "provider_invalid_json",
+            "provider_identity_mismatch",
+            "provider_missing_request_id",
             "provider_redirect",
             "provider_response_too_large",
             "provider_schema_error",
@@ -187,6 +189,8 @@ def _runtime_policy() -> ProbeRuntimePolicy:
             "provider_busy": 2,
             "provider_fatal": 1,
             "provider_invalid_json": 1,
+            "provider_identity_mismatch": 1,
+            "provider_missing_request_id": 1,
             "provider_redirect": 1,
             "provider_response_too_large": 1,
             "provider_schema_error": 1,
@@ -196,6 +200,21 @@ def _runtime_policy() -> ProbeRuntimePolicy:
         timeout_seconds=120.0,
         obey_retry_after=True,
         backoff_seconds=(2.0,),
+        connect_timeout_seconds=10.0,
+        read_timeout_seconds=120.0,
+        retry_after_min_seconds=0.0,
+        retry_after_max_seconds=30.0,
+        invalid_retry_after_action="use_deterministic_backoff",
+        oom_action="terminal_incomplete",
+        server_crash_action="retry_then_terminal_incomplete",
+        model_identity_drift_action="terminal_incomplete",
+        disk_below_threshold_action="terminal_incomplete",
+        max_total_cases=816,
+        max_total_transport_attempts=1632,
+        dispatch_stop_cumulative_attempt_seconds=172800.0,
+        dispatch_stop_input_tokens=2_000_000,
+        dispatch_stop_output_tokens=220_000,
+        minimum_free_disk_bytes=20 * 1024**3,
     )
 
 
@@ -340,7 +359,7 @@ def _semantic_policy(gate: GateAlgorithm) -> SemanticReviewPolicy:
 
 def _specification(
     gate: GateAlgorithm,
-    runtime: ProbeRuntimePolicy,
+    runtime: CloudProbeRuntimePolicy,
     semantic: SemanticReviewPolicy,
 ) -> dict[str, object]:
     return {
@@ -439,9 +458,10 @@ def _specification(
             {"replicate_id": index, "requested_seed": 310001 + index} for index in range(4)
         ],
         "generation_settings": {
-            "temperature": "UNRESOLVED[P1_TEMPERATURE]",
-            "top_p": "UNRESOLVED[P1_TOP_P]",
-            "request_seed": "UNRESOLVED[P1_REQUEST_SEED]",
+            "temperature": 0.7,
+            "top_p": 0.8,
+            "max_tokens": 128,
+            "request_seed": "probe_case.requested_seed",
         },
         "policy_hashes": {
             "gate_algorithm": gate.record_hash,
@@ -458,6 +478,7 @@ def _specification(
             "P1_PARSE_FAILURE_THRESHOLD",
             "P1_TEMPERATURE",
             "P1_TOP_P",
+            "P1_MAX_TOKENS",
             "P1_REQUEST_SEED",
             "P1_TIMEOUT_RETRY",
         ],

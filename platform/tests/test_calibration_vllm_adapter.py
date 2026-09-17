@@ -42,6 +42,8 @@ class FakeVllmServer:
         self.body = VALID_RAW_RESPONSE
         self.headers: dict[str, str] = {"X-Request-Id": "req-test-1"}
         self.delay_seconds = 0.0
+        self.trickle_chunk_bytes = 0
+        self.trickle_delay_seconds = 0.0
         self.requests: list[dict[str, Any]] = []
         owner = self
 
@@ -64,7 +66,15 @@ class FakeVllmServer:
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
                 try:
-                    self.wfile.write(owner.body)
+                    if owner.trickle_chunk_bytes:
+                        for offset in range(0, len(owner.body), owner.trickle_chunk_bytes):
+                            self.wfile.write(
+                                owner.body[offset : offset + owner.trickle_chunk_bytes]
+                            )
+                            self.wfile.flush()
+                            time.sleep(owner.trickle_delay_seconds)
+                    else:
+                        self.wfile.write(owner.body)
                 except OSError:
                     pass
 
@@ -173,6 +183,74 @@ def test_adapter_maps_timeout_without_internal_retry(fake_vllm_server: FakeVllmS
     assert response.provider_seed_echo is None
     assert len(fake_vllm_server.requests) == 1
     assert probe.evidence_for(request.request_id).outcome == "timeout"
+
+
+def test_adapter_enforces_read_timeout_separately_from_overall_timeout(
+    fake_vllm_server: FakeVllmServer,
+) -> None:
+    fake_vllm_server.delay_seconds = 0.2
+    probe = adapter(fake_vllm_server.endpoint)
+    request = valid_request()
+
+    response = probe.generate(
+        request,
+        timeout_seconds=3.0,
+        connect_timeout_seconds=1.0,
+        read_timeout_seconds=0.05,
+    )
+
+    assert response.outcome == "timeout"
+    assert response.error_code == "timeout"
+    assert probe.evidence_for(request.request_id).outcome == "timeout"
+
+
+def test_adapter_overall_deadline_stops_trickled_body_before_read_timeout(
+    fake_vllm_server: FakeVllmServer,
+) -> None:
+    fake_vllm_server.trickle_chunk_bytes = 16
+    fake_vllm_server.trickle_delay_seconds = 0.04
+    probe = adapter(fake_vllm_server.endpoint)
+    request = valid_request()
+
+    started = time.monotonic()
+    response = probe.generate(
+        request,
+        timeout_seconds=0.12,
+        connect_timeout_seconds=0.1,
+        read_timeout_seconds=0.1,
+    )
+    elapsed = time.monotonic() - started
+
+    assert response.outcome == "timeout"
+    assert response.error_code == "timeout"
+    assert elapsed < 0.4
+
+
+def test_adapter_uses_connect_timeout_when_opening_socket(monkeypatch) -> None:
+    observed: list[float] = []
+
+    class RefusingConnection:
+        def __init__(self, host: str, port: int, timeout: float) -> None:
+            assert host == "127.0.0.1"
+            assert port == 8000
+            observed.append(timeout)
+
+        def connect(self) -> None:
+            raise OSError("synthetic refusal")
+
+        def close(self) -> None:
+            return
+
+    monkeypatch.setattr("agent_ex.calibration.vllm_adapter.HTTPConnection", RefusingConnection)
+    response = adapter("http://127.0.0.1:8000/v1/chat/completions").generate(
+        valid_request(),
+        timeout_seconds=3.0,
+        connect_timeout_seconds=0.25,
+        read_timeout_seconds=2.0,
+    )
+
+    assert response.error_code == "provider_unreachable"
+    assert observed == [0.25]
 
 
 def test_adapter_maps_invalid_json_and_preserves_bytes(fake_vllm_server: FakeVllmServer) -> None:

@@ -43,9 +43,9 @@ The deterministic materializer is
 The six proposal record hashes are:
 
 - probe specification including gate algorithm:
-  `89da9f9b1a9272773deab90456e45eca75b0ba40cfa90c5804b61c9a721ce1a2`
+  `612551123cedc084460ef3add5c37219ac87643f068df0919fd0ab0448710946`
 - runtime policy:
-  `fd0b257747525dc79bd634ace413698ebfc1e95653b687c13c26dadf00e9d896`
+  `6f8a2d98316eb3eb87c217dedc460b258459c1c39209c0bf36d6742141675c80`
 - semantic-review policy:
   `12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9`
 - candidate model/runtime/generation manifest:
@@ -56,7 +56,30 @@ The six proposal record hashes are:
   `ec7178c9ed68d9f3ff182cbe337e8a91192334fd069b68c951d7101785945342`
 
 The combined proposal packet record hash is
-`8467cc55fee0600e0f165531f1de0731dd5a09c3536ab4f70ce2f469e8937002`.
+`57abb85edbb7b1d28949ca523abaef6c4c4639a7744ca3bc7b5f5f57056f44bc`.
+
+The executable specification now binds the approved calibration candidates directly:
+`temperature=0.7`, `top_p=0.8`, `max_tokens=128`, and each case's explicit `requested_seed`. The packet contains no
+`UNRESOLVED[...]` marker; research status remains `not_frozen` and formal-parameter authority
+remains false. This closes the launch-artifact placeholder exception without promoting calibration
+candidates into formal Paper 1 parameters.
+
+The runtime group uses the cloud v2 policy and binds connect/read/overall request timeouts,
+Retry-After acceptance bounds and fallback, explicit OOM/server-crash/model-drift/disk actions,
+the exact 816-case ceiling, total transport-attempt ceiling, cumulative provider-time dispatch-stop
+threshold, input/output token dispatch-stop thresholds, and a minimum free-disk threshold. Since
+actual elapsed time and tokens are only known after a response, those thresholds stop the next
+dispatch rather than claiming an impossible per-response hard maximum. Threshold exhaustion is
+persisted as a terminal incomplete run before another request is dispatched.
+
+Both new execution and resume inspect an existing terminal marker before dispatch-journal binding;
+a terminal run therefore remains irreversible and issues zero further requests. The loopback
+adapter also enforces one monotonic overall deadline across connect, send, response headers, and
+body reads, so a trickled response cannot evade the bound while connect/read timeouts remain
+separately enforced.
+Terminal marking, audit-report construction, and sealing also reject any pre-dispatch intent that
+lacks durable attempt evidence, so an indeterminate network send cannot be hidden by a terminal
+record.
 
 The semantic-review proposal assigns a fixed same-revision Qwen3-8B blind judge to every eligible
 item and one human coder to a deterministic 174-item stratified sample. This is a proposal, not an

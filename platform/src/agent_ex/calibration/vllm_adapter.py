@@ -10,7 +10,7 @@ from http.client import HTTPConnection, HTTPResponse
 import json
 import math
 import socket
-from threading import RLock
+from threading import Event, RLock, Timer
 import time
 from typing import Callable, Mapping
 from urllib.parse import urlsplit
@@ -265,7 +265,12 @@ class VllmProbeAdapter(ProbeAdapter):
                 raise KeyError("no transport evidence exists for request") from error
 
     def generate(
-        self, request: ProbeRequest, *, timeout_seconds: float | None = None
+        self,
+        request: ProbeRequest,
+        *,
+        timeout_seconds: float | None = None,
+        connect_timeout_seconds: float | None = None,
+        read_timeout_seconds: float | None = None,
     ) -> ProbeResponse:
         if not isinstance(request, ProbeRequest):
             raise TypeError("request must be a ProbeRequest")
@@ -273,6 +278,18 @@ class VllmProbeAdapter(ProbeAdapter):
             raise TypeError("timeout_seconds must be a finite float")
         if timeout_seconds <= 0:
             raise ValueError("timeout_seconds must be positive")
+        for name, value in (
+            ("connect_timeout_seconds", connect_timeout_seconds),
+            ("read_timeout_seconds", read_timeout_seconds),
+        ):
+            if value is None:
+                continue
+            if type(value) is not float or not math.isfinite(value):
+                raise TypeError(f"{name} must be a finite float or null")
+            if value <= 0 or value > timeout_seconds:
+                raise ValueError(f"{name} must be positive and not exceed timeout_seconds")
+        connect_timeout = connect_timeout_seconds or timeout_seconds
+        read_timeout = read_timeout_seconds or timeout_seconds
         settings = dict(request.generation_settings)
         if set(settings) != _ALLOWED_GENERATION_KEYS:
             raise ValueError("generation settings must contain only temperature/top_p/max_tokens")
@@ -312,6 +329,7 @@ class VllmProbeAdapter(ProbeAdapter):
                 raise
         started_at = _utc_now()
         started_clock = time.monotonic()
+        deadline = started_clock + timeout_seconds
         status: int | None = None
         headers: dict[str, str] = {}
         provider_request_id: str | None = None
@@ -321,9 +339,35 @@ class VllmProbeAdapter(ProbeAdapter):
         error_code: str | None = "provider_unreachable"
         retry_after: float | None = None
         parsed: Mapping[str, object] | None = None
+        deadline_expired = Event()
+        connection: HTTPConnection | None = None
+        transport_socket: socket.socket | None = None
+
+        def expire_transport() -> None:
+            deadline_expired.set()
+            if transport_socket is not None:
+                try:
+                    transport_socket.shutdown(socket.SHUT_RDWR)
+                except OSError:
+                    pass
+
+        deadline_timer = Timer(timeout_seconds, expire_transport)
+        deadline_timer.daemon = True
+        deadline_timer.start()
         try:
-            connection = HTTPConnection("127.0.0.1", self._port, timeout=timeout_seconds)
+            connection = HTTPConnection(
+                "127.0.0.1",
+                self._port,
+                timeout=min(connect_timeout, max(deadline - time.monotonic(), 1e-9)),
+            )
             try:
+                connection.connect()
+                if connection.sock is None:
+                    raise OSError("vLLM connection has no socket")
+                transport_socket = connection.sock
+                transport_socket.settimeout(
+                    min(read_timeout, max(deadline - time.monotonic(), 1e-9))
+                )
                 connection.request(
                     "POST",
                     "/v1/chat/completions",
@@ -334,9 +378,24 @@ class VllmProbeAdapter(ProbeAdapter):
                         "X-Request-Id": request.request_id,
                     },
                 )
+                transport_socket.settimeout(
+                    min(read_timeout, max(deadline - time.monotonic(), 1e-9))
+                )
                 http_response = connection.getresponse()
                 status, headers, provider_request_id = self._read_headers(http_response)
-                raw_body = http_response.read(self._max_response_bytes + 1)
+                chunks: list[bytes] = []
+                remaining_bytes = self._max_response_bytes + 1
+                while remaining_bytes:
+                    remaining_seconds = deadline - time.monotonic()
+                    if remaining_seconds <= 0:
+                        raise TimeoutError("overall transport deadline exceeded")
+                    transport_socket.settimeout(min(read_timeout, remaining_seconds))
+                    chunk = http_response.read(min(64 * 1024, remaining_bytes))
+                    if not chunk:
+                        break
+                    chunks.append(chunk)
+                    remaining_bytes -= len(chunk)
+                raw_body = b"".join(chunks)
                 truncated = len(raw_body) > self._max_response_bytes
             finally:
                 connection.close()
@@ -372,8 +431,14 @@ class VllmProbeAdapter(ProbeAdapter):
             response_outcome = "timeout"
             error_code = "timeout"
         except OSError:
-            response_outcome = "provider_error"
-            error_code = "provider_unreachable"
+            if deadline_expired.is_set() or time.monotonic() >= deadline:
+                response_outcome = "timeout"
+                error_code = "timeout"
+            else:
+                response_outcome = "provider_error"
+                error_code = "provider_unreachable"
+        finally:
+            deadline_timer.cancel()
         ended_at = _utc_now()
         duration = float(time.monotonic() - started_clock)
         evidence = VllmTransportEvidence.create(

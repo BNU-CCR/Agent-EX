@@ -113,15 +113,15 @@
     ],
     "tv_threshold": null
   },
-  "record_hash": "89da9f9b1a9272773deab90456e45eca75b0ba40cfa90c5804b61c9a721ce1a2",
+  "record_hash": "612551123cedc084460ef3add5c37219ac87643f068df0919fd0ab0448710946",
   "schema_version": "paper1.calibration.approved-specification.v1",
   "specification": {
     "algorithm_id": "paper1.calibration_probe_specification_loader",
     "algorithm_version": "1.0.0",
-    "artifact_id": "artifact-6229e255b130816f674542ba386c88cb3fbfc2b4b7a60dc70c4080ab7c532d0c",
+    "artifact_id": "artifact-d32de414dc86d57608f34fdb6c4c0846e1222cdc96404745cee15e9769b3b6fa",
     "artifact_type": "paper1.calibration_probe_specification",
     "input_hashes": {},
-    "output_hash": "f7cea92aa55e59a459b0f6eb9480fa73b0d94eee9f26e09e97f8ee632b277c70",
+    "output_hash": "d77caba7e44fc3b73b4f65d12f8d26138177b2a10430b454b0f58a49de744801",
     "payload": {
       "candidate_order": [
         "retirement-delay",
@@ -145,6 +145,7 @@
       "decision_ids": [
         "P1_CONTINUITY_LOCK_THRESHOLD",
         "P1_CONTINUITY_MC_SCORING",
+        "P1_MAX_TOKENS",
         "P1_PARSE_FAILURE_THRESHOLD",
         "P1_PERSONA_TEMPLATES",
         "P1_REFUSAL_THRESHOLD",
@@ -190,9 +191,10 @@
         }
       ],
       "generation_settings": {
-        "request_seed": "UNRESOLVED[P1_REQUEST_SEED]",
-        "temperature": "UNRESOLVED[P1_TEMPERATURE]",
-        "top_p": "UNRESOLVED[P1_TOP_P]"
+        "max_tokens": 128,
+        "request_seed": "probe_case.requested_seed",
+        "temperature": 0.7,
+        "top_p": 0.8
       },
       "metadata": {
         "calibration_only": true,
@@ -237,7 +239,7 @@
       ],
       "policy_hashes": {
         "gate_algorithm": "8f0e469c2870c88aef2523f1afd09b50fc644b3a52d64f5a7f82178be15ed90c",
-        "runtime_policy": "fd0b257747525dc79bd634ace413698ebfc1e95653b687c13c26dadf00e9d896",
+        "runtime_policy": "6f8a2d98316eb3eb87c217dedc460b258459c1c39209c0bf36d6742141675c80",
         "semantic_review_policy": "12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9"
       },
       "preselection_priority": [

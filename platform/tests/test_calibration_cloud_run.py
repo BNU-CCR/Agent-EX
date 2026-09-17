@@ -6,6 +6,7 @@ from copy import deepcopy
 from dataclasses import replace
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -21,6 +22,7 @@ from agent_ex.calibration.cloud_run import (
     resume_cloud_probe,
     seal_cloud_probe_report,
 )
+from agent_ex.calibration.contracts import CloudProbeRuntimePolicy
 import agent_ex.calibration.cloud_run as cloud_run_module
 from agent_ex.calibration.environment import EnvironmentDriftError, EnvironmentLock
 from agent_ex.calibration.store import ProbeRunStore
@@ -52,7 +54,52 @@ def _record(schema_version: str, **values: object) -> dict[str, object]:
     return {**content, "record_hash": canonical_payload_hash(content)}
 
 
-def approved_run_artifacts_payload() -> dict[str, object]:
+def cloud_runtime_policy(
+    *,
+    dispatch_stop_input_tokens: int = 2_000_000,
+    dispatch_stop_output_tokens: int = 250_000,
+    dispatch_stop_cumulative_attempt_seconds: float = 172800.0,
+    minimum_free_disk_bytes: int = 1,
+) -> CloudProbeRuntimePolicy:
+    transport = runtime_policy()
+    return CloudProbeRuntimePolicy.create(
+        policy_id="phase0a-cloud-test-runtime-v2",
+        retryable_error_codes=(*transport.retryable_error_codes, "provider_unreachable"),
+        nonretryable_error_codes=(
+            *transport.nonretryable_error_codes,
+            "provider_identity_mismatch",
+            "provider_missing_request_id",
+        ),
+        max_transport_attempts_by_code={
+            **transport.max_transport_attempts_by_code,
+            "provider_identity_mismatch": 1,
+            "provider_missing_request_id": 1,
+            "provider_unreachable": 2,
+        },
+        timeout_seconds=transport.timeout_seconds,
+        obey_retry_after=transport.obey_retry_after,
+        backoff_seconds=transport.backoff_seconds,
+        connect_timeout_seconds=10.0,
+        read_timeout_seconds=30.0,
+        retry_after_min_seconds=0.0,
+        retry_after_max_seconds=30.0,
+        invalid_retry_after_action="use_deterministic_backoff",
+        oom_action="terminal_incomplete",
+        server_crash_action="retry_then_terminal_incomplete",
+        model_identity_drift_action="terminal_incomplete",
+        disk_below_threshold_action="terminal_incomplete",
+        max_total_cases=816,
+        max_total_transport_attempts=1632,
+        dispatch_stop_cumulative_attempt_seconds=dispatch_stop_cumulative_attempt_seconds,
+        dispatch_stop_input_tokens=dispatch_stop_input_tokens,
+        dispatch_stop_output_tokens=dispatch_stop_output_tokens,
+        minimum_free_disk_bytes=minimum_free_disk_bytes,
+    )
+
+
+def approved_run_artifacts_payload(
+    *, runtime_override: CloudProbeRuntimePolicy | None = None
+) -> dict[str, object]:
     gate = algorithm(required_challenges())
     semantic = replace(
         review_policy(),
@@ -60,8 +107,14 @@ def approved_run_artifacts_payload() -> dict[str, object]:
         classifier_version=gate.classifier_version,
         classifier_hash=gate.classifier_hash,
     )
-    runtime = runtime_policy()
+    runtime = runtime_override or cloud_runtime_policy()
     specification_payload = probe_spec_payload()
+    specification_payload["generation_settings"] = {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "max_tokens": 128,
+        "request_seed": "probe_case.requested_seed",
+    }
     specification_payload["replicates"] = [
         {"replicate_id": index, "requested_seed": 100 + index} for index in range(4)
     ]
@@ -175,6 +228,49 @@ def test_cloud_run_rejects_any_unresolved_marker() -> None:
     )
 
     with pytest.raises(ValueError, match="UNRESOLVED"):
+        load_cloud_run_artifacts(payload)
+
+
+def test_cloud_run_rejects_hash_valid_generation_placeholders() -> None:
+    payload = approved_run_artifacts_payload()
+    specification_group = payload["artifact_groups"]["probe_specification"]  # type: ignore[index]
+    specification_payload = specification_group["specification"]["payload"]  # type: ignore[index]
+    specification_payload["generation_settings"] = {  # type: ignore[index]
+        "temperature": "UNRESOLVED[P1_TEMPERATURE]",
+        "top_p": "UNRESOLVED[P1_TOP_P]",
+        "max_tokens": "UNRESOLVED[P1_MAX_TOKENS]",
+        "request_seed": "UNRESOLVED[P1_REQUEST_SEED]",
+    }
+    specification_group["specification"]["output_hash"] = canonical_payload_hash(  # type: ignore[index]
+        specification_payload
+    )
+    specification_group["record_hash"] = canonical_payload_hash(  # type: ignore[index]
+        {key: value for key, value in specification_group.items() if key != "record_hash"}
+    )
+    payload["approved_group_hashes"]["probe_specification"] = specification_group[  # type: ignore[index]
+        "record_hash"
+    ]
+    payload["record_hash"] = canonical_payload_hash(
+        {key: value for key, value in payload.items() if key != "record_hash"}
+    )
+
+    with pytest.raises(ValueError, match="UNRESOLVED"):
+        load_cloud_run_artifacts(payload)
+
+
+def test_cloud_run_rejects_hash_valid_generation_manifest_drift() -> None:
+    payload = approved_run_artifacts_payload()
+    candidate = payload["artifact_groups"]["candidate_manifest"]  # type: ignore[index]
+    candidate["generation_settings"]["temperature"] = 0.6  # type: ignore[index]
+    candidate["record_hash"] = canonical_payload_hash(
+        {key: value for key, value in candidate.items() if key != "record_hash"}
+    )
+    payload["approved_group_hashes"]["candidate_manifest"] = candidate["record_hash"]  # type: ignore[index]
+    payload["record_hash"] = canonical_payload_hash(
+        {key: value for key, value in payload.items() if key != "record_hash"}
+    )
+
+    with pytest.raises(ValueError, match="generation settings.*specification"):
         load_cloud_run_artifacts(payload)
 
 
@@ -315,6 +411,213 @@ def test_cloud_facade_persists_each_validated_attempt_before_advancing(
     assert len(server.requests) == 1
 
 
+def test_whole_run_token_budget_stops_before_a_second_request(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload(
+        runtime_override=cloud_runtime_policy(dispatch_stop_input_tokens=1)
+    )
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    try:
+        projection = execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=VllmProbeAdapter(
+                server.endpoint,
+                expected_model="qwen3-8b-paper1",
+                model_revision=valid_observation().model_revision,
+                tokenizer_repository=valid_observation().tokenizer_repository,
+                tokenizer_revision=valid_observation().tokenizer_revision,
+                runtime_version=valid_observation().vllm_identity.version,
+                chat_template_hash=valid_observation().chat_template_hash,
+            ),
+            store=store,
+        )
+    finally:
+        server.close()
+
+    assert len(projection.attempts) == 1
+    assert len(server.requests) == 1
+    report = build_cloud_probe_report(store)
+    assert report.status == "incomplete"
+    assert report.selected_candidate is None
+
+
+def test_output_dispatch_stop_threshold_stops_before_a_second_request(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload(
+        runtime_override=cloud_runtime_policy(dispatch_stop_output_tokens=1)
+    )
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    try:
+        projection = execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=VllmProbeAdapter(
+                server.endpoint,
+                expected_model="qwen3-8b-paper1",
+                model_revision=valid_observation().model_revision,
+                tokenizer_repository=valid_observation().tokenizer_repository,
+                tokenizer_revision=valid_observation().tokenizer_revision,
+                runtime_version=valid_observation().vllm_identity.version,
+                chat_template_hash=valid_observation().chat_template_hash,
+            ),
+            store=store,
+        )
+    finally:
+        server.close()
+    assert len(projection.attempts) == 1
+    assert len(server.requests) == 1
+    assert build_cloud_probe_report(store).status == "incomplete"
+
+
+def test_elapsed_dispatch_stop_threshold_stops_before_a_second_request(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload(
+        runtime_override=cloud_runtime_policy(dispatch_stop_cumulative_attempt_seconds=0.000001)
+    )
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    try:
+        projection = execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=VllmProbeAdapter(
+                server.endpoint,
+                expected_model="qwen3-8b-paper1",
+                model_revision=valid_observation().model_revision,
+                tokenizer_repository=valid_observation().tokenizer_repository,
+                tokenizer_revision=valid_observation().tokenizer_revision,
+                runtime_version=valid_observation().vllm_identity.version,
+                chat_template_hash=valid_observation().chat_template_hash,
+            ),
+            store=store,
+        )
+    finally:
+        server.close()
+    assert len(projection.attempts) == 1
+    assert len(server.requests) == 1
+    assert build_cloud_probe_report(store).status == "incomplete"
+
+
+def test_disk_safety_threshold_stops_before_first_request(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    packet = approved_run_artifacts_payload(
+        runtime_override=cloud_runtime_policy(minimum_free_disk_bytes=10)
+    )
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    monkeypatch.setattr(cloud_run_module.shutil, "disk_usage", lambda _: SimpleNamespace(free=1))
+    server = FakeVllmServer(port=8000)
+    try:
+        projection = execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=VllmProbeAdapter(
+                server.endpoint,
+                expected_model="qwen3-8b-paper1",
+                model_revision=valid_observation().model_revision,
+                tokenizer_repository=valid_observation().tokenizer_repository,
+                tokenizer_revision=valid_observation().tokenizer_revision,
+                runtime_version=valid_observation().vllm_identity.version,
+                chat_template_hash=valid_observation().chat_template_hash,
+            ),
+            store=store,
+        )
+    finally:
+        server.close()
+    assert projection.attempts == ()
+    assert server.requests == []
+    assert build_cloud_probe_report(store).status == "incomplete"
+
+
+def test_total_transport_attempt_ceiling_stops_dispatch(tmp_path: Path) -> None:
+    artifacts = load_cloud_run_artifacts(approved_run_artifacts_payload())
+    store = SimpleNamespace(root=tmp_path)
+    projection = SimpleNamespace(
+        status="incomplete",
+        attempts=(None,) * artifacts.runtime_policy.max_total_transport_attempts,
+    )
+
+    assert (
+        cloud_run_module._cloud_budget_failure_reason(artifacts, projection, store)
+        == "total_transport_attempt_budget_exhausted"
+    )
+
+
+def test_cloud_runner_passes_hash_bound_connect_and_read_timeouts(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+
+    class CapturingAdapter(VllmProbeAdapter):
+        observed: tuple[float, float, float] | None = None
+
+        def generate(
+            self,
+            request,
+            *,
+            timeout_seconds=None,
+            connect_timeout_seconds=None,
+            read_timeout_seconds=None,
+        ):
+            self.observed = (
+                timeout_seconds,
+                connect_timeout_seconds,
+                read_timeout_seconds,
+            )
+            return super().generate(
+                request,
+                timeout_seconds=timeout_seconds,
+                connect_timeout_seconds=connect_timeout_seconds,
+                read_timeout_seconds=read_timeout_seconds,
+            )
+
+    probe = CapturingAdapter(
+        server.endpoint,
+        expected_model="qwen3-8b-paper1",
+        model_revision=valid_observation().model_revision,
+        tokenizer_repository=valid_observation().tokenizer_repository,
+        tokenizer_revision=valid_observation().tokenizer_revision,
+        runtime_version=valid_observation().vllm_identity.version,
+        chat_template_hash=valid_observation().chat_template_hash,
+    )
+    try:
+        execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=probe,
+            store=store,
+            stop_after_attempts=1,
+        )
+    finally:
+        server.close()
+    assert probe.observed == (30.0, 10.0, 30.0)
+
+
 class _FailIfSecondRequestAdapter(VllmProbeAdapter):
     def __init__(self, endpoint: str) -> None:
         observation = valid_observation()
@@ -329,11 +632,23 @@ class _FailIfSecondRequestAdapter(VllmProbeAdapter):
         )
         self.calls = 0
 
-    def generate(self, request, *, timeout_seconds=None):
+    def generate(
+        self,
+        request,
+        *,
+        timeout_seconds=None,
+        connect_timeout_seconds=None,
+        read_timeout_seconds=None,
+    ):
         self.calls += 1
         if self.calls > 1:
             raise AssertionError("terminal failure must stop before a second request")
-        return super().generate(request, timeout_seconds=timeout_seconds)
+        return super().generate(
+            request,
+            timeout_seconds=timeout_seconds,
+            connect_timeout_seconds=connect_timeout_seconds,
+            read_timeout_seconds=read_timeout_seconds,
+        )
 
 
 def test_irreversible_runtime_failure_becomes_terminal_incomplete(
@@ -365,12 +680,235 @@ def test_irreversible_runtime_failure_becomes_terminal_incomplete(
     assert build_cloud_probe_report(store).status == "incomplete"
 
 
+def test_server_crash_retries_then_marks_terminal_incomplete(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    probe = VllmProbeAdapter(
+        "http://127.0.0.1:65534/v1/chat/completions",
+        expected_model="qwen3-8b-paper1",
+        model_revision=valid_observation().model_revision,
+        tokenizer_repository=valid_observation().tokenizer_repository,
+        tokenizer_revision=valid_observation().tokenizer_revision,
+        runtime_version=valid_observation().vllm_identity.version,
+        chat_template_hash=valid_observation().chat_template_hash,
+    )
+
+    projection = execute_cloud_probe(
+        run_artifacts=artifacts,
+        environment_lock=lock,
+        current_environment=valid_observation(),
+        manifest=manifest,
+        adapter=probe,
+        store=store,
+    )
+
+    assert len(projection.attempts) == 2
+    assert {item.response.error_code for item in projection.attempts} == {"provider_unreachable"}
+    reviews = store._load_records(store.root / "staging" / "reviews", "review")  # noqa: SLF001
+    terminal = next(
+        value
+        for value in reviews.values()
+        if value["schema_version"] == "paper1.calibration.cloud-terminal.v1"
+    )
+    assert terminal["reason"] == "server_crash_retry_exhausted"
+
+
+def test_model_identity_drift_persists_transport_and_marks_terminal(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    wrong = json.loads(server.body)
+    wrong["model"] = "drifted-model"
+    server.body = json.dumps(wrong).encode("utf-8")
+    probe = VllmProbeAdapter(
+        server.endpoint,
+        expected_model="qwen3-8b-paper1",
+        model_revision=valid_observation().model_revision,
+        tokenizer_repository=valid_observation().tokenizer_repository,
+        tokenizer_revision=valid_observation().tokenizer_revision,
+        runtime_version=valid_observation().vllm_identity.version,
+        chat_template_hash=valid_observation().chat_template_hash,
+    )
+    try:
+        projection = execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=probe,
+            store=store,
+        )
+    finally:
+        server.close()
+
+    assert len(projection.attempts) == 1
+    assert projection.attempts[0].response.error_code == "provider_identity_mismatch"
+    assert len(store.attempt_hashes) == 1
+    stored = store.load_attempt_records()[0]
+    assert stored["transport_evidence"]["error_code"] == "provider_identity_mismatch"
+    reviews = store._load_records(store.root / "staging" / "reviews", "review")  # noqa: SLF001
+    terminal = next(
+        value
+        for value in reviews.values()
+        if value["schema_version"] == "paper1.calibration.cloud-terminal.v1"
+    )
+    assert terminal["reason"] == "model_identity_drift"
+
+
+def test_terminal_marker_is_idempotent_irreversible_and_resume_never_dispatches(
+    tmp_path: Path,
+) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    first = mark_cloud_probe_terminal(
+        store,
+        manifest=manifest,
+        status="incomplete",
+        selected_candidate=None,
+        reason="operator_stop",
+    )
+    second = mark_cloud_probe_terminal(
+        store,
+        manifest=manifest,
+        status="incomplete",
+        selected_candidate=None,
+        reason="operator_stop",
+    )
+    assert second == first
+    assert len(store.review_hashes) == 1
+    with pytest.raises(ValueError, match="irreversible"):
+        mark_cloud_probe_terminal(
+            store,
+            manifest=manifest,
+            status="incomplete",
+            selected_candidate=None,
+            reason="changed_reason",
+        )
+
+    server = FakeVllmServer(port=8000)
+    try:
+        resumed = resume_cloud_probe(
+            manifest=manifest,
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            adapter=VllmProbeAdapter(
+                server.endpoint,
+                expected_model="qwen3-8b-paper1",
+                model_revision=valid_observation().model_revision,
+                tokenizer_repository=valid_observation().tokenizer_repository,
+                tokenizer_revision=valid_observation().tokenizer_revision,
+                runtime_version=valid_observation().vllm_identity.version,
+                chat_template_hash=valid_observation().chat_template_hash,
+            ),
+            store=ProbeRunStore.open(tmp_path / "run"),
+        )
+    finally:
+        server.close()
+    assert resumed.attempts == ()
+    assert server.requests == []
+    reopened = ProbeRunStore.open(tmp_path / "run")
+    assert len(reopened.review_hashes) == 1
+
+
+def test_terminal_marker_stops_new_execute_before_journal_binding_or_dispatch(
+    tmp_path: Path,
+) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    first_adapter = VllmProbeAdapter(
+        server.endpoint,
+        expected_model="qwen3-8b-paper1",
+        model_revision=valid_observation().model_revision,
+        tokenizer_repository=valid_observation().tokenizer_repository,
+        tokenizer_revision=valid_observation().tokenizer_revision,
+        runtime_version=valid_observation().vllm_identity.version,
+        chat_template_hash=valid_observation().chat_template_hash,
+    )
+    first_projection = execute_cloud_probe(
+        run_artifacts=artifacts,
+        environment_lock=lock,
+        current_environment=valid_observation(),
+        manifest=manifest,
+        adapter=first_adapter,
+        store=store,
+        stop_after_attempts=1,
+    )
+    assert len(first_projection.attempts) == 1
+    mark_cloud_probe_terminal(
+        store,
+        manifest=manifest,
+        status="incomplete",
+        selected_candidate=None,
+        reason="operator_stop",
+    )
+
+    class BindingObserver(VllmProbeAdapter):
+        bind_calls = 0
+
+        def bind_dispatch_journal(self, callback) -> None:
+            self.bind_calls += 1
+            super().bind_dispatch_journal(callback)
+
+    probe = BindingObserver(
+        server.endpoint,
+        expected_model="qwen3-8b-paper1",
+        model_revision=valid_observation().model_revision,
+        tokenizer_repository=valid_observation().tokenizer_repository,
+        tokenizer_revision=valid_observation().tokenizer_revision,
+        runtime_version=valid_observation().vllm_identity.version,
+        chat_template_hash=valid_observation().chat_template_hash,
+    )
+    try:
+        projection = execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=probe,
+            store=ProbeRunStore.open(tmp_path / "run"),
+            stop_after_attempts=1,
+        )
+    finally:
+        server.close()
+
+    assert len(projection.attempts) == 1
+    assert probe.bind_calls == 0
+    assert len(server.requests) == 1
+
+
 class _CrashAfterOneAdapter(_FailIfSecondRequestAdapter):
-    def generate(self, request, *, timeout_seconds=None):
+    def generate(
+        self,
+        request,
+        *,
+        timeout_seconds=None,
+        connect_timeout_seconds=None,
+        read_timeout_seconds=None,
+    ):
         self.calls += 1
         if self.calls > 1:
             raise RuntimeError("controlled client crash")
-        return VllmProbeAdapter.generate(self, request, timeout_seconds=timeout_seconds)
+        return VllmProbeAdapter.generate(
+            self,
+            request,
+            timeout_seconds=timeout_seconds,
+            connect_timeout_seconds=connect_timeout_seconds,
+            read_timeout_seconds=read_timeout_seconds,
+        )
 
 
 def test_unexpected_adapter_crash_keeps_recoverable_prefix(tmp_path: Path) -> None:
@@ -470,6 +1008,51 @@ def test_power_loss_after_response_never_reissues_indeterminate_request(
     finally:
         resumed_server.close()
     assert resumed_server.requests == []
+
+
+def test_indeterminate_dispatch_cannot_be_marked_built_or_sealed(
+    tmp_path: Path,
+) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=environment_lock_for(packet))
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    request = cloud_run_module.ProbeRequest.create(
+        artifacts.cases[0],
+        attempt_index=1,
+        attempt_kind="semantic",
+        generation_settings={"temperature": 0.7, "top_p": 0.8, "max_tokens": 128},
+    )
+    intent = cloud_run_module._dispatch_intent_record(  # noqa: SLF001
+        store=store,
+        request=request,
+        request_body=b"synthetic-dispatched-body",
+    )
+    store.append_review(intent)
+
+    with pytest.raises(AmbiguousCloudDispatchError, match="indeterminate"):
+        mark_cloud_probe_terminal(
+            store,
+            manifest=manifest,
+            status="incomplete",
+            selected_candidate=None,
+            reason="operator_stop",
+        )
+    assert all(
+        value.get("schema_version") != "paper1.calibration.cloud-terminal.v1"
+        for value in store._load_records(  # noqa: SLF001
+            store.root / "staging" / "reviews", "review"
+        ).values()
+    )
+    with pytest.raises(AmbiguousCloudDispatchError, match="indeterminate"):
+        build_cloud_probe_report(store)
+    with pytest.raises(AmbiguousCloudDispatchError, match="indeterminate"):
+        seal_cloud_probe_report(
+            store,
+            bundle=None,
+            run_artifacts=artifacts,
+            manifest=manifest,
+        )
 
 
 def test_seal_rejects_bundle_not_rebuilt_from_this_store(tmp_path: Path) -> None:

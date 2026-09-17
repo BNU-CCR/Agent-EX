@@ -44,7 +44,12 @@ class ProbeScriptStep:
 class ProbeAdapter(ABC):
     @abstractmethod
     def generate(
-        self, request: ProbeRequest, *, timeout_seconds: float | None = None
+        self,
+        request: ProbeRequest,
+        *,
+        timeout_seconds: float | None = None,
+        connect_timeout_seconds: float | None = None,
+        read_timeout_seconds: float | None = None,
     ) -> ProbeResponse:
         """Generate one response, enforcing the supplied timeout at the provider boundary."""
 
@@ -72,7 +77,12 @@ class ScriptedProbeAdapter(ProbeAdapter):
         self._consumed: set[tuple[str, int]] = set()
 
     def generate(
-        self, request: ProbeRequest, *, timeout_seconds: float | None = None
+        self,
+        request: ProbeRequest,
+        *,
+        timeout_seconds: float | None = None,
+        connect_timeout_seconds: float | None = None,
+        read_timeout_seconds: float | None = None,
     ) -> ProbeResponse:
         if not isinstance(request, ProbeRequest):
             raise TypeError("request must be a ProbeRequest")

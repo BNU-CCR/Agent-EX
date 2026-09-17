@@ -1245,6 +1245,202 @@ class ProbeRuntimePolicy:
 
 
 @dataclass(frozen=True, slots=True)
+class CloudProbeRuntimePolicy(ProbeRuntimePolicy):
+    """Transport policy plus hash-bound whole-run safety budgets for the 816 probe."""
+
+    connect_timeout_seconds: float
+    read_timeout_seconds: float
+    retry_after_min_seconds: float
+    retry_after_max_seconds: float
+    invalid_retry_after_action: str
+    oom_action: str
+    server_crash_action: str
+    model_identity_drift_action: str
+    disk_below_threshold_action: str
+    max_total_cases: int
+    max_total_transport_attempts: int
+    dispatch_stop_cumulative_attempt_seconds: float
+    dispatch_stop_input_tokens: int
+    dispatch_stop_output_tokens: int
+    minimum_free_disk_bytes: int
+
+    _SCHEMA_VERSION = "paper1.calibration.cloud-probe-runtime-policy.v2"
+
+    def __post_init__(self) -> None:
+        ProbeRuntimePolicy.__post_init__(self)
+        for name in (
+            "connect_timeout_seconds",
+            "read_timeout_seconds",
+            "retry_after_min_seconds",
+            "retry_after_max_seconds",
+            "dispatch_stop_cumulative_attempt_seconds",
+        ):
+            _require_finite_number(
+                name, getattr(self, name), positive=name not in {"retry_after_min_seconds"}
+            )
+        if self.connect_timeout_seconds > self.timeout_seconds:
+            raise ValueError("connect timeout cannot exceed the overall request timeout")
+        if self.read_timeout_seconds > self.timeout_seconds:
+            raise ValueError("read timeout cannot exceed the overall request timeout")
+        if self.retry_after_min_seconds > self.retry_after_max_seconds:
+            raise ValueError("Retry-After bounds are reversed")
+        if self.invalid_retry_after_action != "use_deterministic_backoff":
+            raise ValueError("invalid Retry-After must use deterministic backoff")
+        expected_actions = {
+            "oom_action": "terminal_incomplete",
+            "server_crash_action": "retry_then_terminal_incomplete",
+            "model_identity_drift_action": "terminal_incomplete",
+            "disk_below_threshold_action": "terminal_incomplete",
+        }
+        for name, expected in expected_actions.items():
+            if getattr(self, name) != expected:
+                raise ValueError(f"{name} must be {expected}")
+        required_retryable = {"provider_unreachable": 2}
+        required_nonretryable = {
+            "provider_identity_mismatch": 1,
+            "provider_missing_request_id": 1,
+        }
+        for code, attempts in required_retryable.items():
+            if (
+                code not in self.retryable_error_codes
+                or self.max_transport_attempts_by_code.get(code) != attempts
+            ):
+                raise ValueError(
+                    f"{code} must be retryable with exactly {attempts} transport attempts"
+                )
+        for code, attempts in required_nonretryable.items():
+            if (
+                code not in self.nonretryable_error_codes
+                or self.max_transport_attempts_by_code.get(code) != attempts
+            ):
+                raise ValueError(
+                    f"{code} must be nonretryable with exactly {attempts} transport attempt"
+                )
+        for name in (
+            "max_total_cases",
+            "max_total_transport_attempts",
+            "dispatch_stop_input_tokens",
+            "dispatch_stop_output_tokens",
+            "minimum_free_disk_bytes",
+        ):
+            _require_int(name, getattr(self, name), minimum=1)
+        if self.max_total_cases != 816:
+            raise ValueError("cloud probe runtime policy must bind exactly 816 cases")
+        if self.max_total_transport_attempts < self.max_total_cases:
+            raise ValueError("total transport budget cannot be smaller than the case inventory")
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA_VERSION,
+            "policy_id": self.policy_id,
+            "retryable_error_codes": self.retryable_error_codes,
+            "nonretryable_error_codes": self.nonretryable_error_codes,
+            "max_transport_attempts_by_code": self.max_transport_attempts_by_code,
+            "timeout_seconds": self.timeout_seconds,
+            "obey_retry_after": self.obey_retry_after,
+            "backoff_seconds": self.backoff_seconds,
+            "connect_timeout_seconds": self.connect_timeout_seconds,
+            "read_timeout_seconds": self.read_timeout_seconds,
+            "retry_after_min_seconds": self.retry_after_min_seconds,
+            "retry_after_max_seconds": self.retry_after_max_seconds,
+            "invalid_retry_after_action": self.invalid_retry_after_action,
+            "oom_action": self.oom_action,
+            "server_crash_action": self.server_crash_action,
+            "model_identity_drift_action": self.model_identity_drift_action,
+            "disk_below_threshold_action": self.disk_below_threshold_action,
+            "max_total_cases": self.max_total_cases,
+            "max_total_transport_attempts": self.max_total_transport_attempts,
+            "dispatch_stop_cumulative_attempt_seconds": (
+                self.dispatch_stop_cumulative_attempt_seconds
+            ),
+            "dispatch_stop_input_tokens": self.dispatch_stop_input_tokens,
+            "dispatch_stop_output_tokens": self.dispatch_stop_output_tokens,
+            "minimum_free_disk_bytes": self.minimum_free_disk_bytes,
+            "metadata": self.metadata,
+        }
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        policy_id: str,
+        retryable_error_codes: tuple[str, ...],
+        nonretryable_error_codes: tuple[str, ...],
+        max_transport_attempts_by_code: Mapping[str, int],
+        timeout_seconds: float,
+        obey_retry_after: bool,
+        backoff_seconds: tuple[float, ...],
+        connect_timeout_seconds: float,
+        read_timeout_seconds: float,
+        retry_after_min_seconds: float,
+        retry_after_max_seconds: float,
+        invalid_retry_after_action: str,
+        oom_action: str,
+        server_crash_action: str,
+        model_identity_drift_action: str,
+        disk_below_threshold_action: str,
+        max_total_cases: int,
+        max_total_transport_attempts: int,
+        dispatch_stop_cumulative_attempt_seconds: float,
+        dispatch_stop_input_tokens: int,
+        dispatch_stop_output_tokens: int,
+        minimum_free_disk_bytes: int,
+    ) -> CloudProbeRuntimePolicy:
+        values = {
+            "policy_id": policy_id,
+            "retryable_error_codes": tuple(sorted(retryable_error_codes)),
+            "nonretryable_error_codes": tuple(sorted(nonretryable_error_codes)),
+            "max_transport_attempts_by_code": dict(sorted(max_transport_attempts_by_code.items())),
+            "timeout_seconds": timeout_seconds,
+            "obey_retry_after": obey_retry_after,
+            "backoff_seconds": backoff_seconds,
+            "connect_timeout_seconds": connect_timeout_seconds,
+            "read_timeout_seconds": read_timeout_seconds,
+            "retry_after_min_seconds": retry_after_min_seconds,
+            "retry_after_max_seconds": retry_after_max_seconds,
+            "invalid_retry_after_action": invalid_retry_after_action,
+            "oom_action": oom_action,
+            "server_crash_action": server_crash_action,
+            "model_identity_drift_action": model_identity_drift_action,
+            "disk_below_threshold_action": disk_below_threshold_action,
+            "max_total_cases": max_total_cases,
+            "max_total_transport_attempts": max_total_transport_attempts,
+            "dispatch_stop_cumulative_attempt_seconds": (dispatch_stop_cumulative_attempt_seconds),
+            "dispatch_stop_input_tokens": dispatch_stop_input_tokens,
+            "dispatch_stop_output_tokens": dispatch_stop_output_tokens,
+            "minimum_free_disk_bytes": minimum_free_disk_bytes,
+        }
+        content = {
+            "schema_version": cls._SCHEMA_VERSION,
+            **values,
+            "metadata": dict(_CALIBRATION_METADATA),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> CloudProbeRuntimePolicy:
+        expected = set(cls.__dataclass_fields__) | {"schema_version", "metadata"}
+        _require_calibration_payload(
+            payload,
+            expected_fields=expected,
+            record_name="cloud probe runtime policy",
+            schema_version=cls._SCHEMA_VERSION,
+        )
+        if (
+            type(payload["retryable_error_codes"]) is not list
+            or type(payload["nonretryable_error_codes"]) is not list
+            or type(payload["backoff_seconds"]) is not list
+            or type(payload["max_transport_attempts_by_code"]) is not dict
+        ):
+            raise TypeError("cloud runtime policy repeated fields use invalid JSON containers")
+        values = {name: payload[name] for name in cls.__dataclass_fields__}
+        values["retryable_error_codes"] = tuple(payload["retryable_error_codes"])
+        values["nonretryable_error_codes"] = tuple(payload["nonretryable_error_codes"])
+        values["backoff_seconds"] = tuple(payload["backoff_seconds"])
+        return cls(**values)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
 class ProbeAttempt:
     """One replayable request/response transition in a probe run."""
 
@@ -1662,8 +1858,19 @@ class ProbeRunProjection:
                         self.runtime_policy.obey_retry_after
                         and attempt.response.retry_after_seconds is not None
                     ):
-                        expected_delay = attempt.response.retry_after_seconds
-                        expected_delay_source = "retry_after"
+                        retry_after = attempt.response.retry_after_seconds
+                        if isinstance(self.runtime_policy, CloudProbeRuntimePolicy) and not (
+                            self.runtime_policy.retry_after_min_seconds
+                            <= retry_after
+                            <= self.runtime_policy.retry_after_max_seconds
+                        ):
+                            expected_delay = self.runtime_policy.backoff_seconds[
+                                expected_ordinal - 1
+                            ]
+                            expected_delay_source = "backoff"
+                        else:
+                            expected_delay = retry_after
+                            expected_delay_source = "retry_after"
                     else:
                         expected_delay = self.runtime_policy.backoff_seconds[expected_ordinal - 1]
                         expected_delay_source = "backoff"
@@ -1817,7 +2024,12 @@ class ProbeRunProjection:
             run_instance_id=payload["run_instance_id"],
             specification_hash=payload["specification_hash"],
             case_inventory_hash=payload["case_inventory_hash"],
-            runtime_policy=ProbeRuntimePolicy.from_payload(payload["runtime_policy"]),  # type: ignore[arg-type]
+            runtime_policy=(
+                CloudProbeRuntimePolicy.from_payload(payload["runtime_policy"])
+                if payload["runtime_policy"].get("schema_version")
+                == CloudProbeRuntimePolicy._SCHEMA_VERSION
+                else ProbeRuntimePolicy.from_payload(payload["runtime_policy"])
+            ),  # type: ignore[arg-type,union-attr]
             runtime_policy_hash=payload["runtime_policy_hash"],
             generation_settings=payload["generation_settings"],
             generation_settings_hash=payload["generation_settings_hash"],

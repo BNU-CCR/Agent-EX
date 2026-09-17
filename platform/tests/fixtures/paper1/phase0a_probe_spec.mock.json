@@ -65,11 +65,11 @@
     {"replicate_id": 0, "requested_seed": 1101},
     {"replicate_id": 1, "requested_seed": 1102}
   ],
-  "generation_settings": {"temperature": "UNRESOLVED[P1_TEMPERATURE]", "top_p": "UNRESOLVED[P1_TOP_P]", "request_seed": "UNRESOLVED[P1_REQUEST_SEED]"},
+  "generation_settings": {"temperature": "UNRESOLVED[P1_TEMPERATURE]", "top_p": "UNRESOLVED[P1_TOP_P]", "max_tokens": "UNRESOLVED[P1_MAX_TOKENS]", "request_seed": "UNRESOLVED[P1_REQUEST_SEED]"},
   "policy_hashes": {
     "gate_algorithm": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "semantic_review_policy": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "runtime_policy": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
   },
-  "decision_ids": ["P1_TOPIC_PRIMARY", "P1_STANCE_SCALE", "P1_PERSONA_TEMPLATES", "P1_CONTINUITY_MC_SCORING", "P1_CONTINUITY_LOCK_THRESHOLD", "P1_REFUSAL_THRESHOLD", "P1_PARSE_FAILURE_THRESHOLD", "P1_TEMPERATURE", "P1_TOP_P", "P1_REQUEST_SEED", "P1_TIMEOUT_RETRY"]
+  "decision_ids": ["P1_TOPIC_PRIMARY", "P1_STANCE_SCALE", "P1_PERSONA_TEMPLATES", "P1_CONTINUITY_MC_SCORING", "P1_CONTINUITY_LOCK_THRESHOLD", "P1_REFUSAL_THRESHOLD", "P1_PARSE_FAILURE_THRESHOLD", "P1_TEMPERATURE", "P1_TOP_P", "P1_MAX_TOKENS", "P1_REQUEST_SEED", "P1_TIMEOUT_RETRY"]
 }

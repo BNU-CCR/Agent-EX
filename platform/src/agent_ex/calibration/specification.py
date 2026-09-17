@@ -23,6 +23,7 @@ ALLOWED_DECISION_IDS = {
     "P1_PARSE_FAILURE_THRESHOLD",
     "P1_TEMPERATURE",
     "P1_TOP_P",
+    "P1_MAX_TOKENS",
     "P1_REQUEST_SEED",
     "P1_TIMEOUT_RETRY",
 }
@@ -289,16 +290,26 @@ def _validate_policies_and_decisions(payload: dict[str, object]) -> None:
         raise ValueError("decision_ids must equal the registered P1 calibration decision IDs")
     settings = _exact_dict(
         payload["generation_settings"],
-        {"temperature", "top_p", "request_seed"},
+        {"temperature", "top_p", "max_tokens", "request_seed"},
         "generation_settings",
     )
-    expected = {
+    unresolved = {
         "temperature": "UNRESOLVED[P1_TEMPERATURE]",
         "top_p": "UNRESOLVED[P1_TOP_P]",
+        "max_tokens": "UNRESOLVED[P1_MAX_TOKENS]",
         "request_seed": "UNRESOLVED[P1_REQUEST_SEED]",
     }
-    if settings != expected:
-        raise ValueError("generation_settings must remain bound to registered unresolved IDs")
+    calibration_candidate = {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "max_tokens": 128,
+        "request_seed": "probe_case.requested_seed",
+    }
+    if settings not in (unresolved, calibration_candidate):
+        raise ValueError(
+            "generation_settings must bind registered unresolved IDs or the approved "
+            "calibration candidate"
+        )
 
 
 def _canonicalize_nonsemantic_arrays(payload: dict[str, object]) -> None:

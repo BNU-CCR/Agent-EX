@@ -10,6 +10,7 @@ import pytest
 import agent_ex.calibration.runner as runner_module
 from agent_ex.calibration.adapters import ProbeScriptStep, ScriptedProbeAdapter
 from agent_ex.calibration.contracts import (
+    CloudProbeRuntimePolicy,
     ProbeAttempt,
     ProbeRequest,
     ProbeResponse,
@@ -73,6 +74,43 @@ def policy(*, timeout_budget: int = 2) -> ProbeRuntimePolicy:
     )
 
 
+def cloud_policy() -> CloudProbeRuntimePolicy:
+    transport = policy()
+    return CloudProbeRuntimePolicy.create(
+        policy_id="phase0a-cloud-runner-test-v2",
+        retryable_error_codes=(*transport.retryable_error_codes, "provider_unreachable"),
+        nonretryable_error_codes=(
+            *transport.nonretryable_error_codes,
+            "provider_identity_mismatch",
+            "provider_missing_request_id",
+        ),
+        max_transport_attempts_by_code={
+            **transport.max_transport_attempts_by_code,
+            "provider_identity_mismatch": 1,
+            "provider_missing_request_id": 1,
+            "provider_unreachable": 2,
+        },
+        timeout_seconds=transport.timeout_seconds,
+        obey_retry_after=True,
+        backoff_seconds=transport.backoff_seconds,
+        connect_timeout_seconds=10.0,
+        read_timeout_seconds=30.0,
+        retry_after_min_seconds=0.0,
+        retry_after_max_seconds=2.0,
+        invalid_retry_after_action="use_deterministic_backoff",
+        oom_action="terminal_incomplete",
+        server_crash_action="retry_then_terminal_incomplete",
+        model_identity_drift_action="terminal_incomplete",
+        disk_below_threshold_action="terminal_incomplete",
+        max_total_cases=816,
+        max_total_transport_attempts=1632,
+        dispatch_stop_cumulative_attempt_seconds=172800.0,
+        dispatch_stop_input_tokens=2_000_000,
+        dispatch_stop_output_tokens=250_000,
+        minimum_free_disk_bytes=1,
+    )
+
+
 def valid_raw(stance: int = 4) -> str:
     return json.dumps(
         {"stance": stance, "confidence": 3, "public_reason": "Synthetic reason."},
@@ -126,6 +164,26 @@ def test_runtime_policy_is_strict_hash_bound_and_round_trips() -> None:
                 "timeout": True,
             },
         )
+
+
+def test_cloud_runtime_policy_and_projection_round_trip_with_whole_run_budgets() -> None:
+    runtime = cloud_policy()
+    assert runtime.max_transport_attempts_by_code["provider_unreachable"] == 2
+    assert "provider_identity_mismatch" in runtime.nonretryable_error_codes
+    assert "provider_missing_request_id" in runtime.nonretryable_error_codes
+    restored_runtime = CloudProbeRuntimePolicy.from_payload(
+        json.loads(json.dumps(runtime.to_payload()))
+    )
+    assert restored_runtime == runtime
+
+    projection = run(
+        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("response", valid_raw(), None, None))),
+        runtime_policy=runtime,
+    )
+    restored_projection = ProbeRunProjection.from_payload(
+        json.loads(json.dumps(projection.to_payload()))
+    )
+    assert restored_projection == projection
 
 
 def test_backoff_schedule_may_be_empty_only_when_no_retry_transition_exists() -> None:
@@ -266,6 +324,25 @@ def test_retry_after_is_executed_and_recorded(monkeypatch) -> None:
     assert projection.attempts[0].retry_delay_seconds == 1.5
     assert projection.attempts[0].retry_delay_source == "retry_after"
     assert sleeps == [1.5]
+
+
+def test_cloud_policy_replaces_out_of_range_retry_after_with_bound_backoff(
+    monkeypatch,
+) -> None:
+    sleeps = []
+    monkeypatch.setattr(runner_module.time, "sleep", sleeps.append)
+    projection = run(
+        ScriptedProbeAdapter(
+            steps_for_first(
+                ProbeScriptStep("provider_error", None, "provider_busy", 30.0),
+                ProbeScriptStep("response", valid_raw(), None, None),
+            )
+        ),
+        runtime_policy=cloud_policy(),
+    )
+    assert projection.attempts[0].retry_delay_seconds == 0.25
+    assert projection.attempts[0].retry_delay_source == "backoff"
+    assert sleeps == [0.25]
 
 
 def test_backoff_is_executed_before_the_next_adapter_call(monkeypatch) -> None:

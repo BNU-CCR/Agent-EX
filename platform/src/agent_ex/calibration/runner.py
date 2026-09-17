@@ -8,6 +8,7 @@ from typing import Mapping
 from ..domain import _require_id, _require_json_transport, _require_sha256, canonical_payload_hash
 from .adapters import ProbeAdapter
 from .contracts import (
+    CloudProbeRuntimePolicy,
     ProbeAttempt,
     ProbeCase,
     ProbeParseEvidence,
@@ -308,7 +309,17 @@ def _continue_run(
                     attempt_kind=next_kind,
                     generation_settings=generation_settings,
                 )
-                response = adapter.generate(request, timeout_seconds=runtime_policy.timeout_seconds)
+                if isinstance(runtime_policy, CloudProbeRuntimePolicy):
+                    response = adapter.generate(
+                        request,
+                        timeout_seconds=runtime_policy.timeout_seconds,
+                        connect_timeout_seconds=runtime_policy.connect_timeout_seconds,
+                        read_timeout_seconds=runtime_policy.read_timeout_seconds,
+                    )
+                else:
+                    response = adapter.generate(
+                        request, timeout_seconds=runtime_policy.timeout_seconds
+                    )
                 _validate_response_provenance(
                     response,
                     runtime_identity=runtime_identity,
@@ -345,8 +356,19 @@ def _continue_run(
                         if runtime_policy.obey_retry_after and retry_after is not None:
                             if type(retry_after) not in {int, float} or float(retry_after) < 0:
                                 raise ValueError("adapter retry-after evidence must be nonnegative")
-                            delay = float(retry_after)
-                            delay_source = "retry_after"
+                            retry_after_value = float(retry_after)
+                            if isinstance(runtime_policy, CloudProbeRuntimePolicy) and not (
+                                runtime_policy.retry_after_min_seconds
+                                <= retry_after_value
+                                <= runtime_policy.retry_after_max_seconds
+                            ):
+                                delay = runtime_policy.backoff_seconds[
+                                    transport_counts[error_code] - 1
+                                ]
+                                delay_source = "backoff"
+                            else:
+                                delay = retry_after_value
+                                delay_source = "retry_after"
                         else:
                             delay = runtime_policy.backoff_seconds[transport_counts[error_code] - 1]
                             delay_source = "backoff"

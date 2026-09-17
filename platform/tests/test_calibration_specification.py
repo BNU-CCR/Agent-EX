@@ -31,6 +31,19 @@ def test_loads_hash_bound_calibration_only_specification() -> None:
     assert set(artifact.payload["decision_ids"]) == ALLOWED_DECISION_IDS
 
 
+def test_specification_accepts_explicit_calibration_generation_candidates() -> None:
+    payload = probe_spec_payload()
+    payload["generation_settings"] = {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "max_tokens": 128,
+        "request_seed": "probe_case.requested_seed",
+    }
+    artifact = load_probe_specification(payload)
+
+    assert artifact.payload["generation_settings"] == payload["generation_settings"]
+
+
 def test_expansion_is_complete_unique_and_iteration_order_independent() -> None:
     first = expand_probe_cases(load_probe_specification(probe_spec_payload()))
     second = expand_probe_cases(

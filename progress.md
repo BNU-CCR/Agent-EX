@@ -874,6 +874,13 @@
 - 审批包物化时发现量表锚点此前未进入请求文本；已用TDD补入七个1--7文字锚点及0/10
   端点锚点，逻辑inventory仍为816。
 - 六组proposal通过生产loader，精确计数为144/96/576；combined packet hash为
-  `8467cc55fee0600e0f165531f1de0731dd5a09c3536ab4f70ce2f469e8937002`。它仍是
+  `57abb85edbb7b1d28949ca523abaef6c4c4639a7744ca3bc7b5f5f57056f44bc`。runtime v2同时
+  绑定整次运行的attempt硬上限、累计请求时间与输入/输出token的下一次派发停止阈值、
+  以及磁盘安全下限；不会把只能在响应后得知的实际token/耗时误称为单次硬上限。它仍是
   proposal-only，必须获得六组完整hash书面批准后才能建立新环境锁并执行。
+- 启动制品已移除generation placeholder例外，直接绑定校准候选`temperature=0.7`、
+  `top_p=0.8`、`max_tokens=128`与逐case `requested_seed`；`formal_parameter_authority=false`不变。新执行与恢复
+  均在journal绑定前尊重既有terminal，vLLM adapter以单一monotonic deadline覆盖连接、发送、
+  response headers与body，trickle response不能绕过overall timeout；terminal/build/seal均拒绝
+  尚无durable attempt的indeterminate dispatch intent。
 - 详细证据和六组hash见`logs/2026-09-17-phase0a1-smoke-pass-and-approval-packet.md`。

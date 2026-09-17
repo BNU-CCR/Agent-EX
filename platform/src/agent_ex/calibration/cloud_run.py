@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, fields
+from datetime import datetime
 import hashlib
 from pathlib import Path, PurePosixPath
 import re
+import shutil
 from typing import Mapping
 
 from ..artifacts import ArtifactEnvelope
@@ -20,11 +22,11 @@ from ..domain import (
 )
 from .bundle import ProbeBundle
 from .contracts import (
+    CloudProbeRuntimePolicy,
     ProbeAttempt,
     ProbeCase,
     ProbeRequest,
     ProbeRunProjection,
-    ProbeRuntimePolicy,
 )
 from .environment import (
     EnvironmentLock,
@@ -32,7 +34,7 @@ from .environment import (
     verify_current_environment,
 )
 from .review import SemanticReviewPolicy
-from .runner import ProbeRunCrash, execute_probe_run, resume_probe_run
+from .runner import ProbeRunCrash, resume_probe_run
 from .specification import expand_probe_cases, load_probe_specification
 from .store import ProbeRunStore
 from .vllm_adapter import VllmProbeAdapter, VllmTransportEvidence
@@ -244,11 +246,6 @@ _SECRET_VALUE = re.compile(
     r"(?i)(?:api[_-]?key|access[_-]?token|auth[_-]?token|password|secret)"
     r"(?:\s*(?:=|:)\s*|\s+)\S+|hf_[A-Za-z0-9]{8,}|BEGIN [A-Z ]*PRIVATE KEY"
 )
-_REGISTERED_SPECIFICATION_PLACEHOLDERS = {
-    "payload.artifact_groups.probe_specification.specification.payload.generation_settings.temperature": "UNRESOLVED[P1_TEMPERATURE]",
-    "payload.artifact_groups.probe_specification.specification.payload.generation_settings.top_p": "UNRESOLVED[P1_TOP_P]",
-    "payload.artifact_groups.probe_specification.specification.payload.generation_settings.request_seed": "UNRESOLVED[P1_REQUEST_SEED]",
-}
 
 
 def _exact(payload: Mapping[str, object], expected: set[str], name: str) -> None:
@@ -260,8 +257,6 @@ def _exact(payload: Mapping[str, object], expected: set[str], name: str) -> None
 def _walk(value: object, *, path: str = "payload") -> None:
     if isinstance(value, str):
         if "UNRESOLVED[" in value:
-            if _REGISTERED_SPECIFICATION_PLACEHOLDERS.get(path) == value:
-                return
             raise ValueError(f"{path} contains UNRESOLVED executable content")
         if _SECRET_VALUE.search(value):
             raise ValueError(f"{path} contains a credential or secret")
@@ -315,7 +310,7 @@ class CloudRunArtifacts:
     approved_group_hashes: Mapping[str, str]
     specification: ArtifactEnvelope
     cases: tuple[ProbeCase, ...]
-    runtime_policy: ProbeRuntimePolicy
+    runtime_policy: CloudProbeRuntimePolicy
     semantic_review_policy: SemanticReviewPolicy
     record_hash: str
 
@@ -329,8 +324,8 @@ class CloudRunArtifacts:
             raise TypeError("specification must be an ArtifactEnvelope")
         if type(self.cases) is not tuple or any(type(item) is not ProbeCase for item in self.cases):
             raise TypeError("cases must be exact ProbeCase records")
-        if not isinstance(self.runtime_policy, ProbeRuntimePolicy):
-            raise TypeError("runtime_policy must be ProbeRuntimePolicy")
+        if not isinstance(self.runtime_policy, CloudProbeRuntimePolicy):
+            raise TypeError("runtime_policy must be CloudProbeRuntimePolicy")
         if not isinstance(self.semantic_review_policy, SemanticReviewPolicy):
             raise TypeError("semantic_review_policy must be SemanticReviewPolicy")
         object.__setattr__(self, "artifact_groups", _freeze(self.artifact_groups))
@@ -426,7 +421,7 @@ def load_cloud_run_artifacts(payload: Mapping[str, object]) -> CloudRunArtifacts
     ):
         raise ValueError("gate_algorithm hash is not bound by the specification")
 
-    runtime = ProbeRuntimePolicy.from_payload(checked_groups["runtime_policy"])
+    runtime = CloudProbeRuntimePolicy.from_payload(checked_groups["runtime_policy"])
     semantic = SemanticReviewPolicy.from_payload(checked_groups["semantic_review_policy"])
     policy_hashes = specification.payload["policy_hashes"]
     if policy_hashes["runtime_policy"] != runtime.record_hash:
@@ -475,6 +470,13 @@ def load_cloud_run_artifacts(payload: Mapping[str, object]) -> CloudRunArtifacts
         raise ValueError("candidate generation_settings must contain exact fields")
     if candidate["generation_settings"]["request_seed"] != "probe_case.requested_seed":
         raise ValueError("candidate request_seed must bind each probe case requested seed")
+    specification_generation = specification.payload["generation_settings"]
+    candidate_generation = candidate["generation_settings"]
+    if any(
+        specification_generation[name] != candidate_generation[name]
+        for name in ("temperature", "top_p", "max_tokens", "request_seed")
+    ):
+        raise ValueError("candidate generation settings differ from the probe specification")
     for name in (
         "chat_template_hash",
         "rendered_non_thinking_hash",
@@ -531,6 +533,8 @@ def load_cloud_run_artifacts(payload: Mapping[str, object]) -> CloudRunArtifacts
         counts[case.case_family] = counts.get(case.case_family, 0) + 1
     if len(cases) != 816 or counts != _EXPECTED_COUNTS:
         raise ValueError("cloud run requires the exact 816-case family inventory")
+    if runtime.max_total_cases != len(cases):
+        raise ValueError("cloud runtime case budget differs from the exact inventory")
     return CloudRunArtifacts(
         artifact_groups=checked_groups,
         approved_group_hashes=dict(sorted(hashes.items())),
@@ -823,7 +827,7 @@ def _continue_cloud_probe(
     run_artifacts: CloudRunArtifacts,
     adapter: VllmProbeAdapter,
     store: ProbeRunStore,
-    projection: ProbeRunProjection | None,
+    projection: ProbeRunProjection,
     stop_after_attempts: int | None,
 ) -> ProbeRunProjection:
     if stop_after_attempts is not None:
@@ -832,22 +836,16 @@ def _continue_cloud_probe(
     added = 0
     current = projection
     while True:
-        prior_count = 0 if current is None else len(current.attempts)
+        if _cloud_budget_failure_reason(run_artifacts, current, store) is not None:
+            return current
+        prior_count = len(current.attempts)
         try:
-            if current is None:
-                current = execute_probe_run(
-                    run_instance_id="cloud-probe-" + run_artifacts.record_hash[:16],
-                    adapter=adapter,
-                    stop_after_attempts=1,
-                    **inputs,  # type: ignore[arg-type]
-                )
-            else:
-                current = resume_probe_run(
-                    projection=current,
-                    adapter=adapter,
-                    stop_after_attempts=1,
-                    **inputs,  # type: ignore[arg-type]
-                )
+            current = resume_probe_run(
+                projection=current,
+                adapter=adapter,
+                stop_after_attempts=1,
+                **inputs,  # type: ignore[arg-type]
+            )
         except ProbeRunCrash as error:
             _persist_projection(store, error.snapshot, adapter)
             raise
@@ -860,6 +858,69 @@ def _continue_cloud_probe(
             return current
         if stop_after_attempts is not None and added >= stop_after_attempts:
             return current
+
+
+def _attempt_elapsed_seconds(attempt: ProbeAttempt) -> float:
+    started = datetime.fromisoformat(attempt.response.started_at.replace("Z", "+00:00"))
+    ended = datetime.fromisoformat(attempt.response.ended_at.replace("Z", "+00:00"))
+    return (ended - started).total_seconds() + (attempt.retry_delay_seconds or 0.0)
+
+
+def _cloud_budget_failure_reason(
+    run_artifacts: CloudRunArtifacts,
+    projection: ProbeRunProjection,
+    store: ProbeRunStore,
+) -> str | None:
+    policy = run_artifacts.runtime_policy
+    if projection.status == "complete":
+        return None
+    if len(projection.attempts) >= policy.max_total_transport_attempts:
+        return "total_transport_attempt_budget_exhausted"
+    if (
+        sum(item.response.input_tokens for item in projection.attempts)
+        >= policy.dispatch_stop_input_tokens
+    ):
+        return "input_token_budget_exhausted"
+    if (
+        sum(item.response.output_tokens for item in projection.attempts)
+        >= policy.dispatch_stop_output_tokens
+    ):
+        return "output_token_budget_exhausted"
+    if (
+        sum(_attempt_elapsed_seconds(item) for item in projection.attempts)
+        >= policy.dispatch_stop_cumulative_attempt_seconds
+    ):
+        return "cumulative_attempt_time_budget_exhausted"
+    if shutil.disk_usage(store.root).free < policy.minimum_free_disk_bytes:
+        return "archive_disk_safety_threshold_reached"
+    return None
+
+
+def _terminal_runtime_reason(
+    run_artifacts: CloudRunArtifacts,
+    projection: ProbeRunProjection,
+    store: ProbeRunStore,
+) -> str | None:
+    if "runtime_failed" in projection.case_statuses.values():
+        last_error = projection.attempts[-1].response.error_code
+        if last_error == "provider_unreachable":
+            if run_artifacts.runtime_policy.server_crash_action != (
+                "retry_then_terminal_incomplete"
+            ):
+                raise ValueError("unsupported hash-bound server crash action")
+            return "server_crash_retry_exhausted"
+        if last_error == "provider_identity_mismatch":
+            if run_artifacts.runtime_policy.model_identity_drift_action != ("terminal_incomplete"):
+                raise ValueError("unsupported hash-bound model identity drift action")
+            return "model_identity_drift"
+        if last_error == "provider_missing_request_id":
+            return "provider_request_identity_missing"
+        if last_error == "oom":
+            if run_artifacts.runtime_policy.oom_action != "terminal_incomplete":
+                raise ValueError("unsupported hash-bound OOM action")
+            return "oom"
+        return "runtime_policy_exhausted"
+    return _cloud_budget_failure_reason(run_artifacts, projection, store)
 
 
 def execute_cloud_probe(
@@ -881,24 +942,37 @@ def execute_cloud_probe(
         manifest=manifest,
         store=store,
     )
+    terminal = _existing_terminal_record(checked_store)
+    if terminal is not None:
+        return reconstruct_cloud_projection(
+            checked_store,
+            run_artifacts=run_artifacts,
+            manifest=manifest,
+        )
     if checked_store.attempt_hashes:
         raise ValueError("new cloud execution requires an empty run store")
     _reconcile_dispatch_journal(checked_store, reject_unresolved=True)
     _bind_dispatch_journal(checked_adapter, checked_store)
+    projection = reconstruct_cloud_projection(
+        checked_store,
+        run_artifacts=run_artifacts,
+        manifest=manifest,
+    )
     projection = _continue_cloud_probe(
         run_artifacts=run_artifacts,
         adapter=checked_adapter,
         store=checked_store,
-        projection=None,
+        projection=projection,
         stop_after_attempts=stop_after_attempts,
     )
-    if "runtime_failed" in projection.case_statuses.values():
+    terminal_reason = _terminal_runtime_reason(run_artifacts, projection, checked_store)
+    if terminal_reason is not None:
         mark_cloud_probe_terminal(
             checked_store,
             manifest=manifest,
             status="incomplete",
             selected_candidate=None,
-            reason="runtime_policy_exhausted",
+            reason=terminal_reason,
         )
     return projection
 
@@ -930,6 +1004,15 @@ def resume_cloud_probe(
         manifest=manifest,
         store=store,
     )
+    terminal = _existing_terminal_record(checked_store)
+    if terminal is not None:
+        if projection is not None:
+            raise ValueError("terminal cloud resume must reconstruct its immutable projection")
+        return reconstruct_cloud_projection(
+            checked_store,
+            run_artifacts=run_artifacts,
+            manifest=manifest,
+        )
     _reconcile_dispatch_journal(checked_store, reject_unresolved=True)
     _bind_dispatch_journal(checked_adapter, checked_store)
     if projection is None:
@@ -948,13 +1031,14 @@ def resume_cloud_probe(
         projection=projection,
         stop_after_attempts=stop_after_attempts,
     )
-    if "runtime_failed" in resumed.case_statuses.values():
+    terminal_reason = _terminal_runtime_reason(run_artifacts, resumed, checked_store)
+    if terminal_reason is not None:
         mark_cloud_probe_terminal(
             checked_store,
             manifest=manifest,
             status="incomplete",
             selected_candidate=None,
-            reason="runtime_policy_exhausted",
+            reason=terminal_reason,
         )
     return resumed
 
@@ -1023,6 +1107,7 @@ def mark_cloud_probe_terminal(
         raise ValueError("terminal selected candidate must be a nonempty string or null")
     if not isinstance(reason, str) or not reason.strip():
         raise ValueError("terminal marker requires a reason")
+    _reconcile_dispatch_journal(store, reject_unresolved=True)
     content: dict[str, object] = {
         "schema_version": "paper1.calibration.cloud-terminal.v1",
         "status": status,
@@ -1033,25 +1118,30 @@ def mark_cloud_probe_terminal(
         "formal_parameter_authority": False,
     }
     record = {**content, "record_hash": canonical_payload_hash(content)}
+    existing = _existing_terminal_record(store)
+    if existing is not None:
+        if existing == record:
+            return existing
+        raise ValueError("cloud terminal marker is irreversible")
     store.append_review(record)
     return record
 
 
-def _terminal_record(store: ProbeRunStore) -> Mapping[str, object]:
-    if not isinstance(store, ProbeRunStore):
-        raise TypeError("cloud report requires ProbeRunStore")
+def _existing_terminal_record(store: ProbeRunStore) -> Mapping[str, object] | None:
     if store._sealed:  # noqa: SLF001 - same-package validated store state
         raise RuntimeError("sealed cloud store report must be loaded from its bundle")
-    records = store._load_records(store.root / "staging" / "reviews", "review")  # noqa: SLF001
+    records = store._load_records(  # noqa: SLF001
+        store.root / "staging" / "reviews", "review"
+    )
     terminal = [
         value
         for value in records.values()
         if value.get("schema_version") == "paper1.calibration.cloud-terminal.v1"
     ]
+    if len(terminal) > 1:
+        raise ValueError("cloud store must contain at most one terminal marker")
     if not terminal:
-        raise RuntimeError("recoverable staging store cannot build or seal a terminal report")
-    if len(terminal) != 1:
-        raise ValueError("cloud store must contain exactly one terminal marker")
+        return None
     record = terminal[0]
     _exact(
         record,
@@ -1073,8 +1163,22 @@ def _terminal_record(store: ProbeRunStore) -> Mapping[str, object]:
     return record
 
 
+def _terminal_record(store: ProbeRunStore) -> Mapping[str, object]:
+    if not isinstance(store, ProbeRunStore):
+        raise TypeError("cloud report requires ProbeRunStore")
+    if store._sealed:  # noqa: SLF001 - same-package validated store state
+        raise RuntimeError("sealed cloud store report must be loaded from its bundle")
+    record = _existing_terminal_record(store)
+    if record is None:
+        raise RuntimeError("recoverable staging store cannot build or seal a terminal report")
+    return record
+
+
 def build_cloud_probe_report(store: ProbeRunStore) -> CloudProbeAuditReport:
     """Build a small terminal audit status; candidate scoring remains in ProbeReport."""
+    if not isinstance(store, ProbeRunStore):
+        raise TypeError("cloud report requires ProbeRunStore")
+    _reconcile_dispatch_journal(store, reject_unresolved=True)
     terminal = _terminal_record(store)
     content: dict[str, object] = {
         "schema_version": "paper1.calibration.cloud-probe-audit-report.v1",
@@ -1104,8 +1208,8 @@ def seal_cloud_probe_report(
     manifest: CloudRunManifest,
 ) -> None:
     """Seal only a bundle rebuilt from this store's exact durable evidence."""
-    if not isinstance(bundle, ProbeBundle):
-        raise TypeError("terminal cloud probe sealing requires ProbeBundle")
+    if not isinstance(store, ProbeRunStore):
+        raise TypeError("cloud sealing requires ProbeRunStore")
     if not isinstance(run_artifacts, CloudRunArtifacts) or not isinstance(
         manifest, CloudRunManifest
     ):
@@ -1115,6 +1219,9 @@ def seal_cloud_probe_report(
         or manifest.approved_artifacts_hash != run_artifacts.record_hash
     ):
         raise ValueError("cloud seal authorization drift")
+    _reconcile_dispatch_journal(store, reject_unresolved=True)
+    if not isinstance(bundle, ProbeBundle):
+        raise TypeError("terminal cloud probe sealing requires ProbeBundle")
     projection = reconstruct_cloud_projection(
         store,
         run_artifacts=run_artifacts,
