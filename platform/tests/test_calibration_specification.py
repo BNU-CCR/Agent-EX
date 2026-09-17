@@ -45,6 +45,30 @@ def test_expansion_is_complete_unique_and_iteration_order_independent() -> None:
     assert {case.probe_case_id for case in first} == {case.probe_case_id for case in second}
 
 
+def test_expansion_renders_declared_scale_anchors_into_every_request() -> None:
+    specification = load_probe_specification(probe_spec_payload())
+    cases = expand_probe_cases(specification)
+    topic = specification.payload["topic_candidates"][0]
+
+    main = next(
+        case
+        for case in cases
+        if case.scenario_id == "topic-retirement-delay" and case.scale_id == "stance-1-7"
+    )
+    main_user_text = main.rendered_messages[1]["content"]
+    for label in topic["stance_labels_1_7"]:
+        assert label in main_user_text
+
+    challenger = next(
+        case
+        for case in cases
+        if case.scenario_id == "topic-retirement-delay" and case.scale_id == "stance-0-10"
+    )
+    challenger_user_text = challenger.rendered_messages[1]["content"]
+    assert "0=完全不同意该陈述" in challenger_user_text
+    assert "10=完全同意该陈述" in challenger_user_text
+
+
 @pytest.mark.parametrize("field", ["schema_version", "metadata", "topic_candidates"])
 def test_specification_requires_exact_fields(field: str) -> None:
     payload = probe_spec_payload()

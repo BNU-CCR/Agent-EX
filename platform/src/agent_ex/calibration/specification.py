@@ -380,6 +380,7 @@ def _messages(
     persona_text: str,
     fact_card: str,
     statement: str,
+    stance_labels_1_7: tuple[str, ...],
     scale: Mapping[str, object],
     field_order: Mapping[str, object],
     history: str | None,
@@ -387,9 +388,14 @@ def _messages(
     user_parts = [fact_card, statement]
     if history is not None:
         user_parts.append(history)
+    if scale["scale_id"] == "stance-1-7":
+        scale_instruction = "Scale anchors: " + "; ".join(stance_labels_1_7)
+    else:
+        scale_instruction = (
+            "Scale anchors: 0=完全不同意该陈述; 10=完全同意该陈述; 仅使用0到10之间的整数"
+        )
     user_parts.append(
-        f"Scale {scale['minimum']}..{scale['maximum']}; JSON field order: "
-        + ",".join(field_order["fields"])  # type: ignore[arg-type]
+        scale_instruction + f"; JSON field order: {','.join(field_order['fields'])}"  # type: ignore[arg-type]
     )
     return (
         {"role": "system", "content": persona_text},
@@ -454,6 +460,7 @@ def expand_probe_cases(specification: ArtifactEnvelope) -> tuple[ProbeCase, ...]
                                     persona_text=absent_view.rendered_text,
                                     fact_card=raw_topic["fact_card"],
                                     statement=statement,
+                                    stance_labels_1_7=tuple(raw_topic["stance_labels_1_7"]),
                                     scale=scale,
                                     field_order=field_order,
                                     history=None,
@@ -497,6 +504,7 @@ def expand_probe_cases(specification: ArtifactEnvelope) -> tuple[ProbeCase, ...]
                                 persona_text=view.rendered_text,
                                 fact_card=raw_topic["fact_card"],
                                 statement=raw_topic["statements"][0],
+                                stance_labels_1_7=tuple(raw_topic["stance_labels_1_7"]),
                                 scale=main_scale,
                                 field_order=first_order,
                                 history=None,
@@ -537,6 +545,7 @@ def expand_probe_cases(specification: ArtifactEnvelope) -> tuple[ProbeCase, ...]
                                         persona_text=view.rendered_text,
                                         fact_card=raw_topic["fact_card"],
                                         statement=raw_topic["statements"][0],
+                                        stance_labels_1_7=tuple(raw_topic["stance_labels_1_7"]),
                                         scale=main_scale,
                                         field_order=first_order,
                                         history=scenario["history"],

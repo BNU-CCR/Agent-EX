@@ -1,0 +1,344 @@
+{
+  "gate_algorithm": {
+    "aggregation": "all-family-and-challenge-hard-gates; incomplete-suppresses-all",
+    "algorithm_id": "phase0a1-real-quality-gates",
+    "algorithm_version": "1.0.0",
+    "challenge_coverage": "all-topic-wording-and-field-order-pairs-on-each-scale",
+    "challenges": [
+      {
+        "axis": "variant_index",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-1-7-wording-0-1",
+        "left": 0,
+        "right": 1,
+        "scale_id": "stance-1-7"
+      },
+      {
+        "axis": "variant_index",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-1-7-wording-0-2",
+        "left": 0,
+        "right": 2,
+        "scale_id": "stance-1-7"
+      },
+      {
+        "axis": "variant_index",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-1-7-wording-1-2",
+        "left": 1,
+        "right": 2,
+        "scale_id": "stance-1-7"
+      },
+      {
+        "axis": "variant_index",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-0-10-wording-0-1",
+        "left": 0,
+        "right": 1,
+        "scale_id": "stance-0-10"
+      },
+      {
+        "axis": "variant_index",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-0-10-wording-0-2",
+        "left": 0,
+        "right": 2,
+        "scale_id": "stance-0-10"
+      },
+      {
+        "axis": "variant_index",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-0-10-wording-1-2",
+        "left": 1,
+        "right": 2,
+        "scale_id": "stance-0-10"
+      },
+      {
+        "axis": "field_order_id",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-1-7-field-order",
+        "left": "reason-confidence-stance",
+        "right": "stance-confidence-reason",
+        "scale_id": "stance-1-7"
+      },
+      {
+        "axis": "field_order_id",
+        "case_family": "topic_quality",
+        "challenge_id": "stance-0-10-field-order",
+        "left": "reason-confidence-stance",
+        "right": "stance-confidence-reason",
+        "scale_id": "stance-0-10"
+      }
+    ],
+    "classifier_hash": "59510e73f3e45efd7039f38bde945aa0a3b8fc573417d5efddc30593163c6915",
+    "classifier_id": "phase0a1-direct-contradiction",
+    "classifier_version": "1.0.0",
+    "contradiction_labels": [
+      "consistent",
+      "contradiction",
+      "indeterminate"
+    ],
+    "implementation": "paper1.calibration.gates.v3",
+    "inventory_policy": "exact-specification-expansion-before-scoring",
+    "max_abs_dz": {
+      "denominator": 5,
+      "numerator": 1
+    },
+    "max_contradiction": {
+      "denominator": 20,
+      "numerator": 1
+    },
+    "max_main_endpoint": {
+      "denominator": 5,
+      "numerator": 4
+    },
+    "max_refusal": {
+      "denominator": 100,
+      "numerator": 1
+    },
+    "min_main_categories": 4,
+    "min_parse": {
+      "denominator": 100,
+      "numerator": 99
+    },
+    "minimum_distribution_n": 24,
+    "pair_strata": [
+      "case_family",
+      "scenario_id",
+      "scale_id",
+      "persona_view_id",
+      "replicate_id",
+      "requested_seed",
+      "nonchallenged-axis"
+    ],
+    "tv_threshold": null
+  },
+  "record_hash": "89da9f9b1a9272773deab90456e45eca75b0ba40cfa90c5804b61c9a721ce1a2",
+  "schema_version": "paper1.calibration.approved-specification.v1",
+  "specification": {
+    "algorithm_id": "paper1.calibration_probe_specification_loader",
+    "algorithm_version": "1.0.0",
+    "artifact_id": "artifact-6229e255b130816f674542ba386c88cb3fbfc2b4b7a60dc70c4080ab7c532d0c",
+    "artifact_type": "paper1.calibration_probe_specification",
+    "input_hashes": {},
+    "output_hash": "f7cea92aa55e59a459b0f6eb9480fa73b0d94eee9f26e09e97f8ee632b277c70",
+    "payload": {
+      "candidate_order": [
+        "retirement-delay",
+        "gm-soybean-oil",
+        "ai-net-employment"
+      ],
+      "continuity_scenarios": [
+        {
+          "history": "既往记录：你先前对该陈述给出6分，理由是你预期收益较大。新增信息：有人表示“听说结果可能相反”，但没有给出来源、数据、方法或可核实细节。",
+          "scenario_id": "insufficient-information"
+        },
+        {
+          "history": "既往记录：你先前对该陈述给出4分，理由是现有信息同时存在利弊。新增信息：本轮没有提供可核实的新事实，只重复了同一问题。",
+          "scenario_id": "reasonable-hold"
+        },
+        {
+          "history": "既往记录：你先前对该陈述给出2分，理由是你预期主要风险大于收益。新增信息：一份与先前判断直接相关、来源透明且方法说明完整的汇总材料显示，你担心的主要风险在多个独立样本中未出现，而预期收益在多个独立样本中重复出现；材料同时明确了不确定性和适用边界。请把这些信息当作本题给定情境，不自行补充其他事实。",
+          "scenario_id": "warranted-update"
+        }
+      ],
+      "decision_ids": [
+        "P1_CONTINUITY_LOCK_THRESHOLD",
+        "P1_CONTINUITY_MC_SCORING",
+        "P1_PARSE_FAILURE_THRESHOLD",
+        "P1_PERSONA_TEMPLATES",
+        "P1_REFUSAL_THRESHOLD",
+        "P1_REQUEST_SEED",
+        "P1_STANCE_SCALE",
+        "P1_TEMPERATURE",
+        "P1_TIMEOUT_RETRY",
+        "P1_TOPIC_PRIMARY",
+        "P1_TOP_P"
+      ],
+      "factor_orders": [
+        {
+          "factor_order_id": "continuity-identity",
+          "factors": [
+            "continuity",
+            "identity"
+          ]
+        },
+        {
+          "factor_order_id": "identity-continuity",
+          "factors": [
+            "identity",
+            "continuity"
+          ]
+        }
+      ],
+      "field_orders": [
+        {
+          "field_order_id": "reason-confidence-stance",
+          "fields": [
+            "public_reason",
+            "confidence",
+            "stance"
+          ]
+        },
+        {
+          "field_order_id": "stance-confidence-reason",
+          "fields": [
+            "stance",
+            "confidence",
+            "public_reason"
+          ]
+        }
+      ],
+      "generation_settings": {
+        "request_seed": "UNRESOLVED[P1_REQUEST_SEED]",
+        "temperature": "UNRESOLVED[P1_TEMPERATURE]",
+        "top_p": "UNRESOLVED[P1_TOP_P]"
+      },
+      "metadata": {
+        "calibration_only": true,
+        "formal_parameter_authority": false,
+        "research_parameter_status": "not_frozen"
+      },
+      "persona": {
+        "common_skeleton": "你正在参加一项校准调查。只根据当前题目、所给事实卡以及（如有）既往回答记录，报告你此刻的个人判断。\n{factor_blocks}\n不要推测实验条件，不补写未提供的人口或经历信息。请只回答当前题目，并严格返回要求字段组成的 JSON 对象；不要输出分析过程或额外文本。",
+        "continuity_blocks": [
+          {
+            "text": "请结合所给既往回答说明当前判断与之前判断的关系。你可以保留或修改先前判断；以当前信息为依据，并简要说明理由。",
+            "wording_id": "continuity-balanced-a"
+          },
+          {
+            "text": "请解释当前回答如何承接先前的立场和理由。若当前信息支持保留或调整，都可以据此作答，并说明此刻的依据。",
+            "wording_id": "continuity-balanced-b"
+          }
+        ],
+        "identity_block": "受访者资料：42岁；女性；高中教育；居住在城镇；当前主要活动为受雇工作；职业大类为服务业。以上仅为调查字段，不代表未说明的经历、知识或立场。"
+      },
+      "persona_conditions": [
+        {
+          "condition_id": "i0-c0",
+          "continuity_present": false,
+          "identity_present": false
+        },
+        {
+          "condition_id": "i0-c1",
+          "continuity_present": true,
+          "identity_present": false
+        },
+        {
+          "condition_id": "i1-c0",
+          "continuity_present": false,
+          "identity_present": true
+        },
+        {
+          "condition_id": "i1-c1",
+          "continuity_present": true,
+          "identity_present": true
+        }
+      ],
+      "policy_hashes": {
+        "gate_algorithm": "8f0e469c2870c88aef2523f1afd09b50fc644b3a52d64f5a7f82178be15ed90c",
+        "runtime_policy": "fd0b257747525dc79bd634ace413698ebfc1e95653b687c13c26dadf00e9d896",
+        "semantic_review_policy": "12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9"
+      },
+      "preselection_priority": [
+        "retirement-delay",
+        "gm-soybean-oil",
+        "ai-net-employment"
+      ],
+      "replicates": [
+        {
+          "replicate_id": 0,
+          "requested_seed": 310001
+        },
+        {
+          "replicate_id": 1,
+          "requested_seed": 310002
+        },
+        {
+          "replicate_id": 2,
+          "requested_seed": 310003
+        },
+        {
+          "replicate_id": 3,
+          "requested_seed": 310004
+        }
+      ],
+      "scales": [
+        {
+          "maximum": 10,
+          "minimum": 0,
+          "role": "challenger",
+          "scale_id": "stance-0-10"
+        },
+        {
+          "maximum": 7,
+          "minimum": 1,
+          "role": "main",
+          "scale_id": "stance-1-7"
+        }
+      ],
+      "schema_version": "paper1.calibration.probe-specification.v1",
+      "topic_candidates": [
+        {
+          "candidate_key": "retirement-delay",
+          "construct": "对逐步提高法定退休年龄这一政策方向的支持程度",
+          "fact_card": "本题讨论是否逐步提高法定退休年龄。评价对象仅是对这一政策方向的总体支持程度；不要求判断具体实施年份、幅度或某一群体的例外安排。",
+          "stance_labels_1_7": [
+            "1 非常不支持",
+            "2 不支持",
+            "3 比较不支持",
+            "4 中立或不确定",
+            "5 比较支持",
+            "6 支持",
+            "7 非常支持"
+          ],
+          "statements": [
+            "总体而言，我支持逐步提高法定退休年龄。",
+            "综合考虑，我赞成以渐进方式延后法定退休年龄。",
+            "就政策方向而言，我同意逐步延迟法定退休年龄。"
+          ]
+        },
+        {
+          "candidate_key": "gm-soybean-oil",
+          "construct": "对购买并食用明确标识的转基因大豆油的个人意愿",
+          "fact_card": "本题中的“有明确标签的转基因大豆油”是指商品标签已清楚标明原料属性的食用大豆油。评价对象仅是个人购买和食用意愿，不要求判断未标示产品或其他转基因食品。",
+          "stance_labels_1_7": [
+            "1 完全不愿意",
+            "2 不愿意",
+            "3 比较不愿意",
+            "4 中立或不确定",
+            "5 比较愿意",
+            "6 愿意",
+            "7 非常愿意"
+          ],
+          "statements": [
+            "在标签清楚的情况下，我愿意购买并食用转基因大豆油。",
+            "如果商品明确标注，我可以接受购买和食用转基因大豆油。",
+            "对于明确标识的转基因大豆油，我有购买并食用的意愿。"
+          ]
+        },
+        {
+          "candidate_key": "ai-net-employment",
+          "construct": "对未来十年人工智能广泛应用是否增加社会总体就业机会的判断",
+          "fact_card": "本题讨论未来十年人工智能广泛应用对社会总体就业机会数量的净影响。评价对象是“就业机会总量是否增加”的判断，不涉及某一行业、职业或个人的就业得失。",
+          "stance_labels_1_7": [
+            "1 完全不同意",
+            "2 不同意",
+            "3 比较不同意",
+            "4 中立或不确定",
+            "5 比较同意",
+            "6 同意",
+            "7 完全同意"
+          ],
+          "statements": [
+            "我认为未来十年人工智能的广泛应用将增加社会总体就业机会。",
+            "就未来十年的净影响而言，我预计人工智能普及会使就业机会总量增加。",
+            "综合新增与被替代岗位，我判断未来十年人工智能应用会带来更多总体就业机会。"
+          ]
+        }
+      ]
+    },
+    "rng_provenance": [],
+    "schema_version": "paper1.artifact-envelope.v1"
+  }
+}

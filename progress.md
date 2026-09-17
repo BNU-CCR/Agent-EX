@@ -863,3 +863,17 @@
 - 本机发布证据见`logs/2026-09-10-phase0a1-local-release.md`。云服务器继续保持关闭；下一步
   仅在用户重新开机并提供当前SSH端点后执行Task 9的版本化只读preflight，再安装锁定环境、
   下载固定revision并运行10条真实smoke。816-case probe仍受六组exact-hash批准门阻断。
+
+### Phase 0A-1：2026-09-17 真实 smoke 与六组审批提案
+
+- **状态：** 真实10请求smoke通过；816-case尚未获批、尚未执行。
+- AutoDL固定Qwen3-8B revision在`d99819a`完成3项transport diagnostics和
+  `9 -> stop -> recovery -> 1`共10条唯一首试成功响应；最终smoke hash为
+  `4eee264bad889d17582d535dc688310a4b7b665c173c187cd8289fc45b39e53e`，环境锁为
+  `c4070d3848da73aa0a16fa1db0c9a4755bdc0238c12b7e84499bbbf00e7d3e91`。服务随后关闭。
+- 审批包物化时发现量表锚点此前未进入请求文本；已用TDD补入七个1--7文字锚点及0/10
+  端点锚点，逻辑inventory仍为816。
+- 六组proposal通过生产loader，精确计数为144/96/576；combined packet hash为
+  `8467cc55fee0600e0f165531f1de0731dd5a09c3536ab4f70ce2f469e8937002`。它仍是
+  proposal-only，必须获得六组完整hash书面批准后才能建立新环境锁并执行。
+- 详细证据和六组hash见`logs/2026-09-17-phase0a1-smoke-pass-and-approval-packet.md`。

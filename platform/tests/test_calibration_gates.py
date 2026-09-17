@@ -405,19 +405,30 @@ def complete_fixture(challenges=None, replicates=4):
 
 def test_any_adverse_semantic_dimension_fails_candidate_gate() -> None:
     spec, cases, run, alg, reviews = complete_fixture()
-    target = reviews[0]
+    retirement_id = next(
+        case.candidate_id for case in cases if case.scenario_id == "topic-retirement-delay"
+    )
+    case_by_id = {case.probe_case_id: case for case in cases}
+    target_index = next(
+        index
+        for index, review in enumerate(reviews)
+        if case_by_id[review.case_id].candidate_id == retirement_id
+    )
+    target = reviews[target_index]
     adverse = replace(
         target,
         dimension_labels={**dict(target.dimension_labels), "single_construct": "no"},
         dimension_passes={**dict(target.dimension_passes), "single_construct": False},
         semantic_passed=False,
     )
+    changed_reviews = list(reviews)
+    changed_reviews[target_index] = adverse
     report = evaluate_quality_gates(
         spec,
         cases,
         run,
         alg,
-        (adverse,) + reviews[1:],
+        tuple(changed_reviews),
         candidate_key="retirement-delay",
     )
     assert report.status == "complete"

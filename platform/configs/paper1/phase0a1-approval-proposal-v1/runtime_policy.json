@@ -1,0 +1,39 @@
+{
+  "backoff_seconds": [
+    2.0
+  ],
+  "max_transport_attempts_by_code": {
+    "oom": 1,
+    "provider_busy": 2,
+    "provider_fatal": 1,
+    "provider_invalid_json": 1,
+    "provider_redirect": 1,
+    "provider_response_too_large": 1,
+    "provider_schema_error": 1,
+    "provider_unreachable": 2,
+    "timeout": 2
+  },
+  "metadata": {
+    "calibration_only": true,
+    "formal_parameter_authority": false,
+    "research_parameter_status": "not_frozen"
+  },
+  "nonretryable_error_codes": [
+    "oom",
+    "provider_fatal",
+    "provider_invalid_json",
+    "provider_redirect",
+    "provider_response_too_large",
+    "provider_schema_error"
+  ],
+  "obey_retry_after": true,
+  "policy_id": "phase0a1-probe-runtime-v1",
+  "record_hash": "fd0b257747525dc79bd634ace413698ebfc1e95653b687c13c26dadf00e9d896",
+  "retryable_error_codes": [
+    "provider_busy",
+    "provider_unreachable",
+    "timeout"
+  ],
+  "schema_version": "paper1.calibration.probe-runtime-policy.v1",
+  "timeout_seconds": 120.0
+}
