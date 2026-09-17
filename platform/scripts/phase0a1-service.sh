@@ -227,6 +227,16 @@ content = {
     "calibration_only": True,
     "formal_parameter_authority": False,
 }
+encoded = json.dumps(content, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+payload = {**content, "record_hash": hashlib.sha256(encoded).hexdigest()}
+fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+with os.fdopen(fd, "w", encoding="utf-8") as stream:
+    json.dump(payload, stream, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    stream.write("\n")
+    stream.flush()
+    os.fsync(stream.fileno())
+PY
+}
 
 write_prelock_abort_evidence() {
   local output="$1"
@@ -247,16 +257,6 @@ content = {
     "aborted_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     "calibration_only": True,
     "formal_parameter_authority": False,
-}
-encoded = json.dumps(content, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
-payload = {**content, "record_hash": hashlib.sha256(encoded).hexdigest()}
-fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-with os.fdopen(fd, "w", encoding="utf-8") as stream:
-    json.dump(payload, stream, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
-    stream.write("\n")
-    stream.flush()
-    os.fsync(stream.fileno())
-PY
 }
 encoded = json.dumps(content, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
 payload = {**content, "record_hash": hashlib.sha256(encoded).hexdigest()}

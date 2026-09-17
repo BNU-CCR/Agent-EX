@@ -232,3 +232,9 @@ def test_service_script_has_a_verified_prelock_abort_terminal_record() -> None:
     assert "write_prelock_abort_evidence" in script
     assert 'start-identity.json" && ! -e "$candidate/stop-evidence.json" && ! -e "$candidate/abort-evidence.json"' in script
     assert 'elif [[ "$(json_field "$identity" binding_kind)" == "environment-lock" ]]' in script
+
+    stop_start = script.index("write_stop_evidence() {")
+    stop_python_close = script.index("\nPY\n}", stop_start)
+    abort_start = script.index("write_prelock_abort_evidence() {")
+    abort_python_close = script.index("\nPY\n}", abort_start)
+    assert stop_start < stop_python_close < abort_start < abort_python_close
