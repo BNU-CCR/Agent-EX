@@ -11,6 +11,7 @@ import pytest
 from agent_ex.calibration.contracts import ProbeRuntimePolicy
 from agent_ex.calibration.environment import EnvironmentLock
 from agent_ex.calibration.transport_diagnostics import (
+    _controlled_timeout_delay,
     DiagnosticCase,
     TransportDiagnosticEvidence,
     diagnostic_cases,
@@ -58,6 +59,11 @@ def test_diagnostic_cases_are_fixed_and_never_name_vllm() -> None:
         "provider_busy",
     )
     assert all(case.endpoint != VLLM_ENDPOINT for case in cases)
+
+
+def test_controlled_timeout_server_has_a_material_deadline_margin() -> None:
+    assert _controlled_timeout_delay(0.02) >= 1.02
+    assert _controlled_timeout_delay(120.0) >= 132.0
 
 
 def test_diagnostic_record_round_trip_rejects_classification_drift() -> None:

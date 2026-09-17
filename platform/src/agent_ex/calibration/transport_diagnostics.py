@@ -309,6 +309,11 @@ class _DiagnosticServer(ThreadingHTTPServer):
     allow_reuse_address = False
 
 
+def _controlled_timeout_delay(timeout_seconds: float) -> float:
+    _require_positive_float("timeout_seconds", timeout_seconds)
+    return timeout_seconds + max(1.0, timeout_seconds * 0.1)
+
+
 def _serve_case(case: DiagnosticCase) -> tuple[_DiagnosticServer, Thread]:
     _, port, _ = _loopback_parts(case.endpoint)
 
@@ -316,7 +321,8 @@ def _serve_case(case: DiagnosticCase) -> tuple[_DiagnosticServer, Thread]:
 
         class Handler(_QuietHandler):
             def do_POST(self) -> None:  # noqa: N802
-                time.sleep(case.timeout_seconds + 0.05)
+                self.close_connection = True
+                time.sleep(_controlled_timeout_delay(case.timeout_seconds))
                 try:
                     self.send_response(204)
                     self.send_header("Content-Length", "0")
