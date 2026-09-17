@@ -224,6 +224,29 @@ def inspection_inputs_payload(tmp_path: Path) -> dict[str, object]:
     return {**content, "record_hash": canonical_payload_hash(content)}
 
 
+def test_inspection_inputs_allow_repeated_argument_values_but_not_duplicate_files(
+    tmp_path: Path,
+) -> None:
+    payload = inspection_inputs_payload(tmp_path)
+    payload["serve_arguments"] = [
+        "serve",
+        "same-revision",
+        "--revision",
+        "same-revision",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000",
+    ]
+
+    checked = cli._inspection_inputs(payload)  # noqa: SLF001
+    assert checked["serve_arguments"] == payload["serve_arguments"]
+
+    payload["model_files"] = ["model.safetensors", "model.safetensors"]
+    with pytest.raises(ValueError, match="model_files contains duplicates"):
+        cli._inspection_inputs(payload)  # noqa: SLF001
+
+
 def test_manifest_binds_exact_approved_packet_and_environment_lock(tmp_path: Path) -> None:
     packet = approved_run_artifacts_payload()
     lock = environment_lock_for(packet)

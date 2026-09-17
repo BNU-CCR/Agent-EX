@@ -499,6 +499,8 @@ def _inspection_inputs(payload: Mapping[str, object]) -> dict[str, object]:
         value = payload[name]
         if type(value) is not list or not value or any(type(item) is not str for item in value):
             raise TypeError(f"inspection input {name} must be a nonempty JSON array of strings")
+    for name in ("model_files", "tokenizer_files"):
+        value = payload[name]
         if len(set(value)) != len(value):
             raise ValueError(f"inspection input {name} contains duplicates")
     archived_diff = payload["archived_diff_file"]

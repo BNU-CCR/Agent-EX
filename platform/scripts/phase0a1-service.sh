@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  echo "usage: phase0a1-service.sh start-first SERVE VLLM PYTHON MODEL EVIDENCE_DIR MANIFEST_HASH PRELIMINARY_HASH | start-recovery SERVE VLLM PYTHON MODEL EVIDENCE_DIR MANIFEST_HASH LOCK_HASH | status PYTHON EVIDENCE_DIR | stop PYTHON EVIDENCE_DIR MANIFEST_HASH LOCK_HASH" >&2
+  echo "usage: phase0a1-service.sh start-first SERVE VLLM PYTHON MODEL EVIDENCE_DIR MANIFEST_HASH PRELIMINARY_HASH | start-recovery SERVE VLLM PYTHON MODEL EVIDENCE_DIR MANIFEST_HASH LOCK_HASH | status PYTHON EVIDENCE_DIR | abort-first PYTHON EVIDENCE_DIR MANIFEST_HASH PRELIMINARY_HASH | stop PYTHON EVIDENCE_DIR MANIFEST_HASH LOCK_HASH" >&2
   exit 2
 }
 
@@ -68,6 +68,12 @@ fields = {
         "schema_version", "manifest_hash", "environment_lock_hash",
         "service_start_identity_hash", "pid", "process_exit_observed",
         "loopback_listener_absent", "stopped_at", "calibration_only",
+        "formal_parameter_authority", "record_hash",
+    },
+    "paper1.calibration.service-prelock-abort-evidence.v1": {
+        "schema_version", "manifest_hash", "preliminary_inspection_hash",
+        "service_start_identity_hash", "pid", "process_exit_observed",
+        "loopback_listener_absent", "aborted_at", "calibration_only",
         "formal_parameter_authority", "record_hash",
     },
 }
@@ -152,7 +158,7 @@ find_active_generation() {
       0001|0002) ;;
       *) echo "unexpected service generation" >&2; exit 1 ;;
     esac
-    if [[ -f "$candidate/start-identity.json" && ! -e "$candidate/stop-evidence.json" ]]; then
+    if [[ -f "$candidate/start-identity.json" && ! -e "$candidate/stop-evidence.json" && ! -e "$candidate/abort-evidence.json" ]]; then
       active+=("$candidate")
     fi
   done
@@ -221,6 +227,37 @@ content = {
     "calibration_only": True,
     "formal_parameter_authority": False,
 }
+
+write_prelock_abort_evidence() {
+  local output="$1"
+  shift
+  "$python_executable" - "$output" "$@" <<'PY'
+import hashlib, json, os, sys
+from datetime import datetime, timezone
+
+output, manifest_hash, preliminary_hash, identity_hash, pid = sys.argv[1:]
+content = {
+    "schema_version": "paper1.calibration.service-prelock-abort-evidence.v1",
+    "manifest_hash": manifest_hash,
+    "preliminary_inspection_hash": preliminary_hash,
+    "service_start_identity_hash": identity_hash,
+    "pid": int(pid),
+    "process_exit_observed": True,
+    "loopback_listener_absent": True,
+    "aborted_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+    "calibration_only": True,
+    "formal_parameter_authority": False,
+}
+encoded = json.dumps(content, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+payload = {**content, "record_hash": hashlib.sha256(encoded).hexdigest()}
+fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+with os.fdopen(fd, "w", encoding="utf-8") as stream:
+    json.dump(payload, stream, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    stream.write("\n")
+    stream.flush()
+    os.fsync(stream.fileno())
+PY
+}
 encoded = json.dumps(content, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
 payload = {**content, "record_hash": hashlib.sha256(encoded).hexdigest()}
 fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -264,17 +301,17 @@ case "$mode" in
     [[ -x "$python_executable" ]] || usage
     require_exact_dir "$evidence_dir" "ABSOLUTE_EVIDENCE_DIR"
     ;;
-  stop)
+  abort-first|stop)
     [[ "$#" -eq 4 ]] || usage
     python_executable="$1"
     evidence_dir="$2"
     manifest_hash="$3"
-    lock_hash="$4"
+    binding_hash="$4"
     require_exact_file "$python_executable" "ABSOLUTE_PYTHON"
     [[ -x "$python_executable" ]] || usage
     require_exact_dir "$evidence_dir" "ABSOLUTE_EVIDENCE_DIR"
     require_sha256 "$manifest_hash" "MANIFEST_HASH"
-    require_sha256 "$lock_hash" "LOCK_HASH"
+    require_sha256 "$binding_hash" "binding hash"
     ;;
   *) usage ;;
 esac
@@ -371,21 +408,31 @@ case "$mode" in
     verify_active_identity "$identity"
     printf '%s\n' "$identity"
     ;;
-  stop)
+  abort-first|stop)
     [[ -d "$generations" && ! -L "$generations" ]] || {
       echo "no active generation" >&2
       exit 1
     }
     find_active_generation "$generations"
     identity="$active_generation/start-identity.json"
+    if [[ "$mode" == "abort-first" ]]; then
+      [[ "$(basename -- "$active_generation")" == "0001" && "$(json_field "$identity" binding_kind)" == "preliminary-inspection" && "$(json_field "$identity" binding_hash)" == "$binding_hash" ]] || {
+        echo "abort-first requires the active preliminary-bound first generation" >&2
+        exit 1
+      }
+    elif [[ "$(json_field "$identity" binding_kind)" == "environment-lock" ]]; then
+      [[ "$(json_field "$identity" binding_hash)" == "$binding_hash" ]] || {
+        echo "environment-lock identity mismatch" >&2
+        exit 1
+      }
+    elif [[ "$(json_field "$identity" binding_kind)" != "preliminary-inspection" ]]; then
+      echo "unsupported service binding kind" >&2
+      exit 1
+    fi
     [[ "$(json_field "$identity" manifest_hash)" == "$manifest_hash" ]] || {
       echo "manifest identity mismatch" >&2
       exit 1
     }
-    if [[ "$(json_field "$identity" binding_kind)" == "environment-lock" && "$(json_field "$identity" binding_hash)" != "$lock_hash" ]]; then
-      echo "environment-lock identity mismatch" >&2
-      exit 1
-    fi
     verify_active_identity "$identity"
     identity_hash="$(json_field "$identity" record_hash)"
     kill -TERM -- "-$pid"
@@ -405,9 +452,15 @@ case "$mode" in
       echo "loopback listener remains after process exit" >&2
       exit 1
     }
-    stop_evidence="$active_generation/stop-evidence.json"
-    write_stop_evidence "$stop_evidence" "$manifest_hash" "$lock_hash" "$identity_hash" "$pid"
-    verify_service_record "$stop_evidence" "paper1.calibration.service-stop-evidence.v1"
-    printf '%s\n' "$stop_evidence"
+    if [[ "$mode" == "abort-first" ]]; then
+      terminal_evidence="$active_generation/abort-evidence.json"
+      write_prelock_abort_evidence "$terminal_evidence" "$manifest_hash" "$binding_hash" "$identity_hash" "$pid"
+      verify_service_record "$terminal_evidence" "paper1.calibration.service-prelock-abort-evidence.v1"
+    else
+      terminal_evidence="$active_generation/stop-evidence.json"
+      write_stop_evidence "$terminal_evidence" "$manifest_hash" "$binding_hash" "$identity_hash" "$pid"
+      verify_service_record "$terminal_evidence" "paper1.calibration.service-stop-evidence.v1"
+    fi
+    printf '%s\n' "$terminal_evidence"
     ;;
 esac

@@ -220,3 +220,15 @@ def test_service_script_uses_an_explicit_recorded_control_python() -> None:
     assert '"$python_executable" - "$output" "$@"' in script
     assert '"control_python"' in script
     assert "python3" not in script
+
+
+def test_service_script_has_a_verified_prelock_abort_terminal_record() -> None:
+    script = _script("phase0a1-service.sh")
+
+    assert "abort-first PYTHON EVIDENCE_DIR MANIFEST_HASH PRELIMINARY_HASH" in script
+    assert "abort-first|stop)" in script
+    assert "paper1.calibration.service-prelock-abort-evidence.v1" in script
+    assert '"preliminary_inspection_hash"' in script
+    assert "write_prelock_abort_evidence" in script
+    assert 'start-identity.json" && ! -e "$candidate/stop-evidence.json" && ! -e "$candidate/abort-evidence.json"' in script
+    assert 'elif [[ "$(json_field "$identity" binding_kind)" == "environment-lock" ]]' in script
