@@ -31,6 +31,8 @@ for variable in $(compgen -e); do
   esac
 done
 
+export VLLM_USE_FLASHINFER_SAMPLER=0
+
 exec "$vllm_executable" serve "$model_path" \
   --host 127.0.0.1 \
   --port 8000 \

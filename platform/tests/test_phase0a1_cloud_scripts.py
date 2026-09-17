@@ -140,6 +140,15 @@ def test_serve_script_rejects_every_proxy_name_immediately_before_exec() -> None
     assert "compgen -e" in script
 
 
+def test_serve_script_disables_flashinfer_sampler_before_exec() -> None:
+    script = _script("phase0a1-serve.sh")
+
+    assignment = "export VLLM_USE_FLASHINFER_SAMPLER=0"
+    assert assignment in script
+    assert script.index(assignment) < script.index('exec "$vllm_executable"')
+    assert "CUDA_HOME=" not in script
+
+
 def test_service_script_exposes_only_two_generations_and_strict_modes() -> None:
     script = _script("phase0a1-service.sh")
 
