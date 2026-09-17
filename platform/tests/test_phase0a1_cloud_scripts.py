@@ -161,13 +161,13 @@ def test_service_script_exposes_only_two_generations_and_strict_modes() -> None:
     assert "service evidence fields are not exact" in script
     assert "9>&-" in script
     assert "cleanup_failed_start" in script
-    assert 'kill -TERM "$pid"' in script
+    assert 'kill -TERM -- "-$pid"' in script
     assert 'wait "$pid"' in script
     launch = script.index("exec 9>&-")
-    exec_serve = script.index('exec "$serve_script"', launch)
+    exec_serve = script.index('exec setsid "$serve_script"', launch)
     background = script.index('&\n    pid="$!"', exec_serve)
     cleanup = script.index("cleanup_failed_start", background)
-    health_loop = script.index("for _ in $(seq 1 120)", cleanup)
+    health_loop = script.index("for _ in $(seq 1 300)", cleanup)
     assert launch < exec_serve < background < cleanup < health_loop
     assert "process_exit_observed" in script
     assert "loopback_listener_absent" in script
@@ -184,6 +184,16 @@ def test_service_script_rejects_proxy_symlink_stale_pid_and_identity_drift() -> 
     assert 'kill -0 "$pid"' in script
     assert "command-line identity mismatch" in script
     assert "process start-time mismatch" in script
-    assert 'kill -TERM "$pid"' in script
+    assert 'kill -TERM -- "-$pid"' in script
     assert "noclobber" in script
     assert "active generation" in script
+
+
+def test_service_script_owns_and_reaps_the_whole_vllm_process_group() -> None:
+    script = _script("phase0a1-service.sh")
+
+    assert 'exec setsid "$serve_script" "$vllm_executable" "$model_path"' in script
+    assert 'kill -TERM -- "-$pid"' in script
+    assert 'kill -KILL -- "-$pid"' in script
+    assert 'kill -0 -- "-$pid"' in script
+    assert "for _ in $(seq 1 300)" in script

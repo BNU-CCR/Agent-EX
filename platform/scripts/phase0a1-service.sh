@@ -301,18 +301,18 @@ case "$mode" in
     mkdir -- "$generation_dir"
     (
       exec 9>&-
-      exec "$serve_script" "$vllm_executable" "$model_path"
+      exec setsid "$serve_script" "$vllm_executable" "$model_path"
     ) > "$generation_dir/service.log" 2>&1 &
     pid="$!"
     start_committed=false
     cleanup_failed_start() {
-      if [[ "$start_committed" != true ]] && kill -0 "$pid" 2>/dev/null; then
-        kill -TERM "$pid" 2>/dev/null || true
+      if [[ "$start_committed" != true ]] && kill -0 -- "-$pid" 2>/dev/null; then
+        kill -TERM -- "-$pid" 2>/dev/null || true
         for _ in $(seq 1 10); do
-          kill -0 "$pid" 2>/dev/null || break
+          kill -0 -- "-$pid" 2>/dev/null || break
           sleep 1
         done
-        kill -KILL "$pid" 2>/dev/null || true
+        kill -KILL -- "-$pid" 2>/dev/null || true
         wait "$pid" 2>/dev/null || true
       fi
     }
@@ -323,7 +323,7 @@ case "$mode" in
     set -o noclobber
     printf '%s\n' "$pid" > "$generation_dir/pid"
     set +o noclobber
-    for _ in $(seq 1 120); do
+    for _ in $(seq 1 300); do
       kill -0 "$pid" 2>/dev/null || {
         echo "vLLM exited before health" >&2
         exit 1
@@ -375,10 +375,10 @@ case "$mode" in
     fi
     verify_active_identity "$identity"
     identity_hash="$(json_field "$identity" record_hash)"
-    kill -TERM "$pid"
+    kill -TERM -- "-$pid"
     exited=false
     for _ in $(seq 1 60); do
-      if ! kill -0 "$pid" 2>/dev/null; then
+      if ! kill -0 -- "-$pid" 2>/dev/null; then
         exited=true
         break
       fi
