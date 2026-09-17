@@ -582,7 +582,7 @@ def test_smoke_preliminary_inspection_binds_wheels_and_current_environment(
     write_json(wheel_path, wheel_manifest)
     packages = (
         PackageEntry(name="torch", version="2.8.0"),
-        PackageEntry(name="vllm", version="0.23.0"),
+        PackageEntry(name="vllm", version="0.23.0+cu129"),
     )
     monkeypatch.setattr(cli, "_package_lock", lambda: packages)
     monkeypatch.setattr(cli, "_distribution_is_in_current_environment", lambda name: True)

@@ -834,9 +834,14 @@ def _smoke_preliminary_inspection_command(args: argparse.Namespace) -> int:
     installed = {item.name.casefold().replace("_", "-"): item.version for item in packages}
     for wheel in wheels:
         name = wheel.name.casefold().replace("_", "-")
-        if installed.get(name) != wheel.version:
+        expected_versions = (
+            {wheel.version, f"{wheel.version}+cu129"}
+            if name == "vllm" and wheel.source == "official-cuda-12.9"
+            else {wheel.version}
+        )
+        if installed.get(name) not in expected_versions:
             raise ValueError(f"installed package differs from wheel manifest: {wheel.name}")
-    if installed.get("vllm") != "0.23.0":
+    if installed.get("vllm") not in {"0.23.0", "0.23.0+cu129"}:
         raise ValueError("preliminary inspection requires installed vLLM 0.23.0")
     if "torch" not in installed:
         raise ValueError("preliminary inspection requires installed PyTorch")
