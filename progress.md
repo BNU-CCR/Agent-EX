@@ -884,3 +884,22 @@
   response headers与body，trickle response不能绕过overall timeout；terminal/build/seal均拒绝
   尚无durable attempt的indeterminate dispatch intent。
 - 详细证据和六组hash见`logs/2026-09-17-phase0a1-smoke-pass-and-approval-packet.md`。
+
+### Phase 0A-1：2026-09-18 首个816-case云端诊断run
+
+- **状态：** 816个唯一case全部执行完成，但因统一测量合同缺陷标记为
+  `diagnostic incomplete`，禁止进入候选比较。
+- 云端源提交为`34cc5d49e275b26d48bd6eed6ff06a0d8ed19e6c`；environment lock为
+  `3ac170ee330bf409c2525aca8c958ce0a6ffc0d7f2a1517b3571ef3770d1d6b9`，run manifest为
+  `1811a2e4eedddebdacd4954103d2926e6540c8860265403679481f6787ac05af`。
+- durable store包含816个case、1,511次attempt（816 semantic + 695 format repair），
+  1,511次transport全部返回response，且每次均有intent/attempt/resolution证据。
+- 最终仅142个case parsed，674个`parse_failed`。根因是request未声明独立
+  `confidence` JSON整数`1..5`合同，且repair请求未携带首次raw answer作为
+  assistant history；这是所有候选共同的工具缺陷，不是议题质量结论。
+- run已不可逆标记`incomplete`；terminal hash为
+  `78e521c40d638022be429ad6862b29d60740b96f0d186132c6ecf61d54250cd4`，audit report为
+  `6e010a4d18d8a825bab01936623410d4a95122eb129812db25ee0110bd399f19`。
+- 下一步必须统一修订prompt/repair合同、重新物化并审批六组hash，然后全量重跑816；
+  不得只补跑失败case，不得将本诊断run混入新run或正式分析。详细见
+  `logs/2026-09-18-phase0a1-first-816-diagnostic-run.md`。
