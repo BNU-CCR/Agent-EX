@@ -109,10 +109,12 @@ runner 的文件系统/input allowlist 必须拒绝完整 bundle、human pack、
   exact-cover index 的最终不可变记录；
 - `JudgeRunProjection`：按 approved order 从 intents、attempts、resolutions 和 reconciliation
   重放得到 797 项状态；
-- `JudgeEvidenceIndex`：每个 judge code record hash 到 manifest、request、intent、attempt、
-  response、parse、raw artifact identity/hash 的 exact mapping；
+- `JudgeEvidenceIndex`：顶层绑定 `JudgeRunCompletion.record_hash` 及 create-only locator，并提供
+  每个 judge code record hash 到 manifest、request、intent、attempt、response、parse、raw
+  artifact identity/hash 的 exact mapping；
 - `HumanCodingRecord` 与 `HumanEvidenceIndex`：人类表单来源及转换证据；
-- `IndependentCodeSetV2`：绑定 judge/human evidence index hash 的 971-record 完整集合。
+- `IndependentCodeSetV2`：绑定 judge/human evidence index hash、
+  `judge_run_completion_hash`/locator 的 971-record 完整集合。
 
 这些类型只服务 Phase 0A-1 calibration review，不复用正式 event engine，也不把 judge
 标签混入 probe attempt store。
@@ -230,12 +232,14 @@ projection hash、service index hash、唯一 stop evidence hash 和 port/GPU-id
 足够。legacy `paper1.calibration.independent-code-set.v1` 只保留给历史/offline synthetic 路径；
 真实 Phase 0A-1 judge 必须使用 `paper1.calibration.independent-code-set.v2`。v2 顶层绑定
 `judge_evidence_index_hash`、`human_evidence_index_hash`、两个 affirmative index locator/hash、
-review bundle/export hash、coder contracts 和 971-record hash。
+`judge_run_completion_hash`/locator、review bundle/export hash、coder contracts 和 971-record hash。
 
 `review-import` 必须读取并逐条 dereference 两个 index 指向的外部证据，验证 judge manifest、
-request/intent/attempt/response/parse/raw artifact 和 human source form/record 的内容 hash；仅比较
-code record 自身 hash 不足以通过。locator 只作定位，内容 hash 才是身份；缺失、不可读取、错配
-或额外证据均 fail closed。
+request/intent/attempt/response/parse/raw artifact、human source form/record，以及
+`JudgeRunCompletion` 的内容 hash；后者还必须反向验证其 manifest/projection/service-index、唯一
+stop record、port/GPU-idle evidence hash，并与 code-set/index 顶层 hash 完全一致。仅比较 code
+record 自身 hash 不足以通过。locator 只作定位，内容 hash 才是身份；缺失、不可读取、错配或
+额外证据均 fail closed。
 
 judge code-set 必须满足：
 
@@ -278,7 +282,8 @@ partial code-set 只能保留在外部 staging，不得调用 `review-import`。
 5. stop/resume 在多个断点与 uninterrupted projection/hash 等价；
 6. 797 个 judge items 的 deterministic order、零重复、零遗漏；
 7. code-set 完整导出、partial import 拒绝，以及 review-import 对 raw/judge evidence 的真实
-   dereference（缺失或篡改 raw artifact 必须失败）；
+   dereference（缺失或篡改 raw artifact、completion、service index 或 stop evidence 时，code
+   export 与 v2 import 都必须失败）；
 8. 174 项 human template/sample exact-cover，human form -> IndependentCode -> evidence index ->
    797+174=971 compose/import 的端到端测试，且平台不会自动填人类标签；
 9. runner 文件系统/input allowlist 测试，证明无法访问 full bundle/human pack/hidden bindings；
