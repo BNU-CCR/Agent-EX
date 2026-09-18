@@ -10,10 +10,11 @@ from typing import Any
 
 import pytest
 
+from agent_ex.calibration.adapters import ProbeScriptStep, ScriptedProbeAdapter
 from agent_ex.calibration.contracts import ProbeRequest
 from agent_ex.calibration.vllm_adapter import VllmProbeAdapter, VllmTransportEvidence
 from agent_ex.domain import canonical_payload_hash
-from test_calibration_runner import specification_and_cases
+from test_calibration_runner import run, specification_and_cases, steps_for_first, valid_raw
 
 
 MODEL_REVISION = "b968826d9c46dd6066d109eabc6255188de91218"
@@ -153,6 +154,33 @@ def test_adapter_preserves_raw_success_and_identity(fake_vllm_server: FakeVllmSe
         "seed": request.requested_seed,
         "chat_template_kwargs": {"enable_thinking": False},
     }
+
+
+def test_adapter_sends_exact_bound_four_message_repair_history(
+    fake_vllm_server: FakeVllmServer,
+) -> None:
+    projection = run(
+        ScriptedProbeAdapter(
+            steps_for_first(
+                ProbeScriptStep("response", "not-json", None, None),
+                ProbeScriptStep("response", valid_raw(), None, None),
+            )
+        )
+    )
+    request = projection.attempts[-1].request
+
+    response = adapter(fake_vllm_server.endpoint).generate(request, timeout_seconds=3.0)
+
+    assert response.outcome == "response"
+    sent_messages = fake_vllm_server.requests[0]["body"]["messages"]
+    assert sent_messages == request.to_payload()["rendered_messages"]
+    assert [message["role"] for message in sent_messages] == [
+        "system",
+        "user",
+        "assistant",
+        "user",
+    ]
+    assert sent_messages[2]["content"] == "not-json"
 
 
 @pytest.mark.parametrize(

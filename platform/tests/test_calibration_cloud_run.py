@@ -411,6 +411,69 @@ def test_cloud_facade_persists_each_validated_attempt_before_advancing(
     assert len(server.requests) == 1
 
 
+def test_reopened_cloud_store_resumes_bound_format_repair(tmp_path: Path) -> None:
+    packet = approved_run_artifacts_payload()
+    artifacts = load_cloud_run_artifacts(packet)
+    lock = environment_lock_for(packet)
+    manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
+    server = FakeVllmServer(port=8000)
+    adapter = VllmProbeAdapter(
+        server.endpoint,
+        expected_model="qwen3-8b-paper1",
+        model_revision=valid_observation().model_revision,
+        tokenizer_repository=valid_observation().tokenizer_repository,
+        tokenizer_revision=valid_observation().tokenizer_revision,
+        runtime_version=valid_observation().vllm_identity.version,
+        chat_template_hash=valid_observation().chat_template_hash,
+    )
+    invalid_body = json.loads(server.body)
+    invalid_body["choices"][0]["message"]["content"] = "not-json"
+    server.body = json.dumps(invalid_body, separators=(",", ":")).encode("utf-8")
+    try:
+        partial = execute_cloud_probe(
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            manifest=manifest,
+            adapter=adapter,
+            store=store,
+            stop_after_attempts=1,
+        )
+        assert partial.attempts[0].case_status_after == "format_pending"
+
+        valid_body = json.loads(server.body)
+        valid_body["choices"][0]["message"]["content"] = (
+            '{"stance":4,"confidence":3,"public_reason":"Synthetic reason."}'
+        )
+        server.body = json.dumps(valid_body, separators=(",", ":")).encode("utf-8")
+        resumed = resume_cloud_probe(
+            manifest=manifest,
+            run_artifacts=artifacts,
+            environment_lock=lock,
+            current_environment=valid_observation(),
+            adapter=VllmProbeAdapter(
+                server.endpoint,
+                expected_model="qwen3-8b-paper1",
+                model_revision=valid_observation().model_revision,
+                tokenizer_repository=valid_observation().tokenizer_repository,
+                tokenizer_revision=valid_observation().tokenizer_revision,
+                runtime_version=valid_observation().vllm_identity.version,
+                chat_template_hash=valid_observation().chat_template_hash,
+            ),
+            store=ProbeRunStore.open(store.root),
+            stop_after_attempts=1,
+        )
+    finally:
+        server.close()
+
+    origin, repair = resumed.attempts
+    assert repair.attempt_kind == "format_repair"
+    assert repair.request.repair_binding["origin_attempt_id"] == origin.attempt_id
+    assert repair.request.rendered_messages[2] == {"role": "assistant", "content": "not-json"}
+    assert len(server.requests) == 2
+
+
 def test_whole_run_token_budget_stops_before_a_second_request(tmp_path: Path) -> None:
     packet = approved_run_artifacts_payload(
         runtime_override=cloud_runtime_policy(dispatch_stop_input_tokens=1)
