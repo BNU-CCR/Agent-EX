@@ -903,3 +903,20 @@
 - 下一步必须统一修订prompt/repair合同、重新物化并审批六组hash，然后全量重跑816；
   不得只补跑失败case，不得将本诊断run混入新run或正式分析。详细见
   `logs/2026-09-18-phase0a1-first-816-diagnostic-run.md`。
+
+### Phase 0A-1：2026-09-18 confidence contract v2 本机发布
+
+- **状态：** 本机实现、独立复核和发布验证完成；等待最终bundle与六组hash书面批准，
+  尚未上传或执行replacement 816。
+- 统一response contract明确stance量表、独立confidence `1..5`、理由长度和精确JSON
+  字段顺序；`probe-request.v2`把format repair绑定到首个失败semantic attempt、原始响应、
+  parse evidence和直接前驱，并在retry/replay/resume/cloud/review全链路fail closed。
+- v2 packet保持816个cases（144/96/576），combined hash为
+  `3023380d393b4e1a50fbc6ae174281712111f706d2ffa6dce337419c7cf5e5b0`；目标archive为
+  `/root/autodl-tmp/agent-ex-phase0a1-probe-816-v2`。v1诊断archive继续不可变且禁止混入。
+- focused为`237 passed in 375.98s`；修复两个独立baseline问题后，fresh full为
+  `1819 passed, 2 skipped, 1 deselected in 3535.09s`。Ruff lint、pip check和diff check
+  通过；本次触及文件format通过，全树仅保留未修改的历史
+  `platform/tests/test_phase0a1_cloud_scripts.py`格式基线。
+- 规格与代码质量独立复审均`APPROVED`、P0--P3为零。详细提交、六组hash、验证边界和
+  后续审批门见`logs/2026-09-18-phase0a1-confidence-contract-revision.md`。
