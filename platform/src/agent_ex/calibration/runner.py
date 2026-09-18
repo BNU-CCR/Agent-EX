@@ -16,6 +16,7 @@ from .contracts import (
     ProbeResponse,
     ProbeRunProjection,
     ProbeRuntimePolicy,
+    repair_context_for_next_request,
 )
 from .parser import parse_probe_response
 
@@ -281,7 +282,12 @@ def _continue_run(
                 transport_counts[attempt.transport_error_code] = (
                     transport_counts.get(attempt.transport_error_code, 0) + 1
                 )
-        next_kind = "format_repair" if current == "format_pending" else "semantic"
+        if current == "format_pending":
+            next_kind = "format_repair"
+        elif current == "pending":
+            next_kind = chain[-1].attempt_kind
+        else:
+            next_kind = "semantic"
         while current in {"unstarted", "pending", "format_pending"}:
             if stop_after_attempts is not None and made >= stop_after_attempts:
                 return ProbeRunProjection.create(
@@ -303,11 +309,16 @@ def _continue_run(
                     if retry_delay is None:
                         raise ValueError("pending transport attempt requires retry delay evidence")
                     time.sleep(retry_delay)
+                repair_origin, repair_predecessor = repair_context_for_next_request(
+                    tuple(chain), next_kind
+                )
                 request = ProbeRequest.create(
                     case,
                     attempt_index=len(chain) + 1,
                     attempt_kind=next_kind,
                     generation_settings=generation_settings,
+                    repair_origin_attempt=repair_origin,
+                    repair_predecessor_attempt=repair_predecessor,
                 )
                 if isinstance(runtime_policy, CloudProbeRuntimePolicy):
                     response = adapter.generate(

@@ -19,6 +19,7 @@ from ..domain import (
     _require_tuple,
     canonical_payload_hash,
 )
+from .response_contract import format_repair_instruction
 
 
 _CALIBRATION_METADATA = {
@@ -31,6 +32,18 @@ _PROBE_FIELD_ORDER_IDS = {
     "stance-confidence-reason",
     "reason-confidence-stance",
 }
+_REPAIR_BINDING_FIELDS = (
+    "origin_attempt_id",
+    "origin_attempt_hash",
+    "origin_attempt_index",
+    "origin_response_id",
+    "origin_response_hash",
+    "origin_parse_evidence_id",
+    "origin_parse_evidence_hash",
+    "predecessor_attempt_id",
+    "predecessor_attempt_hash",
+    "predecessor_attempt_index",
+)
 
 
 def _require_probe_declarations(scale_id: object, field_order_id: object) -> None:
@@ -40,6 +53,27 @@ def _require_probe_declarations(scale_id: object, field_order_id: object) -> Non
         raise ValueError("scale_id is not supported")
     if field_order_id not in _PROBE_FIELD_ORDER_IDS:
         raise ValueError("field_order_id is not supported")
+
+
+def _require_repair_binding(value: object) -> None:
+    if not isinstance(value, Mapping) or set(value) != set(_REPAIR_BINDING_FIELDS):
+        raise ValueError("repair_binding fields do not match the v2 contract")
+    for name in (
+        "origin_attempt_id",
+        "origin_response_id",
+        "origin_parse_evidence_id",
+        "predecessor_attempt_id",
+    ):
+        _require_id(f"repair_binding[{name}]", value[name])
+    for name in (
+        "origin_attempt_hash",
+        "origin_response_hash",
+        "origin_parse_evidence_hash",
+        "predecessor_attempt_hash",
+    ):
+        _require_sha256(f"repair_binding[{name}]", value[name])
+    for name in ("origin_attempt_index", "predecessor_attempt_index"):
+        _require_int(f"repair_binding[{name}]", value[name], minimum=1)
 
 
 def _require_calibration_metadata(value: object, *, record_name: str) -> None:
@@ -526,9 +560,10 @@ class ProbeRequest:
     generation_settings: Mapping[str, object]
     generation_settings_hash: str
     requested_seed: int | None
+    repair_binding: Mapping[str, object] | None
     record_hash: str
 
-    _SCHEMA_VERSION = "paper1.calibration.probe-request.v1"
+    _SCHEMA_VERSION = "paper1.calibration.probe-request.v2"
     _ID_PREFIX = "probe-request-"
     _ATTEMPT_KINDS = {"semantic", "format_repair"}
 
@@ -558,6 +593,21 @@ class ProbeRequest:
         )
         if self.requested_seed is not None:
             _require_int("requested_seed", self.requested_seed)
+        if self.attempt_kind == "semantic":
+            if self.repair_binding is not None:
+                raise ValueError("semantic requests cannot carry repair provenance")
+        else:
+            _require_repair_binding(self.repair_binding)
+            assert self.repair_binding is not None
+            if self.repair_binding["predecessor_attempt_index"] != self.attempt_index - 1:
+                raise ValueError("repair predecessor must be the immediately preceding attempt")
+            if tuple(message["role"] for message in self.rendered_messages) != (
+                "system",
+                "user",
+                "assistant",
+                "user",
+            ):
+                raise ValueError("format repair requires original messages plus assistant history")
         _require_derived_id(
             "request_id", self.request_id, prefix=self._ID_PREFIX, payload=self._identity_payload()
         )
@@ -565,6 +615,8 @@ class ProbeRequest:
         _require_payload_hash("record_hash", self.record_hash, self.content_payload())
         object.__setattr__(self, "rendered_messages", _freeze(self.rendered_messages))
         object.__setattr__(self, "generation_settings", _freeze(self.generation_settings))
+        if self.repair_binding is not None:
+            object.__setattr__(self, "repair_binding", _freeze(self.repair_binding))
 
     @property
     def metadata(self) -> dict[str, object]:
@@ -584,6 +636,7 @@ class ProbeRequest:
             "generation_settings": self.generation_settings,
             "generation_settings_hash": self.generation_settings_hash,
             "requested_seed": self.requested_seed,
+            "repair_binding": self.repair_binding,
             "metadata": self.metadata,
         }
 
@@ -601,20 +654,44 @@ class ProbeRequest:
         attempt_index: int,
         attempt_kind: str,
         generation_settings: Mapping[str, object],
+        repair_origin_attempt: ProbeAttempt | None = None,
+        repair_predecessor_attempt: ProbeAttempt | None = None,
     ) -> ProbeRequest:
         if not isinstance(case, ProbeCase):
             raise TypeError("case must be a ProbeCase")
         rendered_messages = case.rendered_messages
-        if attempt_kind == "format_repair":
+        repair_binding = None
+        if attempt_kind == "semantic":
+            if repair_origin_attempt is not None or repair_predecessor_attempt is not None:
+                raise ValueError("semantic requests cannot carry repair context")
+        elif attempt_kind == "format_repair":
+            if repair_origin_attempt is None or repair_predecessor_attempt is None:
+                raise ValueError("format repair requires origin and predecessor attempts")
+            repair_binding = _repair_binding_from_attempts(
+                repair_origin_attempt, repair_predecessor_attempt
+            )
+            if (
+                repair_origin_attempt.probe_case_id != case.probe_case_id
+                or repair_origin_attempt.probe_case_hash != case.record_hash
+                or repair_predecessor_attempt.probe_case_id != case.probe_case_id
+                or repair_predecessor_attempt.probe_case_hash != case.record_hash
+            ):
+                raise ValueError("repair context cannot cross probe cases")
+            if repair_predecessor_attempt.attempt_index != attempt_index - 1:
+                raise ValueError("repair predecessor is not immediate")
+            assert repair_origin_attempt.response.raw_response is not None
             rendered_messages = rendered_messages + (
                 {
+                    "role": "assistant",
+                    "content": repair_origin_attempt.response.raw_response,
+                },
+                {
                     "role": "user",
-                    "content": (
-                        "FORMAT REPAIR ONLY: return exactly the previously requested JSON "
-                        "fields in the declared order; do not change the substantive answer."
-                    ),
+                    "content": format_repair_instruction(case.scale_id, case.field_order_id),
                 },
             )
+        else:
+            raise ValueError("attempt_kind must be semantic or format_repair")
         rendered_messages_hash = canonical_payload_hash(rendered_messages)
         settings_hash = canonical_payload_hash(generation_settings)
         identity = {
@@ -630,6 +707,7 @@ class ProbeRequest:
             "generation_settings": generation_settings,
             "generation_settings_hash": settings_hash,
             "requested_seed": case.requested_seed,
+            "repair_binding": repair_binding,
             "metadata": dict(_CALIBRATION_METADATA),
         }
         request_id = _derived_id(cls._ID_PREFIX, identity)
@@ -647,6 +725,7 @@ class ProbeRequest:
             generation_settings=generation_settings,
             generation_settings_hash=settings_hash,
             requested_seed=case.requested_seed,
+            repair_binding=repair_binding,
             record_hash=canonical_payload_hash(content),
         )
 
@@ -663,6 +742,8 @@ class ProbeRequest:
             raise TypeError("probe request rendered_messages must use a JSON array")
         if type(payload["generation_settings"]) is not dict:
             raise TypeError("probe request generation_settings must use a JSON object")
+        if payload["repair_binding"] is not None and type(payload["repair_binding"]) is not dict:
+            raise TypeError("probe request repair_binding must use a JSON object or null")
         values = {name: payload[name] for name in cls.__dataclass_fields__}
         values["rendered_messages"] = tuple(payload["rendered_messages"])
         return cls(**values)  # type: ignore[arg-type]
@@ -1665,6 +1746,116 @@ class ProbeAttempt:
         return cls(**values)  # type: ignore[arg-type]
 
 
+def _repair_binding_from_attempts(
+    origin: ProbeAttempt, predecessor: ProbeAttempt
+) -> dict[str, object]:
+    if type(origin) is not ProbeAttempt or type(predecessor) is not ProbeAttempt:
+        raise TypeError("repair context requires ProbeAttempt records")
+    if (
+        origin.probe_run_id != predecessor.probe_run_id
+        or origin.run_instance_id != predecessor.run_instance_id
+        or origin.specification_hash != predecessor.specification_hash
+        or origin.case_inventory_hash != predecessor.case_inventory_hash
+        or origin.runtime_policy_hash != predecessor.runtime_policy_hash
+        or origin.probe_case_id != predecessor.probe_case_id
+        or origin.probe_case_hash != predecessor.probe_case_hash
+    ):
+        raise ValueError("repair origin and predecessor are not from one case chain")
+    if origin.attempt_kind != "semantic" or origin.response.outcome != "response":
+        raise ValueError("repair origin must be a semantic response")
+    if origin.parse_evidence is None or origin.parse_evidence.success:
+        raise ValueError("repair origin requires a failed bound parse")
+    if (
+        origin.parse_evidence.error["code"] == "refusal"
+        or origin.case_status_after != "format_pending"
+        or origin.response.raw_response is None
+    ):
+        raise ValueError("repair origin is not format-repair eligible")
+    if predecessor.attempt_id != origin.attempt_id:
+        binding = predecessor.request.repair_binding
+        if (
+            predecessor.attempt_kind != "format_repair"
+            or predecessor.case_status_after != "pending"
+            or binding is None
+            or binding["origin_attempt_id"] != origin.attempt_id
+            or binding["origin_attempt_hash"] != origin.record_hash
+        ):
+            raise ValueError("repair retry predecessor changed its semantic origin")
+    return {
+        "origin_attempt_id": origin.attempt_id,
+        "origin_attempt_hash": origin.record_hash,
+        "origin_attempt_index": origin.attempt_index,
+        "origin_response_id": origin.response.response_id,
+        "origin_response_hash": origin.response.record_hash,
+        "origin_parse_evidence_id": origin.parse_evidence.parse_evidence_id,
+        "origin_parse_evidence_hash": origin.parse_evidence.record_hash,
+        "predecessor_attempt_id": predecessor.attempt_id,
+        "predecessor_attempt_hash": predecessor.record_hash,
+        "predecessor_attempt_index": predecessor.attempt_index,
+    }
+
+
+def repair_context_for_next_request(
+    chain: tuple[ProbeAttempt, ...], attempt_kind: str
+) -> tuple[ProbeAttempt | None, ProbeAttempt | None]:
+    if attempt_kind == "semantic":
+        return None, None
+    if attempt_kind != "format_repair" or not chain:
+        raise ValueError("format repair requires a durable prior chain")
+    predecessor = chain[-1]
+    if predecessor.case_status_after == "format_pending":
+        origin = predecessor
+    elif predecessor.case_status_after == "pending" and predecessor.attempt_kind == "format_repair":
+        binding = predecessor.request.repair_binding
+        if binding is None:
+            raise ValueError("pending repair lacks origin binding")
+        matches = tuple(
+            item
+            for item in chain
+            if item.attempt_id == binding["origin_attempt_id"]
+            and item.record_hash == binding["origin_attempt_hash"]
+        )
+        if len(matches) != 1:
+            raise ValueError("repair origin is missing or duplicated")
+        origin = matches[0]
+    else:
+        raise ValueError("case chain is not eligible for format repair")
+    return origin, predecessor
+
+
+def validate_request_against_prior_chain(
+    request: ProbeRequest, chain: tuple[ProbeAttempt, ...]
+) -> None:
+    if type(request) is not ProbeRequest:
+        raise TypeError("request must be a ProbeRequest")
+    if type(chain) is not tuple or any(type(item) is not ProbeAttempt for item in chain):
+        raise TypeError("chain must contain ProbeAttempt records")
+    origin, predecessor = repair_context_for_next_request(chain, request.attempt_kind)
+    if request.attempt_kind == "semantic":
+        if request.repair_binding is not None:
+            raise ValueError("semantic request carries repair provenance")
+        return
+    assert origin is not None and predecessor is not None
+    if (
+        request.probe_case_id != origin.probe_case_id
+        or request.probe_case_hash != origin.probe_case_hash
+        or request.attempt_index != predecessor.attempt_index + 1
+    ):
+        raise ValueError("repair request is outside its bound case chain")
+    expected_binding = _repair_binding_from_attempts(origin, predecessor)
+    expected_messages = origin.request.rendered_messages + (
+        {"role": "assistant", "content": origin.response.raw_response},
+        {
+            "role": "user",
+            "content": format_repair_instruction(request.scale_id, request.field_order_id),
+        },
+    )
+    if dict(request.repair_binding or {}) != expected_binding:
+        raise ValueError("repair request provenance differs from the durable chain")
+    if tuple(request.rendered_messages) != expected_messages:
+        raise ValueError("repair request messages differ from the durable origin")
+
+
 @dataclass(frozen=True, slots=True)
 class ProbeRunProjection:
     """Canonical current run state derived exclusively from ordered attempts."""
@@ -1783,6 +1974,7 @@ class ProbeRunProjection:
         transport_counts: dict[str, dict[str, int]] = {
             case_id: {} for case_id in self.case_statuses
         }
+        chains: dict[str, list[ProbeAttempt]] = {case_id: [] for case_id in self.case_statuses}
         for attempt in self.attempts:
             if not isinstance(attempt, ProbeAttempt):
                 raise TypeError("attempts must contain ProbeAttempt records")
@@ -1822,6 +2014,9 @@ class ProbeRunProjection:
                 expected_kind = "semantic"
             if attempt.attempt_kind != expected_kind:
                 raise ValueError("attempt kind is not derived from the prior replay state")
+            validate_request_against_prior_chain(
+                attempt.request, tuple(chains[attempt.probe_case_id])
+            )
             last_index[attempt.probe_case_id] = attempt.attempt_index
             last_kind[attempt.probe_case_id] = attempt.attempt_kind
             if attempt.response.outcome == "response":
@@ -1900,6 +2095,7 @@ class ProbeRunProjection:
                     "attempt transport ordinal, budget, delay, or status disagrees with replay"
                 )
             derived[attempt.probe_case_id] = expected_status
+            chains[attempt.probe_case_id].append(attempt)
         return derived
 
     @property

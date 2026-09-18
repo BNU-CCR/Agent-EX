@@ -12,6 +12,7 @@ from agent_ex.calibration.adapters import ProbeScriptStep, ScriptedProbeAdapter
 from agent_ex.calibration.contracts import (
     CloudProbeRuntimePolicy,
     ProbeAttempt,
+    ProbeParseEvidence,
     ProbeRequest,
     ProbeResponse,
     ProbeRunProjection,
@@ -255,9 +256,153 @@ def test_invalid_format_gets_exactly_one_repair_without_spending_transport_budge
     assert projection.case_statuses == {projection.attempts[0].probe_case_id: "parsed"}
     assert projection.status == "complete"
     assert (
-        projection.attempts[1].request.rendered_messages[:-1]
+        projection.attempts[1].request.rendered_messages[:2]
         == projection.attempts[0].request.rendered_messages
     )
+    assert projection.attempts[1].request.rendered_messages[2] == {
+        "role": "assistant",
+        "content": "not-json",
+    }
+
+
+def test_format_repair_request_binds_origin_and_immediate_predecessor() -> None:
+    specification, cases = specification_and_cases()
+    case = cases[0]
+    projection = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=policy(),
+        adapter=ScriptedProbeAdapter(
+            steps_for_first(ProbeScriptStep("response", "not-json", None, None))
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=1,
+    )
+    origin = projection.attempts[0]
+    assert origin.case_status_after == "format_pending"
+    assert origin.parse_evidence is not None
+
+    repair = ProbeRequest.create(
+        case,
+        attempt_index=2,
+        attempt_kind="format_repair",
+        generation_settings=GENERATION_SETTINGS,
+        repair_origin_attempt=origin,
+        repair_predecessor_attempt=origin,
+    )
+
+    assert repair.repair_binding == {
+        "origin_attempt_id": origin.attempt_id,
+        "origin_attempt_hash": origin.record_hash,
+        "origin_attempt_index": origin.attempt_index,
+        "origin_response_id": origin.response.response_id,
+        "origin_response_hash": origin.response.record_hash,
+        "origin_parse_evidence_id": origin.parse_evidence.parse_evidence_id,
+        "origin_parse_evidence_hash": origin.parse_evidence.record_hash,
+        "predecessor_attempt_id": origin.attempt_id,
+        "predecessor_attempt_hash": origin.record_hash,
+        "predecessor_attempt_index": origin.attempt_index,
+    }
+    assert tuple(message["role"] for message in repair.rendered_messages) == (
+        "system",
+        "user",
+        "assistant",
+        "user",
+    )
+    assert repair.rendered_messages[2]["content"] == origin.response.raw_response
+    assert ProbeRequest.from_payload(repair.to_payload()) == repair
+
+
+def test_request_creation_rejects_ineligible_or_missing_repair_context() -> None:
+    specification, cases = specification_and_cases(2)
+    case, other_case = cases
+
+    def one_attempt(raw: str):
+        return execute_probe_run(
+            run_instance_id=f"repair-context-{canonical_payload_hash(raw)[:12]}",
+            specification_hash=specification.output_hash,
+            cases=(case,),
+            runtime_policy=policy(),
+            adapter=ScriptedProbeAdapter(
+                {(case.probe_case_id, 1): ProbeScriptStep("response", raw, None, None)}
+            ),
+            generation_settings=GENERATION_SETTINGS,
+            runtime_identity=RUNTIME_IDENTITY,
+            model_identity=MODEL_IDENTITY,
+            tokenizer_identity=TOKENIZER_IDENTITY,
+            chat_template_hash=CHAT_TEMPLATE_HASH,
+            stop_after_attempts=1,
+        ).attempts[0]
+
+    format_pending = one_attempt("not-json")
+    parsed = one_attempt(valid_raw())
+    refused = one_attempt('{"refusal":true}')
+
+    with pytest.raises(ValueError, match="origin|predecessor|context"):
+        ProbeRequest.create(
+            case,
+            attempt_index=2,
+            attempt_kind="format_repair",
+            generation_settings=GENERATION_SETTINGS,
+        )
+    with pytest.raises(ValueError, match="semantic|repair"):
+        ProbeRequest.create(
+            case,
+            attempt_index=2,
+            attempt_kind="semantic",
+            generation_settings=GENERATION_SETTINGS,
+            repair_origin_attempt=format_pending,
+            repair_predecessor_attempt=format_pending,
+        )
+    for ineligible in (parsed, refused):
+        with pytest.raises(ValueError, match="failed|eligible|origin"):
+            ProbeRequest.create(
+                case,
+                attempt_index=2,
+                attempt_kind="format_repair",
+                generation_settings=GENERATION_SETTINGS,
+                repair_origin_attempt=ineligible,
+                repair_predecessor_attempt=ineligible,
+            )
+    with pytest.raises(ValueError, match="case"):
+        ProbeRequest.create(
+            other_case,
+            attempt_index=2,
+            attempt_kind="format_repair",
+            generation_settings=GENERATION_SETTINGS,
+            repair_origin_attempt=format_pending,
+            repair_predecessor_attempt=format_pending,
+        )
+    with pytest.raises(ValueError, match="immediate"):
+        ProbeRequest.create(
+            case,
+            attempt_index=3,
+            attempt_kind="format_repair",
+            generation_settings=GENERATION_SETTINGS,
+            repair_origin_attempt=format_pending,
+            repair_predecessor_attempt=format_pending,
+        )
+
+
+def test_response_attempt_without_bound_parse_cannot_become_repair_origin() -> None:
+    projection = run(
+        ScriptedProbeAdapter(steps_for_first(ProbeScriptStep("response", valid_raw(), None, None)))
+    )
+    attempt = projection.attempts[0]
+    values = {
+        name: getattr(attempt, name)
+        for name in attempt.__dataclass_fields__
+        if name not in {"attempt_id", "record_hash"}
+    }
+    values["parse_evidence"] = None
+    values["parse_evidence_hash"] = None
+    with pytest.raises(ValueError, match="parse evidence"):
+        ProbeAttempt.create(**values)
 
 
 def test_second_invalid_format_is_terminal_and_no_third_call_occurs() -> None:
@@ -272,6 +417,175 @@ def test_second_invalid_format_is_terminal_and_no_third_call_occurs() -> None:
     assert len(projection.attempts) == 2
     assert next(iter(projection.case_statuses.values())) == "parse_failed"
     assert projection.status == "complete"
+
+
+def test_repair_transport_retry_keeps_origin_and_advances_predecessor() -> None:
+    projection = run(
+        ScriptedProbeAdapter(
+            steps_for_first(
+                ProbeScriptStep("response", "not-json", None, None),
+                ProbeScriptStep("timeout", None, "timeout", None),
+                ProbeScriptStep("response", valid_raw(), None, None),
+            )
+        )
+    )
+    origin, failed_repair, succeeded_repair = projection.attempts
+    assert [item.attempt_kind for item in projection.attempts] == [
+        "semantic",
+        "format_repair",
+        "format_repair",
+    ]
+    assert failed_repair.request.repair_binding is not None
+    assert succeeded_repair.request.repair_binding is not None
+    assert failed_repair.request.repair_binding["origin_attempt_id"] == origin.attempt_id
+    assert succeeded_repair.request.repair_binding["origin_attempt_id"] == origin.attempt_id
+    assert (
+        succeeded_repair.request.repair_binding["predecessor_attempt_id"]
+        == failed_repair.attempt_id
+    )
+    assert failed_repair.request.rendered_messages[2]["content"] == "not-json"
+    assert succeeded_repair.request.rendered_messages[2]["content"] == "not-json"
+    assert projection.status == "complete"
+
+
+def test_resume_after_format_pending_matches_uninterrupted_repair_evidence() -> None:
+    specification, cases = specification_and_cases()
+    case = cases[0]
+    runtime_policy = policy()
+    steps = {
+        (case.probe_case_id, 1): ProbeScriptStep("response", "not-json", None, None),
+        (case.probe_case_id, 2): ProbeScriptStep("response", valid_raw(), None, None),
+    }
+    uninterrupted = run(ScriptedProbeAdapter(steps), runtime_policy=runtime_policy)
+    partial = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter(steps),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=1,
+    )
+    restored = ProbeRunProjection.from_payload(json.loads(json.dumps(partial.to_payload())))
+    resumed = resume_probe_run(
+        projection=restored,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter({(case.probe_case_id, 2): steps[(case.probe_case_id, 2)]}),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+
+    assert resumed.attempts[-1].request == uninterrupted.attempts[-1].request
+    assert resumed.run_evidence_hash == uninterrupted.run_evidence_hash
+
+
+def test_resume_after_repair_transport_failure_matches_uninterrupted_evidence() -> None:
+    specification, cases = specification_and_cases()
+    case = cases[0]
+    runtime_policy = policy()
+    steps = {
+        (case.probe_case_id, 1): ProbeScriptStep("response", "not-json", None, None),
+        (case.probe_case_id, 2): ProbeScriptStep("timeout", None, "timeout", None),
+        (case.probe_case_id, 3): ProbeScriptStep("response", valid_raw(), None, None),
+    }
+    uninterrupted = run(ScriptedProbeAdapter(steps), runtime_policy=runtime_policy)
+    partial = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter(steps),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=2,
+    )
+    restored = ProbeRunProjection.from_payload(json.loads(json.dumps(partial.to_payload())))
+    resumed = resume_probe_run(
+        projection=restored,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=runtime_policy,
+        adapter=ScriptedProbeAdapter({(case.probe_case_id, 3): steps[(case.probe_case_id, 3)]}),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+    )
+
+    assert resumed.attempts[-1].request == uninterrupted.attempts[-1].request
+    assert resumed.run_evidence_hash == uninterrupted.run_evidence_hash
+
+
+def test_projection_replay_rejects_hash_valid_repair_predecessor_drift() -> None:
+    projection = run(
+        ScriptedProbeAdapter(
+            steps_for_first(
+                ProbeScriptStep("response", "not-json", None, None),
+                ProbeScriptStep("response", valid_raw(), None, None),
+            )
+        )
+    )
+    original = projection.attempts[-1]
+    request_payload = original.request.to_payload()
+    request_payload["repair_binding"]["predecessor_attempt_hash"] = canonical_payload_hash(
+        "forged-predecessor"
+    )
+    forged_request = ProbeRequest.from_payload(
+        rehash_payload(request_payload, id_field="request_id", prefix="probe-request-")
+    )
+
+    response_payload = original.response.to_payload()
+    response_payload["request_id"] = forged_request.request_id
+    response_payload["request_hash"] = forged_request.record_hash
+    forged_response = ProbeResponse.from_payload(
+        rehash_payload(response_payload, id_field="response_id", prefix="probe-response-")
+    )
+
+    assert original.parse_evidence is not None
+    parse_payload = original.parse_evidence.to_payload()
+    parse_payload["request_id"] = forged_request.request_id
+    parse_payload["request_hash"] = forged_request.record_hash
+    parse_payload["response_id"] = forged_response.response_id
+    parse_payload["response_hash"] = forged_response.record_hash
+    forged_parse = ProbeParseEvidence.from_payload(
+        rehash_payload(parse_payload, id_field="parse_evidence_id", prefix="probe-parse-")
+    )
+
+    attempt_values = {
+        name: getattr(original, name)
+        for name in original.__dataclass_fields__
+        if name not in {"attempt_id", "record_hash"}
+    }
+    attempt_values.update(
+        request=forged_request,
+        request_hash=forged_request.record_hash,
+        response=forged_response,
+        response_hash=forged_response.record_hash,
+        parse_evidence=forged_parse,
+        parse_evidence_hash=forged_parse.record_hash,
+    )
+    forged_attempt = ProbeAttempt.create(**attempt_values)
+    payload = projection.to_payload()
+    payload["attempts"][-1] = forged_attempt.to_payload()
+    payload["run_evidence_hash"] = canonical_payload_hash(
+        [projection.attempts[0].record_hash, forged_attempt.record_hash]
+    )
+
+    with pytest.raises(ValueError, match="repair|predecessor|provenance|chain"):
+        ProbeRunProjection.from_payload(payload)
 
 
 def test_refusal_is_terminal_and_never_triggers_format_repair() -> None:

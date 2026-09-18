@@ -24,11 +24,13 @@ from ..domain import (
     canonical_payload_hash,
 )
 from .contracts import (
+    ProbeAttempt,
     ProbeCase,
     ProbeParseEvidence,
     ProbeRequest,
     ProbeRunProjection,
     ProbeTopicCandidate,
+    repair_context_for_next_request,
 )
 from .gates import SemanticGateEvidence, fold_case_attempts
 from .specification import expand_probe_cases, load_probe_specification
@@ -1812,6 +1814,9 @@ def to_semantic_gate_evidence(
         for attempt in run.attempts
         if attempt.parse_evidence is not None
     }
+    attempts_by_case: dict[str, list[ProbeAttempt]] = {case_id: [] for case_id in case_map}
+    for run_attempt in run.attempts:
+        attempts_by_case[run_attempt.probe_case_id].append(run_attempt)
     for case_id, parse in parse_map.items():
         case = case_map.get(case_id)
         if (
@@ -1821,11 +1826,19 @@ def to_semantic_gate_evidence(
         ):
             raise ValueError("bridge parse is not the final run-bound case evidence")
         attempt = attempts_by_parse[parse.record_hash]
+        prior_chain = tuple(
+            item for item in attempts_by_case[case_id] if item.attempt_index < attempt.attempt_index
+        )
+        repair_origin, repair_predecessor = repair_context_for_next_request(
+            prior_chain, attempt.attempt_kind
+        )
         expected_request = ProbeRequest.create(
             case,
             attempt_index=attempt.attempt_index,
             attempt_kind=attempt.attempt_kind,
             generation_settings=attempt.request.generation_settings,
+            repair_origin_attempt=repair_origin,
+            repair_predecessor_attempt=repair_predecessor,
         )
         if expected_request.to_payload() != attempt.request.to_payload():
             raise ValueError("bridge rendered request differs from the authoritative case")
