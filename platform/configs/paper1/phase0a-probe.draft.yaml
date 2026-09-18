@@ -113,6 +113,7 @@ replicates:
 generation_settings:
   temperature: UNRESOLVED[P1_TEMPERATURE]
   top_p: UNRESOLVED[P1_TOP_P]
+  max_tokens: UNRESOLVED[P1_MAX_TOKENS]
   request_seed: UNRESOLVED[P1_REQUEST_SEED]
 policy_hashes:
   gate_algorithm: UNRESOLVED[P1_PARSE_FAILURE_THRESHOLD]
@@ -128,5 +129,6 @@ decision_ids:
   - P1_PARSE_FAILURE_THRESHOLD
   - P1_TEMPERATURE
   - P1_TOP_P
+  - P1_MAX_TOKENS
   - P1_REQUEST_SEED
   - P1_TIMEOUT_RETRY
