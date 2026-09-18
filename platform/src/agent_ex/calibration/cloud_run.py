@@ -37,7 +37,7 @@ from .review import SemanticReviewPolicy
 from .response_contract import RESPONSE_CONTRACT_VERSION, response_contract_hash
 from .runner import ProbeRunCrash, resume_probe_run
 from .specification import expand_probe_cases, load_probe_specification
-from .store import ProbeRunStore
+from .store import ProbeRunStore, review_evidence_hash
 from .vllm_adapter import VllmProbeAdapter, VllmTransportEvidence
 
 
@@ -1265,7 +1265,7 @@ def seal_cloud_probe_report(
         source.semantic_review.review_export.to_payload(),
         source.semantic_review.to_payload(),
     ):
-        digest = payload["record_hash"]
+        digest = review_evidence_hash(payload)
         if review_records.get(digest) != payload:
             raise ValueError("probe bundle semantic review is not durable run evidence")
     expected_status = "incomplete" if bundle.report.status == "incomplete" else "complete"

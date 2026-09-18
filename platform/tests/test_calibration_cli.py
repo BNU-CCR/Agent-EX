@@ -20,6 +20,8 @@ from agent_ex.calibration.environment import (
     PreliminaryEnvironmentInspection,
     WheelEntry,
 )
+from agent_ex.calibration.review import export_blind_review
+from agent_ex.calibration.store import ProbeRunStore
 from agent_ex.domain import canonical_payload_hash
 from test_calibration_cloud_run import (
     approved_artifacts,
@@ -27,6 +29,7 @@ from test_calibration_cloud_run import (
     environment_lock_for,
 )
 from test_calibration_environment import valid_observation
+from test_calibration_review import prepared
 from test_calibration_smoke import manifest as smoke_manifest
 
 
@@ -171,6 +174,30 @@ def test_control_file_write_fsyncs_parent_directory(
     cli._write_json_create_only(output, {"status": "ok"})  # noqa: SLF001
 
     assert synced == [tmp_path]
+
+
+def test_blind_review_export_persists_by_its_canonical_export_hash(tmp_path: Path) -> None:
+    specification, cases, run, policy = prepared()
+    bundle = export_blind_review(specification, cases, run, policy)
+    manifest_content = {"schema_version": "test.review-export-manifest.v1"}
+    manifest = {
+        **manifest_content,
+        "record_hash": canonical_payload_hash(manifest_content),
+    }
+    store = ProbeRunStore.create(tmp_path / "run", manifest=manifest)
+    payload = bundle.review_export.to_payload()
+
+    cli._append_review_once(store, payload)  # noqa: SLF001
+    cli._append_review_once(store, payload)  # noqa: SLF001 - idempotent retry
+
+    reopened = ProbeRunStore.open(store.root)
+    assert reopened.review_hashes == (bundle.review_export.export_hash,)
+    assert (
+        reopened._load_records(  # noqa: SLF001
+            reopened.root / "staging" / "reviews", "review"
+        )[bundle.review_export.export_hash]
+        == payload
+    )
 
 
 def test_git_identity_is_bound_to_running_agent_ex_checkout(

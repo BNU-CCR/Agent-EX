@@ -21,6 +21,7 @@ if TYPE_CHECKING:
 
 _PROJECTION_SCHEMA = "paper1.calibration.probe-store-projection.v1"
 _SEAL_SCHEMA = "paper1.calibration.probe-store-seal.v1"
+_BLIND_REVIEW_EXPORT_SCHEMA = "paper1.calibration.blind-review-export.v1"
 
 
 def _duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
@@ -106,6 +107,21 @@ def _validate_hashed_record(payload: Mapping[str, object], *, name: str) -> str:
     if digest != canonical_payload_hash(content):
         raise ValueError(f"{name} hash drift")
     return digest
+
+
+def review_evidence_hash(payload: Mapping[str, object]) -> str:
+    """Return the canonical identity used by an append-only review record."""
+    if type(payload) is dict and payload.get("schema_version") == _BLIND_REVIEW_EXPORT_SCHEMA:
+        if "record_hash" in payload or "export_hash" not in payload:
+            raise ValueError("blind review export must contain only export_hash identity")
+        _require_json_transport(payload, "review")
+        digest = payload["export_hash"]
+        _require_sha256("export_hash", digest)
+        content = {key: value for key, value in payload.items() if key != "export_hash"}
+        if digest != canonical_payload_hash(content):
+            raise ValueError("review hash drift")
+        return digest
+    return _validate_hashed_record(payload, name="review")
 
 
 def _projection_payload(
@@ -352,7 +368,11 @@ class ProbeRunStore:
             if path.name.startswith(".tmp-"):
                 continue
             payload = _read_json(path)
-            digest = _validate_hashed_record(payload, name=name)
+            digest = (
+                review_evidence_hash(payload)
+                if name == "review"
+                else _validate_hashed_record(payload, name=name)
+            )
             if path.name != f"{digest}.json":
                 raise ValueError(f"{name} filename and hash drift")
             if digest in records:
@@ -396,7 +416,7 @@ class ProbeRunStore:
     def append_review(self, payload: Mapping[str, object]) -> None:
         with self._lock:
             staging = self._require_staging()
-            digest = _validate_hashed_record(payload, name="review")
+            digest = review_evidence_hash(payload)
             _write_create_only(staging / "reviews" / f"{digest}.json", _json_ready(payload))
             self.review_hashes = (*self.review_hashes, digest)
             self._persist_projection(staging)

@@ -62,7 +62,7 @@ from .smoke import (
     run_smoke_phase_one,
     run_smoke_phase_two,
 )
-from .store import ProbeRunStore
+from .store import ProbeRunStore, review_evidence_hash
 from .vllm_adapter import VllmProbeAdapter
 from ..domain import canonical_payload_hash
 
@@ -1231,9 +1231,7 @@ def _load_projection(path: Path, affirmative_hash: str) -> ProbeRunProjection:
 
 
 def _append_review_once(store: ProbeRunStore, payload: Mapping[str, object]) -> None:
-    digest = payload.get("record_hash")
-    if not isinstance(digest, str):
-        raise ValueError("review evidence must contain record_hash")
+    digest = review_evidence_hash(payload)
     if digest in store.review_hashes:
         records = store._load_records(store.root / "staging" / "reviews", "review")  # noqa: SLF001
         if records.get(digest) != payload:
@@ -1414,7 +1412,7 @@ def _review_import_command(args: argparse.Namespace) -> int:
     )
     export_payload = bundle.review_export.to_payload()
     if (
-        durable_reviews.get(export_payload["record_hash"]) != export_payload
+        durable_reviews.get(review_evidence_hash(export_payload)) != export_payload
         or durable_reviews.get(bundle.record_hash) != bundle.to_payload()
     ):
         raise ValueError("review import lacks the store's durable blind export evidence")
