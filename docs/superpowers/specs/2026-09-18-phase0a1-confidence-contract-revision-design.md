@@ -1,5 +1,5 @@
 ---
-status: approved design; pending independent review and user written-spec review
+status: approved design; first independent-review issues addressed; pending re-review and user written-spec review
 authority: Phase 0A-1 calibration measurement-contract revision; subordinate to the frozen protocol chain
 approved-by: user
 approved-date: 2026-09-18
@@ -54,13 +54,23 @@ the model's certainty in its answer and therefore cannot inherit the stance rang
 
 ## 4. Format-repair contract and provenance
 
-`ProbeRequest.create` must require the immediately preceding `ProbeResponse` when creating
-a `format_repair` request and must reject a previous response for a semantic request. The
-previous response must:
+`ProbeRequest.create` must require a run-bound repair context when creating a
+`format_repair` request and must reject repair context for a semantic request. The context
+has two distinct roles:
 
-- belong to the same probe case and the immediately preceding attempt;
-- be a transport `response` with a string `raw_response`;
-- come from a semantic attempt, not from a prior repair.
+- the **repair origin** is the unique semantic `ProbeAttempt` whose transport outcome is a
+  string response, whose bound parse evidence failed format validation, and whose resulting
+  case status is `format_pending`;
+- the **immediate predecessor** is the last durable attempt in the same case chain. For the
+  first repair request it is the repair origin. For a transport retry of that repair, it is
+  the preceding repair transport failure with `pending` status, while the repair origin
+  remains unchanged.
+
+A parsed semantic response, an explicit refusal, a semantic response without its exact
+run-bound parse evidence, and a failed or successful prior repair cannot become a repair
+origin. The context must fail closed if the origin or predecessor belongs to another case,
+is not the correct prior attempt index, has drifted request/response/parse hashes, or is not
+consistent with the durable case-status transition.
 
 The rendered message sequence is:
 
@@ -74,15 +84,26 @@ to be expressed on the separate `1..5` scale, restate the exact case-specific st
 and field order, and prohibit extra keys, Markdown, and commentary. It authorizes only the
 minimal schema correction needed to express the same answer under the declared contract.
 
-The full rendered message list remains hash-bound into the request identity. The runner and
-resume path obtain the previous response only from the durable per-case attempt chain. The
-review bridge must reconstruct a repaired request from that same predecessor and fail closed
-on a missing, reordered, cross-case, or hash-drifted predecessor.
+The full rendered message list remains hash-bound into the request identity. In addition,
+the request schema and identity must bind the repair origin's attempt ID, attempt record hash,
+attempt index, response ID, response record hash, parse-evidence ID, and parse-evidence record
+hash. They must also bind the immediate predecessor's attempt ID, attempt record hash, and
+attempt index. Semantic requests carry none of these repair fields. Consequently, two
+response records with identical text cannot produce indistinguishable repair provenance,
+and a repair transport retry cannot hide or skip its preceding failed attempt.
+
+The runner and resume path derive both roles only from the durable per-case attempt chain.
+They locate the unique semantic `format_pending` origin and require the chain tail to be the
+valid immediate predecessor for the requested transition. The review bridge reconstructs a
+repaired request from the same durable origin and chain tail and fails closed on missing,
+reordered, cross-case, duplicated, or hash-drifted evidence.
 
 Transport retries retain their current purpose. A retry of a semantic attempt does not gain
-repair context. A transport retry of a format-repair attempt reuses the same original
-semantic response and therefore produces the same rendered messages and request semantics
-apart from the already recorded attempt identity.
+repair context. A transport retry of a format-repair attempt binds its immediately preceding
+repair transport failure but reuses the same repair-origin semantic response. It therefore
+keeps identical assistant history and repair-origin provenance while receiving the next
+already-recorded attempt index. Crash/resume must derive exactly the same origin binding as
+an uninterrupted run.
 
 ## 5. Evidence isolation and re-approval
 
@@ -108,8 +129,12 @@ Implementation follows test-first red/green cycles. Regression tests must prove:
   confidence range;
 - the requested JSON field-order challenge is still rendered exactly;
 - a repair request carries the exact first raw response as assistant history;
-- repair creation rejects missing, non-response, non-immediate, cross-case, and repair-on-
-  repair predecessors, while semantic creation rejects predecessor input;
+- repair creation rejects missing, non-response, non-immediate, cross-case, and hash-drifted
+  origins or predecessors, while semantic creation rejects repair context;
+- parsed responses, explicit refusals, missing parse evidence, and parse evidence not bound
+  to the semantic response cannot become repair origins;
+- a repair transport failure followed by a repair retry preserves the original semantic
+  origin, binds the new immediate predecessor, and behaves identically across crash/resume;
 - live execution, crash/resume, projection validation, strict JSON round-trip, and review
   bridge reconstruction preserve the same predecessor binding;
 - the one-repair limit and all runtime budgets remain unchanged;
