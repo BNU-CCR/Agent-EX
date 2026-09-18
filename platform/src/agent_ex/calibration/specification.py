@@ -10,6 +10,7 @@ from ..artifacts import ArtifactEnvelope
 from ..domain import _require_json_transport, _require_sha256
 from .contracts import ProbeCase, ProbeTopicCandidate
 from .render import render_probe_persona
+from .response_contract import response_contract_text
 
 
 EXPECTED_TOPIC_ORDER = ("retirement-delay", "gm-soybean-oil", "ai-net-employment")
@@ -407,6 +408,12 @@ def _messages(
         )
     user_parts.append(
         scale_instruction + f"; JSON field order: {','.join(field_order['fields'])}"  # type: ignore[arg-type]
+    )
+    user_parts.append(
+        response_contract_text(
+            scale["scale_id"],  # type: ignore[arg-type]
+            field_order["field_order_id"],  # type: ignore[arg-type]
+        )
     )
     return (
         {"role": "system", "content": persona_text},

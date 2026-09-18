@@ -82,6 +82,56 @@ def test_expansion_renders_declared_scale_anchors_into_every_request() -> None:
     assert "10=完全同意该陈述" in challenger_user_text
 
 
+@pytest.mark.parametrize(
+    ("scale_id", "range_text"),
+    (("stance-1-7", "from 1 to 7"), ("stance-0-10", "from 0 to 10")),
+)
+def test_every_case_declares_distinct_stance_confidence_and_json_contract(
+    scale_id: str, range_text: str
+) -> None:
+    cases = expand_probe_cases(load_probe_specification(probe_spec_payload()))
+    selected = tuple(case for case in cases if case.scale_id == scale_id)
+    assert selected
+    for case in selected:
+        text = case.rendered_messages[-1]["content"]
+        assert f"stance must be a JSON integer {range_text}" in text
+        assert "confidence is independent of the stance scale" in text
+        assert "must be a JSON integer from 1 to 5" in text
+        assert "public_reason must be non-empty text of at most 2048 characters" in text
+        assert "return exactly one JSON object" in text
+        assert "no extra keys, Markdown, or commentary" in text
+        order = (
+            "stance,confidence,public_reason"
+            if case.field_order_id == "stance-confidence-reason"
+            else "public_reason,confidence,stance"
+        )
+        assert f"exact field order: {order}" in text
+
+
+def test_response_contract_helpers_validate_identifiers_and_keep_repair_narrow() -> None:
+    from agent_ex.calibration.response_contract import (
+        format_repair_instruction,
+        response_contract_text,
+    )
+
+    repair = format_repair_instruction("stance-0-10", "reason-confidence-stance")
+    assert "preserve the substantive stance and public_reason" in repair
+    assert "separate 1-to-5 scale" in repair
+    assert "stance must be a JSON integer from 0 to 10" in repair
+    assert "exact field order: public_reason,confidence,stance" in repair
+    assert "without changing the substantive position or reason" in repair
+
+    for helper in (response_contract_text, format_repair_instruction):
+        with pytest.raises(TypeError, match="scale_id"):
+            helper(1, "stance-confidence-reason")
+        with pytest.raises(TypeError, match="field_order_id"):
+            helper("stance-1-7", None)
+        with pytest.raises(ValueError, match="scale_id is not supported"):
+            helper("unsupported-scale", "stance-confidence-reason")
+        with pytest.raises(ValueError, match="field_order_id is not supported"):
+            helper("stance-1-7", "unsupported-order")
+
+
 @pytest.mark.parametrize("field", ["schema_version", "metadata", "topic_candidates"])
 def test_specification_requires_exact_fields(field: str) -> None:
     payload = probe_spec_payload()
