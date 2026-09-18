@@ -1,5 +1,5 @@
 ---
-status: approved design; independent specification review revision 1 pending
+status: independently reviewed; awaiting owner written-spec approval
 authority: Phase 0A-1 post-run blind-judge execution design; subordinate to the approved six-group packet, immutable v2 run evidence, and frozen semantic-review policy
 approved-by: user
 approved-date: 2026-09-18
