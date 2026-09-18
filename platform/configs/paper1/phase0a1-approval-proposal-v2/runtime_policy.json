@@ -1,0 +1,58 @@
+{
+  "backoff_seconds": [
+    2.0
+  ],
+  "connect_timeout_seconds": 10.0,
+  "disk_below_threshold_action": "terminal_incomplete",
+  "dispatch_stop_cumulative_attempt_seconds": 172800.0,
+  "dispatch_stop_input_tokens": 2000000,
+  "dispatch_stop_output_tokens": 220000,
+  "invalid_retry_after_action": "use_deterministic_backoff",
+  "max_total_cases": 816,
+  "max_total_transport_attempts": 1632,
+  "max_transport_attempts_by_code": {
+    "oom": 1,
+    "provider_busy": 2,
+    "provider_fatal": 1,
+    "provider_identity_mismatch": 1,
+    "provider_invalid_json": 1,
+    "provider_missing_request_id": 1,
+    "provider_redirect": 1,
+    "provider_response_too_large": 1,
+    "provider_schema_error": 1,
+    "provider_unreachable": 2,
+    "timeout": 2
+  },
+  "metadata": {
+    "calibration_only": true,
+    "formal_parameter_authority": false,
+    "research_parameter_status": "not_frozen"
+  },
+  "minimum_free_disk_bytes": 21474836480,
+  "model_identity_drift_action": "terminal_incomplete",
+  "nonretryable_error_codes": [
+    "oom",
+    "provider_fatal",
+    "provider_identity_mismatch",
+    "provider_invalid_json",
+    "provider_missing_request_id",
+    "provider_redirect",
+    "provider_response_too_large",
+    "provider_schema_error"
+  ],
+  "obey_retry_after": true,
+  "oom_action": "terminal_incomplete",
+  "policy_id": "phase0a1-probe-runtime-v2",
+  "read_timeout_seconds": 120.0,
+  "record_hash": "6f8a2d98316eb3eb87c217dedc460b258459c1c39209c0bf36d6742141675c80",
+  "retry_after_max_seconds": 30.0,
+  "retry_after_min_seconds": 0.0,
+  "retryable_error_codes": [
+    "provider_busy",
+    "provider_unreachable",
+    "timeout"
+  ],
+  "schema_version": "paper1.calibration.cloud-probe-runtime-policy.v2",
+  "server_crash_action": "retry_then_terminal_incomplete",
+  "timeout_seconds": 120.0
+}

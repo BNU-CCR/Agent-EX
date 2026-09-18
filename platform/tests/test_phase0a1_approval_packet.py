@@ -1,12 +1,24 @@
 """Checks for the proposal-only real Phase 0A-1 six-group packet."""
 
 import json
+import importlib.util
 from pathlib import Path
 
 from agent_ex.calibration.cloud_run import load_cloud_run_artifacts
 
 
-PACKET_DIR = Path(__file__).parents[1] / "configs" / "paper1" / "phase0a1-approval-proposal-v1"
+PLATFORM_ROOT = Path(__file__).parents[1]
+PACKET_DIR = PLATFORM_ROOT / "configs" / "paper1" / "phase0a1-approval-proposal-v2"
+
+
+def fresh_packet() -> dict[str, object]:
+    script_path = PLATFORM_ROOT / "scripts" / "materialize_phase0a1_approval_packet.py"
+    spec = importlib.util.spec_from_file_location("phase0a1_packet_materializer", script_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("could not load the Phase 0A-1 packet materializer")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.build_packet()
 
 
 def test_proposal_packet_loads_with_exact_real_inventory_and_visible_anchors() -> None:
@@ -15,23 +27,37 @@ def test_proposal_packet_loads_with_exact_real_inventory_and_visible_anchors() -
     )
     artifacts = load_cloud_run_artifacts(packet)
 
-    assert artifacts.record_hash == (
-        "57abb85edbb7b1d28949ca523abaef6c4c4639a7744ca3bc7b5f5f57056f44bc"
-    )
     assert len(artifacts.cases) == 816
-    assert artifacts.approved_group_hashes == {
-        "archive_declaration": ("ec7178c9ed68d9f3ff182cbe337e8a91192334fd069b68c951d7101785945342"),
-        "candidate_manifest": ("479fc2e5cb1864a04bb3c155abc00d56683de5b3125b6c4b3337c824e8b118a1"),
-        "credential_boundary": ("595a19eb5f33ab0357177f30a233e54b6bfbc6608789fb765793cb3bf9cd3105"),
-        "probe_specification": ("612551123cedc084460ef3add5c37219ac87643f068df0919fd0ab0448710946"),
-        "runtime_policy": ("6f8a2d98316eb3eb87c217dedc460b258459c1c39209c0bf36d6742141675c80"),
-        "semantic_review_policy": (
-            "12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9"
-        ),
+    assert set(artifacts.approved_group_hashes) == {
+        "archive_declaration",
+        "candidate_manifest",
+        "credential_boundary",
+        "probe_specification",
+        "runtime_policy",
+        "semantic_review_policy",
     }
     user_texts = tuple(case.rendered_messages[1]["content"] for case in artifacts.cases)
     assert any("1 非常不支持" in text and "7 非常支持" in text for text in user_texts)
     assert any("0=完全不同意该陈述" in text and "10=完全同意该陈述" in text for text in user_texts)
+
+
+def test_checked_in_v2_packet_equals_fresh_materializer_and_excludes_v1() -> None:
+    packet = json.loads(
+        (PACKET_DIR / "approved-cloud-artifacts.proposal.json").read_text(encoding="utf-8")
+    )
+    summary = json.loads((PACKET_DIR / "approval-summary.json").read_text(encoding="utf-8"))
+
+    assert packet == fresh_packet()
+    artifacts = load_cloud_run_artifacts(packet)
+    assert len(artifacts.cases) == 816
+    assert artifacts.archive_uri == "/root/autodl-tmp/agent-ex-phase0a1-probe-816-v2"
+    assert artifacts.archive_uri != "/root/autodl-tmp/agent-ex-phase0a1-probe-816-v1"
+    assert summary["packet_hash"] == packet["record_hash"]
+    assert summary["group_hashes"] == packet["approved_group_hashes"]
+    for case in artifacts.cases:
+        text = case.rendered_messages[-1]["content"]
+        assert "confidence is independent of the stance scale" in text
+        assert "must be a JSON integer from 1 to 5" in text
 
 
 def test_proposal_supporting_hashes_bind_the_judge_contract() -> None:

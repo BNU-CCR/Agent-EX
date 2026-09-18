@@ -556,7 +556,7 @@ def build_packet() -> dict[str, object]:
         "archive_declaration": _record(
             "paper1.calibration.archive-declaration.v1",
             metadata={"calibration_only": True, "formal_parameter_authority": False},
-            archive_uri="/root/autodl-tmp/agent-ex-phase0a1-probe-816-v1",
+            archive_uri="/root/autodl-tmp/agent-ex-phase0a1-probe-816-v2",
             raw_artifacts_in_git=False,
         ),
     }

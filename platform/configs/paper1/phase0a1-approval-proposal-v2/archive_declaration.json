@@ -1,0 +1,10 @@
+{
+  "archive_uri": "/root/autodl-tmp/agent-ex-phase0a1-probe-816-v2",
+  "metadata": {
+    "calibration_only": true,
+    "formal_parameter_authority": false
+  },
+  "raw_artifacts_in_git": false,
+  "record_hash": "341cb87a2b76147c17c6e32781589bc5dd64618eee9ef2db51cc8c9822e46a73",
+  "schema_version": "paper1.calibration.archive-declaration.v1"
+}

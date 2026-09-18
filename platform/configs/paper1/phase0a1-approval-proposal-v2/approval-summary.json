@@ -1,0 +1,19 @@
+{
+  "case_count": 816,
+  "case_family_counts": {
+    "continuity": 576,
+    "identity": 96,
+    "topic_quality": 144
+  },
+  "group_hashes": {
+    "archive_declaration": "341cb87a2b76147c17c6e32781589bc5dd64618eee9ef2db51cc8c9822e46a73",
+    "candidate_manifest": "479fc2e5cb1864a04bb3c155abc00d56683de5b3125b6c4b3337c824e8b118a1",
+    "credential_boundary": "595a19eb5f33ab0357177f30a233e54b6bfbc6608789fb765793cb3bf9cd3105",
+    "probe_specification": "612551123cedc084460ef3add5c37219ac87643f068df0919fd0ab0448710946",
+    "runtime_policy": "6f8a2d98316eb3eb87c217dedc460b258459c1c39209c0bf36d6742141675c80",
+    "semantic_review_policy": "12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9"
+  },
+  "human_review_sample_count": 174,
+  "model_judge_scope": "all_eligible",
+  "packet_hash": "7d09c028b4ebe6bf8b7f33edb0ad4e8141a9e083d2e114d6885f5de37fc57928"
+}
