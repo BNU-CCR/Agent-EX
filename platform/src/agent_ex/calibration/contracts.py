@@ -1773,12 +1773,20 @@ def _repair_binding_from_attempts(
         raise ValueError("repair origin is not format-repair eligible")
     if predecessor.attempt_id != origin.attempt_id:
         binding = predecessor.request.repair_binding
+        expected_origin_binding = {
+            "origin_attempt_id": origin.attempt_id,
+            "origin_attempt_hash": origin.record_hash,
+            "origin_attempt_index": origin.attempt_index,
+            "origin_response_id": origin.response.response_id,
+            "origin_response_hash": origin.response.record_hash,
+            "origin_parse_evidence_id": origin.parse_evidence.parse_evidence_id,
+            "origin_parse_evidence_hash": origin.parse_evidence.record_hash,
+        }
         if (
             predecessor.attempt_kind != "format_repair"
             or predecessor.case_status_after != "pending"
             or binding is None
-            or binding["origin_attempt_id"] != origin.attempt_id
-            or binding["origin_attempt_hash"] != origin.record_hash
+            or any(binding[name] != value for name, value in expected_origin_binding.items())
         ):
             raise ValueError("repair retry predecessor changed its semantic origin")
     return {
@@ -1834,6 +1842,23 @@ def validate_request_against_prior_chain(
     if request.attempt_kind == "semantic":
         if request.repair_binding is not None:
             raise ValueError("semantic request carries repair provenance")
+        if chain:
+            prior_request = chain[-1].request
+            stable_fields = (
+                "probe_case_id",
+                "probe_case_hash",
+                "scale_id",
+                "field_order_id",
+                "rendered_messages",
+                "rendered_messages_hash",
+                "generation_settings",
+                "generation_settings_hash",
+                "requested_seed",
+            )
+            if chain[-1].case_status_after != "pending" or any(
+                getattr(request, name) != getattr(prior_request, name) for name in stable_fields
+            ):
+                raise ValueError("semantic transport retry differs from its durable request")
         return
     assert origin is not None and predecessor is not None
     if (
@@ -1842,6 +1867,15 @@ def validate_request_against_prior_chain(
         or request.attempt_index != predecessor.attempt_index + 1
     ):
         raise ValueError("repair request is outside its bound case chain")
+    stable_fields = (
+        "scale_id",
+        "field_order_id",
+        "generation_settings",
+        "generation_settings_hash",
+        "requested_seed",
+    )
+    if any(getattr(request, name) != getattr(origin.request, name) for name in stable_fields):
+        raise ValueError("repair request declarations differ from its semantic origin")
     expected_binding = _repair_binding_from_attempts(origin, predecessor)
     expected_messages = origin.request.rendered_messages + (
         {"role": "assistant", "content": origin.response.raw_response},

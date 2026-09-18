@@ -34,6 +34,7 @@ from .environment import (
     verify_current_environment,
 )
 from .review import SemanticReviewPolicy
+from .response_contract import RESPONSE_CONTRACT_VERSION, response_contract_hash
 from .runner import ProbeRunCrash, resume_probe_run
 from .specification import expand_probe_cases, load_probe_specification
 from .store import ProbeRunStore
@@ -401,10 +402,18 @@ def load_cloud_run_artifacts(payload: Mapping[str, object]) -> CloudRunArtifacts
     specification_group = checked_groups["probe_specification"]
     _exact(
         specification_group,
-        {"schema_version", "specification", "gate_algorithm", "record_hash"},
+        {
+            "schema_version",
+            "specification",
+            "gate_algorithm",
+            "response_contract_version",
+            "response_contract_hash",
+            "case_inventory_hash",
+            "record_hash",
+        },
         "probe specification group",
     )
-    if specification_group["schema_version"] != "paper1.calibration.approved-specification.v1":
+    if specification_group["schema_version"] != "paper1.calibration.approved-specification.v2":
         raise ValueError("probe specification group schema is not supported")
     envelope_payload = specification_group["specification"]
     if type(envelope_payload) is not dict or type(envelope_payload.get("payload")) is not dict:
@@ -412,6 +421,16 @@ def load_cloud_run_artifacts(payload: Mapping[str, object]) -> CloudRunArtifacts
     specification = load_probe_specification(envelope_payload["payload"])
     if specification.to_payload() != envelope_payload:
         raise ValueError("probe specification envelope hash drift")
+    if specification_group["response_contract_version"] != RESPONSE_CONTRACT_VERSION:
+        raise ValueError("response contract version differs from the approved probe group")
+    if specification_group["response_contract_hash"] != response_contract_hash():
+        raise ValueError("response contract wording differs from the approved probe group")
+    cases = expand_probe_cases(specification)
+    case_inventory_hash = canonical_payload_hash(
+        [case.to_payload() for case in sorted(cases, key=lambda item: item.probe_case_id)]
+    )
+    if specification_group["case_inventory_hash"] != case_inventory_hash:
+        raise ValueError("expanded case inventory differs from the approved probe group")
     gate_payload = specification_group["gate_algorithm"]
     if type(gate_payload) is not dict:
         raise TypeError("gate_algorithm must be a strict JSON object")
@@ -527,7 +546,6 @@ def load_cloud_run_artifacts(payload: Mapping[str, object]) -> CloudRunArtifacts
     if archive["raw_artifacts_in_git"] is not False:
         raise ValueError("raw artifacts must remain outside Git")
 
-    cases = expand_probe_cases(specification)
     counts: dict[str, int] = {}
     for case in cases:
         counts[case.case_family] = counts.get(case.case_family, 0) + 1

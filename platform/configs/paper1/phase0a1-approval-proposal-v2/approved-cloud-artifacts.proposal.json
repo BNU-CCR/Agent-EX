@@ -3,7 +3,7 @@
     "archive_declaration": "341cb87a2b76147c17c6e32781589bc5dd64618eee9ef2db51cc8c9822e46a73",
     "candidate_manifest": "479fc2e5cb1864a04bb3c155abc00d56683de5b3125b6c4b3337c824e8b118a1",
     "credential_boundary": "595a19eb5f33ab0357177f30a233e54b6bfbc6608789fb765793cb3bf9cd3105",
-    "probe_specification": "612551123cedc084460ef3add5c37219ac87643f068df0919fd0ab0448710946",
+    "probe_specification": "8c3541f0f38cd52aa29c30b60c6b7ad336e6ad22c079aeaf466a5f5f974cedce",
     "runtime_policy": "6f8a2d98316eb3eb87c217dedc460b258459c1c39209c0bf36d6742141675c80",
     "semantic_review_policy": "12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9"
   },
@@ -83,6 +83,7 @@
       "schema_version": "paper1.calibration.credential-boundary.v1"
     },
     "probe_specification": {
+      "case_inventory_hash": "93927a7266d6a7de115581d34e4efe054532e8d47c902e985151cf142c6908d1",
       "gate_algorithm": {
         "aggregation": "all-family-and-challenge-hard-gates; incomplete-suppresses-all",
         "algorithm_id": "phase0a1-real-quality-gates",
@@ -197,8 +198,10 @@
         ],
         "tv_threshold": null
       },
-      "record_hash": "612551123cedc084460ef3add5c37219ac87643f068df0919fd0ab0448710946",
-      "schema_version": "paper1.calibration.approved-specification.v1",
+      "record_hash": "8c3541f0f38cd52aa29c30b60c6b7ad336e6ad22c079aeaf466a5f5f974cedce",
+      "response_contract_hash": "d103b008af95117a72fa18e6f04eb5c268f33e6a05b54d1f2656cf5e50f8dfff",
+      "response_contract_version": "2.0.0",
+      "schema_version": "paper1.calibration.approved-specification.v2",
       "specification": {
         "algorithm_id": "paper1.calibration_probe_specification_loader",
         "algorithm_version": "1.0.0",
@@ -2187,7 +2190,7 @@
   },
   "calibration_only": true,
   "formal_parameter_authority": false,
-  "record_hash": "7d09c028b4ebe6bf8b7f33edb0ad4e8141a9e083d2e114d6885f5de37fc57928",
+  "record_hash": "3023380d393b4e1a50fbc6ae174281712111f706d2ffa6dce337419c7cf5e5b0",
   "research_parameter_status": "not_frozen",
   "schema_version": "paper1.calibration.approved-cloud-artifacts.v1"
 }

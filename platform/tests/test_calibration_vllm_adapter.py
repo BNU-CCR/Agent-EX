@@ -52,11 +52,12 @@ class FakeVllmServer:
             def do_POST(self) -> None:  # noqa: N802
                 length = int(self.headers.get("Content-Length", "0"))
                 raw = self.rfile.read(length)
+                request_body = json.loads(raw)
                 owner.requests.append(
                     {
                         "path": self.path,
                         "headers": dict(self.headers.items()),
-                        "body": json.loads(raw),
+                        "body": request_body,
                     }
                 )
                 if owner.delay_seconds:
@@ -67,15 +68,26 @@ class FakeVllmServer:
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
                 try:
+                    response_body = owner.body
+                    if owner.body == VALID_RAW_RESPONSE:
+                        prompt = request_body["messages"][-1]["content"]
+                        if "exact field order: public_reason,confidence,stance" in prompt:
+                            payload = json.loads(VALID_RAW_RESPONSE)
+                            payload["choices"][0]["message"]["content"] = (
+                                '{"public_reason":"Synthetic reason.","confidence":3,"stance":4}'
+                            )
+                            response_body = json.dumps(payload, separators=(",", ":")).encode(
+                                "utf-8"
+                            )
                     if owner.trickle_chunk_bytes:
-                        for offset in range(0, len(owner.body), owner.trickle_chunk_bytes):
+                        for offset in range(0, len(response_body), owner.trickle_chunk_bytes):
                             self.wfile.write(
-                                owner.body[offset : offset + owner.trickle_chunk_bytes]
+                                response_body[offset : offset + owner.trickle_chunk_bytes]
                             )
                             self.wfile.flush()
                             time.sleep(owner.trickle_delay_seconds)
                     else:
-                        self.wfile.write(owner.body)
+                        self.wfile.write(response_body)
                 except OSError:
                     pass
 

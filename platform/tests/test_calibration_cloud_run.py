@@ -28,7 +28,11 @@ from agent_ex.calibration.environment import EnvironmentDriftError, EnvironmentL
 from agent_ex.calibration.store import ProbeRunStore
 from agent_ex.calibration.vllm_adapter import VllmProbeAdapter
 from agent_ex.calibration.runner import ProbeRunCrash
-from agent_ex.calibration.specification import load_probe_specification
+from agent_ex.calibration.response_contract import (
+    RESPONSE_CONTRACT_VERSION,
+    response_contract_hash,
+)
+from agent_ex.calibration.specification import expand_probe_cases, load_probe_specification
 from agent_ex.domain import canonical_payload_hash
 from helpers.calibration import probe_spec_payload
 from test_calibration_environment import mutate_observation, valid_observation
@@ -124,6 +128,10 @@ def approved_run_artifacts_payload(
         "runtime_policy": runtime.record_hash,
     }
     specification = load_probe_specification(specification_payload)
+    cases = expand_probe_cases(specification)
+    case_inventory_hash = canonical_payload_hash(
+        [case.to_payload() for case in sorted(cases, key=lambda item: item.probe_case_id)]
+    )
     observation = valid_observation()
     model_artifacts_hash = canonical_payload_hash(
         tuple(
@@ -136,9 +144,12 @@ def approved_run_artifacts_payload(
     )
     groups = {
         "probe_specification": _record(
-            "paper1.calibration.approved-specification.v1",
+            "paper1.calibration.approved-specification.v2",
             specification=specification.to_payload(),
             gate_algorithm=gate.to_payload(),
+            response_contract_version=RESPONSE_CONTRACT_VERSION,
+            response_contract_hash=response_contract_hash(),
+            case_inventory_hash=case_inventory_hash,
         ),
         "runtime_policy": runtime.to_payload(),
         "semantic_review_policy": semantic.to_payload(),
@@ -322,6 +333,25 @@ def test_cloud_run_artifact_packet_rejects_group_or_top_hash_drift() -> None:
     )
     with pytest.raises(ValueError, match="approved_group_hashes"):
         load_cloud_run_artifacts(changed)
+
+
+@pytest.mark.parametrize("field", ["response_contract_hash", "case_inventory_hash"])
+def test_cloud_run_rejects_rehashed_probe_renderer_or_inventory_drift(field: str) -> None:
+    payload = approved_run_artifacts_payload()
+    specification_group = payload["artifact_groups"]["probe_specification"]  # type: ignore[index]
+    specification_group[field] = canonical_payload_hash(f"drifted-{field}")  # type: ignore[index]
+    specification_group["record_hash"] = canonical_payload_hash(  # type: ignore[index]
+        {key: value for key, value in specification_group.items() if key != "record_hash"}
+    )
+    payload["approved_group_hashes"]["probe_specification"] = specification_group[  # type: ignore[index]
+        "record_hash"
+    ]
+    payload["record_hash"] = canonical_payload_hash(
+        {key: value for key, value in payload.items() if key != "record_hash"}
+    )
+
+    with pytest.raises(ValueError, match="response contract|case inventory"):
+        load_cloud_run_artifacts(payload)
 
 
 def test_cloud_run_manifest_rejects_candidate_environment_mismatch() -> None:
@@ -552,6 +582,7 @@ def test_elapsed_dispatch_stop_threshold_stops_before_a_second_request(tmp_path:
     manifest = build_cloud_run_manifest(artifacts, environment_lock=lock)
     store = ProbeRunStore.create(tmp_path / "run", manifest=manifest.to_payload())
     server = FakeVllmServer(port=8000)
+    server.delay_seconds = 0.01
     try:
         projection = execute_cloud_probe(
             run_artifacts=artifacts,

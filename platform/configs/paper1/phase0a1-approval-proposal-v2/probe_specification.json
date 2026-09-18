@@ -1,4 +1,5 @@
 {
+  "case_inventory_hash": "93927a7266d6a7de115581d34e4efe054532e8d47c902e985151cf142c6908d1",
   "gate_algorithm": {
     "aggregation": "all-family-and-challenge-hard-gates; incomplete-suppresses-all",
     "algorithm_id": "phase0a1-real-quality-gates",
@@ -113,8 +114,10 @@
     ],
     "tv_threshold": null
   },
-  "record_hash": "612551123cedc084460ef3add5c37219ac87643f068df0919fd0ab0448710946",
-  "schema_version": "paper1.calibration.approved-specification.v1",
+  "record_hash": "8c3541f0f38cd52aa29c30b60c6b7ad336e6ad22c079aeaf466a5f5f974cedce",
+  "response_contract_hash": "d103b008af95117a72fa18e6f04eb5c268f33e6a05b54d1f2656cf5e50f8dfff",
+  "response_contract_version": "2.0.0",
+  "schema_version": "paper1.calibration.approved-specification.v2",
   "specification": {
     "algorithm_id": "paper1.calibration_probe_specification_loader",
     "algorithm_version": "1.0.0",

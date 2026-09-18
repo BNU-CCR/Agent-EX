@@ -52,6 +52,23 @@ def test_checked_in_v2_packet_equals_fresh_materializer_and_excludes_v1() -> Non
     assert len(artifacts.cases) == 816
     assert artifacts.archive_uri == "/root/autodl-tmp/agent-ex-phase0a1-probe-816-v2"
     assert artifacts.archive_uri != "/root/autodl-tmp/agent-ex-phase0a1-probe-816-v1"
+    specification_group = packet["artifact_groups"]["probe_specification"]
+    assert specification_group["response_contract_version"] == "2.0.0"
+    assert len(specification_group["response_contract_hash"]) == 64
+    assert len(specification_group["case_inventory_hash"]) == 64
+    v1_packet = json.loads(
+        (
+            PLATFORM_ROOT
+            / "configs"
+            / "paper1"
+            / "phase0a1-approval-proposal-v1"
+            / "approved-cloud-artifacts.proposal.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert (
+        packet["approved_group_hashes"]["probe_specification"]
+        != v1_packet["approved_group_hashes"]["probe_specification"]
+    )
     assert summary["packet_hash"] == packet["record_hash"]
     assert summary["group_hashes"] == packet["approved_group_hashes"]
     for case in artifacts.cases:

@@ -95,6 +95,7 @@ def test_every_case_declares_distinct_stance_confidence_and_json_contract(
     for case in selected:
         text = case.rendered_messages[-1]["content"]
         assert f"stance must be a JSON integer {range_text}" in text
+        assert "confidence represents certainty in the answer" in text
         assert "confidence is independent of the stance scale" in text
         assert "must be a JSON integer from 1 to 5" in text
         assert "public_reason must be non-empty text of at most 2048 characters" in text

@@ -55,7 +55,14 @@ class TimeoutCapturingAdapter(ScriptedProbeAdapter):
 
 def specification_and_cases(count: int = 1):
     specification = load_probe_specification(probe_spec_payload())
-    return specification, expand_probe_cases(specification)[:count]
+    cases = sorted(
+        expand_probe_cases(specification),
+        key=lambda case: (
+            case.field_order_id != "stance-confidence-reason",
+            case.probe_case_id,
+        ),
+    )
+    return specification, tuple(cases[:count])
 
 
 def policy(*, timeout_budget: int = 2) -> ProbeRuntimePolicy:
@@ -448,6 +455,65 @@ def test_repair_transport_retry_keeps_origin_and_advances_predecessor() -> None:
     assert projection.status == "complete"
 
 
+def test_repair_creation_rejects_predecessor_with_drifted_origin_evidence_binding() -> None:
+    specification, cases = specification_and_cases()
+    case = cases[0]
+    projection = execute_probe_run(
+        run_instance_id=RUN_INSTANCE_ID,
+        specification_hash=specification.output_hash,
+        cases=cases,
+        runtime_policy=policy(),
+        adapter=ScriptedProbeAdapter(
+            steps_for_first(
+                ProbeScriptStep("response", "not-json", None, None),
+                ProbeScriptStep("timeout", None, "timeout", None),
+            )
+        ),
+        generation_settings=GENERATION_SETTINGS,
+        runtime_identity=RUNTIME_IDENTITY,
+        model_identity=MODEL_IDENTITY,
+        tokenizer_identity=TOKENIZER_IDENTITY,
+        chat_template_hash=CHAT_TEMPLATE_HASH,
+        stop_after_attempts=2,
+    )
+    origin, predecessor = projection.attempts
+    request_payload = predecessor.request.to_payload()
+    request_payload["repair_binding"]["origin_response_hash"] = canonical_payload_hash(
+        "drifted-origin-response"
+    )
+    forged_request = ProbeRequest.from_payload(
+        rehash_payload(request_payload, id_field="request_id", prefix="probe-request-")
+    )
+    response_payload = predecessor.response.to_payload()
+    response_payload["request_id"] = forged_request.request_id
+    response_payload["request_hash"] = forged_request.record_hash
+    forged_response = ProbeResponse.from_payload(
+        rehash_payload(response_payload, id_field="response_id", prefix="probe-response-")
+    )
+    values = {
+        name: getattr(predecessor, name)
+        for name in predecessor.__dataclass_fields__
+        if name not in {"attempt_id", "record_hash"}
+    }
+    values.update(
+        request=forged_request,
+        request_hash=forged_request.record_hash,
+        response=forged_response,
+        response_hash=forged_response.record_hash,
+    )
+    forged_predecessor = ProbeAttempt.create(**values)
+
+    with pytest.raises(ValueError, match="origin|binding|evidence"):
+        ProbeRequest.create(
+            case,
+            attempt_index=3,
+            attempt_kind="format_repair",
+            generation_settings=GENERATION_SETTINGS,
+            repair_origin_attempt=origin,
+            repair_predecessor_attempt=forged_predecessor,
+        )
+
+
 def test_resume_after_format_pending_matches_uninterrupted_repair_evidence() -> None:
     specification, cases = specification_and_cases()
     case = cases[0]
@@ -529,7 +595,8 @@ def test_resume_after_repair_transport_failure_matches_uninterrupted_evidence() 
     assert resumed.run_evidence_hash == uninterrupted.run_evidence_hash
 
 
-def test_projection_replay_rejects_hash_valid_repair_predecessor_drift() -> None:
+@pytest.mark.parametrize("drift", ["predecessor", "scale"])
+def test_projection_replay_rejects_hash_valid_repair_contract_drift(drift: str) -> None:
     projection = run(
         ScriptedProbeAdapter(
             steps_for_first(
@@ -540,9 +607,14 @@ def test_projection_replay_rejects_hash_valid_repair_predecessor_drift() -> None
     )
     original = projection.attempts[-1]
     request_payload = original.request.to_payload()
-    request_payload["repair_binding"]["predecessor_attempt_hash"] = canonical_payload_hash(
-        "forged-predecessor"
-    )
+    if drift == "predecessor":
+        request_payload["repair_binding"]["predecessor_attempt_hash"] = canonical_payload_hash(
+            "forged-predecessor"
+        )
+    else:
+        request_payload["scale_id"] = (
+            "stance-0-10" if original.request.scale_id == "stance-1-7" else "stance-1-7"
+        )
     forged_request = ProbeRequest.from_payload(
         rehash_payload(request_payload, id_field="request_id", prefix="probe-request-")
     )
@@ -550,6 +622,7 @@ def test_projection_replay_rejects_hash_valid_repair_predecessor_drift() -> None
     response_payload = original.response.to_payload()
     response_payload["request_id"] = forged_request.request_id
     response_payload["request_hash"] = forged_request.record_hash
+    response_payload["scale_id"] = forged_request.scale_id
     forged_response = ProbeResponse.from_payload(
         rehash_payload(response_payload, id_field="response_id", prefix="probe-response-")
     )
@@ -560,6 +633,7 @@ def test_projection_replay_rejects_hash_valid_repair_predecessor_drift() -> None
     parse_payload["request_hash"] = forged_request.record_hash
     parse_payload["response_id"] = forged_response.response_id
     parse_payload["response_hash"] = forged_response.record_hash
+    parse_payload["scale_id"] = forged_request.scale_id
     forged_parse = ProbeParseEvidence.from_payload(
         rehash_payload(parse_payload, id_field="parse_evidence_id", prefix="probe-parse-")
     )
@@ -584,7 +658,7 @@ def test_projection_replay_rejects_hash_valid_repair_predecessor_drift() -> None
         [projection.attempts[0].record_hash, forged_attempt.record_hash]
     )
 
-    with pytest.raises(ValueError, match="repair|predecessor|provenance|chain"):
+    with pytest.raises(ValueError, match="repair|predecessor|provenance|chain|declarations"):
         ProbeRunProjection.from_payload(payload)
 
 

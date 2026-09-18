@@ -16,7 +16,11 @@ from agent_ex.calibration.review import (
     ReviewStratum,
     SemanticReviewPolicy,
 )
-from agent_ex.calibration.specification import load_probe_specification
+from agent_ex.calibration.response_contract import (
+    RESPONSE_CONTRACT_VERSION,
+    response_contract_hash,
+)
+from agent_ex.calibration.specification import expand_probe_cases, load_probe_specification
 from agent_ex.domain import canonical_payload_hash
 
 
@@ -490,11 +494,18 @@ def build_packet() -> dict[str, object]:
     runtime = _runtime_policy()
     semantic = _semantic_policy(gate)
     specification = load_probe_specification(_specification(gate, runtime, semantic))
+    cases = expand_probe_cases(specification)
+    case_inventory_hash = canonical_payload_hash(
+        [case.to_payload() for case in sorted(cases, key=lambda item: item.probe_case_id)]
+    )
     groups = {
         "probe_specification": _record(
-            "paper1.calibration.approved-specification.v1",
+            "paper1.calibration.approved-specification.v2",
             specification=specification.to_payload(),
             gate_algorithm=gate.to_payload(),
+            response_contract_version=RESPONSE_CONTRACT_VERSION,
+            response_contract_hash=response_contract_hash(),
+            case_inventory_hash=case_inventory_hash,
         ),
         "runtime_policy": runtime.to_payload(),
         "semantic_review_policy": semantic.to_payload(),

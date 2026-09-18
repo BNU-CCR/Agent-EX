@@ -26,17 +26,16 @@ TOKENIZER_IDENTITY = {"tokenizer": "synthetic", "revision": "offline-v1"}
 CHAT_TEMPLATE_HASH = canonical_payload_hash("synthetic-chat-template-v1")
 
 
-def probe_case(*, scale_id: str = "stance-1-7", field_order_id: str | None = None):
+def probe_case(*, scale_id: str = "stance-1-7", field_order_id: str = "stance-confidence-reason"):
     cases = expand_probe_cases(load_probe_specification(probe_spec_payload()))
     return next(
         case
         for case in cases
-        if case.scale_id == scale_id
-        and (field_order_id is None or case.field_order_id == field_order_id)
+        if case.scale_id == scale_id and case.field_order_id == field_order_id
     )
 
 
-def request(*, scale_id: str = "stance-1-7", field_order_id: str | None = None):
+def request(*, scale_id: str = "stance-1-7", field_order_id: str = "stance-confidence-reason"):
     return ProbeRequest.create(
         probe_case(scale_id=scale_id, field_order_id=field_order_id),
         attempt_index=1,
@@ -45,7 +44,12 @@ def request(*, scale_id: str = "stance-1-7", field_order_id: str | None = None):
     )
 
 
-def response(raw: str, *, scale_id: str = "stance-1-7", field_order_id: str | None = None):
+def response(
+    raw: str,
+    *,
+    scale_id: str = "stance-1-7",
+    field_order_id: str = "stance-confidence-reason",
+):
     req = request(scale_id=scale_id, field_order_id=field_order_id)
     return ProbeResponse.from_script_step(
         request=req,
