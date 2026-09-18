@@ -44,8 +44,10 @@ environment lock 或 run manifest，也不授予正式 Paper 1 主实验权限�
 
 任何 item、顺序、visible allowlist、模型 revision、prompt、标签集合或 hash 不一致都必须在
 首个 judge 请求前失败。职责必须分离：受信的 `review-materialize-judge` 控制进程可以读取完整
-bundle 和 hidden bindings，只用于验证来源、exact cover 和生成去盲后的 judge-only pack/index；
-真正发送请求的 blinded runner 只能获得 judge-only pack/index、批准的授权和执行 manifest。
+bundle 和 hidden bindings，只用于验证来源、exact cover，并输出/复制严格盲化的 runner-only
+view；该 view 必须与既有 approved judge pack/index canonical 且 byte-equivalent，输出 hash 必须
+分别等于上述已批准 pack/index hash，不得加入 hidden binding、human selection 或新排序。真正
+发送请求的 blinded runner 只能获得该 judge-only view、批准的授权和执行 manifest。
 runner 的文件系统/input allowlist 必须拒绝完整 bundle、human pack、hidden bindings、候选 key、
 条件标签、采样状态、human selection 标志、既有人工编码和汇总结果。
 
@@ -101,6 +103,10 @@ runner 的文件系统/input allowlist 必须拒绝完整 bundle、human pack、
 - `JudgeParseEvidence`：严格 JSON 对象解析、八个维度 exact-cover、合法标签和失败代码；
 - `JudgeAttemptEvidence`：request/response/parse 的单一不可变组合；
 - `JudgeDispatchReconciliation`：unresolved dispatch 的 typed、签名式裁定证据；
+- `JudgeServiceEvidence`：preflight、environment observation/lock、service-start identity 和
+  service-stop/port/GPU-idle 的 create-only lifecycle records；
+- `JudgeRunCompletion`：terminal verify 后绑定 projection、两个 service lifecycle 端点及其
+  exact-cover index 的最终不可变记录；
 - `JudgeRunProjection`：按 approved order 从 intents、attempts、resolutions 和 reconciliation
   重放得到 797 项状态；
 - `JudgeEvidenceIndex`：每个 judge code record hash 到 manifest、request、intent、attempt、
@@ -133,17 +139,25 @@ judge 证据写入 v2 archive 旁的新目录，不写入 Git，也不改动 pro
 ```text
 /root/autodl-tmp/agent-ex-phase0a1-judge-v1/
   staging/manifest.json
+  staging/service/preflight/<hash>.json
+  staging/service/start/<hash>.json
+  staging/service/stop/<hash>.json
+  staging/service/index.json
   staging/attempts/<hash>.json
   staging/dispatch/<hash>.json
   staging/reconciliation/<hash>.json
   staging/projection.json
   staging/raw/<hash>.json
   staging/judge-evidence-index.json
+  staging/completion.json
 ```
 
 每次发送前先原子写入 dispatch intent；收到并验证输出后写 raw artifact、attempt 和 dispatch
 resolution，再推进 projection。raw artifact 只在外部 archive 中保存，日志和用户消息不得输出
-响应正文。文件名、内容 hash 和 projection 列表必须 exact-cover。
+响应正文。文件名、内容 hash 和 projection 列表必须 exact-cover。若复用现有 service lifecycle
+实现，仍必须把其不可变 record locator/hash 纳入 `staging/service/index.json`；judge projection
+引用批准 manifest 所绑定的 preflight/start records，最终 `JudgeRunCompletion` 再绑定唯一 stop
+record。散落在投影或 completion 之外的 lifecycle 日志不构成完成证据。
 
 ## 4. 状态机、重试与恢复
 
@@ -191,8 +205,10 @@ durable attempts 重建 projection。恢复输出使用新的 create-only 控制
 - `judge-run`：只允许空 judge store，执行 797 项；
 - `judge-resume`：只恢复同一 manifest 的非终态 store；
 - `judge-reconcile`：依据 provider/transport 证据生成 typed reconciliation；
-- `judge-verify`：重放全部证据并核对 exactly 797 terminal coded items；
-- `judge-export-codes`：只在 verify 通过后创建 797-record judge code-set 与
+- `judge-verify`：重放全部证据并核对 exactly 797 terminal coded items、preflight/start exact-cover；
+- `judge-verify-completion`：服务停止后验证唯一 stop、port/GPU-idle 和 service index exact-cover，
+  创建 `JudgeRunCompletion`；
+- `judge-export-codes`：只在 completion verify 通过后创建 797-record judge code-set 与
   `JudgeEvidenceIndex`；
 - `human-export`：从已批准 human coder pack 生成便于填写的视图和空白记录模板，不填标签；
 - `human-import`：验证完成的 174 项表单并生成 human IndependentCode records 与
@@ -204,7 +220,9 @@ durable attempts 重建 projection。恢复输出使用新的 create-only 控制
 vLLM 必须通过审计过的 service lifecycle 启停。启动前验证端口空闲、GPU、固定模型 artifacts、
 runtime、已批准 authorization；启动后把 fresh observation 和 start identity 写入新的 judge
 manifest，待其批准后才发送请求。运行完成或失败后记录 stop evidence，并确认端口 8000 关闭、GPU
-计算进程为零。服务停止后 AutoDL 可关机，人工编码可离线继续。
+计算进程为零。随后 `judge-verify-completion` 必须创建 `JudgeRunCompletion`，绑定 terminal
+projection hash、service index hash、唯一 stop evidence hash 和 port/GPU-idle 证明；缺少该记录时
+不得宣称 judge run 完成或导出 codes。服务停止后 AutoDL 可关机，人工编码可离线继续。
 
 ## 6. 完整导入门
 
