@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, fields
+import ctypes
+import errno
 import hashlib
 import json
 import os
-from pathlib import Path
-import stat
 from pathlib import PureWindowsPath
+from pathlib import Path
+import secrets
+import stat
 from typing import Mapping
 
 from ..domain import _require_sha256, canonical_payload_hash
@@ -23,6 +26,7 @@ _METADATA = {
 _PACK_SCHEMA = "paper1.calibration.blind-coder-pack.v1"
 _INDEX_SCHEMA = "paper1.calibration.blind-coder-pack-index.v1"
 _VISIBLE_FIELDS = ("topic_text", "history_text", "identity_text", "response_text")
+EXPECTED_JUDGE_ITEM_COUNT = 797
 
 
 def _canonical_bytes(payload: object) -> bytes:
@@ -138,6 +142,8 @@ def _validate_pack(
         raise ValueError("judge pack export hash differs from the bundle")
     if type(pack["items"]) is not list:
         raise TypeError("judge pack items must use a JSON array")
+    if len(pack["items"]) != EXPECTED_JUDGE_ITEM_COUNT:
+        raise ValueError(f"judge pack must contain exactly {EXPECTED_JUDGE_ITEM_COUNT} items")
     parsed: list[BlindReviewItem] = []
     for payload in pack["items"]:
         if type(payload) is not dict:
@@ -150,6 +156,10 @@ def _validate_pack(
             raise ValueError("judge pack visible fields differ from the exact allowlist")
         parsed.append(item)
     expected = items_for_coder(bundle, contract.coder_id)
+    if len(expected) != EXPECTED_JUDGE_ITEM_COUNT:
+        raise ValueError(
+            f"bundle-derived judge item count must be exactly {EXPECTED_JUDGE_ITEM_COUNT}"
+        )
     if [item.to_payload() for item in parsed] != [item.to_payload() for item in expected]:
         raise ValueError("judge pack item identity, content, or order is not an exact bundle match")
     return contract.coder_id, contract.record_hash, expected
@@ -373,21 +383,78 @@ def _fsync_directory(path: Path) -> None:
         os.close(descriptor)
 
 
-def _unlink_owned_file(path: Path, identity: _Identity) -> None:
-    if _safe_identity(path, "file") != identity:
-        return
-    try:
-        path.unlink()
-    except FileNotFoundError:
-        return
+def _unlink_owned_file(
+    path: Path,
+    identity: _Identity,
+    parent_identity: _Identity | None = None,
+    *,
+    directory_fd: int | None = None,
+) -> bool:
+    """Unlink only by a held POSIX directory/file handle; otherwise quarantine."""
+
+    if os.name == "posix":
+        owns_directory_fd = directory_fd is None
+        if owns_directory_fd:
+            directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | os.O_NOFOLLOW
+            try:
+                directory_fd = os.open(path.parent, directory_flags)
+            except OSError:
+                return False
+        try:
+            assert directory_fd is not None
+            if (
+                parent_identity is not None
+                and _stable_identity(os.fstat(directory_fd)) != parent_identity
+            ):
+                return False
+            file_flags = getattr(os, "O_PATH", os.O_RDONLY) | os.O_NOFOLLOW
+            try:
+                file_fd = os.open(path.name, file_flags, dir_fd=directory_fd)
+            except OSError:
+                return False
+            try:
+                if _stable_identity(os.fstat(file_fd)) != identity:
+                    return False
+                unlinkat = getattr(ctypes.CDLL(None, use_errno=True), "unlinkat", None)
+                if unlinkat is None:
+                    return False
+                unlinkat.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
+                unlinkat.restype = ctypes.c_int
+                if unlinkat(file_fd, b"", 0x1000) == 0:  # AT_EMPTY_PATH
+                    return True
+                return False
+            finally:
+                os.close(file_fd)
+        finally:
+            if owns_directory_fd:
+                os.close(directory_fd)
+
+    # Windows has no portable handle-relative unlink API in the standard library.
+    # Keep the private staging tree as quarantine rather than risking a path race.
+    return False
 
 
 def _write_bytes_create_only(path: Path, content: bytes) -> _Identity:
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
     descriptor: int | None = None
+    directory_fd: int | None = None
+    parent_identity: _Identity | None = None
     identity: _Identity | None = None
     try:
-        descriptor = os.open(path, flags, 0o600)
+        if os.name == "posix":
+            directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | os.O_NOFOLLOW
+            directory_fd = os.open(path.parent, directory_flags)
+            parent_identity = _stable_identity(os.fstat(directory_fd))
+            if parent_identity is None:
+                raise ValueError("staging parent has no stable object identity")
+            descriptor = os.open(
+                path.name,
+                flags | os.O_NOFOLLOW,
+                0o600,
+                dir_fd=directory_fd,
+            )
+        else:
+            descriptor = os.open(path, flags, 0o600)
         stat_result = os.fstat(descriptor)
         identity = _stable_identity(stat_result)
         if identity is None:
@@ -400,48 +467,190 @@ def _write_bytes_create_only(path: Path, content: bytes) -> _Identity:
         if descriptor is not None:
             os.close(descriptor)
         if identity is not None:
-            _unlink_owned_file(path, identity)
+            if directory_fd is None:
+                _unlink_owned_file(path, identity, parent_identity)
+            else:
+                _unlink_owned_file(
+                    path,
+                    identity,
+                    parent_identity,
+                    directory_fd=directory_fd,
+                )
+        if directory_fd is not None:
+            os.close(directory_fd)
         raise
     else:
         assert descriptor is not None and identity is not None
         os.close(descriptor)
-    _fsync_directory(path.parent)
+        if directory_fd is not None:
+            try:
+                os.fsync(directory_fd)
+            except OSError:
+                pass
+    if directory_fd is not None:
+        os.close(directory_fd)
     return identity
 
 
 def _rollback_materialization(
-    output_root: Path,
+    staging_root: Path,
     parent_identity: _Identity | None,
-    root_identity: _Identity | None,
+    staging_identity: _Identity | None,
     created_files: list[tuple[Path, _Identity]],
 ) -> None:
-    """Remove only files and the directory proven to belong to this invocation."""
+    """Remove only a private staging tree proven to belong to this invocation."""
 
-    if parent_identity is None or root_identity is None:
+    if parent_identity is None or staging_identity is None:
         return
-    if _safe_identity(output_root.parent, "directory") != parent_identity:
+    if _safe_identity(staging_root.parent, "directory") != parent_identity:
         return
-    if _safe_identity(output_root, "directory") != root_identity:
+    if _safe_identity(staging_root, "directory") != staging_identity:
         return
     for path, identity in reversed(created_files):
-        _unlink_owned_file(path, identity)
-    if _safe_identity(output_root, "directory") != root_identity:
+        if not _unlink_owned_file(path, identity, staging_identity):
+            return
+    if _safe_identity(staging_root, "directory") != staging_identity:
         return
     try:
-        if any(output_root.iterdir()):
+        if any(staging_root.iterdir()):
             return
     except OSError:
         return
-    if _safe_identity(output_root.parent, "directory") != parent_identity:
+    if _safe_identity(staging_root.parent, "directory") != parent_identity:
         return
-    if _safe_identity(output_root, "directory") != root_identity:
+    if _safe_identity(staging_root, "directory") != staging_identity:
         return
     try:
-        output_root.rmdir()
+        staging_root.rmdir()
     except OSError:
         return
-    if _safe_identity(output_root.parent, "directory") == parent_identity:
-        _fsync_directory(output_root.parent)
+    if _safe_identity(staging_root.parent, "directory") == parent_identity:
+        _fsync_directory(staging_root.parent)
+
+
+def _make_staging_directory(parent: Path, name: str) -> tuple[Path, _Identity]:
+    """Create a private high-entropy sibling directory without following links."""
+
+    if os.name == "posix":
+        directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | os.O_NOFOLLOW
+        try:
+            parent_fd = os.open(parent, directory_flags)
+        except OSError:
+            raise ValueError("staging parent must be a real directory") from None
+        try:
+            if _stable_identity(os.fstat(parent_fd)) is None:
+                raise ValueError("staging parent has no stable object identity")
+            for _ in range(32):
+                staging_name = f".{name}.staging-{secrets.token_hex(16)}"
+                try:
+                    os.mkdir(staging_name, 0o700, dir_fd=parent_fd)
+                except FileExistsError:
+                    continue
+                staging = parent / staging_name
+                identity = _safe_identity(staging, "directory")
+                if identity is None:
+                    raise ValueError("staging directory has no stable non-link identity")
+                return staging, identity
+        finally:
+            os.close(parent_fd)
+        raise FileExistsError("could not allocate a unique private staging directory")
+
+    for _ in range(32):
+        staging = parent / f".{name}.staging-{secrets.token_hex(16)}"
+        try:
+            staging.mkdir(mode=0o700)
+        except FileExistsError:
+            continue
+        identity = _safe_identity(staging, "directory")
+        if identity is None:
+            raise ValueError("staging directory has no stable non-link identity")
+        return staging, identity
+    raise FileExistsError("could not allocate a unique private staging directory")
+
+
+def _verify_staged_files(
+    staging_root: Path,
+    staging_identity: _Identity,
+    files: tuple[tuple[Path, bytes, _Identity], ...],
+) -> None:
+    if _safe_identity(staging_root, "directory") != staging_identity:
+        raise ValueError("staging directory identity changed")
+    if {entry.name for entry in staging_root.iterdir()} != {path.name for path, _, _ in files}:
+        raise ValueError("staging inventory is not exact")
+    for path, expected, identity in files:
+        if _safe_identity(path, "file") != identity:
+            raise ValueError("staged file identity changed")
+        actual = path.read_bytes()
+        if _safe_identity(path, "file") != identity:
+            raise ValueError("staged file identity changed during verification")
+        if (
+            actual != expected
+            or hashlib.sha256(actual).digest() != hashlib.sha256(expected).digest()
+        ):
+            raise ValueError("staged file bytes or hash changed")
+
+
+def _rename_directory_no_replace(
+    source: Path,
+    target: Path,
+    expected_parent_identity: _Identity | None = None,
+) -> None:
+    """Atomically publish a directory while refusing an existing target."""
+
+    if os.name == "nt":
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        move_file = kernel32.MoveFileExW
+        move_file.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p, ctypes.c_uint32]
+        move_file.restype = ctypes.c_int
+        if move_file(str(source), str(target), 0):
+            return
+        error = ctypes.get_last_error()
+        if error in {80, 183}:
+            raise FileExistsError(target)
+        raise OSError(error, "atomic directory publish failed", target)
+
+    if os.name == "posix":
+        if source.parent != target.parent:
+            raise ValueError("source and target must share a parent directory")
+        directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | os.O_NOFOLLOW
+        try:
+            parent_fd = os.open(source.parent, directory_flags)
+        except OSError:
+            raise OSError(errno.ENOENT, "publish parent directory is unavailable") from None
+        try:
+            if (
+                expected_parent_identity is not None
+                and _stable_identity(os.fstat(parent_fd)) != expected_parent_identity
+            ):
+                raise ValueError("publish parent directory identity changed")
+            libc = ctypes.CDLL(None, use_errno=True)
+            renameat2 = getattr(libc, "renameat2", None)
+            if renameat2 is None:
+                raise OSError(errno.ENOTSUP, "atomic no-replace directory publish is unavailable")
+            renameat2.argtypes = [
+                ctypes.c_int,
+                ctypes.c_char_p,
+                ctypes.c_int,
+                ctypes.c_char_p,
+                ctypes.c_uint,
+            ]
+            renameat2.restype = ctypes.c_int
+            result = renameat2(
+                parent_fd,
+                os.fsencode(source.name),
+                parent_fd,
+                os.fsencode(target.name),
+                1,
+            )
+            if result == 0:
+                return
+            error = ctypes.get_errno()
+            if error == errno.EEXIST:
+                raise FileExistsError(target)
+            raise OSError(error, "atomic directory publish failed", target)
+        finally:
+            os.close(parent_fd)
+    raise OSError(errno.ENOTSUP, "atomic no-replace directory publish is unavailable")
 
 
 def materialize_judge_view(
@@ -493,39 +702,58 @@ def materialize_judge_view(
         item_count=len(items),
     )
 
-    root_identity: _Identity | None = None
+    staging_root: Path | None = None
+    staging_identity: _Identity | None = None
     created_files: list[tuple[Path, _Identity]] = []
     try:
-        output_root.mkdir(mode=0o700)
-        root_identity = _safe_identity(output_root, "directory")
-        if root_identity is None:
-            raise ValueError("output root must be a newly created non-symlink directory")
+        staging_root, staging_identity = _make_staging_directory(
+            output_root.parent, output_root.name
+        )
         if _safe_identity(output_root.parent, "directory") != parent_identity:
             raise ValueError("output root parent directory identity changed")
 
         files = (
-            (output_root / "judge-pack.json", pack_bytes),
-            (output_root / "index.json", index_bytes),
-            (output_root / "materialization.json", _canonical_bytes(result.to_payload())),
+            (staging_root / "judge-pack.json", pack_bytes),
+            (staging_root / "index.json", index_bytes),
+            (staging_root / "materialization.json", _canonical_bytes(result.to_payload())),
         )
         for path, content in files:
-            if _safe_identity(output_root.parent, "directory") != parent_identity:
+            if _safe_identity(staging_root, "directory") != staging_identity:
+                raise ValueError("staging directory identity changed")
+            if _safe_identity(staging_root.parent, "directory") != parent_identity:
                 raise ValueError("output root parent directory identity changed")
-            if _safe_identity(output_root, "directory") != root_identity:
-                raise ValueError("output root directory identity changed")
-            created_files.append((path, _write_bytes_create_only(path, content)))
-        if {path.name for path in output_root.iterdir()} != {
-            "judge-pack.json",
-            "index.json",
-            "materialization.json",
-        }:
-            raise ValueError("judge materialization exact inventory check failed")
-        _fsync_directory(output_root)
+            created_files.append((path, _write_bytes_create_only(path, content)))  # type: ignore[arg-type]
+        staged = tuple(
+            (path, content, identity)
+            for (path, content), (_, identity) in zip(files, created_files)
+        )
+        _verify_staged_files(staging_root, staging_identity, staged)
+        _fsync_directory(staging_root)
+        if _safe_identity(output_root.parent, "directory") != parent_identity:
+            raise ValueError("output root parent directory identity changed before publish")
+        if output_root.exists() or _is_link_or_reparse(output_root):
+            raise FileExistsError("output root appeared before publish")
+        _rename_directory_no_replace(staging_root, output_root, parent_identity)
+        staging_root = None
+        published_identity = _safe_identity(output_root, "directory")
+        if published_identity != staging_identity:
+            raise ValueError("published output directory identity changed")
+        published_files = tuple(
+            (output_root / path.name, content, identity) for path, content, identity in staged
+        )
+        _verify_staged_files(output_root, published_identity, published_files)
         _fsync_directory(output_root.parent)
+        if _safe_identity(output_root, "directory") != published_identity:
+            raise ValueError("published output directory identity changed before return")
+        if _safe_identity(output_root.parent, "directory") != parent_identity:
+            raise ValueError("output root parent directory identity changed before return")
     except BaseException:
-        _rollback_materialization(output_root, parent_identity, root_identity, created_files)
+        if staging_root is not None:
+            _rollback_materialization(
+                staging_root, parent_identity, staging_identity, created_files
+            )
         raise
     return result
 
 
-__all__ = ["JudgeMaterialization", "materialize_judge_view"]
+__all__ = ["EXPECTED_JUDGE_ITEM_COUNT", "JudgeMaterialization", "materialize_judge_view"]

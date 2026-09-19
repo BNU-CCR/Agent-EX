@@ -9,9 +9,11 @@ from pathlib import Path
 import pytest
 
 from agent_ex.calibration.judge_materialize import (
+    EXPECTED_JUDGE_ITEM_COUNT,
     JudgeMaterialization,
     materialize_judge_view,
 )
+import agent_ex.calibration.review as review_module
 from agent_ex.calibration.review import items_for_coder
 from agent_ex.domain import canonical_payload_hash
 from test_calibration_review import prepared
@@ -36,11 +38,88 @@ def rehash(payload: dict[str, object]) -> None:
     )
 
 
-@pytest.fixture
-def review_inputs() -> dict[str, object]:
-    bundle = __import__(
-        "agent_ex.calibration.review", fromlist=["export_blind_review"]
-    ).export_blind_review(*prepared())
+def _bundle_with_exact_judge_item_count():
+    specification, cases, run, policy = prepared()
+    bundle = review_module.export_blind_review(specification, cases, run, policy)
+    source_binding = bundle.hidden_bindings[0]
+    source_case = next(case for case in cases if case.probe_case_id == source_binding.probe_case_id)
+    source_parse = next(
+        attempt.parse_evidence
+        for attempt in run.attempts
+        if attempt.parse_evidence is not None
+        and attempt.parse_evidence.request_id == source_binding.request_id
+    )
+    source_item = bundle.review_export.items[0]
+    items = []
+    bindings = []
+    for index in range(EXPECTED_JUDGE_ITEM_COUNT):
+        visible = dict(source_item.visible_payload)
+        visible["response_text"] = f"{visible['response_text']} item-{index}"
+        visible_hash = canonical_payload_hash(visible)
+        item_id = review_module._opaque_item_id(
+            policy_id=policy.policy_id,
+            policy_hash=policy.record_hash,
+            randomization_seed=policy.randomization_seed,
+            randomization_domain=policy.randomization_domain,
+            stratum_id=source_binding.stratum_id,
+            probe_case_id=source_binding.probe_case_id,
+            probe_case_hash=source_binding.probe_case_hash,
+            request_id=source_binding.request_id,
+            request_hash=source_binding.request_hash,
+            response_id=source_binding.response_id,
+            response_hash=source_binding.response_hash,
+            raw_response_hash=source_binding.raw_response_hash,
+            parse_id=source_binding.parse_id,
+            parse_hash=source_binding.parse_hash,
+            visible_payload_hash=visible_hash,
+        )
+        item = review_module.BlindReviewItem.create(
+            item_id=item_id,
+            policy_hash=policy.record_hash,
+            visible_payload=visible,
+        )
+        binding = review_module.HiddenReviewBinding.create(
+            policy,
+            item,
+            source_binding.stratum_id,
+            source_case,
+            source_parse,
+            human_audit_selected=index < 3,
+        )
+        items.append(item)
+        bindings.append(binding)
+    export_values = {
+        "policy_id": bundle.review_export.policy_id,
+        "policy_version": bundle.review_export.policy_version,
+        "policy_hash": bundle.review_export.policy_hash,
+        "specification_hash": bundle.review_export.specification_hash,
+        "specification_semantic_review_policy_hash": bundle.review_export.specification_semantic_review_policy_hash,
+        "run_id": bundle.review_export.run_id,
+        "run_evidence_hash": bundle.review_export.run_evidence_hash,
+        "items": tuple(items),
+    }
+    export_content = {
+        "schema_version": review_module.BlindReviewExport._SCHEMA,
+        **{**export_values, "items": [item.to_payload() for item in items]},
+        "metadata": bundle.review_export.metadata,
+    }
+    export = review_module.BlindReviewExport(
+        **export_values,
+        export_hash=canonical_payload_hash(export_content),
+    )
+    return review_module.SemanticReviewBundle(
+        policy,
+        export,
+        tuple(bindings),
+        (),
+        (),
+        None,
+        "awaiting_codes",
+        (),
+    )
+
+
+def _pack_and_index(bundle):
     judge = next(contract for contract in bundle.policy.coder_contracts if contract.role == "judge")
     content: dict[str, object] = {
         "schema_version": "paper1.calibration.blind-coder-pack.v1",
@@ -70,12 +149,17 @@ def review_inputs() -> dict[str, object]:
     }
     index = {**index_content, "record_hash": canonical_payload_hash(index_content)}
     return {
-        "bundle": bundle,
         "pack_bytes": canonical_bytes(pack),
         "index_bytes": canonical_bytes(index),
         "approved_pack_hash": pack["record_hash"],
         "approved_index_hash": index["record_hash"],
     }
+
+
+@pytest.fixture
+def review_inputs() -> dict[str, object]:
+    bundle = _bundle_with_exact_judge_item_count()
+    return {"bundle": bundle, **_pack_and_index(bundle)}
 
 
 def materialize(tmp_path: Path, review_inputs: dict[str, object]) -> JudgeMaterialization:
@@ -137,6 +221,32 @@ def test_item_inventory_must_exactly_match_bundle_order(
     with pytest.raises(ValueError, match="item|order|exact"):
         materialize(tmp_path, attacked)
     assert not (tmp_path / "runner").exists()
+
+
+@pytest.mark.parametrize("count", [776, 798])
+def test_judge_pack_requires_exact_797_items(
+    tmp_path: Path, review_inputs: dict[str, object], count: int
+) -> None:
+    def mutate(pack: dict[str, object]) -> None:
+        if count < EXPECTED_JUDGE_ITEM_COUNT:
+            pack["items"] = pack["items"][:count]
+        else:
+            pack["items"] = pack["items"] + [deepcopy(pack["items"][0])]
+        rehash(pack)
+
+    attacked = dict(review_inputs)
+    attacked["pack_bytes"] = mutate_json_bytes(review_inputs["pack_bytes"], mutate)
+    attacked["approved_pack_hash"] = json.loads(attacked["pack_bytes"])["record_hash"]
+    with pytest.raises(ValueError, match="797"):
+        materialize(tmp_path, attacked)
+
+
+def test_self_consistent_small_bundle_is_rejected_by_formal_count(tmp_path: Path) -> None:
+    specification, cases, run, policy = prepared()
+    bundle = review_module.export_blind_review(specification, cases, run, policy)
+    inputs = {"bundle": bundle, **_pack_and_index(bundle)}
+    with pytest.raises(ValueError, match="797"):
+        materialize_judge_view(**inputs, output_root=tmp_path / "runner")
 
 
 @pytest.mark.parametrize(
@@ -324,15 +434,24 @@ def test_rollback_never_deletes_replaced_output_directory(
     real_write = materializer._write_bytes_create_only
     real_identity = materializer._safe_identity
     replaced = False
+    staging_holder: list[Path] = []
 
     def replace_after_first_write(path: Path, content: bytes) -> None:
         nonlocal replaced
-        real_write(path, content)
+        identity = real_write(path, content)
+        staging_holder.append(path.parent)
         replaced = True
+        return identity
 
     def report_replaced_identity(path: Path, kind: str) -> tuple[int, int] | None:
         identity = real_identity(path, kind)
-        if replaced and path == output_root and kind == "directory" and identity is not None:
+        if (
+            replaced
+            and staging_holder
+            and path == staging_holder[0]
+            and kind == "directory"
+            and identity is not None
+        ):
             return (identity[0], identity[1] + 1)
         return identity
 
@@ -346,7 +465,7 @@ def test_rollback_never_deletes_replaced_output_directory(
     )
     with pytest.raises(ValueError, match="identity"):
         materialize_judge_view(**review_inputs, output_root=output_root)
-    assert (output_root / "judge-pack.json").is_file()
+    assert staging_holder and (staging_holder[0] / "judge-pack.json").is_file()
     assert sibling_marker.read_text(encoding="utf-8") == "sibling-must-survive"
 
 
@@ -371,28 +490,194 @@ def test_rollback_never_follows_real_replaced_output_directory(
 
         def replace_after_first_write(path: Path, content: bytes) -> None:
             nonlocal calls
-            real_write(path, content)
+            identity = real_write(path, content)
             calls += 1
             if calls == 1:
+                output_root.mkdir()
+                (output_root / "judge-pack.json").write_bytes(path.read_bytes())
                 output_root.rename(moved_original)
                 output_root.mkdir()
                 (output_root / "replacement-sentinel.txt").write_text(
                     "replacement-must-survive", encoding="utf-8"
                 )
-            else:
-                raise OSError("synthetic write failure after real directory replacement")
+            return identity
 
         monkeypatch.setattr(
             "agent_ex.calibration.judge_materialize._write_bytes_create_only",
             replace_after_first_write,
         )
-        with pytest.raises(ValueError, match="identity"):
+        with pytest.raises(FileExistsError, match="appeared"):
             materialize_judge_view(**review_inputs, output_root=output_root)
         assert (moved_original / "judge-pack.json").is_file()
         assert (output_root / "replacement-sentinel.txt").read_text(
             encoding="utf-8"
         ) == "replacement-must-survive"
         assert target_marker.read_text(encoding="utf-8") == "target-sibling-must-survive"
+
+
+def test_publish_swap_before_return_is_detected_without_cleanup(
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import tempfile
+
+    import agent_ex.calibration.judge_materialize as materializer
+
+    with tempfile.TemporaryDirectory(prefix="agent-ex-judge-return-") as temporary_root:
+        base = Path(temporary_root)
+        output_root = base / "runner"
+        moved_original = base / "moved-original"
+        real_fsync = materializer._fsync_directory
+        swapped = False
+
+        def swap_after_publish(path: Path) -> None:
+            nonlocal swapped
+            real_fsync(path)
+            if path == output_root.parent and output_root.exists() and not swapped:
+                output_root.rename(moved_original)
+                output_root.mkdir()
+                (output_root / "replacement-sentinel.txt").write_text(
+                    "replacement-must-survive", encoding="utf-8"
+                )
+                swapped = True
+
+        monkeypatch.setattr(
+            "agent_ex.calibration.judge_materialize._fsync_directory",
+            swap_after_publish,
+        )
+        with pytest.raises(ValueError, match="before return|identity"):
+            materialize_judge_view(**review_inputs, output_root=output_root)
+        assert swapped
+        assert (moved_original / "judge-pack.json").is_file()
+        assert (output_root / "replacement-sentinel.txt").read_text(encoding="utf-8") == (
+            "replacement-must-survive"
+        )
+
+
+def test_open_swap_quarantines_replaced_staging_directory(
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import tempfile
+
+    import agent_ex.calibration.judge_materialize as materializer
+
+    with tempfile.TemporaryDirectory(prefix="agent-ex-judge-open-") as temporary_root:
+        base = Path(temporary_root)
+        output_root = base / "runner"
+        moved_original = base / "moved-original"
+        real_open = materializer.os.open
+        swapped = False
+
+        def swap_before_open(path, flags, *args, **kwargs):
+            nonlocal swapped
+            candidate = Path(path)
+            if candidate.name == "judge-pack.json" and flags & os.O_CREAT and not swapped:
+                staging_root = candidate.parent
+                staging_root.rename(moved_original)
+                staging_root.mkdir()
+                (staging_root / "replacement-sentinel.txt").write_text(
+                    "replacement-must-survive", encoding="utf-8"
+                )
+                swapped = True
+            return real_open(path, flags, *args, **kwargs)
+
+        monkeypatch.setattr(materializer.os, "open", swap_before_open)
+        with pytest.raises(ValueError, match="staging directory identity"):
+            materialize_judge_view(**review_inputs, output_root=output_root)
+        assert swapped
+        assert not output_root.exists()
+        assert (moved_original / "judge-pack.json").exists() is False
+        assert (
+            next(path for path in base.iterdir() if path.name.startswith(".runner.staging-"))
+            / "replacement-sentinel.txt"
+        ).read_text(encoding="utf-8") == "replacement-must-survive"
+
+
+def test_rollback_unlink_race_never_deletes_replacement_file(
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import tempfile
+
+    import agent_ex.calibration.judge_materialize as materializer
+
+    with tempfile.TemporaryDirectory(prefix="agent-ex-judge-unlink-") as temporary_root:
+        base = Path(temporary_root)
+        output_root = base / "runner"
+        moved_original = base / "moved-original"
+        target_sibling = base / "target-sibling"
+        target_sibling.mkdir()
+        target_marker = target_sibling / "must-survive.txt"
+        target_marker.write_text("target-sibling-must-survive", encoding="utf-8")
+        real_write = materializer._write_bytes_create_only
+        calls = 0
+        swapped = False
+        replacement_root: list[Path] = []
+
+        def fail_on_second_write(path: Path, content: bytes):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise OSError("synthetic failure before rollback")
+            return real_write(path, content)
+
+        def replace_staging(path: Path) -> None:
+            nonlocal swapped
+            staging_root = path.parent
+            staging_root.rename(moved_original)
+            staging_root.mkdir()
+            replacement_root.append(staging_root)
+            path.write_text("replacement-sentinel", encoding="utf-8")
+            swapped = True
+
+        def quarantine_before_unlink(path: Path, identity, parent_identity):
+            if path.name == "judge-pack.json" and not swapped:
+                replace_staging(path)
+            return False
+
+        monkeypatch.setattr(
+            "agent_ex.calibration.judge_materialize._write_bytes_create_only",
+            fail_on_second_write,
+        )
+        monkeypatch.setattr(materializer, "_unlink_owned_file", quarantine_before_unlink)
+        with pytest.raises(OSError, match="synthetic failure"):
+            materialize_judge_view(**review_inputs, output_root=output_root)
+        assert swapped
+        assert (moved_original / "judge-pack.json").is_file()
+        assert (output_root.parent / target_sibling.name / target_marker.name).read_text(
+            encoding="utf-8"
+        ) == "target-sibling-must-survive"
+        assert replacement_root
+        assert (replacement_root[0] / "judge-pack.json").read_text(encoding="utf-8") == (
+            "replacement-sentinel"
+        )
+
+
+@pytest.mark.skipif(os.name != "posix", reason="POSIX handle-relative contract")
+def test_posix_staged_file_open_is_handle_relative_and_nofollow(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    staging = tmp_path / "staging"
+    staging.mkdir()
+    target = staging / "payload"
+    real_open = materializer.os.open
+    observed: list[tuple[int, int | None]] = []
+
+    def record_open(path, flags, *args, **kwargs):
+        if Path(path).name == "payload" and flags & os.O_CREAT:
+            observed.append((flags, kwargs.get("dir_fd")))
+        return real_open(path, flags, *args, **kwargs)
+
+    monkeypatch.setattr(materializer.os, "open", record_open)
+    materializer._write_bytes_create_only(target, b"payload")
+
+    assert observed
+    flags, dir_fd = observed[0]
+    assert dir_fd is not None
+    assert flags & os.O_NOFOLLOW
 
 
 def test_materializer_ignores_ctime_changes_when_identity_is_stable(
