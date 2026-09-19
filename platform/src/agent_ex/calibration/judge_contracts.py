@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import base64
+import hashlib
 import json
 import math
 import re
@@ -19,6 +21,7 @@ from ..domain import (
     _require_payload_hash,
     _require_sha256,
     _require_string,
+    _require_timestamp,
     canonical_payload_hash,
 )
 from .review import BlindReviewItem, SemanticReviewPolicy
@@ -1334,3 +1337,353 @@ class JudgeRunCompletion:
         if not isinstance(abort, JudgePreManifestAbortEvidence):
             raise TypeError("judge completion abort input is invalid")
         raise ValueError("pre-manifest abort evidence cannot create judge completion")
+
+
+def _sha256_bytes(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeRequestEvidence:
+    """One rendered judge item bound to its manifest order and provider payload."""
+
+    rendered_request: RenderedJudgeRequest
+    manifest_hash: str
+    order_index: int
+    model_id: str
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-request-evidence.v1"
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.rendered_request, RenderedJudgeRequest):
+            raise TypeError("rendered_request must be a RenderedJudgeRequest")
+        _require_sha256("manifest_hash", self.manifest_hash)
+        _require_int("order_index", self.order_index, minimum=0)
+        _require_id("model_id", self.model_id)
+        settings = self.rendered_request.generation_settings
+        if set(settings) != {"temperature", "top_p", "max_tokens"}:
+            raise ValueError("judge generation settings require exact provider fields")
+        for name in ("temperature", "top_p"):
+            if type(settings[name]) is not float or not math.isfinite(settings[name]):
+                raise ValueError(f"judge {name} must be a finite float")
+        _require_int("judge max_tokens", settings["max_tokens"], minimum=1)
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    @property
+    def request_id(self) -> str:
+        return self.rendered_request.request_id
+
+    @property
+    def response_byte_ceiling(self) -> int:
+        return self.rendered_request.response_byte_ceiling
+
+    @property
+    def generation_settings(self) -> Mapping[str, object]:
+        return self.rendered_request.generation_settings
+
+    def provider_payload(self) -> dict[str, object]:
+        settings = self.rendered_request.generation_settings
+        return {
+            "model": self.model_id,
+            "messages": _json_ready(self.rendered_request.messages),
+            "temperature": settings["temperature"],
+            "top_p": settings["top_p"],
+            "max_tokens": settings["max_tokens"],
+            "seed": self.rendered_request.seed,
+            "chat_template_kwargs": {"enable_thinking": False},
+            "response_format": {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "phase0a1_judge_labels",
+                    "strict": True,
+                    "schema": _json_ready(self.rendered_request.response_schema),
+                },
+            },
+        }
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA,
+            "rendered_request": self.rendered_request.to_payload(),
+            "manifest_hash": self.manifest_hash,
+            "order_index": self.order_index,
+            "model_id": self.model_id,
+            "metadata": _metadata(),
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        rendered_request: RenderedJudgeRequest,
+        manifest_hash: str,
+        order_index: int,
+        model_id: str,
+    ) -> JudgeRequestEvidence:
+        values = {
+            "rendered_request": rendered_request,
+            "manifest_hash": manifest_hash,
+            "order_index": order_index,
+            "model_id": model_id,
+        }
+        content = {
+            "schema_version": cls._SCHEMA,
+            "rendered_request": rendered_request.to_payload(),
+            "manifest_hash": manifest_hash,
+            "order_index": order_index,
+            "model_id": model_id,
+            "metadata": _metadata(),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeRequestEvidence:
+        expected = {
+            "schema_version",
+            "rendered_request",
+            "manifest_hash",
+            "order_index",
+            "model_id",
+            "metadata",
+            "record_hash",
+        }
+        _exact_payload(payload, expected, cls._SCHEMA)
+        if type(payload["rendered_request"]) is not dict:
+            raise TypeError("judge rendered request must use a JSON object")
+        return cls(
+            rendered_request=RenderedJudgeRequest.from_payload(payload["rendered_request"]),
+            manifest_hash=payload["manifest_hash"],
+            order_index=payload["order_index"],
+            model_id=payload["model_id"],
+            record_hash=payload["record_hash"],
+        )  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeResponseEvidence:
+    """Immutable result of exactly one judge transport dispatch."""
+
+    request_id: str
+    request_hash: str
+    provider_request_id: str | None
+    http_status: int | None
+    response_headers: Mapping[str, str]
+    raw_bytes_base64: str
+    raw_bytes_sha256: str
+    raw_bytes_count: int
+    output_bytes_base64: str | None
+    output_bytes_sha256: str | None
+    model_id: str | None
+    termination: str | None
+    input_tokens: int | None
+    output_tokens: int | None
+    success: bool
+    failure_code: str | None
+    retry_after_seconds: float | None
+    started_at: str
+    ended_at: str
+    duration_seconds: float
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-response-evidence.v1"
+
+    def __post_init__(self) -> None:
+        _require_id("request_id", self.request_id)
+        _require_sha256("request_hash", self.request_hash)
+        if self.provider_request_id is not None:
+            _require_id("provider_request_id", self.provider_request_id)
+        if self.http_status is not None:
+            _require_int("http_status", self.http_status, minimum=100)
+            if self.http_status > 599:
+                raise ValueError("http_status must be a valid HTTP status")
+        if not isinstance(self.response_headers, Mapping) or any(
+            type(name) is not str or type(value) is not str
+            for name, value in self.response_headers.items()
+        ):
+            raise TypeError("response headers must be a string mapping")
+        object.__setattr__(
+            self, "response_headers", _freeze(dict(sorted(self.response_headers.items())))
+        )
+        _require_sha256("raw_bytes_sha256", self.raw_bytes_sha256)
+        if self.raw_bytes_sha256 != _sha256_bytes(self.raw_bytes):
+            raise ValueError("raw response byte hash differs from exact bytes")
+        if self.raw_bytes_count != len(self.raw_bytes):
+            raise ValueError("raw response byte count differs from exact bytes")
+        if (self.output_bytes_base64 is None) != (self.output_bytes_sha256 is None):
+            raise ValueError("output bytes and hash must both be present or absent")
+        if self.output_bytes_sha256 is not None:
+            _require_sha256("output_bytes_sha256", self.output_bytes_sha256)
+            if self.output_bytes_sha256 != _sha256_bytes(self.output_bytes or b""):
+                raise ValueError("judge output byte hash differs from exact bytes")
+        for name in ("input_tokens", "output_tokens"):
+            value = getattr(self, name)
+            if value is not None:
+                _require_int(name, value, minimum=0)
+        if type(self.success) is not bool:
+            raise TypeError("success must be a boolean")
+        if self.success == (self.failure_code is not None):
+            raise ValueError(
+                "successful response must have no failure code and failure must have one"
+            )
+        if self.success and self.output_bytes_base64 is None:
+            raise ValueError("successful response requires exact output bytes")
+        if self.retry_after_seconds is not None:
+            _require_nonnegative_number("retry_after_seconds", self.retry_after_seconds)
+        _require_nonnegative_number("duration_seconds", self.duration_seconds)
+        started = _require_timestamp("started_at", self.started_at)
+        ended = _require_timestamp("ended_at", self.ended_at)
+        if ended < started:
+            raise ValueError("judge response ended_at cannot precede started_at")
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    @property
+    def raw_bytes(self) -> bytes:
+        return base64.b64decode(self.raw_bytes_base64, validate=True)
+
+    @property
+    def output_bytes(self) -> bytes | None:
+        if self.output_bytes_base64 is None:
+            return None
+        return base64.b64decode(self.output_bytes_base64, validate=True)
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeResponseEvidence:
+        expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        if type(payload["response_headers"]) is not dict:
+            raise TypeError("judge response headers must use a JSON object")
+        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        request: JudgeRequestEvidence,
+        provider_request_id: str | None,
+        http_status: int | None,
+        response_headers: Mapping[str, str],
+        raw_bytes: bytes,
+        output_bytes: bytes | None,
+        model_id: str | None,
+        termination: str | None,
+        input_tokens: int | None,
+        output_tokens: int | None,
+        failure_code: str | None,
+        retry_after_seconds: float | None,
+        started_at: str,
+        ended_at: str,
+        duration_seconds: float,
+    ) -> JudgeResponseEvidence:
+        values: dict[str, object] = {
+            "request_id": request.request_id,
+            "request_hash": request.record_hash,
+            "provider_request_id": provider_request_id,
+            "http_status": http_status,
+            "response_headers": dict(sorted(response_headers.items())),
+            "raw_bytes_base64": base64.b64encode(raw_bytes).decode("ascii"),
+            "raw_bytes_sha256": _sha256_bytes(raw_bytes),
+            "raw_bytes_count": len(raw_bytes),
+            "output_bytes_base64": (
+                None if output_bytes is None else base64.b64encode(output_bytes).decode("ascii")
+            ),
+            "output_bytes_sha256": None if output_bytes is None else _sha256_bytes(output_bytes),
+            "model_id": model_id,
+            "termination": termination,
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "success": failure_code is None,
+            "failure_code": failure_code,
+            "retry_after_seconds": retry_after_seconds,
+            "started_at": started_at,
+            "ended_at": ended_at,
+            "duration_seconds": duration_seconds,
+        }
+        content = {"schema_version": cls._SCHEMA, **values, "metadata": _metadata()}
+        return cls(**values, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeParseEvidence:
+    """Strict exact-cover interpretation of one raw judge JSON object."""
+
+    raw_bytes_base64: str
+    raw_bytes_sha256: str
+    policy_hash: str
+    success: bool
+    labels: Mapping[str, str]
+    failure_code: str | None
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-parse-evidence.v1"
+
+    def __post_init__(self) -> None:
+        _require_sha256("raw_bytes_sha256", self.raw_bytes_sha256)
+        if self.raw_bytes_sha256 != _sha256_bytes(self.raw_bytes):
+            raise ValueError("parse raw byte hash differs from exact bytes")
+        _require_sha256("policy_hash", self.policy_hash)
+        if type(self.success) is not bool:
+            raise TypeError("success must be a boolean")
+        if not isinstance(self.labels, Mapping) or any(
+            type(name) is not str or type(value) is not str for name, value in self.labels.items()
+        ):
+            raise TypeError("judge parse labels must be a string mapping")
+        if self.success:
+            if self.failure_code is not None or tuple(self.labels) != DIMENSIONS:
+                raise ValueError(
+                    "successful parse requires exact ordered dimensions and no failure"
+                )
+        elif self.failure_code is None:
+            raise ValueError("failed parse requires a typed failure code")
+        object.__setattr__(self, "labels", _freeze(dict(self.labels)))
+        _require_sha256("record_hash", self.record_hash)
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    @property
+    def raw_bytes(self) -> bytes:
+        return base64.b64decode(self.raw_bytes_base64, validate=True)
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeParseEvidence:
+        expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        if type(payload["labels"]) is not dict:
+            raise TypeError("judge parse labels must use a JSON object")
+        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        raw_bytes: bytes,
+        policy_hash: str,
+        labels: Mapping[str, str],
+        failure_code: str | None,
+    ) -> JudgeParseEvidence:
+        values: dict[str, object] = {
+            "raw_bytes_base64": base64.b64encode(raw_bytes).decode("ascii"),
+            "raw_bytes_sha256": _sha256_bytes(raw_bytes),
+            "policy_hash": policy_hash,
+            "success": failure_code is None,
+            "labels": dict(labels),
+            "failure_code": failure_code,
+        }
+        content = {"schema_version": cls._SCHEMA, **values, "metadata": _metadata()}
+        return cls(**values, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
