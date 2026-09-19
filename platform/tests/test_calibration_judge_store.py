@@ -3,39 +3,60 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+from functools import lru_cache
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
 import pytest
 
-from agent_ex.calibration.judge_contracts import JudgeExecutionManifest
+from agent_ex.calibration.judge_contracts import (
+    JudgeExecutionManifest,
+    JudgePreflightEvidence,
+    JudgeRequestEvidence,
+    JudgeRequestRenderer,
+    JudgeServiceEvidence,
+)
 from agent_ex.calibration.judge_runner import (
     AmbiguousJudgeDispatchError,
     JudgeDispatchIntent,
     JudgeDispatchReconciliation,
+    JudgeNegativeDispatchEvidence,
+    JudgeApprovedOrder,
     reconstruct_judge_projection,
 )
 from agent_ex.calibration.judge_store import JudgeRunStore
+import agent_ex.calibration.judge_store as judge_store_module
+from agent_ex.calibration.review import BlindReviewItem, SemanticReviewPolicy
 from agent_ex.domain import canonical_payload_hash
 
 
 SHA = "a" * 64
+POLICY_PATH = (
+    Path(__file__).parents[1]
+    / "configs"
+    / "paper1"
+    / "phase0a1-approval-proposal-v2"
+    / "semantic_review_policy.json"
+)
 
 
-def manifest() -> JudgeExecutionManifest:
+def _manifest(
+    *, pack_hash: str, index_hash: str, renderer_hash: str, preflight_hash: str
+) -> JudgeExecutionManifest:
     values: dict[str, object] = {
         "run_id": "judge-run-test",
         "authorization_hash": SHA,
         "review_bundle_hash": SHA,
         "export_hash": SHA,
-        "judge_pack_hash": SHA,
-        "judge_pack_index_hash": SHA,
+        "judge_pack_hash": pack_hash,
+        "judge_pack_index_hash": index_hash,
         "judge_coder_contract_hash": SHA,
         "old_judge_prompt_hash": SHA,
-        "renderer_hash": SHA,
+        "renderer_hash": renderer_hash,
         "ordering_policy_hash": SHA,
         "classifier_contract_hash": SHA,
         "environment_lock_hash": SHA,
-        "preflight_hash": SHA,
+        "preflight_hash": preflight_hash,
         "service_start_identity_hash": SHA,
         "runner_view_hash": SHA,
         "old_environment_lock_hash": SHA,
@@ -78,23 +99,122 @@ def manifest() -> JudgeExecutionManifest:
     )
 
 
-def intent(*, item_id: str = "blind-item-001", order_index: int = 0) -> JudgeDispatchIntent:
-    return JudgeDispatchIntent.create(
-        manifest_hash=manifest().record_hash,
-        item_id=item_id,
-        item_hash=SHA,
+@lru_cache(maxsize=1)
+def context() -> tuple[
+    JudgeExecutionManifest,
+    JudgeApprovedOrder,
+    JudgeRequestRenderer,
+    tuple[BlindReviewItem, ...],
+    JudgePreflightEvidence,
+    JudgeServiceEvidence,
+    dict[str, object],
+    dict[str, object],
+]:
+    policy = SemanticReviewPolicy.from_payload(json.loads(POLICY_PATH.read_text(encoding="utf-8")))
+    items = tuple(
+        BlindReviewItem.create(
+            item_id=f"blind-item-{index:03d}",
+            policy_hash=policy.record_hash,
+            visible_payload={
+                "topic_text": "测试议题",
+                "history_text": "",
+                "identity_text": "",
+                "response_text": f"响应 {index}",
+            },
+        )
+        for index in range(797)
+    )
+    renderer = JudgeRequestRenderer.create(
+        policy,
+        chat_template_hash=SHA,
+        response_byte_ceiling=4096,
+        generation_settings={"temperature": 0.0, "top_p": 1.0, "max_tokens": 512},
+        golden_fixture_content={
+            "schema_version": "paper1.calibration.judge-rendered-request-golden-input.v1",
+            "item": items[0].to_payload(),
+            "attempt_index": 1,
+            "repair": False,
+        },
+    )
+    pack_content = {
+        "schema_version": "paper1.calibration.blind-coder-pack.v1",
+        "coder_id": "judge",
+        "coder_role": "judge",
+        "coder_contract_hash": SHA,
+        "policy_id": policy.policy_id,
+        "policy_hash": policy.record_hash,
+        "export_hash": SHA,
+        "items": [item.to_payload() for item in items],
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+    }
+    pack = {**pack_content, "record_hash": canonical_payload_hash(pack_content)}
+    index_content = {
+        "schema_version": "paper1.calibration.blind-coder-pack-index.v1",
+        "review_bundle_hash": SHA,
+        "packs": [
+            {"coder_id": "judge", "filename": "judge-pack.json", "record_hash": pack["record_hash"]}
+        ],
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+    }
+    index = {**index_content, "record_hash": canonical_payload_hash(index_content)}
+    preflight_content = {
+        "schema_version": JudgePreflightEvidence._SCHEMA,
+        "authorization_hash": SHA,
+        "supporting_material_hash": SHA,
+        "old_judge_prompt_hash": SHA,
+        "preliminary_inspection_hash": SHA,
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+        "metadata": {
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+            "research_parameter_status": "not_frozen",
+        },
+    }
+    preflight = JudgePreflightEvidence.from_payload(
+        {**preflight_content, "record_hash": canonical_payload_hash(preflight_content)}
+    )
+    manifest = _manifest(
+        pack_hash=pack["record_hash"],
+        index_hash=index["record_hash"],
+        renderer_hash=renderer.record_hash,
+        preflight_hash=preflight.record_hash,
+    )
+    order = JudgeApprovedOrder.from_manifest_bound_payloads(manifest, pack, index)
+    start = JudgeServiceEvidence.create(
+        phase="start", authorization_hash=SHA, evidence_hash=SHA, service_start_identity_hash=SHA
+    )
+    return manifest, order, renderer, items, preflight, start, pack, index
+
+
+def manifest() -> JudgeExecutionManifest:
+    return context()[0]
+
+
+def intent(*, order_index: int = 0, attempt_index: int = 1) -> JudgeDispatchIntent:
+    manifest_value, _, renderer, items, _, _, _, _ = context()
+    item = items[order_index]
+    request = JudgeRequestEvidence.create(
+        rendered_request=renderer.render(item, attempt_index, repair=attempt_index > 1),
+        manifest_hash=manifest_value.record_hash,
         order_index=order_index,
-        attempt_index=1,
-        request_hash=SHA,
-        request_id=f"judge-request-{item_id}",
-        idempotency_key=f"judge-idempotency-{item_id}",
+        model_id=manifest_value.model_id,
+    )
+    return JudgeDispatchIntent.create(
+        request=request,
         created_at="2026-09-19T00:00:00Z",
     )
 
 
 @pytest.fixture
 def judge_store(tmp_path: Path) -> JudgeRunStore:
-    return JudgeRunStore.create(tmp_path / "judge", manifest())
+    manifest_value, _, _, _, preflight, start, pack, index = context()
+    store = JudgeRunStore.create(tmp_path / "judge", manifest_value, pack, index)
+    store.append_preflight(preflight)
+    store.append_service_start(start)
+    return store
 
 
 def test_store_creates_exact_append_only_layout_and_initial_projection(
@@ -114,15 +234,20 @@ def test_store_creates_exact_append_only_layout_and_initial_projection(
     ):
         assert (judge_store.root / "staging" / relative).is_dir()
     snapshots = tuple((judge_store.root / "staging" / "projections").iterdir())
-    assert len(snapshots) == 1
-    assert snapshots[0].name.startswith("000000000000-")
+    assert len(snapshots) == 3
+    assert sorted(snapshots)[0].name.startswith("000000000000-")
+    assert judge_store.current_projection.preflight_hash == judge_store.manifest.preflight_hash
+    assert (
+        judge_store.current_projection.service_start_identity_hash
+        == judge_store.manifest.service_start_identity_hash
+    )
 
 
 def test_store_creation_and_record_append_are_create_only(
     judge_store: JudgeRunStore,
 ) -> None:
     with pytest.raises(FileExistsError):
-        JudgeRunStore.create(judge_store.root, manifest())
+        JudgeRunStore.create(judge_store.root, manifest(), context()[6], context()[7])
     record = intent()
     judge_store.append_intent(record)
     with pytest.raises(FileExistsError):
@@ -164,10 +289,23 @@ def test_reconciliation_has_only_three_outcomes(
         }
         judge_store.append_raw_provider_audit(dispatch, provider_audit)
         evidence["response_bytes_hash"] = response_hash
+    elif decision == "proved_not_sent":
+        negative = JudgeNegativeDispatchEvidence.create(
+            dispatch,
+            verifier_id="provider-log-verifier-v1",
+            observation_id="provider-observation-store",
+            provider_log_hash="b" * 64,
+            observed_at="2026-09-19T00:01:00Z",
+        )
+        judge_store.append_negative_dispatch_evidence(negative)
+        evidence["provider_audit_hash"] = negative.record_hash
     record = JudgeDispatchReconciliation.create(dispatch, decision, evidence)
     judge_store.append_reconciliation(record)
-    projection = reconstruct_judge_projection(judge_store)
+    projection = judge_store.current_projection
     assert projection.item_states[dispatch.item_id].status == expected_status
+    if decision == "recovered_response":
+        with pytest.raises(AmbiguousJudgeDispatchError, match="unresolved dispatch"):
+            reconstruct_judge_projection(judge_store)
 
 
 def test_open_replays_and_rejects_a_tampered_projection_chain(
@@ -175,11 +313,22 @@ def test_open_replays_and_rejects_a_tampered_projection_chain(
 ) -> None:
     dispatch = intent()
     judge_store.append_intent(dispatch)
+    negative = JudgeNegativeDispatchEvidence.create(
+        dispatch,
+        verifier_id="provider-log-verifier-v1",
+        observation_id="provider-observation-open",
+        provider_log_hash="b" * 64,
+        observed_at="2026-09-19T00:01:00Z",
+    )
+    judge_store.append_negative_dispatch_evidence(negative)
     judge_store.append_reconciliation(
         JudgeDispatchReconciliation.create(
             dispatch,
             "proved_not_sent",
-            {"provider_audit_hash": SHA, "checked_at": "2026-09-19T00:01:00Z"},
+            {
+                "provider_audit_hash": negative.record_hash,
+                "checked_at": "2026-09-19T00:01:00Z",
+            },
         )
     )
     reopened = JudgeRunStore.open(judge_store.root)
@@ -202,3 +351,94 @@ def test_append_refuses_to_extend_a_tampered_projection_chain(
     latest.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(ValueError, match="projection|hash"):
         judge_store.append_intent(intent())
+
+
+def test_journal_manifest_hash_is_checked_even_when_entry_is_rehashed(
+    judge_store: JudgeRunStore,
+) -> None:
+    judge_store.append_intent(intent())
+    journal = sorted((judge_store.staging / "journal").iterdir())[-1]
+    payload = json.loads(journal.read_text(encoding="utf-8"))
+    payload["manifest_hash"] = "b" * 64
+    content = {name: value for name, value in payload.items() if name != "journal_hash"}
+    payload["journal_hash"] = canonical_payload_hash(content)
+    replacement = journal.with_name(f"{payload['sequence']:012d}-{payload['journal_hash']}.json")
+    journal.rename(replacement)
+    replacement.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="journal manifest"):
+        JudgeRunStore.open(judge_store.root)
+
+
+def test_child_directory_symlink_escape_is_rejected(
+    judge_store: JudgeRunStore, tmp_path: Path
+) -> None:
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    dispatch = judge_store.staging / "dispatch"
+    dispatch.rmdir()
+    try:
+        dispatch.symlink_to(outside, target_is_directory=True)
+    except OSError:
+        pytest.skip("directory symlinks unavailable")
+    with pytest.raises(ValueError, match="link|inventory|directory"):
+        JudgeRunStore.open(judge_store.root)
+
+
+def test_nested_evidence_inventory_rejects_unrecognized_directory(
+    judge_store: JudgeRunStore,
+) -> None:
+    (judge_store.staging / "dispatch" / "unexpected").mkdir()
+    with pytest.raises(ValueError, match="inventory|regular file"):
+        JudgeRunStore.open(judge_store.root)
+
+
+def test_concurrent_append_has_one_winner_and_archive_remains_replayable(
+    judge_store: JudgeRunStore,
+) -> None:
+    record = intent()
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        outcomes = list(
+            executor.map(
+                lambda _: _append_outcome(judge_store, record),
+                range(2),
+            )
+        )
+    assert sorted(outcomes) == ["exists", "ok"]
+    reopened = JudgeRunStore.open(judge_store.root)
+    with pytest.raises(AmbiguousJudgeDispatchError):
+        reconstruct_judge_projection(reopened)
+
+
+def _append_outcome(store: JudgeRunStore, record: JudgeDispatchIntent) -> str:
+    try:
+        store.append_intent(record)
+    except FileExistsError:
+        return "exists"
+    return "ok"
+
+
+@pytest.mark.parametrize("crash_phase", ["prepared", "record", "journal", "projection", "commit"])
+def test_prepared_transaction_is_deterministically_recovered(
+    judge_store: JudgeRunStore,
+    monkeypatch: pytest.MonkeyPatch,
+    crash_phase: str,
+) -> None:
+    def crash(phase: str) -> None:
+        if phase == crash_phase:
+            raise RuntimeError("injected crash")
+
+    monkeypatch.setattr(judge_store_module, "_transaction_checkpoint", crash)
+    with pytest.raises(RuntimeError, match="injected crash"):
+        judge_store.append_intent(intent())
+    monkeypatch.setattr(judge_store_module, "_transaction_checkpoint", lambda phase: None)
+    recovered = JudgeRunStore.open(judge_store.root)
+    with pytest.raises(AmbiguousJudgeDispatchError, match="unresolved dispatch"):
+        reconstruct_judge_projection(recovered)
+
+
+def test_terminal_projection_is_create_only_and_requires_exact_terminal_cover(
+    judge_store: JudgeRunStore,
+) -> None:
+    with pytest.raises(ValueError, match="terminal|cover"):
+        judge_store.verify_terminal_projection()
+    assert not (judge_store.staging / "projection.json").exists()

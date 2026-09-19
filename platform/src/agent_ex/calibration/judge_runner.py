@@ -12,6 +12,15 @@ import hashlib
 from typing import TYPE_CHECKING, Mapping
 
 from ..domain import canonical_payload_hash
+from .judge_contracts import (
+    JudgeExecutionManifest,
+    JudgeParseEvidence,
+    JudgePreflightEvidence,
+    JudgeRequestEvidence,
+    JudgeResponseEvidence,
+    JudgeServiceEvidence,
+)
+from .review import BlindReviewItem
 
 if TYPE_CHECKING:
     from .judge_store import JudgeRunStore
@@ -27,6 +36,141 @@ _RECONCILIATION_DECISIONS = (
     "proved_not_sent",
     "ambiguous",
 )
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeApprovedItem:
+    item_id: str
+    item_hash: str
+
+    def to_payload(self) -> dict[str, str]:
+        return {"item_id": self.item_id, "item_hash": self.item_hash}
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeApprovedOrder:
+    """Exact item identity/order extracted from the manifest-bound pack and index."""
+
+    manifest_hash: str
+    pack_hash: str
+    index_hash: str
+    items: tuple[JudgeApprovedItem, ...]
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-approved-order.v1"
+
+    def __post_init__(self) -> None:
+        for name in ("manifest_hash", "pack_hash", "index_hash", "record_hash"):
+            _sha256(name, getattr(self, name))
+        if type(self.items) is not tuple or not self.items:
+            raise ValueError("approved judge order must contain items")
+        if len({item.item_id for item in self.items}) != len(self.items) or len(
+            {item.item_hash for item in self.items}
+        ) != len(self.items):
+            raise ValueError("approved judge order contains duplicate identities")
+        if self.record_hash != canonical_payload_hash(self.content_payload()):
+            raise ValueError("approved judge order hash differs from content")
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA,
+            "manifest_hash": self.manifest_hash,
+            "pack_hash": self.pack_hash,
+            "index_hash": self.index_hash,
+            "items": [item.to_payload() for item in self.items],
+            "metadata": dict(_METADATA),
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeApprovedOrder:
+        expected = {
+            "schema_version",
+            "manifest_hash",
+            "pack_hash",
+            "index_hash",
+            "items",
+            "metadata",
+            "record_hash",
+        }
+        if type(payload) is not dict or set(payload) != expected:
+            raise ValueError("approved judge order requires exact fields")
+        if payload["schema_version"] != cls._SCHEMA or payload["metadata"] != _METADATA:
+            raise ValueError("approved judge order schema or metadata differs")
+        if type(payload["items"]) is not list:
+            raise TypeError("approved judge order items must use a JSON array")
+        items: list[JudgeApprovedItem] = []
+        for item in payload["items"]:
+            if type(item) is not dict or set(item) != {"item_id", "item_hash"}:
+                raise ValueError("approved judge item requires exact fields")
+            items.append(JudgeApprovedItem(item_id=item["item_id"], item_hash=item["item_hash"]))
+        return cls(
+            manifest_hash=payload["manifest_hash"],
+            pack_hash=payload["pack_hash"],
+            index_hash=payload["index_hash"],
+            items=tuple(items),
+            record_hash=payload["record_hash"],
+        )  # type: ignore[arg-type]
+
+    @classmethod
+    def from_manifest_bound_payloads(
+        cls,
+        manifest: JudgeExecutionManifest,
+        pack: Mapping[str, object],
+        index: Mapping[str, object],
+    ) -> JudgeApprovedOrder:
+        """Verify canonical pack/index identities and derive the only allowed order."""
+
+        if type(pack) is not dict or type(index) is not dict:
+            raise TypeError("judge pack and index must be decoded JSON objects")
+        for name, payload, expected_hash in (
+            ("pack", pack, manifest.judge_pack_hash),
+            ("index", index, manifest.judge_pack_index_hash),
+        ):
+            embedded = payload.get("record_hash")
+            if embedded != expected_hash or embedded != canonical_payload_hash(
+                {key: value for key, value in payload.items() if key != "record_hash"}
+            ):
+                raise ValueError(f"judge {name} hash differs from manifest-bound evidence")
+        if (
+            pack.get("schema_version") != "paper1.calibration.blind-coder-pack.v1"
+            or pack.get("coder_role") != "judge"
+            or pack.get("coder_contract_hash") != manifest.judge_coder_contract_hash
+            or pack.get("export_hash") != manifest.export_hash
+            or type(pack.get("items")) is not list
+        ):
+            raise ValueError("judge pack contract differs from execution manifest")
+        if (
+            index.get("schema_version") != "paper1.calibration.blind-coder-pack-index.v1"
+            or index.get("review_bundle_hash") != manifest.review_bundle_hash
+            or type(index.get("packs")) is not list
+            or len(index["packs"]) != 1
+            or type(index["packs"][0]) is not dict
+            or index["packs"][0].get("record_hash") != manifest.judge_pack_hash
+            or index["packs"][0].get("coder_id") != pack.get("coder_id")
+        ):
+            raise ValueError("judge pack index differs from execution manifest")
+        parsed = tuple(BlindReviewItem.from_payload(item) for item in pack["items"])
+        if len(parsed) != manifest.expected_item_count:
+            raise ValueError("judge pack item count differs from execution manifest")
+        items = tuple(JudgeApprovedItem(item.item_id, item.record_hash) for item in parsed)
+        values = {
+            "manifest_hash": manifest.record_hash,
+            "pack_hash": manifest.judge_pack_hash,
+            "index_hash": manifest.judge_pack_index_hash,
+            "items": items,
+        }
+        content = {
+            "schema_version": cls._SCHEMA,
+            "manifest_hash": manifest.record_hash,
+            "pack_hash": manifest.judge_pack_hash,
+            "index_hash": manifest.judge_pack_index_hash,
+            "items": [item.to_payload() for item in items],
+            "metadata": dict(_METADATA),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))
 
 
 class AmbiguousJudgeDispatchError(RuntimeError):
@@ -88,9 +232,7 @@ class JudgeDispatchIntent:
     order_index: int
     attempt_index: int
     attempt_id: str
-    request_hash: str
-    request_id: str
-    idempotency_key: str
+    request: JudgeRequestEvidence
     created_at: str
     record_hash: str
 
@@ -103,16 +245,35 @@ class JudgeDispatchIntent:
         _integer("order_index", self.order_index)
         _integer("attempt_index", self.attempt_index, 1)
         _text("attempt_id", self.attempt_id)
-        _sha256("request_hash", self.request_hash)
-        _text("request_id", self.request_id)
-        _text("idempotency_key", self.idempotency_key)
+        if not isinstance(self.request, JudgeRequestEvidence):
+            raise TypeError("dispatch intent requires JudgeRequestEvidence")
+        JudgeRequestEvidence.from_payload(self.request.to_payload())
+        if (
+            self.request.manifest_hash != self.manifest_hash
+            or self.request.rendered_request.item_id != self.item_id
+            or self.request.rendered_request.item_hash != self.item_hash
+            or self.request.order_index != self.order_index
+            or self.request.rendered_request.attempt_index != self.attempt_index
+        ):
+            raise ValueError("dispatch request identity differs from intent")
         _text("created_at", self.created_at)
         _sha256("record_hash", self.record_hash)
         if self.record_hash != canonical_payload_hash(self.content_payload()):
             raise ValueError("judge dispatch intent hash differs from content")
 
     def content_payload(self) -> dict[str, object]:
-        return _record_payload(self, self._SCHEMA)
+        return {
+            "schema_version": self._SCHEMA,
+            "manifest_hash": self.manifest_hash,
+            "item_id": self.item_id,
+            "item_hash": self.item_hash,
+            "order_index": self.order_index,
+            "attempt_index": self.attempt_index,
+            "attempt_id": self.attempt_id,
+            "request": self.request.to_payload(),
+            "created_at": self.created_at,
+            "metadata": dict(_METADATA),
+        }
 
     def to_payload(self) -> dict[str, object]:
         return {**self.content_payload(), "record_hash": self.record_hash}
@@ -121,46 +282,61 @@ class JudgeDispatchIntent:
     def create(
         cls,
         *,
-        manifest_hash: str,
-        item_id: str,
-        item_hash: str,
-        order_index: int,
-        attempt_index: int,
-        request_hash: str,
-        request_id: str,
-        idempotency_key: str,
+        request: JudgeRequestEvidence,
         created_at: str,
     ) -> JudgeDispatchIntent:
+        if not isinstance(request, JudgeRequestEvidence):
+            raise TypeError("dispatch intent requires JudgeRequestEvidence")
+        rendered = request.rendered_request
         attempt_identity = canonical_payload_hash(
             {
-                "manifest_hash": manifest_hash,
-                "item_id": item_id,
-                "item_hash": item_hash,
-                "order_index": order_index,
-                "attempt_index": attempt_index,
-                "request_hash": request_hash,
-                "request_id": request_id,
-                "idempotency_key": idempotency_key,
+                "manifest_hash": request.manifest_hash,
+                "item_id": rendered.item_id,
+                "item_hash": rendered.item_hash,
+                "order_index": request.order_index,
+                "attempt_index": rendered.attempt_index,
+                "request_hash": request.record_hash,
+                "request_id": request.request_id,
+                "idempotency_key": rendered.idempotency_key,
             }
         )
         values = {
-            "manifest_hash": manifest_hash,
-            "item_id": item_id,
-            "item_hash": item_hash,
-            "order_index": order_index,
-            "attempt_index": attempt_index,
+            "manifest_hash": request.manifest_hash,
+            "item_id": rendered.item_id,
+            "item_hash": rendered.item_hash,
+            "order_index": request.order_index,
+            "attempt_index": rendered.attempt_index,
             "attempt_id": f"judge-attempt-{attempt_identity}",
-            "request_hash": request_hash,
-            "request_id": request_id,
-            "idempotency_key": idempotency_key,
+            "request": request,
             "created_at": created_at,
         }
-        content = {"schema_version": cls._SCHEMA, **values, "metadata": dict(_METADATA)}
+        content = {
+            "schema_version": cls._SCHEMA,
+            **{name: value for name, value in values.items() if name != "request"},
+            "request": request.to_payload(),
+            "metadata": dict(_METADATA),
+        }
         return cls(**values, record_hash=canonical_payload_hash(content))
 
     @classmethod
     def from_payload(cls, payload: Mapping[str, object]) -> JudgeDispatchIntent:
-        return cls(**_validate_payload(payload, cls, cls._SCHEMA))  # type: ignore[arg-type]
+        values = _validate_payload(payload, cls, cls._SCHEMA)
+        if type(values["request"]) is not dict:
+            raise TypeError("dispatch request must use a JSON object")
+        values["request"] = JudgeRequestEvidence.from_payload(values["request"])
+        return cls(**values)  # type: ignore[arg-type]
+
+    @property
+    def request_hash(self) -> str:
+        return self.request.record_hash
+
+    @property
+    def request_id(self) -> str:
+        return self.request.request_id
+
+    @property
+    def idempotency_key(self) -> str:
+        return self.request.rendered_request.idempotency_key
 
 
 @dataclass(frozen=True, slots=True)
@@ -336,6 +512,227 @@ class JudgeDispatchReconciliation:
 
 
 @dataclass(frozen=True, slots=True)
+class JudgeNegativeDispatchEvidence:
+    """Externally verified evidence that no provider dispatch occurred."""
+
+    manifest_hash: str
+    intent_hash: str
+    verifier_id: str
+    observation_id: str
+    provider_log_hash: str
+    observed_at: str
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-negative-dispatch-evidence.v1"
+
+    def __post_init__(self) -> None:
+        for name in ("manifest_hash", "intent_hash", "provider_log_hash", "record_hash"):
+            _sha256(name, getattr(self, name))
+        for name in ("verifier_id", "observation_id", "observed_at"):
+            _text(name, getattr(self, name))
+        if self.record_hash != canonical_payload_hash(self.content_payload()):
+            raise ValueError("negative dispatch evidence hash differs from content")
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def create(
+        cls,
+        intent: JudgeDispatchIntent,
+        *,
+        verifier_id: str,
+        observation_id: str,
+        provider_log_hash: str,
+        observed_at: str,
+    ) -> JudgeNegativeDispatchEvidence:
+        values = {
+            "manifest_hash": intent.manifest_hash,
+            "intent_hash": intent.record_hash,
+            "verifier_id": verifier_id,
+            "observation_id": observation_id,
+            "provider_log_hash": provider_log_hash,
+            "observed_at": observed_at,
+        }
+        content = {"schema_version": cls._SCHEMA, **values, "metadata": dict(_METADATA)}
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeNegativeDispatchEvidence:
+        return cls(**_validate_payload(payload, cls, cls._SCHEMA))  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeCompletedAttempt:
+    manifest_hash: str
+    intent_hash: str
+    item_id: str
+    attempt_id: str
+    request: JudgeRequestEvidence
+    response: JudgeResponseEvidence
+    parse: JudgeParseEvidence | None
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-completed-attempt.v1"
+
+    def __post_init__(self) -> None:
+        _sha256("manifest_hash", self.manifest_hash)
+        _sha256("intent_hash", self.intent_hash)
+        _text("item_id", self.item_id)
+        _text("attempt_id", self.attempt_id)
+        if not isinstance(self.request, JudgeRequestEvidence) or not isinstance(
+            self.response, JudgeResponseEvidence
+        ):
+            raise TypeError("completed attempt requires typed request and response evidence")
+        if self.response.request_hash != self.request.record_hash:
+            raise ValueError("completed attempt response differs from exact request")
+        if self.response.success:
+            if not isinstance(self.parse, JudgeParseEvidence):
+                raise ValueError("successful response requires exact parse evidence")
+            if (
+                self.response.output_bytes is None
+                or self.parse.raw_bytes != self.response.output_bytes
+            ):
+                raise ValueError("parse evidence differs from exact provider output bytes")
+        elif self.parse is not None:
+            raise ValueError("transport failure cannot carry parse evidence")
+        _sha256("record_hash", self.record_hash)
+        if self.record_hash != canonical_payload_hash(self.content_payload()):
+            raise ValueError("completed attempt hash differs from content")
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA,
+            "manifest_hash": self.manifest_hash,
+            "intent_hash": self.intent_hash,
+            "item_id": self.item_id,
+            "attempt_id": self.attempt_id,
+            "request": self.request.to_payload(),
+            "response": self.response.to_payload(),
+            "parse": None if self.parse is None else self.parse.to_payload(),
+            "metadata": dict(_METADATA),
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def create(
+        cls,
+        intent: JudgeDispatchIntent,
+        response: JudgeResponseEvidence,
+        parse: JudgeParseEvidence | None,
+    ) -> JudgeCompletedAttempt:
+        values = {
+            "manifest_hash": intent.manifest_hash,
+            "intent_hash": intent.record_hash,
+            "item_id": intent.item_id,
+            "attempt_id": intent.attempt_id,
+            "request": intent.request,
+            "response": response,
+            "parse": parse,
+        }
+        content = {
+            "schema_version": cls._SCHEMA,
+            **{
+                name: value
+                for name, value in values.items()
+                if name not in {"request", "response", "parse"}
+            },
+            "request": intent.request.to_payload(),
+            "response": response.to_payload(),
+            "parse": None if parse is None else parse.to_payload(),
+            "metadata": dict(_METADATA),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeCompletedAttempt:
+        values = _validate_payload(payload, cls, cls._SCHEMA)
+        if type(values["request"]) is not dict or type(values["response"]) is not dict:
+            raise TypeError("completed attempt evidence must use JSON objects")
+        values["request"] = JudgeRequestEvidence.from_payload(values["request"])
+        values["response"] = JudgeResponseEvidence.from_payload(values["response"])
+        if values["parse"] is not None:
+            if type(values["parse"]) is not dict:
+                raise TypeError("completed attempt parse must use a JSON object")
+            values["parse"] = JudgeParseEvidence.from_payload(values["parse"])
+        return cls(**values)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeAttemptResolution:
+    manifest_hash: str
+    attempt_hash: str
+    intent_hash: str
+    item_id: str
+    attempt_id: str
+    outcome: str
+    failure_code: str | None
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-attempt-resolution.v1"
+
+    def __post_init__(self) -> None:
+        for name in ("manifest_hash", "attempt_hash", "intent_hash", "record_hash"):
+            _sha256(name, getattr(self, name))
+        for name in ("item_id", "attempt_id"):
+            _text(name, getattr(self, name))
+        if self.outcome not in {"coded", "retryable_failed", "terminal_failed"}:
+            raise ValueError("attempt resolution outcome is unsupported")
+        if self.outcome == "coded" and self.failure_code is not None:
+            raise ValueError("coded resolution cannot carry a failure code")
+        if self.outcome != "coded":
+            _text("failure_code", self.failure_code)
+        if self.record_hash != canonical_payload_hash(self.content_payload()):
+            raise ValueError("attempt resolution hash differs from content")
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def create(
+        cls,
+        attempt: JudgeCompletedAttempt,
+        *,
+        outcome: str,
+        failure_code: str | None,
+    ) -> JudgeAttemptResolution:
+        if outcome == "coded" and (attempt.parse is None or not attempt.parse.success):
+            raise ValueError("coded resolution requires a successful exact parse")
+        observed_failure = (
+            attempt.response.failure_code
+            if not attempt.response.success
+            else None
+            if attempt.parse is None
+            else attempt.parse.failure_code
+        )
+        if outcome != "coded" and failure_code != observed_failure:
+            raise ValueError("resolution failure differs from completed attempt evidence")
+        values = {
+            "manifest_hash": attempt.manifest_hash,
+            "attempt_hash": attempt.record_hash,
+            "intent_hash": attempt.intent_hash,
+            "item_id": attempt.item_id,
+            "attempt_id": attempt.attempt_id,
+            "outcome": outcome,
+            "failure_code": failure_code,
+        }
+        content = {"schema_version": cls._SCHEMA, **values, "metadata": dict(_METADATA)}
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeAttemptResolution:
+        return cls(**_validate_payload(payload, cls, cls._SCHEMA))  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
 class JudgeItemState:
     item_id: str
     item_hash: str
@@ -345,6 +742,9 @@ class JudgeItemState:
     attempt_ids: tuple[str, ...]
     unresolved_intent_hash: str | None
     last_reconciliation_hash: str | None
+    completed_attempt_hash: str | None
+    resolution_hash: str | None
+    last_error: str | None
 
     def to_payload(self) -> dict[str, object]:
         return {
@@ -356,6 +756,9 @@ class JudgeItemState:
             "attempt_ids": list(self.attempt_ids),
             "unresolved_intent_hash": self.unresolved_intent_hash,
             "last_reconciliation_hash": self.last_reconciliation_hash,
+            "completed_attempt_hash": self.completed_attempt_hash,
+            "resolution_hash": self.resolution_hash,
+            "last_error": self.last_error,
         }
 
     @classmethod
@@ -369,6 +772,9 @@ class JudgeItemState:
             "attempt_ids",
             "unresolved_intent_hash",
             "last_reconciliation_hash",
+            "completed_attempt_hash",
+            "resolution_hash",
+            "last_error",
         }
         if (
             type(payload) is not dict
@@ -385,12 +791,17 @@ class JudgeItemState:
             attempt_ids=tuple(payload["attempt_ids"]),  # type: ignore[arg-type]
             unresolved_intent_hash=payload["unresolved_intent_hash"],  # type: ignore[arg-type]
             last_reconciliation_hash=payload["last_reconciliation_hash"],  # type: ignore[arg-type]
+            completed_attempt_hash=payload["completed_attempt_hash"],  # type: ignore[arg-type]
+            resolution_hash=payload["resolution_hash"],  # type: ignore[arg-type]
+            last_error=payload["last_error"],  # type: ignore[arg-type]
         )
 
 
 @dataclass(frozen=True, slots=True)
 class JudgeProjection:
     manifest_hash: str
+    preflight_hash: str | None
+    service_start_identity_hash: str | None
     sequence: int
     previous_projection_hash: str | None
     item_order: tuple[str, ...]
@@ -403,6 +814,8 @@ class JudgeProjection:
         return {
             "schema_version": self._SCHEMA,
             "manifest_hash": self.manifest_hash,
+            "preflight_hash": self.preflight_hash,
+            "service_start_identity_hash": self.service_start_identity_hash,
             "sequence": self.sequence,
             "previous_projection_hash": self.previous_projection_hash,
             "item_order": list(self.item_order),
@@ -420,6 +833,8 @@ class JudgeProjection:
         cls,
         *,
         manifest_hash: str,
+        preflight_hash: str | None,
+        service_start_identity_hash: str | None,
         sequence: int,
         previous_projection_hash: str | None,
         item_order: tuple[str, ...],
@@ -427,6 +842,8 @@ class JudgeProjection:
     ) -> JudgeProjection:
         values = {
             "manifest_hash": manifest_hash,
+            "preflight_hash": preflight_hash,
+            "service_start_identity_hash": service_start_identity_hash,
             "sequence": sequence,
             "previous_projection_hash": previous_projection_hash,
             "item_order": item_order,
@@ -440,6 +857,8 @@ class JudgeProjection:
         expected = {
             "schema_version",
             "manifest_hash",
+            "preflight_hash",
+            "service_start_identity_hash",
             "sequence",
             "previous_projection_hash",
             "item_order",
@@ -455,6 +874,8 @@ class JudgeProjection:
             raise TypeError("judge projection order and states require JSON containers")
         projection = cls(
             manifest_hash=payload["manifest_hash"],  # type: ignore[arg-type]
+            preflight_hash=payload["preflight_hash"],  # type: ignore[arg-type]
+            service_start_identity_hash=payload["service_start_identity_hash"],  # type: ignore[arg-type]
             sequence=payload["sequence"],  # type: ignore[arg-type]
             previous_projection_hash=payload["previous_projection_hash"],  # type: ignore[arg-type]
             item_order=tuple(payload["item_order"]),  # type: ignore[arg-type]
@@ -465,6 +886,10 @@ class JudgeProjection:
             record_hash=payload["record_hash"],  # type: ignore[arg-type]
         )
         _sha256("manifest_hash", projection.manifest_hash)
+        if projection.preflight_hash is not None:
+            _sha256("preflight_hash", projection.preflight_hash)
+        if projection.service_start_identity_hash is not None:
+            _sha256("service_start_identity_hash", projection.service_start_identity_hash)
         _integer("sequence", projection.sequence)
         if projection.previous_projection_hash is not None:
             _sha256("previous_projection_hash", projection.previous_projection_hash)
@@ -477,15 +902,20 @@ class JudgeProjection:
 
 
 def replay_judge_records(
-    manifest_hash: str,
+    manifest: JudgeExecutionManifest,
+    approved_order: JudgeApprovedOrder,
     records: tuple[object, ...],
 ) -> tuple[JudgeProjection, ...]:
     """Replay every append exactly, returning the full immutable projection chain."""
 
     states: dict[str, JudgeItemState] = {}
     item_order: list[str] = []
+    preflight_hash: str | None = None
+    service_start_identity_hash: str | None = None
     projection = JudgeProjection.create(
-        manifest_hash=manifest_hash,
+        manifest_hash=manifest.record_hash,
+        preflight_hash=None,
+        service_start_identity_hash=None,
         sequence=0,
         previous_projection_hash=None,
         item_order=(),
@@ -494,10 +924,35 @@ def replay_judge_records(
     projections = [projection]
     intents: dict[str, JudgeDispatchIntent] = {}
     audits: dict[str, JudgeProviderAuditRecord] = {}
+    negative_evidence: dict[str, JudgeNegativeDispatchEvidence] = {}
+    responses: dict[str, JudgeResponseEvidence] = {}
+    attempts: dict[str, JudgeCompletedAttempt] = {}
+    request_ids: set[str] = set()
+    idempotency_keys: set[str] = set()
+    attempt_ids: set[str] = set()
     for sequence, record in enumerate(records, 1):
-        if getattr(record, "manifest_hash", None) != manifest_hash:
+        if isinstance(record, JudgePreflightEvidence):
+            if preflight_hash is not None or record.record_hash != manifest.preflight_hash:
+                raise ValueError("service preflight evidence differs from manifest")
+            if record.authorization_hash != manifest.authorization_hash:
+                raise ValueError("service preflight authorization differs from manifest")
+            preflight_hash = record.record_hash
+        elif isinstance(record, JudgeServiceEvidence):
+            if (
+                record.phase != "start"
+                or service_start_identity_hash is not None
+                or record.authorization_hash != manifest.authorization_hash
+                or record.evidence_hash != manifest.service_start_identity_hash
+            ):
+                raise ValueError("service start evidence differs from manifest")
+            service_start_identity_hash = record.evidence_hash
+        elif getattr(record, "manifest_hash", None) != manifest.record_hash:
             raise ValueError("judge evidence manifest differs from store manifest")
-        if isinstance(record, JudgeDispatchIntent):
+        elif isinstance(record, JudgeDispatchIntent):
+            if preflight_hash is None or service_start_identity_hash is None:
+                raise ValueError(
+                    "judge dispatch requires manifest-bound preflight and start evidence"
+                )
             prior = states.get(record.item_id)
             if prior is None:
                 if any(state.unresolved_intent_hash is not None for state in states.values()):
@@ -506,10 +961,16 @@ def replay_judge_records(
                     )
                 if record.order_index != len(item_order):
                     raise ValueError("judge intents require contiguous approved item order")
+                approved = approved_order.items[record.order_index]
+                if (record.item_id, record.item_hash) != (
+                    approved.item_id,
+                    approved.item_hash,
+                ):
+                    raise ValueError("judge intent differs from manifest-bound approved order")
                 if record.attempt_index != 1:
                     raise ValueError("first judge dispatch must use attempt index one")
                 item_order.append(record.item_id)
-                attempts: tuple[str, ...] = ()
+                item_attempt_ids: tuple[str, ...] = ()
             else:
                 if prior.status != "pending_retry" or prior.unresolved_intent_hash is not None:
                     raise ValueError("judge item is immutable or not authorized for retry")
@@ -517,23 +978,36 @@ def replay_judge_records(
                     raise ValueError("judge retry changed immutable item identity")
                 if record.attempt_index != prior.attempt_count + 1:
                     raise ValueError("judge retry attempt budget is not monotonic")
-                attempts = prior.attempt_ids
-            if record.record_hash in intents or record.attempt_id in {
-                attempt for state in states.values() for attempt in state.attempt_ids
-            }:
+                item_attempt_ids = prior.attempt_ids
+            if record.attempt_index > manifest.max_attempts_per_item:
+                raise ValueError("judge dispatch exceeds manifest attempt budget")
+            if record.request.rendered_request.renderer_hash != manifest.renderer_hash:
+                raise ValueError("judge request renderer differs from manifest")
+            if (
+                record.record_hash in intents
+                or record.attempt_id in attempt_ids
+                or record.request_id in request_ids
+                or record.idempotency_key in idempotency_keys
+            ):
                 raise ValueError("judge dispatch identity is duplicated")
             intents[record.record_hash] = record
+            attempt_ids.add(record.attempt_id)
+            request_ids.add(record.request_id)
+            idempotency_keys.add(record.idempotency_key)
             states[record.item_id] = JudgeItemState(
                 item_id=record.item_id,
                 item_hash=record.item_hash,
                 order_index=record.order_index,
                 status="dispatch_unresolved",
                 attempt_count=record.attempt_index,
-                attempt_ids=(*attempts, record.attempt_id),
+                attempt_ids=(*item_attempt_ids, record.attempt_id),
                 unresolved_intent_hash=record.record_hash,
                 last_reconciliation_hash=(
                     None if prior is None else prior.last_reconciliation_hash
                 ),
+                completed_attempt_hash=None,
+                resolution_hash=None,
+                last_error=None,
             )
         elif isinstance(record, JudgeProviderAuditRecord):
             intent = intents.get(record.intent_hash)
@@ -549,6 +1023,52 @@ def replay_judge_records(
             if record.intent_hash in audits:
                 raise ValueError("provider audit is duplicated for one dispatch")
             audits[record.intent_hash] = record
+        elif isinstance(record, JudgeNegativeDispatchEvidence):
+            intent = intents.get(record.intent_hash)
+            state = states.get(intent.item_id) if intent is not None else None
+            if (
+                intent is None
+                or state is None
+                or state.unresolved_intent_hash != record.intent_hash
+            ):
+                raise ValueError("negative dispatch evidence does not cover unresolved intent")
+            if record.intent_hash in negative_evidence:
+                raise ValueError("negative dispatch evidence is duplicated")
+            negative_evidence[record.intent_hash] = record
+        elif isinstance(record, JudgeResponseEvidence):
+            matching = tuple(
+                intent
+                for intent in intents.values()
+                if intent.request_hash == record.request_hash
+                and intent.request_id == record.request_id
+            )
+            if len(matching) != 1:
+                raise ValueError("judge response does not uniquely cover a dispatch request")
+            intent = matching[0]
+            state = states[intent.item_id]
+            if state.unresolved_intent_hash != intent.record_hash:
+                raise ValueError("judge response does not cover unresolved dispatch")
+            if intent.record_hash in responses:
+                raise ValueError("judge response is duplicated for one dispatch")
+            responses[intent.record_hash] = record
+        elif isinstance(record, JudgeCompletedAttempt):
+            intent = intents.get(record.intent_hash)
+            response = responses.get(record.intent_hash)
+            state = states.get(record.item_id)
+            if (
+                intent is None
+                or response is None
+                or state is None
+                or state.unresolved_intent_hash != record.intent_hash
+                or record.request != intent.request
+                or record.response != response
+                or record.attempt_id != intent.attempt_id
+            ):
+                raise ValueError("completed attempt lacks exact request/response coverage")
+            if record.intent_hash in attempts:
+                raise ValueError("completed attempt is duplicated")
+            attempts[record.intent_hash] = record
+            states[record.item_id] = replace(state, completed_attempt_hash=record.record_hash)
         elif isinstance(record, JudgeIncompleteAttemptMarker):
             intent = intents.get(record.intent_hash)
             state = states.get(record.item_id)
@@ -580,7 +1100,12 @@ def replay_judge_records(
                     raise ValueError("recovered response lacks exact provider audit evidence")
                 status = "recovered_response"
             elif record.decision == "proved_not_sent":
-                if audit is not None:
+                negative = negative_evidence.get(record.intent_hash)
+                if (
+                    audit is not None
+                    or negative is None
+                    or negative.record_hash != record.provider_audit_hash
+                ):
                     raise ValueError("proved_not_sent contradicts persisted response evidence")
                 status = "pending_retry"
             else:
@@ -588,13 +1113,43 @@ def replay_judge_records(
             states[record.item_id] = replace(
                 state,
                 status=status,
-                unresolved_intent_hash=None,
+                unresolved_intent_hash=(
+                    record.intent_hash if record.decision == "recovered_response" else None
+                ),
                 last_reconciliation_hash=record.record_hash,
+            )
+        elif isinstance(record, JudgeAttemptResolution):
+            attempt = attempts.get(record.intent_hash)
+            state = states.get(record.item_id)
+            if (
+                attempt is None
+                or state is None
+                or state.unresolved_intent_hash != record.intent_hash
+                or record.attempt_hash != attempt.record_hash
+                or record.attempt_id != attempt.attempt_id
+            ):
+                raise ValueError("attempt resolution lacks exact completed attempt coverage")
+            if record.outcome == "coded":
+                status = "coded"
+            elif record.outcome == "terminal_failed":
+                status = "terminal_failed"
+            else:
+                if state.attempt_count >= manifest.max_attempts_per_item:
+                    raise ValueError("retryable resolution exceeds manifest attempt budget")
+                status = "pending_retry"
+            states[record.item_id] = replace(
+                state,
+                status=status,
+                unresolved_intent_hash=None,
+                resolution_hash=record.record_hash,
+                last_error=record.failure_code,
             )
         else:
             raise TypeError("unsupported judge replay record")
         projection = JudgeProjection.create(
-            manifest_hash=manifest_hash,
+            manifest_hash=manifest.record_hash,
+            preflight_hash=preflight_hash,
+            service_start_identity_hash=service_start_identity_hash,
             sequence=sequence,
             previous_projection_hash=projection.record_hash,
             item_order=tuple(item_order),
@@ -605,7 +1160,7 @@ def replay_judge_records(
 
 
 def reconstruct_judge_projection(store: JudgeRunStore) -> JudgeProjection:
-    projections = replay_judge_records(store.manifest.record_hash, store.read_records())
+    projections = replay_judge_records(store.manifest, store.approved_order, store.read_records())
     projection = projections[-1]
     unresolved = tuple(
         item_id
@@ -639,15 +1194,22 @@ def reconcile_from_provider_log(
 
 
 def reconcile_proved_not_sent(
-    store: JudgeRunStore, intent: JudgeDispatchIntent
+    store: JudgeRunStore,
+    intent: JudgeDispatchIntent,
+    evidence: JudgeNegativeDispatchEvidence,
 ) -> JudgeDispatchReconciliation:
-    evidence = {
-        "provider_audit_hash": canonical_payload_hash(
-            {"intent_hash": intent.record_hash, "decision": "proved_not_sent"}
-        ),
-        "checked_at": intent.created_at,
-    }
-    reconciliation = JudgeDispatchReconciliation.create(intent, "proved_not_sent", evidence)
+    if (
+        not isinstance(evidence, JudgeNegativeDispatchEvidence)
+        or evidence.intent_hash != intent.record_hash
+        or evidence.manifest_hash != intent.manifest_hash
+    ):
+        raise ValueError("proved_not_sent requires exact external negative provider evidence")
+    store.append_negative_dispatch_evidence(evidence)
+    reconciliation = JudgeDispatchReconciliation.create(
+        intent,
+        "proved_not_sent",
+        {"provider_audit_hash": evidence.record_hash, "checked_at": evidence.observed_at},
+    )
     store.append_reconciliation(reconciliation)
     return reconciliation
 
@@ -655,6 +1217,7 @@ def reconcile_proved_not_sent(
 def build_retry_after_not_sent(
     intent: JudgeDispatchIntent,
     reconciliation: JudgeDispatchReconciliation,
+    request: JudgeRequestEvidence,
 ) -> JudgeDispatchIntent:
     if (
         reconciliation.decision != "proved_not_sent"
@@ -662,23 +1225,18 @@ def build_retry_after_not_sent(
     ):
         raise ValueError("retry requires proved_not_sent for the exact dispatch intent")
     next_index = intent.attempt_index + 1
-    retry_identity = canonical_payload_hash(
-        {
-            "prior_intent_hash": intent.record_hash,
-            "reconciliation_hash": reconciliation.record_hash,
-            "attempt_index": next_index,
-        }
-    )
+    rendered = request.rendered_request
+    if (
+        request.manifest_hash != intent.manifest_hash
+        or request.order_index != intent.order_index
+        or rendered.item_id != intent.item_id
+        or rendered.item_hash != intent.item_hash
+        or rendered.attempt_index != next_index
+        or rendered.request_id == intent.request_id
+        or rendered.idempotency_key == intent.idempotency_key
+    ):
+        raise ValueError("retry request does not match exact next rendered attempt")
     return JudgeDispatchIntent.create(
-        manifest_hash=intent.manifest_hash,
-        item_id=intent.item_id,
-        item_hash=intent.item_hash,
-        order_index=intent.order_index,
-        attempt_index=next_index,
-        request_hash=canonical_payload_hash(
-            {"prior_request_hash": intent.request_hash, "attempt_index": next_index}
-        ),
-        request_id=f"judge-request-{retry_identity}",
-        idempotency_key=f"judge-idempotency-{retry_identity}",
+        request=request,
         created_at=reconciliation.checked_at,
     )
