@@ -9,6 +9,7 @@ from __future__ import annotations
 import base64
 from dataclasses import dataclass, fields, replace
 import hashlib
+import json
 from typing import TYPE_CHECKING, Mapping
 
 from ..domain import canonical_payload_hash
@@ -512,26 +513,111 @@ class JudgeDispatchReconciliation:
 
 
 @dataclass(frozen=True, slots=True)
-class JudgeNegativeDispatchEvidence:
-    """Externally verified evidence that no provider dispatch occurred."""
+class JudgeNegativeVerifierContract:
+    """The one negative-log verifier identity derived from the execution manifest."""
+
+    manifest_hash: str
+    authorization_hash: str
+    runner_view_hash: str
+    verifier_id: str
+    verifier_version: str
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-negative-verifier-contract.v1"
+    _VERIFIER_ID = "phase0a1-provider-negative-log-verifier"
+    _VERIFIER_VERSION = "1"
+
+    def __post_init__(self) -> None:
+        for name in ("manifest_hash", "authorization_hash", "runner_view_hash", "record_hash"):
+            _sha256(name, getattr(self, name))
+        if self.verifier_id != self._VERIFIER_ID or self.verifier_version != self._VERIFIER_VERSION:
+            raise ValueError("negative verifier identity is outside the frozen contract")
+        if self.record_hash != canonical_payload_hash(self.content_payload()):
+            raise ValueError("negative verifier contract hash differs from content")
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def create(cls, manifest: JudgeExecutionManifest) -> JudgeNegativeVerifierContract:
+        if not isinstance(manifest, JudgeExecutionManifest):
+            raise TypeError("negative verifier requires JudgeExecutionManifest")
+        values = {
+            "manifest_hash": manifest.record_hash,
+            "authorization_hash": manifest.authorization_hash,
+            "runner_view_hash": manifest.runner_view_hash,
+            "verifier_id": cls._VERIFIER_ID,
+            "verifier_version": cls._VERIFIER_VERSION,
+        }
+        content = {"schema_version": cls._SCHEMA, **values, "metadata": dict(_METADATA)}
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeNegativeVerifierContract:
+        return cls(**_validate_payload(payload, cls, cls._SCHEMA))  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeProviderNegativeLogArtifact:
+    """Content-addressed exact provider observation proving no matching dispatch."""
 
     manifest_hash: str
     intent_hash: str
-    verifier_id: str
+    request_id: str
+    verifier_contract_hash: str
     observation_id: str
-    provider_log_hash: str
+    raw_bytes_base64: str
+    raw_bytes_sha256: str
+    raw_bytes_count: int
     observed_at: str
     record_hash: str
 
-    _SCHEMA = "paper1.calibration.judge-negative-dispatch-evidence.v1"
+    _SCHEMA = "paper1.calibration.judge-provider-negative-log-artifact.v1"
+    _LOG_SCHEMA = "paper1.calibration.provider-negative-log.v1"
 
     def __post_init__(self) -> None:
-        for name in ("manifest_hash", "intent_hash", "provider_log_hash", "record_hash"):
+        for name in (
+            "manifest_hash",
+            "intent_hash",
+            "verifier_contract_hash",
+            "raw_bytes_sha256",
+            "record_hash",
+        ):
             _sha256(name, getattr(self, name))
-        for name in ("verifier_id", "observation_id", "observed_at"):
+        for name in ("request_id", "observation_id", "observed_at"):
             _text(name, getattr(self, name))
+        try:
+            raw = base64.b64decode(self.raw_bytes_base64, validate=True)
+            decoded = json.loads(raw.decode("utf-8"))
+        except (ValueError, UnicodeDecodeError) as error:
+            raise ValueError("provider negative-log artifact is not exact JSON bytes") from error
+        if self.raw_bytes_sha256 != hashlib.sha256(raw).hexdigest():
+            raise ValueError("provider negative-log bytes differ from their content hash")
+        if self.raw_bytes_count != len(raw):
+            raise ValueError("provider negative-log byte count differs from exact bytes")
+        expected = {
+            "schema_version": self._LOG_SCHEMA,
+            "request_id": self.request_id,
+            "observation_id": self.observation_id,
+            "dispatch_found": False,
+            "verifier_contract_hash": self.verifier_contract_hash,
+        }
+        if type(decoded) is not dict or decoded != expected:
+            raise ValueError("provider negative-log artifact does not prove exact non-dispatch")
+        canonical = json.dumps(
+            decoded, ensure_ascii=False, allow_nan=False, separators=(",", ":")
+        ).encode("utf-8")
+        if raw != canonical:
+            raise ValueError("provider negative-log artifact bytes are not canonical")
         if self.record_hash != canonical_payload_hash(self.content_payload()):
-            raise ValueError("negative dispatch evidence hash differs from content")
+            raise ValueError("provider negative-log artifact hash differs from content")
+
+    @property
+    def raw_bytes(self) -> bytes:
+        return base64.b64decode(self.raw_bytes_base64, validate=True)
 
     def content_payload(self) -> dict[str, object]:
         return _record_payload(self, self._SCHEMA)
@@ -544,25 +630,142 @@ class JudgeNegativeDispatchEvidence:
         cls,
         intent: JudgeDispatchIntent,
         *,
-        verifier_id: str,
+        verifier: JudgeNegativeVerifierContract,
         observation_id: str,
-        provider_log_hash: str,
+        provider_log_bytes: bytes,
         observed_at: str,
-    ) -> JudgeNegativeDispatchEvidence:
+    ) -> JudgeProviderNegativeLogArtifact:
+        if not isinstance(verifier, JudgeNegativeVerifierContract):
+            raise TypeError("negative-log artifact requires typed verifier contract")
+        if verifier.manifest_hash != intent.manifest_hash:
+            raise ValueError("negative-log verifier differs from dispatch manifest")
+        if type(provider_log_bytes) is not bytes:
+            raise TypeError("provider negative-log artifact requires exact bytes")
         values = {
             "manifest_hash": intent.manifest_hash,
             "intent_hash": intent.record_hash,
-            "verifier_id": verifier_id,
+            "request_id": intent.request_id,
+            "verifier_contract_hash": verifier.record_hash,
             "observation_id": observation_id,
-            "provider_log_hash": provider_log_hash,
+            "raw_bytes_base64": base64.b64encode(provider_log_bytes).decode("ascii"),
+            "raw_bytes_sha256": hashlib.sha256(provider_log_bytes).hexdigest(),
+            "raw_bytes_count": len(provider_log_bytes),
             "observed_at": observed_at,
         }
         content = {"schema_version": cls._SCHEMA, **values, "metadata": dict(_METADATA)}
         return cls(**values, record_hash=canonical_payload_hash(content))
 
     @classmethod
-    def from_payload(cls, payload: Mapping[str, object]) -> JudgeNegativeDispatchEvidence:
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeProviderNegativeLogArtifact:
         return cls(**_validate_payload(payload, cls, cls._SCHEMA))  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeNegativeDispatchEvidence:
+    """Manifest-authorized proof that the provider received no matching dispatch."""
+
+    manifest_hash: str
+    intent_hash: str
+    verifier: JudgeNegativeVerifierContract
+    provider_log_artifact: JudgeProviderNegativeLogArtifact
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-negative-dispatch-evidence.v2"
+
+    def __post_init__(self) -> None:
+        for name in ("manifest_hash", "intent_hash", "record_hash"):
+            _sha256(name, getattr(self, name))
+        if not isinstance(self.verifier, JudgeNegativeVerifierContract) or not isinstance(
+            self.provider_log_artifact, JudgeProviderNegativeLogArtifact
+        ):
+            raise TypeError("negative dispatch requires verifier and provider-log artifact")
+        artifact = self.provider_log_artifact
+        if (
+            self.verifier.manifest_hash != self.manifest_hash
+            or artifact.manifest_hash != self.manifest_hash
+            or artifact.intent_hash != self.intent_hash
+            or artifact.verifier_contract_hash != self.verifier.record_hash
+        ):
+            raise ValueError("negative dispatch evidence lacks manifest-authorized exact cover")
+        if self.record_hash != canonical_payload_hash(self.content_payload()):
+            raise ValueError("negative dispatch evidence hash differs from content")
+
+    @property
+    def verifier_id(self) -> str:
+        return self.verifier.verifier_id
+
+    @property
+    def observation_id(self) -> str:
+        return self.provider_log_artifact.observation_id
+
+    @property
+    def provider_log_hash(self) -> str:
+        return self.provider_log_artifact.raw_bytes_sha256
+
+    @property
+    def observed_at(self) -> str:
+        return self.provider_log_artifact.observed_at
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self._SCHEMA,
+            "manifest_hash": self.manifest_hash,
+            "intent_hash": self.intent_hash,
+            "verifier": self.verifier.to_payload(),
+            "provider_log_artifact": self.provider_log_artifact.to_payload(),
+            "metadata": dict(_METADATA),
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
+
+    @classmethod
+    def create(
+        cls,
+        intent: JudgeDispatchIntent,
+        *,
+        manifest: JudgeExecutionManifest,
+        verifier: JudgeNegativeVerifierContract,
+        provider_log_artifact: JudgeProviderNegativeLogArtifact,
+    ) -> JudgeNegativeDispatchEvidence:
+        if not isinstance(manifest, JudgeExecutionManifest):
+            raise TypeError("negative dispatch requires JudgeExecutionManifest")
+        if (
+            manifest.record_hash != intent.manifest_hash
+            or verifier.manifest_hash != manifest.record_hash
+            or verifier.authorization_hash != manifest.authorization_hash
+            or verifier.runner_view_hash != manifest.runner_view_hash
+        ):
+            raise ValueError("negative verifier is not authorized by the execution manifest")
+        values = {
+            "manifest_hash": intent.manifest_hash,
+            "intent_hash": intent.record_hash,
+            "verifier": verifier,
+            "provider_log_artifact": provider_log_artifact,
+        }
+        content = {
+            "schema_version": cls._SCHEMA,
+            "manifest_hash": intent.manifest_hash,
+            "intent_hash": intent.record_hash,
+            "verifier": verifier.to_payload(),
+            "provider_log_artifact": provider_log_artifact.to_payload(),
+            "metadata": dict(_METADATA),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeNegativeDispatchEvidence:
+        values = _validate_payload(payload, cls, cls._SCHEMA)
+        if (
+            type(values["verifier"]) is not dict
+            or type(values["provider_log_artifact"]) is not dict
+        ):
+            raise TypeError("negative dispatch nested evidence must use JSON objects")
+        values["verifier"] = JudgeNegativeVerifierContract.from_payload(values["verifier"])
+        values["provider_log_artifact"] = JudgeProviderNegativeLogArtifact.from_payload(
+            values["provider_log_artifact"]
+        )
+        return cls(**values)  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)
@@ -597,6 +800,17 @@ class JudgeCompletedAttempt:
                 or self.parse.raw_bytes != self.response.output_bytes
             ):
                 raise ValueError("parse evidence differs from exact provider output bytes")
+            response_schema = self.request.rendered_request.response_schema
+            properties = response_schema["properties"]
+            schema_labels = {name: tuple(properties[name]["enum"]) for name in properties}
+            if dict(
+                self.parse.dimension_labels
+            ) != schema_labels or self.parse.dimension_labels_hash != canonical_payload_hash(
+                schema_labels
+            ):
+                raise ValueError(
+                    "completed parse label policy differs from the frozen response schema"
+                )
         elif self.parse is not None:
             raise ValueError("transport failure cannot carry parse evidence")
         _sha256("record_hash", self.record_hash)
@@ -670,6 +884,7 @@ class JudgeAttemptResolution:
     intent_hash: str
     item_id: str
     attempt_id: str
+    attempt: JudgeCompletedAttempt
     outcome: str
     failure_code: str | None
     record_hash: str
@@ -681,17 +896,39 @@ class JudgeAttemptResolution:
             _sha256(name, getattr(self, name))
         for name in ("item_id", "attempt_id"):
             _text(name, getattr(self, name))
+        if not isinstance(self.attempt, JudgeCompletedAttempt):
+            raise TypeError("attempt resolution requires exact completed attempt evidence")
+        if (
+            self.attempt.record_hash != self.attempt_hash
+            or self.attempt.manifest_hash != self.manifest_hash
+            or self.attempt.intent_hash != self.intent_hash
+            or self.attempt.item_id != self.item_id
+            or self.attempt.attempt_id != self.attempt_id
+        ):
+            raise ValueError("attempt resolution differs from exact completed attempt evidence")
         if self.outcome not in {"coded", "retryable_failed", "terminal_failed"}:
             raise ValueError("attempt resolution outcome is unsupported")
         if self.outcome == "coded" and self.failure_code is not None:
             raise ValueError("coded resolution cannot carry a failure code")
         if self.outcome != "coded":
             _text("failure_code", self.failure_code)
+        self._validate_semantics(self.attempt)
         if self.record_hash != canonical_payload_hash(self.content_payload()):
             raise ValueError("attempt resolution hash differs from content")
 
     def content_payload(self) -> dict[str, object]:
-        return _record_payload(self, self._SCHEMA)
+        return {
+            "schema_version": self._SCHEMA,
+            "manifest_hash": self.manifest_hash,
+            "attempt_hash": self.attempt_hash,
+            "intent_hash": self.intent_hash,
+            "item_id": self.item_id,
+            "attempt_id": self.attempt_id,
+            "attempt": self.attempt.to_payload(),
+            "outcome": self.outcome,
+            "failure_code": self.failure_code,
+            "metadata": dict(_METADATA),
+        }
 
     def to_payload(self) -> dict[str, object]:
         return {**self.content_payload(), "record_hash": self.record_hash}
@@ -704,7 +941,34 @@ class JudgeAttemptResolution:
         outcome: str,
         failure_code: str | None,
     ) -> JudgeAttemptResolution:
-        if outcome == "coded" and (attempt.parse is None or not attempt.parse.success):
+        values = {
+            "manifest_hash": attempt.manifest_hash,
+            "attempt_hash": attempt.record_hash,
+            "intent_hash": attempt.intent_hash,
+            "item_id": attempt.item_id,
+            "attempt_id": attempt.attempt_id,
+            "attempt": attempt,
+            "outcome": outcome,
+            "failure_code": failure_code,
+        }
+        content = {
+            "schema_version": cls._SCHEMA,
+            **{name: value for name, value in values.items() if name != "attempt"},
+            "attempt": attempt.to_payload(),
+            "metadata": dict(_METADATA),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeAttemptResolution:
+        values = _validate_payload(payload, cls, cls._SCHEMA)
+        if type(values["attempt"]) is not dict:
+            raise TypeError("attempt resolution evidence must use a JSON object")
+        values["attempt"] = JudgeCompletedAttempt.from_payload(values["attempt"])
+        return cls(**values)  # type: ignore[arg-type]
+
+    def _validate_semantics(self, attempt: JudgeCompletedAttempt) -> None:
+        if self.outcome == "coded" and (attempt.parse is None or not attempt.parse.success):
             raise ValueError("coded resolution requires a successful exact parse")
         observed_failure = (
             attempt.response.failure_code
@@ -713,23 +977,8 @@ class JudgeAttemptResolution:
             if attempt.parse is None
             else attempt.parse.failure_code
         )
-        if outcome != "coded" and failure_code != observed_failure:
+        if self.outcome != "coded" and self.failure_code != observed_failure:
             raise ValueError("resolution failure differs from completed attempt evidence")
-        values = {
-            "manifest_hash": attempt.manifest_hash,
-            "attempt_hash": attempt.record_hash,
-            "intent_hash": attempt.intent_hash,
-            "item_id": attempt.item_id,
-            "attempt_id": attempt.attempt_id,
-            "outcome": outcome,
-            "failure_code": failure_code,
-        }
-        content = {"schema_version": cls._SCHEMA, **values, "metadata": dict(_METADATA)}
-        return cls(**values, record_hash=canonical_payload_hash(content))
-
-    @classmethod
-    def from_payload(cls, payload: Mapping[str, object]) -> JudgeAttemptResolution:
-        return cls(**_validate_payload(payload, cls, cls._SCHEMA))  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)
@@ -927,26 +1176,40 @@ def replay_judge_records(
     negative_evidence: dict[str, JudgeNegativeDispatchEvidence] = {}
     responses: dict[str, JudgeResponseEvidence] = {}
     attempts: dict[str, JudgeCompletedAttempt] = {}
+    evidence_lanes: dict[str, str] = {}
+    reconciliations: dict[str, JudgeDispatchReconciliation] = {}
     request_ids: set[str] = set()
     idempotency_keys: set[str] = set()
     attempt_ids: set[str] = set()
     for sequence, record in enumerate(records, 1):
         if isinstance(record, JudgePreflightEvidence):
-            if preflight_hash is not None or record.record_hash != manifest.preflight_hash:
+            if (
+                sequence != 1
+                or preflight_hash is not None
+                or service_start_identity_hash is not None
+                or record.record_hash != manifest.preflight_hash
+            ):
                 raise ValueError("service preflight evidence differs from manifest")
             if record.authorization_hash != manifest.authorization_hash:
                 raise ValueError("service preflight authorization differs from manifest")
             preflight_hash = record.record_hash
         elif isinstance(record, JudgeServiceEvidence):
             if (
-                record.phase != "start"
+                sequence != 2
+                or preflight_hash is None
+                or record.phase != "start"
                 or service_start_identity_hash is not None
                 or record.authorization_hash != manifest.authorization_hash
                 or record.evidence_hash != manifest.service_start_identity_hash
             ):
-                raise ValueError("service start evidence differs from manifest")
+                raise ValueError(
+                    "judge lifecycle order requires exact preflight before service start"
+                )
             service_start_identity_hash = record.evidence_hash
-        elif getattr(record, "manifest_hash", None) != manifest.record_hash:
+        elif (
+            not isinstance(record, JudgeResponseEvidence)
+            and getattr(record, "manifest_hash", None) != manifest.record_hash
+        ):
             raise ValueError("judge evidence manifest differs from store manifest")
         elif isinstance(record, JudgeDispatchIntent):
             if preflight_hash is None or service_start_identity_hash is None:
@@ -1022,7 +1285,10 @@ def replay_judge_records(
                 raise ValueError("provider audit does not cover the unresolved intent")
             if record.intent_hash in audits:
                 raise ValueError("provider audit is duplicated for one dispatch")
+            if record.intent_hash in evidence_lanes:
+                raise ValueError("provider audit contradicts the existing evidence lane")
             audits[record.intent_hash] = record
+            evidence_lanes[record.intent_hash] = "provider_audit"
         elif isinstance(record, JudgeNegativeDispatchEvidence):
             intent = intents.get(record.intent_hash)
             state = states.get(intent.item_id) if intent is not None else None
@@ -1030,11 +1296,20 @@ def replay_judge_records(
                 intent is None
                 or state is None
                 or state.unresolved_intent_hash != record.intent_hash
+                or record.verifier.manifest_hash != manifest.record_hash
+                or record.verifier.authorization_hash != manifest.authorization_hash
+                or record.verifier.runner_view_hash != manifest.runner_view_hash
+                or record.provider_log_artifact.request_id != intent.request_id
             ):
-                raise ValueError("negative dispatch evidence does not cover unresolved intent")
+                raise ValueError(
+                    "negative dispatch evidence is not manifest-authorized exact cover"
+                )
             if record.intent_hash in negative_evidence:
                 raise ValueError("negative dispatch evidence is duplicated")
+            if record.intent_hash in evidence_lanes:
+                raise ValueError("negative evidence contradicts the existing evidence lane")
             negative_evidence[record.intent_hash] = record
+            evidence_lanes[record.intent_hash] = "negative"
         elif isinstance(record, JudgeResponseEvidence):
             matching = tuple(
                 intent
@@ -1050,7 +1325,15 @@ def replay_judge_records(
                 raise ValueError("judge response does not cover unresolved dispatch")
             if intent.record_hash in responses:
                 raise ValueError("judge response is duplicated for one dispatch")
+            lane = evidence_lanes.get(intent.record_hash)
+            if lane == "recovered_response":
+                reconciliation = reconciliations[intent.record_hash]
+                if record.raw_bytes_sha256 != reconciliation.response_bytes_hash:
+                    raise ValueError("judge raw bytes differ from the recovered response evidence")
+            elif lane is not None:
+                raise ValueError("judge response contradicts the existing evidence lane")
             responses[intent.record_hash] = record
+            evidence_lanes[intent.record_hash] = "response"
         elif isinstance(record, JudgeCompletedAttempt):
             intent = intents.get(record.intent_hash)
             response = responses.get(record.intent_hash)
@@ -1080,6 +1363,9 @@ def replay_judge_records(
                 raise ValueError("attempt marker does not cover the unresolved dispatch")
             if record.attempt_id != intent.attempt_id:
                 raise ValueError("attempt marker identity differs from dispatch")
+            if record.intent_hash in evidence_lanes:
+                raise ValueError("incomplete marker contradicts the existing evidence lane")
+            evidence_lanes[record.intent_hash] = "incomplete"
         elif isinstance(record, JudgeDispatchReconciliation):
             intent = intents.get(record.intent_hash)
             state = states.get(record.item_id)
@@ -1093,23 +1379,30 @@ def replay_judge_records(
             audit = audits.get(record.intent_hash)
             if record.decision == "recovered_response":
                 if (
-                    audit is None
+                    evidence_lanes.get(record.intent_hash) != "provider_audit"
+                    or audit is None
                     or audit.provider_audit_hash != record.provider_audit_hash
                     or audit.response_bytes_hash != record.response_bytes_hash
                 ):
                     raise ValueError("recovered response lacks exact provider audit evidence")
                 status = "recovered_response"
+                evidence_lanes[record.intent_hash] = "recovered_response"
             elif record.decision == "proved_not_sent":
                 negative = negative_evidence.get(record.intent_hash)
                 if (
-                    audit is not None
+                    evidence_lanes.get(record.intent_hash) != "negative"
+                    or audit is not None
                     or negative is None
                     or negative.record_hash != record.provider_audit_hash
                 ):
                     raise ValueError("proved_not_sent contradicts persisted response evidence")
                 status = "pending_retry"
             else:
+                if record.intent_hash in evidence_lanes:
+                    raise ValueError("ambiguous reconciliation contradicts existing evidence lane")
+                evidence_lanes[record.intent_hash] = "ambiguous"
                 status = "ambiguous_incomplete"
+            reconciliations[record.intent_hash] = record
             states[record.item_id] = replace(
                 state,
                 status=status,
@@ -1127,8 +1420,10 @@ def replay_judge_records(
                 or state.unresolved_intent_hash != record.intent_hash
                 or record.attempt_hash != attempt.record_hash
                 or record.attempt_id != attempt.attempt_id
+                or record.attempt != attempt
             ):
                 raise ValueError("attempt resolution lacks exact completed attempt coverage")
+            record._validate_semantics(attempt)
             if record.outcome == "coded":
                 status = "coded"
             elif record.outcome == "terminal_failed":
