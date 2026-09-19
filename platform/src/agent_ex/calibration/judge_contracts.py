@@ -64,9 +64,9 @@ _REPAIR_USER_TEMPLATE = (
     "EXACT_RESPONSE_SCHEMA_JSON={response_schema_json}"
 )
 _CANONICAL_JSON_VERSION = "agent-ex-renderer-json-utf8-declared-order-v1"
-_SEED_DERIVATION = "sha256-canonical-renderer-item-attempt-first64-v1"
-_REQUEST_IDENTITY_DERIVATION = "judge-request-v1"
-_IDEMPOTENCY_DERIVATION = "judge-idempotency-v1"
+_SEED_DERIVATION = "sha256-canonical-renderer-item-attempt-signed63-v2"
+_REQUEST_IDENTITY_DERIVATION = "judge-request-rendered-contract-v2"
+_IDEMPOTENCY_DERIVATION = "judge-idempotency-rendered-contract-v2"
 
 
 def _metadata() -> dict[str, object]:
@@ -135,6 +135,39 @@ def _response_schema(
     }
 
 
+def _rendered_request_identity_hash(
+    *,
+    renderer_hash: str,
+    item_id: str,
+    item_hash: str,
+    visible_payload_hash: str,
+    attempt_index: int,
+    repair: bool,
+    visible_fields: tuple[str, ...],
+    messages: tuple[Mapping[str, str], ...],
+    response_schema: Mapping[str, object],
+    generation_settings: Mapping[str, object],
+    response_byte_ceiling: int,
+) -> str:
+    """Hash every immutable request input except derived identities and their record hash."""
+
+    return canonical_payload_hash(
+        {
+            "renderer_hash": renderer_hash,
+            "item_id": item_id,
+            "item_hash": item_hash,
+            "visible_payload_hash": visible_payload_hash,
+            "attempt_index": attempt_index,
+            "repair": repair,
+            "visible_fields_hash": canonical_payload_hash(visible_fields),
+            "messages_hash": canonical_payload_hash(messages),
+            "response_schema_hash": canonical_payload_hash(response_schema),
+            "generation_settings_hash": canonical_payload_hash(generation_settings),
+            "response_byte_ceiling": response_byte_ceiling,
+        }
+    )
+
+
 def derive_judge_seed(renderer_hash: str, item_id: str, attempt_index: int) -> int:
     """Derive the stable per-item attempt seed authorized by the renderer."""
 
@@ -148,7 +181,7 @@ def derive_judge_seed(renderer_hash: str, item_id: str, attempt_index: int) -> i
             "attempt_index": attempt_index,
         }
     )
-    return int(digest[:16], 16)
+    return int(digest[:16], 16) & (2**63 - 1)
 
 
 @dataclass(frozen=True, slots=True)
@@ -181,20 +214,6 @@ class RenderedJudgeRequest:
         _require_int("seed", self.seed)
         for name in ("request_id", "idempotency_key"):
             _require_id(name, getattr(self, name))
-        expected_seed = derive_judge_seed(self.renderer_hash, self.item_id, self.attempt_index)
-        if self.seed != expected_seed:
-            raise ValueError("seed differs from the frozen renderer/item/attempt derivation")
-        identity = {
-            "renderer_hash": self.renderer_hash,
-            "item_id": self.item_id,
-            "attempt_index": self.attempt_index,
-            "repair": self.repair,
-        }
-        identity_hash = canonical_payload_hash(identity)
-        if self.request_id != "judge-request-" + identity_hash:
-            raise ValueError("request_id differs from the frozen request identity derivation")
-        if self.idempotency_key != "judge-idempotency-" + identity_hash:
-            raise ValueError("idempotency_key differs from the frozen idempotency derivation")
         if self.visible_fields != VISIBLE_FIELDS:
             raise ValueError("visible field order differs from the frozen judge contract")
         if (
@@ -217,6 +236,26 @@ class RenderedJudgeRequest:
         if not isinstance(self.generation_settings, Mapping) or not self.generation_settings:
             raise ValueError("generation settings must be an explicit nonempty mapping")
         _require_int("response_byte_ceiling", self.response_byte_ceiling, minimum=1)
+        expected_seed = derive_judge_seed(self.renderer_hash, self.item_id, self.attempt_index)
+        if self.seed != expected_seed:
+            raise ValueError("seed differs from the frozen renderer/item/attempt derivation")
+        identity_hash = _rendered_request_identity_hash(
+            renderer_hash=self.renderer_hash,
+            item_id=self.item_id,
+            item_hash=self.item_hash,
+            visible_payload_hash=self.visible_payload_hash,
+            attempt_index=self.attempt_index,
+            repair=self.repair,
+            visible_fields=self.visible_fields,
+            messages=self.messages,
+            response_schema=self.response_schema,
+            generation_settings=self.generation_settings,
+            response_byte_ceiling=self.response_byte_ceiling,
+        )
+        if self.request_id != "judge-request-" + identity_hash:
+            raise ValueError("request_id differs from the frozen request identity derivation")
+        if self.idempotency_key != "judge-idempotency-" + identity_hash:
+            raise ValueError("idempotency_key differs from the frozen idempotency derivation")
         object.__setattr__(self, "messages", tuple(frozen_messages))
         object.__setattr__(self, "response_schema", _freeze(self.response_schema))
         object.__setattr__(self, "generation_settings", _freeze(self.generation_settings))
@@ -337,7 +376,7 @@ class JudgeRequestRenderer:
                 _require_id("judge label", label)
             normalized_labels[dimension] = labels
         expected_schema = _response_schema(normalized_labels)
-        if _json_ready(self.response_schema) != expected_schema:
+        if canonical_payload_hash(self.response_schema) != canonical_payload_hash(expected_schema):
             raise ValueError("renderer response schema differs from labels or field order")
         if self.canonical_json_version != _CANONICAL_JSON_VERSION:
             raise ValueError("renderer canonical JSON identity is unsupported")
@@ -408,6 +447,11 @@ class JudgeRequestRenderer:
     def from_payload(cls, payload: Mapping[str, object]) -> JudgeRequestRenderer:
         expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
         _exact_payload(payload, expected, cls._SCHEMA)
+        _require_payload_hash(
+            "record_hash",
+            payload["record_hash"],
+            {name: value for name, value in payload.items() if name != "record_hash"},
+        )
         for name in ("message_roles", "visible_fields", "dimensions"):
             if type(payload[name]) is not list:
                 raise TypeError(f"renderer {name} must use a JSON array")
@@ -452,12 +496,23 @@ class JudgeRequestRenderer:
         user_content = self.repair_user_template if repair else self.normal_user_template
         for marker, value in replacements.items():
             user_content = user_content.replace(marker, value)
-        identity = {
-            "renderer_hash": self.record_hash,
-            "item_id": item.item_id,
-            "attempt_index": attempt_index,
-            "repair": repair,
-        }
+        messages = (
+            {"role": "system", "content": self.system_template},
+            {"role": "user", "content": user_content},
+        )
+        identity_hash = _rendered_request_identity_hash(
+            renderer_hash=self.record_hash,
+            item_id=item.item_id,
+            item_hash=item.record_hash,
+            visible_payload_hash=item.visible_payload_hash,
+            attempt_index=attempt_index,
+            repair=repair,
+            visible_fields=VISIBLE_FIELDS,
+            messages=messages,
+            response_schema=self.response_schema,
+            generation_settings=self.generation_settings,
+            response_byte_ceiling=self.response_byte_ceiling,
+        )
         values = {
             "item_id": item.item_id,
             "item_hash": item.record_hash,
@@ -465,14 +520,11 @@ class JudgeRequestRenderer:
             "attempt_index": attempt_index,
             "repair": repair,
             "seed": derive_judge_seed(self.record_hash, item.item_id, attempt_index),
-            "request_id": "judge-request-" + canonical_payload_hash(identity),
-            "idempotency_key": "judge-idempotency-" + canonical_payload_hash(identity),
+            "request_id": "judge-request-" + identity_hash,
+            "idempotency_key": "judge-idempotency-" + identity_hash,
             "renderer_hash": self.record_hash,
             "visible_fields": VISIBLE_FIELDS,
-            "messages": (
-                {"role": "system", "content": self.system_template},
-                {"role": "user", "content": user_content},
-            ),
+            "messages": messages,
             "response_schema": self.response_schema,
             "generation_settings": self.generation_settings,
             "response_byte_ceiling": self.response_byte_ceiling,

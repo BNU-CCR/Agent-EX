@@ -111,8 +111,8 @@ def authorization_payload(renderer: JudgeRequestRenderer) -> dict[str, object]:
         "max_attempts_per_item": 3,
         "retryable_codes": ["timeout", "http_429", "invalid_json"],
         "retry_backoff_seconds": [1.0, 2.0],
-        "request_identity_derivation": "judge-request-v1",
-        "idempotency_key_derivation": "judge-idempotency-v1",
+        "request_identity_derivation": "judge-request-rendered-contract-v2",
+        "idempotency_key_derivation": "judge-idempotency-rendered-contract-v2",
         "one_item_per_request": True,
         "strict_approved_order": True,
         "generation_settings": {
@@ -212,6 +212,16 @@ def test_renderer_round_trip_is_strict_and_immutable(
         rendered.messages[0]["role"] = "user"  # type: ignore[index]
 
 
+@pytest.mark.parametrize("numeric_false", [0, 0.0])
+def test_renderer_from_payload_rejects_bool_numeric_schema_normalization_attack(
+    renderer: JudgeRequestRenderer, numeric_false: object
+) -> None:
+    payload = renderer.to_payload()
+    payload["response_schema"]["additionalProperties"] = numeric_false
+    with pytest.raises(ValueError, match="record_hash|record hash|response schema"):
+        JudgeRequestRenderer.from_payload(payload)
+
+
 def test_seed_request_and_idempotency_are_deterministic_per_item_attempt(
     renderer: JudgeRequestRenderer, item: BlindReviewItem
 ) -> None:
@@ -223,6 +233,37 @@ def test_seed_request_and_idempotency_are_deterministic_per_item_attempt(
     assert len({first.request_id, next_attempt.request_id, repair.request_id}) == 3
     assert len({first.idempotency_key, next_attempt.idempotency_key, repair.idempotency_key}) == 3
     assert first.seed != next_attempt.seed
+
+
+def test_judge_seed_is_always_vllm_signed_int64_safe(
+    renderer: JudgeRequestRenderer, item: BlindReviewItem
+) -> None:
+    assert renderer.seed_derivation == "sha256-canonical-renderer-item-attempt-signed63-v2"
+    seeds = (
+        derive_judge_seed(renderer.record_hash, item.item_id, attempt_index)
+        for attempt_index in range(1, 257)
+    )
+    assert all(0 <= seed <= 2**63 - 1 for seed in seeds)
+
+
+def test_request_identity_binds_item_hash_visible_hash_and_rendered_contract(
+    renderer: JudgeRequestRenderer,
+    item: BlindReviewItem,
+) -> None:
+    changed_visible = dict(item.visible_payload)
+    changed_visible["response_text"] += " changed"
+    changed_item = BlindReviewItem.create(
+        item_id=item.item_id,
+        policy_hash=item.policy_hash,
+        visible_payload=changed_visible,
+    )
+    original = renderer.render(item, 1, repair=False)
+    changed = renderer.render(changed_item, 1, repair=False)
+    assert original.item_hash != changed.item_hash
+    assert original.visible_payload_hash != changed.visible_payload_hash
+    assert original.messages != changed.messages
+    assert original.request_id != changed.request_id
+    assert original.idempotency_key != changed.idempotency_key
 
 
 @pytest.mark.parametrize(
@@ -245,6 +286,29 @@ def test_rendered_request_rejects_rehashed_derived_identity_tamper(
         {name: field_value for name, field_value in payload.items() if name != "record_hash"}
     )
     with pytest.raises(ValueError, match=field):
+        RenderedJudgeRequest.from_payload(payload)
+
+
+@pytest.mark.parametrize(
+    "field",
+    ["item_hash", "visible_payload_hash", "messages", "response_schema"],
+)
+def test_rendered_request_identity_rejects_rehashed_bound_input_tamper(
+    renderer: JudgeRequestRenderer,
+    item: BlindReviewItem,
+    field: str,
+) -> None:
+    payload = renderer.render(item, 1, repair=False).to_payload()
+    if field in {"item_hash", "visible_payload_hash"}:
+        payload[field] = SHA_F
+    elif field == "messages":
+        payload[field][1]["content"] += " tampered"
+    else:
+        payload[field]["properties"]["refusal"]["enum"][0] = "tampered"
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="request_id"):
         RenderedJudgeRequest.from_payload(payload)
 
 
@@ -272,7 +336,7 @@ def test_golden_verification_rejects_role_label_order_or_escape_tamper(
         )
     else:
         request["messages"][1]["content"] = request["messages"][1]["content"].replace("\\\\", "\\")
-    with pytest.raises(ValueError, match="fixture|rendered request|hash|order"):
+    with pytest.raises(ValueError, match="fixture|rendered request|hash|order|request_id"):
         renderer.verify_fixture(item, tampered)
 
 
