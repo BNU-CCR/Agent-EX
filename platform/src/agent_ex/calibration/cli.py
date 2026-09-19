@@ -95,6 +95,12 @@ _SMOKE_CHAT_TEMPLATE_HASH = "41d5929bf73796beb66809ac700b2cf3ff81694f933e5c14d52
 _SMOKE_RUNTIME_POLICY_HASH = "e0c72256eb39927f0e76565bb95b7b570c5930c22c40a28267ec872d97af0f13"
 _SMOKE_PROMPT_SET_HASH = "da354eaeda9d83a018d6022a6e094cf03f4a461cc5576ea0c339fc8555608ea5"
 _SMOKE_CREDENTIAL_BOUNDARY_HASH = "4522015a0a1aaf3d1fc14ad295d88bd4e1bd519bb9abf2f23ff29ade0cd8fffa"
+_HAS_SECURE_JUDGE_FILESYSTEM = (
+    os.name == "posix"
+    and hasattr(os, "O_DIRECTORY")
+    and hasattr(os, "O_NOFOLLOW")
+    and os.open in getattr(os, "supports_dir_fd", ())
+)
 
 
 def _absolute_path(value: str) -> Path:
@@ -428,12 +434,7 @@ class _SecureArchiveIO:
     """Descriptor-anchored judge I/O that never re-resolves validated pathnames."""
 
     def __init__(self, archive_root: Path) -> None:
-        if (
-            os.name != "posix"
-            or not hasattr(os, "O_DIRECTORY")
-            or not hasattr(os, "O_NOFOLLOW")
-            or os.open not in os.supports_dir_fd
-        ):
+        if not _HAS_SECURE_JUDGE_FILESYSTEM:
             raise RuntimeError("secure judge filesystem backend is unavailable on this platform")
         self._archive_path = Path(os.path.abspath(archive_root))
         self._root_fd = self._open_absolute_directory(self._archive_path)
