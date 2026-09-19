@@ -21,6 +21,8 @@ from agent_ex.calibration.judge_runner import (
     JudgeDispatchIntent,
     JudgeDispatchReconciliation,
     JudgeNegativeDispatchEvidence,
+    JudgeNegativeVerifierContract,
+    JudgeProviderNegativeLogArtifact,
     JudgeApprovedOrder,
     reconstruct_judge_projection,
 )
@@ -208,6 +210,36 @@ def intent(*, order_index: int = 0, attempt_index: int = 1) -> JudgeDispatchInte
     )
 
 
+def negative_evidence(
+    dispatch: JudgeDispatchIntent, *, observation_id: str
+) -> JudgeNegativeDispatchEvidence:
+    manifest_value = context()[0]
+    verifier = JudgeNegativeVerifierContract.create(manifest_value)
+    provider_log = json.dumps(
+        {
+            "schema_version": "paper1.calibration.provider-negative-log.v1",
+            "request_id": dispatch.request_id,
+            "observation_id": observation_id,
+            "dispatch_found": False,
+            "verifier_contract_hash": verifier.record_hash,
+        },
+        separators=(",", ":"),
+    ).encode("utf-8")
+    artifact = JudgeProviderNegativeLogArtifact.create(
+        dispatch,
+        verifier=verifier,
+        observation_id=observation_id,
+        provider_log_bytes=provider_log,
+        observed_at="2026-09-19T00:01:00Z",
+    )
+    return JudgeNegativeDispatchEvidence.create(
+        dispatch,
+        manifest=manifest_value,
+        verifier=verifier,
+        provider_log_artifact=artifact,
+    )
+
+
 @pytest.fixture
 def judge_store(tmp_path: Path) -> JudgeRunStore:
     manifest_value, _, _, _, preflight, start, pack, index = context()
@@ -290,13 +322,7 @@ def test_reconciliation_has_only_three_outcomes(
         judge_store.append_raw_provider_audit(dispatch, provider_audit)
         evidence["response_bytes_hash"] = response_hash
     elif decision == "proved_not_sent":
-        negative = JudgeNegativeDispatchEvidence.create(
-            dispatch,
-            verifier_id="provider-log-verifier-v1",
-            observation_id="provider-observation-store",
-            provider_log_hash="b" * 64,
-            observed_at="2026-09-19T00:01:00Z",
-        )
+        negative = negative_evidence(dispatch, observation_id="provider-observation-store")
         judge_store.append_negative_dispatch_evidence(negative)
         evidence["provider_audit_hash"] = negative.record_hash
     record = JudgeDispatchReconciliation.create(dispatch, decision, evidence)
@@ -313,13 +339,7 @@ def test_open_replays_and_rejects_a_tampered_projection_chain(
 ) -> None:
     dispatch = intent()
     judge_store.append_intent(dispatch)
-    negative = JudgeNegativeDispatchEvidence.create(
-        dispatch,
-        verifier_id="provider-log-verifier-v1",
-        observation_id="provider-observation-open",
-        provider_log_hash="b" * 64,
-        observed_at="2026-09-19T00:01:00Z",
-    )
+    negative = negative_evidence(dispatch, observation_id="provider-observation-open")
     judge_store.append_negative_dispatch_evidence(negative)
     judge_store.append_reconciliation(
         JudgeDispatchReconciliation.create(
@@ -389,6 +409,73 @@ def test_nested_evidence_inventory_rejects_unrecognized_directory(
 ) -> None:
     (judge_store.staging / "dispatch" / "unexpected").mkdir()
     with pytest.raises(ValueError, match="inventory|regular file"):
+        JudgeRunStore.open(judge_store.root)
+
+
+def test_partial_prepared_write_never_publishes_a_torn_final_file(
+    judge_store: JudgeRunStore,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    original_write = judge_store_module.os.write
+    injected = False
+
+    def torn_write(descriptor: int, data: bytes) -> int:
+        nonlocal injected
+        if not injected and len(data) > 32:
+            injected = True
+            original_write(descriptor, data[:17])
+            raise OSError("injected torn temporary write")
+        return original_write(descriptor, data)
+
+    monkeypatch.setattr(judge_store_module.os, "write", torn_write)
+    with pytest.raises(OSError, match="torn"):
+        judge_store.append_intent(intent())
+    monkeypatch.setattr(judge_store_module.os, "write", original_write)
+    reopened = JudgeRunStore.open(judge_store.root)
+    assert reopened.current_projection.item_order == ()
+    assert not any(
+        path.name.startswith(".tmp-")
+        for path in (reopened.staging / "transactions" / "prepared").iterdir()
+    )
+
+
+def test_nonterminal_projection_file_is_rejected_and_seals_append(
+    judge_store: JudgeRunStore,
+) -> None:
+    terminal = judge_store.staging / "projection.json"
+    terminal.write_bytes(
+        judge_store_module._canonical_json_bytes(judge_store.current_projection.to_payload())
+    )
+    with pytest.raises(ValueError, match="terminal|cover"):
+        JudgeRunStore.open(judge_store.root)
+    with pytest.raises(ValueError, match="sealed|terminal"):
+        judge_store.append_intent(intent())
+
+
+@pytest.mark.parametrize(
+    "relative",
+    (
+        "manifest.json",
+        "approved-pack.json",
+        "approved-index.json",
+        "approved-order.json",
+        ".append.lock",
+    ),
+)
+def test_authoritative_base_file_symlink_is_rejected(
+    judge_store: JudgeRunStore,
+    tmp_path: Path,
+    relative: str,
+) -> None:
+    target = tmp_path / f"outside-{relative.replace('.', '-')}.json"
+    source = judge_store.staging / relative
+    target.write_bytes(source.read_bytes())
+    source.unlink()
+    try:
+        source.symlink_to(target)
+    except OSError:
+        pytest.skip("file symlinks unavailable")
+    with pytest.raises(ValueError, match="link|regular file|authoritative"):
         JudgeRunStore.open(judge_store.root)
 
 

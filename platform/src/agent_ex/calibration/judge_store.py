@@ -5,7 +5,9 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import stat
 import threading
+import uuid
 from contextlib import contextmanager
 from typing import Mapping
 
@@ -60,6 +62,12 @@ _SCHEMA_TYPES = {
 
 _THREAD_LOCKS: dict[str, threading.Lock] = {}
 _THREAD_LOCKS_GUARD = threading.Lock()
+_HAS_SECURE_DIRECTORY_IO = (
+    os.name != "nt"
+    and hasattr(os, "O_DIRECTORY")
+    and hasattr(os, "O_NOFOLLOW")
+    and os.supports_dir_fd
+)
 
 
 def _transaction_checkpoint(phase: str) -> None:
@@ -83,7 +91,23 @@ def _archive_lock(root: Path):
         thread_lock = _THREAD_LOCKS.setdefault(key, threading.Lock())
     with thread_lock:
         lock_path = root / "staging" / ".append.lock"
-        descriptor = os.open(lock_path, os.O_RDWR)
+        staging_fd: int | None = None
+        if _HAS_SECURE_DIRECTORY_IO:
+            staging_fd = _open_directory_handle(lock_path.parent)
+            descriptor = os.open(
+                lock_path.name,
+                os.O_RDWR | os.O_NOFOLLOW,
+                dir_fd=staging_fd,
+            )
+        else:
+            if lock_path.is_symlink():
+                raise ValueError("judge archive lock must not be a link")
+            descriptor = os.open(lock_path, os.O_RDWR)
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            os.close(descriptor)
+            if staging_fd is not None:
+                os.close(staging_fd)
+            raise ValueError("judge archive lock must be a regular file")
         try:
             if os.name == "nt":
                 import msvcrt
@@ -106,6 +130,23 @@ def _archive_lock(root: Path):
 
                 fcntl.flock(descriptor, fcntl.LOCK_UN)
             os.close(descriptor)
+            if staging_fd is not None:
+                os.close(staging_fd)
+
+
+def _open_directory_handle(path: Path) -> int:
+    absolute = path if path.is_absolute() else Path.cwd() / path
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    descriptor = os.open(Path(absolute.anchor), flags)
+    try:
+        for component in absolute.parts[1:]:
+            child = os.open(component, flags, dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = child
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
 
 
 def _canonical_json_bytes(payload: Mapping[str, object]) -> bytes:
@@ -116,7 +157,16 @@ def _canonical_json_bytes(payload: Mapping[str, object]) -> bytes:
 
 def _write_json_create_only(path: Path, payload: Mapping[str, object]) -> None:
     content = _canonical_json_bytes(payload)
-    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    temporary_name = f".tmp-{uuid.uuid4().hex}"
+    temporary = path.parent / temporary_name
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    parent_fd: int | None = None
+    if _HAS_SECURE_DIRECTORY_IO:
+        parent_fd = _open_directory_handle(path.parent)
+        descriptor = os.open(temporary_name, flags, 0o600, dir_fd=parent_fd)
+    else:
+        descriptor = os.open(temporary, flags, 0o600)
+    write_succeeded = False
     try:
         offset = 0
         while offset < len(content):
@@ -125,9 +175,42 @@ def _write_json_create_only(path: Path, payload: Mapping[str, object]) -> None:
                 raise OSError("short write while appending judge evidence")
             offset += written
         os.fsync(descriptor)
+        write_succeeded = True
     finally:
         os.close(descriptor)
-    _fsync_directory(path.parent)
+        if not write_succeeded:
+            try:
+                if parent_fd is not None:
+                    os.unlink(temporary_name, dir_fd=parent_fd)
+                else:
+                    temporary.unlink()
+            except FileNotFoundError:
+                pass
+            if parent_fd is not None:
+                os.close(parent_fd)
+    try:
+        if parent_fd is not None:
+            os.link(
+                temporary_name,
+                path.name,
+                src_dir_fd=parent_fd,
+                dst_dir_fd=parent_fd,
+                follow_symlinks=False,
+            )
+            os.fsync(parent_fd)
+        else:
+            os.link(temporary, path, follow_symlinks=False)
+            _fsync_directory(path.parent)
+    finally:
+        try:
+            if parent_fd is not None:
+                os.unlink(temporary_name, dir_fd=parent_fd)
+            else:
+                temporary.unlink()
+        except FileNotFoundError:
+            pass
+        if parent_fd is not None:
+            os.close(parent_fd)
 
 
 def _publish_json_exact(path: Path, payload: Mapping[str, object]) -> None:
@@ -147,7 +230,30 @@ def _publish_json_exact(path: Path, payload: Mapping[str, object]) -> None:
 
 def _load_json(path: Path) -> dict[str, object]:
     try:
-        payload = json.loads(path.read_bytes())
+        if _HAS_SECURE_DIRECTORY_IO:
+            parent_fd = _open_directory_handle(path.parent)
+            try:
+                descriptor = os.open(
+                    path.name,
+                    os.O_RDONLY | os.O_NOFOLLOW,
+                    dir_fd=parent_fd,
+                )
+            finally:
+                os.close(parent_fd)
+            try:
+                if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+                    raise ValueError("judge evidence must be a regular file")
+                chunks: list[bytes] = []
+                while chunk := os.read(descriptor, 1024 * 1024):
+                    chunks.append(chunk)
+                encoded = b"".join(chunks)
+            finally:
+                os.close(descriptor)
+        else:
+            if path.is_symlink() or not path.is_file():
+                raise ValueError("judge evidence must be a regular non-link file")
+            encoded = path.read_bytes()
+        payload = json.loads(encoded)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ValueError(f"invalid judge evidence JSON: {path.name}") from error
     if type(payload) is not dict:
@@ -252,6 +358,7 @@ class JudgeRunStore:
             raise ValueError("stored approved order differs from manifest-bound pack and index")
         store = cls(root, manifest, approved_order)
         with _archive_lock(root):
+            store._cleanup_temporary_files()
             store._recover_transactions()
             records = store.read_records()
             expected = replay_judge_records(manifest, approved_order, records)
@@ -268,6 +375,7 @@ class JudgeRunStore:
                 terminal = JudgeProjection.from_payload(_load_json(terminal_path))
                 if not actual or terminal.to_payload() != actual[-1].to_payload():
                     raise ValueError("terminal judge projection differs from final snapshot")
+                store._require_terminal_cover(terminal)
         return store
 
     @staticmethod
@@ -296,6 +404,32 @@ class JudgeRunStore:
             "committed",
         }:
             raise ValueError("judge transaction inventory is not exact")
+        for relative in (
+            "manifest.json",
+            "approved-pack.json",
+            "approved-index.json",
+            "approved-order.json",
+            ".append.lock",
+        ):
+            path = staging / relative
+            if path.is_symlink() or not path.is_file():
+                raise ValueError("judge authoritative base file must be a regular non-link file")
+
+    def _cleanup_temporary_files(self) -> None:
+        directories = [self.staging / kind for kind in _KIND_TYPES] + [
+            self.staging / "journal",
+            self.staging / "projections",
+            self.staging / "transactions" / "prepared",
+            self.staging / "transactions" / "committed",
+        ]
+        for directory in directories:
+            for path in directory.iterdir():
+                if not path.name.startswith(".tmp-"):
+                    continue
+                if path.is_symlink() or not path.is_file():
+                    raise ValueError("judge temporary artifact must be a regular non-link file")
+                path.unlink()
+            _fsync_directory(directory)
 
     def _recover_transactions(self) -> None:
         prepared_dir = self.staging / "transactions" / "prepared"
@@ -500,7 +634,10 @@ class JudgeRunStore:
         if record_manifest_hash is not None and record_manifest_hash != self.manifest.record_hash:
             raise ValueError("judge evidence manifest differs from store manifest")
         with _archive_lock(self.root):
+            if (self.staging / "projection.json").exists():
+                raise ValueError("terminal judge store is sealed against further append")
             self._require_safe_layout(self.staging)
+            self._cleanup_temporary_files()
             self._recover_transactions()
             # Validate the complete current archive before introducing another immutable file.
             current_records = self.read_records()
@@ -577,22 +714,25 @@ class JudgeRunStore:
             records = self.read_records()
             self._require_exact_projection_replay(records)
             projection = replay_judge_records(self.manifest, self.approved_order, records)[-1]
-            if (
-                tuple(projection.item_order)
-                != tuple(item.item_id for item in self.approved_order.items)
-                or len(projection.item_states) != self.manifest.expected_item_count
-                or any(
-                    state.unresolved_intent_hash is not None
-                    or state.status not in {"coded", "terminal_failed", "ambiguous_incomplete"}
-                    for state in projection.item_states.values()
-                )
-            ):
-                raise ValueError("terminal projection lacks exact terminal item cover")
+            self._require_terminal_cover(projection)
             target = self.staging / "projection.json"
             if target.exists() or target.is_symlink():
                 raise FileExistsError("terminal projection already exists")
             _write_json_create_only(target, projection.to_payload())
             return projection
+
+    def _require_terminal_cover(self, projection: JudgeProjection) -> None:
+        if (
+            tuple(projection.item_order)
+            != tuple(item.item_id for item in self.approved_order.items)
+            or len(projection.item_states) != self.manifest.expected_item_count
+            or any(
+                state.unresolved_intent_hash is not None
+                or state.status not in {"coded", "terminal_failed", "ambiguous_incomplete"}
+                for state in projection.item_states.values()
+            )
+        ):
+            raise ValueError("terminal projection lacks exact terminal item cover")
 
     def append_intent(self, record: JudgeDispatchIntent) -> None:
         self.append("dispatch", record)
