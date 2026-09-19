@@ -66,6 +66,51 @@ def golden_fixture_content(item: BlindReviewItem) -> dict[str, object]:
     }
 
 
+def ordered_json_identity(value: object) -> object:
+    if isinstance(value, dict):
+        return [["mapping-entry", key, ordered_json_identity(item)] for key, item in value.items()]
+    if isinstance(value, list):
+        return [["sequence-item", ordered_json_identity(item)] for item in value]
+    return ["scalar", type(value).__name__, value]
+
+
+def rehash_rendered_request_v3(payload: dict[str, object]) -> None:
+    payload["response_schema_order_hash"] = canonical_payload_hash(
+        ordered_json_identity(payload["response_schema"])
+    )
+    identity_hash = canonical_payload_hash(
+        {
+            "renderer_hash": payload["renderer_hash"],
+            "item_id": payload["item_id"],
+            "item_hash": payload["item_hash"],
+            "visible_payload_hash": payload["visible_payload_hash"],
+            "attempt_index": payload["attempt_index"],
+            "repair": payload["repair"],
+            "visible_fields_hash": canonical_payload_hash(payload["visible_fields"]),
+            "messages_hash": canonical_payload_hash(payload["messages"]),
+            "response_schema_order_hash": payload["response_schema_order_hash"],
+            "generation_settings_hash": canonical_payload_hash(payload["generation_settings"]),
+            "response_byte_ceiling": payload["response_byte_ceiling"],
+        }
+    )
+    payload["request_id"] = "judge-request-" + identity_hash
+    payload["idempotency_key"] = "judge-idempotency-" + identity_hash
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+
+
+def reorder_response_schema(payload: dict[str, object], mutation: str) -> None:
+    schema = payload["response_schema"]
+    if mutation == "top_level":
+        payload["response_schema"] = {name: schema[name] for name in reversed(tuple(schema))}
+    elif mutation == "properties":
+        properties = schema["properties"]
+        schema["properties"] = {name: properties[name] for name in reversed(tuple(properties))}
+    else:
+        schema["required"] = list(reversed(schema["required"]))
+
+
 @pytest.fixture
 def renderer(policy: SemanticReviewPolicy, item: BlindReviewItem) -> JudgeRequestRenderer:
     return JudgeRequestRenderer.create(
@@ -111,8 +156,8 @@ def authorization_payload(renderer: JudgeRequestRenderer) -> dict[str, object]:
         "max_attempts_per_item": 3,
         "retryable_codes": ["timeout", "http_429", "invalid_json"],
         "retry_backoff_seconds": [1.0, 2.0],
-        "request_identity_derivation": "judge-request-rendered-contract-v2",
-        "idempotency_key_derivation": "judge-idempotency-rendered-contract-v2",
+        "request_identity_derivation": "judge-request-ordered-rendered-contract-v3",
+        "idempotency_key_derivation": "judge-idempotency-ordered-rendered-contract-v3",
         "one_item_per_request": True,
         "strict_approved_order": True,
         "generation_settings": {
@@ -222,6 +267,32 @@ def test_renderer_from_payload_rejects_bool_numeric_schema_normalization_attack(
         JudgeRequestRenderer.from_payload(payload)
 
 
+@pytest.mark.parametrize("mutation", ["top_level", "properties", "required"])
+def test_renderer_from_payload_rejects_response_schema_order_tamper(
+    renderer: JudgeRequestRenderer, mutation: str
+) -> None:
+    payload = renderer.to_payload()
+    reorder_response_schema(payload, mutation)
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="response schema|order"):
+        JudgeRequestRenderer.from_payload(payload)
+
+
+@pytest.mark.parametrize("mutation", ["top_level", "properties", "required"])
+def test_rendered_request_from_payload_rejects_response_schema_order_tamper(
+    renderer: JudgeRequestRenderer,
+    item: BlindReviewItem,
+    mutation: str,
+) -> None:
+    payload = renderer.render(item, 1, repair=False).to_payload()
+    reorder_response_schema(payload, mutation)
+    rehash_rendered_request_v3(payload)
+    with pytest.raises(ValueError, match="response schema|order"):
+        RenderedJudgeRequest.from_payload(payload)
+
+
 def test_seed_request_and_idempotency_are_deterministic_per_item_attempt(
     renderer: JudgeRequestRenderer, item: BlindReviewItem
 ) -> None:
@@ -308,7 +379,7 @@ def test_rendered_request_identity_rejects_rehashed_bound_input_tamper(
     payload["record_hash"] = canonical_payload_hash(
         {name: value for name, value in payload.items() if name != "record_hash"}
     )
-    with pytest.raises(ValueError, match="request_id"):
+    with pytest.raises(ValueError, match="request_id|response_schema_order_hash"):
         RenderedJudgeRequest.from_payload(payload)
 
 

@@ -30,10 +30,10 @@
     "visible_payload_hash": "ccc63c523a21a8ef1bc8fe5aa6412c9fe51f83c6280206994563659089350aa3",
     "attempt_index": 1,
     "repair": false,
-    "seed": 4148904951639603369,
-    "request_id": "judge-request-380a774c1e2e19c5b721f68e1506342352fd7ba718ddacc473a2e19157aaf322",
-    "idempotency_key": "judge-idempotency-380a774c1e2e19c5b721f68e1506342352fd7ba718ddacc473a2e19157aaf322",
-    "renderer_hash": "a985871ae3d690c43aaa8c80f706b40f566a6612d950f2c70cee893b3bc027c7",
+    "seed": 8839198841483482037,
+    "request_id": "judge-request-af6a58655d6397c4fb3534c8c4e1a020ecd036d3a4053ab66371c975937bdeff",
+    "idempotency_key": "judge-idempotency-af6a58655d6397c4fb3534c8c4e1a020ecd036d3a4053ab66371c975937bdeff",
+    "renderer_hash": "b0ff57fd07e0c3a7d397523eea4a99616e232fbb5a14851d1fdf959768f9a316",
     "visible_fields": [
       "topic_text",
       "history_text",
@@ -74,6 +74,7 @@
         "information_fidelity": {"type": "string", "enum": ["faithful", "unsupported_claim", "unclear"]}
       }
     },
+    "response_schema_order_hash": "f5b33a347994326acc5aef5e864a59347d1567cfc271b86fead01d11435f2a73",
     "generation_settings": {
       "temperature": 0.0,
       "top_p": 1.0,
@@ -85,7 +86,7 @@
       "formal_parameter_authority": false,
       "research_parameter_status": "not_frozen"
     },
-    "record_hash": "52551b19084227a1e6602b8f80050a62892a9602df48da497680c64087fb9978"
+    "record_hash": "995aaa42ac2fbc9e27cbf7ecc1e080efd8726b5dddf0413d34c88cf299eb600b"
   },
-  "record_hash": "52551b19084227a1e6602b8f80050a62892a9602df48da497680c64087fb9978"
+  "record_hash": "995aaa42ac2fbc9e27cbf7ecc1e080efd8726b5dddf0413d34c88cf299eb600b"
 }

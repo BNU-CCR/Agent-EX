@@ -65,8 +65,10 @@ _REPAIR_USER_TEMPLATE = (
 )
 _CANONICAL_JSON_VERSION = "agent-ex-renderer-json-utf8-declared-order-v1"
 _SEED_DERIVATION = "sha256-canonical-renderer-item-attempt-signed63-v2"
-_REQUEST_IDENTITY_DERIVATION = "judge-request-rendered-contract-v2"
-_IDEMPOTENCY_DERIVATION = "judge-idempotency-rendered-contract-v2"
+_REQUEST_IDENTITY_DERIVATION = "judge-request-ordered-rendered-contract-v3"
+_IDEMPOTENCY_DERIVATION = "judge-idempotency-ordered-rendered-contract-v3"
+_RESPONSE_SCHEMA_KEYS = ("type", "additionalProperties", "required", "properties")
+_PROPERTY_SCHEMA_KEYS = ("type", "enum")
 
 
 def _metadata() -> dict[str, object]:
@@ -135,6 +137,43 @@ def _response_schema(
     }
 
 
+def _ordered_json_identity(value: object) -> object:
+    if isinstance(value, Mapping):
+        return [["mapping-entry", key, _ordered_json_identity(item)] for key, item in value.items()]
+    if isinstance(value, (list, tuple)):
+        return [["sequence-item", _ordered_json_identity(item)] for item in value]
+    return ["scalar", type(value).__name__, value]
+
+
+def _response_schema_order_hash(response_schema: Mapping[str, object]) -> str:
+    return canonical_payload_hash(_ordered_json_identity(response_schema))
+
+
+def _require_response_schema_order(response_schema: Mapping[str, object]) -> None:
+    if tuple(response_schema) != _RESPONSE_SCHEMA_KEYS:
+        raise ValueError("response schema top-level key order differs from the contract")
+    if response_schema["type"] != "object" or response_schema["additionalProperties"] is not False:
+        raise ValueError("response schema object declaration differs from the contract")
+    required = response_schema["required"]
+    if type(required) not in {list, tuple} or tuple(required) != DIMENSIONS:
+        raise ValueError("response schema required order differs from the frozen dimensions")
+    properties = response_schema["properties"]
+    if not isinstance(properties, Mapping) or tuple(properties) != DIMENSIONS:
+        raise ValueError("response schema properties order differs from the frozen dimensions")
+    for dimension, declaration in properties.items():
+        if not isinstance(declaration, Mapping) or tuple(declaration) != _PROPERTY_SCHEMA_KEYS:
+            raise ValueError(f"response schema property order differs for {dimension}")
+        if declaration["type"] != "string":
+            raise ValueError(f"response schema property type differs for {dimension}")
+        labels = declaration["enum"]
+        if (
+            type(labels) not in {list, tuple}
+            or not labels
+            or any(type(label) is not str or not label for label in labels)
+        ):
+            raise ValueError(f"response schema labels are invalid for {dimension}")
+
+
 def _rendered_request_identity_hash(
     *,
     renderer_hash: str,
@@ -145,7 +184,7 @@ def _rendered_request_identity_hash(
     repair: bool,
     visible_fields: tuple[str, ...],
     messages: tuple[Mapping[str, str], ...],
-    response_schema: Mapping[str, object],
+    response_schema_order_hash: str,
     generation_settings: Mapping[str, object],
     response_byte_ceiling: int,
 ) -> str:
@@ -161,7 +200,7 @@ def _rendered_request_identity_hash(
             "repair": repair,
             "visible_fields_hash": canonical_payload_hash(visible_fields),
             "messages_hash": canonical_payload_hash(messages),
-            "response_schema_hash": canonical_payload_hash(response_schema),
+            "response_schema_order_hash": response_schema_order_hash,
             "generation_settings_hash": canonical_payload_hash(generation_settings),
             "response_byte_ceiling": response_byte_ceiling,
         }
@@ -198,6 +237,7 @@ class RenderedJudgeRequest:
     visible_fields: tuple[str, ...]
     messages: tuple[Mapping[str, str], ...]
     response_schema: Mapping[str, object]
+    response_schema_order_hash: str
     generation_settings: Mapping[str, object]
     response_byte_ceiling: int
     record_hash: str
@@ -206,7 +246,13 @@ class RenderedJudgeRequest:
 
     def __post_init__(self) -> None:
         _require_id("item_id", self.item_id)
-        for name in ("item_hash", "visible_payload_hash", "renderer_hash", "record_hash"):
+        for name in (
+            "item_hash",
+            "visible_payload_hash",
+            "renderer_hash",
+            "response_schema_order_hash",
+            "record_hash",
+        ):
             _require_sha256(name, getattr(self, name))
         _require_int("attempt_index", self.attempt_index, minimum=1)
         if type(self.repair) is not bool:
@@ -233,6 +279,12 @@ class RenderedJudgeRequest:
             frozen_messages.append(_freeze(dict(message)))
         if not isinstance(self.response_schema, Mapping):
             raise TypeError("response_schema must be a mapping")
+        _require_response_schema_order(self.response_schema)
+        _require_payload_hash(
+            "response_schema_order_hash",
+            self.response_schema_order_hash,
+            _ordered_json_identity(self.response_schema),
+        )
         if not isinstance(self.generation_settings, Mapping) or not self.generation_settings:
             raise ValueError("generation settings must be an explicit nonempty mapping")
         _require_int("response_byte_ceiling", self.response_byte_ceiling, minimum=1)
@@ -248,7 +300,7 @@ class RenderedJudgeRequest:
             repair=self.repair,
             visible_fields=self.visible_fields,
             messages=self.messages,
-            response_schema=self.response_schema,
+            response_schema_order_hash=self.response_schema_order_hash,
             generation_settings=self.generation_settings,
             response_byte_ceiling=self.response_byte_ceiling,
         )
@@ -300,6 +352,7 @@ class JudgeRequestRenderer:
     dimensions: tuple[str, ...]
     dimension_labels: Mapping[str, tuple[str, ...]]
     response_schema: Mapping[str, object]
+    response_schema_order_hash: str
     canonical_json_version: str
     chat_template_hash: str
     response_byte_ceiling: int
@@ -316,6 +369,7 @@ class JudgeRequestRenderer:
             "policy_hash",
             "golden_fixture_hash",
             "chat_template_hash",
+            "response_schema_order_hash",
             "record_hash",
         ):
             _require_sha256(name, getattr(self, name))
@@ -376,6 +430,12 @@ class JudgeRequestRenderer:
                 _require_id("judge label", label)
             normalized_labels[dimension] = labels
         expected_schema = _response_schema(normalized_labels)
+        _require_response_schema_order(self.response_schema)
+        _require_payload_hash(
+            "response_schema_order_hash",
+            self.response_schema_order_hash,
+            _ordered_json_identity(self.response_schema),
+        )
         if canonical_payload_hash(self.response_schema) != canonical_payload_hash(expected_schema):
             raise ValueError("renderer response schema differs from labels or field order")
         if self.canonical_json_version != _CANONICAL_JSON_VERSION:
@@ -413,6 +473,7 @@ class JudgeRequestRenderer:
         if set(policy.dimension_labels) != set(DIMENSIONS):
             raise ValueError("policy dimensions differ from the frozen renderer exact cover")
         labels = {dimension: tuple(policy.dimension_labels[dimension]) for dimension in DIMENSIONS}
+        response_schema = _response_schema(labels)
         values = {
             "policy_hash": policy.record_hash,
             "renderer_version": "phase0a1-blind-judge-renderer-v1",
@@ -425,7 +486,8 @@ class JudgeRequestRenderer:
             "visible_fields": VISIBLE_FIELDS,
             "dimensions": DIMENSIONS,
             "dimension_labels": labels,
-            "response_schema": _response_schema(labels),
+            "response_schema": response_schema,
+            "response_schema_order_hash": _response_schema_order_hash(response_schema),
             "canonical_json_version": _CANONICAL_JSON_VERSION,
             "chat_template_hash": chat_template_hash,
             "response_byte_ceiling": response_byte_ceiling,
@@ -509,7 +571,7 @@ class JudgeRequestRenderer:
             repair=repair,
             visible_fields=VISIBLE_FIELDS,
             messages=messages,
-            response_schema=self.response_schema,
+            response_schema_order_hash=self.response_schema_order_hash,
             generation_settings=self.generation_settings,
             response_byte_ceiling=self.response_byte_ceiling,
         )
@@ -526,6 +588,7 @@ class JudgeRequestRenderer:
             "visible_fields": VISIBLE_FIELDS,
             "messages": messages,
             "response_schema": self.response_schema,
+            "response_schema_order_hash": self.response_schema_order_hash,
             "generation_settings": self.generation_settings,
             "response_byte_ceiling": self.response_byte_ceiling,
         }
