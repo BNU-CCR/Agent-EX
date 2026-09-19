@@ -41,6 +41,7 @@ DIMENSIONS = (
 )
 JUDGE_RESPONSE_FAILURE_CODES = (
     "provider_unreachable",
+    "provider_incomplete_body",
     "timeout",
     "response_size_exceeded",
     "http_429",
@@ -1376,7 +1377,7 @@ def _decode_judge_label_object(raw_bytes: bytes) -> dict[str, object] | None:
 
     try:
         decoded = json.loads(raw_bytes.decode("utf-8"), object_pairs_hook=pairs_hook)
-    except (UnicodeDecodeError, json.JSONDecodeError):
+    except (UnicodeDecodeError, ValueError):
         return None
     if type(decoded) is not dict or duplicate:
         return None
@@ -1384,11 +1385,37 @@ def _decode_judge_label_object(raw_bytes: bytes) -> dict[str, object] | None:
 
 
 def _decode_provider_object(raw_bytes: bytes) -> dict[str, object] | None:
+    duplicate = False
+
+    def pairs_hook(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        nonlocal duplicate
+        decoded: dict[str, object] = {}
+        for name, value in pairs:
+            if name in decoded:
+                duplicate = True
+            decoded[name] = value
+        return decoded
+
     try:
-        decoded = json.loads(raw_bytes.decode("utf-8"))
+        decoded = json.loads(raw_bytes.decode("utf-8"), object_pairs_hook=pairs_hook)
     except (UnicodeDecodeError, ValueError):
         return None
-    return decoded if type(decoded) is dict else None
+    return decoded if type(decoded) is dict and not duplicate else None
+
+
+def _derive_response_headers(
+    items: tuple[tuple[str, str], ...],
+) -> tuple[dict[str, str], tuple[str, ...]]:
+    grouped: dict[str, list[str]] = {}
+    for name, value in items:
+        grouped.setdefault(name, []).append(value)
+    critical = {"x-request-id", "retry-after"}
+    duplicates = tuple(sorted(name for name in critical if len(grouped.get(name, ())) > 1))
+    headers = {
+        name: values[0] if name in critical else ", ".join(values)
+        for name, values in grouped.items()
+    }
+    return dict(sorted(headers.items())), duplicates
 
 
 def _valid_provider_envelope(payload: Mapping[str, object]) -> bool:
@@ -1557,6 +1584,7 @@ class JudgeResponseEvidence:
     provider_request_id: str | None
     http_status: int | None
     response_headers: Mapping[str, str]
+    response_header_items: tuple[tuple[str, str], ...]
     duplicate_critical_header_names: tuple[str, ...]
     raw_bytes_base64: str
     raw_bytes_sha256: str
@@ -1600,6 +1628,19 @@ class JudgeResponseEvidence:
         object.__setattr__(
             self, "response_headers", _freeze(dict(sorted(self.response_headers.items())))
         )
+        if type(self.response_header_items) is not tuple or any(
+            type(item) is not tuple
+            or len(item) != 2
+            or type(item[0]) is not str
+            or type(item[1]) is not str
+            for item in self.response_header_items
+        ):
+            raise TypeError("response header items must be exact string pairs")
+        if any(name != name.lower() for name, _ in self.response_header_items):
+            raise ValueError("response header item names must be normalized lowercase")
+        derived_headers, derived_duplicates = _derive_response_headers(self.response_header_items)
+        if dict(self.response_headers) != derived_headers:
+            raise ValueError("response headers differ from exact header item evidence")
         if (
             type(self.duplicate_critical_header_names) is not tuple
             or any(
@@ -1610,6 +1651,8 @@ class JudgeResponseEvidence:
             != len(self.duplicate_critical_header_names)
         ):
             raise ValueError("duplicate critical header names are invalid")
+        if self.duplicate_critical_header_names != derived_duplicates:
+            raise ValueError("duplicate critical headers differ from exact header item evidence")
         _require_sha256("raw_bytes_sha256", self.raw_bytes_sha256)
         if self.raw_bytes_sha256 != _sha256_bytes(self.raw_bytes):
             raise ValueError("raw response byte hash differs from exact bytes")
@@ -1704,10 +1747,16 @@ class JudgeResponseEvidence:
             or not self.raw_bytes_complete
         ):
             raise ValueError("http_error requires complete non-429 3xx/4xx response")
-        if self.failure_code in {"timeout", "provider_unreachable"} and (
+        if self.failure_code == "provider_unreachable" and (
             self.http_status is not None or self.raw_bytes_complete
         ):
-            raise ValueError("timeout and transport failures require no status and partial bytes")
+            raise ValueError("pre-status transport failures require no status and partial bytes")
+        if self.failure_code == "timeout" and self.raw_bytes_complete:
+            raise ValueError("timeout requires incomplete response bytes")
+        if self.failure_code == "provider_incomplete_body" and (
+            self.http_status is None or self.raw_bytes_complete
+        ):
+            raise ValueError("incomplete provider body requires observed status and partial bytes")
         if self.failure_code == "provider_duplicate_critical_header":
             if not self.duplicate_critical_header_names or not self.raw_bytes_complete:
                 raise ValueError("duplicate critical header failure requires duplicate evidence")
@@ -1785,9 +1834,16 @@ class JudgeResponseEvidence:
         _exact_payload(payload, expected, cls._SCHEMA)
         if type(payload["response_headers"]) is not dict:
             raise TypeError("judge response headers must use a JSON object")
+        if type(payload["response_header_items"]) is not list or any(
+            type(item) is not list or len(item) != 2 for item in payload["response_header_items"]
+        ):
+            raise TypeError("judge response header items must use JSON pair arrays")
         if type(payload["duplicate_critical_header_names"]) is not list:
             raise TypeError("duplicate critical header names must use a JSON array")
         values = {field.name: payload[field.name] for field in fields(cls)}
+        values["response_header_items"] = tuple(
+            tuple(item) for item in payload["response_header_items"]
+        )
         values["duplicate_critical_header_names"] = tuple(
             payload["duplicate_critical_header_names"]
         )
@@ -1801,6 +1857,7 @@ class JudgeResponseEvidence:
         provider_request_id: str | None,
         http_status: int | None,
         response_headers: Mapping[str, str],
+        response_header_items: tuple[tuple[str, str], ...],
         duplicate_critical_header_names: tuple[str, ...],
         raw_bytes: bytes,
         raw_bytes_complete: bool,
@@ -1823,6 +1880,7 @@ class JudgeResponseEvidence:
             "provider_request_id": provider_request_id,
             "http_status": http_status,
             "response_headers": dict(sorted(response_headers.items())),
+            "response_header_items": response_header_items,
             "duplicate_critical_header_names": duplicate_critical_header_names,
             "raw_bytes_base64": base64.b64encode(raw_bytes).decode("ascii"),
             "raw_bytes_sha256": _sha256_bytes(raw_bytes),

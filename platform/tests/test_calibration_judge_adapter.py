@@ -133,6 +133,19 @@ def test_parser_rejects_invalid_json_object(
     assert evidence.raw_bytes == raw
 
 
+def test_parser_maps_huge_integer_to_typed_invalid_json(
+    policy: SemanticReviewPolicy,
+) -> None:
+    previous_limit = sys.get_int_max_str_digits()
+    try:
+        sys.set_int_max_str_digits(640)
+        evidence = parse_judge_response(b'{"value":' + (b"9" * 700) + b"}", policy)
+    finally:
+        sys.set_int_max_str_digits(previous_limit)
+    assert evidence.success is False
+    assert evidence.failure_code == "parse_invalid_json"
+
+
 @pytest.mark.parametrize("mutation", ["missing", "extra"])
 def test_parser_requires_exact_eight_dimensions(
     mutation: str,
@@ -299,6 +312,24 @@ class _FakeJudgeServer:
                     response = b"not-json"
                 elif owner.outcome == "huge_integer":
                     response = b'{"value":' + (b"9" * 700) + b"}"
+                elif owner.outcome == "duplicate_provider_key":
+                    valid = canonical_json_bytes(
+                        {
+                            "id": "completion-001",
+                            "model": "qwen",
+                            "choices": [
+                                {
+                                    "message": {
+                                        "role": "assistant",
+                                        "content": canonical_json_bytes(owner.labels).decode(),
+                                    },
+                                    "finish_reason": "stop",
+                                }
+                            ],
+                            "usage": {"prompt_tokens": 11, "completion_tokens": 8},
+                        }
+                    )
+                    response = valid.replace(b'"model":"qwen"', b'"model":"qwen","model":"qwen"')
                 elif owner.outcome == "http_429":
                     status = 429
                     headers["retry-after"] = "2.5"
@@ -431,6 +462,7 @@ def test_response_create_rejects_success_identity_drift(
             provider_request_id=(None if mutation == "missing_request_id" else "provider-1"),
             http_status=200,
             response_headers={},
+            response_header_items=(),
             duplicate_critical_header_names=(),
             raw_bytes=b"{}",
             raw_bytes_complete=True,
@@ -460,6 +492,7 @@ def test_response_create_rejects_success_identity_drift(
         ("missing_request_id", "provider_request_identity_missing"),
         ("model_drift", "provider_model_identity_drift"),
         ("negative_usage", "provider_invalid_json"),
+        ("duplicate_provider_key", "provider_invalid_json"),
         ("duplicate_request_id", "provider_duplicate_critical_header"),
     ),
 )
@@ -511,7 +544,6 @@ def test_provider_decoder_value_error_maps_to_typed_failure_without_escape(
         ("http_429", "status", "429"),
         ("http_500", "status", "5xx"),
         ("oom", "status", "OOM|5xx"),
-        ("timeout", "status", "timeout|status"),
     ),
 )
 def test_response_contract_rejects_rehashed_status_semantics_attack(
@@ -529,8 +561,6 @@ def test_response_contract_rejects_rehashed_status_semantics_attack(
         )
     if mutation == "retry_after":
         payload["retry_after_seconds"] = 1.0
-    elif outcome == "timeout":
-        payload["http_status"] = 200
     elif outcome == "http_429":
         payload["http_status"] = 200
     elif outcome in {"http_500", "oom"}:
@@ -553,11 +583,33 @@ def test_midstream_failure_preserves_partial_bytes_without_claiming_completeness
             valid_request
         )
     assert fake.request_count == 1
-    assert response.failure_code == "provider_unreachable"
-    assert response.http_status is None
+    assert response.failure_code == "provider_incomplete_body"
+    assert response.http_status == 200
     assert response.raw_bytes == b'{"partial"'
     assert response.raw_bytes_complete is False
     assert response.raw_bytes_total_lower_bound == len(response.raw_bytes)
+
+
+def test_response_contract_rejects_rehashed_duplicate_header_claim_without_multiplicity(
+    valid_request: JudgeRequestEvidence,
+    valid_labels: dict[str, str],
+) -> None:
+    with _FakeJudgeServer("success", valid_labels) as fake:
+        payload = (
+            JudgeVllmAdapter(fake.endpoint, model_id="qwen", limits=LIMITS)
+            .generate(valid_request)
+            .to_payload()
+        )
+    payload["success"] = False
+    payload["failure_code"] = "provider_duplicate_critical_header"
+    payload["output_bytes_base64"] = None
+    payload["output_bytes_sha256"] = None
+    payload["duplicate_critical_header_names"] = ["x-request-id"]
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="duplicate|header"):
+        JudgeResponseEvidence.from_payload(payload)
 
 
 def test_response_bytes_are_not_logged(

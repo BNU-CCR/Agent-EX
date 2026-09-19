@@ -175,6 +175,7 @@ class JudgeVllmAdapter:
         deadline = started_clock + self._limits.total_timeout_seconds
         status: int | None = None
         headers: dict[str, str] = {}
+        header_items: tuple[tuple[str, str], ...] = ()
         duplicate_critical_headers: tuple[str, ...] = ()
         raw_bytes = b""
         raw_bytes_complete = False
@@ -226,7 +227,7 @@ class JudgeVllmAdapter:
                 },
             )
             response = connection.getresponse()
-            status, headers, duplicate_critical_headers = self._headers(response)
+            status, headers, header_items, duplicate_critical_headers = self._headers(response)
             provider_request_id = headers.get("x-request-id")
             raw_bytes, exceeded = self._read_body(
                 response,
@@ -270,8 +271,7 @@ class JudgeVllmAdapter:
         except _BodyReadFailure as error:
             raw_bytes = error.raw_bytes
             raw_bytes_complete = False
-            status = None
-            failure_code = "timeout" if error.timed_out else "provider_unreachable"
+            failure_code = "timeout" if error.timed_out else "provider_incomplete_body"
         except (TimeoutError, socket.timeout):
             status = None
             failure_code = "timeout"
@@ -292,6 +292,7 @@ class JudgeVllmAdapter:
             provider_request_id=provider_request_id,
             http_status=status,
             response_headers=headers,
+            response_header_items=header_items,
             duplicate_critical_header_names=duplicate_critical_headers,
             raw_bytes=raw_bytes,
             raw_bytes_complete=raw_bytes_complete,
@@ -311,17 +312,23 @@ class JudgeVllmAdapter:
     @staticmethod
     def _headers(
         response: HTTPResponse,
-    ) -> tuple[int, dict[str, str], tuple[str, ...]]:
+    ) -> tuple[
+        int,
+        dict[str, str],
+        tuple[tuple[str, str], ...],
+        tuple[str, ...],
+    ]:
+        items = tuple((name.lower(), value) for name, value in response.getheaders())
         grouped: dict[str, list[str]] = {}
-        for name, value in response.getheaders():
-            grouped.setdefault(name.lower(), []).append(value)
+        for name, value in items:
+            grouped.setdefault(name, []).append(value)
         critical = {"x-request-id", "retry-after"}
         duplicates = tuple(sorted(name for name in critical if len(grouped.get(name, ())) > 1))
         headers = {
             name: values[0] if name in critical else ", ".join(values)
             for name, values in grouped.items()
         }
-        return response.status, headers, duplicates
+        return response.status, headers, items, duplicates
 
     def _read_body(
         self,
