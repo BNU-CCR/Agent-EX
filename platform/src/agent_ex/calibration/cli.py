@@ -13,6 +13,7 @@ from pathlib import PurePosixPath
 import platform
 import re
 import shutil
+import stat
 import subprocess
 import sys
 from typing import Mapping, Sequence
@@ -423,6 +424,201 @@ def _fsync_directory(path: Path) -> None:
         os.close(descriptor)
 
 
+class _SecureArchiveIO:
+    """Descriptor-anchored judge I/O that never re-resolves validated pathnames."""
+
+    def __init__(self, archive_root: Path) -> None:
+        if (
+            os.name != "posix"
+            or not hasattr(os, "O_DIRECTORY")
+            or not hasattr(os, "O_NOFOLLOW")
+            or os.open not in os.supports_dir_fd
+        ):
+            raise RuntimeError("secure judge filesystem backend is unavailable on this platform")
+        self._archive_path = Path(os.path.abspath(archive_root))
+        self._root_fd = self._open_absolute_directory(self._archive_path)
+
+    @staticmethod
+    def _open_absolute_directory(path: Path) -> int:
+        if not path.is_absolute():
+            raise ValueError("secure archive root must be absolute")
+        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        descriptor = os.open(path.anchor, flags)
+        try:
+            for part in path.parts[1:]:
+                next_descriptor = os.open(part, flags, dir_fd=descriptor)
+                os.close(descriptor)
+                descriptor = next_descriptor
+        except BaseException:
+            os.close(descriptor)
+            raise
+        return descriptor
+
+    def close(self) -> None:
+        if self._root_fd >= 0:
+            os.close(self._root_fd)
+            self._root_fd = -1
+
+    def __enter__(self) -> _SecureArchiveIO:
+        return self
+
+    def __exit__(self, *exc_info: object) -> None:
+        self.close()
+
+    def _relative_parts(self, path: Path) -> tuple[str, ...]:
+        absolute = Path(os.path.abspath(path))
+        try:
+            relative = absolute.relative_to(self._archive_path)
+        except ValueError as error:
+            raise ValueError("evidence path is outside the explicit archive root") from error
+        if not relative.parts or any(part in {"", ".", ".."} for part in relative.parts):
+            raise ValueError("evidence path must name an archive entry")
+        return relative.parts
+
+    def _open_parent(self, path: Path) -> tuple[int, str]:
+        parts = self._relative_parts(path)
+        descriptor = os.dup(self._root_fd)
+        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        try:
+            for part in parts[:-1]:
+                next_descriptor = os.open(part, flags, dir_fd=descriptor)
+                os.close(descriptor)
+                descriptor = next_descriptor
+        except BaseException:
+            os.close(descriptor)
+            raise
+        return descriptor, parts[-1]
+
+    def require_directory(self, path: Path) -> None:
+        parent_fd, name = self._open_parent(path)
+        try:
+            descriptor = os.open(
+                name,
+                os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                dir_fd=parent_fd,
+            )
+            os.close(descriptor)
+        finally:
+            os.close(parent_fd)
+
+    def _open_regular_file(self, path: Path) -> tuple[int, int]:
+        parent_fd, name = self._open_parent(path)
+        try:
+            descriptor = os.open(name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=parent_fd)
+        finally:
+            os.close(parent_fd)
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISREG(metadata.st_mode):
+            os.close(descriptor)
+            raise ValueError("secure judge input must be a regular file")
+        return descriptor, metadata.st_size
+
+    def read_bytes(self, path: Path, *, maximum_bytes: int | None = None) -> bytes:
+        descriptor, initial_size = self._open_regular_file(path)
+        try:
+            if maximum_bytes is not None and initial_size > maximum_bytes:
+                raise ValueError("control file exceeds maximum size")
+            chunks: list[bytes] = []
+            byte_count = 0
+            while chunk := os.read(descriptor, 1024 * 1024):
+                byte_count += len(chunk)
+                if maximum_bytes is not None and byte_count > maximum_bytes:
+                    raise ValueError("control file exceeds maximum size")
+                chunks.append(chunk)
+            return b"".join(chunks)
+        finally:
+            os.close(descriptor)
+
+    def file_size_and_sha256(self, path: Path) -> tuple[int, str]:
+        descriptor, _ = self._open_regular_file(path)
+        digest = hashlib.sha256()
+        byte_count = 0
+        try:
+            while chunk := os.read(descriptor, 1024 * 1024):
+                byte_count += len(chunk)
+                digest.update(chunk)
+        finally:
+            os.close(descriptor)
+        return byte_count, digest.hexdigest()
+
+    def write_json_create_only(self, path: Path, payload: object) -> None:
+        encoded = (
+            json.dumps(
+                payload,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+                allow_nan=False,
+            )
+            + "\n"
+        ).encode("utf-8")
+        parent_fd, name = self._open_parent(path)
+        descriptor = -1
+        try:
+            descriptor = os.open(
+                name,
+                os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                0o600,
+                dir_fd=parent_fd,
+            )
+            offset = 0
+            while offset < len(encoded):
+                written = os.write(descriptor, encoded[offset:])
+                if written <= 0:
+                    raise OSError("secure judge output write made no progress")
+                offset += written
+            os.fsync(descriptor)
+            try:
+                os.fsync(parent_fd)
+            except OSError:
+                pass
+        finally:
+            if descriptor >= 0:
+                os.close(descriptor)
+            os.close(parent_fd)
+
+
+def _decode_json_object(data: bytes) -> dict[str, object]:
+    try:
+        payload = json.loads(
+            data.decode("utf-8", errors="strict"),
+            object_pairs_hook=_reject_duplicate_keys,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as error:
+        raise ValueError("control file is not strict UTF-8 JSON") from error
+    if type(payload) is not dict:
+        raise TypeError("control file must contain one JSON object")
+    return payload
+
+
+def _secure_read_json_record(
+    archive: _SecureArchiveIO,
+    path: Path,
+    *,
+    affirmative_hash: str,
+) -> dict[str, object]:
+    payload = _decode_json_object(archive.read_bytes(path, maximum_bytes=_MAX_CONTROL_FILE_BYTES))
+    if payload.get("record_hash") != affirmative_hash:
+        raise ValueError("control file does not match its affirmative hash")
+    content = {key: value for key, value in payload.items() if key != "record_hash"}
+    if canonical_payload_hash(content) != affirmative_hash:
+        raise ValueError("control file record hash does not bind its content")
+    return payload
+
+
+def _secure_read_json_payload(
+    archive: _SecureArchiveIO,
+    path: Path,
+    *,
+    affirmative_hash: str,
+) -> dict[str, object]:
+    payload = _decode_json_object(archive.read_bytes(path, maximum_bytes=_MAX_CONTROL_FILE_BYTES))
+    if canonical_payload_hash(payload) != affirmative_hash:
+        raise ValueError("control file does not match its affirmative payload hash")
+    return payload
+
+
 def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
     result: dict[str, object] = {}
     for key, value in pairs:
@@ -692,6 +888,8 @@ def collect_judge_environment_observation(
     authorization: JudgeAuthorization,
     inputs: Mapping[str, object],
     archive_root: Path,
+    *,
+    secure_archive: _SecureArchiveIO | None = None,
 ) -> EnvironmentObservation:
     """Collect the live, health-bearing observation after judge service start."""
     if not isinstance(authorization, JudgeAuthorization):
@@ -702,33 +900,88 @@ def collect_judge_environment_observation(
         "tokenizer_repository": authorization.tokenizer_id,
         "tokenizer_revision": authorization.tokenizer_revision,
     }
-    return _collect_environment_observation(candidate, inputs, archive_root)
+    return _collect_environment_observation(
+        candidate,
+        inputs,
+        archive_root,
+        secure_archive=secure_archive,
+    )
 
 
 def _collect_environment_observation(
     candidate: Mapping[str, object],
     inputs: Mapping[str, object],
     archive_root: Path,
+    *,
+    secure_archive: _SecureArchiveIO | None = None,
 ) -> EnvironmentObservation:
     checked = _inspection_inputs(inputs)
     artifact_root = Path(checked["artifact_root"])  # type: ignore[arg-type]
-    if not artifact_root.is_absolute() or not artifact_root.is_dir() or artifact_root.is_symlink():
-        raise ValueError("inspection artifact_root must be an existing absolute directory")
-    if artifact_root.resolve(strict=True) != artifact_root.absolute():
-        raise ValueError("inspection artifact_root must not traverse symlinks")
-    _require_within_archive(artifact_root, archive_root)
     model_files = checked["model_files"]
     tokenizer_files = checked["tokenizer_files"]
-    model_artifacts = _artifact_entries(artifact_root, model_files)  # type: ignore[arg-type]
-    tokenizer_artifacts = _artifact_entries(artifact_root, tokenizer_files)  # type: ignore[arg-type]
-    chat_path = _artifact_path(artifact_root, checked["chat_template_file"])  # type: ignore[arg-type]
-    rendered_path = _artifact_path(
-        artifact_root,
-        checked["rendered_non_thinking_file"],  # type: ignore[arg-type]
-    )
-    wheel_path = _artifact_path(artifact_root, checked["vllm_wheel_file"])  # type: ignore[arg-type]
-    chat_template = chat_path.read_text(encoding="utf-8")
-    rendered = rendered_path.read_text(encoding="utf-8")
+    if secure_archive is None:
+        if (
+            not artifact_root.is_absolute()
+            or not artifact_root.is_dir()
+            or artifact_root.is_symlink()
+        ):
+            raise ValueError("inspection artifact_root must be an existing absolute directory")
+        if artifact_root.resolve(strict=True) != artifact_root.absolute():
+            raise ValueError("inspection artifact_root must not traverse symlinks")
+        _require_within_archive(artifact_root, archive_root)
+        model_artifacts = _artifact_entries(artifact_root, model_files)  # type: ignore[arg-type]
+        tokenizer_artifacts = _artifact_entries(artifact_root, tokenizer_files)  # type: ignore[arg-type]
+        chat_path = _artifact_path(  # type: ignore[arg-type]
+            artifact_root, checked["chat_template_file"]
+        )
+        rendered_path = _artifact_path(  # type: ignore[arg-type]
+            artifact_root,
+            checked["rendered_non_thinking_file"],
+        )
+        wheel_path = _artifact_path(  # type: ignore[arg-type]
+            artifact_root, checked["vllm_wheel_file"]
+        )
+        chat_template = chat_path.read_text(encoding="utf-8")
+        rendered = rendered_path.read_text(encoding="utf-8")
+        wheel_hash = _file_sha256(wheel_path)
+    else:
+        if not artifact_root.is_absolute():
+            raise ValueError("inspection artifact_root must be an existing absolute directory")
+        secure_archive.require_directory(artifact_root)
+
+        def secure_artifact(relative_path: str) -> bytes:
+            return secure_archive.read_bytes(
+                artifact_root.joinpath(*PurePosixPath(relative_path).parts)
+            )
+
+        def secure_entries(names: list[str]) -> tuple[ArtifactEntry, ...]:
+            result = []
+            for name in names:
+                byte_size, sha256 = secure_archive.file_size_and_sha256(
+                    artifact_root.joinpath(*PurePosixPath(name).parts)
+                )
+                result.append(
+                    ArtifactEntry(
+                        relative_path=name,
+                        byte_size=byte_size,
+                        sha256=sha256,
+                    )
+                )
+            return tuple(result)
+
+        model_artifacts = secure_entries(model_files)  # type: ignore[arg-type]
+        tokenizer_artifacts = secure_entries(tokenizer_files)  # type: ignore[arg-type]
+        chat_template = secure_artifact(  # type: ignore[arg-type]
+            checked["chat_template_file"]
+        ).decode("utf-8", errors="strict")
+        rendered = secure_artifact(  # type: ignore[arg-type]
+            checked["rendered_non_thinking_file"]
+        ).decode("utf-8", errors="strict")
+        _, wheel_hash = secure_archive.file_size_and_sha256(
+            artifact_root.joinpath(
+                *PurePosixPath(checked["vllm_wheel_file"]).parts  # type: ignore[arg-type]
+            )
+        )
     packages = _package_lock()
     vllm_versions = {item.version for item in packages if item.name.casefold() == "vllm"}
     if len(vllm_versions) != 1:
@@ -739,9 +992,16 @@ def _collect_environment_observation(
     if git_dirty:
         if archived_diff_file is None:
             raise ValueError("dirty Git requires an explicitly archived diff file")
-        archived_diff_hash = _file_sha256(
-            _artifact_path(artifact_root, archived_diff_file)  # type: ignore[arg-type]
-        )
+        if secure_archive is None:
+            archived_diff_hash = _file_sha256(
+                _artifact_path(artifact_root, archived_diff_file)  # type: ignore[arg-type]
+            )
+        else:
+            _, archived_diff_hash = secure_archive.file_size_and_sha256(
+                artifact_root.joinpath(
+                    *PurePosixPath(archived_diff_file).parts  # type: ignore[arg-type]
+                )
+            )
     elif archived_diff_file is not None:
         raise ValueError("archived diff is forbidden for a clean Git checkout")
     gpu, driver, cuda = _single_gpu_observation()
@@ -768,7 +1028,7 @@ def _collect_environment_observation(
         rendered_non_thinking_hash=canonical_payload_hash(rendered),
         vllm_identity=VllmIdentity(
             version=next(iter(vllm_versions)),
-            wheel_hash=_file_sha256(wheel_path),
+            wheel_hash=wheel_hash,
         ),
         image_identity=ImageIdentity(
             repository=checked["image_repository"],  # type: ignore[arg-type]
@@ -806,99 +1066,99 @@ def _lock_command(args: argparse.Namespace) -> int:
 
 
 def _judge_preflight_command(args: argparse.Namespace) -> int:
-    for path in (
-        args.authorization,
-        args.supporting_material,
-        args.preliminary_inspection,
-        args.output,
-    ):
-        _require_within_archive(path, args.archive_root)
-    authorization = JudgeAuthorization.from_payload(
-        _read_json_record(
-            args.authorization,
-            affirmative_hash=args.authorization_hash,
+    with _SecureArchiveIO(args.archive_root) as archive:
+        authorization = JudgeAuthorization.from_payload(
+            _secure_read_json_record(
+                archive,
+                args.authorization,
+                affirmative_hash=args.authorization_hash,
+            )
         )
-    )
-    supporting_material = _read_json_payload(
-        args.supporting_material,
-        affirmative_hash=args.supporting_material_hash,
-    )
-    if supporting_material.get("judge_prompt_hash") != authorization.old_judge_prompt_hash:
-        raise ValueError("supporting material old judge prompt differs from authorization")
-    preliminary = PreliminaryEnvironmentInspection.from_payload(
-        _read_json_record(
-            args.preliminary_inspection,
-            affirmative_hash=args.preliminary_inspection_hash,
+        supporting_material = _secure_read_json_payload(
+            archive,
+            args.supporting_material,
+            affirmative_hash=args.supporting_material_hash,
         )
-    )
-    evidence = JudgePreflightEvidence.create(
-        authorization=authorization,
-        supporting_material_hash=args.supporting_material_hash,
-        old_judge_prompt_hash=authorization.old_judge_prompt_hash,
-        preliminary_inspection_hash=preliminary.record_hash,
-    )
-    _write_json_create_only(args.output, evidence.to_payload())
+        if supporting_material.get("judge_prompt_hash") != authorization.old_judge_prompt_hash:
+            raise ValueError("supporting material old judge prompt differs from authorization")
+        preliminary = PreliminaryEnvironmentInspection.from_payload(
+            _secure_read_json_record(
+                archive,
+                args.preliminary_inspection,
+                affirmative_hash=args.preliminary_inspection_hash,
+            )
+        )
+        evidence = JudgePreflightEvidence.create(
+            authorization=authorization,
+            supporting_material_hash=args.supporting_material_hash,
+            old_judge_prompt_hash=authorization.old_judge_prompt_hash,
+            preliminary_inspection_hash=preliminary.record_hash,
+        )
+        archive.write_json_create_only(args.output, evidence.to_payload())
     return 0
 
 
 def _judge_authorization_command(args: argparse.Namespace) -> int:
-    for path in (
-        args.authorization_proposal,
-        args.supporting_material,
-        args.output,
-    ):
-        _require_within_archive(path, args.archive_root)
-    proposal = _read_json_payload(
-        args.authorization_proposal,
-        affirmative_hash=args.authorization_proposal_hash,
-    )
-    supporting_material = _read_json_payload(
-        args.supporting_material,
-        affirmative_hash=args.supporting_material_hash,
-    )
-    authorization = JudgeAuthorization.create_from_approved_payload(
-        proposal,
-        supporting_material=supporting_material,
-    )
-    _write_json_create_only(args.output, authorization.to_payload())
+    with _SecureArchiveIO(args.archive_root) as archive:
+        proposal = _secure_read_json_payload(
+            archive,
+            args.authorization_proposal,
+            affirmative_hash=args.authorization_proposal_hash,
+        )
+        supporting_material = _secure_read_json_payload(
+            archive,
+            args.supporting_material,
+            affirmative_hash=args.supporting_material_hash,
+        )
+        authorization = JudgeAuthorization.create_from_approved_payload(
+            proposal,
+            supporting_material=supporting_material,
+        )
+        archive.write_json_create_only(args.output, authorization.to_payload())
     return 0
 
 
 def _judge_lock_command(args: argparse.Namespace) -> int:
-    for path in (args.authorization, args.preflight, args.inspection_inputs, args.output):
-        _require_within_archive(path, args.archive_root)
-    authorization = JudgeAuthorization.from_payload(
-        _read_json_record(
-            args.authorization,
-            affirmative_hash=args.authorization_hash,
+    with _SecureArchiveIO(args.archive_root) as archive:
+        authorization = JudgeAuthorization.from_payload(
+            _secure_read_json_record(
+                archive,
+                args.authorization,
+                affirmative_hash=args.authorization_hash,
+            )
         )
-    )
-    preflight = JudgePreflightEvidence.from_payload(
-        _read_json_record(args.preflight, affirmative_hash=args.preflight_hash)
-    )
-    if preflight.authorization_hash != authorization.record_hash:
-        raise ValueError("judge preflight differs from the approved authorization")
-    inspection_payload = _read_json_record(
-        args.inspection_inputs,
-        affirmative_hash=args.inspection_inputs_hash,
-    )
-    observation = collect_judge_environment_observation(
-        authorization,
-        _inspection_inputs(inspection_payload),
-        args.archive_root,
-    )
-    environment_lock = EnvironmentLock.create(
-        observation,
-        authorization_hash=authorization.record_hash,
-    )
-    if (
-        environment_lock.model_revision != authorization.model_revision
-        or environment_lock.tokenizer_revision != authorization.tokenizer_revision
-        or environment_lock.chat_template_hash != authorization.chat_template_hash
-        or environment_lock.vllm_identity.version != authorization.runtime_version
-    ):
-        raise ValueError("live judge environment differs from authorization")
-    _write_json_create_only(args.output, environment_lock.to_payload())
+        preflight = JudgePreflightEvidence.from_payload(
+            _secure_read_json_record(
+                archive,
+                args.preflight,
+                affirmative_hash=args.preflight_hash,
+            )
+        )
+        if preflight.authorization_hash != authorization.record_hash:
+            raise ValueError("judge preflight differs from the approved authorization")
+        inspection_payload = _secure_read_json_record(
+            archive,
+            args.inspection_inputs,
+            affirmative_hash=args.inspection_inputs_hash,
+        )
+        observation = collect_judge_environment_observation(
+            authorization,
+            _inspection_inputs(inspection_payload),
+            args.archive_root,
+            secure_archive=archive,
+        )
+        environment_lock = EnvironmentLock.create(
+            observation,
+            authorization_hash=authorization.record_hash,
+        )
+        if (
+            environment_lock.model_revision != authorization.model_revision
+            or environment_lock.tokenizer_revision != authorization.tokenizer_revision
+            or environment_lock.chat_template_hash != authorization.chat_template_hash
+            or environment_lock.vllm_identity.version != authorization.runtime_version
+        ):
+            raise ValueError("live judge environment differs from authorization")
+        archive.write_json_create_only(args.output, environment_lock.to_payload())
     return 0
 
 

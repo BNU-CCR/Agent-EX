@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from dataclasses import replace
 from pathlib import Path
 import subprocess
+import threading
 from types import SimpleNamespace
 
 import pytest
@@ -81,6 +83,7 @@ def test_parser_exposes_only_approved_subcommands() -> None:
     }
 
 
+@pytest.mark.skipif(os.name != "posix", reason="secure judge filesystem backend is POSIX-only")
 def test_judge_authorization_validates_supporting_material_before_writing(
     tmp_path: Path,
 ) -> None:
@@ -167,6 +170,7 @@ def judge_authorization_for_observation() -> tuple[JudgeAuthorization, object]:
     return JudgeAuthorization.from_payload(payload), observation
 
 
+@pytest.mark.skipif(os.name != "posix", reason="secure judge filesystem backend is POSIX-only")
 def test_judge_preflight_is_static_and_judge_lock_collects_live_http_200(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
@@ -237,8 +241,8 @@ def test_judge_preflight_is_static_and_judge_lock_collects_live_http_200(
     )
     collected: list[object] = []
 
-    def collect(*args: object) -> object:
-        collected.append(args)
+    def collect(*args: object, **kwargs: object) -> object:
+        collected.append((args, kwargs))
         return observation
 
     monkeypatch.setattr(cli, "collect_judge_environment_observation", collect)
@@ -270,6 +274,200 @@ def test_judge_preflight_is_static_and_judge_lock_collects_live_http_200(
     assert lock.authorization_hash == authorization.record_hash
     assert lock.health_check.status_code == 200
     assert len(collected) == 1
+
+
+def _judge_authorization_arguments(archive: Path) -> tuple[list[str], Path]:
+    from test_calibration_judge_contracts import authorization_payload
+
+    payload = authorization_payload(SimpleNamespace(record_hash="e" * 64))
+    proposal = {name: value for name, value in payload.items() if name != "record_hash"}
+    supporting = {
+        "judge_prompt_hash": proposal["old_judge_prompt_hash"],
+        "ordering_policy_hash": proposal["ordering_policy_hash"],
+        "classifier_contract_hash": proposal["classifier_contract_hash"],
+    }
+    proposal_path = archive / "authorization-proposal.json"
+    supporting_path = archive / "supporting-material.json"
+    output = archive / "authorization.json"
+    write_json(proposal_path, proposal)
+    write_json(supporting_path, supporting)
+    return (
+        [
+            "judge-authorization",
+            "--archive-root",
+            str(archive),
+            "--authorization-proposal",
+            str(proposal_path),
+            "--authorization-proposal-hash",
+            canonical_payload_hash(proposal),
+            "--supporting-material",
+            str(supporting_path),
+            "--supporting-material-hash",
+            canonical_payload_hash(supporting),
+            "--output",
+            str(output),
+        ],
+        output,
+    )
+
+
+@pytest.mark.skipif(os.name == "posix", reason="exercises the mandatory non-POSIX gate")
+def test_judge_commands_fail_closed_without_secure_filesystem_backend(tmp_path: Path) -> None:
+    arguments, output = _judge_authorization_arguments(tmp_path)
+
+    with pytest.raises(RuntimeError, match="secure judge filesystem backend"):
+        cli.main(arguments)
+
+    assert not output.exists()
+
+
+@pytest.mark.skipif(os.name == "posix", reason="exercises the mandatory non-POSIX gate")
+@pytest.mark.parametrize(
+    "handler",
+    [
+        "_judge_authorization_command",
+        "_judge_preflight_command",
+        "_judge_lock_command",
+    ],
+)
+def test_every_judge_handler_fails_closed_without_secure_filesystem_backend(
+    tmp_path: Path,
+    handler: str,
+) -> None:
+    with pytest.raises(RuntimeError, match="secure judge filesystem backend"):
+        getattr(cli, handler)(SimpleNamespace(archive_root=tmp_path))
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires POSIX symlink and dir-fd semantics")
+def test_judge_output_stays_in_held_archive_when_archive_path_is_replaced(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    archive = tmp_path / "archive"
+    archive.mkdir()
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    held_archive = tmp_path / "held-archive"
+    arguments, _ = _judge_authorization_arguments(archive)
+    entered = threading.Event()
+    resume = threading.Event()
+    original = JudgeAuthorization.create_from_approved_payload
+
+    def paused_create(*args: object, **kwargs: object) -> JudgeAuthorization:
+        entered.set()
+        assert resume.wait(timeout=5)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(JudgeAuthorization, "create_from_approved_payload", paused_create)
+    errors: list[BaseException] = []
+
+    def run() -> None:
+        try:
+            cli.main(arguments)
+        except BaseException as error:  # pragma: no cover - asserted below
+            errors.append(error)
+
+    worker = threading.Thread(target=run)
+    worker.start()
+    assert entered.wait(timeout=5)
+    archive.rename(held_archive)
+    archive.symlink_to(outside, target_is_directory=True)
+    resume.set()
+    worker.join(timeout=5)
+
+    assert not worker.is_alive()
+    assert errors == []
+    assert (held_archive / "authorization.json").is_file()
+    assert not (outside / "authorization.json").exists()
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires POSIX symlink and dir-fd semantics")
+def test_judge_input_uses_held_parent_when_input_parent_is_replaced(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    archive = tmp_path / "archive"
+    archive.mkdir()
+    nested = archive / "nested"
+    nested.mkdir()
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    arguments, output = _judge_authorization_arguments(archive)
+    proposal = archive / "authorization-proposal.json"
+    nested_proposal = nested / proposal.name
+    proposal.rename(nested_proposal)
+    arguments[arguments.index(str(proposal))] = str(nested_proposal)
+    malicious = outside / proposal.name
+    malicious.write_text("{}", encoding="utf-8")
+    held_nested = archive / "held-nested"
+    original_open = os.open
+    swapped = False
+
+    def racing_open(
+        path: object, flags: int, mode: int = 0o777, *, dir_fd: int | None = None
+    ) -> int:
+        nonlocal swapped
+        descriptor = original_open(path, flags, mode, dir_fd=dir_fd)
+        if path == "nested" and dir_fd is not None and not swapped:
+            swapped = True
+            nested.rename(held_nested)
+            nested.symlink_to(outside, target_is_directory=True)
+        return descriptor
+
+    monkeypatch.setattr(os, "open", racing_open)
+
+    assert cli.main(arguments) == 0
+    assert swapped
+    assert output.is_file()
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires POSIX symlink and dir-fd semantics")
+def test_judge_output_rejects_symlink_created_after_argument_validation(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    arguments, output = _judge_authorization_arguments(tmp_path)
+    victim = tmp_path / "victim.json"
+    victim.write_text("unchanged", encoding="utf-8")
+    original = JudgeAuthorization.create_from_approved_payload
+
+    def create_symlink(*args: object, **kwargs: object) -> JudgeAuthorization:
+        output.symlink_to(victim)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(JudgeAuthorization, "create_from_approved_payload", create_symlink)
+
+    with pytest.raises(FileExistsError):
+        cli.main(arguments)
+
+    assert victim.read_text(encoding="utf-8") == "unchanged"
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires POSIX dir-fd semantics")
+def test_judge_write_failure_never_unlinks_replacement_output(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    arguments, output = _judge_authorization_arguments(tmp_path)
+    displaced = tmp_path / "displaced-output.json"
+    original_write = os.write
+    failed = False
+
+    def failing_write(descriptor: int, data: bytes) -> int:
+        nonlocal failed
+        if not failed:
+            failed = True
+            output.rename(displaced)
+            output.write_text("replacement", encoding="utf-8")
+            raise OSError("injected write failure")
+        return original_write(descriptor, data)
+
+    monkeypatch.setattr(os, "write", failing_write)
+
+    with pytest.raises(OSError, match="injected write failure"):
+        cli.main(arguments)
+
+    assert output.read_text(encoding="utf-8") == "replacement"
 
 
 def test_preflight_command_has_no_network_or_install_side_effect(
