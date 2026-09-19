@@ -350,6 +350,51 @@ def test_rollback_never_deletes_replaced_output_directory(
     assert sibling_marker.read_text(encoding="utf-8") == "sibling-must-survive"
 
 
+def test_rollback_never_follows_real_replaced_output_directory(
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import tempfile
+
+    import agent_ex.calibration.judge_materialize as materializer
+
+    with tempfile.TemporaryDirectory(prefix="agent-ex-judge-rollback-") as temporary_root:
+        base = Path(temporary_root)
+        output_root = base / "runner"
+        moved_original = base / "moved-original"
+        target_sibling = base / "target-sibling"
+        target_sibling.mkdir()
+        target_marker = target_sibling / "must-survive.txt"
+        target_marker.write_text("target-sibling-must-survive", encoding="utf-8")
+        real_write = materializer._write_bytes_create_only
+        calls = 0
+
+        def replace_after_first_write(path: Path, content: bytes) -> None:
+            nonlocal calls
+            real_write(path, content)
+            calls += 1
+            if calls == 1:
+                output_root.rename(moved_original)
+                output_root.mkdir()
+                (output_root / "replacement-sentinel.txt").write_text(
+                    "replacement-must-survive", encoding="utf-8"
+                )
+            else:
+                raise OSError("synthetic write failure after real directory replacement")
+
+        monkeypatch.setattr(
+            "agent_ex.calibration.judge_materialize._write_bytes_create_only",
+            replace_after_first_write,
+        )
+        with pytest.raises(ValueError, match="identity"):
+            materialize_judge_view(**review_inputs, output_root=output_root)
+        assert (moved_original / "judge-pack.json").is_file()
+        assert (output_root / "replacement-sentinel.txt").read_text(
+            encoding="utf-8"
+        ) == "replacement-must-survive"
+        assert target_marker.read_text(encoding="utf-8") == "target-sibling-must-survive"
+
+
 def test_materializer_ignores_ctime_changes_when_identity_is_stable(
     tmp_path: Path,
     review_inputs: dict[str, object],
