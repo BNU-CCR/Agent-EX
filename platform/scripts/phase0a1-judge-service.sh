@@ -59,13 +59,36 @@ assert_gpu_compute_processes_absent() {
 assert_loopback_listener_absent() {
   local sockets
   sockets="$(ss -ltnH 'sport = :8000')" || {
-    echo "could not verify final loopback listener state" >&2
+    echo "could not verify final port 8000 listener state" >&2
     return 1
   }
-  [[ "$sockets" != *"127.0.0.1:8000"* ]] || {
-    echo "judge loopback listener remains after process exit" >&2
+  [[ -z "$sockets" ]] || {
+    echo "judge port 8000 remains occupied after process exit" >&2
     return 1
   }
+}
+
+verify_evidence_directory_binding() {
+  "$python_executable" - "$evidence_directory_fd" "$evidence_dir" \
+    "$evidence_directory_device" "$evidence_directory_inode" <<'PY'
+import os
+import stat
+import sys
+
+directory_fd = int(sys.argv[1])
+path = sys.argv[2]
+expected = (int(sys.argv[3]), int(sys.argv[4]))
+
+held = os.fstat(directory_fd)
+if not stat.S_ISDIR(held.st_mode) or (held.st_dev, held.st_ino) != expected:
+    raise SystemExit("held evidence directory identity changed")
+try:
+    current = os.stat(path, follow_symlinks=False)
+except OSError as error:
+    raise SystemExit(f"evidence directory pathname identity changed: {error}")
+if not stat.S_ISDIR(current.st_mode) or (current.st_dev, current.st_ino) != expected:
+    raise SystemExit("evidence directory pathname identity changed")
+PY
 }
 
 listener_owned_by_pid() {
@@ -271,6 +294,7 @@ stop_verified_process() {
 
 reject_proxy_environment
 [[ "$#" -ge 1 ]] || usage
+original_arguments=("$@")
 mode="$1"
 shift
 
@@ -315,7 +339,35 @@ case "$mode" in
   *) usage ;;
 esac
 
-lock_dir="$evidence_dir/.phase0a1-judge-service.lock.d"
+if [[ -z "${AGENT_EX_JUDGE_EVIDENCE_FD-}" ]]; then
+  exec "$python_executable" -c '
+import os
+import shutil
+import sys
+
+script, evidence_dir, *arguments = sys.argv[1:]
+flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+directory_fd = os.open(evidence_dir, flags)
+directory_stat = os.fstat(directory_fd)
+os.set_inheritable(directory_fd, True)
+environment = dict(os.environ)
+environment["AGENT_EX_JUDGE_EVIDENCE_FD"] = str(directory_fd)
+environment["AGENT_EX_JUDGE_EVIDENCE_DEVICE"] = str(directory_stat.st_dev)
+environment["AGENT_EX_JUDGE_EVIDENCE_INODE"] = str(directory_stat.st_ino)
+bash = shutil.which("bash")
+if bash is None:
+    raise SystemExit("bash executable is unavailable")
+os.execve(bash, ["bash", os.path.realpath(script), *arguments], environment)
+' "$0" "$evidence_dir" "${original_arguments[@]}"
+fi
+evidence_directory_fd="$AGENT_EX_JUDGE_EVIDENCE_FD"
+evidence_directory_device="$AGENT_EX_JUDGE_EVIDENCE_DEVICE"
+evidence_directory_inode="$AGENT_EX_JUDGE_EVIDENCE_INODE"
+[[ "$evidence_directory_fd" =~ ^[0-9]+$ ]] || { echo "invalid evidence directory descriptor" >&2; exit 1; }
+evidence_anchor="/proc/$$/fd/$evidence_directory_fd"
+verify_evidence_directory_binding
+
+lock_dir="$evidence_anchor/.phase0a1-judge-service.lock.d"
 mkdir -- "$lock_dir" 2>/dev/null || {
   echo "judge lifecycle lock is already held or unsafe" >&2
   exit 1
@@ -329,16 +381,16 @@ trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
 set -o noclobber
-identity="$evidence_dir/start-identity.json"
+identity="$evidence_anchor/start-identity.json"
 
 case "$mode" in
   start)
-    [[ ! -e "$identity" && ! -e "$evidence_dir/stop-evidence.json" && ! -e "$evidence_dir/abort-evidence.json" ]] || {
+    [[ ! -e "$identity" && ! -e "$evidence_anchor/stop-evidence.json" && ! -e "$evidence_anchor/abort-evidence.json" ]] || {
       echo "judge lifecycle evidence already exists" >&2; exit 1;
     }
     (
       exec setsid "$serve_script" "$vllm_executable" "$model_path"
-    ) > "$evidence_dir/service.log" 2>&1 &
+    ) > "$evidence_anchor/service.log" 2>&1 &
     pid="$!"
     process_group_id="$pid"
     committed=false
@@ -376,6 +428,7 @@ case "$mode" in
       sleep 1
     done
     listener_owned_by_pid "$pid" || { echo "judge service did not become healthy" >&2; exit 1; }
+    verify_evidence_directory_binding
     proc_values="$("$python_executable" - "$pid" <<'PY'
 import sys
 
@@ -403,6 +456,7 @@ PY
     printf '%s\n' "$identity"
     ;;
   status)
+    verify_evidence_directory_binding
     verify_active_identity "$identity"
     printf '%s\n' "$identity"
     ;;
@@ -411,9 +465,10 @@ PY
     [[ "$recorded_authorization_hash" == "$authorization_hash" ]] || { echo "authorization identity mismatch" >&2; exit 1; }
     [[ "$start_hash" == "$expected_start_hash" ]] || { echo "start identity hash mismatch" >&2; exit 1; }
     stop_verified_process
-    hash_gpu_compute_process_observation "$evidence_dir/gpu-abort-observation"
+    verify_evidence_directory_binding
+    hash_gpu_compute_process_observation "$evidence_anchor/gpu-abort-observation"
     lock_value="$environment_lock_hash"; [[ "$lock_value" == "-" ]] && lock_value="null"
-    write_record "$evidence_dir/abort-evidence.json" "paper1.calibration.judge-pre-manifest-abort-evidence.v1" \
+    write_record "$evidence_anchor/abort-evidence.json" "paper1.calibration.judge-pre-manifest-abort-evidence.v1" \
       "authorization_hash=$authorization_hash" "service_start_identity_hash=$start_hash" \
       "environment_lock_hash=$lock_value" "process_exit_observed=true" \
       "loopback_listener_absent=true" "gpu_idle_observation_hash=$gpu_observation_hash"
@@ -423,8 +478,9 @@ PY
     verify_active_identity "$identity"
     [[ "$start_hash" == "$expected_start_hash" ]] || { echo "start identity hash mismatch" >&2; exit 1; }
     stop_verified_process
-    hash_gpu_compute_process_observation "$evidence_dir/gpu-stop-observation"
-    write_record "$evidence_dir/stop-evidence.json" "paper1.calibration.judge-service-stop-evidence.v1" \
+    verify_evidence_directory_binding
+    hash_gpu_compute_process_observation "$evidence_anchor/gpu-stop-observation"
+    write_record "$evidence_anchor/stop-evidence.json" "paper1.calibration.judge-service-stop-evidence.v1" \
       "manifest_hash=$manifest_hash" "environment_lock_hash=$environment_lock_hash" \
       "service_start_identity_hash=$start_hash" "pid=$pid" "process_exit_observed=true" \
       "loopback_listener_absent=true" "gpu_compute_process_observation_hash=$gpu_observation_hash"

@@ -305,6 +305,32 @@ def test_judge_service_hardens_identity_filesystem_and_cleanup_contracts() -> No
         assert f"exit {status}" in script
 
 
+def test_judge_service_treats_any_port_8000_listener_as_occupied() -> None:
+    script = _script("phase0a1-judge-service.sh")
+
+    absence_check = script[
+        script.index("assert_loopback_listener_absent()") : script.index(
+            "listener_owned_by_pid()"
+        )
+    ]
+    assert '[[ -z "$sockets" ]]' in absence_check
+    assert '[[ "$sockets" != *"127.0.0.1:8000"* ]]' not in absence_check
+
+
+def test_judge_service_anchors_all_evidence_io_to_a_held_directory_capability() -> None:
+    script = _script("phase0a1-judge-service.sh")
+
+    assert 'os.O_DIRECTORY | os.O_NOFOLLOW' in script
+    assert "os.set_inheritable(directory_fd, True)" in script
+    assert 'evidence_anchor="/proc/$$/fd/$evidence_directory_fd"' in script
+    assert "verify_evidence_directory_binding" in script
+    assert '"$evidence_anchor/service.log"' in script
+    assert '"$evidence_anchor/start-identity.json"' in script
+    assert '"$evidence_anchor/gpu-stop-observation"' in script
+    assert '"$evidence_anchor/stop-evidence.json"' in script
+    assert '"$evidence_dir/service.log"' not in script
+
+
 @pytest.mark.skipif(os.name != "posix", reason="requires Linux procfs and sockets")
 def test_judge_service_rejects_tampered_identity_and_pid_reuse_fields(
     tmp_path: Path,
@@ -441,8 +467,66 @@ def test_judge_early_child_failure_performs_bounded_final_cleanup(tmp_path: Path
     _wait_process_absent(early_pid)
 
 
+@pytest.mark.skipif(os.name != "posix", reason="requires Linux sockets")
+def test_judge_failed_start_detects_wildcard_port_8000_listener(tmp_path: Path) -> None:
+    harness = _judge_harness(tmp_path, early_exit=True)
+    ready = tmp_path / "wildcard-ready"
+    listener = subprocess.Popen(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import pathlib,socket,sys,time; "
+                "s=socket.socket(); s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1); "
+                "s.bind(('0.0.0.0',8000)); s.listen(); "
+                "pathlib.Path(sys.argv[1]).write_text('ready'); time.sleep(30)"
+            ),
+            str(ready),
+        ]
+    )
+    try:
+        deadline = time.monotonic() + 5
+        while not ready.exists() and time.monotonic() < deadline:
+            time.sleep(0.05)
+        assert ready.exists()
+        evidence = tmp_path / "evidence"
+        evidence.mkdir()
+        result = harness.run("start", evidence=evidence)
+        assert result.returncode != 0
+        assert "judge port 8000 remains occupied" in result.stderr
+    finally:
+        listener.terminate()
+        listener.wait(timeout=5)
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires Linux directory descriptors")
+def test_judge_start_fails_closed_if_evidence_directory_is_replaced(
+    tmp_path: Path,
+) -> None:
+    harness = _judge_harness(tmp_path, replace_evidence=True)
+    evidence = tmp_path / "evidence"
+    evidence.mkdir()
+    result = harness.run("start", evidence=evidence)
+    assert result.returncode != 0
+    assert "evidence directory pathname identity changed" in result.stderr
+    replacement = tmp_path / "evidence"
+    original = tmp_path / "evidence-renamed"
+    assert replacement.is_dir()
+    assert list(replacement.iterdir()) == []
+    assert (original / "service.log").is_file()
+    assert not (original / ".phase0a1-judge-service.lock.d").exists()
+    assert not (replacement / ".phase0a1-judge-service.lock.d").exists()
+
+
 class _JudgeHarness:
-    def __init__(self, root: Path, *, stubborn: bool = False, early_exit: bool = False) -> None:
+    def __init__(
+        self,
+        root: Path,
+        *,
+        stubborn: bool = False,
+        early_exit: bool = False,
+        replace_evidence: bool = False,
+    ) -> None:
         self.script = (SCRIPTS / "phase0a1-judge-service.sh").resolve(strict=True)
         self.python = Path(sys.executable).resolve(strict=True)
         self.model = root / "model"
@@ -457,7 +541,14 @@ class _JudgeHarness:
             encoding="utf-8",
         )
         self.serve = root / "serve.sh"
-        if stubborn:
+        if replace_evidence:
+            body = (
+                "#!/usr/bin/env bash\n"
+                'mv "$2/../evidence" "$2/../evidence-renamed"\n'
+                'mkdir "$2/../evidence"\n'
+                'exec "$1" "$2/health_server.py"\n'
+            )
+        elif stubborn:
             body = (
                 "#!/usr/bin/env bash\n"
                 "(\n"
@@ -525,9 +616,18 @@ class _JudgeHarness:
 
 
 def _judge_harness(
-    tmp_path: Path, *, stubborn: bool = False, early_exit: bool = False
+    tmp_path: Path,
+    *,
+    stubborn: bool = False,
+    early_exit: bool = False,
+    replace_evidence: bool = False,
 ) -> _JudgeHarness:
-    return _JudgeHarness(tmp_path, stubborn=stubborn, early_exit=early_exit)
+    return _JudgeHarness(
+        tmp_path,
+        stubborn=stubborn,
+        early_exit=early_exit,
+        replace_evidence=replace_evidence,
+    )
 
 
 def _wait_process_absent(pid: int, *, process_group: bool = False) -> None:
