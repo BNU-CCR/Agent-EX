@@ -145,6 +145,12 @@ def rehash_rendered_request_v3(payload: dict[str, object]) -> None:
     )
 
 
+def rehash_record(payload: dict[str, object]) -> None:
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+
+
 def reorder_response_schema(payload: dict[str, object], mutation: str) -> None:
     schema = payload["response_schema"]
     if mutation == "top_level":
@@ -657,6 +663,43 @@ def test_manifest_binds_authorization_fresh_lock_preflight_and_start(
     assert JudgeExecutionManifest.from_payload(manifest.to_payload()) == manifest
 
 
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("total_timeout_seconds", 119.0),
+        ("total_timeout_seconds", True),
+        ("connect_timeout_seconds", True),
+        ("retryable_codes", ["timeout", "timeout"]),
+        ("retryable_codes", ["timeout", True]),
+        ("retry_backoff_seconds", [1.0]),
+        ("retry_backoff_seconds", [1.0, -1.0]),
+        ("retry_backoff_seconds", [1.0, True]),
+        ("max_attempts_per_item", True),
+        ("generation_settings", {"stop": ("END",)}),
+        ("expected_item_count", True),
+    ],
+)
+def test_standalone_manifest_rejects_rehashed_invalid_execution_contract(
+    valid_lifecycle: dict[str, object], field: str, value: object
+) -> None:
+    payload = JudgeExecutionManifest.create(**valid_lifecycle).to_payload()
+    payload[field] = value
+    rehash_record(payload)
+
+    with pytest.raises((TypeError, ValueError)):
+        JudgeExecutionManifest.from_payload(payload)
+
+
+def test_standalone_manifest_rejects_nonfinite_retry_backoff_transport(
+    valid_lifecycle: dict[str, object],
+) -> None:
+    payload = JudgeExecutionManifest.create(**valid_lifecycle).to_payload()
+    payload["retry_backoff_seconds"] = [1.0, float("inf")]
+
+    with pytest.raises(ValueError, match="finite"):
+        JudgeExecutionManifest.from_payload(payload)
+
+
 def test_manifest_rejects_environment_drift(
     valid_lifecycle: dict[str, object],
 ) -> None:
@@ -809,6 +852,33 @@ def test_judge_preflight_and_service_wrappers_preserve_two_stage_order(
             old_judge_prompt_hash=SHA_F,
             preliminary_inspection_hash=SHA_E,
         )
+
+
+@pytest.mark.parametrize("field", ["environment_lock_hash", "manifest_hash"])
+def test_start_service_evidence_rejects_later_lifecycle_hashes(field: str) -> None:
+    values = {
+        "phase": "start",
+        "authorization_hash": SHA_A,
+        "evidence_hash": SHA_B,
+        "service_start_identity_hash": SHA_B,
+        "environment_lock_hash": None,
+        "manifest_hash": None,
+    }
+    values[field] = SHA_C
+
+    with pytest.raises(ValueError, match="start.*later lifecycle"):
+        JudgeServiceEvidence.create(**values)
+
+    valid = JudgeServiceEvidence.create(
+        phase="start",
+        authorization_hash=SHA_A,
+        evidence_hash=SHA_B,
+        service_start_identity_hash=SHA_B,
+    ).to_payload()
+    valid[field] = SHA_C
+    rehash_record(valid)
+    with pytest.raises(ValueError, match="start.*later lifecycle"):
+        JudgeServiceEvidence.from_payload(valid)
 
 
 def test_judge_run_completion_round_trip_requires_post_manifest_stop() -> None:

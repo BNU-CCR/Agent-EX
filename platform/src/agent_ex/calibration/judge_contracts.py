@@ -943,23 +943,39 @@ class JudgeExecutionManifest:
             raise ValueError("judge manifest non_thinking must be true")
         if not isinstance(self.generation_settings, Mapping) or not self.generation_settings:
             raise ValueError("judge manifest generation settings must be explicit")
+        _require_json_transport(_json_ready(self.generation_settings), "generation_settings")
         for name in (
             "connect_timeout_seconds",
             "read_timeout_seconds",
             "total_timeout_seconds",
         ):
             _require_positive_number(name, getattr(self, name))
+        if self.total_timeout_seconds < max(
+            self.connect_timeout_seconds, self.read_timeout_seconds
+        ):
+            raise ValueError("total timeout must cover connect and read timeout budgets")
         _require_int("max_attempts_per_item", self.max_attempts_per_item, minimum=1)
-        if type(self.retryable_codes) is not tuple or not self.retryable_codes:
-            raise ValueError("judge manifest retryable_codes must be an explicit tuple")
+        if (
+            type(self.retryable_codes) is not tuple
+            or not self.retryable_codes
+            or len(set(self.retryable_codes)) != len(self.retryable_codes)
+        ):
+            raise ValueError("judge manifest retryable_codes must be an explicit unique tuple")
+        for code in self.retryable_codes:
+            _require_id("retryable code", code)
         if type(self.retry_backoff_seconds) is not tuple:
             raise TypeError("judge manifest retry_backoff_seconds must be a tuple")
         if len(self.retry_backoff_seconds) != self.max_attempts_per_item - 1:
             raise ValueError("judge manifest retry backoff does not cover its attempt budget")
+        for value in self.retry_backoff_seconds:
+            _require_nonnegative_number("retry backoff", value)
         if self.one_item_per_request is not True or self.strict_approved_order is not True:
             raise ValueError("judge manifest requires one item and strict approved order")
         _require_evidence_uri("archive_uri", self.archive_uri)
-        if _GIT_PATTERN.fullmatch(self.source_commit) is None:
+        if (
+            type(self.source_commit) is not str
+            or _GIT_PATTERN.fullmatch(self.source_commit) is None
+        ):
             raise ValueError("source_commit must be a lowercase 40-character Git commit")
         if self.expected_item_count != 797 or type(self.expected_item_count) is not int:
             raise ValueError("judge manifest requires exactly 797 items")
@@ -1192,8 +1208,14 @@ class JudgeServiceEvidence:
             )
         ):
             raise ValueError("preflight service evidence cannot bind later lifecycle records")
-        if self.phase == "start" and self.service_start_identity_hash != self.evidence_hash:
-            raise ValueError("start service evidence must bind its start identity")
+        if self.phase == "start" and (
+            self.service_start_identity_hash != self.evidence_hash
+            or self.environment_lock_hash is not None
+            or self.manifest_hash is not None
+        ):
+            raise ValueError(
+                "start service evidence must bind its start identity without later lifecycle hashes"
+            )
         if self.phase == "live-observation" and (
             self.service_start_identity_hash is None
             or self.environment_lock_hash != self.evidence_hash
