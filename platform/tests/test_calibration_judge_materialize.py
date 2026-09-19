@@ -4,7 +4,9 @@ from copy import deepcopy
 import hashlib
 import json
 import os
+import errno
 from pathlib import Path
+import stat
 
 import pytest
 
@@ -24,8 +26,8 @@ from test_calibration_review import prepared
 def _require_posix_secure_backend(request: pytest.FixtureRequest) -> None:
     allowed = (
         "test_windows_materialization_fails_closed",
-        "test_posix_staged_file_open",
         "test_exact797_validator",
+        "test_fsync_handle_propagates_oserror",
     )
     if os.name == "nt" and not request.node.name.startswith(allowed):
         pytest.skip("materialization requires the POSIX handle-relative backend")
@@ -667,6 +669,95 @@ def test_failed_write_keeps_partial_staging_without_cleanup(
         assert (partial / "judge-pack.json").exists()
 
 
+@pytest.mark.skipif(os.name != "posix", reason="requires real POSIX directory handles")
+@pytest.mark.parametrize("failure", [errno.EIO, errno.EBADF])
+def test_fsync_failure_is_fail_closed_and_retains_quarantine(
+    tmp_path: Path,
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+    failure: int,
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    def fail_fsync(descriptor: int) -> None:
+        raise OSError(failure, "synthetic fsync failure")
+
+    monkeypatch.setattr(materializer.os, "fsync", fail_fsync)
+    with pytest.raises(OSError, match="synthetic fsync failure") as caught:
+        materialize_judge_view(**review_inputs, output_root=tmp_path / "runner")
+    assert not (tmp_path / "runner").exists()
+    assert any(tmp_path.glob(".runner.staging-*"))
+    assert "staging quarantine retained at" in " ".join(caught.value.__notes__)
+
+
+def test_fsync_handle_propagates_oserror(monkeypatch: pytest.MonkeyPatch) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    def fail_fsync(descriptor: int) -> None:
+        raise OSError(errno.EIO, "synthetic fsync failure")
+
+    monkeypatch.setattr(materializer.os, "fsync", fail_fsync)
+    with pytest.raises(OSError, match="synthetic fsync failure"):
+        materializer._fsync_handle(123)
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires real POSIX directory handles")
+def test_extra_file_injected_after_first_inventory_is_rejected(
+    tmp_path: Path,
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    real_listdir = materializer.os.listdir
+    inventories = 0
+
+    def inject_after_first_inventory(path):
+        nonlocal inventories
+        names = real_listdir(path)
+        inventories += 1
+        if inventories == 1:
+            descriptor = materializer.os.open(
+                "injected-extra", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600, dir_fd=path
+            )
+            try:
+                materializer.os.write(descriptor, b"unexpected")
+            finally:
+                materializer.os.close(descriptor)
+        return names
+
+    monkeypatch.setattr(materializer.os, "listdir", inject_after_first_inventory)
+    with pytest.raises(ValueError, match="inventory"):
+        materialize_judge_view(**review_inputs, output_root=tmp_path / "runner")
+    assert not (tmp_path / "runner").exists()
+    partial = next(tmp_path.glob(".runner.staging-*"))
+    assert (partial / "injected-extra").read_bytes() == b"unexpected"
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires real POSIX directory handles")
+def test_posix_staging_symlink_entry_is_rejected(
+    tmp_path: Path,
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    staging = tmp_path / "staging"
+    staging.mkdir()
+    outside = tmp_path / "outside.txt"
+    outside.write_bytes(b"outside")
+    link = staging / "payload"
+    link.symlink_to(outside)
+    staging_fd = os.open(staging, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    identity = materializer._stable_identity(os.fstat(staging_fd))
+    assert identity is not None and stat.S_ISDIR(os.fstat(staging_fd).st_mode)
+    try:
+        with pytest.raises(OSError):
+            materializer._write_bytes_create_only(link, b"overwrite", staging_fd, identity)
+    finally:
+        os.close(staging_fd)
+    assert outside.read_bytes() == b"outside"
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires real POSIX directory handles")
 def test_posix_staged_file_open_is_handle_relative_and_nofollow(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -676,33 +767,29 @@ def test_posix_staged_file_open_is_handle_relative_and_nofollow(
     staging.mkdir()
     target = staging / "payload"
     real_open = materializer.os.open
-    staging_probe = staging / ".fd-probe"
-    staging_fd = real_open(staging_probe, os.O_RDWR | os.O_CREAT | os.O_EXCL, 0o600)
-    staging_identity = materializer._stable_identity(os.fstat(staging_fd))
+    staging_fd = real_open(staging, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    staging_stat = os.fstat(staging_fd)
+    assert stat.S_ISDIR(staging_stat.st_mode)
+    staging_identity = materializer._stable_identity(staging_stat)
     assert staging_identity is not None
     observed: list[tuple[int, int | None]] = []
-    nofollow_marker = getattr(os, "O_NOFOLLOW", 1 << 30)
-    fd_paths = {staging_fd: staging}
-    monkeypatch.setattr(materializer.os, "O_NOFOLLOW", nofollow_marker, raising=False)
 
     def record_open(path, flags, *args, **kwargs):
         if Path(path).name == "payload" and flags & os.O_CREAT:
             observed.append((flags, kwargs.get("dir_fd")))
-        dir_fd = kwargs.pop("dir_fd", None)
-        actual = fd_paths[dir_fd] / path if dir_fd is not None else path
-        return real_open(actual, flags & ~nofollow_marker, *args, **kwargs)
+        return real_open(path, flags, *args, **kwargs)
 
     monkeypatch.setattr(materializer.os, "open", record_open)
     try:
         materializer._write_bytes_create_only(target, b"payload", staging_fd, staging_identity)
     finally:
         os.close(staging_fd)
-        staging_probe.unlink()
 
     assert observed
     flags, dir_fd = observed[0]
-    assert dir_fd is not None
-    assert flags & nofollow_marker
+    assert dir_fd == staging_fd
+    assert flags & os.O_NOFOLLOW
+    assert flags & os.O_EXCL
 
 
 def test_materializer_ignores_ctime_changes_when_identity_is_stable(

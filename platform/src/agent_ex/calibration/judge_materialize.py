@@ -382,10 +382,7 @@ def _existing_ancestors_are_safe(path: Path) -> None:
 
 
 def _fsync_handle(descriptor: int) -> None:
-    try:
-        os.fsync(descriptor)
-    except OSError:
-        pass
+    os.fsync(descriptor)
 
 
 def _write_bytes_create_only(
@@ -451,8 +448,8 @@ def _verify_staged_files(
 ) -> None:
     if _stable_identity(os.fstat(staging_fd)) != staging_identity:
         raise ValueError("staging directory identity changed")
-    if {entry for entry in os.listdir(staging_fd)} != {path.name for path, _, _ in files}:
-        raise ValueError("staging inventory is not exact")
+    expected_names = {path.name for path, _, _ in files}
+    _require_exact_inventory(staging_fd, expected_names)
     for path, expected, identity in files:
         descriptor = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=staging_fd)
         try:
@@ -474,6 +471,12 @@ def _verify_staged_files(
             or hashlib.sha256(actual).digest() != hashlib.sha256(expected).digest()
         ):
             raise ValueError("staged file bytes or hash changed")
+    _require_exact_inventory(staging_fd, expected_names)
+
+
+def _require_exact_inventory(staging_fd: int, expected_names: set[str]) -> None:
+    if set(os.listdir(staging_fd)) != expected_names:
+        raise ValueError("staging inventory is not exact")
 
 
 def _rename_directory_no_replace(
@@ -620,6 +623,7 @@ def materialize_judge_view(
             pass
         else:
             raise FileExistsError("output root appeared before publish")
+        _require_exact_inventory(staging_fd, {path.name for path, _, _ in staged})
         assert staging_name is not None
         _rename_directory_no_replace(parent_fd, staging_name, output_root.name, parent_identity)
         published = True
