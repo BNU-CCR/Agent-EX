@@ -295,10 +295,12 @@ class _FakeJudgeServer:
                 if owner.outcome == "timeout":
                     time.sleep(0.7)
                     return
-                if owner.outcome == "midstream_error":
+                if owner.outcome in {"midstream_error", "duplicate_request_id_midstream"}:
                     response = b'{"partial"'
                     self.send_response(200)
                     self.send_header("x-request-id", "provider-request-001")
+                    if owner.outcome == "duplicate_request_id_midstream":
+                        self.send_header("X-Request-Id", "provider-request-002")
                     self.send_header("content-length", "100")
                     self.end_headers()
                     self.wfile.write(response)
@@ -340,7 +342,7 @@ class _FakeJudgeServer:
                 elif owner.outcome == "oom":
                     status = 500
                     response = b'{"error":"CUDA out of memory"}'
-                elif owner.outcome == "oversize":
+                elif owner.outcome in {"oversize", "duplicate_request_id_oversize"}:
                     response = b"x" * 5000
                 else:
                     if owner.outcome == "missing_request_id":
@@ -372,7 +374,7 @@ class _FakeJudgeServer:
                 self.send_response(status)
                 for name, value in headers.items():
                     self.send_header(name, value)
-                if owner.outcome == "duplicate_request_id":
+                if owner.outcome in {"duplicate_request_id", "duplicate_request_id_oversize"}:
                     self.send_header("x-request-id", "provider-request-001")
                     self.send_header("X-Request-Id", "provider-request-002")
                 self.send_header("content-length", str(len(response)))
@@ -448,6 +450,31 @@ def test_response_contract_rejects_rehashed_identity_or_failure_enum_tamper(
         {name: value for name, value in payload.items() if name != "record_hash"}
     )
     with pytest.raises(ValueError, match=expected_match):
+        JudgeResponseEvidence.from_payload(payload)
+
+
+@pytest.mark.parametrize("mutation", ["changed", "missing_with_present_header"])
+def test_response_contract_binds_provider_request_id_to_exact_header_items(
+    mutation: str,
+    valid_request: JudgeRequestEvidence,
+    valid_labels: dict[str, str],
+) -> None:
+    outcome = "success" if mutation == "changed" else "missing_request_id"
+    with _FakeJudgeServer(outcome, valid_labels) as fake:
+        payload = (
+            JudgeVllmAdapter(fake.endpoint, model_id="qwen", limits=LIMITS)
+            .generate(valid_request)
+            .to_payload()
+        )
+    if mutation == "changed":
+        payload["provider_request_id"] = "forged-provider-request"
+    else:
+        payload["response_header_items"].append(["x-request-id", "provider-request-001"])
+        payload["response_headers"]["x-request-id"] = "provider-request-001"
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="provider_request_id|request identity|header"):
         JudgeResponseEvidence.from_payload(payload)
 
 
@@ -588,6 +615,29 @@ def test_midstream_failure_preserves_partial_bytes_without_claiming_completeness
     assert response.raw_bytes == b'{"partial"'
     assert response.raw_bytes_complete is False
     assert response.raw_bytes_total_lower_bound == len(response.raw_bytes)
+
+
+@pytest.mark.parametrize(
+    ("outcome", "expected_code"),
+    (
+        ("duplicate_request_id_midstream", "provider_incomplete_body"),
+        ("duplicate_request_id_oversize", "response_size_exceeded"),
+    ),
+)
+def test_duplicate_critical_headers_remain_orthogonal_to_body_failure(
+    outcome: str,
+    expected_code: str,
+    valid_request: JudgeRequestEvidence,
+    valid_labels: dict[str, str],
+) -> None:
+    with _FakeJudgeServer(outcome, valid_labels) as fake:
+        response = JudgeVllmAdapter(fake.endpoint, model_id="qwen", limits=LIMITS).generate(
+            valid_request
+        )
+    assert response.failure_code == expected_code
+    assert response.duplicate_critical_header_names == ("x-request-id",)
+    assert response.raw_bytes_complete is False
+    assert JudgeResponseEvidence.from_payload(response.to_payload()) == response
 
 
 def test_response_contract_rejects_rehashed_duplicate_header_claim_without_multiplicity(

@@ -1653,6 +1653,11 @@ class JudgeResponseEvidence:
             raise ValueError("duplicate critical header names are invalid")
         if self.duplicate_critical_header_names != derived_duplicates:
             raise ValueError("duplicate critical headers differ from exact header item evidence")
+        if (
+            "x-request-id" not in self.duplicate_critical_header_names
+            and self.provider_request_id != derived_headers.get("x-request-id")
+        ):
+            raise ValueError("provider_request_id differs from exact response header evidence")
         _require_sha256("raw_bytes_sha256", self.raw_bytes_sha256)
         if self.raw_bytes_sha256 != _sha256_bytes(self.raw_bytes):
             raise ValueError("raw response byte hash differs from exact bytes")
@@ -1760,7 +1765,11 @@ class JudgeResponseEvidence:
         if self.failure_code == "provider_duplicate_critical_header":
             if not self.duplicate_critical_header_names or not self.raw_bytes_complete:
                 raise ValueError("duplicate critical header failure requires duplicate evidence")
-        elif self.duplicate_critical_header_names:
+        elif self.duplicate_critical_header_names and self.failure_code not in {
+            "timeout",
+            "provider_incomplete_body",
+            "response_size_exceeded",
+        }:
             raise ValueError("duplicate critical headers require their typed failure code")
         provider_payload = (
             _decode_provider_object(self.raw_bytes) if self.raw_bytes_complete else None

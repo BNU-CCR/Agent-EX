@@ -235,10 +235,10 @@ class JudgeVllmAdapter:
                 ceiling=request.response_byte_ceiling,
             )
             raw_bytes_complete = not exceeded
-            if duplicate_critical_headers:
-                failure_code = "provider_duplicate_critical_header"
-            elif exceeded:
+            if exceeded:
                 failure_code = "response_size_exceeded"
+            elif duplicate_critical_headers:
+                failure_code = "provider_duplicate_critical_header"
             elif status == 429:
                 failure_code = "http_429"
                 retry_after = self._retry_after(headers)
