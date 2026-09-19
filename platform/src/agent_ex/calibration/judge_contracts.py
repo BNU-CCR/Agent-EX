@@ -1700,6 +1700,7 @@ class JudgeParseEvidence:
     raw_bytes_base64: str
     raw_bytes_sha256: str
     policy_hash: str
+    policy_payload: Mapping[str, object]
     dimension_labels: Mapping[str, tuple[str, ...]]
     dimension_labels_hash: str
     policy_label_contract_hash: str
@@ -1715,6 +1716,15 @@ class JudgeParseEvidence:
         if self.raw_bytes_sha256 != _sha256_bytes(self.raw_bytes):
             raise ValueError("parse raw byte hash differs from exact bytes")
         _require_sha256("policy_hash", self.policy_hash)
+        if not isinstance(self.policy_payload, Mapping):
+            raise TypeError("parse policy_payload must be a mapping")
+        policy_payload = _json_ready(self.policy_payload)
+        if type(policy_payload) is not dict:
+            raise TypeError("parse policy_payload must use a JSON object")
+        verified_policy = SemanticReviewPolicy.from_payload(policy_payload)
+        if verified_policy.record_hash != self.policy_hash:
+            raise ValueError("parse policy payload differs from the bound policy_hash")
+        object.__setattr__(self, "policy_payload", _freeze(policy_payload))
         if (
             not isinstance(self.dimension_labels, Mapping)
             or tuple(self.dimension_labels) != DIMENSIONS
@@ -1730,6 +1740,11 @@ class JudgeParseEvidence:
             ):
                 raise ValueError(f"parse policy legal labels are invalid for {dimension}")
             normalized_enums[dimension] = tuple(legal_labels)
+        expected_enums = {
+            name: tuple(verified_policy.dimension_labels[name]) for name in DIMENSIONS
+        }
+        if normalized_enums != expected_enums:
+            raise ValueError("parse label enums differ from the verified policy payload")
         object.__setattr__(self, "dimension_labels", _freeze(normalized_enums))
         _require_sha256("dimension_labels_hash", self.dimension_labels_hash)
         _require_payload_hash(
@@ -1811,6 +1826,8 @@ class JudgeParseEvidence:
         _exact_payload(payload, expected, cls._SCHEMA)
         if type(payload["labels"]) is not dict:
             raise TypeError("judge parse labels must use a JSON object")
+        if type(payload["policy_payload"]) is not dict:
+            raise TypeError("judge parse policy_payload must use a JSON object")
         if type(payload["dimension_labels"]) is not dict or any(
             type(labels) is not list for labels in payload["dimension_labels"].values()
         ):
@@ -1826,22 +1843,24 @@ class JudgeParseEvidence:
         cls,
         *,
         raw_bytes: bytes,
-        policy_hash: str,
-        dimension_labels: Mapping[str, tuple[str, ...]],
+        policy: SemanticReviewPolicy,
         labels: Mapping[str, str],
         failure_code: str | None,
     ) -> JudgeParseEvidence:
-        frozen_enums = {name: tuple(dimension_labels[name]) for name in DIMENSIONS}
+        if not isinstance(policy, SemanticReviewPolicy):
+            raise TypeError("judge parse policy must be SemanticReviewPolicy")
+        frozen_enums = {name: tuple(policy.dimension_labels[name]) for name in DIMENSIONS}
         dimension_labels_hash = canonical_payload_hash(frozen_enums)
         values: dict[str, object] = {
             "raw_bytes_base64": base64.b64encode(raw_bytes).decode("ascii"),
             "raw_bytes_sha256": _sha256_bytes(raw_bytes),
-            "policy_hash": policy_hash,
+            "policy_hash": policy.record_hash,
+            "policy_payload": policy.to_payload(),
             "dimension_labels": frozen_enums,
             "dimension_labels_hash": dimension_labels_hash,
             "policy_label_contract_hash": canonical_payload_hash(
                 {
-                    "policy_hash": policy_hash,
+                    "policy_hash": policy.record_hash,
                     "dimension_labels_hash": dimension_labels_hash,
                 }
             ),

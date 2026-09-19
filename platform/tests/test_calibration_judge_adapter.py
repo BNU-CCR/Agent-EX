@@ -238,6 +238,32 @@ def test_parse_contract_rejects_rehashed_failure_semantics_drift(
         type(parse_judge_response(b"not-json", policy)).from_payload(payload)
 
 
+def test_parse_contract_rejects_rehashed_self_authorized_enum_attack(
+    policy: SemanticReviewPolicy,
+    valid_labels: dict[str, str],
+) -> None:
+    payload = parse_judge_response(canonical_json_bytes(valid_labels), policy).to_payload()
+    payload["dimension_labels"]["refusal"].append("outside-policy")
+    payload["dimension_labels_hash"] = canonical_payload_hash(payload["dimension_labels"])
+    payload["policy_label_contract_hash"] = canonical_payload_hash(
+        {
+            "policy_hash": payload["policy_hash"],
+            "dimension_labels_hash": payload["dimension_labels_hash"],
+        }
+    )
+    forged = dict(valid_labels)
+    forged["refusal"] = "outside-policy"
+    raw = canonical_json_bytes(forged)
+    payload["labels"] = forged
+    payload["raw_bytes_base64"] = base64.b64encode(raw).decode("ascii")
+    payload["raw_bytes_sha256"] = hashlib.sha256(raw).hexdigest()
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="policy|enum|labels"):
+        type(parse_judge_response(canonical_json_bytes(valid_labels), policy)).from_payload(payload)
+
+
 class _FakeJudgeServer:
     def __init__(self, outcome: str, labels: dict[str, str]) -> None:
         self.outcome = outcome
