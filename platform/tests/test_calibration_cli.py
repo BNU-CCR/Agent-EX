@@ -14,6 +14,7 @@ import pytest
 from agent_ex.calibration.cloud import CloudPreflight
 from agent_ex.calibration import cli
 from agent_ex.calibration.cloud_run import CloudRunManifest
+from agent_ex.calibration.judge_contracts import JudgeAuthorization, JudgePreflightEvidence
 from agent_ex.calibration.environment import (
     EnvironmentLock,
     PackageEntry,
@@ -58,6 +59,7 @@ def test_parser_exposes_only_approved_subcommands() -> None:
 
     assert set(action.choices) == {
         "preflight",
+        "judge-authorization",
         "judge-preflight",
         "judge-lock",
         "smoke-manifest",
@@ -77,6 +79,197 @@ def test_parser_exposes_only_approved_subcommands() -> None:
         "seal",
         "verify",
     }
+
+
+def test_judge_authorization_validates_supporting_material_before_writing(
+    tmp_path: Path,
+) -> None:
+    from test_calibration_judge_contracts import authorization_payload
+
+    payload = authorization_payload(SimpleNamespace(record_hash="e" * 64))
+    proposal = {name: value for name, value in payload.items() if name != "record_hash"}
+    supporting = {
+        "judge_prompt_hash": proposal["old_judge_prompt_hash"],
+        "ordering_policy_hash": proposal["ordering_policy_hash"],
+        "classifier_contract_hash": proposal["classifier_contract_hash"],
+    }
+    proposal_path = tmp_path / "authorization-proposal.json"
+    supporting_path = tmp_path / "supporting-material.json"
+    output = tmp_path / "authorization.json"
+    write_json(proposal_path, proposal)
+    write_json(supporting_path, supporting)
+
+    assert (
+        cli.main(
+            [
+                "judge-authorization",
+                "--archive-root",
+                str(tmp_path),
+                "--authorization-proposal",
+                str(proposal_path),
+                "--authorization-proposal-hash",
+                canonical_payload_hash(proposal),
+                "--supporting-material",
+                str(supporting_path),
+                "--supporting-material-hash",
+                canonical_payload_hash(supporting),
+                "--output",
+                str(output),
+            ]
+        )
+        == 0
+    )
+    assert JudgeAuthorization.from_payload(json.loads(output.read_text(encoding="utf-8")))
+
+    output.unlink()
+    supporting["judge_prompt_hash"] = "f" * 64
+    write_json(supporting_path, supporting)
+    with pytest.raises(ValueError, match="supporting material.*judge prompt"):
+        cli.main(
+            [
+                "judge-authorization",
+                "--archive-root",
+                str(tmp_path),
+                "--authorization-proposal",
+                str(proposal_path),
+                "--authorization-proposal-hash",
+                canonical_payload_hash(proposal),
+                "--supporting-material",
+                str(supporting_path),
+                "--supporting-material-hash",
+                canonical_payload_hash(supporting),
+                "--output",
+                str(output),
+            ]
+        )
+    assert not output.exists()
+
+
+def judge_authorization_for_observation() -> tuple[JudgeAuthorization, object]:
+    from test_calibration_judge_contracts import authorization_payload
+
+    observation = valid_observation()
+    lock = EnvironmentLock.create(observation, authorization_hash="a" * 64)
+    payload = authorization_payload(SimpleNamespace(record_hash="e" * 64))
+    payload.update(
+        model_id=observation.model_repository,
+        model_revision=observation.model_revision,
+        model_artifacts_hash=lock.model_artifacts_hash,
+        tokenizer_id=observation.tokenizer_repository,
+        tokenizer_revision=observation.tokenizer_revision,
+        tokenizer_artifacts_hash=lock.tokenizer_artifacts_hash,
+        chat_template_hash=observation.chat_template_hash,
+        runtime_version=observation.vllm_identity.version,
+    )
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    return JudgeAuthorization.from_payload(payload), observation
+
+
+def test_judge_preflight_is_static_and_judge_lock_collects_live_http_200(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    authorization, observation = judge_authorization_for_observation()
+    assert hasattr(observation, "package_lock")
+    preliminary = PreliminaryEnvironmentInspection.create(
+        python_version=observation.python_version,
+        package_lock=observation.package_lock,
+        wheel_entries=(
+            WheelEntry(
+                name="vllm",
+                version="0.23.0",
+                sha256=observation.vllm_identity.wheel_hash,
+                source="official-cuda-12.9",
+            ),
+        ),
+        torch_source="fresh-vllm-environment",
+    )
+    supporting = {
+        "judge_prompt_hash": authorization.old_judge_prompt_hash,
+        "ordering_policy_hash": authorization.ordering_policy_hash,
+        "classifier_contract_hash": authorization.classifier_contract_hash,
+    }
+    inspection = inspection_inputs_payload(tmp_path)
+    authorization_path = tmp_path / "authorization.json"
+    supporting_path = tmp_path / "supporting.json"
+    preliminary_path = tmp_path / "preliminary.json"
+    inspection_path = tmp_path / "inspection.json"
+    preflight_path = tmp_path / "judge-preflight.json"
+    lock_path = tmp_path / "judge-lock.json"
+    write_json(authorization_path, authorization.to_payload())
+    write_json(supporting_path, supporting)
+    write_json(preliminary_path, preliminary.to_payload())
+    write_json(inspection_path, inspection)
+    monkeypatch.setattr(
+        cli,
+        "_health_check",
+        lambda endpoint: pytest.fail("static judge preflight performed a health check"),
+    )
+
+    assert (
+        cli.main(
+            [
+                "judge-preflight",
+                "--archive-root",
+                str(tmp_path),
+                "--authorization",
+                str(authorization_path),
+                "--authorization-hash",
+                authorization.record_hash,
+                "--supporting-material",
+                str(supporting_path),
+                "--supporting-material-hash",
+                canonical_payload_hash(supporting),
+                "--preliminary-inspection",
+                str(preliminary_path),
+                "--preliminary-inspection-hash",
+                preliminary.record_hash,
+                "--output",
+                str(preflight_path),
+            ]
+        )
+        == 0
+    )
+    preflight = JudgePreflightEvidence.from_payload(
+        json.loads(preflight_path.read_text(encoding="utf-8"))
+    )
+    collected: list[object] = []
+
+    def collect(*args: object) -> object:
+        collected.append(args)
+        return observation
+
+    monkeypatch.setattr(cli, "collect_judge_environment_observation", collect)
+    assert (
+        cli.main(
+            [
+                "judge-lock",
+                "--archive-root",
+                str(tmp_path),
+                "--authorization",
+                str(authorization_path),
+                "--authorization-hash",
+                authorization.record_hash,
+                "--preflight",
+                str(preflight_path),
+                "--preflight-hash",
+                preflight.record_hash,
+                "--inspection-inputs",
+                str(inspection_path),
+                "--inspection-inputs-hash",
+                inspection["record_hash"],
+                "--output",
+                str(lock_path),
+            ]
+        )
+        == 0
+    )
+    lock = EnvironmentLock.from_payload(json.loads(lock_path.read_text(encoding="utf-8")))
+    assert lock.authorization_hash == authorization.record_hash
+    assert lock.health_check.status_code == 200
+    assert len(collected) == 1
 
 
 def test_preflight_command_has_no_network_or_install_side_effect(

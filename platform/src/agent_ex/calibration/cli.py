@@ -82,6 +82,7 @@ _COMMANDS = (
     "review-import",
     "seal",
     "verify",
+    "judge-authorization",
     "judge-preflight",
     "judge-lock",
 )
@@ -178,6 +179,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     preflight = commands.add_parser("preflight")
     preflight.add_argument("--output", required=True, type=_output_path)
+
+    judge_authorization = commands.add_parser("judge-authorization")
+    _add_archive_root(judge_authorization)
+    judge_authorization.add_argument(
+        "--authorization-proposal", required=True, type=_existing_regular_file
+    )
+    judge_authorization.add_argument("--authorization-proposal-hash", required=True, type=_sha256)
+    judge_authorization.add_argument(
+        "--supporting-material", required=True, type=_existing_regular_file
+    )
+    judge_authorization.add_argument("--supporting-material-hash", required=True, type=_sha256)
+    judge_authorization.add_argument("--output", required=True, type=_output_path)
 
     judge_preflight = commands.add_parser("judge-preflight")
     _add_archive_root(judge_preflight)
@@ -825,6 +838,29 @@ def _judge_preflight_command(args: argparse.Namespace) -> int:
         preliminary_inspection_hash=preliminary.record_hash,
     )
     _write_json_create_only(args.output, evidence.to_payload())
+    return 0
+
+
+def _judge_authorization_command(args: argparse.Namespace) -> int:
+    for path in (
+        args.authorization_proposal,
+        args.supporting_material,
+        args.output,
+    ):
+        _require_within_archive(path, args.archive_root)
+    proposal = _read_json_payload(
+        args.authorization_proposal,
+        affirmative_hash=args.authorization_proposal_hash,
+    )
+    supporting_material = _read_json_payload(
+        args.supporting_material,
+        affirmative_hash=args.supporting_material_hash,
+    )
+    authorization = JudgeAuthorization.create_from_approved_payload(
+        proposal,
+        supporting_material=supporting_material,
+    )
+    _write_json_create_only(args.output, authorization.to_payload())
     return 0
 
 
@@ -1542,6 +1578,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = collect_cloud_preflight()
         _write_json_create_only(args.output, result.to_payload())
         return 0
+    if args.command == "judge-authorization":
+        return _judge_authorization_command(args)
     if args.command == "judge-preflight":
         return _judge_preflight_command(args)
     if args.command == "judge-lock":

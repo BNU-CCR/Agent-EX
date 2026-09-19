@@ -656,9 +656,11 @@ class JudgeAuthorization:
     old_environment_lock_hash: str
     model_id: str
     model_revision: str
+    model_artifacts_hash: str
     tokenizer_id: str
     tokenizer_revision: str
     tokenizer_hash: str
+    tokenizer_artifacts_hash: str
     chat_template_hash: str
     runtime_provider: str
     runtime_version: str
@@ -694,7 +696,9 @@ class JudgeAuthorization:
             "ordering_policy_hash",
             "classifier_contract_hash",
             "old_environment_lock_hash",
+            "model_artifacts_hash",
             "tokenizer_hash",
+            "tokenizer_artifacts_hash",
             "chat_template_hash",
             "record_hash",
         ):
@@ -789,6 +793,37 @@ class JudgeAuthorization:
         )
         return cls(**values)  # type: ignore[arg-type]
 
+    @classmethod
+    def create_from_approved_payload(
+        cls,
+        payload: Mapping[str, object],
+        *,
+        supporting_material: Mapping[str, object],
+    ) -> JudgeAuthorization:
+        """Create the authorization only after its approved semantic inputs match."""
+
+        expected = ({field.name for field in fields(cls)} - {"record_hash"}) | {
+            "schema_version",
+            "metadata",
+        }
+        _exact_payload(payload, expected, cls._SCHEMA)
+        if type(supporting_material) is not dict:
+            raise TypeError("supporting material must be one JSON object")
+        supporting_links = {
+            "judge prompt": ("judge_prompt_hash", "old_judge_prompt_hash"),
+            "ordering policy": ("ordering_policy_hash", "ordering_policy_hash"),
+            "classifier contract": (
+                "classifier_contract_hash",
+                "classifier_contract_hash",
+            ),
+        }
+        for label, (supporting_name, authorization_name) in supporting_links.items():
+            if supporting_material.get(supporting_name) != payload[authorization_name]:
+                raise ValueError(f"supporting material {label} differs from authorization")
+        record = dict(payload)
+        record["record_hash"] = canonical_payload_hash(payload)
+        return cls.from_payload(record)
+
 
 @dataclass(frozen=True, slots=True)
 class JudgeExecutionManifest:
@@ -812,9 +847,11 @@ class JudgeExecutionManifest:
     old_environment_lock_hash: str
     model_id: str
     model_revision: str
+    model_artifacts_hash: str
     tokenizer_hash: str
     tokenizer_id: str
     tokenizer_revision: str
+    tokenizer_artifacts_hash: str
     chat_template_hash: str
     runtime_version: str
     non_thinking: bool
@@ -848,9 +885,11 @@ class JudgeExecutionManifest:
         "old_environment_lock_hash": "old_environment_lock_hash",
         "model_id": "model_id",
         "model_revision": "model_revision",
+        "model_artifacts_hash": "model_artifacts_hash",
         "tokenizer_hash": "tokenizer_hash",
         "tokenizer_id": "tokenizer_id",
         "tokenizer_revision": "tokenizer_revision",
+        "tokenizer_artifacts_hash": "tokenizer_artifacts_hash",
         "chat_template_hash": "chat_template_hash",
         "runtime_version": "runtime_version",
         "non_thinking": "non_thinking",
@@ -885,7 +924,9 @@ class JudgeExecutionManifest:
             "service_start_identity_hash",
             "runner_view_hash",
             "old_environment_lock_hash",
+            "model_artifacts_hash",
             "tokenizer_hash",
+            "tokenizer_artifacts_hash",
             "chat_template_hash",
             "record_hash",
         ):
@@ -962,8 +1003,12 @@ class JudgeExecutionManifest:
             if repeated[manifest_name] != getattr(authorization, authorization_name):
                 raise ValueError(f"judge manifest authorization drift in {manifest_name}")
         observation_drift = {
+            "model_id": environment_lock.model_repository,
             "model_revision": environment_lock.model_revision,
+            "model_artifacts_hash": environment_lock.model_artifacts_hash,
+            "tokenizer_id": environment_lock.tokenizer_repository,
             "tokenizer_revision": environment_lock.tokenizer_revision,
+            "tokenizer_artifacts_hash": environment_lock.tokenizer_artifacts_hash,
             "chat_template_hash": environment_lock.chat_template_hash,
             "runtime_version": environment_lock.vllm_identity.version,
         }

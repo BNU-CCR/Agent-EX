@@ -61,9 +61,11 @@ def manifest_values_from_authorization(
         "classifier_contract_hash": authorization.classifier_contract_hash,
         "model_id": authorization.model_id,
         "model_revision": authorization.model_revision,
+        "model_artifacts_hash": authorization.model_artifacts_hash,
         "tokenizer_id": authorization.tokenizer_id,
         "tokenizer_revision": authorization.tokenizer_revision,
         "tokenizer_hash": authorization.tokenizer_hash,
+        "tokenizer_artifacts_hash": authorization.tokenizer_artifacts_hash,
         "chat_template_hash": authorization.chat_template_hash,
         "runtime_version": authorization.runtime_version,
         "non_thinking": authorization.non_thinking,
@@ -188,6 +190,8 @@ def authorization_payload(renderer: JudgeRequestRenderer) -> dict[str, object]:
         "tokenizer_id": "qwen3-8b-paper1-tokenizer",
         "tokenizer_revision": "b968826d9c46dd6066d109eabc6255188de91218",
         "tokenizer_hash": SHA_D,
+        "model_artifacts_hash": SHA_E,
+        "tokenizer_artifacts_hash": SHA_F,
         "chat_template_hash": SHA_A,
         "runtime_provider": "vllm-loopback",
         "runtime_version": "0.23.0-cu129",
@@ -225,6 +229,14 @@ def valid_lifecycle(renderer: JudgeRequestRenderer) -> dict[str, object]:
     payload = authorization_payload(renderer)
     payload["chat_template_hash"] = observation.chat_template_hash
     payload["runtime_version"] = observation.vllm_identity.version
+    payload["model_id"] = observation.model_repository
+    payload["tokenizer_id"] = observation.tokenizer_repository
+    payload["model_artifacts_hash"] = EnvironmentLock.create(
+        observation, authorization_hash=SHA_A
+    ).model_artifacts_hash
+    payload["tokenizer_artifacts_hash"] = EnvironmentLock.create(
+        observation, authorization_hash=SHA_A
+    ).tokenizer_artifacts_hash
     payload["record_hash"] = canonical_payload_hash(
         {name: value for name, value in payload.items() if name != "record_hash"}
     )
@@ -255,7 +267,9 @@ def distinct_valid_value(field: str, value: object) -> object:
         "renderer_hash",
         "ordering_policy_hash",
         "classifier_contract_hash",
+        "model_artifacts_hash",
         "tokenizer_hash",
+        "tokenizer_artifacts_hash",
         "chat_template_hash",
     }:
         return SHA_F if value != SHA_F else SHA_E
@@ -558,6 +572,29 @@ def test_authorization_round_trip_binds_every_static_hash(
             JudgeAuthorization.from_payload(tampered)
 
 
+def test_authorization_is_hashed_only_after_supporting_material_matches(
+    renderer: JudgeRequestRenderer,
+) -> None:
+    payload = authorization_payload(renderer)
+    proposal = {name: value for name, value in payload.items() if name != "record_hash"}
+    supporting = {
+        "judge_prompt_hash": proposal["old_judge_prompt_hash"],
+        "ordering_policy_hash": proposal["ordering_policy_hash"],
+        "classifier_contract_hash": proposal["classifier_contract_hash"],
+    }
+
+    authorization = JudgeAuthorization.create_from_approved_payload(
+        proposal, supporting_material=supporting
+    )
+
+    assert authorization.to_payload() == payload
+    with pytest.raises(ValueError, match="supporting material.*judge prompt"):
+        JudgeAuthorization.create_from_approved_payload(
+            proposal,
+            supporting_material={**supporting, "judge_prompt_hash": SHA_F},
+        )
+
+
 @pytest.mark.parametrize(
     "field",
     [
@@ -642,6 +679,43 @@ def test_manifest_rejects_environment_drift(
 @pytest.mark.parametrize(
     "field",
     (
+        "model_repository",
+        "tokenizer_repository",
+        "model_artifacts_hash",
+        "tokenizer_artifacts_hash",
+    ),
+)
+def test_manifest_rejects_fresh_repository_or_artifact_drift(
+    valid_lifecycle: dict[str, object], field: str
+) -> None:
+    authorization = valid_lifecycle["authorization"]
+    environment_lock = valid_lifecycle["environment_lock"]
+    assert isinstance(authorization, JudgeAuthorization)
+    assert isinstance(environment_lock, EnvironmentLock)
+    observation = environment_lock._observation()  # noqa: SLF001 - construct drift fixture
+    if field == "model_repository":
+        observation = replace(observation, model_repository="Qwen/other-model")
+    elif field == "tokenizer_repository":
+        observation = replace(observation, tokenizer_repository="Qwen/other-tokenizer")
+    elif field == "model_artifacts_hash":
+        changed = replace(observation.model_artifacts[0], sha256=SHA_F)
+        observation = replace(
+            observation, model_artifacts=(changed, *observation.model_artifacts[1:])
+        )
+    else:
+        changed = replace(observation.tokenizer_artifacts[0], sha256=SHA_F)
+        observation = replace(observation, tokenizer_artifacts=(changed,))
+    valid_lifecycle["environment_lock"] = EnvironmentLock.create(
+        observation,
+        authorization_hash=authorization.record_hash,
+    )
+    with pytest.raises(ValueError, match="environment|drift"):
+        JudgeExecutionManifest.create(**valid_lifecycle)
+
+
+@pytest.mark.parametrize(
+    "field",
+    (
         "review_bundle_hash",
         "export_hash",
         "judge_pack_hash",
@@ -653,9 +727,11 @@ def test_manifest_rejects_environment_drift(
         "classifier_contract_hash",
         "model_id",
         "model_revision",
+        "model_artifacts_hash",
         "tokenizer_id",
         "tokenizer_revision",
         "tokenizer_hash",
+        "tokenizer_artifacts_hash",
         "chat_template_hash",
         "runtime_version",
         "non_thinking",

@@ -4,9 +4,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
+import signal
 import subprocess
 import sys
+
+import pytest
 
 
 PLATFORM_ROOT = Path(__file__).parents[1]
@@ -39,9 +43,9 @@ def test_download_script_has_only_fixed_modes_and_scoped_network_turbo() -> None
     assert script.count("source /etc/network_turbo") == 1
     assert "(" in script[: script.index("source /etc/network_turbo")]
     assert "trap cleanup EXIT" in script
-    for signal in ("HUP", "INT", "TERM"):
+    for signal_name in ("HUP", "INT", "TERM"):
         assert "trap 'signal_exit" in script
-        assert signal in script
+        assert signal_name in script
     for name in PROXY_NAMES:
         assert name in script
     assert "[Pp][Rr][Oo][Xx][Yy]" in script
@@ -277,3 +281,108 @@ def test_judge_service_start_binds_only_authorization_and_abort_never_invents_ma
     assert 'kill -TERM -- "-$pid"' in script
     assert "loopback_listener_absent" in script
     assert "process_exit_observed" in script
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires Linux process and socket evidence")
+def test_judge_service_executes_both_lifecycle_paths_and_writes_canonical_records(
+    tmp_path: Path,
+) -> None:
+    script = (SCRIPTS / "phase0a1-judge-service.sh").resolve(strict=True)
+    python = Path(sys.executable).resolve(strict=True)
+    model = tmp_path / "model"
+    model.mkdir()
+    server = model / "health_server.py"
+    server.write_text(
+        """from http.server import BaseHTTPRequestHandler, HTTPServer
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200 if self.path == '/health' else 404)
+        self.end_headers()
+    def log_message(self, format, *args):
+        pass
+HTTPServer(('127.0.0.1', 8000), Handler).serve_forever()
+""",
+        encoding="utf-8",
+    )
+    serve = tmp_path / "serve.sh"
+    serve.write_text(
+        '#!/usr/bin/env bash\nexec "$1" "$2/health_server.py"\n',
+        encoding="utf-8",
+    )
+    serve.chmod(0o700)
+    fake_bin = tmp_path / "bin"
+    fake_bin.mkdir()
+    fake_nvidia_smi = fake_bin / "nvidia-smi"
+    fake_nvidia_smi.write_text("#!/usr/bin/env bash\nexit 0\n", encoding="utf-8")
+    fake_nvidia_smi.chmod(0o700)
+    environment = {
+        name: value for name, value in os.environ.items() if "proxy" not in name.casefold()
+    }
+    environment["PATH"] = f"{fake_bin}{os.pathsep}{environment['PATH']}"
+    authorization_hash = "a" * 64
+    manifest_hash = "b" * 64
+    lock_hash = "c" * 64
+    active_groups: set[int] = set()
+
+    def run(*arguments: object) -> subprocess.CompletedProcess[str]:
+        completed = subprocess.run(
+            ["bash", str(script), *(str(value) for value in arguments)],
+            text=True,
+            capture_output=True,
+            check=False,
+            timeout=90,
+            env=environment,
+        )
+        assert completed.returncode == 0, completed.stderr
+        return completed
+
+    def load_record(path: Path) -> dict[str, object]:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        content = {name: value for name, value in payload.items() if name != "record_hash"}
+        encoded = json.dumps(
+            content, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+        ).encode()
+        assert payload["record_hash"] == hashlib.sha256(encoded).hexdigest()
+        return payload
+
+    try:
+        abort_dir = tmp_path / "abort-evidence"
+        abort_dir.mkdir()
+        run("start", serve, python, python, model, abort_dir, authorization_hash)
+        start = load_record(abort_dir / "start-identity.json")
+        active_groups.add(int(start["pid"]))
+        run("status", python, abort_dir)
+        run(
+            "abort-pre-manifest",
+            python,
+            abort_dir,
+            authorization_hash,
+            start["record_hash"],
+            "-",
+        )
+        active_groups.discard(int(start["pid"]))
+        abort = load_record(abort_dir / "abort-evidence.json")
+        assert abort["schema_version"] == (
+            "paper1.calibration.judge-pre-manifest-abort-evidence.v1"
+        )
+        assert abort["environment_lock_hash"] is None
+        assert "manifest_hash" not in abort
+
+        stop_dir = tmp_path / "stop-evidence"
+        stop_dir.mkdir()
+        run("start", serve, python, python, model, stop_dir, authorization_hash)
+        start = load_record(stop_dir / "start-identity.json")
+        active_groups.add(int(start["pid"]))
+        run("stop", python, stop_dir, manifest_hash, lock_hash, start["record_hash"])
+        active_groups.discard(int(start["pid"]))
+        stop = load_record(stop_dir / "stop-evidence.json")
+        assert stop["schema_version"] == "paper1.calibration.judge-service-stop-evidence.v1"
+        assert stop["manifest_hash"] == manifest_hash
+        assert stop["environment_lock_hash"] == lock_hash
+        assert stop["service_start_identity_hash"] == start["record_hash"]
+    finally:
+        for process_group in active_groups:
+            try:
+                os.killpg(process_group, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
