@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import base64
+import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
@@ -164,6 +166,76 @@ def test_valid_refusal_code_is_not_a_transport_failure(
     evidence = parse_judge_response(canonical_json_bytes(valid_labels), policy)
     assert evidence.success is True
     assert evidence.labels["refusal"] == "refused"
+
+
+@pytest.mark.parametrize(
+    ("mutation", "expected_match"),
+    (
+        ("invented_failure", "failure code"),
+        ("illegal_label", "legal|label"),
+        ("labels_raw_mismatch", "raw|labels"),
+        ("extra_dimension", "exact|dimensions"),
+        ("missing_dimension", "exact|dimensions"),
+    ),
+)
+def test_parse_contract_rejects_rehashed_semantic_tamper(
+    mutation: str,
+    expected_match: str,
+    policy: SemanticReviewPolicy,
+    valid_labels: dict[str, str],
+) -> None:
+    evidence = parse_judge_response(canonical_json_bytes(valid_labels), policy)
+    payload = evidence.to_payload()
+    if mutation == "invented_failure":
+        payload["success"] = False
+        payload["failure_code"] = "invented_parse_failure"
+    elif mutation == "illegal_label":
+        illegal = dict(valid_labels)
+        illegal["refusal"] = "outside-policy"
+        raw = canonical_json_bytes(illegal)
+        payload["labels"] = illegal
+        payload["raw_bytes_base64"] = base64.b64encode(raw).decode("ascii")
+        payload["raw_bytes_sha256"] = hashlib.sha256(raw).hexdigest()
+    elif mutation == "labels_raw_mismatch":
+        payload["labels"]["refusal"] = "refused"
+    elif mutation == "extra_dimension":
+        payload["labels"]["unexpected"] = "value"
+    else:
+        del payload["labels"]["information_fidelity"]
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match=expected_match):
+        type(evidence).from_payload(payload)
+
+
+def test_parse_contract_freezes_policy_label_enums(
+    policy: SemanticReviewPolicy,
+    valid_labels: dict[str, str],
+) -> None:
+    evidence = parse_judge_response(canonical_json_bytes(valid_labels), policy)
+    assert tuple(evidence.dimension_labels) == DIMENSIONS
+    assert evidence.dimension_labels_hash == canonical_payload_hash(evidence.dimension_labels)
+    assert evidence.policy_label_contract_hash == canonical_payload_hash(
+        {
+            "policy_hash": evidence.policy_hash,
+            "dimension_labels_hash": evidence.dimension_labels_hash,
+        }
+    )
+    with pytest.raises(TypeError):
+        evidence.dimension_labels["refusal"] = ("forged",)  # type: ignore[index]
+
+
+def test_parse_contract_rejects_rehashed_failure_semantics_drift(
+    policy: SemanticReviewPolicy,
+) -> None:
+    payload = parse_judge_response(b"not-json", policy).to_payload()
+    payload["failure_code"] = "parse_missing_dimensions"
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="missing_dimensions|JSON object"):
+        type(parse_judge_response(b"not-json", policy)).from_payload(payload)
 
 
 class _FakeJudgeServer:

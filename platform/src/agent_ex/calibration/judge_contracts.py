@@ -51,6 +51,12 @@ JUDGE_RESPONSE_FAILURE_CODES = (
     "provider_request_identity_missing",
     "provider_model_identity_drift",
 )
+JUDGE_PARSE_FAILURE_CODES = (
+    "parse_invalid_json",
+    "parse_missing_dimensions",
+    "parse_extra_dimensions",
+    "parse_illegal_label",
+)
 
 _METADATA = {
     "calibration_only": True,
@@ -1355,6 +1361,27 @@ def _sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def _decode_judge_label_object(raw_bytes: bytes) -> dict[str, object] | None:
+    duplicate = False
+
+    def pairs_hook(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        nonlocal duplicate
+        decoded: dict[str, object] = {}
+        for name, value in pairs:
+            if name in decoded:
+                duplicate = True
+            decoded[name] = value
+        return decoded
+
+    try:
+        decoded = json.loads(raw_bytes.decode("utf-8"), object_pairs_hook=pairs_hook)
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return None
+    if type(decoded) is not dict or duplicate:
+        return None
+    return decoded
+
+
 @dataclass(frozen=True, slots=True)
 class JudgeRequestEvidence:
     """One rendered judge item bound to its manifest order and provider payload."""
@@ -1673,6 +1700,9 @@ class JudgeParseEvidence:
     raw_bytes_base64: str
     raw_bytes_sha256: str
     policy_hash: str
+    dimension_labels: Mapping[str, tuple[str, ...]]
+    dimension_labels_hash: str
+    policy_label_contract_hash: str
     success: bool
     labels: Mapping[str, str]
     failure_code: str | None
@@ -1685,20 +1715,83 @@ class JudgeParseEvidence:
         if self.raw_bytes_sha256 != _sha256_bytes(self.raw_bytes):
             raise ValueError("parse raw byte hash differs from exact bytes")
         _require_sha256("policy_hash", self.policy_hash)
+        if (
+            not isinstance(self.dimension_labels, Mapping)
+            or tuple(self.dimension_labels) != DIMENSIONS
+        ):
+            raise ValueError("parse policy label dimensions differ from the exact contract")
+        normalized_enums: dict[str, tuple[str, ...]] = {}
+        for dimension, legal_labels in self.dimension_labels.items():
+            if (
+                type(legal_labels) not in {list, tuple}
+                or not legal_labels
+                or any(type(label) is not str or not label for label in legal_labels)
+                or len(set(legal_labels)) != len(legal_labels)
+            ):
+                raise ValueError(f"parse policy legal labels are invalid for {dimension}")
+            normalized_enums[dimension] = tuple(legal_labels)
+        object.__setattr__(self, "dimension_labels", _freeze(normalized_enums))
+        _require_sha256("dimension_labels_hash", self.dimension_labels_hash)
+        _require_payload_hash(
+            "dimension_labels_hash", self.dimension_labels_hash, self.dimension_labels
+        )
+        _require_sha256("policy_label_contract_hash", self.policy_label_contract_hash)
+        _require_payload_hash(
+            "policy_label_contract_hash",
+            self.policy_label_contract_hash,
+            {
+                "policy_hash": self.policy_hash,
+                "dimension_labels_hash": self.dimension_labels_hash,
+            },
+        )
         if type(self.success) is not bool:
             raise TypeError("success must be a boolean")
         if not isinstance(self.labels, Mapping) or any(
             type(name) is not str or type(value) is not str for name, value in self.labels.items()
         ):
             raise TypeError("judge parse labels must be a string mapping")
-        if self.success:
-            if self.failure_code is not None or tuple(self.labels) != DIMENSIONS:
-                raise ValueError(
-                    "successful parse requires exact ordered dimensions and no failure"
-                )
-        elif self.failure_code is None:
-            raise ValueError("failed parse requires a typed failure code")
         object.__setattr__(self, "labels", _freeze(dict(self.labels)))
+        decoded = _decode_judge_label_object(self.raw_bytes)
+        decoded_string_labels = (
+            {}
+            if decoded is None
+            else {name: value for name, value in decoded.items() if type(value) is str}
+        )
+        if dict(self.labels) != decoded_string_labels:
+            raise ValueError("parse labels differ from the exact raw JSON object")
+        if self.success:
+            if self.failure_code is not None:
+                raise ValueError("successful parse cannot carry a failure code")
+            if decoded is None or tuple(self.labels) != DIMENSIONS:
+                raise ValueError("successful parse requires exact eight dimensions")
+            if any(self.labels[name] not in self.dimension_labels[name] for name in DIMENSIONS):
+                raise ValueError("successful parse contains a label outside the legal policy enum")
+        else:
+            if self.failure_code not in JUDGE_PARSE_FAILURE_CODES:
+                raise ValueError("parse failure code is outside the frozen typed enum")
+            decoded_names = set() if decoded is None else set(decoded)
+            missing = set(DIMENSIONS) - decoded_names
+            extra = decoded_names - set(DIMENSIONS)
+            illegal = (
+                decoded is not None
+                and not missing
+                and not extra
+                and any(
+                    type(decoded[name]) is not str
+                    or decoded[name] not in self.dimension_labels[name]
+                    for name in DIMENSIONS
+                )
+            )
+            if self.failure_code == "parse_invalid_json" and decoded is not None:
+                raise ValueError("parse_invalid_json requires non-object or invalid raw JSON")
+            if self.failure_code == "parse_missing_dimensions" and (decoded is None or not missing):
+                raise ValueError(
+                    "parse_missing_dimensions requires a JSON object with missing dimensions"
+                )
+            if self.failure_code == "parse_extra_dimensions" and (missing or not extra):
+                raise ValueError("parse_extra_dimensions requires only extra dimensions")
+            if self.failure_code == "parse_illegal_label" and not illegal:
+                raise ValueError("parse_illegal_label requires an illegal policy label")
         _require_sha256("record_hash", self.record_hash)
         _require_payload_hash("record_hash", self.record_hash, self.content_payload())
 
@@ -1718,7 +1811,15 @@ class JudgeParseEvidence:
         _exact_payload(payload, expected, cls._SCHEMA)
         if type(payload["labels"]) is not dict:
             raise TypeError("judge parse labels must use a JSON object")
-        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+        if type(payload["dimension_labels"]) is not dict or any(
+            type(labels) is not list for labels in payload["dimension_labels"].values()
+        ):
+            raise TypeError("judge parse dimension labels must use JSON arrays")
+        values = {field.name: payload[field.name] for field in fields(cls)}
+        values["dimension_labels"] = {
+            name: tuple(labels) for name, labels in payload["dimension_labels"].items()
+        }
+        return cls(**values)  # type: ignore[arg-type]
 
     @classmethod
     def create(
@@ -1726,13 +1827,24 @@ class JudgeParseEvidence:
         *,
         raw_bytes: bytes,
         policy_hash: str,
+        dimension_labels: Mapping[str, tuple[str, ...]],
         labels: Mapping[str, str],
         failure_code: str | None,
     ) -> JudgeParseEvidence:
+        frozen_enums = {name: tuple(dimension_labels[name]) for name in DIMENSIONS}
+        dimension_labels_hash = canonical_payload_hash(frozen_enums)
         values: dict[str, object] = {
             "raw_bytes_base64": base64.b64encode(raw_bytes).decode("ascii"),
             "raw_bytes_sha256": _sha256_bytes(raw_bytes),
             "policy_hash": policy_hash,
+            "dimension_labels": frozen_enums,
+            "dimension_labels_hash": dimension_labels_hash,
+            "policy_label_contract_hash": canonical_payload_hash(
+                {
+                    "policy_hash": policy_hash,
+                    "dimension_labels_hash": dimension_labels_hash,
+                }
+            ),
             "success": failure_code is None,
             "labels": dict(labels),
             "failure_code": failure_code,

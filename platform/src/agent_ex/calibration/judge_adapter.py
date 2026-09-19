@@ -91,6 +91,7 @@ def parse_judge_response(raw_bytes: bytes, policy: SemanticReviewPolicy) -> Judg
         return JudgeParseEvidence.create(
             raw_bytes=raw_bytes,
             policy_hash=policy.record_hash,
+            dimension_labels=policy.dimension_labels,
             labels={},
             failure_code="parse_invalid_json",
         )
@@ -115,6 +116,7 @@ def parse_judge_response(raw_bytes: bytes, policy: SemanticReviewPolicy) -> Judg
     return JudgeParseEvidence.create(
         raw_bytes=raw_bytes,
         policy_hash=policy.record_hash,
+        dimension_labels=policy.dimension_labels,
         labels=labels,  # type: ignore[arg-type]
         failure_code=failure_code,
     )
