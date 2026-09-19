@@ -511,21 +511,43 @@ def _rollback_materialization(
             return
     if _safe_identity(staging_root, "directory") != staging_identity:
         return
-    try:
-        if any(staging_root.iterdir()):
-            return
-    except OSError:
-        return
-    if _safe_identity(staging_root.parent, "directory") != parent_identity:
-        return
-    if _safe_identity(staging_root, "directory") != staging_identity:
-        return
-    try:
-        staging_root.rmdir()
-    except OSError:
+    if not _rmdir_owned_directory(staging_root, parent_identity, staging_identity):
         return
     if _safe_identity(staging_root.parent, "directory") == parent_identity:
         _fsync_directory(staging_root.parent)
+
+
+def _rmdir_owned_directory(path: Path, parent_identity: _Identity, identity: _Identity) -> bool:
+    """Remove an empty owned directory relative to a held parent handle."""
+
+    if os.name != "posix":
+        return False
+    directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | os.O_NOFOLLOW
+    try:
+        parent_fd = os.open(path.parent, directory_flags)
+    except OSError:
+        return False
+    try:
+        if _stable_identity(os.fstat(parent_fd)) != parent_identity:
+            return False
+        try:
+            directory_fd = os.open(path.name, directory_flags, dir_fd=parent_fd)
+        except OSError:
+            return False
+        try:
+            if _stable_identity(os.fstat(directory_fd)) != identity:
+                return False
+            if os.listdir(directory_fd):
+                return False
+        finally:
+            os.close(directory_fd)
+        try:
+            os.rmdir(path.name, dir_fd=parent_fd)
+        except OSError:
+            return False
+        return True
+    finally:
+        os.close(parent_fd)
 
 
 def _make_staging_directory(parent: Path, name: str) -> tuple[Path, _Identity]:
