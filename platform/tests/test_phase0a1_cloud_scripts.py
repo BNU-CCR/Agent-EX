@@ -9,6 +9,7 @@ from pathlib import Path
 import signal
 import subprocess
 import sys
+import time
 
 import pytest
 
@@ -264,7 +265,7 @@ def test_judge_service_script_has_distinct_two_stage_authorization_lifecycle() -
     assert "service_start_identity_hash" in script
     assert "127.0.0.1:8000" in script
     assert "/health" in script
-    assert "flock" in script
+    assert ".phase0a1-judge-service.lock.d" in script
     assert "pkill" not in script
 
 
@@ -278,9 +279,267 @@ def test_judge_service_start_binds_only_authorization_and_abort_never_invents_ma
     assert "manifest_hash" not in start_block
     assert "manifest_hash" not in abort_block
     assert "manifest_hash" in stop_block
-    assert 'kill -TERM -- "-$pid"' in script
+    assert 'kill -TERM -- "-$group_id"' in script
     assert "loopback_listener_absent" in script
     assert "process_exit_observed" in script
+
+
+def test_judge_service_hardens_identity_filesystem_and_cleanup_contracts() -> None:
+    script = _script("phase0a1-judge-service.sh")
+
+    assert "object_pairs_hook" in script
+    assert "parse_constant" in script
+    assert "judge start identity fields are not exact" in script
+    assert "judge start identity record hash mismatch" in script
+    assert "control Python identity mismatch" in script
+    assert "process start-time mismatch" in script
+    assert "process-group identity mismatch" in script
+    assert "session identity mismatch" in script
+    assert "O_NOFOLLOW" in script
+    assert "O_EXCL" in script
+    assert ".phase0a1-judge-service.lock.d" in script
+    assert "kill -KILL" in script
+    assert "assert_loopback_listener_absent" in script
+    assert "assert_gpu_compute_processes_absent" in script
+    for status in (129, 130, 143):
+        assert f"exit {status}" in script
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires Linux procfs and sockets")
+def test_judge_service_rejects_tampered_identity_and_pid_reuse_fields(
+    tmp_path: Path,
+) -> None:
+    harness = _judge_harness(tmp_path)
+    evidence = tmp_path / "evidence"
+    evidence.mkdir()
+    started = harness.run("start", evidence=evidence)
+    assert started.returncode == 0, started.stderr
+    identity = evidence / "start-identity.json"
+    original = identity.read_text(encoding="utf-8")
+    payload = json.loads(original)
+
+    def rejected(raw: str, message: str) -> None:
+        identity.write_text(raw, encoding="utf-8")
+        result = harness.run("status", evidence=evidence)
+        assert result.returncode != 0
+        assert message in result.stderr
+        identity.write_text(original, encoding="utf-8")
+
+    try:
+        rejected(original.rstrip()[:-1] + ',"pid":1}\n', "duplicate JSON field")
+        rejected(original.replace('"pid":', '"unexpected":NaN,"pid":', 1), "non-finite JSON")
+        extra = {**payload, "unexpected": "field"}
+        rejected(json.dumps(extra), "fields are not exact")
+        bad_hash = {**payload, "record_hash": "0" * 64}
+        rejected(json.dumps(bad_hash), "record hash mismatch")
+        changed_python = {**payload, "control_python": "/not/the/control/python"}
+        changed_content = {
+            key: value for key, value in changed_python.items() if key != "record_hash"
+        }
+        changed_python["record_hash"] = hashlib.sha256(
+            json.dumps(
+                changed_content,
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=False,
+            ).encode()
+        ).hexdigest()
+        rejected(json.dumps(changed_python), "control Python identity mismatch")
+        for field, message in (
+            ("proc_start_time", "process start-time mismatch"),
+            ("process_group_id", "process-group identity mismatch"),
+            ("session_id", "session identity mismatch"),
+        ):
+            changed = {**payload, field: int(payload[field]) + 1}
+            content = {key: value for key, value in changed.items() if key != "record_hash"}
+            changed["record_hash"] = hashlib.sha256(
+                json.dumps(
+                    content, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+                ).encode()
+            ).hexdigest()
+            rejected(json.dumps(changed), message)
+    finally:
+        identity.write_text(original, encoding="utf-8")
+        stopped = harness.run("stop", evidence=evidence, start_hash=str(payload["record_hash"]))
+        if stopped.returncode != 0:
+            os.killpg(int(payload["process_group_id"]), signal.SIGKILL)
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires Linux procfs and sockets")
+def test_judge_service_refuses_preset_symlinks_and_existing_outputs(
+    tmp_path: Path,
+) -> None:
+    harness = _judge_harness(tmp_path)
+    sentinel = tmp_path / "sentinel"
+    sentinel.write_text("do-not-touch", encoding="utf-8")
+
+    for trap_name in (".phase0a1-judge-service.lock.d", "service.log"):
+        evidence = tmp_path / trap_name.replace(".", "_")
+        evidence.mkdir()
+        (evidence / trap_name).symlink_to(sentinel)
+        result = harness.run("start", evidence=evidence)
+        assert result.returncode != 0
+        assert sentinel.read_text(encoding="utf-8") == "do-not-touch"
+
+    evidence = tmp_path / "existing-log"
+    evidence.mkdir()
+    (evidence / "service.log").write_text("existing", encoding="utf-8")
+    result = harness.run("start", evidence=evidence)
+    assert result.returncode != 0
+    assert (evidence / "service.log").read_text(encoding="utf-8") == "existing"
+
+    evidence = tmp_path / "terminal-evidence"
+    evidence.mkdir()
+    started = harness.run("start", evidence=evidence)
+    assert started.returncode == 0, started.stderr
+    payload = json.loads((evidence / "start-identity.json").read_text(encoding="utf-8"))
+    (evidence / "gpu-stop-observation").symlink_to(sentinel)
+    (evidence / "stop-evidence.json").symlink_to(sentinel)
+    result = harness.run(
+        "stop",
+        evidence=evidence,
+        start_hash=str(payload["record_hash"]),
+    )
+    assert result.returncode != 0
+    assert sentinel.read_text(encoding="utf-8") == "do-not-touch"
+    _wait_process_absent(int(payload["process_group_id"]), process_group=True)
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires Linux procfs and sockets")
+def test_judge_failed_start_kills_term_ignoring_process_group_and_keeps_signal_exit(
+    tmp_path: Path,
+) -> None:
+    harness = _judge_harness(tmp_path, stubborn=True)
+    evidence = tmp_path / "evidence"
+    evidence.mkdir()
+    process = harness.popen("start", evidence=evidence)
+    pid_file = evidence / "stubborn.pid"
+    deadline = time.monotonic() + 10
+    while not pid_file.exists() and time.monotonic() < deadline:
+        time.sleep(0.05)
+    assert pid_file.exists()
+    process.send_signal(signal.SIGTERM)
+    _stdout, stderr = process.communicate(timeout=15)
+    assert process.returncode == 143, stderr
+    stubborn_pid = int(pid_file.read_text(encoding="utf-8"))
+    _wait_process_absent(stubborn_pid)
+    assert "escalating to KILL" in stderr
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires Linux procfs and sockets")
+def test_judge_early_child_failure_performs_bounded_final_cleanup(tmp_path: Path) -> None:
+    harness = _judge_harness(tmp_path, early_exit=True)
+    evidence = tmp_path / "evidence"
+    evidence.mkdir()
+    before = time.monotonic()
+    result = harness.run("start", evidence=evidence)
+    elapsed = time.monotonic() - before
+    assert result.returncode != 0
+    assert elapsed < 10
+    assert "vLLM exited before judge health" in result.stderr
+    early_pid = int((evidence / "early.pid").read_text(encoding="utf-8"))
+    _wait_process_absent(early_pid)
+
+
+class _JudgeHarness:
+    def __init__(self, root: Path, *, stubborn: bool = False, early_exit: bool = False) -> None:
+        self.script = (SCRIPTS / "phase0a1-judge-service.sh").resolve(strict=True)
+        self.python = Path(sys.executable).resolve(strict=True)
+        self.model = root / "model"
+        self.model.mkdir()
+        server = self.model / "health_server.py"
+        server.write_text(
+            "from http.server import HTTPServer,BaseHTTPRequestHandler\n"
+            "class H(BaseHTTPRequestHandler):\n"
+            " def do_GET(self): self.send_response(200 if self.path=='/health' else 404); self.end_headers()\n"
+            " def log_message(self,*args): pass\n"
+            "HTTPServer(('127.0.0.1',8000),H).serve_forever()\n",
+            encoding="utf-8",
+        )
+        self.serve = root / "serve.sh"
+        if stubborn:
+            body = (
+                "#!/usr/bin/env bash\n"
+                "(\n"
+                "  trap '' TERM\n"
+                '  echo "$BASHPID" > "$2/../evidence/stubborn.pid"\n'
+                "  while :; do sleep 1; done\n"
+                ") &\n"
+                "wait\n"
+            )
+        elif early_exit:
+            body = '#!/usr/bin/env bash\necho "$$" > "$2/../evidence/early.pid"\nexit 23\n'
+        else:
+            body = '#!/usr/bin/env bash\nexec "$1" "$2/health_server.py"\n'
+        self.serve.write_text(body, encoding="utf-8")
+        self.serve.chmod(0o700)
+        fake_bin = root / "bin"
+        fake_bin.mkdir()
+        fake_nvidia = fake_bin / "nvidia-smi"
+        fake_nvidia.write_text("#!/usr/bin/env bash\nexit 0\n", encoding="utf-8")
+        fake_nvidia.chmod(0o700)
+        self.environment = {
+            name: value for name, value in os.environ.items() if "proxy" not in name.casefold()
+        }
+        self.environment["PATH"] = f"{fake_bin}{os.pathsep}{self.environment['PATH']}"
+
+    def command(
+        self,
+        mode: str,
+        *,
+        evidence: Path,
+        start_hash: str = "d" * 64,
+    ) -> list[str]:
+        if mode == "start":
+            args = [self.serve, self.python, self.python, self.model, evidence, "a" * 64]
+        elif mode == "status":
+            args = [self.python, evidence]
+        elif mode == "stop":
+            args = [self.python, evidence, "b" * 64, "c" * 64, start_hash]
+        else:
+            raise AssertionError(mode)
+        return ["bash", str(self.script), mode, *(str(value) for value in args)]
+
+    def run(
+        self, mode: str, *, evidence: Path, start_hash: str = "d" * 64
+    ) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            self.command(mode, evidence=evidence, start_hash=start_hash),
+            text=True,
+            capture_output=True,
+            timeout=20,
+            check=False,
+            env=self.environment,
+        )
+
+    def popen(
+        self, mode: str, *, evidence: Path, start_hash: str = "d" * 64
+    ) -> subprocess.Popen[str]:
+        return subprocess.Popen(
+            self.command(mode, evidence=evidence, start_hash=start_hash),
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            env=self.environment,
+        )
+
+
+def _judge_harness(
+    tmp_path: Path, *, stubborn: bool = False, early_exit: bool = False
+) -> _JudgeHarness:
+    return _JudgeHarness(tmp_path, stubborn=stubborn, early_exit=early_exit)
+
+
+def _wait_process_absent(pid: int, *, process_group: bool = False) -> None:
+    target = -pid if process_group else pid
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline:
+        try:
+            os.kill(target, 0)
+        except ProcessLookupError:
+            return
+        time.sleep(0.05)
+    pytest.fail(f"process identity {target} remains")
 
 
 @pytest.mark.skipif(os.name != "posix", reason="requires Linux process and socket evidence")
