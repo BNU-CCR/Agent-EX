@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from http.client import HTTPConnection, HTTPResponse
+from http.client import HTTPConnection, HTTPResponse, IncompleteRead
 import json
 import math
 import socket
@@ -72,7 +72,7 @@ def _parse_json_object(raw_bytes: bytes) -> tuple[dict[str, object] | None, bool
 
     try:
         parsed = json.loads(raw_bytes.decode("utf-8"), object_pairs_hook=pairs_hook)
-    except (UnicodeDecodeError, json.JSONDecodeError):
+    except (UnicodeDecodeError, ValueError):
         return None, False
     if type(parsed) is not dict or duplicate:
         return None, False
@@ -120,6 +120,13 @@ def parse_judge_response(raw_bytes: bytes, policy: SemanticReviewPolicy) -> Judg
     )
 
 
+class _BodyReadFailure(Exception):
+    def __init__(self, raw_bytes: bytes, *, timed_out: bool) -> None:
+        super().__init__("judge response body read did not complete")
+        self.raw_bytes = raw_bytes
+        self.timed_out = timed_out
+
+
 class JudgeVllmAdapter:
     """No-redirect OpenAI-compatible client restricted to exact HTTP loopback."""
 
@@ -131,7 +138,12 @@ class JudgeVllmAdapter:
         limits: JudgeTransportLimits,
     ) -> None:
         parsed = urlsplit(endpoint)
-        if parsed.scheme != "http" or parsed.hostname != "127.0.0.1":
+        if (
+            parsed.scheme != "http"
+            or parsed.hostname != "127.0.0.1"
+            or parsed.username is not None
+            or parsed.password is not None
+        ):
             raise ValueError("judge endpoint must use exact HTTP loopback 127.0.0.1")
         if parsed.path != "/v1/chat/completions" or parsed.query or parsed.fragment:
             raise ValueError("judge loopback endpoint path must be /v1/chat/completions")
@@ -163,6 +175,7 @@ class JudgeVllmAdapter:
         deadline = started_clock + self._limits.total_timeout_seconds
         status: int | None = None
         headers: dict[str, str] = {}
+        duplicate_critical_headers: tuple[str, ...] = ()
         raw_bytes = b""
         raw_bytes_complete = False
         output_bytes: bytes | None = None
@@ -213,7 +226,7 @@ class JudgeVllmAdapter:
                 },
             )
             response = connection.getresponse()
-            status, headers = self._headers(response)
+            status, headers, duplicate_critical_headers = self._headers(response)
             provider_request_id = headers.get("x-request-id")
             raw_bytes, exceeded = self._read_body(
                 response,
@@ -221,7 +234,9 @@ class JudgeVllmAdapter:
                 ceiling=request.response_byte_ceiling,
             )
             raw_bytes_complete = not exceeded
-            if exceeded:
+            if duplicate_critical_headers:
+                failure_code = "provider_duplicate_critical_header"
+            elif exceeded:
                 failure_code = "response_size_exceeded"
             elif status == 429:
                 failure_code = "http_429"
@@ -252,9 +267,16 @@ class JudgeVllmAdapter:
                         input_tokens,
                         output_tokens,
                     ) = self._success_fields(payload)
+        except _BodyReadFailure as error:
+            raw_bytes = error.raw_bytes
+            raw_bytes_complete = False
+            status = None
+            failure_code = "timeout" if error.timed_out else "provider_unreachable"
         except (TimeoutError, socket.timeout):
+            status = None
             failure_code = "timeout"
         except OSError:
+            status = None
             failure_code = (
                 "timeout"
                 if deadline_expired.is_set() or time.monotonic() >= deadline
@@ -270,6 +292,7 @@ class JudgeVllmAdapter:
             provider_request_id=provider_request_id,
             http_status=status,
             response_headers=headers,
+            duplicate_critical_header_names=duplicate_critical_headers,
             raw_bytes=raw_bytes,
             raw_bytes_complete=raw_bytes_complete,
             raw_bytes_total_lower_bound=len(raw_bytes),
@@ -286,8 +309,19 @@ class JudgeVllmAdapter:
         )
 
     @staticmethod
-    def _headers(response: HTTPResponse) -> tuple[int, dict[str, str]]:
-        return response.status, {name.lower(): value for name, value in response.getheaders()}
+    def _headers(
+        response: HTTPResponse,
+    ) -> tuple[int, dict[str, str], tuple[str, ...]]:
+        grouped: dict[str, list[str]] = {}
+        for name, value in response.getheaders():
+            grouped.setdefault(name.lower(), []).append(value)
+        critical = {"x-request-id", "retry-after"}
+        duplicates = tuple(sorted(name for name in critical if len(grouped.get(name, ())) > 1))
+        headers = {
+            name: values[0] if name in critical else ", ".join(values)
+            for name, values in grouped.items()
+        }
+        return response.status, headers, duplicates
 
     def _read_body(
         self,
@@ -298,16 +332,26 @@ class JudgeVllmAdapter:
     ) -> tuple[bytes, bool]:
         chunks: list[bytes] = []
         remaining = ceiling + 1
-        while remaining:
-            time_left = deadline - time.monotonic()
-            if time_left <= 0:
-                raise TimeoutError("judge total transport deadline exceeded")
-            chunk = response.read(min(64 * 1024, remaining))
-            if not chunk:
-                break
-            chunks.append(chunk)
-            remaining -= len(chunk)
+        try:
+            while remaining:
+                time_left = deadline - time.monotonic()
+                if time_left <= 0:
+                    raise TimeoutError("judge total transport deadline exceeded")
+                chunk = response.read(min(64 * 1024, remaining))
+                if not chunk:
+                    break
+                chunks.append(chunk)
+                remaining -= len(chunk)
+        except IncompleteRead as error:
+            chunks.append(error.partial)
+            raise _BodyReadFailure(b"".join(chunks), timed_out=False) from error
+        except (TimeoutError, socket.timeout) as error:
+            raise _BodyReadFailure(b"".join(chunks), timed_out=True) from error
+        except OSError as error:
+            raise _BodyReadFailure(b"".join(chunks), timed_out=False) from error
         raw = b"".join(chunks)
+        if response.length not in {None, 0} and len(raw) <= ceiling:
+            raise _BodyReadFailure(raw, timed_out=False)
         return raw, len(raw) > ceiling
 
     @staticmethod
@@ -338,6 +382,8 @@ class JudgeVllmAdapter:
             or type(usage) is not dict
             or type(usage.get("prompt_tokens")) is not int
             or type(usage.get("completion_tokens")) is not int
+            or usage["prompt_tokens"] < 0
+            or usage["completion_tokens"] < 0
         ):
             return "provider_invalid_json", None, None, None, None, None
         return (

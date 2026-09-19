@@ -50,6 +50,7 @@ JUDGE_RESPONSE_FAILURE_CODES = (
     "provider_invalid_json",
     "provider_request_identity_missing",
     "provider_model_identity_drift",
+    "provider_duplicate_critical_header",
 )
 JUDGE_PARSE_FAILURE_CODES = (
     "parse_invalid_json",
@@ -1382,6 +1383,49 @@ def _decode_judge_label_object(raw_bytes: bytes) -> dict[str, object] | None:
     return decoded
 
 
+def _decode_provider_object(raw_bytes: bytes) -> dict[str, object] | None:
+    try:
+        decoded = json.loads(raw_bytes.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError):
+        return None
+    return decoded if type(decoded) is dict else None
+
+
+def _valid_provider_envelope(payload: Mapping[str, object]) -> bool:
+    choices = payload.get("choices")
+    usage = payload.get("usage")
+    if (
+        type(payload.get("model")) is not str
+        or type(choices) is not list
+        or len(choices) != 1
+        or type(choices[0]) is not dict
+        or type(usage) is not dict
+    ):
+        return False
+    choice = choices[0]
+    message = choice.get("message")
+    return (
+        type(message) is dict
+        and type(message.get("content")) is str
+        and type(choice.get("finish_reason")) is str
+        and type(usage.get("prompt_tokens")) is int
+        and usage["prompt_tokens"] >= 0
+        and type(usage.get("completion_tokens")) is int
+        and usage["completion_tokens"] >= 0
+    )
+
+
+def _retry_after_value(headers: Mapping[str, str]) -> float | None:
+    value = headers.get("retry-after")
+    if value is None:
+        return None
+    try:
+        parsed = float(value)
+    except ValueError:
+        return None
+    return parsed if math.isfinite(parsed) and parsed >= 0 else None
+
+
 @dataclass(frozen=True, slots=True)
 class JudgeRequestEvidence:
     """One rendered judge item bound to its manifest order and provider payload."""
@@ -1513,6 +1557,7 @@ class JudgeResponseEvidence:
     provider_request_id: str | None
     http_status: int | None
     response_headers: Mapping[str, str]
+    duplicate_critical_header_names: tuple[str, ...]
     raw_bytes_base64: str
     raw_bytes_sha256: str
     raw_bytes_count: int
@@ -1550,9 +1595,21 @@ class JudgeResponseEvidence:
             for name, value in self.response_headers.items()
         ):
             raise TypeError("response headers must be a string mapping")
+        if any(name != name.lower() for name in self.response_headers):
+            raise ValueError("response header names must be normalized lowercase")
         object.__setattr__(
             self, "response_headers", _freeze(dict(sorted(self.response_headers.items())))
         )
+        if (
+            type(self.duplicate_critical_header_names) is not tuple
+            or any(
+                name not in {"x-request-id", "retry-after"}
+                for name in self.duplicate_critical_header_names
+            )
+            or len(set(self.duplicate_critical_header_names))
+            != len(self.duplicate_critical_header_names)
+        ):
+            raise ValueError("duplicate critical header names are invalid")
         _require_sha256("raw_bytes_sha256", self.raw_bytes_sha256)
         if self.raw_bytes_sha256 != _sha256_bytes(self.raw_bytes):
             raise ValueError("raw response byte hash differs from exact bytes")
@@ -1600,6 +1657,97 @@ class JudgeResponseEvidence:
                 raise ValueError("successful response requires provider_request_id")
             if self.model_id != self.expected_model_id:
                 raise ValueError("successful response model differs from expected model")
+            if self.http_status is None or not 200 <= self.http_status < 300:
+                raise ValueError("successful response requires a 2xx HTTP status")
+            if self.retry_after_seconds is not None:
+                raise ValueError("successful response cannot carry retry_after_seconds")
+            payload = _decode_provider_object(self.raw_bytes)
+            if payload is None or not _valid_provider_envelope(payload):
+                raise ValueError("successful response requires a valid provider response body")
+            choice = payload["choices"][0]
+            usage = payload["usage"]
+            if (
+                payload["model"] != self.model_id
+                or choice["message"]["content"].encode("utf-8") != self.output_bytes
+                or choice["finish_reason"] != self.termination
+                or usage["prompt_tokens"] != self.input_tokens
+                or usage["completion_tokens"] != self.output_tokens
+            ):
+                raise ValueError("successful response fields differ from provider body")
+        if self.failure_code is not None and self.output_bytes is not None:
+            raise ValueError("failed response cannot carry parseable output bytes")
+        if self.failure_code != "http_429" and self.retry_after_seconds is not None:
+            raise ValueError("retry_after_seconds is allowed only for http_429")
+        if self.failure_code == "http_429":
+            if self.http_status != 429 or not self.raw_bytes_complete:
+                raise ValueError("http_429 requires complete status 429 response")
+            if self.retry_after_seconds != _retry_after_value(self.response_headers):
+                raise ValueError("http_429 retry_after differs from response header")
+        if self.failure_code == "http_5xx" and (
+            self.http_status is None
+            or not 500 <= self.http_status < 600
+            or not self.raw_bytes_complete
+        ):
+            raise ValueError("http_5xx requires a complete 5xx response")
+        if self.failure_code == "provider_oom":
+            if (
+                self.http_status is None
+                or not 500 <= self.http_status < 600
+                or not self.raw_bytes_complete
+                or b"out of memory" not in self.raw_bytes.lower()
+            ):
+                raise ValueError("provider OOM requires complete 5xx OOM response body")
+        if self.failure_code == "http_error" and (
+            self.http_status is None
+            or not 300 <= self.http_status < 500
+            or self.http_status == 429
+            or not self.raw_bytes_complete
+        ):
+            raise ValueError("http_error requires complete non-429 3xx/4xx response")
+        if self.failure_code in {"timeout", "provider_unreachable"} and (
+            self.http_status is not None or self.raw_bytes_complete
+        ):
+            raise ValueError("timeout and transport failures require no status and partial bytes")
+        if self.failure_code == "provider_duplicate_critical_header":
+            if not self.duplicate_critical_header_names or not self.raw_bytes_complete:
+                raise ValueError("duplicate critical header failure requires duplicate evidence")
+        elif self.duplicate_critical_header_names:
+            raise ValueError("duplicate critical headers require their typed failure code")
+        provider_payload = (
+            _decode_provider_object(self.raw_bytes) if self.raw_bytes_complete else None
+        )
+        if self.failure_code == "provider_invalid_json":
+            invalid_envelope = provider_payload is None or (
+                self.provider_request_id is not None
+                and provider_payload.get("model") == self.expected_model_id
+                and not _valid_provider_envelope(provider_payload)
+            )
+            if (
+                self.http_status is None
+                or not 200 <= self.http_status < 300
+                or not self.raw_bytes_complete
+                or not invalid_envelope
+            ):
+                raise ValueError("provider_invalid_json requires invalid complete 2xx body")
+        if self.failure_code == "provider_request_identity_missing" and (
+            self.http_status is None
+            or not 200 <= self.http_status < 300
+            or not self.raw_bytes_complete
+            or self.provider_request_id is not None
+            or provider_payload is None
+        ):
+            raise ValueError("missing provider identity requires complete 2xx JSON response")
+        if self.failure_code == "provider_model_identity_drift" and (
+            self.http_status is None
+            or not 200 <= self.http_status < 300
+            or not self.raw_bytes_complete
+            or self.provider_request_id is None
+            or self.model_id is None
+            or self.model_id == self.expected_model_id
+            or provider_payload is None
+            or provider_payload.get("model") != self.model_id
+        ):
+            raise ValueError("model identity drift requires mismatched complete 2xx response")
         if self.failure_code == "response_size_exceeded":
             if self.raw_bytes_complete:
                 raise ValueError("oversize response cannot claim complete raw bytes")
@@ -1637,7 +1785,13 @@ class JudgeResponseEvidence:
         _exact_payload(payload, expected, cls._SCHEMA)
         if type(payload["response_headers"]) is not dict:
             raise TypeError("judge response headers must use a JSON object")
-        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+        if type(payload["duplicate_critical_header_names"]) is not list:
+            raise TypeError("duplicate critical header names must use a JSON array")
+        values = {field.name: payload[field.name] for field in fields(cls)}
+        values["duplicate_critical_header_names"] = tuple(
+            payload["duplicate_critical_header_names"]
+        )
+        return cls(**values)  # type: ignore[arg-type]
 
     @classmethod
     def create(
@@ -1647,6 +1801,7 @@ class JudgeResponseEvidence:
         provider_request_id: str | None,
         http_status: int | None,
         response_headers: Mapping[str, str],
+        duplicate_critical_header_names: tuple[str, ...],
         raw_bytes: bytes,
         raw_bytes_complete: bool,
         raw_bytes_total_lower_bound: int,
@@ -1668,6 +1823,7 @@ class JudgeResponseEvidence:
             "provider_request_id": provider_request_id,
             "http_status": http_status,
             "response_headers": dict(sorted(response_headers.items())),
+            "duplicate_critical_header_names": duplicate_critical_header_names,
             "raw_bytes_base64": base64.b64encode(raw_bytes).decode("ascii"),
             "raw_bytes_sha256": _sha256_bytes(raw_bytes),
             "raw_bytes_count": len(raw_bytes),
