@@ -314,33 +314,101 @@ def test_rollback_never_deletes_replaced_output_directory(
     review_inputs: dict[str, object],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
     output_root = tmp_path / "runner"
-    moved_root = tmp_path / "moved-root"
-    replacement_marker = "replacement-must-survive"
-    real_write = __import__(
-        "agent_ex.calibration.judge_materialize", fromlist=["_write_bytes_create_only"]
-    )._write_bytes_create_only
-    calls = 0
+    sibling = tmp_path / "sibling"
+    sibling.mkdir()
+    sibling_marker = sibling / "must-survive.txt"
+    sibling_marker.write_text("sibling-must-survive", encoding="utf-8")
+    real_write = materializer._write_bytes_create_only
+    real_identity = materializer._safe_identity
+    replaced = False
 
     def replace_after_first_write(path: Path, content: bytes) -> None:
-        nonlocal calls
+        nonlocal replaced
         real_write(path, content)
-        calls += 1
-        if calls == 1:
-            output_root.rename(moved_root)
-            output_root.mkdir()
-            (output_root / "sentinel.txt").write_text(replacement_marker, encoding="utf-8")
-        else:
-            raise OSError("synthetic write failure after directory replacement")
+        replaced = True
+
+    def report_replaced_identity(path: Path, kind: str) -> tuple[int, int] | None:
+        identity = real_identity(path, kind)
+        if replaced and path == output_root and kind == "directory" and identity is not None:
+            return (identity[0], identity[1] + 1)
+        return identity
 
     monkeypatch.setattr(
         "agent_ex.calibration.judge_materialize._write_bytes_create_only",
         replace_after_first_write,
     )
-    with pytest.raises((OSError, ValueError), match="directory replacement|identity"):
+    monkeypatch.setattr(
+        "agent_ex.calibration.judge_materialize._safe_identity",
+        report_replaced_identity,
+    )
+    with pytest.raises(ValueError, match="identity"):
         materialize_judge_view(**review_inputs, output_root=output_root)
-    assert (moved_root / "judge-pack.json").is_file()
-    assert (output_root / "sentinel.txt").read_text(encoding="utf-8") == replacement_marker
+    assert (output_root / "judge-pack.json").is_file()
+    assert sibling_marker.read_text(encoding="utf-8") == "sibling-must-survive"
+
+
+def test_materializer_ignores_ctime_changes_when_identity_is_stable(
+    tmp_path: Path,
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    real_lstat = materializer.os.lstat
+    ticks = 0
+
+    class CtimeChangingStat:
+        def __init__(self, original: os.stat_result) -> None:
+            self._original = original
+
+        def __getattr__(self, name: str) -> object:
+            return getattr(self._original, name)
+
+        @property
+        def st_ctime_ns(self) -> int:
+            nonlocal ticks
+            ticks += 1
+            return self._original.st_ctime_ns + ticks
+
+    def changing_lstat(path: str | os.PathLike[str]) -> CtimeChangingStat:
+        return CtimeChangingStat(real_lstat(path))
+
+    monkeypatch.setattr(materializer.os, "lstat", changing_lstat)
+    result = materialize(tmp_path, review_inputs)
+    assert result.item_count == len(items_for_coder(review_inputs["bundle"], "coder-b"))
+    assert (tmp_path / "runner" / "judge-pack.json").read_bytes() == review_inputs["pack_bytes"]
+
+
+def test_zero_inode_identity_fails_closed_without_cleanup(
+    tmp_path: Path,
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    real_lstat = materializer.os.lstat
+
+    class ZeroInodeStat:
+        def __init__(self, original: os.stat_result) -> None:
+            self._original = original
+
+        def __getattr__(self, name: str) -> object:
+            return getattr(self._original, name)
+
+        @property
+        def st_ino(self) -> int:
+            return 0
+
+    def zero_inode_lstat(path: str | os.PathLike[str]) -> ZeroInodeStat:
+        return ZeroInodeStat(real_lstat(path))
+
+    monkeypatch.setattr(materializer.os, "lstat", zero_inode_lstat)
+    with pytest.raises(ValueError, match="parent|identity"):
+        materialize(tmp_path, review_inputs)
+    assert not (tmp_path / "runner").exists()
 
 
 def test_materialization_round_trip_hash_and_information_boundary(

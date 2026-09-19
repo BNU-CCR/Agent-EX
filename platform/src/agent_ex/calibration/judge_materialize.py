@@ -310,7 +310,16 @@ class JudgeMaterialization:
         return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
 
 
-_Identity = tuple[int, int, int]
+_Identity = tuple[int, int]
+
+
+def _stable_identity(stat_result: os.stat_result) -> _Identity | None:
+    """Return an object identity; inode zero fails closed instead of using time metadata."""
+
+    inode = int(stat_result.st_ino)
+    if inode == 0:
+        return None
+    return int(stat_result.st_dev), inode
 
 
 def _is_link_or_reparse(path: Path) -> bool:
@@ -337,11 +346,7 @@ def _safe_identity(path: Path, kind: str) -> _Identity | None:
         return None
     if kind == "file" and not stat.S_ISREG(stat_result.st_mode):
         return None
-    return (
-        int(stat_result.st_dev),
-        int(stat_result.st_ino),
-        int(getattr(stat_result, "st_ctime_ns", 0)),
-    )
+    return _stable_identity(stat_result)
 
 
 def _existing_ancestors_are_safe(path: Path) -> None:
@@ -384,11 +389,9 @@ def _write_bytes_create_only(path: Path, content: bytes) -> _Identity:
     try:
         descriptor = os.open(path, flags, 0o600)
         stat_result = os.fstat(descriptor)
-        identity = (
-            int(stat_result.st_dev),
-            int(stat_result.st_ino),
-            int(getattr(stat_result, "st_ctime_ns", 0)),
-        )
+        identity = _stable_identity(stat_result)
+        if identity is None:
+            raise ValueError("created file has no stable object identity")
         written = os.write(descriptor, content)
         if written != len(content):
             raise OSError("short write while materializing judge view")
