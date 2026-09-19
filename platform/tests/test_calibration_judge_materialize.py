@@ -636,15 +636,12 @@ def test_open_swap_quarantines_replaced_staging_directory(
         assert (moved_original / "judge-pack.json").exists()
         assert (moved_original / "index.json").exists()
         assert (moved_original / "materialization.json").exists()
-        replacement = next(
-            path for path in base.iterdir() if path.name.startswith(".runner.staging-")
-        )
-        assert (replacement / "replacement-sentinel.txt").read_text(
-            encoding="utf-8"
-        ) == "replacement-must-survive"
-        assert not (replacement / "judge-pack.json").exists()
-        assert not (replacement / "index.json").exists()
-        assert not (replacement / "materialization.json").exists()
+        assert {path.name for path in output_root.iterdir()} == {"replacement-sentinel.txt"}
+        assert {path.name for path in moved_original.iterdir()} == {
+            "judge-pack.json",
+            "index.json",
+            "materialization.json",
+        }
 
 
 def test_failed_write_keeps_partial_staging_without_cleanup(
