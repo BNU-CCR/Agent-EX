@@ -33,6 +33,13 @@ class SecureMaterializationUnsupportedError(RuntimeError):
     """Raised when the host cannot provide the required handle-relative primitives."""
 
 
+def _require_secure_backend() -> None:
+    if os.name != "posix":
+        raise SecureMaterializationUnsupportedError(
+            "judge materialization requires POSIX handle-relative staging and publish"
+        )
+
+
 def _canonical_bytes(payload: object) -> bytes:
     return (
         json.dumps(
@@ -531,10 +538,7 @@ def materialize_judge_view(
     _require_sha256("approved_index_hash", approved_index_hash)
     if not isinstance(output_root, Path):
         raise TypeError("output_root must be a Path")
-    if os.name != "posix":
-        raise SecureMaterializationUnsupportedError(
-            "judge materialization requires POSIX handle-relative staging and publish"
-        )
+    _require_secure_backend()
     _existing_ancestors_are_safe(output_root)
     if output_root.exists() or output_root.is_symlink():
         raise FileExistsError("output root already exists or is a symlink")
@@ -583,6 +587,7 @@ def materialize_judge_view(
         staging_root, staging_name, staging_fd, staging_identity = _make_staging_directory(
             output_root.parent, parent_fd, output_root.name, parent_identity
         )
+        _fsync_handle(parent_fd)
 
         files = (
             (staging_root / "judge-pack.json", pack_bytes),

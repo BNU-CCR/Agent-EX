@@ -22,9 +22,12 @@ from test_calibration_review import prepared
 
 @pytest.fixture(autouse=True)
 def _require_posix_secure_backend(request: pytest.FixtureRequest) -> None:
-    if os.name == "nt" and not request.node.name.startswith(
-        "test_windows_materialization_fails_closed"
-    ):
+    allowed = (
+        "test_windows_materialization_fails_closed",
+        "test_posix_staged_file_open",
+        "test_exact797_validator",
+    )
+    if os.name == "nt" and not request.node.name.startswith(allowed):
         pytest.skip("materialization requires the POSIX handle-relative backend")
 
 
@@ -39,6 +42,16 @@ def test_windows_materialization_fails_closed_before_staging(
         materialize_judge_view(**review_inputs, output_root=output_root)
     assert not output_root.exists()
     assert not list(tmp_path.glob(".runner.staging-*"))
+
+
+def test_exact797_validator_and_canonical_pack_contract(
+    review_inputs: dict[str, object],
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    pack = materializer._load_canonical_json(review_inputs["pack_bytes"], "judge pack")
+    _, _, items = materializer._validate_pack(review_inputs["bundle"], pack)
+    assert len(items) == EXPECTED_JUDGE_ITEM_COUNT
 
 
 def canonical_bytes(payload: object) -> bytes:
@@ -654,7 +667,6 @@ def test_failed_write_keeps_partial_staging_without_cleanup(
         assert (partial / "judge-pack.json").exists()
 
 
-@pytest.mark.skipif(os.name != "posix", reason="POSIX handle-relative contract")
 def test_posix_staged_file_open_is_handle_relative_and_nofollow(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -664,26 +676,33 @@ def test_posix_staged_file_open_is_handle_relative_and_nofollow(
     staging.mkdir()
     target = staging / "payload"
     real_open = materializer.os.open
-    staging_fd = real_open(staging, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    staging_probe = staging / ".fd-probe"
+    staging_fd = real_open(staging_probe, os.O_RDWR | os.O_CREAT | os.O_EXCL, 0o600)
     staging_identity = materializer._stable_identity(os.fstat(staging_fd))
     assert staging_identity is not None
     observed: list[tuple[int, int | None]] = []
+    nofollow_marker = getattr(os, "O_NOFOLLOW", 1 << 30)
+    fd_paths = {staging_fd: staging}
+    monkeypatch.setattr(materializer.os, "O_NOFOLLOW", nofollow_marker, raising=False)
 
     def record_open(path, flags, *args, **kwargs):
         if Path(path).name == "payload" and flags & os.O_CREAT:
             observed.append((flags, kwargs.get("dir_fd")))
-        return real_open(path, flags, *args, **kwargs)
+        dir_fd = kwargs.pop("dir_fd", None)
+        actual = fd_paths[dir_fd] / path if dir_fd is not None else path
+        return real_open(actual, flags & ~nofollow_marker, *args, **kwargs)
 
     monkeypatch.setattr(materializer.os, "open", record_open)
     try:
         materializer._write_bytes_create_only(target, b"payload", staging_fd, staging_identity)
     finally:
         os.close(staging_fd)
+        staging_probe.unlink()
 
     assert observed
     flags, dir_fd = observed[0]
     assert dir_fd is not None
-    assert flags & os.O_NOFOLLOW
+    assert flags & nofollow_marker
 
 
 def test_materializer_ignores_ctime_changes_when_identity_is_stable(
