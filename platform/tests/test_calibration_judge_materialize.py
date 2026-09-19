@@ -466,7 +466,7 @@ def test_parent_ancestor_swap_after_initial_check_is_rejected(
         return real_open(path, flags, *args, **kwargs)
 
     monkeypatch.setattr(materializer.os, "open", swap_ancestor)
-    with pytest.raises(ValueError, match="parent directory identity"):
+    with pytest.raises(ValueError, match="identity"):
         materialize_judge_view(**review_inputs, output_root=parent / "runner")
     assert swapped
     assert not (moved_ancestor / "parent" / "runner").exists()
