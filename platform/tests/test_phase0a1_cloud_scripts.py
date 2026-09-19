@@ -309,9 +309,7 @@ def test_judge_service_treats_any_port_8000_listener_as_occupied() -> None:
     script = _script("phase0a1-judge-service.sh")
 
     absence_check = script[
-        script.index("assert_loopback_listener_absent()") : script.index(
-            "listener_owned_by_pid()"
-        )
+        script.index("assert_loopback_listener_absent()") : script.index("listener_owned_by_pid()")
     ]
     assert '[[ -z "$sockets" ]]' in absence_check
     assert '[[ "$sockets" != *"127.0.0.1:8000"* ]]' not in absence_check
@@ -320,7 +318,7 @@ def test_judge_service_treats_any_port_8000_listener_as_occupied() -> None:
 def test_judge_service_anchors_all_evidence_io_to_a_held_directory_capability() -> None:
     script = _script("phase0a1-judge-service.sh")
 
-    assert 'os.O_DIRECTORY | os.O_NOFOLLOW' in script
+    assert "os.O_DIRECTORY | os.O_NOFOLLOW" in script
     assert "os.set_inheritable(directory_fd, True)" in script
     assert 'evidence_anchor="/proc/$$/fd/$evidence_directory_fd"' in script
     assert "verify_evidence_directory_binding" in script
