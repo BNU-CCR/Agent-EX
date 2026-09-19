@@ -437,6 +437,103 @@ def test_existing_or_symlink_output_root_is_rejected(
         materialize_judge_view(**review_inputs, output_root=link)
 
 
+@pytest.mark.skipif(os.name != "posix", reason="requires real POSIX directory handles")
+def test_parent_ancestor_swap_after_initial_check_is_rejected(
+    tmp_path: Path,
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    ancestor = tmp_path / "ancestor"
+    parent = ancestor / "parent"
+    parent.mkdir(parents=True)
+    moved_ancestor = tmp_path / "moved-ancestor"
+    replacement_parent = ancestor / "parent"
+    real_open = materializer.os.open
+    swapped = False
+
+    def swap_ancestor(path, flags, *args, **kwargs):
+        nonlocal swapped
+        if Path(path).name == "ancestor" and kwargs.get("dir_fd") is not None and not swapped:
+            ancestor.rename(moved_ancestor)
+            ancestor.mkdir()
+            replacement_parent.mkdir()
+            (replacement_parent / "replacement-sentinel.txt").write_text(
+                "replacement-must-survive", encoding="utf-8"
+            )
+            swapped = True
+        return real_open(path, flags, *args, **kwargs)
+
+    monkeypatch.setattr(materializer.os, "open", swap_ancestor)
+    with pytest.raises(ValueError, match="parent directory identity"):
+        materialize_judge_view(**review_inputs, output_root=parent / "runner")
+    assert swapped
+    assert not (moved_ancestor / "parent" / "runner").exists()
+    assert (replacement_parent / "replacement-sentinel.txt").read_text(
+        encoding="utf-8"
+    ) == "replacement-must-survive"
+    assert not (replacement_parent / "runner").exists()
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires real POSIX directory handles")
+def test_parent_dotdot_component_is_rejected(
+    tmp_path: Path, review_inputs: dict[str, object]
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    parent = tmp_path / "parent"
+    parent.mkdir()
+    with pytest.raises(ValueError, match=r"\.\."):
+        materializer.materialize_judge_view(
+            **review_inputs, output_root=parent / "child" / ".." / "runner"
+        )
+
+
+@pytest.mark.skipif(os.name != "posix", reason="requires real POSIX directory handles")
+@pytest.mark.parametrize("failure", ["open", "fstat"])
+def test_staging_open_or_fstat_failure_retains_quarantine_locator(
+    tmp_path: Path,
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+    failure: str,
+) -> None:
+    import agent_ex.calibration.judge_materialize as materializer
+
+    if failure == "open":
+        real_open = materializer.os.open
+
+        def fail_staging_open(path, flags, *args, **kwargs):
+            if Path(path).name.startswith(".runner.staging-"):
+                raise OSError("synthetic staging open failure")
+            return real_open(path, flags, *args, **kwargs)
+
+        monkeypatch.setattr(materializer.os, "open", fail_staging_open)
+        expected_error = "synthetic staging open failure"
+    else:
+        real_fstat = materializer.os.fstat
+        fstat_calls = 0
+
+        def fail_staging_fstat(descriptor: int):
+            nonlocal fstat_calls
+            fstat_calls += 1
+            if fstat_calls == 3:
+                raise OSError("synthetic staging fstat failure")
+            return real_fstat(descriptor)
+
+        monkeypatch.setattr(materializer.os, "fstat", fail_staging_fstat)
+        expected_error = "synthetic staging fstat failure"
+
+    with pytest.raises(OSError, match=expected_error) as caught:
+        materialize_judge_view(**review_inputs, output_root=tmp_path / "runner")
+    assert not (tmp_path / "runner").exists()
+    partial = next(tmp_path.glob(".runner.staging-*"))
+    assert partial.is_dir()
+    notes = " ".join(caught.value.__notes__)
+    assert "staging quarantine retained at" in notes
+    assert str(partial) in notes
+
+
 def test_failed_write_rolls_back_partial_directory(
     tmp_path: Path, review_inputs: dict[str, object], monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -587,7 +684,7 @@ def test_publish_swap_before_return_is_detected_without_cleanup(
             "agent_ex.calibration.judge_materialize._rename_directory_no_replace",
             swap_after_publish,
         )
-        with pytest.raises(ValueError, match="before return|identity"):
+        with pytest.raises(ValueError, match="before return|identity") as caught:
             materialize_judge_view(**review_inputs, output_root=output_root)
         assert swapped
         assert (moved_original / "judge-pack.json").is_file()
@@ -596,6 +693,9 @@ def test_publish_swap_before_return_is_detected_without_cleanup(
         assert (output_root / "replacement-sentinel.txt").read_text(encoding="utf-8") == (
             "replacement-must-survive"
         )
+        notes = " ".join(caught.value.__notes__)
+        assert "published output retained at" in notes
+        assert str(output_root) in notes
 
 
 def test_open_swap_quarantines_replaced_staging_directory(

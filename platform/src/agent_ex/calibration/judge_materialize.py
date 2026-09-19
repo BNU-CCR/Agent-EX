@@ -381,6 +381,28 @@ def _existing_ancestors_are_safe(path: Path) -> None:
         current = parent
 
 
+def _reject_parent_components(path: Path) -> None:
+    if ".." in path.parts:
+        raise ValueError("output path must not contain '..' components")
+
+
+def _open_directory_handle(path: Path) -> int:
+    """Open a directory by walking held handles, never by re-resolving ancestors."""
+
+    absolute = path if path.is_absolute() else Path.cwd() / path
+    directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | os.O_NOFOLLOW
+    descriptor = os.open(Path(absolute.anchor), directory_flags)
+    try:
+        for component in absolute.parts[1:]:
+            child = os.open(component, directory_flags, dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = child
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
 def _fsync_handle(descriptor: int) -> None:
     os.fsync(descriptor)
 
@@ -431,11 +453,20 @@ def _make_staging_directory(
             os.mkdir(staging_name, 0o700, dir_fd=parent_fd)
         except FileExistsError:
             continue
-        staging_fd = os.open(staging_name, directory_flags, dir_fd=parent_fd)
-        staging_identity = _stable_identity(os.fstat(staging_fd))
-        if staging_identity is None:
-            os.close(staging_fd)
-            raise ValueError("staging directory has no stable non-link identity")
+        try:
+            staging_fd: int | None = None
+            staging_fd = os.open(staging_name, directory_flags, dir_fd=parent_fd)
+            staging_identity = _stable_identity(os.fstat(staging_fd))
+            if staging_identity is None:
+                raise ValueError("staging directory has no stable non-link identity")
+        except BaseException as error:
+            try:
+                if staging_fd is not None:
+                    os.close(staging_fd)
+            finally:
+                error.add_note(f"staging quarantine retained at {parent / staging_name}")
+            raise
+        assert staging_fd is not None
         return parent / staging_name, staging_name, staging_fd, staging_identity
     raise FileExistsError("could not allocate a unique private staging directory")
 
@@ -542,11 +573,12 @@ def materialize_judge_view(
     if not isinstance(output_root, Path):
         raise TypeError("output_root must be a Path")
     _require_secure_backend()
+    _reject_parent_components(output_root)
     _existing_ancestors_are_safe(output_root)
     if output_root.exists() or output_root.is_symlink():
         raise FileExistsError("output root already exists or is a symlink")
-    parent_identity = _safe_identity(output_root.parent, "directory")
-    if parent_identity is None:
+    expected_parent_identity = _safe_identity(output_root.parent, "directory")
+    if expected_parent_identity is None:
         raise ValueError("output root parent must be an existing directory")
 
     pack = _load_canonical_json(pack_bytes, "judge pack")
@@ -580,15 +612,14 @@ def materialize_judge_view(
     staging_identity: _Identity | None = None
     published = False
     try:
-        directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | os.O_NOFOLLOW
-        parent_fd = os.open(output_root.parent, directory_flags)
-        parent_identity = _stable_identity(os.fstat(parent_fd))
-        if parent_identity is None:
+        parent_fd = _open_directory_handle(output_root.parent)
+        held_parent_identity = _stable_identity(os.fstat(parent_fd))
+        if held_parent_identity != expected_parent_identity:
             raise ValueError("output root parent must have a stable object identity")
-        if _safe_identity(output_root.parent, "directory") != parent_identity:
+        if _safe_identity(output_root.parent, "directory") != expected_parent_identity:
             raise ValueError("output root parent directory identity changed")
         staging_root, staging_name, staging_fd, staging_identity = _make_staging_directory(
-            output_root.parent, parent_fd, output_root.name, parent_identity
+            output_root.parent, parent_fd, output_root.name, expected_parent_identity
         )
         _fsync_handle(parent_fd)
 
@@ -602,7 +633,7 @@ def materialize_judge_view(
             assert staging_fd is not None and staging_identity is not None
             if _stable_identity(os.fstat(staging_fd)) != staging_identity:
                 raise ValueError("staging directory identity changed")
-            if _stable_identity(os.fstat(parent_fd)) != parent_identity:
+            if _stable_identity(os.fstat(parent_fd)) != expected_parent_identity:
                 raise ValueError("output root parent directory identity changed")
             created_identities.append(
                 _write_bytes_create_only(path, content, staging_fd, staging_identity)
@@ -613,9 +644,9 @@ def materialize_judge_view(
         )
         _verify_staged_files(staging_root, staging_identity, staging_fd, staged)
         _fsync_handle(staging_fd)
-        if _stable_identity(os.fstat(parent_fd)) != parent_identity:
+        if _stable_identity(os.fstat(parent_fd)) != expected_parent_identity:
             raise ValueError("output root parent directory identity changed before publish")
-        if _safe_identity(output_root.parent, "directory") != parent_identity:
+        if _safe_identity(output_root.parent, "directory") != expected_parent_identity:
             raise ValueError("output root parent directory identity changed before publish")
         try:
             os.stat(output_root.name, dir_fd=parent_fd, follow_symlinks=False)
@@ -625,7 +656,9 @@ def materialize_judge_view(
             raise FileExistsError("output root appeared before publish")
         _require_exact_inventory(staging_fd, {path.name for path, _, _ in staged})
         assert staging_name is not None
-        _rename_directory_no_replace(parent_fd, staging_name, output_root.name, parent_identity)
+        _rename_directory_no_replace(
+            parent_fd, staging_name, output_root.name, expected_parent_identity
+        )
         published = True
         assert staging_fd is not None and staging_identity is not None
         if _stable_identity(os.fstat(staging_fd)) != staging_identity:
@@ -641,13 +674,16 @@ def materialize_judge_view(
             raise ValueError("published output directory identity changed before return")
         _verify_staged_files(staging_root, staging_identity, staging_fd, staged)
         _fsync_handle(parent_fd)
-        if _stable_identity(os.fstat(parent_fd)) != parent_identity:
+        if _stable_identity(os.fstat(parent_fd)) != expected_parent_identity:
             raise ValueError("output root parent directory identity changed before return")
-        if _safe_identity(output_root.parent, "directory") != parent_identity:
+        if _safe_identity(output_root.parent, "directory") != expected_parent_identity:
             raise ValueError("output root parent directory identity changed before return")
     except BaseException as error:
-        if staging_root is not None and not published:
-            error.add_note(f"staging quarantine retained at {staging_root}")
+        if staging_root is not None:
+            if published:
+                error.add_note(f"published output retained at {output_root}")
+            else:
+                error.add_note(f"staging quarantine retained at {staging_root}")
         raise
     finally:
         if staging_fd is not None:
