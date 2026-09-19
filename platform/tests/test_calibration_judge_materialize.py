@@ -455,7 +455,10 @@ def test_failed_write_rolls_back_partial_directory(
         materialize(tmp_path, review_inputs)
     assert not (tmp_path / "runner").exists()
     partial = next(tmp_path.glob(".runner.staging-*"))
-    assert {path.name for path in partial.iterdir()} == {"judge-pack.json"}
+    partial_names = {path.name for path in partial.iterdir()}
+    assert partial_names
+    assert partial_names <= {"judge-pack.json", "index.json", "materialization.json"}
+    assert (partial / "judge-pack.json").is_file()
     assert "staging quarantine retained at" in " ".join(caught.value.__notes__)
 
 
@@ -543,9 +546,11 @@ def test_rollback_never_follows_real_replaced_output_directory(
             "agent_ex.calibration.judge_materialize._write_bytes_create_only",
             replace_after_first_write,
         )
-        with pytest.raises(FileNotFoundError):
+        with pytest.raises(ValueError, match="identity"):
             materialize_judge_view(**review_inputs, output_root=output_root)
         assert (moved_original / "judge-pack.json").is_file()
+        assert (moved_original / "index.json").is_file()
+        assert (moved_original / "materialization.json").is_file()
         assert (output_root / "replacement-sentinel.txt").read_text(
             encoding="utf-8"
         ) == "replacement-must-survive"
@@ -564,28 +569,30 @@ def test_publish_swap_before_return_is_detected_without_cleanup(
         base = Path(temporary_root)
         output_root = base / "runner"
         moved_original = base / "moved-original"
-        real_fsync = materializer._fsync_handle
+        real_rename = materializer._rename_directory_no_replace
         swapped = False
 
-        def swap_after_publish(descriptor: int) -> None:
+        def swap_after_publish(*args, **kwargs) -> None:
             nonlocal swapped
-            real_fsync(descriptor)
-            if output_root.exists() and not swapped:
-                output_root.rename(moved_original)
-                output_root.mkdir()
-                (output_root / "replacement-sentinel.txt").write_text(
-                    "replacement-must-survive", encoding="utf-8"
-                )
-                swapped = True
+            real_rename(*args, **kwargs)
+            assert output_root.is_dir()
+            output_root.rename(moved_original)
+            output_root.mkdir()
+            (output_root / "replacement-sentinel.txt").write_text(
+                "replacement-must-survive", encoding="utf-8"
+            )
+            swapped = True
 
         monkeypatch.setattr(
-            "agent_ex.calibration.judge_materialize._fsync_handle",
+            "agent_ex.calibration.judge_materialize._rename_directory_no_replace",
             swap_after_publish,
         )
         with pytest.raises(ValueError, match="before return|identity"):
             materialize_judge_view(**review_inputs, output_root=output_root)
         assert swapped
         assert (moved_original / "judge-pack.json").is_file()
+        assert (moved_original / "index.json").is_file()
+        assert (moved_original / "materialization.json").is_file()
         assert (output_root / "replacement-sentinel.txt").read_text(encoding="utf-8") == (
             "replacement-must-survive"
         )
@@ -620,19 +627,24 @@ def test_open_swap_quarantines_replaced_staging_directory(
             return real_open(path, flags, *args, **kwargs)
 
         monkeypatch.setattr(materializer.os, "open", swap_before_open)
-        with pytest.raises(FileNotFoundError):
+        with pytest.raises(ValueError, match="identity"):
             materialize_judge_view(**review_inputs, output_root=output_root)
         assert swapped
-        assert not output_root.exists()
+        assert (output_root / "replacement-sentinel.txt").read_text(encoding="utf-8") == (
+            "replacement-must-survive"
+        )
         assert (moved_original / "judge-pack.json").exists()
-        assert (
-            next(path for path in base.iterdir() if path.name.startswith(".runner.staging-"))
-            / "replacement-sentinel.txt"
-        ).read_text(encoding="utf-8") == "replacement-must-survive"
-        assert not (
-            next(path for path in base.iterdir() if path.name.startswith(".runner.staging-"))
-            / "judge-pack.json"
-        ).exists()
+        assert (moved_original / "index.json").exists()
+        assert (moved_original / "materialization.json").exists()
+        replacement = next(
+            path for path in base.iterdir() if path.name.startswith(".runner.staging-")
+        )
+        assert (replacement / "replacement-sentinel.txt").read_text(
+            encoding="utf-8"
+        ) == "replacement-must-survive"
+        assert not (replacement / "judge-pack.json").exists()
+        assert not (replacement / "index.json").exists()
+        assert not (replacement / "materialization.json").exists()
 
 
 def test_failed_write_keeps_partial_staging_without_cleanup(
