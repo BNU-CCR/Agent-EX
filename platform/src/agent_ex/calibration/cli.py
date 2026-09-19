@@ -43,6 +43,10 @@ from .environment import (
     VllmIdentity,
     WheelEntry,
 )
+from .judge_contracts import (
+    JudgeAuthorization,
+    JudgePreflightEvidence,
+)
 from .contracts import ProbeRunProjection, ProbeRuntimePolicy
 from .runner import ProbeRunCrash
 from .review import (
@@ -78,6 +82,8 @@ _COMMANDS = (
     "review-import",
     "seal",
     "verify",
+    "judge-preflight",
+    "judge-lock",
 )
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _MAX_CONTROL_FILE_BYTES = 16 * 1024 * 1024
@@ -172,6 +178,23 @@ def build_parser() -> argparse.ArgumentParser:
 
     preflight = commands.add_parser("preflight")
     preflight.add_argument("--output", required=True, type=_output_path)
+
+    judge_preflight = commands.add_parser("judge-preflight")
+    _add_archive_root(judge_preflight)
+    _add_hashed_file(judge_preflight, "authorization")
+    judge_preflight.add_argument(
+        "--supporting-material", required=True, type=_existing_regular_file
+    )
+    judge_preflight.add_argument("--supporting-material-hash", required=True, type=_sha256)
+    _add_hashed_file(judge_preflight, "preliminary_inspection")
+    judge_preflight.add_argument("--output", required=True, type=_output_path)
+
+    judge_lock = commands.add_parser("judge-lock")
+    _add_archive_root(judge_lock)
+    _add_hashed_file(judge_lock, "authorization")
+    _add_hashed_file(judge_lock, "preflight")
+    _add_hashed_file(judge_lock, "inspection_inputs")
+    judge_lock.add_argument("--output", required=True, type=_output_path)
 
     smoke_manifest = commands.add_parser("smoke-manifest")
     _add_archive_root(smoke_manifest)
@@ -652,6 +675,23 @@ def collect_smoke_environment_observation(
     return _collect_environment_observation(candidate, inputs, archive_root)
 
 
+def collect_judge_environment_observation(
+    authorization: JudgeAuthorization,
+    inputs: Mapping[str, object],
+    archive_root: Path,
+) -> EnvironmentObservation:
+    """Collect the live, health-bearing observation after judge service start."""
+    if not isinstance(authorization, JudgeAuthorization):
+        raise TypeError("judge environment inspection requires JudgeAuthorization")
+    candidate: dict[str, object] = {
+        "model_repository": authorization.model_id,
+        "model_revision": authorization.model_revision,
+        "tokenizer_repository": authorization.tokenizer_id,
+        "tokenizer_revision": authorization.tokenizer_revision,
+    }
+    return _collect_environment_observation(candidate, inputs, archive_root)
+
+
 def _collect_environment_observation(
     candidate: Mapping[str, object],
     inputs: Mapping[str, object],
@@ -748,6 +788,80 @@ def _lock_command(args: argparse.Namespace) -> int:
         authorization_hash=artifacts.record_hash,
     )
     build_cloud_run_manifest(artifacts, environment_lock=environment_lock)
+    _write_json_create_only(args.output, environment_lock.to_payload())
+    return 0
+
+
+def _judge_preflight_command(args: argparse.Namespace) -> int:
+    for path in (
+        args.authorization,
+        args.supporting_material,
+        args.preliminary_inspection,
+        args.output,
+    ):
+        _require_within_archive(path, args.archive_root)
+    authorization = JudgeAuthorization.from_payload(
+        _read_json_record(
+            args.authorization,
+            affirmative_hash=args.authorization_hash,
+        )
+    )
+    supporting_material = _read_json_payload(
+        args.supporting_material,
+        affirmative_hash=args.supporting_material_hash,
+    )
+    if supporting_material.get("judge_prompt_hash") != authorization.old_judge_prompt_hash:
+        raise ValueError("supporting material old judge prompt differs from authorization")
+    preliminary = PreliminaryEnvironmentInspection.from_payload(
+        _read_json_record(
+            args.preliminary_inspection,
+            affirmative_hash=args.preliminary_inspection_hash,
+        )
+    )
+    evidence = JudgePreflightEvidence.create(
+        authorization=authorization,
+        supporting_material_hash=args.supporting_material_hash,
+        old_judge_prompt_hash=authorization.old_judge_prompt_hash,
+        preliminary_inspection_hash=preliminary.record_hash,
+    )
+    _write_json_create_only(args.output, evidence.to_payload())
+    return 0
+
+
+def _judge_lock_command(args: argparse.Namespace) -> int:
+    for path in (args.authorization, args.preflight, args.inspection_inputs, args.output):
+        _require_within_archive(path, args.archive_root)
+    authorization = JudgeAuthorization.from_payload(
+        _read_json_record(
+            args.authorization,
+            affirmative_hash=args.authorization_hash,
+        )
+    )
+    preflight = JudgePreflightEvidence.from_payload(
+        _read_json_record(args.preflight, affirmative_hash=args.preflight_hash)
+    )
+    if preflight.authorization_hash != authorization.record_hash:
+        raise ValueError("judge preflight differs from the approved authorization")
+    inspection_payload = _read_json_record(
+        args.inspection_inputs,
+        affirmative_hash=args.inspection_inputs_hash,
+    )
+    observation = collect_judge_environment_observation(
+        authorization,
+        _inspection_inputs(inspection_payload),
+        args.archive_root,
+    )
+    environment_lock = EnvironmentLock.create(
+        observation,
+        authorization_hash=authorization.record_hash,
+    )
+    if (
+        environment_lock.model_revision != authorization.model_revision
+        or environment_lock.tokenizer_revision != authorization.tokenizer_revision
+        or environment_lock.chat_template_hash != authorization.chat_template_hash
+        or environment_lock.vllm_identity.version != authorization.runtime_version
+    ):
+        raise ValueError("live judge environment differs from authorization")
     _write_json_create_only(args.output, environment_lock.to_payload())
     return 0
 
@@ -1428,6 +1542,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = collect_cloud_preflight()
         _write_json_create_only(args.output, result.to_payload())
         return 0
+    if args.command == "judge-preflight":
+        return _judge_preflight_command(args)
+    if args.command == "judge-lock":
+        return _judge_lock_command(args)
     smoke_handlers = {
         "smoke-manifest": _smoke_manifest_command,
         "smoke-preliminary-inspection": _smoke_preliminary_inspection_command,

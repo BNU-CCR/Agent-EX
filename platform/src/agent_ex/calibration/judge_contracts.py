@@ -22,6 +22,7 @@ from ..domain import (
     canonical_payload_hash,
 )
 from .review import BlindReviewItem, SemanticReviewPolicy
+from .environment import EnvironmentLock
 
 
 VISIBLE_FIELDS = ("topic_text", "history_text", "identity_text", "response_text")
@@ -787,3 +788,482 @@ class JudgeAuthorization:
             retry_backoff_seconds=tuple(payload["retry_backoff_seconds"]),
         )
         return cls(**values)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeExecutionManifest:
+    """Post-start authorization binding the fresh judge runtime and static contract."""
+
+    run_id: str
+    authorization_hash: str
+    review_bundle_hash: str
+    export_hash: str
+    judge_pack_hash: str
+    judge_pack_index_hash: str
+    judge_coder_contract_hash: str
+    old_judge_prompt_hash: str
+    renderer_hash: str
+    ordering_policy_hash: str
+    classifier_contract_hash: str
+    environment_lock_hash: str
+    preflight_hash: str
+    service_start_identity_hash: str
+    runner_view_hash: str
+    old_environment_lock_hash: str
+    model_id: str
+    model_revision: str
+    tokenizer_hash: str
+    tokenizer_id: str
+    tokenizer_revision: str
+    chat_template_hash: str
+    runtime_version: str
+    non_thinking: bool
+    generation_settings: Mapping[str, object]
+    connect_timeout_seconds: float
+    read_timeout_seconds: float
+    total_timeout_seconds: float
+    retryable_codes: tuple[str, ...]
+    retry_backoff_seconds: tuple[float, ...]
+    max_attempts_per_item: int
+    one_item_per_request: bool
+    strict_approved_order: bool
+    archive_uri: str
+    source_commit: str
+    expected_item_count: int
+    calibration_only: bool
+    formal_parameter_authority: bool
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-execution-manifest.v1"
+    _AUTHORIZATION_FIELDS = {
+        "review_bundle_hash": "review_bundle_hash",
+        "export_hash": "export_hash",
+        "judge_pack_hash": "judge_pack_hash",
+        "judge_pack_index_hash": "judge_pack_index_hash",
+        "judge_coder_contract_hash": "coder_contract_hash",
+        "old_judge_prompt_hash": "old_judge_prompt_hash",
+        "renderer_hash": "renderer_hash",
+        "ordering_policy_hash": "ordering_policy_hash",
+        "classifier_contract_hash": "classifier_contract_hash",
+        "old_environment_lock_hash": "old_environment_lock_hash",
+        "model_id": "model_id",
+        "model_revision": "model_revision",
+        "tokenizer_hash": "tokenizer_hash",
+        "tokenizer_id": "tokenizer_id",
+        "tokenizer_revision": "tokenizer_revision",
+        "chat_template_hash": "chat_template_hash",
+        "runtime_version": "runtime_version",
+        "non_thinking": "non_thinking",
+        "generation_settings": "generation_settings",
+        "connect_timeout_seconds": "connect_timeout_seconds",
+        "read_timeout_seconds": "read_timeout_seconds",
+        "total_timeout_seconds": "total_timeout_seconds",
+        "retryable_codes": "retryable_codes",
+        "retry_backoff_seconds": "retry_backoff_seconds",
+        "max_attempts_per_item": "max_attempts_per_item",
+        "one_item_per_request": "one_item_per_request",
+        "strict_approved_order": "strict_approved_order",
+        "archive_uri": "archive_uri",
+        "source_commit": "source_commit",
+    }
+
+    def __post_init__(self) -> None:
+        _require_id("run_id", self.run_id)
+        for name in (
+            "authorization_hash",
+            "review_bundle_hash",
+            "export_hash",
+            "judge_pack_hash",
+            "judge_pack_index_hash",
+            "judge_coder_contract_hash",
+            "old_judge_prompt_hash",
+            "renderer_hash",
+            "ordering_policy_hash",
+            "classifier_contract_hash",
+            "environment_lock_hash",
+            "preflight_hash",
+            "service_start_identity_hash",
+            "runner_view_hash",
+            "old_environment_lock_hash",
+            "tokenizer_hash",
+            "chat_template_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        for name in (
+            "model_id",
+            "model_revision",
+            "tokenizer_id",
+            "tokenizer_revision",
+            "runtime_version",
+        ):
+            _require_string(name, getattr(self, name))
+        if type(self.non_thinking) is not bool or not self.non_thinking:
+            raise ValueError("judge manifest non_thinking must be true")
+        if not isinstance(self.generation_settings, Mapping) or not self.generation_settings:
+            raise ValueError("judge manifest generation settings must be explicit")
+        for name in (
+            "connect_timeout_seconds",
+            "read_timeout_seconds",
+            "total_timeout_seconds",
+        ):
+            _require_positive_number(name, getattr(self, name))
+        _require_int("max_attempts_per_item", self.max_attempts_per_item, minimum=1)
+        if type(self.retryable_codes) is not tuple or not self.retryable_codes:
+            raise ValueError("judge manifest retryable_codes must be an explicit tuple")
+        if type(self.retry_backoff_seconds) is not tuple:
+            raise TypeError("judge manifest retry_backoff_seconds must be a tuple")
+        if len(self.retry_backoff_seconds) != self.max_attempts_per_item - 1:
+            raise ValueError("judge manifest retry backoff does not cover its attempt budget")
+        if self.one_item_per_request is not True or self.strict_approved_order is not True:
+            raise ValueError("judge manifest requires one item and strict approved order")
+        _require_evidence_uri("archive_uri", self.archive_uri)
+        if _GIT_PATTERN.fullmatch(self.source_commit) is None:
+            raise ValueError("source_commit must be a lowercase 40-character Git commit")
+        if self.expected_item_count != 797 or type(self.expected_item_count) is not int:
+            raise ValueError("judge manifest requires exactly 797 items")
+        if self.calibration_only is not True or self.formal_parameter_authority is not False:
+            raise ValueError("judge manifest must remain calibration-only")
+        object.__setattr__(self, "generation_settings", _freeze(self.generation_settings))
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        run_id: str,
+        authorization: JudgeAuthorization,
+        environment_lock: EnvironmentLock,
+        preflight_hash: str,
+        service_start_identity_hash: str,
+        runner_view_hash: str,
+        **manifest_values: object,
+    ) -> JudgeExecutionManifest:
+        if not isinstance(authorization, JudgeAuthorization):
+            raise TypeError("judge manifest requires a JudgeAuthorization")
+        if not isinstance(environment_lock, EnvironmentLock):
+            raise TypeError("judge manifest requires a fresh EnvironmentLock")
+        if environment_lock.authorization_hash != authorization.record_hash:
+            raise ValueError("environment lock authorization differs from judge authorization")
+        expected_names = set(cls._AUTHORIZATION_FIELDS) - {"old_environment_lock_hash"}
+        if set(manifest_values) != expected_names:
+            raise ValueError("judge manifest repeated authorization fields are not exact")
+        repeated = {
+            **manifest_values,
+            "old_environment_lock_hash": authorization.old_environment_lock_hash,
+        }
+        for manifest_name, authorization_name in cls._AUTHORIZATION_FIELDS.items():
+            if repeated[manifest_name] != getattr(authorization, authorization_name):
+                raise ValueError(f"judge manifest authorization drift in {manifest_name}")
+        observation_drift = {
+            "model_revision": environment_lock.model_revision,
+            "tokenizer_revision": environment_lock.tokenizer_revision,
+            "chat_template_hash": environment_lock.chat_template_hash,
+            "runtime_version": environment_lock.vllm_identity.version,
+        }
+        for name, observed in observation_drift.items():
+            if getattr(authorization, name) != observed:
+                raise ValueError(f"fresh environment drift in {name}")
+        content: dict[str, object] = {
+            "run_id": run_id,
+            "authorization_hash": authorization.record_hash,
+            **repeated,
+            "environment_lock_hash": environment_lock.record_hash,
+            "preflight_hash": preflight_hash,
+            "service_start_identity_hash": service_start_identity_hash,
+            "runner_view_hash": runner_view_hash,
+            "expected_item_count": 797,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        payload = {"schema_version": cls._SCHEMA, **content, "metadata": _metadata()}
+        return cls(**content, record_hash=canonical_payload_hash(payload))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeExecutionManifest:
+        expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        for name in ("retryable_codes", "retry_backoff_seconds"):
+            if type(payload[name]) is not list:
+                raise TypeError(f"{name} must use a JSON array")
+        if type(payload["generation_settings"]) is not dict:
+            raise TypeError("generation_settings must use a JSON object")
+        values = {field.name: payload[field.name] for field in fields(cls)}
+        values["retryable_codes"] = tuple(payload["retryable_codes"])
+        values["retry_backoff_seconds"] = tuple(payload["retry_backoff_seconds"])
+        return cls(**values)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgePreManifestAbortEvidence:
+    authorization_hash: str
+    service_start_identity_hash: str
+    environment_lock_hash: str | None
+    process_exit_observed: bool
+    loopback_listener_absent: bool
+    gpu_idle_observation_hash: str
+    calibration_only: bool
+    formal_parameter_authority: bool
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-pre-manifest-abort-evidence.v1"
+
+    def __post_init__(self) -> None:
+        for name in (
+            "authorization_hash",
+            "service_start_identity_hash",
+            "gpu_idle_observation_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        if self.environment_lock_hash is not None:
+            _require_sha256("environment_lock_hash", self.environment_lock_hash)
+        if self.process_exit_observed is not True or self.loopback_listener_absent is not True:
+            raise ValueError("judge abort requires observed process exit and absent listener")
+        if self.calibration_only is not True or self.formal_parameter_authority is not False:
+            raise ValueError("judge abort must remain calibration-only")
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(cls, **values: object) -> JudgePreManifestAbortEvidence:
+        content = {
+            **values,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        payload = {"schema_version": cls._SCHEMA, **content, "metadata": _metadata()}
+        return cls(**content, record_hash=canonical_payload_hash(payload))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgePreManifestAbortEvidence:
+        expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgePreflightEvidence:
+    authorization_hash: str
+    supporting_material_hash: str
+    old_judge_prompt_hash: str
+    preliminary_inspection_hash: str
+    calibration_only: bool
+    formal_parameter_authority: bool
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-preflight.v1"
+
+    def __post_init__(self) -> None:
+        for name in (
+            "authorization_hash",
+            "supporting_material_hash",
+            "old_judge_prompt_hash",
+            "preliminary_inspection_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        if self.calibration_only is not True or self.formal_parameter_authority is not False:
+            raise ValueError("judge preflight must remain calibration-only")
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        authorization: JudgeAuthorization,
+        supporting_material_hash: str,
+        old_judge_prompt_hash: str,
+        preliminary_inspection_hash: str,
+    ) -> JudgePreflightEvidence:
+        if not isinstance(authorization, JudgeAuthorization):
+            raise TypeError("judge preflight requires JudgeAuthorization")
+        if old_judge_prompt_hash != authorization.old_judge_prompt_hash:
+            raise ValueError("supporting material old judge prompt differs from authorization")
+        content: dict[str, object] = {
+            "authorization_hash": authorization.record_hash,
+            "supporting_material_hash": supporting_material_hash,
+            "old_judge_prompt_hash": old_judge_prompt_hash,
+            "preliminary_inspection_hash": preliminary_inspection_hash,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        payload = {"schema_version": cls._SCHEMA, **content, "metadata": _metadata()}
+        return cls(**content, record_hash=canonical_payload_hash(payload))
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgePreflightEvidence:
+        expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeServiceEvidence:
+    """Hash-only wrapper for one create-only judge service lifecycle record."""
+
+    phase: str
+    authorization_hash: str
+    evidence_hash: str
+    service_start_identity_hash: str | None
+    environment_lock_hash: str | None
+    manifest_hash: str | None
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-service-evidence.v1"
+
+    def __post_init__(self) -> None:
+        if self.phase not in {"preflight", "start", "live-observation", "stop"}:
+            raise ValueError("judge service evidence phase is unsupported")
+        for name in ("authorization_hash", "evidence_hash", "record_hash"):
+            _require_sha256(name, getattr(self, name))
+        for name in ("service_start_identity_hash", "environment_lock_hash", "manifest_hash"):
+            value = getattr(self, name)
+            if value is not None:
+                _require_sha256(name, value)
+        if self.phase == "preflight" and any(
+            value is not None
+            for value in (
+                self.service_start_identity_hash,
+                self.environment_lock_hash,
+                self.manifest_hash,
+            )
+        ):
+            raise ValueError("preflight service evidence cannot bind later lifecycle records")
+        if self.phase == "start" and self.service_start_identity_hash != self.evidence_hash:
+            raise ValueError("start service evidence must bind its start identity")
+        if self.phase == "live-observation" and (
+            self.service_start_identity_hash is None
+            or self.environment_lock_hash != self.evidence_hash
+            or self.manifest_hash is not None
+        ):
+            raise ValueError("live service evidence requires start and environment lock")
+        if self.phase == "stop" and any(
+            value is None
+            for value in (
+                self.service_start_identity_hash,
+                self.environment_lock_hash,
+                self.manifest_hash,
+            )
+        ):
+            raise ValueError("stop service evidence requires manifest, lock, and start")
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        phase: str,
+        authorization_hash: str,
+        evidence_hash: str,
+        service_start_identity_hash: str | None = None,
+        environment_lock_hash: str | None = None,
+        manifest_hash: str | None = None,
+    ) -> JudgeServiceEvidence:
+        content: dict[str, object] = {
+            "phase": phase,
+            "authorization_hash": authorization_hash,
+            "evidence_hash": evidence_hash,
+            "service_start_identity_hash": service_start_identity_hash,
+            "environment_lock_hash": environment_lock_hash,
+            "manifest_hash": manifest_hash,
+        }
+        payload = {"schema_version": cls._SCHEMA, **content, "metadata": _metadata()}
+        return cls(**content, record_hash=canonical_payload_hash(payload))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeServiceEvidence:
+        expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class JudgeRunCompletion:
+    manifest_hash: str
+    projection_hash: str
+    service_index_hash: str
+    stop_evidence_hash: str
+    service_start_identity_hash: str
+    environment_lock_hash: str
+    gpu_idle_observation_hash: str
+    calibration_only: bool
+    formal_parameter_authority: bool
+    record_hash: str
+
+    _SCHEMA = "paper1.calibration.judge-run-completion.v1"
+
+    def __post_init__(self) -> None:
+        for field in fields(self):
+            if field.name.endswith("_hash"):
+                _require_sha256(field.name, getattr(self, field.name))
+        if self.calibration_only is not True or self.formal_parameter_authority is not False:
+            raise ValueError("judge completion must remain calibration-only")
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    def content_payload(self) -> dict[str, object]:
+        return _record_payload(self, self._SCHEMA)
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        manifest_hash: str,
+        projection_hash: str,
+        service_index_hash: str,
+        stop_evidence_hash: str,
+        service_start_identity_hash: str,
+        environment_lock_hash: str,
+        gpu_idle_observation_hash: str,
+    ) -> JudgeRunCompletion:
+        content: dict[str, object] = {
+            "manifest_hash": manifest_hash,
+            "projection_hash": projection_hash,
+            "service_index_hash": service_index_hash,
+            "stop_evidence_hash": stop_evidence_hash,
+            "service_start_identity_hash": service_start_identity_hash,
+            "environment_lock_hash": environment_lock_hash,
+            "gpu_idle_observation_hash": gpu_idle_observation_hash,
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+        }
+        payload = {"schema_version": cls._SCHEMA, **content, "metadata": _metadata()}
+        return cls(**content, record_hash=canonical_payload_hash(payload))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> JudgeRunCompletion:
+        expected = {field.name for field in fields(cls)} | {"schema_version", "metadata"}
+        _exact_payload(payload, expected, cls._SCHEMA)
+        return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
+
+    @classmethod
+    def create_from_abort(cls, abort: JudgePreManifestAbortEvidence) -> JudgeRunCompletion:
+        if not isinstance(abort, JudgePreManifestAbortEvidence):
+            raise TypeError("judge completion abort input is invalid")
+        raise ValueError("pre-manifest abort evidence cannot create judge completion")

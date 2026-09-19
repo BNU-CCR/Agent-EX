@@ -230,7 +230,10 @@ def test_service_script_has_a_verified_prelock_abort_terminal_record() -> None:
     assert "paper1.calibration.service-prelock-abort-evidence.v1" in script
     assert '"preliminary_inspection_hash"' in script
     assert "write_prelock_abort_evidence" in script
-    assert 'start-identity.json" && ! -e "$candidate/stop-evidence.json" && ! -e "$candidate/abort-evidence.json"' in script
+    assert (
+        'start-identity.json" && ! -e "$candidate/stop-evidence.json" && ! -e "$candidate/abort-evidence.json"'
+        in script
+    )
     assert 'elif [[ "$(json_field "$identity" binding_kind)" == "environment-lock" ]]' in script
 
     stop_start = script.index("write_stop_evidence() {")
@@ -238,3 +241,39 @@ def test_service_script_has_a_verified_prelock_abort_terminal_record() -> None:
     abort_start = script.index("write_prelock_abort_evidence() {")
     abort_python_close = script.index("\nPY\n}", abort_start)
     assert stop_start < stop_python_close < abort_start < abort_python_close
+
+
+def test_judge_service_script_has_distinct_two_stage_authorization_lifecycle() -> None:
+    script = _script("phase0a1-judge-service.sh")
+
+    assert 'case "$mode" in' in script
+    for mode in ("start)", "status)", "abort-pre-manifest)", "stop)"):
+        assert mode in script
+    assert "AUTHORIZATION_HASH" in script
+    assert "MANIFEST_HASH" in script
+    assert "paper1.calibration.judge-service-start-identity.v1" in script
+    assert "paper1.calibration.judge-pre-manifest-abort-evidence.v1" in script
+    assert "paper1.calibration.judge-service-stop-evidence.v1" in script
+    assert "gpu_compute_process_observation_hash" in script
+    assert "gpu_idle_observation_hash" in script
+    assert "environment_lock_hash" in script
+    assert "service_start_identity_hash" in script
+    assert "127.0.0.1:8000" in script
+    assert "/health" in script
+    assert "flock" in script
+    assert "pkill" not in script
+
+
+def test_judge_service_start_binds_only_authorization_and_abort_never_invents_manifest() -> None:
+    script = _script("phase0a1-judge-service.sh")
+
+    start_block = script[script.index("  start)") : script.index("  status)")]
+    abort_block = script[script.index("  abort-pre-manifest)") : script.index("  stop)")]
+    stop_block = script[script.index("  stop)") :]
+    assert "authorization_hash" in start_block
+    assert "manifest_hash" not in start_block
+    assert "manifest_hash" not in abort_block
+    assert "manifest_hash" in stop_block
+    assert 'kill -TERM -- "-$pid"' in script
+    assert "loopback_listener_absent" in script
+    assert "process_exit_observed" in script

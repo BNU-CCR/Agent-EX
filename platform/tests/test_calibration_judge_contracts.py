@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from dataclasses import replace
 import json
 from pathlib import Path
 
@@ -10,12 +11,19 @@ from agent_ex.calibration.judge_contracts import (
     DIMENSIONS,
     VISIBLE_FIELDS,
     JudgeAuthorization,
+    JudgeExecutionManifest,
+    JudgePreflightEvidence,
+    JudgePreManifestAbortEvidence,
+    JudgeRunCompletion,
+    JudgeServiceEvidence,
     JudgeRequestRenderer,
     RenderedJudgeRequest,
     derive_judge_seed,
 )
+from agent_ex.calibration.environment import EnvironmentLock
 from agent_ex.calibration.review import BlindReviewItem, SemanticReviewPolicy
 from agent_ex.domain import canonical_payload_hash
+from test_calibration_environment import valid_observation
 
 
 PLATFORM_ROOT = Path(__file__).parents[1]
@@ -36,6 +44,41 @@ SHA_D = "d" * 64
 SHA_E = "e" * 64
 SHA_F = "f" * 64
 SOURCE_COMMIT = "1" * 40
+
+
+def manifest_values_from_authorization(
+    authorization: JudgeAuthorization,
+) -> dict[str, object]:
+    return {
+        "review_bundle_hash": authorization.review_bundle_hash,
+        "export_hash": authorization.export_hash,
+        "judge_pack_hash": authorization.judge_pack_hash,
+        "judge_pack_index_hash": authorization.judge_pack_index_hash,
+        "judge_coder_contract_hash": authorization.coder_contract_hash,
+        "old_judge_prompt_hash": authorization.old_judge_prompt_hash,
+        "renderer_hash": authorization.renderer_hash,
+        "ordering_policy_hash": authorization.ordering_policy_hash,
+        "classifier_contract_hash": authorization.classifier_contract_hash,
+        "model_id": authorization.model_id,
+        "model_revision": authorization.model_revision,
+        "tokenizer_id": authorization.tokenizer_id,
+        "tokenizer_revision": authorization.tokenizer_revision,
+        "tokenizer_hash": authorization.tokenizer_hash,
+        "chat_template_hash": authorization.chat_template_hash,
+        "runtime_version": authorization.runtime_version,
+        "non_thinking": authorization.non_thinking,
+        "generation_settings": authorization.generation_settings,
+        "connect_timeout_seconds": authorization.connect_timeout_seconds,
+        "read_timeout_seconds": authorization.read_timeout_seconds,
+        "total_timeout_seconds": authorization.total_timeout_seconds,
+        "retryable_codes": authorization.retryable_codes,
+        "retry_backoff_seconds": authorization.retry_backoff_seconds,
+        "max_attempts_per_item": authorization.max_attempts_per_item,
+        "one_item_per_request": authorization.one_item_per_request,
+        "strict_approved_order": authorization.strict_approved_order,
+        "archive_uri": authorization.archive_uri,
+        "source_commit": authorization.source_commit,
+    }
 
 
 @pytest.fixture
@@ -174,6 +217,69 @@ def authorization_payload(renderer: JudgeRequestRenderer) -> dict[str, object]:
         },
     }
     return {**content, "record_hash": canonical_payload_hash(content)}
+
+
+@pytest.fixture
+def valid_lifecycle(renderer: JudgeRequestRenderer) -> dict[str, object]:
+    observation = valid_observation()
+    payload = authorization_payload(renderer)
+    payload["chat_template_hash"] = observation.chat_template_hash
+    payload["runtime_version"] = observation.vllm_identity.version
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    authorization = JudgeAuthorization.from_payload(payload)
+    environment_lock = EnvironmentLock.create(
+        observation,
+        authorization_hash=authorization.record_hash,
+    )
+    return {
+        "run_id": "judge-run-test-001",
+        "authorization": authorization,
+        "environment_lock": environment_lock,
+        "preflight_hash": SHA_A,
+        "service_start_identity_hash": SHA_B,
+        "runner_view_hash": SHA_C,
+        **manifest_values_from_authorization(authorization),
+    }
+
+
+def distinct_valid_value(field: str, value: object) -> object:
+    if field in {
+        "review_bundle_hash",
+        "export_hash",
+        "judge_pack_hash",
+        "judge_pack_index_hash",
+        "judge_coder_contract_hash",
+        "old_judge_prompt_hash",
+        "renderer_hash",
+        "ordering_policy_hash",
+        "classifier_contract_hash",
+        "tokenizer_hash",
+        "chat_template_hash",
+    }:
+        return SHA_F if value != SHA_F else SHA_E
+    if field == "source_commit":
+        return "2" * 40
+    if field in {"non_thinking", "one_item_per_request", "strict_approved_order"}:
+        return not value
+    if field == "generation_settings":
+        return {"temperature": 0.1, "top_p": 1.0, "max_tokens": 512}
+    if field == "retryable_codes":
+        return (*value, "http_503")
+    if field == "retry_backoff_seconds":
+        return (3.0, 4.0)
+    if field == "max_attempts_per_item":
+        return int(value) + 1
+    if field in {
+        "connect_timeout_seconds",
+        "read_timeout_seconds",
+        "total_timeout_seconds",
+    }:
+        return float(value) + 1.0
+    if field == "archive_uri":
+        return "/root/autodl-tmp/agent-ex-phase0a1-judge-drift"
+    return f"{value}-drift"
 
 
 def test_renderer_golden_binds_roles_schema_labels_and_seed(
@@ -497,6 +603,149 @@ def test_authorization_rejects_invalid_timeout_budget_loopback_or_runtime_flag(
         match="timeout|attempt|backoff|non.thinking|item|order|loopback|runtime|generation",
     ):
         JudgeAuthorization.from_payload(payload)
+
+
+def test_manifest_binds_authorization_fresh_lock_preflight_and_start(
+    valid_lifecycle: dict[str, object],
+) -> None:
+    manifest = JudgeExecutionManifest.create(**valid_lifecycle)
+    authorization = valid_lifecycle["authorization"]
+    environment_lock = valid_lifecycle["environment_lock"]
+    assert isinstance(authorization, JudgeAuthorization)
+    assert isinstance(environment_lock, EnvironmentLock)
+    assert manifest.authorization_hash == authorization.record_hash
+    assert manifest.environment_lock_hash == environment_lock.record_hash
+    assert manifest.preflight_hash == valid_lifecycle["preflight_hash"]
+    assert manifest.service_start_identity_hash == valid_lifecycle["service_start_identity_hash"]
+    assert JudgeExecutionManifest.from_payload(manifest.to_payload()) == manifest
+
+
+def test_manifest_rejects_environment_drift(
+    valid_lifecycle: dict[str, object],
+) -> None:
+    environment_lock = valid_lifecycle["environment_lock"]
+    assert isinstance(environment_lock, EnvironmentLock)
+    valid_lifecycle["environment_lock"] = replace(
+        environment_lock,
+        authorization_hash=SHA_F,
+        record_hash=canonical_payload_hash(
+            {
+                **environment_lock.payload_without_record_hash(),
+                "authorization_hash": SHA_F,
+            }
+        ),
+    )
+    with pytest.raises(ValueError, match="authorization|environment"):
+        JudgeExecutionManifest.create(**valid_lifecycle)
+
+
+@pytest.mark.parametrize(
+    "field",
+    (
+        "review_bundle_hash",
+        "export_hash",
+        "judge_pack_hash",
+        "judge_pack_index_hash",
+        "judge_coder_contract_hash",
+        "old_judge_prompt_hash",
+        "renderer_hash",
+        "ordering_policy_hash",
+        "classifier_contract_hash",
+        "model_id",
+        "model_revision",
+        "tokenizer_id",
+        "tokenizer_revision",
+        "tokenizer_hash",
+        "chat_template_hash",
+        "runtime_version",
+        "non_thinking",
+        "generation_settings",
+        "connect_timeout_seconds",
+        "read_timeout_seconds",
+        "total_timeout_seconds",
+        "retryable_codes",
+        "retry_backoff_seconds",
+        "max_attempts_per_item",
+        "one_item_per_request",
+        "strict_approved_order",
+        "archive_uri",
+        "source_commit",
+    ),
+)
+def test_manifest_rejects_every_authorization_field_drift(
+    valid_lifecycle: dict[str, object], field: str
+) -> None:
+    valid_lifecycle[field] = distinct_valid_value(field, valid_lifecycle[field])
+    with pytest.raises(ValueError, match="authorization|drift"):
+        JudgeExecutionManifest.create(**valid_lifecycle)
+
+
+def test_pre_manifest_abort_binds_authorization_start_and_optional_lock(
+    valid_lifecycle: dict[str, object],
+) -> None:
+    authorization = valid_lifecycle["authorization"]
+    assert isinstance(authorization, JudgeAuthorization)
+    abort = JudgePreManifestAbortEvidence.create(
+        authorization_hash=authorization.record_hash,
+        service_start_identity_hash=valid_lifecycle["service_start_identity_hash"],
+        environment_lock_hash=None,
+        process_exit_observed=True,
+        loopback_listener_absent=True,
+        gpu_idle_observation_hash=SHA_A,
+    )
+    assert abort.environment_lock_hash is None
+    assert JudgePreManifestAbortEvidence.from_payload(abort.to_payload()) == abort
+    with pytest.raises(ValueError, match="abort|completion"):
+        JudgeRunCompletion.create_from_abort(abort)
+
+
+def test_judge_preflight_and_service_wrappers_preserve_two_stage_order(
+    valid_lifecycle: dict[str, object],
+) -> None:
+    authorization = valid_lifecycle["authorization"]
+    assert isinstance(authorization, JudgeAuthorization)
+    preflight = JudgePreflightEvidence.create(
+        authorization=authorization,
+        supporting_material_hash=SHA_D,
+        old_judge_prompt_hash=authorization.old_judge_prompt_hash,
+        preliminary_inspection_hash=SHA_E,
+    )
+    assert JudgePreflightEvidence.from_payload(preflight.to_payload()) == preflight
+    start = JudgeServiceEvidence.create(
+        phase="start",
+        authorization_hash=authorization.record_hash,
+        evidence_hash=SHA_B,
+        service_start_identity_hash=SHA_B,
+    )
+    live = JudgeServiceEvidence.create(
+        phase="live-observation",
+        authorization_hash=authorization.record_hash,
+        evidence_hash=SHA_C,
+        service_start_identity_hash=start.evidence_hash,
+        environment_lock_hash=SHA_C,
+    )
+    assert JudgeServiceEvidence.from_payload(start.to_payload()) == start
+    assert JudgeServiceEvidence.from_payload(live.to_payload()) == live
+    with pytest.raises(ValueError, match="old judge prompt"):
+        JudgePreflightEvidence.create(
+            authorization=authorization,
+            supporting_material_hash=SHA_D,
+            old_judge_prompt_hash=SHA_F,
+            preliminary_inspection_hash=SHA_E,
+        )
+
+
+def test_judge_run_completion_round_trip_requires_post_manifest_stop() -> None:
+    completion = JudgeRunCompletion.create(
+        manifest_hash=SHA_A,
+        projection_hash=SHA_B,
+        service_index_hash=SHA_C,
+        stop_evidence_hash=SHA_D,
+        service_start_identity_hash=SHA_E,
+        environment_lock_hash=SHA_F,
+        gpu_idle_observation_hash=SHA_A,
+    )
+    assert JudgeRunCompletion.from_payload(completion.to_payload()) == completion
 
 
 def test_authorization_rejects_wrong_container_types_and_hash_tamper(

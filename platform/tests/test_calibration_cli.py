@@ -58,6 +58,8 @@ def test_parser_exposes_only_approved_subcommands() -> None:
 
     assert set(action.choices) == {
         "preflight",
+        "judge-preflight",
+        "judge-lock",
         "smoke-manifest",
         "smoke-preliminary-inspection",
         "smoke-lock",
