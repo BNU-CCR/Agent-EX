@@ -1,4 +1,28 @@
 {
+  "fixture_content": {
+    "schema_version": "paper1.calibration.judge-rendered-request-golden-input.v1",
+    "item": {
+      "schema_version": "paper1.calibration.blind-review-item.v1",
+      "item_id": "blind-item-golden-001",
+      "policy_hash": "12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9",
+      "visible_payload": {
+        "topic_text": "\u5ef6\u8fdf\u9000\u4f11\u662f\u5426\u5408\u9002\uff1f\n\u8bf7\u53ea\u5224\u65ad\u540c\u4e00\u6784\u5ff5\u3002",
+        "history_text": "",
+        "identity_text": "\u804c\u4e1a\uff1a\u6559\u5e08\uff1b\u5907\u6ce8\u542b\u5f15\u53f7 \\\"\u4e0e\u53cd\u659c\u6760 \\\\ ",
+        "response_text": "\u6211\u503e\u5411\u652f\u6301\uff0c\u4f46\u4f1a\u6839\u636e\u65b0\u8bc1\u636e\u8c03\u6574\u3002\tEND"
+      },
+      "visible_payload_hash": "ccc63c523a21a8ef1bc8fe5aa6412c9fe51f83c6280206994563659089350aa3",
+      "metadata": {
+        "calibration_only": true,
+        "formal_parameter_authority": false,
+        "research_parameter_status": "not_frozen"
+      },
+      "record_hash": "70657120427bf07ca239231b18954450d91ac4e13ee50eb6b8cfb70c4d2fe7ed"
+    },
+    "attempt_index": 1,
+    "repair": false
+  },
+  "fixture_content_hash": "05175d34eb995fbd8c0c9156133a64cf723b0d4b62bff4f17b3028157fbc4fa9",
   "rendered_request": {
     "schema_version": "paper1.calibration.rendered-judge-request.v1",
     "item_id": "blind-item-golden-001",
@@ -6,10 +30,10 @@
     "visible_payload_hash": "ccc63c523a21a8ef1bc8fe5aa6412c9fe51f83c6280206994563659089350aa3",
     "attempt_index": 1,
     "repair": false,
-    "seed": 4328369628837455988,
-    "request_id": "judge-request-14d6cc77f4bc7877db9607d95b74fd5f54e4d787fdd54ad3e5c4e80e7f0cfd2c",
-    "idempotency_key": "judge-idempotency-14d6cc77f4bc7877db9607d95b74fd5f54e4d787fdd54ad3e5c4e80e7f0cfd2c",
-    "renderer_hash": "f9218c2588b7e2cee41af3a86c72bcbdb9ff339d819fef79e6c7406f1964bc0e",
+    "seed": 17644927026409212499,
+    "request_id": "judge-request-1098cfa7885f7d5a93be9aa90d2901a2103d8b0fa5c19adb4e4a872cfaa866bf",
+    "idempotency_key": "judge-idempotency-1098cfa7885f7d5a93be9aa90d2901a2103d8b0fa5c19adb4e4a872cfaa866bf",
+    "renderer_hash": "2b27499033bbe79ff454d2b114e1193571e4cbeb36d2c02ceaa34990b6a0e632",
     "visible_fields": [
       "topic_text",
       "history_text",
@@ -61,7 +85,7 @@
       "formal_parameter_authority": false,
       "research_parameter_status": "not_frozen"
     },
-    "record_hash": "d7156c7a81ed9303538ce0cc7d2b5f3049402d61f684279f368c2ec39bc0128d"
+    "record_hash": "c76e708809b5e137f7ac046aa8bbaf07be71a80a06bc8b9905c105c804af9bdd"
   },
-  "record_hash": "d7156c7a81ed9303538ce0cc7d2b5f3049402d61f684279f368c2ec39bc0128d"
+  "record_hash": "c76e708809b5e137f7ac046aa8bbaf07be71a80a06bc8b9905c105c804af9bdd"
 }

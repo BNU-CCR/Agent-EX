@@ -57,8 +57,17 @@ def item(policy: SemanticReviewPolicy) -> BlindReviewItem:
     )
 
 
+def golden_fixture_content(item: BlindReviewItem) -> dict[str, object]:
+    return {
+        "schema_version": "paper1.calibration.judge-rendered-request-golden-input.v1",
+        "item": item.to_payload(),
+        "attempt_index": 1,
+        "repair": False,
+    }
+
+
 @pytest.fixture
-def renderer(policy: SemanticReviewPolicy) -> JudgeRequestRenderer:
+def renderer(policy: SemanticReviewPolicy, item: BlindReviewItem) -> JudgeRequestRenderer:
     return JudgeRequestRenderer.create(
         policy,
         chat_template_hash=SHA_A,
@@ -68,6 +77,7 @@ def renderer(policy: SemanticReviewPolicy) -> JudgeRequestRenderer:
             "top_p": 1.0,
             "max_tokens": 512,
         },
+        golden_fixture_content=golden_fixture_content(item),
     )
 
 
@@ -133,9 +143,60 @@ def test_renderer_golden_binds_roles_schema_labels_and_seed(
     assert rendered.seed == derive_judge_seed(renderer.record_hash, item.item_id, 1)
     assert rendered.record_hash == canonical_payload_hash(rendered.content_payload())
     fixture = json.loads(GOLDEN_FIXTURE.read_text(encoding="utf-8"))
+    assert set(fixture) == {
+        "fixture_content",
+        "fixture_content_hash",
+        "rendered_request",
+        "record_hash",
+    }
+    assert fixture["fixture_content"] == golden_fixture_content(item)
+    assert "renderer_hash" not in fixture["fixture_content"]
+    assert "rendered_request" not in fixture["fixture_content"]
+    assert fixture["fixture_content_hash"] == canonical_payload_hash(fixture["fixture_content"])
+    assert renderer.golden_fixture_hash == fixture["fixture_content_hash"]
+    assert dict(renderer.golden_fixture_content) == fixture["fixture_content"]
     assert rendered.to_payload() == fixture["rendered_request"]
     assert rendered.record_hash == fixture["record_hash"]
     renderer.verify_fixture(item, fixture)
+
+
+@pytest.mark.parametrize("missing", ["golden_fixture_content", "golden_fixture_hash"])
+def test_renderer_payload_rejects_missing_golden_fixture_binding(
+    renderer: JudgeRequestRenderer, missing: str
+) -> None:
+    payload = renderer.to_payload()
+    del payload[missing]
+    with pytest.raises(ValueError, match="exact fields"):
+        JudgeRequestRenderer.from_payload(payload)
+
+
+@pytest.mark.parametrize("mutation", ["hash", "content"])
+def test_renderer_payload_rejects_rehashed_golden_fixture_drift(
+    renderer: JudgeRequestRenderer, mutation: str
+) -> None:
+    payload = renderer.to_payload()
+    if mutation == "hash":
+        payload["golden_fixture_hash"] = SHA_F
+    else:
+        payload["golden_fixture_content"]["attempt_index"] = 2
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match="golden_fixture_hash|golden fixture"):
+        JudgeRequestRenderer.from_payload(payload)
+
+
+@pytest.mark.parametrize("mutation", ["missing", "hash_drift"])
+def test_checked_in_fixture_rejects_missing_or_drifted_content_hash(
+    renderer: JudgeRequestRenderer, item: BlindReviewItem, mutation: str
+) -> None:
+    fixture = json.loads(GOLDEN_FIXTURE.read_text(encoding="utf-8"))
+    if mutation == "missing":
+        del fixture["fixture_content_hash"]
+    else:
+        fixture["fixture_content_hash"] = SHA_F
+    with pytest.raises(ValueError, match="fixture|hash|exact fields"):
+        renderer.verify_fixture(item, fixture)
 
 
 def test_renderer_round_trip_is_strict_and_immutable(
@@ -162,6 +223,29 @@ def test_seed_request_and_idempotency_are_deterministic_per_item_attempt(
     assert len({first.request_id, next_attempt.request_id, repair.request_id}) == 3
     assert len({first.idempotency_key, next_attempt.idempotency_key, repair.idempotency_key}) == 3
     assert first.seed != next_attempt.seed
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("seed", 123456789),
+        ("request_id", "judge-request-" + "1" * 64),
+        ("idempotency_key", "judge-idempotency-" + "2" * 64),
+    ],
+)
+def test_rendered_request_rejects_rehashed_derived_identity_tamper(
+    renderer: JudgeRequestRenderer,
+    item: BlindReviewItem,
+    field: str,
+    value: object,
+) -> None:
+    payload = renderer.render(item, 1, repair=False).to_payload()
+    payload[field] = value
+    payload["record_hash"] = canonical_payload_hash(
+        {name: field_value for name, field_value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match=field):
+        RenderedJudgeRequest.from_payload(payload)
 
 
 @pytest.mark.parametrize("attempt_index", [0, -1, True, 1.0])

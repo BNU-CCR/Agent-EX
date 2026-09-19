@@ -181,6 +181,20 @@ class RenderedJudgeRequest:
         _require_int("seed", self.seed)
         for name in ("request_id", "idempotency_key"):
             _require_id(name, getattr(self, name))
+        expected_seed = derive_judge_seed(self.renderer_hash, self.item_id, self.attempt_index)
+        if self.seed != expected_seed:
+            raise ValueError("seed differs from the frozen renderer/item/attempt derivation")
+        identity = {
+            "renderer_hash": self.renderer_hash,
+            "item_id": self.item_id,
+            "attempt_index": self.attempt_index,
+            "repair": self.repair,
+        }
+        identity_hash = canonical_payload_hash(identity)
+        if self.request_id != "judge-request-" + identity_hash:
+            raise ValueError("request_id differs from the frozen request identity derivation")
+        if self.idempotency_key != "judge-idempotency-" + identity_hash:
+            raise ValueError("idempotency_key differs from the frozen idempotency derivation")
         if self.visible_fields != VISIBLE_FIELDS:
             raise ValueError("visible field order differs from the frozen judge contract")
         if (
@@ -237,6 +251,8 @@ class RenderedJudgeRequest:
 class JudgeRequestRenderer:
     policy_hash: str
     renderer_version: str
+    golden_fixture_content: Mapping[str, object]
+    golden_fixture_hash: str
     system_template: str
     normal_user_template: str
     repair_user_template: str
@@ -257,8 +273,39 @@ class JudgeRequestRenderer:
     _SCHEMA = "paper1.calibration.judge-request-renderer.v1"
 
     def __post_init__(self) -> None:
-        for name in ("policy_hash", "chat_template_hash", "record_hash"):
+        for name in (
+            "policy_hash",
+            "golden_fixture_hash",
+            "chat_template_hash",
+            "record_hash",
+        ):
             _require_sha256(name, getattr(self, name))
+        if not isinstance(self.golden_fixture_content, Mapping) or set(
+            self.golden_fixture_content
+        ) != {"schema_version", "item", "attempt_index", "repair"}:
+            raise ValueError("golden fixture content requires exact non-circular fields")
+        if (
+            self.golden_fixture_content["schema_version"]
+            != "paper1.calibration.judge-rendered-request-golden-input.v1"
+        ):
+            raise ValueError("golden fixture content schema is unsupported")
+        if type(self.golden_fixture_content["item"]) is not dict:
+            raise TypeError("golden fixture item must use a JSON object")
+        golden_item = BlindReviewItem.from_payload(self.golden_fixture_content["item"])
+        if golden_item.policy_hash != self.policy_hash:
+            raise ValueError("golden fixture item policy differs from renderer policy")
+        _require_int(
+            "golden fixture attempt_index",
+            self.golden_fixture_content["attempt_index"],
+            minimum=1,
+        )
+        if type(self.golden_fixture_content["repair"]) is not bool:
+            raise TypeError("golden fixture repair must be a boolean")
+        _require_payload_hash(
+            "golden_fixture_hash",
+            self.golden_fixture_hash,
+            self.golden_fixture_content,
+        )
         for name in (
             "renderer_version",
             "system_template",
@@ -304,6 +351,7 @@ class JudgeRequestRenderer:
         if not isinstance(self.generation_settings, Mapping) or not self.generation_settings:
             raise ValueError("generation settings must be an explicit nonempty mapping")
         _require_json_transport(_json_ready(self.generation_settings), "generation_settings")
+        object.__setattr__(self, "golden_fixture_content", _freeze(self.golden_fixture_content))
         object.__setattr__(self, "dimension_labels", _freeze(normalized_labels))
         object.__setattr__(self, "response_schema", _freeze(expected_schema))
         object.__setattr__(self, "generation_settings", _freeze(self.generation_settings))
@@ -317,6 +365,7 @@ class JudgeRequestRenderer:
         chat_template_hash: str,
         response_byte_ceiling: int,
         generation_settings: Mapping[str, object],
+        golden_fixture_content: Mapping[str, object],
     ) -> JudgeRequestRenderer:
         if type(policy) is not SemanticReviewPolicy:
             raise TypeError("renderer policy must be a SemanticReviewPolicy")
@@ -328,6 +377,8 @@ class JudgeRequestRenderer:
         values = {
             "policy_hash": policy.record_hash,
             "renderer_version": "phase0a1-blind-judge-renderer-v1",
+            "golden_fixture_content": golden_fixture_content,
+            "golden_fixture_hash": canonical_payload_hash(golden_fixture_content),
             "system_template": _SYSTEM_TEMPLATE,
             "normal_user_template": _NORMAL_USER_TEMPLATE,
             "repair_user_template": _REPAIR_USER_TEMPLATE,
@@ -368,6 +419,8 @@ class JudgeRequestRenderer:
             raise TypeError("renderer response_schema must use a JSON object")
         if type(payload["generation_settings"]) is not dict:
             raise TypeError("renderer generation_settings must use a JSON object")
+        if type(payload["golden_fixture_content"]) is not dict:
+            raise TypeError("renderer golden_fixture_content must use a JSON object")
         values = {field.name: payload[field.name] for field in fields(cls)}
         values.update(
             message_roles=tuple(payload["message_roles"]),
@@ -437,12 +490,36 @@ class JudgeRequestRenderer:
     def verify_fixture(
         self, item: BlindReviewItem, fixture: Mapping[str, object]
     ) -> RenderedJudgeRequest:
-        if type(fixture) is not dict or set(fixture) != {"rendered_request", "record_hash"}:
+        if type(fixture) is not dict or set(fixture) != {
+            "fixture_content",
+            "fixture_content_hash",
+            "rendered_request",
+            "record_hash",
+        }:
             raise ValueError("golden fixture requires exact fields")
+        if type(fixture["fixture_content"]) is not dict:
+            raise TypeError("golden fixture content must use a JSON object")
+        _require_sha256("fixture_content_hash", fixture["fixture_content_hash"])
+        _require_payload_hash(
+            "fixture_content_hash",
+            fixture["fixture_content_hash"],
+            fixture["fixture_content"],
+        )
+        if fixture["fixture_content_hash"] != self.golden_fixture_hash or fixture[
+            "fixture_content"
+        ] != _json_ready(self.golden_fixture_content):
+            raise ValueError("golden fixture content or hash differs from renderer binding")
+        fixture_item = BlindReviewItem.from_payload(fixture["fixture_content"]["item"])
+        if fixture_item != item:
+            raise ValueError("golden fixture item differs from the requested verification item")
         if type(fixture["rendered_request"]) is not dict:
             raise TypeError("golden fixture rendered request must use a JSON object")
         rendered = RenderedJudgeRequest.from_payload(fixture["rendered_request"])
-        expected = self.render(item, attempt_index=1, repair=False)
+        expected = self.render(
+            item,
+            attempt_index=fixture["fixture_content"]["attempt_index"],
+            repair=fixture["fixture_content"]["repair"],
+        )
         if rendered != expected or fixture["record_hash"] != expected.record_hash:
             raise ValueError("golden fixture differs from the exact rendered request or hash")
         return rendered
