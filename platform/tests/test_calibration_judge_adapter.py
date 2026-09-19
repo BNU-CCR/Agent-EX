@@ -21,6 +21,7 @@ from agent_ex.calibration.judge_contracts import (
     JudgeRequestRenderer,
 )
 from agent_ex.calibration.review import BlindReviewItem, SemanticReviewPolicy
+from agent_ex.domain import canonical_payload_hash
 
 
 POLICY_PATH = (
@@ -266,6 +267,66 @@ def test_adapter_success_is_one_canonical_request_with_exact_raw_evidence(
 
 
 @pytest.mark.parametrize(
+    ("mutation", "expected_match"),
+    (
+        ("missing_request_id", "provider_request_id"),
+        ("model_drift", "model"),
+        ("unknown_failure", "failure code"),
+    ),
+)
+def test_response_contract_rejects_rehashed_identity_or_failure_enum_tamper(
+    mutation: str,
+    expected_match: str,
+    valid_request: JudgeRequestEvidence,
+    valid_labels: dict[str, str],
+) -> None:
+    with _FakeJudgeServer("success", valid_labels) as fake:
+        response = JudgeVllmAdapter(fake.endpoint, model_id="qwen", limits=LIMITS).generate(
+            valid_request
+        )
+    payload = response.to_payload()
+    if mutation == "missing_request_id":
+        payload["provider_request_id"] = None
+    elif mutation == "model_drift":
+        payload["model_id"] = "other-model"
+    else:
+        payload["success"] = False
+        payload["failure_code"] = "invented_failure"
+    payload["record_hash"] = canonical_payload_hash(
+        {name: value for name, value in payload.items() if name != "record_hash"}
+    )
+    with pytest.raises(ValueError, match=expected_match):
+        JudgeResponseEvidence.from_payload(payload)
+
+
+@pytest.mark.parametrize("mutation", ["missing_request_id", "model_drift"])
+def test_response_create_rejects_success_identity_drift(
+    mutation: str,
+    valid_request: JudgeRequestEvidence,
+) -> None:
+    with pytest.raises(ValueError, match="provider_request_id|model"):
+        JudgeResponseEvidence.create(
+            request=valid_request,
+            provider_request_id=(None if mutation == "missing_request_id" else "provider-1"),
+            http_status=200,
+            response_headers={},
+            raw_bytes=b"{}",
+            raw_bytes_complete=True,
+            raw_bytes_total_lower_bound=2,
+            output_bytes=b"{}",
+            model_id=("other-model" if mutation == "model_drift" else "qwen"),
+            termination="stop",
+            input_tokens=1,
+            output_tokens=1,
+            failure_code=None,
+            retry_after_seconds=None,
+            started_at="2026-09-19T00:00:00Z",
+            ended_at="2026-09-19T00:00:01Z",
+            duration_seconds=1.0,
+        )
+
+
+@pytest.mark.parametrize(
     ("server_outcome", "expected_code"),
     (
         ("invalid_provider_json", "provider_invalid_json"),
@@ -292,6 +353,13 @@ def test_adapter_maps_one_typed_failure_without_internal_retry(
     assert fake.request_count == 1
     if server_outcome == "http_429":
         assert response.retry_after_seconds == 2.5
+    if server_outcome == "oversize":
+        assert response.raw_bytes_complete is False
+        assert response.raw_bytes_count == valid_request.response_byte_ceiling + 1
+        assert response.raw_bytes_total_lower_bound == response.raw_bytes_count
+        assert response.raw_bytes == b"x" * (valid_request.response_byte_ceiling + 1)
+        assert len(response.raw_bytes) < 5000
+        assert JudgeResponseEvidence.from_payload(response.to_payload()) == response
 
 
 def test_response_bytes_are_not_logged(

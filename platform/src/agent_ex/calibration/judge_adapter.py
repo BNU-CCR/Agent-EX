@@ -164,6 +164,7 @@ class JudgeVllmAdapter:
         status: int | None = None
         headers: dict[str, str] = {}
         raw_bytes = b""
+        raw_bytes_complete = False
         output_bytes: bytes | None = None
         provider_request_id: str | None = None
         response_model: str | None = None
@@ -219,6 +220,7 @@ class JudgeVllmAdapter:
                 deadline=deadline,
                 ceiling=request.response_byte_ceiling,
             )
+            raw_bytes_complete = not exceeded
             if exceeded:
                 failure_code = "response_size_exceeded"
             elif status == 429:
@@ -269,6 +271,8 @@ class JudgeVllmAdapter:
             http_status=status,
             response_headers=headers,
             raw_bytes=raw_bytes,
+            raw_bytes_complete=raw_bytes_complete,
+            raw_bytes_total_lower_bound=len(raw_bytes),
             output_bytes=output_bytes,
             model_id=response_model,
             termination=termination,

@@ -39,6 +39,18 @@ DIMENSIONS = (
     "change_appropriateness",
     "information_fidelity",
 )
+JUDGE_RESPONSE_FAILURE_CODES = (
+    "provider_unreachable",
+    "timeout",
+    "response_size_exceeded",
+    "http_429",
+    "http_5xx",
+    "provider_oom",
+    "http_error",
+    "provider_invalid_json",
+    "provider_request_identity_missing",
+    "provider_model_identity_drift",
+)
 
 _METADATA = {
     "calibration_only": True,
@@ -1470,12 +1482,16 @@ class JudgeResponseEvidence:
 
     request_id: str
     request_hash: str
+    expected_model_id: str
     provider_request_id: str | None
     http_status: int | None
     response_headers: Mapping[str, str]
     raw_bytes_base64: str
     raw_bytes_sha256: str
     raw_bytes_count: int
+    raw_bytes_complete: bool
+    raw_bytes_total_lower_bound: int
+    response_byte_ceiling: int
     output_bytes_base64: str | None
     output_bytes_sha256: str | None
     model_id: str | None
@@ -1495,6 +1511,7 @@ class JudgeResponseEvidence:
     def __post_init__(self) -> None:
         _require_id("request_id", self.request_id)
         _require_sha256("request_hash", self.request_hash)
+        _require_id("expected_model_id", self.expected_model_id)
         if self.provider_request_id is not None:
             _require_id("provider_request_id", self.provider_request_id)
         if self.http_status is not None:
@@ -1514,24 +1531,53 @@ class JudgeResponseEvidence:
             raise ValueError("raw response byte hash differs from exact bytes")
         if self.raw_bytes_count != len(self.raw_bytes):
             raise ValueError("raw response byte count differs from exact bytes")
+        if type(self.raw_bytes_complete) is not bool:
+            raise TypeError("raw_bytes_complete must be a boolean")
+        _require_int(
+            "raw_bytes_total_lower_bound",
+            self.raw_bytes_total_lower_bound,
+            minimum=self.raw_bytes_count,
+        )
+        _require_int("response_byte_ceiling", self.response_byte_ceiling, minimum=1)
+        if self.raw_bytes_complete:
+            if self.raw_bytes_total_lower_bound != self.raw_bytes_count:
+                raise ValueError("complete raw response lower bound must equal its byte count")
+            if self.raw_bytes_count > self.response_byte_ceiling:
+                raise ValueError("complete raw response exceeds its frozen byte ceiling")
         if (self.output_bytes_base64 is None) != (self.output_bytes_sha256 is None):
             raise ValueError("output bytes and hash must both be present or absent")
         if self.output_bytes_sha256 is not None:
             _require_sha256("output_bytes_sha256", self.output_bytes_sha256)
             if self.output_bytes_sha256 != _sha256_bytes(self.output_bytes or b""):
                 raise ValueError("judge output byte hash differs from exact bytes")
+            if not self.raw_bytes_complete:
+                raise ValueError("parseable judge output requires complete raw response bytes")
         for name in ("input_tokens", "output_tokens"):
             value = getattr(self, name)
             if value is not None:
                 _require_int(name, value, minimum=0)
         if type(self.success) is not bool:
             raise TypeError("success must be a boolean")
+        if self.failure_code is not None and self.failure_code not in JUDGE_RESPONSE_FAILURE_CODES:
+            raise ValueError("judge response failure code is outside the frozen typed enum")
         if self.success == (self.failure_code is not None):
             raise ValueError(
                 "successful response must have no failure code and failure must have one"
             )
         if self.success and self.output_bytes_base64 is None:
             raise ValueError("successful response requires exact output bytes")
+        if self.success:
+            if not self.raw_bytes_complete:
+                raise ValueError("successful response requires complete raw bytes")
+            if self.provider_request_id is None:
+                raise ValueError("successful response requires provider_request_id")
+            if self.model_id != self.expected_model_id:
+                raise ValueError("successful response model differs from expected model")
+        if self.failure_code == "response_size_exceeded":
+            if self.raw_bytes_complete:
+                raise ValueError("oversize response cannot claim complete raw bytes")
+            if self.raw_bytes_count != self.response_byte_ceiling + 1:
+                raise ValueError("oversize response must retain exactly ceiling plus one bytes")
         if self.retry_after_seconds is not None:
             _require_nonnegative_number("retry_after_seconds", self.retry_after_seconds)
         _require_nonnegative_number("duration_seconds", self.duration_seconds)
@@ -1575,6 +1621,8 @@ class JudgeResponseEvidence:
         http_status: int | None,
         response_headers: Mapping[str, str],
         raw_bytes: bytes,
+        raw_bytes_complete: bool,
+        raw_bytes_total_lower_bound: int,
         output_bytes: bytes | None,
         model_id: str | None,
         termination: str | None,
@@ -1589,12 +1637,16 @@ class JudgeResponseEvidence:
         values: dict[str, object] = {
             "request_id": request.request_id,
             "request_hash": request.record_hash,
+            "expected_model_id": request.model_id,
             "provider_request_id": provider_request_id,
             "http_status": http_status,
             "response_headers": dict(sorted(response_headers.items())),
             "raw_bytes_base64": base64.b64encode(raw_bytes).decode("ascii"),
             "raw_bytes_sha256": _sha256_bytes(raw_bytes),
             "raw_bytes_count": len(raw_bytes),
+            "raw_bytes_complete": raw_bytes_complete,
+            "raw_bytes_total_lower_bound": raw_bytes_total_lower_bound,
+            "response_byte_ceiling": request.response_byte_ceiling,
             "output_bytes_base64": (
                 None if output_bytes is None else base64.b64encode(output_bytes).decode("ascii")
             ),
