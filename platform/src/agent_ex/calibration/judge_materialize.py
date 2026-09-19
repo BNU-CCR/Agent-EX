@@ -7,7 +7,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-import shutil
+import stat
 from pathlib import PureWindowsPath
 from typing import Mapping
 
@@ -310,10 +310,44 @@ class JudgeMaterialization:
         return cls(**{field.name: payload[field.name] for field in fields(cls)})  # type: ignore[arg-type]
 
 
+_Identity = tuple[int, int, int]
+
+
+def _is_link_or_reparse(path: Path) -> bool:
+    try:
+        stat_result = os.lstat(path)
+    except OSError:
+        return False
+    if stat.S_ISLNK(stat_result.st_mode) or path.is_symlink():
+        return True
+    is_junction = getattr(path, "is_junction", None)
+    if is_junction is not None and is_junction():
+        return True
+    return bool(getattr(stat_result, "st_file_attributes", 0) & 0x400)
+
+
+def _safe_identity(path: Path, kind: str) -> _Identity | None:
+    try:
+        stat_result = os.lstat(path)
+    except OSError:
+        return None
+    if _is_link_or_reparse(path):
+        return None
+    if kind == "directory" and not stat.S_ISDIR(stat_result.st_mode):
+        return None
+    if kind == "file" and not stat.S_ISREG(stat_result.st_mode):
+        return None
+    return (
+        int(stat_result.st_dev),
+        int(stat_result.st_ino),
+        int(getattr(stat_result, "st_ctime_ns", 0)),
+    )
+
+
 def _existing_ancestors_are_safe(path: Path) -> None:
     current = path.parent
     while True:
-        if current.exists() and current.is_symlink():
+        if current.exists() and _is_link_or_reparse(current):
             raise ValueError("output path must not traverse a symlink")
         parent = current.parent
         if parent == current:
@@ -334,21 +368,77 @@ def _fsync_directory(path: Path) -> None:
         os.close(descriptor)
 
 
-def _write_bytes_create_only(path: Path, content: bytes) -> None:
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
-    descriptor = os.open(path, flags, 0o600)
+def _unlink_owned_file(path: Path, identity: _Identity) -> None:
+    if _safe_identity(path, "file") != identity:
+        return
     try:
+        path.unlink()
+    except FileNotFoundError:
+        return
+
+
+def _write_bytes_create_only(path: Path, content: bytes) -> _Identity:
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+    descriptor: int | None = None
+    identity: _Identity | None = None
+    try:
+        descriptor = os.open(path, flags, 0o600)
+        stat_result = os.fstat(descriptor)
+        identity = (
+            int(stat_result.st_dev),
+            int(stat_result.st_ino),
+            int(getattr(stat_result, "st_ctime_ns", 0)),
+        )
         written = os.write(descriptor, content)
         if written != len(content):
             raise OSError("short write while materializing judge view")
         os.fsync(descriptor)
     except BaseException:
-        os.close(descriptor)
-        path.unlink(missing_ok=True)
+        if descriptor is not None:
+            os.close(descriptor)
+        if identity is not None:
+            _unlink_owned_file(path, identity)
         raise
     else:
+        assert descriptor is not None and identity is not None
         os.close(descriptor)
     _fsync_directory(path.parent)
+    return identity
+
+
+def _rollback_materialization(
+    output_root: Path,
+    parent_identity: _Identity | None,
+    root_identity: _Identity | None,
+    created_files: list[tuple[Path, _Identity]],
+) -> None:
+    """Remove only files and the directory proven to belong to this invocation."""
+
+    if parent_identity is None or root_identity is None:
+        return
+    if _safe_identity(output_root.parent, "directory") != parent_identity:
+        return
+    if _safe_identity(output_root, "directory") != root_identity:
+        return
+    for path, identity in reversed(created_files):
+        _unlink_owned_file(path, identity)
+    if _safe_identity(output_root, "directory") != root_identity:
+        return
+    try:
+        if any(output_root.iterdir()):
+            return
+    except OSError:
+        return
+    if _safe_identity(output_root.parent, "directory") != parent_identity:
+        return
+    if _safe_identity(output_root, "directory") != root_identity:
+        return
+    try:
+        output_root.rmdir()
+    except OSError:
+        return
+    if _safe_identity(output_root.parent, "directory") == parent_identity:
+        _fsync_directory(output_root.parent)
 
 
 def materialize_judge_view(
@@ -372,7 +462,8 @@ def materialize_judge_view(
     _existing_ancestors_are_safe(output_root)
     if output_root.exists() or output_root.is_symlink():
         raise FileExistsError("output root already exists or is a symlink")
-    if not output_root.parent.is_dir():
+    parent_identity = _safe_identity(output_root.parent, "directory")
+    if parent_identity is None:
         raise ValueError("output root parent must be an existing directory")
 
     pack = _load_canonical_json(pack_bytes, "judge pack")
@@ -399,15 +490,27 @@ def materialize_judge_view(
         item_count=len(items),
     )
 
-    output_root.mkdir(mode=0o700)
+    root_identity: _Identity | None = None
+    created_files: list[tuple[Path, _Identity]] = []
     try:
-        if output_root.is_symlink() or not output_root.is_dir():
+        output_root.mkdir(mode=0o700)
+        root_identity = _safe_identity(output_root, "directory")
+        if root_identity is None:
             raise ValueError("output root must be a newly created non-symlink directory")
-        _write_bytes_create_only(output_root / "judge-pack.json", pack_bytes)
-        _write_bytes_create_only(output_root / "index.json", index_bytes)
-        _write_bytes_create_only(
-            output_root / "materialization.json", _canonical_bytes(result.to_payload())
+        if _safe_identity(output_root.parent, "directory") != parent_identity:
+            raise ValueError("output root parent directory identity changed")
+
+        files = (
+            (output_root / "judge-pack.json", pack_bytes),
+            (output_root / "index.json", index_bytes),
+            (output_root / "materialization.json", _canonical_bytes(result.to_payload())),
         )
+        for path, content in files:
+            if _safe_identity(output_root.parent, "directory") != parent_identity:
+                raise ValueError("output root parent directory identity changed")
+            if _safe_identity(output_root, "directory") != root_identity:
+                raise ValueError("output root directory identity changed")
+            created_files.append((path, _write_bytes_create_only(path, content)))
         if {path.name for path in output_root.iterdir()} != {
             "judge-pack.json",
             "index.json",
@@ -417,12 +520,7 @@ def materialize_judge_view(
         _fsync_directory(output_root)
         _fsync_directory(output_root.parent)
     except BaseException:
-        resolved_root = output_root.resolve(strict=False)
-        resolved_parent = output_root.parent.resolve(strict=True)
-        if resolved_root.parent != resolved_parent:
-            raise RuntimeError("refusing to roll back an escaped output directory")
-        shutil.rmtree(resolved_root)
-        _fsync_directory(resolved_parent)
+        _rollback_materialization(output_root, parent_identity, root_identity, created_files)
         raise
     return result
 

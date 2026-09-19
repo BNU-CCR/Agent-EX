@@ -309,6 +309,40 @@ def test_failed_write_rolls_back_partial_directory(
     assert not (tmp_path / "runner").exists()
 
 
+def test_rollback_never_deletes_replaced_output_directory(
+    tmp_path: Path,
+    review_inputs: dict[str, object],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    output_root = tmp_path / "runner"
+    moved_root = tmp_path / "moved-root"
+    replacement_marker = "replacement-must-survive"
+    real_write = __import__(
+        "agent_ex.calibration.judge_materialize", fromlist=["_write_bytes_create_only"]
+    )._write_bytes_create_only
+    calls = 0
+
+    def replace_after_first_write(path: Path, content: bytes) -> None:
+        nonlocal calls
+        real_write(path, content)
+        calls += 1
+        if calls == 1:
+            output_root.rename(moved_root)
+            output_root.mkdir()
+            (output_root / "sentinel.txt").write_text(replacement_marker, encoding="utf-8")
+        else:
+            raise OSError("synthetic write failure after directory replacement")
+
+    monkeypatch.setattr(
+        "agent_ex.calibration.judge_materialize._write_bytes_create_only",
+        replace_after_first_write,
+    )
+    with pytest.raises((OSError, ValueError), match="directory replacement|identity"):
+        materialize_judge_view(**review_inputs, output_root=output_root)
+    assert (moved_root / "judge-pack.json").is_file()
+    assert (output_root / "sentinel.txt").read_text(encoding="utf-8") == replacement_marker
+
+
 def test_materialization_round_trip_hash_and_information_boundary(
     tmp_path: Path, review_inputs: dict[str, object]
 ) -> None:
