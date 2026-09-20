@@ -296,7 +296,6 @@ def test_unresolved_dispatch_requires_typed_reconciliation(judge_store: JudgeRun
     ("decision", "expected_status"),
     [
         ("recovered_response", "recovered_response"),
-        ("proved_not_sent", "pending_retry"),
         ("ambiguous", "ambiguous_incomplete"),
     ],
 )
@@ -321,10 +320,6 @@ def test_reconciliation_has_only_three_outcomes(
         }
         judge_store.append_raw_provider_audit(dispatch, provider_audit)
         evidence["response_bytes_hash"] = response_hash
-    elif decision == "proved_not_sent":
-        negative = negative_evidence(dispatch, observation_id="provider-observation-store")
-        judge_store.append_negative_dispatch_evidence(negative)
-        evidence["provider_audit_hash"] = negative.record_hash
     record = JudgeDispatchReconciliation.create(dispatch, decision, evidence)
     judge_store.append_reconciliation(record)
     projection = judge_store.current_projection
@@ -339,14 +334,12 @@ def test_open_replays_and_rejects_a_tampered_projection_chain(
 ) -> None:
     dispatch = intent()
     judge_store.append_intent(dispatch)
-    negative = negative_evidence(dispatch, observation_id="provider-observation-open")
-    judge_store.append_negative_dispatch_evidence(negative)
     judge_store.append_reconciliation(
         JudgeDispatchReconciliation.create(
             dispatch,
-            "proved_not_sent",
+            "ambiguous",
             {
-                "provider_audit_hash": negative.record_hash,
+                "provider_audit_hash": SHA,
                 "checked_at": "2026-09-19T00:01:00Z",
             },
         )
@@ -450,6 +443,36 @@ def test_nonterminal_projection_file_is_rejected_and_seals_append(
         JudgeRunStore.open(judge_store.root)
     with pytest.raises(ValueError, match="sealed|terminal"):
         judge_store.append_intent(intent())
+
+
+def test_dangling_terminal_projection_symlink_is_rejected(
+    judge_store: JudgeRunStore,
+    tmp_path: Path,
+) -> None:
+    terminal = judge_store.staging / "projection.json"
+    try:
+        terminal.symlink_to(tmp_path / "missing-projection.json")
+    except OSError:
+        pytest.skip("file symlinks unavailable")
+    with pytest.raises(ValueError, match="terminal|link|inventory"):
+        JudgeRunStore.open(judge_store.root)
+    with pytest.raises(ValueError, match="sealed|terminal"):
+        judge_store.append_intent(intent())
+
+
+def test_publish_exact_rejects_existing_symlink_even_when_bytes_match(
+    tmp_path: Path,
+) -> None:
+    payload = {"schema_version": "test.v1", "value": 1}
+    target = tmp_path / "outside.json"
+    target.write_bytes(judge_store_module._canonical_json_bytes(payload))
+    link = tmp_path / "inside.json"
+    try:
+        link.symlink_to(target)
+    except OSError:
+        pytest.skip("file symlinks unavailable")
+    with pytest.raises(ValueError, match="regular|link|cannot be read"):
+        judge_store_module._publish_json_exact(link, payload)
 
 
 @pytest.mark.parametrize(

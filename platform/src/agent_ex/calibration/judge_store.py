@@ -219,7 +219,7 @@ def _publish_json_exact(path: Path, payload: Mapping[str, object]) -> None:
         _write_json_create_only(path, payload)
     except FileExistsError:
         try:
-            observed = path.read_bytes()
+            observed = _read_bytes_no_follow(path)
         except OSError as error:
             raise ValueError("existing judge transaction artifact cannot be read") from error
         if observed != expected:
@@ -228,31 +228,36 @@ def _publish_json_exact(path: Path, payload: Mapping[str, object]) -> None:
             )
 
 
+def _read_bytes_no_follow(path: Path) -> bytes:
+    parent_fd: int | None = None
+    if _HAS_SECURE_DIRECTORY_IO:
+        parent_fd = _open_directory_handle(path.parent)
+        try:
+            descriptor = os.open(
+                path.name,
+                os.O_RDONLY | os.O_NOFOLLOW,
+                dir_fd=parent_fd,
+            )
+        finally:
+            os.close(parent_fd)
+    else:
+        if path.is_symlink():
+            raise ValueError("judge evidence must be a regular non-link file")
+        descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise ValueError("judge evidence must be a regular file")
+        chunks: list[bytes] = []
+        while chunk := os.read(descriptor, 1024 * 1024):
+            chunks.append(chunk)
+        return b"".join(chunks)
+    finally:
+        os.close(descriptor)
+
+
 def _load_json(path: Path) -> dict[str, object]:
     try:
-        if _HAS_SECURE_DIRECTORY_IO:
-            parent_fd = _open_directory_handle(path.parent)
-            try:
-                descriptor = os.open(
-                    path.name,
-                    os.O_RDONLY | os.O_NOFOLLOW,
-                    dir_fd=parent_fd,
-                )
-            finally:
-                os.close(parent_fd)
-            try:
-                if not stat.S_ISREG(os.fstat(descriptor).st_mode):
-                    raise ValueError("judge evidence must be a regular file")
-                chunks: list[bytes] = []
-                while chunk := os.read(descriptor, 1024 * 1024):
-                    chunks.append(chunk)
-                encoded = b"".join(chunks)
-            finally:
-                os.close(descriptor)
-        else:
-            if path.is_symlink() or not path.is_file():
-                raise ValueError("judge evidence must be a regular non-link file")
-            encoded = path.read_bytes()
+        encoded = _read_bytes_no_follow(path)
         payload = json.loads(encoded)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ValueError(f"invalid judge evidence JSON: {path.name}") from error
@@ -369,7 +374,7 @@ class JudgeRunStore:
                 if observed.sequence != sequence or observed.to_payload() != derived.to_payload():
                     raise ValueError("judge projection hash chain differs from exact replay")
             terminal_path = staging / "projection.json"
-            if terminal_path.exists():
+            if terminal_path.exists() or terminal_path.is_symlink():
                 if terminal_path.is_symlink() or not terminal_path.is_file():
                     raise ValueError("terminal judge projection must be a regular file")
                 terminal = JudgeProjection.from_payload(_load_json(terminal_path))
@@ -634,7 +639,8 @@ class JudgeRunStore:
         if record_manifest_hash is not None and record_manifest_hash != self.manifest.record_hash:
             raise ValueError("judge evidence manifest differs from store manifest")
         with _archive_lock(self.root):
-            if (self.staging / "projection.json").exists():
+            terminal_path = self.staging / "projection.json"
+            if terminal_path.exists() or terminal_path.is_symlink():
                 raise ValueError("terminal judge store is sealed against further append")
             self._require_safe_layout(self.staging)
             self._cleanup_temporary_files()

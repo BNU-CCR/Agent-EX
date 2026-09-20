@@ -43,9 +43,19 @@ _RECONCILIATION_DECISIONS = (
 class JudgeApprovedItem:
     item_id: str
     item_hash: str
+    policy_hash: str
+
+    def __post_init__(self) -> None:
+        _text("item_id", self.item_id)
+        _sha256("item_hash", self.item_hash)
+        _sha256("policy_hash", self.policy_hash)
 
     def to_payload(self) -> dict[str, str]:
-        return {"item_id": self.item_id, "item_hash": self.item_hash}
+        return {
+            "item_id": self.item_id,
+            "item_hash": self.item_hash,
+            "policy_hash": self.policy_hash,
+        }
 
 
 @dataclass(frozen=True, slots=True)
@@ -58,7 +68,7 @@ class JudgeApprovedOrder:
     items: tuple[JudgeApprovedItem, ...]
     record_hash: str
 
-    _SCHEMA = "paper1.calibration.judge-approved-order.v1"
+    _SCHEMA = "paper1.calibration.judge-approved-order.v2"
 
     def __post_init__(self) -> None:
         for name in ("manifest_hash", "pack_hash", "index_hash", "record_hash"):
@@ -104,9 +114,19 @@ class JudgeApprovedOrder:
             raise TypeError("approved judge order items must use a JSON array")
         items: list[JudgeApprovedItem] = []
         for item in payload["items"]:
-            if type(item) is not dict or set(item) != {"item_id", "item_hash"}:
+            if type(item) is not dict or set(item) != {
+                "item_id",
+                "item_hash",
+                "policy_hash",
+            }:
                 raise ValueError("approved judge item requires exact fields")
-            items.append(JudgeApprovedItem(item_id=item["item_id"], item_hash=item["item_hash"]))
+            items.append(
+                JudgeApprovedItem(
+                    item_id=item["item_id"],
+                    item_hash=item["item_hash"],
+                    policy_hash=item["policy_hash"],
+                )
+            )
         return cls(
             manifest_hash=payload["manifest_hash"],
             pack_hash=payload["pack_hash"],
@@ -156,7 +176,9 @@ class JudgeApprovedOrder:
         parsed = tuple(BlindReviewItem.from_payload(item) for item in pack["items"])
         if len(parsed) != manifest.expected_item_count:
             raise ValueError("judge pack item count differs from execution manifest")
-        items = tuple(JudgeApprovedItem(item.item_id, item.record_hash) for item in parsed)
+        items = tuple(
+            JudgeApprovedItem(item.item_id, item.record_hash, item.policy_hash) for item in parsed
+        )
         values = {
             "manifest_hash": manifest.record_hash,
             "pack_hash": manifest.judge_pack_hash,
@@ -1338,16 +1360,20 @@ def replay_judge_records(
             intent = intents.get(record.intent_hash)
             response = responses.get(record.intent_hash)
             state = states.get(record.item_id)
+            approved = approved_order.items[intent.order_index] if intent is not None else None
             if (
                 intent is None
                 or response is None
                 or state is None
+                or approved is None
                 or state.unresolved_intent_hash != record.intent_hash
                 or record.request != intent.request
                 or record.response != response
                 or record.attempt_id != intent.attempt_id
             ):
                 raise ValueError("completed attempt lacks exact request/response coverage")
+            if record.parse is not None and record.parse.policy_hash != approved.policy_hash:
+                raise ValueError("completed parse policy differs from approved item policy")
             if record.intent_hash in attempts:
                 raise ValueError("completed attempt is duplicated")
             attempts[record.intent_hash] = record
@@ -1388,17 +1414,12 @@ def replay_judge_records(
                 status = "recovered_response"
                 evidence_lanes[record.intent_hash] = "recovered_response"
             elif record.decision == "proved_not_sent":
-                negative = negative_evidence.get(record.intent_hash)
-                if (
-                    evidence_lanes.get(record.intent_hash) != "negative"
-                    or audit is not None
-                    or negative is None
-                    or negative.record_hash != record.provider_audit_hash
-                ):
-                    raise ValueError("proved_not_sent contradicts persisted response evidence")
-                status = "pending_retry"
+                raise ValueError(
+                    "proved_not_sent retry is disabled without authenticated provider attestation"
+                )
             else:
-                if record.intent_hash in evidence_lanes:
+                lane = evidence_lanes.get(record.intent_hash)
+                if lane not in {None, "incomplete"}:
                     raise ValueError("ambiguous reconciliation contradicts existing evidence lane")
                 evidence_lanes[record.intent_hash] = "ambiguous"
                 status = "ambiguous_incomplete"
@@ -1426,12 +1447,17 @@ def replay_judge_records(
             record._validate_semantics(attempt)
             if record.outcome == "coded":
                 status = "coded"
-            elif record.outcome == "terminal_failed":
-                status = "terminal_failed"
             else:
-                if state.attempt_count >= manifest.max_attempts_per_item:
-                    raise ValueError("retryable resolution exceeds manifest attempt budget")
-                status = "pending_retry"
+                can_retry = (
+                    record.failure_code in manifest.retryable_codes
+                    and state.attempt_count < manifest.max_attempts_per_item
+                )
+                expected_outcome = "retryable_failed" if can_retry else "terminal_failed"
+                if record.outcome != expected_outcome:
+                    raise ValueError(
+                        "attempt resolution outcome differs from manifest retry policy and budget"
+                    )
+                status = "pending_retry" if can_retry else "terminal_failed"
             states[record.item_id] = replace(
                 state,
                 status=status,
@@ -1493,20 +1519,8 @@ def reconcile_proved_not_sent(
     intent: JudgeDispatchIntent,
     evidence: JudgeNegativeDispatchEvidence,
 ) -> JudgeDispatchReconciliation:
-    if (
-        not isinstance(evidence, JudgeNegativeDispatchEvidence)
-        or evidence.intent_hash != intent.record_hash
-        or evidence.manifest_hash != intent.manifest_hash
-    ):
-        raise ValueError("proved_not_sent requires exact external negative provider evidence")
-    store.append_negative_dispatch_evidence(evidence)
-    reconciliation = JudgeDispatchReconciliation.create(
-        intent,
-        "proved_not_sent",
-        {"provider_audit_hash": evidence.record_hash, "checked_at": evidence.observed_at},
-    )
-    store.append_reconciliation(reconciliation)
-    return reconciliation
+    del store, intent, evidence
+    raise ValueError("proved_not_sent retry is disabled without authenticated provider attestation")
 
 
 def build_retry_after_not_sent(
@@ -1514,24 +1528,5 @@ def build_retry_after_not_sent(
     reconciliation: JudgeDispatchReconciliation,
     request: JudgeRequestEvidence,
 ) -> JudgeDispatchIntent:
-    if (
-        reconciliation.decision != "proved_not_sent"
-        or reconciliation.intent_hash != intent.record_hash
-    ):
-        raise ValueError("retry requires proved_not_sent for the exact dispatch intent")
-    next_index = intent.attempt_index + 1
-    rendered = request.rendered_request
-    if (
-        request.manifest_hash != intent.manifest_hash
-        or request.order_index != intent.order_index
-        or rendered.item_id != intent.item_id
-        or rendered.item_hash != intent.item_hash
-        or rendered.attempt_index != next_index
-        or rendered.request_id == intent.request_id
-        or rendered.idempotency_key == intent.idempotency_key
-    ):
-        raise ValueError("retry request does not match exact next rendered attempt")
-    return JudgeDispatchIntent.create(
-        request=request,
-        created_at=reconciliation.checked_at,
-    )
+    del intent, reconciliation, request
+    raise ValueError("proved_not_sent retry is disabled without authenticated provider attestation")

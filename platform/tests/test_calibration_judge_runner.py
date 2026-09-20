@@ -118,6 +118,61 @@ def successful_response(
     return response, parse_judge_response(output, review_policy)
 
 
+def parse_failed_attempt(
+    dispatch: JudgeDispatchIntent, *, failure_code: str = "parse_invalid_json"
+) -> JudgeCompletedAttempt:
+    review_policy = policy()
+    if failure_code == "parse_invalid_json":
+        output = b"not-json"
+    elif failure_code == "parse_illegal_label":
+        labels = {
+            name: review_policy.dimension_labels[name][0] for name in review_policy.dimension_labels
+        }
+        labels[next(iter(labels))] = "not-an-approved-label"
+        output = json.dumps(labels, separators=(",", ":")).encode("utf-8")
+    else:
+        raise ValueError("unsupported test failure code")
+    raw = json.dumps(
+        {
+            "model": dispatch.request.model_id,
+            "choices": [
+                {
+                    "message": {"content": output.decode("utf-8")},
+                    "finish_reason": "stop",
+                }
+            ],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 20},
+        },
+        separators=(",", ":"),
+    ).encode("utf-8")
+    response = JudgeResponseEvidence.create(
+        request=dispatch.request,
+        provider_request_id=f"provider-{dispatch.request_id}",
+        http_status=200,
+        response_headers={"x-request-id": f"provider-{dispatch.request_id}"},
+        response_header_items=(("x-request-id", f"provider-{dispatch.request_id}"),),
+        duplicate_critical_header_names=(),
+        raw_bytes=raw,
+        raw_bytes_complete=True,
+        raw_bytes_total_lower_bound=len(raw),
+        output_bytes=output,
+        model_id=dispatch.request.model_id,
+        termination="stop",
+        input_tokens=10,
+        output_tokens=20,
+        failure_code=None,
+        retry_after_seconds=None,
+        started_at="2026-09-19T00:01:00Z",
+        ended_at="2026-09-19T00:01:01Z",
+        duration_seconds=1.0,
+    )
+    return JudgeCompletedAttempt.create(
+        dispatch,
+        response,
+        parse_judge_response(output, review_policy),
+    )
+
+
 def negative_evidence(
     dispatch: JudgeDispatchIntent,
     *,
@@ -184,19 +239,14 @@ def test_provider_log_recovery_preserves_exact_bytes(
         reconstruct_judge_projection(judge_store)
 
 
-def test_proved_not_sent_retry_gets_new_attempt_but_same_item_identity(
+def test_proved_not_sent_retry_is_disabled_without_external_authentication(
     judge_store: JudgeRunStore,
 ) -> None:
     dispatch = intent()
     judge_store.append_intent(dispatch)
     negative = negative_evidence(dispatch, observation_id="provider-observation-001")
-    reconciliation = reconcile_proved_not_sent(judge_store, dispatch, negative)
-    retry = build_retry_after_not_sent(dispatch, reconciliation, intent(attempt_index=2).request)
-    assert retry.item_id == dispatch.item_id
-    assert retry.item_hash == dispatch.item_hash
-    assert retry.attempt_id != dispatch.attempt_id
-    assert retry.idempotency_key != dispatch.idempotency_key
-    assert retry.attempt_index == 2
+    with pytest.raises(ValueError, match="disabled|authenticated provider attestation"):
+        reconcile_proved_not_sent(judge_store, dispatch, negative)
 
 
 def test_reconciliation_rejects_wrong_provider_request_identity(
@@ -222,17 +272,22 @@ def test_projection_refuses_next_item_while_prior_dispatch_is_unresolved(
         judge_store.append_intent(intent(order_index=1))
 
 
-def test_proved_not_sent_reconciliation_allows_exact_next_attempt(
+def test_locally_constructed_proved_not_sent_cannot_authorize_retry(
     judge_store: JudgeRunStore,
 ) -> None:
     dispatch = intent()
     judge_store.append_intent(dispatch)
     negative = negative_evidence(dispatch, observation_id="provider-observation-002")
-    reconciliation = reconcile_proved_not_sent(judge_store, dispatch, negative)
-    retry = build_retry_after_not_sent(dispatch, reconciliation, intent(attempt_index=2).request)
-    judge_store.append_intent(retry)
-    with pytest.raises(AmbiguousJudgeDispatchError, match="unresolved dispatch"):
-        reconstruct_judge_projection(judge_store)
+    reconciliation = JudgeDispatchReconciliation.create(
+        dispatch,
+        "proved_not_sent",
+        {
+            "provider_audit_hash": negative.record_hash,
+            "checked_at": negative.observed_at,
+        },
+    )
+    with pytest.raises(ValueError, match="disabled|authenticated provider attestation"):
+        build_retry_after_not_sent(dispatch, reconciliation, intent(attempt_index=2).request)
 
 
 def test_dispatch_intent_round_trip_is_exact() -> None:
@@ -388,6 +443,89 @@ def test_completed_parse_must_match_request_response_schema_policy() -> None:
         JudgeCompletedAttempt.create(dispatch, response, parse)
 
 
+def test_approved_order_preserves_exact_item_policy_hash() -> None:
+    approved = context()[1]
+    assert approved.items[0].policy_hash == policy().record_hash
+
+
+def test_replay_rejects_parse_from_different_policy_with_same_labels(
+    judge_store: JudgeRunStore,
+) -> None:
+    dispatch = intent()
+    response, _ = successful_response(dispatch)
+    drifted_policy = replace(policy(), policy_version="drifted-but-same-labels")
+    drifted_parse = parse_judge_response(response.output_bytes, drifted_policy)
+    attempt = JudgeCompletedAttempt.create(dispatch, response, drifted_parse)
+    judge_store.append_intent(dispatch)
+    judge_store.append_response(response)
+    with pytest.raises(ValueError, match="policy.*approved|approved.*policy"):
+        judge_store.append_completed_attempt(attempt)
+
+
+def test_replay_rejects_terminal_failure_while_retryable_budget_remains(
+    judge_store: JudgeRunStore,
+) -> None:
+    dispatch = intent()
+    attempt = parse_failed_attempt(dispatch)
+    judge_store.append_intent(dispatch)
+    judge_store.append_response(attempt.response)
+    judge_store.append_completed_attempt(attempt)
+    resolution = JudgeAttemptResolution.create(
+        attempt,
+        outcome="terminal_failed",
+        failure_code="parse_invalid_json",
+    )
+    with pytest.raises(ValueError, match="retry policy|retryable"):
+        judge_store.append_attempt_resolution(resolution)
+
+
+def test_replay_rejects_retry_for_nonretryable_failure(
+    judge_store: JudgeRunStore,
+) -> None:
+    dispatch = intent()
+    attempt = parse_failed_attempt(dispatch, failure_code="parse_illegal_label")
+    judge_store.append_intent(dispatch)
+    judge_store.append_response(attempt.response)
+    judge_store.append_completed_attempt(attempt)
+    resolution = JudgeAttemptResolution.create(
+        attempt,
+        outcome="retryable_failed",
+        failure_code="parse_illegal_label",
+    )
+    with pytest.raises(ValueError, match="retry policy|nonretryable"):
+        judge_store.append_attempt_resolution(resolution)
+
+
+def test_replay_requires_terminal_failure_when_retry_budget_is_exhausted(
+    judge_store: JudgeRunStore,
+) -> None:
+    for attempt_index in (1, 2):
+        dispatch = intent(attempt_index=attempt_index)
+        attempt = parse_failed_attempt(dispatch)
+        judge_store.append_intent(dispatch)
+        judge_store.append_response(attempt.response)
+        judge_store.append_completed_attempt(attempt)
+        judge_store.append_attempt_resolution(
+            JudgeAttemptResolution.create(
+                attempt,
+                outcome="retryable_failed",
+                failure_code="parse_invalid_json",
+            )
+        )
+    dispatch = intent(attempt_index=3)
+    attempt = parse_failed_attempt(dispatch)
+    judge_store.append_intent(dispatch)
+    judge_store.append_response(attempt.response)
+    judge_store.append_completed_attempt(attempt)
+    resolution = JudgeAttemptResolution.create(
+        attempt,
+        outcome="retryable_failed",
+        failure_code="parse_invalid_json",
+    )
+    with pytest.raises(ValueError, match="retry policy|budget"):
+        judge_store.append_attempt_resolution(resolution)
+
+
 def test_service_start_cannot_precede_exact_preflight() -> None:
     manifest_value, approved, _, _, preflight, start, _, _ = context()
     with pytest.raises(ValueError, match="preflight.*before.*start|lifecycle order"):
@@ -442,7 +580,7 @@ def test_provider_audit_lane_rejects_negative_evidence(
         )
 
 
-def test_incomplete_lane_rejects_ambiguous_reconciliation(
+def test_incomplete_lane_allows_only_ambiguous_reconciliation(
     judge_store: JudgeRunStore,
 ) -> None:
     dispatch = intent()
@@ -453,8 +591,10 @@ def test_incomplete_lane_rejects_ambiguous_reconciliation(
         "ambiguous",
         {"provider_audit_hash": "b" * 64, "checked_at": "2026-09-19T00:01:00Z"},
     )
-    with pytest.raises(ValueError, match="evidence lane|contradict"):
-        judge_store.append_reconciliation(ambiguous)
+    judge_store.append_reconciliation(ambiguous)
+    state = judge_store.current_projection.item_states[dispatch.item_id]
+    assert state.status == "ambiguous_incomplete"
+    assert state.unresolved_intent_hash is None
 
 
 def test_negative_dispatch_requires_manifest_authorized_verifier_and_log_artifact() -> None:
