@@ -14,6 +14,7 @@ from typing import Mapping
 
 from ..domain import canonical_payload_hash
 from ..mock_matrix import CANONICAL_CELL_IDS
+from ..topic import TopicPackage
 from .contracts import (
     DiagnosticAdapterBinding,
     DiagnosticAttemptPolicy,
@@ -21,6 +22,11 @@ from .contracts import (
     DiagnosticTerminalReport,
 )
 from .matrix import DiagnosticMatrixCandidate
+from .pipeline import (
+    DiagnosticEventState,
+    apply_diagnostic_vllm_response,
+    prepare_diagnostic_event,
+)
 from .vllm_event_adapter import (
     Phase0BDispatchJournal,
     Phase0BVllmEventRequest,
@@ -62,6 +68,56 @@ class DiagnosticMatrixRunResult:
     final_projection_hash: str
     committed_event_count: int
     transport_count: int
+
+
+@dataclass(frozen=True, slots=True)
+class DiagnosticApprovalPacket:
+    """Sanitized source/authority packet for the cloud launch approval gate."""
+
+    schema_version: str
+    calibration_only: bool
+    formal_parameter_authority: bool
+    research_parameter_status: str
+    source_commit: str
+    source_dirty: bool
+    source_diff_hash: str | None
+    authorization_hash: str
+    matrix_hash: str
+    adapter_binding_hash: str
+    attempt_policy_hash: str
+    expected_event_count: int
+    max_transport_count: int
+    archive_uri: str
+    endpoint: str
+    served_model_name: str
+    model_repository: str
+    labels: tuple[str, ...]
+    record_hash: str
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": self.schema_version,
+            "calibration_only": self.calibration_only,
+            "formal_parameter_authority": self.formal_parameter_authority,
+            "research_parameter_status": self.research_parameter_status,
+            "source_commit": self.source_commit,
+            "source_dirty": self.source_dirty,
+            "source_diff_hash": self.source_diff_hash,
+            "authorization_hash": self.authorization_hash,
+            "matrix_hash": self.matrix_hash,
+            "adapter_binding_hash": self.adapter_binding_hash,
+            "attempt_policy_hash": self.attempt_policy_hash,
+            "expected_event_count": self.expected_event_count,
+            "max_transport_count": self.max_transport_count,
+            "archive_uri": self.archive_uri,
+            "endpoint": self.endpoint,
+            "served_model_name": self.served_model_name,
+            "model_repository": self.model_repository,
+            "labels": self.labels,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return {**self.content_payload(), "record_hash": self.record_hash}
 
 
 class Phase0BJsonlStagingStore:
@@ -376,6 +432,190 @@ def run_fake_diagnostic_matrix(
     )
 
 
+def run_real_adapter_diagnostic_matrix(
+    *,
+    authorization: DiagnosticRunAuthorization,
+    matrix_candidate: DiagnosticMatrixCandidate,
+    adapter_binding: DiagnosticAdapterBinding,
+    attempt_policy: DiagnosticAttemptPolicy,
+    adapter: object,
+    topic_package: TopicPackage,
+    run_root: str | Path,
+) -> DiagnosticMatrixRunResult:
+    """Run the 12-cell staging matrix through a real-adapter-shaped event loop.
+
+    The adapter may be a fake in tests, but it must expose the same
+    bind-before-dispatch and generate interface as Phase0BVllmEventAdapter.
+    """
+
+    if not isinstance(topic_package, TopicPackage):
+        raise TypeError("topic_package must be a TopicPackage")
+    root = Path(run_root)
+    if root.exists():
+        raise FileExistsError("diagnostic launch root already exists")
+
+    preflight = preflight_diagnostic_run(
+        authorization=authorization,
+        matrix_candidate=matrix_candidate,
+        adapter_binding=adapter_binding,
+        attempt_policy=attempt_policy,
+        run_root=root,
+    )
+    staging = Phase0BJsonlStagingStore(root / "staging")
+    journal = Phase0BDispatchJournal(root / "dispatch.jsonl")
+
+    if not hasattr(adapter, "bind_dispatch_journal") or not hasattr(adapter, "generate"):
+        raise TypeError("adapter must expose bind_dispatch_journal and generate")
+    adapter.bind_dispatch_journal(journal.record_before_dispatch)
+
+    request_hashes: list[str] = []
+    response_hashes: list[str] = []
+    evidence_hashes: list[str] = []
+    cell_summaries: list[dict[str, object]] = []
+    for cell_id in CANONICAL_CELL_IDS:
+        state = DiagnosticEventState.initial(
+            topic_package=topic_package,
+            matched_seed=authorization.matched_seed,
+            agent_id=f"{cell_id}-agent-0000",
+            stance_label="label-4",
+            reason="phase0b-diagnostic-round-zero",
+        )
+        cell_request_hashes: list[str] = []
+        cell_response_hashes: list[str] = []
+        cell_evidence_hashes: list[str] = []
+        for event_offset in range(40):
+            prepared = prepare_diagnostic_event(
+                state=state,
+                authorization=authorization,
+                adapter_binding=adapter_binding,
+                publish_flag=True,
+            )
+            response = adapter.generate(
+                prepared.request,
+                timeout_seconds=attempt_policy.total_timeout_seconds,
+                connect_timeout_seconds=attempt_policy.connect_timeout_seconds,
+                read_timeout_seconds=attempt_policy.read_timeout_seconds,
+            )
+            if not isinstance(response, Phase0BVllmEventResponse):
+                raise TypeError("adapter returned an unsupported response type")
+            journal.record_resolution(response)
+            result = apply_diagnostic_vllm_response(
+                state=state,
+                prepared=prepared,
+                response=response,
+                topic_package=topic_package,
+            )
+            _append_sanitized_attempt(
+                staging,
+                prepared.request,
+                response,
+                cell_id=cell_id,
+                schema_version="paper1.phase0b.real-adapter-attempt.v1",
+                pipeline_evidence_hash=result.evidence.record_hash,
+                committed_state_hash=result.state.record_hash if result.committed else None,
+            )
+            request_hashes.append(prepared.request.record_hash)
+            response_hashes.append(response.record_hash)
+            evidence_hashes.append(result.evidence.record_hash)
+            cell_request_hashes.append(prepared.request.record_hash)
+            cell_response_hashes.append(response.record_hash)
+            cell_evidence_hashes.append(result.evidence.record_hash)
+            if not result.committed:
+                raise RuntimeError("diagnostic real-adapter matrix stopped before terminal commit")
+            state = result.state
+            if state.next_event_ordinal != event_offset + 1:
+                raise RuntimeError("diagnostic event prefix advanced unexpectedly")
+        cell_summaries.append(
+            {
+                "cell_id": cell_id,
+                "committed_event_count": len(cell_request_hashes),
+                "transport_count": len(cell_response_hashes),
+                "request_hashes_hash": canonical_payload_hash(tuple(cell_request_hashes)),
+                "response_hashes_hash": canonical_payload_hash(tuple(cell_response_hashes)),
+                "pipeline_evidence_hashes_hash": canonical_payload_hash(
+                    tuple(cell_evidence_hashes)
+                ),
+                "final_state_hash": state.record_hash,
+            }
+        )
+
+    unresolved_dispatch_count = len(journal.unresolved_request_ids())
+    projection_hash = staging.write_json(
+        "projection.json",
+        {
+            "schema_version": "paper1.phase0b.real-adapter-matrix-projection.v1",
+            "authorization_hash": authorization.record_hash,
+            "matrix_hash": matrix_candidate.matrix_hash,
+            "committed_event_count": len(request_hashes),
+            "transport_count": len(response_hashes),
+            "unresolved_dispatch_count": unresolved_dispatch_count,
+            "completed_cell_ids": CANONICAL_CELL_IDS,
+            "cell_summaries": tuple(cell_summaries),
+            "request_hashes_hash": canonical_payload_hash(tuple(request_hashes)),
+            "response_hashes_hash": canonical_payload_hash(tuple(response_hashes)),
+            "pipeline_evidence_hashes_hash": canonical_payload_hash(tuple(evidence_hashes)),
+        },
+    )
+    terminal_report = DiagnosticTerminalReport.create(
+        authorization_hash=authorization.record_hash,
+        terminal_status="complete",
+        completed_cell_ids=CANONICAL_CELL_IDS,
+        committed_event_count=len(request_hashes),
+        transport_count=len(response_hashes),
+        unresolved_dispatch_count=unresolved_dispatch_count,
+        final_projection_hash=projection_hash,
+    )
+    staging.write_json("terminal-report.json", terminal_report.to_payload())
+    return DiagnosticMatrixRunResult(
+        preflight=preflight,
+        terminal_report=terminal_report,
+        final_projection_hash=projection_hash,
+        committed_event_count=len(request_hashes),
+        transport_count=len(response_hashes),
+    )
+
+
+def materialize_diagnostic_approval_packet(
+    *,
+    authorization: DiagnosticRunAuthorization,
+    matrix_candidate: DiagnosticMatrixCandidate,
+    adapter_binding: DiagnosticAdapterBinding,
+    attempt_policy: DiagnosticAttemptPolicy,
+) -> DiagnosticApprovalPacket:
+    """Create the sanitized approval gate packet without launching cloud work."""
+
+    if authorization.adapter_binding_hash != adapter_binding.record_hash:
+        raise ValueError("adapter binding hash does not match authorization")
+    if authorization.attempt_policy_hash != attempt_policy.record_hash:
+        raise ValueError("attempt policy hash does not match authorization")
+    if authorization.artifact_hashes != matrix_candidate.authorization_artifact_hashes:
+        raise ValueError("authorization artifact hashes drifted from matrix candidate")
+    content = {
+        "schema_version": "paper1.phase0b.diagnostic-approval-packet.v1",
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+        "research_parameter_status": "not_frozen",
+        "source_commit": authorization.source_commit,
+        "source_dirty": authorization.source_dirty,
+        "source_diff_hash": authorization.source_diff_hash,
+        "authorization_hash": authorization.record_hash,
+        "matrix_hash": matrix_candidate.matrix_hash,
+        "adapter_binding_hash": adapter_binding.record_hash,
+        "attempt_policy_hash": attempt_policy.record_hash,
+        "expected_event_count": matrix_candidate.expected_event_count,
+        "max_transport_count": matrix_candidate.max_transport_count,
+        "archive_uri": authorization.archive_uri,
+        "endpoint": adapter_binding.endpoint,
+        "served_model_name": adapter_binding.served_model_name,
+        "model_repository": adapter_binding.model_repository,
+        "labels": ("preliminary", "diagnostic", "not_frozen"),
+    }
+    return DiagnosticApprovalPacket(
+        **content,
+        record_hash=canonical_payload_hash(content),
+    )
+
+
 def verify_diagnostic_matrix_run(
     *,
     run_root: str | Path,
@@ -476,11 +716,14 @@ def _append_sanitized_attempt(
     response: Phase0BVllmEventResponse,
     *,
     cell_id: str | None = None,
+    schema_version: str = "paper1.phase0b.fake-slice-attempt.v1",
+    pipeline_evidence_hash: str | None = None,
+    committed_state_hash: str | None = None,
 ) -> None:
     store.append_jsonl(
         "attempts.jsonl",
         {
-            "schema_version": "paper1.phase0b.fake-slice-attempt.v1",
+            "schema_version": schema_version,
             "cell_id": cell_id or CANONICAL_CELL_IDS[0],
             "event_id": request.event_id,
             "attempt_id": request.attempt_id,
@@ -488,6 +731,8 @@ def _append_sanitized_attempt(
             "request_hash": request.record_hash,
             "response_hash": response.record_hash,
             "transport_evidence_hash": response.transport_evidence.record_hash,
+            "pipeline_evidence_hash": pipeline_evidence_hash,
+            "committed_state_hash": committed_state_hash,
             "outcome": response.outcome,
             "error_code": response.error_code,
             "provider_request_id": response.provider_request_id,

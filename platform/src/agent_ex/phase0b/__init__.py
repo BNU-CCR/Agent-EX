@@ -19,13 +19,16 @@ from .pipeline import (
 )
 from .report import build_phase0b_preliminary_report
 from .run import (
+    DiagnosticApprovalPacket,
     DiagnosticFakeSliceResult,
     DiagnosticMatrixRunResult,
     DiagnosticRunPreflight,
     Phase0BJsonlStagingStore,
+    materialize_diagnostic_approval_packet,
     preflight_diagnostic_run,
     run_fake_diagnostic_matrix,
     run_fake_diagnostic_slice,
+    run_real_adapter_diagnostic_matrix,
     verify_diagnostic_matrix_run,
 )
 from .vllm_event_adapter import (
@@ -39,6 +42,7 @@ from .vllm_event_adapter import (
 
 __all__ = [
     "DiagnosticAdapterBinding",
+    "DiagnosticApprovalPacket",
     "DiagnosticAttemptPolicy",
     "DiagnosticEventLoopResult",
     "DiagnosticEventState",
@@ -61,10 +65,12 @@ __all__ = [
     "apply_diagnostic_vllm_response",
     "build_diagnostic_n20_matrix_candidate",
     "build_phase0b_preliminary_report",
+    "materialize_diagnostic_approval_packet",
     "preflight_diagnostic_run",
     "prepare_diagnostic_event",
     "run_fake_diagnostic_matrix",
     "run_diagnostic_vllm_event_loop",
     "run_fake_diagnostic_slice",
+    "run_real_adapter_diagnostic_matrix",
     "verify_diagnostic_matrix_run",
 ]

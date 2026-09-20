@@ -15,13 +15,16 @@ from agent_ex.phase0b import (
     build_diagnostic_n20_matrix_candidate,
 )
 from agent_ex.phase0b.run import (
+    materialize_diagnostic_approval_packet,
     Phase0BJsonlStagingStore,
     preflight_diagnostic_run,
     run_fake_diagnostic_matrix,
     run_fake_diagnostic_slice,
+    run_real_adapter_diagnostic_matrix,
     verify_diagnostic_matrix_run,
 )
 from helpers.mock_matrix import build_mock_artifact_family
+from test_prompt import topic
 
 
 SHA = "a" * 64
@@ -53,12 +56,29 @@ class FakePhase0BAdapter:
         )
 
         self.calls += 1
-        raw_body = (
-            b'{"id":"phase0b-fake","model":"qwen3-8b-paper1","choices":'
-            b'[{"index":0,"message":{"role":"assistant","content":"{}"},'
-            b'"finish_reason":"stop"}],"usage":{"prompt_tokens":2,'
-            b'"completion_tokens":1,"total_tokens":3}}'
+        content = json.dumps(
+            {
+                "stance": "label-5",
+                "confidence": 4,
+                "public_reason": "real-qwen-diagnostic-update",
+            },
+            separators=(",", ":"),
         )
+        raw_body = json.dumps(
+            {
+                "id": "phase0b-fake",
+                "model": "qwen3-8b-paper1",
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {"role": "assistant", "content": content},
+                        "finish_reason": "stop",
+                    }
+                ],
+                "usage": {"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+            },
+            separators=(",", ":"),
+        ).encode("utf-8")
         evidence = Phase0BVllmTransportEvidence.create(
             request=request,
             http_status=200,
@@ -353,6 +373,77 @@ def test_fake_matrix_runner_completes_all_12_cells_and_480_events(tmp_path) -> N
     assert verified.terminal_status == "complete"
     assert verified.committed_event_count == 480
     assert verified.transport_count == 480
+
+
+def test_real_adapter_matrix_runner_commits_480_events_without_raw_content(tmp_path) -> None:
+    candidate = _candidate()
+    binding = _binding()
+    policy = _policy()
+    authorization = _authorization(candidate, binding, policy)
+    adapter = FakePhase0BAdapter()
+
+    result = run_real_adapter_diagnostic_matrix(
+        authorization=authorization,
+        matrix_candidate=candidate,
+        adapter_binding=binding,
+        attempt_policy=policy,
+        adapter=adapter,
+        topic_package=topic(),
+        run_root=tmp_path / "run",
+    )
+
+    assert result.terminal_report.terminal_status == "complete"
+    assert result.terminal_report.completed_cell_ids == CANONICAL_CELL_IDS
+    assert result.committed_event_count == 480
+    assert result.transport_count == 480
+    assert adapter.calls == 480
+
+    store = Phase0BJsonlStagingStore(tmp_path / "run" / "staging")
+    attempts = store.read_jsonl("attempts.jsonl")
+    assert len(attempts) == 480
+    assert {record["schema_version"] for record in attempts} == {
+        "paper1.phase0b.real-adapter-attempt.v1"
+    }
+    serialized = json.dumps(attempts, sort_keys=True)
+    assert "raw_body" not in serialized
+    assert "real-qwen-diagnostic-update" not in serialized
+    assert (
+        verify_diagnostic_matrix_run(
+            run_root=tmp_path / "run",
+            authorization=authorization,
+            matrix_candidate=candidate,
+        ).committed_event_count
+        == 480
+    )
+
+
+def test_approval_packet_binds_source_authority_endpoint_and_archive_without_raw_content() -> None:
+    candidate = _candidate()
+    binding = _binding()
+    policy = _policy()
+    authorization = _authorization(candidate, binding, policy)
+
+    packet = materialize_diagnostic_approval_packet(
+        authorization=authorization,
+        matrix_candidate=candidate,
+        adapter_binding=binding,
+        attempt_policy=policy,
+    )
+
+    assert packet.source_commit == authorization.source_commit
+    assert packet.source_dirty is authorization.source_dirty
+    assert packet.source_diff_hash == authorization.source_diff_hash
+    assert packet.authorization_hash == authorization.record_hash
+    assert packet.matrix_hash == candidate.matrix_hash
+    assert packet.expected_event_count == 480
+    assert packet.max_transport_count == 960
+    assert packet.archive_uri == authorization.archive_uri
+    assert packet.endpoint == binding.endpoint
+    assert packet.served_model_name == binding.served_model_name
+    assert packet.labels == ("preliminary", "diagnostic", "not_frozen")
+    serialized = json.dumps(packet.to_payload(), sort_keys=True)
+    assert "raw_body" not in serialized
+    assert "rendered_messages" not in serialized
 
 
 def test_matrix_runner_rejects_partial_terminal_mismatch(tmp_path) -> None:

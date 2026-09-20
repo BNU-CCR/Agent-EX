@@ -1018,3 +1018,12 @@
   为`62 passed in 37.06s`；Ruff lint与format check通过。当前仍未启动云端Phase 0B真实run；
   下一步是把本地runner从fake transport切换到真实event pipeline/adapter、生成审批包，并等待
   judge服务交接后上云执行480-event诊断。
+- Phase 0B快线已补入真实adapter形状的480-event runner和审批包helper：
+  `run_real_adapter_diagnostic_matrix`按12个canonical cell各40个事件调用
+  `Phase0BVllmEventAdapter`同形接口，绑定dispatch journal、pipeline parse/commit evidence、
+  projection和terminal report；测试中使用fake adapter，不联系真实vLLM。新增
+  `materialize_diagnostic_approval_packet`，输出source commit/dirty/diff hash、authorization hash、
+  matrix hash、adapter/policy hash、480/960 inventory、archive root、endpoint、served model和
+  `preliminary/diagnostic/not_frozen`标签，不包含raw prompt/response/reason text。Phase 0B专项更新为
+  `64 passed in 47.07s`；Ruff lint与format check通过。下一步是生成实际云端授权/审批包并在judge
+  服务交接后执行两事件preflight与480-event真实诊断run。
