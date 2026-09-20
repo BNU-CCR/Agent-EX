@@ -366,6 +366,17 @@ def test_append_refuses_to_extend_a_tampered_projection_chain(
         judge_store.append_intent(intent())
 
 
+def test_append_does_not_rescan_every_historical_projection(
+    judge_store: JudgeRunStore,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def reject_full_projection_scan(self: JudgeRunStore) -> tuple[object, ...]:
+        raise AssertionError("append must not reload the full projection history")
+
+    monkeypatch.setattr(JudgeRunStore, "_read_projections", reject_full_projection_scan)
+    judge_store.append_intent(intent())
+
+
 def test_journal_manifest_hash_is_checked_even_when_entry_is_rehashed(
     judge_store: JudgeRunStore,
 ) -> None:

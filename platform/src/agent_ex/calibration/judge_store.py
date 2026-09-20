@@ -278,6 +278,7 @@ class JudgeRunStore:
         self.root = root
         self.manifest = manifest
         self.approved_order = approved_order
+        self._projection_identities: dict[str, tuple[int, int, int, int, int]] = {}
 
     @property
     def staging(self) -> Path:
@@ -373,6 +374,10 @@ class JudgeRunStore:
             for sequence, (observed, derived) in enumerate(zip(actual, expected, strict=True)):
                 if observed.sequence != sequence or observed.to_payload() != derived.to_payload():
                     raise ValueError("judge projection hash chain differs from exact replay")
+            store._projection_identities = {
+                path.name: store._projection_identity(path)
+                for path in (staging / "projections").iterdir()
+            }
             terminal_path = staging / "projection.json"
             if terminal_path.exists() or terminal_path.is_symlink():
                 if terminal_path.is_symlink() or not terminal_path.is_file():
@@ -555,6 +560,45 @@ class JudgeRunStore:
             projections.append(projection)
         return tuple(projections)
 
+    def _read_current_projection(self, expected_sequence: int) -> JudgeProjection:
+        paths = sorted((self.staging / "projections").iterdir())
+        if len(paths) != expected_sequence + 1:
+            raise ValueError("judge projection inventory is not contiguous")
+        for sequence, path in enumerate(paths):
+            if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+                raise ValueError("judge projection inventory requires regular JSON files")
+            if not path.name.startswith(f"{sequence:012d}-"):
+                raise ValueError("judge projection sequence is not contiguous")
+            expected_identity = self._projection_identities.get(path.name)
+            if (
+                expected_identity is not None
+                and self._projection_identity(path) != expected_identity
+            ):
+                raise ValueError("judge projection file identity changed after validation")
+        unknown = {path.name for path in paths} - set(self._projection_identities)
+        if unknown and unknown != {paths[-1].name}:
+            raise ValueError("judge projection inventory changed after validation")
+        path = paths[-1]
+        projection = JudgeProjection.from_payload(_load_json(path))
+        if projection.sequence != expected_sequence:
+            raise ValueError("current judge projection sequence differs from journal")
+        if path.name != f"{expected_sequence:012d}-{projection.record_hash}.json":
+            raise ValueError("current judge projection filename differs from its identity")
+        return projection
+
+    @staticmethod
+    def _projection_identity(path: Path) -> tuple[int, int, int, int, int]:
+        observed = path.stat(follow_symlinks=False)
+        if path.is_symlink() or not stat.S_ISREG(observed.st_mode):
+            raise ValueError("judge projection inventory requires regular files")
+        return (
+            observed.st_dev,
+            observed.st_ino,
+            observed.st_size,
+            observed.st_mtime_ns,
+            observed.st_ctime_ns,
+        )
+
     @property
     def current_projection(self) -> JudgeProjection:
         projections = self._read_projections()
@@ -645,9 +689,17 @@ class JudgeRunStore:
             self._require_safe_layout(self.staging)
             self._cleanup_temporary_files()
             self._recover_transactions()
-            # Validate the complete current archive before introducing another immutable file.
+            # Replay authoritative records and validate the current immutable projection.
             current_records = self.read_records()
-            self._require_exact_projection_replay(current_records)
+            expected_current = replay_judge_records(
+                self.manifest,
+                self.approved_order,
+                current_records,
+                retain_history=False,
+            )[-1]
+            observed_current = self._read_current_projection(len(current_records))
+            if observed_current.to_payload() != expected_current.to_payload():
+                raise ValueError("current judge projection differs from exact replay")
             record_path = self.staging / kind / f"{record.record_hash}.json"
             if record_path.exists() or record_path.is_symlink():
                 raise FileExistsError("judge evidence record already exists")
@@ -663,7 +715,10 @@ class JudgeRunStore:
             journal_payload = {**entry_content, "journal_hash": journal_hash}
             candidate_records = (*current_records, record)
             derived_projection = replay_judge_records(
-                self.manifest, self.approved_order, candidate_records
+                self.manifest,
+                self.approved_order,
+                candidate_records,
+                retain_history=False,
             )[-1]
             transaction_content: dict[str, object] = {
                 "schema_version": "paper1.calibration.judge-append-transaction.v1",
@@ -694,12 +749,12 @@ class JudgeRunStore:
                 journal_payload,
             )
             _transaction_checkpoint("journal")
-            _publish_json_exact(
+            projection_path = (
                 self.staging
                 / "projections"
-                / f"{sequence:012d}-{derived_projection.record_hash}.json",
-                derived_projection.to_payload(),
+                / f"{sequence:012d}-{derived_projection.record_hash}.json"
             )
+            _publish_json_exact(projection_path, derived_projection.to_payload())
             _transaction_checkpoint("projection")
             _publish_json_exact(
                 self.staging
@@ -713,6 +768,9 @@ class JudgeRunStore:
                 },
             )
             _transaction_checkpoint("commit")
+            self._projection_identities[projection_path.name] = self._projection_identity(
+                projection_path
+            )
 
     def verify_terminal_projection(self) -> JudgeProjection:
         with _archive_lock(self.root):

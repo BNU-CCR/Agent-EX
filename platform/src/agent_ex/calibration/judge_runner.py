@@ -1182,8 +1182,10 @@ def replay_judge_records(
     manifest: JudgeExecutionManifest,
     approved_order: JudgeApprovedOrder,
     records: tuple[object, ...],
+    *,
+    retain_history: bool = True,
 ) -> tuple[JudgeProjection, ...]:
-    """Replay every append exactly, returning the full immutable projection chain."""
+    """Replay every append exactly, optionally retaining only the final projection."""
 
     states: dict[str, JudgeItemState] = {}
     item_order: list[str] = []
@@ -1198,7 +1200,7 @@ def replay_judge_records(
         item_order=(),
         item_states={},
     )
-    projections = [projection]
+    projections = [projection] if retain_history else []
     intents: dict[str, JudgeDispatchIntent] = {}
     audits: dict[str, JudgeProviderAuditRecord] = {}
     negative_evidence: dict[str, JudgeNegativeDispatchEvidence] = {}
@@ -1482,12 +1484,18 @@ def replay_judge_records(
             item_order=tuple(item_order),
             item_states=states,
         )
-        projections.append(projection)
-    return tuple(projections)
+        if retain_history:
+            projections.append(projection)
+    return tuple(projections) if retain_history else (projection,)
 
 
 def reconstruct_judge_projection(store: JudgeRunStore) -> JudgeProjection:
-    projections = replay_judge_records(store.manifest, store.approved_order, store.read_records())
+    projections = replay_judge_records(
+        store.manifest,
+        store.approved_order,
+        store.read_records(),
+        retain_history=False,
+    )
     projection = projections[-1]
     unresolved = tuple(
         item_id
