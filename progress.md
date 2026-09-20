@@ -980,3 +980,13 @@
   而没有resolution，`assert_no_unresolved_dispatches`会阻止自动重发。新增测试证明intent
   写入发生在fake connection收到任何HTTP请求之前，且resolution写入后未决集合清零。
   合同+矩阵+adapter+journal相关专项为`49 passed in 1.57s`，Ruff lint与format check通过。
+- Phase 0B runner/storage最小垂直切片已新增`platform/src/agent_ex/phase0b/run.py`：
+  提供`preflight_diagnostic_run`、`Phase0BJsonlStagingStore`和
+  `run_fake_diagnostic_slice`。当前实现只作为`preliminary` JSONL staging，不冒充正式
+  SQLite v6 diagnostic store；预检绑定authorization、matrix、adapter binding和attempt
+  policy hash，拒绝changed authorization hash、重复launch root和未决dispatch。fake slice
+  可构造Phase0B vLLM event request、通过dispatch journal写intent/resolution、写入脱敏
+  attempt摘要、projection hash和`DiagnosticTerminalReport`，不写入raw prompt/response。
+  新增测试`platform/tests/test_phase0b_run.py`。Phase 0B四组专项为`54 passed in 1.85s`；
+  Ruff lint与format check均通过。正式SQLite v6 diagnostic schema union、真实event pipeline
+  wrapper和云端480-event runner仍待下一步接入。
