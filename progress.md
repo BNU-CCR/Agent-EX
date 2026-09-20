@@ -967,3 +967,11 @@
   `N=20,T=2,12 cells,480 events,960 transport ceiling`。测试覆盖精确inventory、
   authorization artifact hash映射、非N20拒绝和生产代码无测试依赖；合同+矩阵专项为
   `36 passed in 1.27s`，Ruff lint通过。
+- Phase 0B真实事件adapter边界已新增`platform/src/agent_ex/phase0b/vllm_event_adapter.py`：
+  只接受`http://127.0.0.1:8000/v1/chat/completions`，请求体字段锁死为
+  `model/messages/temperature/top_p/max_tokens/seed/chat_template_kwargs`且
+  `enable_thinking=false`，未绑定durable pre-dispatch journal时fail closed。响应证据保存
+  request id、HTTP状态、headers、provider request id、原始bytes及SHA-256、usage、
+  finish reason、latency和typed error；测试覆盖success、非法endpoint、hook-before-send、
+  非法generation key、invalid JSON、429、500、OOM、redirect和response size limit。
+  相关专项为`48 passed in 1.87s`，Ruff lint与format check通过。

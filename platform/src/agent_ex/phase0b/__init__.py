@@ -7,6 +7,13 @@ from .contracts import (
     DiagnosticTerminalReport,
 )
 from .matrix import DiagnosticMatrixCandidate, build_diagnostic_n20_matrix_candidate
+from .vllm_event_adapter import (
+    PHASE0B_VLLM_ENDPOINT,
+    Phase0BVllmEventAdapter,
+    Phase0BVllmEventRequest,
+    Phase0BVllmEventResponse,
+    Phase0BVllmTransportEvidence,
+)
 
 __all__ = [
     "DiagnosticAdapterBinding",
@@ -14,5 +21,10 @@ __all__ = [
     "DiagnosticMatrixCandidate",
     "DiagnosticRunAuthorization",
     "DiagnosticTerminalReport",
+    "PHASE0B_VLLM_ENDPOINT",
+    "Phase0BVllmEventAdapter",
+    "Phase0BVllmEventRequest",
+    "Phase0BVllmEventResponse",
+    "Phase0BVllmTransportEvidence",
     "build_diagnostic_n20_matrix_candidate",
 ]
