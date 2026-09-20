@@ -6,6 +6,7 @@ from agent_ex.phase0b.pipeline import (
     DiagnosticEventState,
     apply_diagnostic_vllm_response,
     prepare_diagnostic_event,
+    run_diagnostic_vllm_event_loop,
 )
 from agent_ex.phase0b.vllm_event_adapter import (
     Phase0BVllmEventResponse,
@@ -143,3 +144,39 @@ def test_malformed_vllm_content_records_failure_without_mutating_state() -> None
     assert result.committed is False
     assert result.state == state
     assert result.evidence.error_code == "json"
+
+
+def test_event_loop_stops_on_first_failed_response_and_keeps_prefix_state() -> None:
+    state = _state()
+    binding = _binding()
+    authorization = _authorization(binding=binding)
+
+    def generate(request):
+        if request.event_id.endswith("0001"):
+            return _response(request, content="not-json")
+        return _response(
+            request,
+            content=json.dumps(
+                {
+                    "stance": "label-3",
+                    "confidence": 3,
+                    "public_reason": "first-prefix-update",
+                },
+                separators=(",", ":"),
+            ),
+        )
+
+    result = run_diagnostic_vllm_event_loop(
+        state=state,
+        authorization=authorization,
+        adapter_binding=binding,
+        publish_flags=(True, True, True),
+        generate=generate,
+        topic_package=topic(),
+    )
+
+    assert result.committed_count == 1
+    assert result.state.next_event_ordinal == 1
+    assert result.state.private_state.reason == "first-prefix-update"
+    assert len(result.step_results) == 2
+    assert result.step_results[-1].committed is False

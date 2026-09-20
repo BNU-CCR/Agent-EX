@@ -1001,3 +1001,7 @@
   Ruff lint与format check均通过。pytest默认cache目录仍受Windows/OneDrive权限锁影响，
   本次验证使用全新`--basetemp`规避，属于测试临时目录问题而非代码失败。下一步仍需把该
   桥接接入480-event云端runner/外部归档，而不是直接声称正式实验完成。
+- 同一桥接模块随后补入`run_diagnostic_vllm_event_loop`，可按显式`publish_flags`连续准备
+  和应用多个真实vLLM事件，并在首个未提交事件处停止，保留已成功提交的严格前缀状态。
+  新增测试证明三步中第二步malformed JSON时，只保留第一步成功状态且不继续第三步。Phase 0B
+  专项更新为`58 passed in 2.44s`，Ruff lint与format check通过。

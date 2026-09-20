@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+from typing import Callable
 
 from ..domain import canonical_payload_hash
 from ..feed import FeedCursor
@@ -210,6 +211,35 @@ class DiagnosticPipelineResult:
     evidence: DiagnosticPipelineEvidence
 
 
+@dataclass(frozen=True, slots=True)
+class DiagnosticEventLoopResult:
+    """Prefix-preserving result for a preliminary diagnostic event loop."""
+
+    state: DiagnosticEventState
+    step_results: tuple[DiagnosticPipelineResult, ...]
+    committed_count: int
+    record_hash: str
+
+    def __post_init__(self) -> None:
+        if self.committed_count != sum(1 for result in self.step_results if result.committed):
+            raise ValueError("committed_count must match committed step results")
+        if self.record_hash != canonical_payload_hash(self.content_payload()):
+            raise ValueError("diagnostic event loop result hash drift")
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": "paper1.phase0b.diagnostic-event-loop-result.v1",
+            "calibration_only": True,
+            "formal_parameter_authority": False,
+            "research_parameter_status": "not_frozen",
+            "state_hash": self.state.record_hash,
+            "step_evidence_hashes": tuple(
+                result.evidence.record_hash for result in self.step_results
+            ),
+            "committed_count": self.committed_count,
+        }
+
+
 def prepare_diagnostic_event(
     *,
     state: DiagnosticEventState,
@@ -370,6 +400,58 @@ def apply_diagnostic_vllm_response(
         committed_state_hash=next_state.record_hash,
     )
     return DiagnosticPipelineResult(committed=True, state=next_state, evidence=evidence)
+
+
+def run_diagnostic_vllm_event_loop(
+    *,
+    state: DiagnosticEventState,
+    authorization: DiagnosticRunAuthorization,
+    adapter_binding: DiagnosticAdapterBinding,
+    publish_flags: tuple[bool, ...],
+    generate: Callable[[Phase0BVllmEventRequest], Phase0BVllmEventResponse],
+    topic_package: TopicPackage,
+) -> DiagnosticEventLoopResult:
+    """Run a strict prefix loop, stopping at the first uncommitted event."""
+
+    if type(publish_flags) is not tuple or not publish_flags:
+        raise ValueError("publish_flags must be a non-empty tuple")
+    if not callable(generate):
+        raise TypeError("generate must be callable")
+    current = state
+    results: list[DiagnosticPipelineResult] = []
+    for publish_flag in publish_flags:
+        prepared = prepare_diagnostic_event(
+            state=current,
+            authorization=authorization,
+            adapter_binding=adapter_binding,
+            publish_flag=publish_flag,
+        )
+        response = generate(prepared.request)
+        result = apply_diagnostic_vllm_response(
+            state=current,
+            prepared=prepared,
+            response=response,
+            topic_package=topic_package,
+        )
+        results.append(result)
+        if not result.committed:
+            break
+        current = result.state
+    content = {
+        "schema_version": "paper1.phase0b.diagnostic-event-loop-result.v1",
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+        "research_parameter_status": "not_frozen",
+        "state_hash": current.record_hash,
+        "step_evidence_hashes": tuple(result.evidence.record_hash for result in results),
+        "committed_count": sum(1 for result in results if result.committed),
+    }
+    return DiagnosticEventLoopResult(
+        state=current,
+        step_results=tuple(results),
+        committed_count=content["committed_count"],  # type: ignore[arg-type]
+        record_hash=canonical_payload_hash(content),
+    )
 
 
 def _parse_vllm_message_content(

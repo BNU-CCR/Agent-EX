@@ -8,12 +8,14 @@ from .contracts import (
 )
 from .matrix import DiagnosticMatrixCandidate, build_diagnostic_n20_matrix_candidate
 from .pipeline import (
+    DiagnosticEventLoopResult,
     DiagnosticEventState,
     DiagnosticPipelineEvidence,
     DiagnosticPipelineResult,
     DiagnosticPreparedEvent,
     apply_diagnostic_vllm_response,
     prepare_diagnostic_event,
+    run_diagnostic_vllm_event_loop,
 )
 from .run import (
     DiagnosticFakeSliceResult,
@@ -34,6 +36,7 @@ from .vllm_event_adapter import (
 __all__ = [
     "DiagnosticAdapterBinding",
     "DiagnosticAttemptPolicy",
+    "DiagnosticEventLoopResult",
     "DiagnosticEventState",
     "DiagnosticFakeSliceResult",
     "DiagnosticMatrixCandidate",
@@ -54,5 +57,6 @@ __all__ = [
     "build_diagnostic_n20_matrix_candidate",
     "preflight_diagnostic_run",
     "prepare_diagnostic_event",
+    "run_diagnostic_vllm_event_loop",
     "run_fake_diagnostic_slice",
 ]
