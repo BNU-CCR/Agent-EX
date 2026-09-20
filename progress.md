@@ -975,3 +975,8 @@
   finish reason、latency和typed error；测试覆盖success、非法endpoint、hook-before-send、
   非法generation key、invalid JSON、429、500、OOM、redirect和response size limit。
   相关专项为`48 passed in 1.87s`，Ruff lint与format check通过。
+- Phase 0B dispatch journal已补为append-only JSONL安全件：adapter可在HTTP发送前调用
+  `record_before_dispatch`写入request hash与request body SHA-256；如果崩溃后只存在intent
+  而没有resolution，`assert_no_unresolved_dispatches`会阻止自动重发。新增测试证明intent
+  写入发生在fake connection收到任何HTTP请求之前，且resolution写入后未决集合清零。
+  合同+矩阵+adapter+journal相关专项为`49 passed in 1.57s`，Ruff lint与format check通过。

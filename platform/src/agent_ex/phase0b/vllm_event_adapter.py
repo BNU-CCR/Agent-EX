@@ -9,6 +9,7 @@ import hashlib
 from http.client import HTTPConnection
 import json
 import math
+from pathlib import Path
 import time
 from typing import Callable, Mapping
 from urllib.parse import urlsplit
@@ -487,6 +488,105 @@ class Phase0BVllmEventResponse:
             **content,
             record_hash=canonical_payload_hash(hash_content),
         )  # type: ignore[arg-type]
+
+
+class Phase0BDispatchJournal:
+    """Append-only dispatch intent ledger used before any HTTP bytes are sent."""
+
+    def __init__(self, path: str | Path) -> None:
+        self.path = Path(path)
+        if self.path.exists() and not self.path.is_file():
+            raise ValueError("dispatch journal path must be a file")
+
+    def record_before_dispatch(self, request: Phase0BVllmEventRequest, body: bytes) -> None:
+        if not isinstance(request, Phase0BVllmEventRequest):
+            raise TypeError("dispatch journal request must be a Phase0BVllmEventRequest")
+        if type(body) is not bytes:
+            raise TypeError("dispatch journal body must be bytes")
+        records = self._records()
+        if request.request_id in records["intents"]:
+            raise RuntimeError("dispatch intent already exists for request")
+        if request.request_id in records["resolutions"]:
+            raise RuntimeError("dispatch resolution already exists for request")
+        payload = {
+            "schema_version": "paper1.phase0b.dispatch-intent.v1",
+            "kind": "intent",
+            "request_id": request.request_id,
+            "request_hash": request.record_hash,
+            "request_body_sha256": _sha256_bytes(body),
+            "created_at": _utc_now(),
+        }
+        self._append({**payload, "record_hash": canonical_payload_hash(payload)})
+
+    def record_resolution(self, response: Phase0BVllmEventResponse) -> None:
+        if not isinstance(response, Phase0BVllmEventResponse):
+            raise TypeError("dispatch journal response must be a Phase0BVllmEventResponse")
+        records = self._records()
+        if response.request_id not in records["intents"]:
+            raise RuntimeError("cannot resolve a request without a dispatch intent")
+        if response.request_id in records["resolutions"]:
+            raise RuntimeError("dispatch resolution already exists for request")
+        payload = {
+            "schema_version": "paper1.phase0b.dispatch-resolution.v1",
+            "kind": "resolution",
+            "request_id": response.request_id,
+            "response_hash": response.record_hash,
+            "transport_evidence_hash": response.transport_evidence.record_hash,
+            "created_at": _utc_now(),
+        }
+        self._append({**payload, "record_hash": canonical_payload_hash(payload)})
+
+    def unresolved_request_ids(self) -> tuple[str, ...]:
+        records = self._records()
+        return tuple(
+            request_id
+            for request_id in records["intents"]
+            if request_id not in records["resolutions"]
+        )
+
+    def assert_no_unresolved_dispatches(self) -> None:
+        unresolved = self.unresolved_request_ids()
+        if unresolved:
+            raise RuntimeError("unresolved dispatch intent prevents automatic resend")
+
+    def _append(self, payload: Mapping[str, object]) -> None:
+        _require_json_transport(payload, "Phase 0B dispatch journal entry")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with self.path.open("a", encoding="utf-8", newline="\n") as handle:
+            handle.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
+
+    def _records(self) -> dict[str, dict[str, Mapping[str, object]]]:
+        intents: dict[str, Mapping[str, object]] = {}
+        resolutions: dict[str, Mapping[str, object]] = {}
+        if not self.path.exists():
+            return {"intents": intents, "resolutions": resolutions}
+        with self.path.open("r", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle, start=1):
+                stripped = line.strip()
+                if not stripped:
+                    raise ValueError("dispatch journal must not contain blank lines")
+                payload = json.loads(stripped)
+                if type(payload) is not dict:
+                    raise ValueError("dispatch journal entry must be an object")
+                record_hash = payload.get("record_hash")
+                content = {key: value for key, value in payload.items() if key != "record_hash"}
+                if record_hash != canonical_payload_hash(content):
+                    raise ValueError(f"dispatch journal hash drift at line {line_number}")
+                request_id = payload.get("request_id")
+                if type(request_id) is not str or not request_id:
+                    raise ValueError("dispatch journal entry must bind a request_id")
+                kind = payload.get("kind")
+                if kind == "intent":
+                    if request_id in intents:
+                        raise ValueError("duplicate dispatch intent in journal")
+                    intents[request_id] = payload
+                elif kind == "resolution":
+                    if request_id in resolutions:
+                        raise ValueError("duplicate dispatch resolution in journal")
+                    resolutions[request_id] = payload
+                else:
+                    raise ValueError("dispatch journal entry kind is unsupported")
+        return {"intents": intents, "resolutions": resolutions}
 
 
 class Phase0BVllmEventAdapter:

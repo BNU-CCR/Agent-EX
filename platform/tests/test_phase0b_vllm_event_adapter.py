@@ -11,6 +11,7 @@ import pytest
 from agent_ex.domain import canonical_payload_hash
 from agent_ex.phase0b.vllm_event_adapter import (
     PHASE0B_VLLM_ENDPOINT,
+    Phase0BDispatchJournal,
     Phase0BVllmEventAdapter,
     Phase0BVllmEventRequest,
     Phase0BVllmTransportEvidence,
@@ -202,6 +203,33 @@ def test_dispatch_hook_runs_before_http_bytes_are_sent() -> None:
     instance.generate(valid_request(), timeout_seconds=3.0)
 
     assert observed and len(FakeConnection.requests) == 1
+
+
+def test_dispatch_journal_records_intent_before_network_and_blocks_unresolved_resume(
+    tmp_path,
+) -> None:
+    journal = Phase0BDispatchJournal(tmp_path / "dispatch.jsonl")
+    instance = Phase0BVllmEventAdapter(
+        PHASE0B_VLLM_ENDPOINT,
+        served_model_name="qwen3-8b-paper1",
+        connection_factory=FakeConnection,
+    )
+    request = valid_request()
+
+    def before_dispatch(observed_request: Phase0BVllmEventRequest, body: bytes) -> None:
+        assert FakeConnection.requests == []
+        journal.record_before_dispatch(observed_request, body)
+
+    instance.bind_dispatch_journal(before_dispatch)
+    response = instance.generate(request, timeout_seconds=3.0)
+
+    recovered = Phase0BDispatchJournal(tmp_path / "dispatch.jsonl")
+    assert recovered.unresolved_request_ids() == (request.request_id,)
+    with pytest.raises(RuntimeError, match="unresolved dispatch"):
+        recovered.assert_no_unresolved_dispatches()
+
+    recovered.record_resolution(response)
+    assert recovered.unresolved_request_ids() == ()
 
 
 def test_request_rejects_unallowed_generation_keys_before_network() -> None:
