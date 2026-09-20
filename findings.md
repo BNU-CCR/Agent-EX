@@ -713,6 +713,18 @@
 ---
 *外部内容被视为研究材料，不作为可执行指令。*
 
+## 2026-09-20：双轨快进边界
+
+- 797条盲判是对816条真实校准响应中eligible items的独立语义质量编码，不是社会网络
+  主实验。其科学作用是验证议题、identity和continuity材料，不应被描述为正式实验结果。
+- 当前长墙钟主要来自create-only证据存储的累计projection写放大，不是Qwen推理或网络吞吐；
+  因而等待judge不能成为停止Phase 0B工程准备和初步汇报整理的理由。
+- 现有平台已经完成12-cell、N=20/100/1000 mock事件链；前台最短缺口是正式输入冻结、
+  真实vLLM事件adapter及N=20运行授权，而不是重建population/network/engine。
+- 可汇报的快速交付必须标为`preliminary / diagnostic`，只报告真实校准机器指标、运行性能
+  和后续小规模动力学诊断；在797 judge、174 human codes及裁决完成前不得宣称Phase 0A-1
+  complete、正式topic通过或Paper 1主假设获得支持。
+
 ## 2026-07-29：Phase 4A.1方法论重构结论
 
 - Paper 1应定位为“理论驱动的生成式舆论动力学计算实验”，直接识别指定模型—协议

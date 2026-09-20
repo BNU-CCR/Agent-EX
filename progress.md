@@ -920,3 +920,32 @@
   `platform/tests/test_phase0a1_cloud_scripts.py`格式基线。
 - 规格与代码质量独立复审均`APPROVED`、P0--P3为零。详细提交、六组hash、验证边界和
   后续审批门见`logs/2026-09-18-phase0a1-confidence-contract-revision.md`。
+
+### 2026-09-20：双轨快进切换
+
+- 用户将当前优先目标明确切换为：尽快取得可用于开学汇报的初步真实数据，同时后台
+  补齐正式证据链。
+- 前台轨复用816条真实校准响应生成`preliminary / diagnostic`摘要，并准备真实Phase 0B
+  N=20最短启动路径；后台轨继续797条独立模型盲判，不合并已停止的v1证据。
+- 优化后的judge v2绑定提交`bf2f63a3144b4bb9a69337c2cfde159e0ea0cc58`与manifest
+  `2cf46ae940d904383881ac74e4cc64d1f9bd3cdd623c67e56c52f04a06a567f1`。该运行保留为
+  正式证据轨，不再让其墙钟时间阻塞前台诊断交付。
+- 长期目标界面仍保留未完成且暂停的旧目标，系统不允许直接改写未完成目标；本次用户
+  恢复与切换指令以本计划、进度记录和实际执行优先级为准，旧目标不得虚假标记完成。
+- 前台A已从816-case v2 durable evidence生成不含原文的机器聚合：797 parsed、19
+  parse-failed（97.67%），841 responses、0 transport errors、381,664 tokens、墙钟
+  1386.418秒，请求延迟p50/p95为0.894/1.173秒。远端聚合文件SHA-256为
+  `a099c45e57eaf965e2f9e24abd806fc2836ed9fb5dcd1ae1afeb1e14c4d999d9`，记录hash为
+  `fb40c60199398b8f50294ffdc0f792327e15733130f24cf0a14bf339388dc8c1`；详细边界见
+  `logs/2026-09-20-preliminary-report-fast-track.md`。
+- N=20快线路线已形成并通过独立复核：`N=20,T=2,12 cells`，480个逻辑事件；复用
+  现有串行engine和SQLite恢复链，新增honest diagnostic-real vLLM event adapter及
+  SQLite v6 diagnostic-v2 schema union。计划明确legacy byte-for-byte replay、端口8000
+  服务所有权交接与`preliminary/not_frozen/formal_parameter_authority=false`边界，见
+  `docs/superpowers/plans/2026-09-20-phase0b-n20-fast-track.md`。
+- 797 judge v2最近只读检查为132/797、无未决dispatch、服务健康。云端程序独立后台运行，
+  不依赖本地对话或额度；监控已从20分钟降频为每小时，仅在完成、失败或需处置时通知。
+- 开学汇报图表已在额度恢复后从已绑定的脱敏JSON生成并通过独立复核：中文一页brief、
+  `parse-success.png`与`runtime-profile.png`位于
+  `reports/2026-09-20-phase0a1-preliminary/`。制品未读取raw response，且明确标注为
+  `preliminary / diagnostic`，不能据此比较或选择议题。
