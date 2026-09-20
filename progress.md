@@ -949,3 +949,16 @@
   `parse-success.png`与`runtime-profile.png`位于
   `reports/2026-09-20-phase0a1-preliminary/`。制品未读取raw response，且明确标注为
   `preliminary / diagnostic`，不能据此比较或选择议题。
+- Phase 0B快线合同层已落地到`platform/src/agent_ex/phase0b/`：新增
+  `DiagnosticAttemptPolicy`、`DiagnosticAdapterBinding`、`DiagnosticRunAuthorization`
+  与`DiagnosticTerminalReport`，绑定`N=20,T=2,12 cells`、480事件、最多960次transport、
+  Qwen/Qwen3-8B、loopback vLLM端点、B=6/K=3候选值和`not_frozen`边界。合同拒绝
+  UNRESOLVED、Git内归档路径、unsafe external archive URI、bool inventory count、
+  非canonical cell prefix、complete/incomplete terminal count不一致和递归UNRESOLVED。
+- 合同测试文件为`platform/tests/test_phase0b_contracts.py`。本机目标pytest显示32/32
+  测试体通过，但pytest进程在收尾阶段未退出，已按节省额度原则停止追查测试运行器挂起；
+  代码直接编译通过，`platform/.venv`下Ruff lint与format check通过，合同对象可直接
+  创建并生成content-addressed record hash。
+- 为节省额度，三路独立复核子代理在workspace credits耗尽后停止，不再立即重启。后续优先
+  本地最小验证与可恢复提交；云端797盲判继续独立后台运行，最近只读检查为约192条attempt、
+  vLLM服务健康。
