@@ -17,12 +17,16 @@ from .pipeline import (
     prepare_diagnostic_event,
     run_diagnostic_vllm_event_loop,
 )
+from .report import build_phase0b_preliminary_report
 from .run import (
     DiagnosticFakeSliceResult,
+    DiagnosticMatrixRunResult,
     DiagnosticRunPreflight,
     Phase0BJsonlStagingStore,
     preflight_diagnostic_run,
+    run_fake_diagnostic_matrix,
     run_fake_diagnostic_slice,
+    verify_diagnostic_matrix_run,
 )
 from .vllm_event_adapter import (
     PHASE0B_VLLM_ENDPOINT,
@@ -39,6 +43,7 @@ __all__ = [
     "DiagnosticEventLoopResult",
     "DiagnosticEventState",
     "DiagnosticFakeSliceResult",
+    "DiagnosticMatrixRunResult",
     "DiagnosticMatrixCandidate",
     "DiagnosticPipelineEvidence",
     "DiagnosticPipelineResult",
@@ -55,8 +60,11 @@ __all__ = [
     "Phase0BVllmTransportEvidence",
     "apply_diagnostic_vllm_response",
     "build_diagnostic_n20_matrix_candidate",
+    "build_phase0b_preliminary_report",
     "preflight_diagnostic_run",
     "prepare_diagnostic_event",
+    "run_fake_diagnostic_matrix",
     "run_diagnostic_vllm_event_loop",
     "run_fake_diagnostic_slice",
+    "verify_diagnostic_matrix_run",
 ]

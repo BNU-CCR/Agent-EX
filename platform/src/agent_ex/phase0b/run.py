@@ -53,6 +53,17 @@ class DiagnosticFakeSliceResult:
     transport_count: int
 
 
+@dataclass(frozen=True, slots=True)
+class DiagnosticMatrixRunResult:
+    """Terminal evidence for a full 12-cell preliminary diagnostic staging run."""
+
+    preflight: DiagnosticRunPreflight
+    terminal_report: DiagnosticTerminalReport
+    final_projection_hash: str
+    committed_event_count: int
+    transport_count: int
+
+
 class Phase0BJsonlStagingStore:
     """Append-only JSONL staging for preliminary runner evidence.
 
@@ -76,7 +87,7 @@ class Phase0BJsonlStagingStore:
         if "/" in name or "\\" in name:
             raise ValueError("staging JSON name must be local to the staging root")
         self.root.mkdir(parents=True, exist_ok=True)
-        content = dict(payload)
+        content = {key: value for key, value in payload.items() if key != "record_hash"}
         record_hash = canonical_payload_hash(content)
         record = {**content, "record_hash": record_hash}
         (self.root / name).write_text(
@@ -101,6 +112,19 @@ class Phase0BJsonlStagingStore:
                     raise ValueError(f"staging record hash drift at line {line_number}")
                 records.append(payload)
         return records
+
+    def read_json(self, name: str) -> dict[str, object]:
+        path = self.root / name
+        if not path.exists():
+            raise FileNotFoundError(f"missing staging JSON: {name}")
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if type(payload) is not dict:
+            raise ValueError("staging JSON record must be an object")
+        record_hash = payload.get("record_hash")
+        content = {key: value for key, value in payload.items() if key != "record_hash"}
+        if record_hash != canonical_payload_hash(content):
+            raise ValueError("staging JSON record hash drift")
+        return payload
 
 
 def preflight_diagnostic_run(
@@ -245,13 +269,171 @@ def run_fake_diagnostic_slice(
     )
 
 
+def run_fake_diagnostic_matrix(
+    *,
+    authorization: DiagnosticRunAuthorization,
+    matrix_candidate: DiagnosticMatrixCandidate,
+    adapter_binding: DiagnosticAdapterBinding,
+    attempt_policy: DiagnosticAttemptPolicy,
+    adapter: object,
+    run_root: str | Path,
+) -> DiagnosticMatrixRunResult:
+    """Run all 12 diagnostic cells through the safe fake transport contract.
+
+    This is a local staging runner for the fast-track path.  It proves the
+    12-cell/480-event orchestration, terminal accounting, dispatch journal, and
+    sanitized export shape without contacting a real model.
+    """
+
+    root = Path(run_root)
+    if root.exists():
+        raise FileExistsError("diagnostic launch root already exists")
+
+    preflight = preflight_diagnostic_run(
+        authorization=authorization,
+        matrix_candidate=matrix_candidate,
+        adapter_binding=adapter_binding,
+        attempt_policy=attempt_policy,
+        run_root=root,
+    )
+    staging = Phase0BJsonlStagingStore(root / "staging")
+    journal = Phase0BDispatchJournal(root / "dispatch.jsonl")
+
+    if not hasattr(adapter, "bind_dispatch_journal") or not hasattr(adapter, "generate"):
+        raise TypeError("adapter must expose bind_dispatch_journal and generate")
+    adapter.bind_dispatch_journal(journal.record_before_dispatch)
+
+    request_hashes: list[str] = []
+    response_hashes: list[str] = []
+    cell_summaries: list[dict[str, object]] = []
+    for cell_index, cell_id in enumerate(CANONICAL_CELL_IDS):
+        cell_request_hashes: list[str] = []
+        cell_response_hashes: list[str] = []
+        for event_offset in range(40):
+            global_offset = cell_index * 40 + event_offset
+            request = _fake_request_for_event(
+                authorization=authorization,
+                adapter_binding=adapter_binding,
+                offset=global_offset,
+                cell_id=cell_id,
+            )
+            response = adapter.generate(
+                request,
+                timeout_seconds=attempt_policy.total_timeout_seconds,
+                connect_timeout_seconds=attempt_policy.connect_timeout_seconds,
+                read_timeout_seconds=attempt_policy.read_timeout_seconds,
+            )
+            if not isinstance(response, Phase0BVllmEventResponse):
+                raise TypeError("adapter returned an unsupported response type")
+            journal.record_resolution(response)
+            _append_sanitized_attempt(staging, request, response, cell_id=cell_id)
+            request_hashes.append(request.record_hash)
+            response_hashes.append(response.record_hash)
+            cell_request_hashes.append(request.record_hash)
+            cell_response_hashes.append(response.record_hash)
+        cell_summaries.append(
+            {
+                "cell_id": cell_id,
+                "committed_event_count": len(cell_request_hashes),
+                "transport_count": len(cell_response_hashes),
+                "request_hashes_hash": canonical_payload_hash(tuple(cell_request_hashes)),
+                "response_hashes_hash": canonical_payload_hash(tuple(cell_response_hashes)),
+            }
+        )
+
+    unresolved_dispatch_count = len(journal.unresolved_request_ids())
+    projection_hash = staging.write_json(
+        "projection.json",
+        {
+            "schema_version": "paper1.phase0b.fake-matrix-projection.v1",
+            "authorization_hash": authorization.record_hash,
+            "matrix_hash": matrix_candidate.matrix_hash,
+            "committed_event_count": len(request_hashes),
+            "transport_count": len(response_hashes),
+            "unresolved_dispatch_count": unresolved_dispatch_count,
+            "completed_cell_ids": CANONICAL_CELL_IDS,
+            "cell_summaries": tuple(cell_summaries),
+            "request_hashes_hash": canonical_payload_hash(tuple(request_hashes)),
+            "response_hashes_hash": canonical_payload_hash(tuple(response_hashes)),
+        },
+    )
+    terminal_report = DiagnosticTerminalReport.create(
+        authorization_hash=authorization.record_hash,
+        terminal_status="complete",
+        completed_cell_ids=CANONICAL_CELL_IDS,
+        committed_event_count=len(request_hashes),
+        transport_count=len(response_hashes),
+        unresolved_dispatch_count=unresolved_dispatch_count,
+        final_projection_hash=projection_hash,
+    )
+    staging.write_json("terminal-report.json", terminal_report.to_payload())
+    return DiagnosticMatrixRunResult(
+        preflight=preflight,
+        terminal_report=terminal_report,
+        final_projection_hash=projection_hash,
+        committed_event_count=len(request_hashes),
+        transport_count=len(response_hashes),
+    )
+
+
+def verify_diagnostic_matrix_run(
+    *,
+    run_root: str | Path,
+    authorization: DiagnosticRunAuthorization,
+    matrix_candidate: DiagnosticMatrixCandidate,
+) -> DiagnosticTerminalReport:
+    """Verify a terminal Phase 0B staging run without contacting any model."""
+
+    root = Path(run_root)
+    staging = Phase0BJsonlStagingStore(root / "staging")
+    projection = staging.read_json("projection.json")
+    terminal = DiagnosticTerminalReport.from_payload(staging.read_json("terminal-report.json"))
+    attempts = staging.read_jsonl("attempts.jsonl")
+    unresolved = len(Phase0BDispatchJournal(root / "dispatch.jsonl").unresolved_request_ids())
+
+    if projection["authorization_hash"] != authorization.record_hash:
+        raise ValueError("projection authorization hash drift")
+    if projection["matrix_hash"] != matrix_candidate.matrix_hash:
+        raise ValueError("projection matrix hash drift")
+    if terminal.authorization_hash != authorization.record_hash:
+        raise ValueError("terminal report authorization hash drift")
+    if terminal.final_projection_hash != projection["record_hash"]:
+        raise ValueError("terminal report projection hash drift")
+    if terminal.terminal_status != "complete":
+        raise ValueError("terminal report is not complete")
+    if terminal.completed_cell_ids != CANONICAL_CELL_IDS:
+        raise ValueError("terminal report does not cover all canonical cells")
+    if terminal.committed_event_count != 480 or len(attempts) != 480:
+        raise ValueError("terminal report must bind exactly 480 committed events")
+    if terminal.transport_count != 480:
+        raise ValueError("terminal report must bind exactly 480 transports")
+    if terminal.unresolved_dispatch_count != 0 or unresolved != 0:
+        raise ValueError("terminal report must have no unresolved dispatches")
+
+    counts_by_cell = {cell_id: 0 for cell_id in CANONICAL_CELL_IDS}
+    for record in attempts:
+        cell_id = record.get("cell_id")
+        if cell_id not in counts_by_cell:
+            raise ValueError("attempt record contains an unknown cell")
+        counts_by_cell[cell_id] += 1  # type: ignore[index]
+        serialized = json.dumps(record, sort_keys=True)
+        if "raw_body" in serialized or "rendered_messages" in serialized:
+            raise ValueError("attempt staging contains unsanitized raw content")
+    if any(count != 40 for count in counts_by_cell.values()):
+        raise ValueError("terminal report must bind exactly 40 attempts per cell")
+    return terminal
+
+
 def _fake_request_for_event(
     *,
     authorization: DiagnosticRunAuthorization,
     adapter_binding: DiagnosticAdapterBinding,
     offset: int,
+    cell_id: str | None = None,
 ) -> Phase0BVllmEventRequest:
-    cell_id = CANONICAL_CELL_IDS[0]
+    cell_id = cell_id or CANONICAL_CELL_IDS[0]
+    if cell_id not in CANONICAL_CELL_IDS:
+        raise ValueError("cell_id must be canonical")
     event_id = f"phase0b-event-{cell_id}-{offset + 1:04d}"
     rendered_messages = (
         {"role": "system", "content": "Return a compact diagnostic JSON object."},
@@ -292,11 +474,14 @@ def _append_sanitized_attempt(
     store: Phase0BJsonlStagingStore,
     request: Phase0BVllmEventRequest,
     response: Phase0BVllmEventResponse,
+    *,
+    cell_id: str | None = None,
 ) -> None:
     store.append_jsonl(
         "attempts.jsonl",
         {
             "schema_version": "paper1.phase0b.fake-slice-attempt.v1",
+            "cell_id": cell_id or CANONICAL_CELL_IDS[0],
             "event_id": request.event_id,
             "attempt_id": request.attempt_id,
             "request_id": request.request_id,

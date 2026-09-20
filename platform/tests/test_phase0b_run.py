@@ -17,7 +17,9 @@ from agent_ex.phase0b import (
 from agent_ex.phase0b.run import (
     Phase0BJsonlStagingStore,
     preflight_diagnostic_run,
+    run_fake_diagnostic_matrix,
     run_fake_diagnostic_slice,
+    verify_diagnostic_matrix_run,
 )
 from helpers.mock_matrix import build_mock_artifact_family
 
@@ -318,4 +320,63 @@ def test_fake_slice_rejects_reusing_launch_root(tmp_path) -> None:
             adapter=FakePhase0BAdapter(),
             run_root=run_root,
             event_count=1,
+        )
+
+
+def test_fake_matrix_runner_completes_all_12_cells_and_480_events(tmp_path) -> None:
+    candidate = _candidate()
+    binding = _binding()
+    policy = _policy()
+    authorization = _authorization(candidate, binding, policy)
+    adapter = FakePhase0BAdapter()
+
+    result = run_fake_diagnostic_matrix(
+        authorization=authorization,
+        matrix_candidate=candidate,
+        adapter_binding=binding,
+        attempt_policy=policy,
+        adapter=adapter,
+        run_root=tmp_path / "run",
+    )
+
+    assert result.terminal_report.terminal_status == "complete"
+    assert result.terminal_report.completed_cell_ids == CANONICAL_CELL_IDS
+    assert result.committed_event_count == 480
+    assert result.transport_count == 480
+    assert adapter.calls == 480
+
+    verified = verify_diagnostic_matrix_run(
+        run_root=tmp_path / "run",
+        authorization=authorization,
+        matrix_candidate=candidate,
+    )
+    assert verified.terminal_status == "complete"
+    assert verified.committed_event_count == 480
+    assert verified.transport_count == 480
+
+
+def test_matrix_runner_rejects_partial_terminal_mismatch(tmp_path) -> None:
+    candidate = _candidate()
+    binding = _binding()
+    policy = _policy()
+    authorization = _authorization(candidate, binding, policy)
+    run_root = tmp_path / "run"
+    run_fake_diagnostic_matrix(
+        authorization=authorization,
+        matrix_candidate=candidate,
+        adapter_binding=binding,
+        attempt_policy=policy,
+        adapter=FakePhase0BAdapter(),
+        run_root=run_root,
+    )
+    terminal_path = run_root / "staging" / "terminal-report.json"
+    terminal_payload = json.loads(terminal_path.read_text(encoding="utf-8"))
+    terminal_payload["committed_event_count"] = 479
+    terminal_path.write_text(json.dumps(terminal_payload, sort_keys=True), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="record hash drift|terminal report"):
+        verify_diagnostic_matrix_run(
+            run_root=run_root,
+            authorization=authorization,
+            matrix_candidate=candidate,
         )

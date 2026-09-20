@@ -1005,3 +1005,16 @@
   和应用多个真实vLLM事件，并在首个未提交事件处停止，保留已成功提交的严格前缀状态。
   新增测试证明三步中第二步malformed JSON时，只保留第一步成功状态且不继续第三步。Phase 0B
   专项更新为`58 passed in 2.44s`，Ruff lint与format check通过。
+- Phase 0B runner/export继续补齐12-cell本地全量编排：`run_fake_diagnostic_matrix`
+  按canonical cell顺序执行12×40个事件，复用dispatch journal写入intent/resolution，
+  生成脱敏attempt JSONL、projection和complete `DiagnosticTerminalReport`；`verify_diagnostic_matrix_run`
+  只读durable staging核对exactly 12 cells、480 committed events、480 transports、每cell
+  40 attempts、0 unresolved dispatch，并拒绝terminal/projection/hash漂移或raw内容泄露。
+- 新增`platform/src/agent_ex/phase0b/report.py`，从已验证staging生成
+  `preliminary/not_frozen/formal_parameter_authority=false`的安全JSON摘要，包含completion、
+  provider failure、retry、usage totals和per-cell counts，不包含raw prompt、raw response或
+  `public_reason`文本。新增测试`platform/tests/test_phase0b_report.py`覆盖完整报告和
+  缺失attempt篡改拒绝。Phase 0B专项（contracts/matrix/vLLM adapter/run/pipeline/report）
+  为`62 passed in 37.06s`；Ruff lint与format check通过。当前仍未启动云端Phase 0B真实run；
+  下一步是把本地runner从fake transport切换到真实event pipeline/adapter、生成审批包，并等待
+  judge服务交接后上云执行480-event诊断。
