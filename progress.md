@@ -962,3 +962,8 @@
 - 为节省额度，三路独立复核子代理在workspace credits耗尽后停止，不再立即重启。后续优先
   本地最小验证与可恢复提交；云端797盲判继续独立后台运行，最近只读检查为约192条attempt、
   vLLM服务健康。
+- Phase 0B矩阵入口已新增`platform/src/agent_ex/phase0b/matrix.py`：生产代码不导入
+  `tests`，而是接收显式传入的候选制品并复用既有严格矩阵验证器，再额外锁死
+  `N=20,T=2,12 cells,480 events,960 transport ceiling`。测试覆盖精确inventory、
+  authorization artifact hash映射、非N20拒绝和生产代码无测试依赖；合同+矩阵专项为
+  `36 passed in 1.27s`，Ruff lint通过。
