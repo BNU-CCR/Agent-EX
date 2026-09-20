@@ -8,20 +8,26 @@ from __future__ import annotations
 
 import base64
 from dataclasses import dataclass, fields, replace
+from datetime import UTC, datetime
 import hashlib
 import json
-from typing import TYPE_CHECKING, Mapping
+from pathlib import Path
+import time
+from typing import TYPE_CHECKING, Callable, Mapping
 
 from ..domain import canonical_payload_hash
+from .judge_adapter import JudgeVllmAdapter, parse_judge_response
 from .judge_contracts import (
+    JudgeAuthorization,
     JudgeExecutionManifest,
     JudgeParseEvidence,
     JudgePreflightEvidence,
     JudgeRequestEvidence,
+    JudgeRequestRenderer,
     JudgeResponseEvidence,
     JudgeServiceEvidence,
 )
-from .review import BlindReviewItem
+from .review import BlindReviewItem, SemanticReviewPolicy
 
 if TYPE_CHECKING:
     from .judge_store import JudgeRunStore
@@ -1493,6 +1499,265 @@ def reconstruct_judge_projection(store: JudgeRunStore) -> JudgeProjection:
             "unresolved dispatch requires typed reconciliation: " + ", ".join(unresolved)
         )
     return projection
+
+
+def next_judge_action(
+    state: JudgeItemState | None,
+    authorization: JudgeAuthorization | JudgeExecutionManifest,
+) -> str:
+    """Return the only legal next action for one approved item."""
+
+    if not isinstance(authorization, (JudgeAuthorization, JudgeExecutionManifest)):
+        raise TypeError("judge action requires authorization or execution manifest")
+    if state is None:
+        return "initial"
+    if not isinstance(state, JudgeItemState):
+        raise TypeError("judge action requires JudgeItemState or None")
+    if state.status in {"coded", "terminal_failed", "ambiguous_incomplete"}:
+        return "stop"
+    if state.unresolved_intent_hash is not None:
+        return "reconcile"
+    if state.attempt_count >= authorization.max_attempts_per_item:
+        return "terminal_failed"
+    if state.status != "pending_retry" or state.last_error not in authorization.retryable_codes:
+        return "terminal_failed"
+    return "repair" if state.last_error.startswith("parse_") else "retry"
+
+
+def _utc_now() -> str:
+    return datetime.now(UTC).isoformat().replace("+00:00", "Z")
+
+
+def _validate_execution_inputs(
+    *,
+    store: JudgeRunStore,
+    manifest: JudgeExecutionManifest,
+    pack: Mapping[str, object],
+    index: Mapping[str, object],
+    preflight: JudgePreflightEvidence,
+    service_start: JudgeServiceEvidence,
+    renderer: JudgeRequestRenderer,
+    policy: SemanticReviewPolicy,
+) -> tuple[BlindReviewItem, ...]:
+    if store.manifest != manifest:
+        raise ValueError("judge store manifest differs from requested execution manifest")
+    approved = JudgeApprovedOrder.from_manifest_bound_payloads(manifest, pack, index)
+    if approved != store.approved_order:
+        raise ValueError("judge execution pack/index differ from stored approved order")
+    if (
+        preflight.record_hash != manifest.preflight_hash
+        or service_start.phase != "start"
+        or service_start.authorization_hash != manifest.authorization_hash
+        or service_start.evidence_hash != manifest.service_start_identity_hash
+    ):
+        raise ValueError("judge lifecycle evidence differs from execution manifest")
+    if renderer.record_hash != manifest.renderer_hash or renderer.policy_hash != policy.record_hash:
+        raise ValueError("judge renderer/policy differ from execution manifest")
+    raw_items = pack.get("items") if type(pack) is dict else None
+    if type(raw_items) is not list:
+        raise TypeError("judge execution pack items must use a JSON array")
+    items = tuple(BlindReviewItem.from_payload(item) for item in raw_items)
+    if tuple((item.item_id, item.record_hash, item.policy_hash) for item in items) != tuple(
+        (item.item_id, item.item_hash, item.policy_hash) for item in approved.items
+    ):
+        raise ValueError("judge execution items differ from approved order")
+    return items
+
+
+def _execute_judge_items(
+    *,
+    store: JudgeRunStore,
+    manifest: JudgeExecutionManifest,
+    items: tuple[BlindReviewItem, ...],
+    renderer: JudgeRequestRenderer,
+    policy: SemanticReviewPolicy,
+    adapter: JudgeVllmAdapter,
+    stop_after_attempts: int | None,
+    created_at_factory: Callable[[], str],
+    sleep_fn: Callable[[float], None],
+) -> JudgeProjection:
+    if stop_after_attempts is not None and (
+        type(stop_after_attempts) is not int or stop_after_attempts < 0
+    ):
+        raise ValueError("stop_after_attempts must be an integer >= 0 or None")
+    projection = reconstruct_judge_projection(store)
+    attempts_executed = 0
+    while True:
+        if stop_after_attempts is not None and attempts_executed >= stop_after_attempts:
+            return projection
+        current_state = (
+            projection.item_states[projection.item_order[-1]] if projection.item_order else None
+        )
+        if current_state is not None and current_state.status == "ambiguous_incomplete":
+            raise AmbiguousJudgeDispatchError(
+                "ambiguous incomplete judge item blocks the remaining approved order"
+            )
+        if current_state is not None and current_state.status == "terminal_failed":
+            raise ValueError("terminal_failed judge item blocks the remaining approved order")
+        if current_state is not None and current_state.status == "pending_retry":
+            order_index = current_state.order_index
+            state = current_state
+        else:
+            order_index = len(projection.item_order)
+            state = None
+        if order_index >= len(items):
+            return projection
+        action = next_judge_action(state, manifest)
+        if action == "reconcile":
+            raise AmbiguousJudgeDispatchError(
+                "unresolved dispatch requires typed reconciliation before resume"
+            )
+        if action in {"stop", "terminal_failed"}:
+            raise ValueError("judge projection cannot advance from its current item state")
+        attempt_index = 1 if state is None else state.attempt_count + 1
+        if action in {"retry", "repair"}:
+            sleep_fn(manifest.retry_backoff_seconds[attempt_index - 2])
+        item = items[order_index]
+        request = JudgeRequestEvidence.create(
+            rendered_request=renderer.render(
+                item,
+                attempt_index,
+                repair=action == "repair",
+            ),
+            manifest_hash=manifest.record_hash,
+            order_index=order_index,
+            model_id=manifest.model_id,
+        )
+        intent = JudgeDispatchIntent.create(
+            request=request,
+            created_at=created_at_factory(),
+        )
+        # This append is the durable send boundary. Any exception after it leaves an
+        # unresolved intent which resume refuses to resend.
+        store.append_intent(intent)
+        response = adapter.generate(request)
+        store.append_response(response)
+        parse = (
+            parse_judge_response(response.output_bytes, policy)
+            if response.success and response.output_bytes is not None
+            else None
+        )
+        attempt = JudgeCompletedAttempt.create(intent, response, parse)
+        store.append_completed_attempt(attempt)
+        failure_code = (
+            response.failure_code
+            if not response.success
+            else None
+            if parse is None
+            else parse.failure_code
+        )
+        if failure_code is None:
+            outcome = "coded"
+        elif (
+            failure_code in manifest.retryable_codes
+            and attempt_index < manifest.max_attempts_per_item
+        ):
+            outcome = "retryable_failed"
+        else:
+            outcome = "terminal_failed"
+        store.append_attempt_resolution(
+            JudgeAttemptResolution.create(
+                attempt,
+                outcome=outcome,
+                failure_code=failure_code,
+            )
+        )
+        attempts_executed += 1
+        projection = reconstruct_judge_projection(store)
+
+
+def run_judge(
+    *,
+    root: Path,
+    manifest: JudgeExecutionManifest,
+    pack: Mapping[str, object],
+    index: Mapping[str, object],
+    preflight: JudgePreflightEvidence,
+    service_start: JudgeServiceEvidence,
+    renderer: JudgeRequestRenderer,
+    policy: SemanticReviewPolicy,
+    adapter: JudgeVllmAdapter,
+    stop_after_attempts: int | None = None,
+    created_at_factory: Callable[[], str] = _utc_now,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> JudgeProjection:
+    """Create and execute a judge run in exact approved order."""
+
+    from .judge_store import JudgeRunStore
+
+    store = JudgeRunStore.create(root, manifest, pack, index)
+    store.append_preflight(preflight)
+    store.append_service_start(service_start)
+    items = _validate_execution_inputs(
+        store=store,
+        manifest=manifest,
+        pack=pack,
+        index=index,
+        preflight=preflight,
+        service_start=service_start,
+        renderer=renderer,
+        policy=policy,
+    )
+    return _execute_judge_items(
+        store=store,
+        manifest=manifest,
+        items=items,
+        renderer=renderer,
+        policy=policy,
+        adapter=adapter,
+        stop_after_attempts=stop_after_attempts,
+        created_at_factory=created_at_factory,
+        sleep_fn=sleep_fn,
+    )
+
+
+def resume_judge(
+    *,
+    root: Path,
+    manifest: JudgeExecutionManifest,
+    pack: Mapping[str, object],
+    index: Mapping[str, object],
+    preflight: JudgePreflightEvidence,
+    service_start: JudgeServiceEvidence,
+    renderer: JudgeRequestRenderer,
+    policy: SemanticReviewPolicy,
+    adapter: JudgeVllmAdapter,
+    stop_after_attempts: int | None = None,
+    created_at_factory: Callable[[], str] = _utc_now,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> JudgeProjection:
+    """Resume only a validated, nonterminal prefix without resetting budgets."""
+
+    from .judge_store import JudgeRunStore
+
+    store = JudgeRunStore.open(root)
+    items = _validate_execution_inputs(
+        store=store,
+        manifest=manifest,
+        pack=pack,
+        index=index,
+        preflight=preflight,
+        service_start=service_start,
+        renderer=renderer,
+        policy=policy,
+    )
+    projection = reconstruct_judge_projection(store)
+    if len(projection.item_order) == manifest.expected_item_count and all(
+        state.status in {"coded", "terminal_failed", "ambiguous_incomplete"}
+        for state in projection.item_states.values()
+    ):
+        raise ValueError("judge run is already terminal and cannot be resumed")
+    return _execute_judge_items(
+        store=store,
+        manifest=manifest,
+        items=items,
+        renderer=renderer,
+        policy=policy,
+        adapter=adapter,
+        stop_after_attempts=stop_after_attempts,
+        created_at_factory=created_at_factory,
+        sleep_fn=sleep_fn,
+    )
 
 
 def reconcile_from_provider_log(

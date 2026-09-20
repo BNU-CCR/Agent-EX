@@ -17,7 +17,10 @@ from agent_ex.calibration.judge_runner import (
     JudgeNegativeDispatchEvidence,
     JudgeNegativeVerifierContract,
     JudgeProviderNegativeLogArtifact,
+    next_judge_action,
     replay_judge_records,
+    resume_judge,
+    run_judge,
     build_retry_after_not_sent,
     reconcile_from_provider_log,
     reconcile_proved_not_sent,
@@ -25,6 +28,7 @@ from agent_ex.calibration.judge_runner import (
 )
 from agent_ex.calibration.judge_adapter import parse_judge_response
 from agent_ex.calibration.judge_contracts import (
+    JudgeExecutionManifest,
     JudgeRequestEvidence,
     JudgeRequestRenderer,
     JudgeResponseEvidence,
@@ -171,6 +175,173 @@ def parse_failed_attempt(
         response,
         parse_judge_response(output, review_policy),
     )
+
+
+def small_run_context() -> tuple[
+    JudgeExecutionManifest,
+    dict[str, object],
+    dict[str, object],
+    object,
+    object,
+    object,
+    SemanticReviewPolicy,
+]:
+    manifest_value, _, renderer, items, preflight, start, pack, index = context()
+    assert len(items) == manifest_value.expected_item_count
+    return manifest_value, pack, index, preflight, start, renderer, policy()
+
+
+class ScriptedJudgeAdapter:
+    def __init__(self, outcomes: tuple[str, ...] = ()) -> None:
+        self.outcomes = outcomes
+        self.calls = 0
+        self.before_generate = None
+
+    def generate(self, request: JudgeRequestEvidence) -> JudgeResponseEvidence:
+        if self.before_generate is not None:
+            self.before_generate(request)
+        outcome = self.outcomes[self.calls] if self.calls < len(self.outcomes) else "success"
+        self.calls += 1
+        dispatch = JudgeDispatchIntent.create(
+            request=request,
+            created_at="2026-09-19T00:00:00Z",
+        )
+        if outcome == "crash":
+            raise RuntimeError("injected network crash")
+        if outcome == "invalid_json":
+            return parse_failed_attempt(dispatch).response
+        if outcome == "illegal_label":
+            return parse_failed_attempt(dispatch, failure_code="parse_illegal_label").response
+        return successful_response(dispatch)[0]
+
+
+def run_kwargs(tmp_path: Path, *, name: str, adapter: ScriptedJudgeAdapter) -> dict[str, object]:
+    manifest_value, pack, index, preflight, start, renderer, review_policy = small_run_context()
+    return {
+        "root": tmp_path / name,
+        "manifest": manifest_value,
+        "pack": pack,
+        "index": index,
+        "preflight": preflight,
+        "service_start": start,
+        "renderer": renderer,
+        "policy": review_policy,
+        "adapter": adapter,
+        "created_at_factory": lambda: "2026-09-19T00:00:00Z",
+        "sleep_fn": lambda _: None,
+    }
+
+
+def test_resume_matches_uninterrupted_projection(tmp_path: Path) -> None:
+    full_kwargs = run_kwargs(tmp_path, name="full", adapter=ScriptedJudgeAdapter())
+    full = run_judge(**full_kwargs, stop_after_attempts=3)
+
+    resumed_kwargs = run_kwargs(tmp_path, name="resumed", adapter=ScriptedJudgeAdapter())
+    paused = run_judge(**resumed_kwargs, stop_after_attempts=1)
+    assert len(paused.item_order) == 1
+    resumed_kwargs["adapter"] = ScriptedJudgeAdapter()
+    resumed = resume_judge(**resumed_kwargs, stop_after_attempts=2)
+
+    assert resumed.content_payload() == full.content_payload()
+    assert len(resumed.item_order) == 3
+    assert all(state.status == "coded" for state in resumed.item_states.values())
+
+
+def test_retry_budget_never_resets_across_resume(tmp_path: Path) -> None:
+    kwargs = run_kwargs(
+        tmp_path,
+        name="retry-resume",
+        adapter=ScriptedJudgeAdapter(("invalid_json",)),
+    )
+    paused = run_judge(**kwargs, stop_after_attempts=1)
+    assert paused.item_states[paused.item_order[0]].status == "pending_retry"
+    kwargs["adapter"] = ScriptedJudgeAdapter(("invalid_json", "success"))
+    resumed = resume_judge(**kwargs, stop_after_attempts=2)
+    first = resumed.item_states[resumed.item_order[0]]
+    assert first.attempt_count == 3
+    assert first.status == "coded"
+
+
+def test_unresolved_network_dispatch_fails_closed_without_resend(tmp_path: Path) -> None:
+    adapter = ScriptedJudgeAdapter(("crash",))
+    kwargs = run_kwargs(tmp_path, name="unresolved", adapter=adapter)
+    root = kwargs["root"]
+
+    def assert_intent_precedes_network(_: JudgeRequestEvidence) -> None:
+        store = JudgeRunStore.open(root)
+        assert store.current_projection.item_states["blind-item-000"].status == (
+            "dispatch_unresolved"
+        )
+
+    adapter.before_generate = assert_intent_precedes_network
+    with pytest.raises(RuntimeError, match="network crash"):
+        run_judge(**kwargs)
+    replacement = ScriptedJudgeAdapter()
+    kwargs["adapter"] = replacement
+    with pytest.raises(AmbiguousJudgeDispatchError, match="unresolved dispatch"):
+        resume_judge(**kwargs)
+    assert replacement.calls == 0
+
+
+def test_resume_stops_at_ambiguous_item_without_advancing(tmp_path: Path) -> None:
+    kwargs = run_kwargs(tmp_path, name="ambiguous-stop", adapter=ScriptedJudgeAdapter())
+    run_judge(**kwargs, stop_after_attempts=0)
+    store = JudgeRunStore.open(kwargs["root"])
+    dispatch = intent()
+    store.append_intent(dispatch)
+    store.append_incomplete_attempt_marker(dispatch)
+    store.append_reconciliation(
+        JudgeDispatchReconciliation.create(
+            dispatch,
+            "ambiguous",
+            {
+                "provider_audit_hash": "b" * 64,
+                "checked_at": "2026-09-19T00:01:00Z",
+            },
+        )
+    )
+    replacement = ScriptedJudgeAdapter()
+    kwargs["adapter"] = replacement
+    with pytest.raises(AmbiguousJudgeDispatchError, match="ambiguous|incomplete"):
+        resume_judge(**kwargs)
+    assert replacement.calls == 0
+    assert len(JudgeRunStore.open(kwargs["root"]).current_projection.item_order) == 1
+
+
+def test_resume_stops_at_terminal_failed_item_without_advancing(tmp_path: Path) -> None:
+    kwargs = run_kwargs(
+        tmp_path,
+        name="terminal-stop",
+        adapter=ScriptedJudgeAdapter(("illegal_label",)),
+    )
+    failed = run_judge(**kwargs, stop_after_attempts=1)
+    assert failed.item_states[failed.item_order[-1]].status == "terminal_failed"
+    replacement = ScriptedJudgeAdapter()
+    kwargs["adapter"] = replacement
+    with pytest.raises(ValueError, match="terminal_failed|terminal failure"):
+        resume_judge(**kwargs)
+    assert replacement.calls == 0
+    assert len(JudgeRunStore.open(kwargs["root"]).current_projection.item_order) == 1
+
+
+def test_next_action_respects_retry_kind_and_terminal_states(judge_store: JudgeRunStore) -> None:
+    manifest_value = judge_store.manifest
+    assert next_judge_action(None, manifest_value) == "initial"
+    dispatch = intent()
+    attempt = parse_failed_attempt(dispatch)
+    judge_store.append_intent(dispatch)
+    judge_store.append_response(attempt.response)
+    judge_store.append_completed_attempt(attempt)
+    judge_store.append_attempt_resolution(
+        JudgeAttemptResolution.create(
+            attempt,
+            outcome="retryable_failed",
+            failure_code="parse_invalid_json",
+        )
+    )
+    state = judge_store.current_projection.item_states[dispatch.item_id]
+    assert next_judge_action(state, manifest_value) == "repair"
+    assert next_judge_action(replace(state, status="coded"), manifest_value) == "stop"
 
 
 def negative_evidence(
