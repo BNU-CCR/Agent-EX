@@ -7,6 +7,14 @@ from .contracts import (
     DiagnosticTerminalReport,
 )
 from .matrix import DiagnosticMatrixCandidate, build_diagnostic_n20_matrix_candidate
+from .pipeline import (
+    DiagnosticEventState,
+    DiagnosticPipelineEvidence,
+    DiagnosticPipelineResult,
+    DiagnosticPreparedEvent,
+    apply_diagnostic_vllm_response,
+    prepare_diagnostic_event,
+)
 from .run import (
     DiagnosticFakeSliceResult,
     DiagnosticRunPreflight,
@@ -26,8 +34,12 @@ from .vllm_event_adapter import (
 __all__ = [
     "DiagnosticAdapterBinding",
     "DiagnosticAttemptPolicy",
+    "DiagnosticEventState",
     "DiagnosticFakeSliceResult",
     "DiagnosticMatrixCandidate",
+    "DiagnosticPipelineEvidence",
+    "DiagnosticPipelineResult",
+    "DiagnosticPreparedEvent",
     "DiagnosticRunPreflight",
     "DiagnosticRunAuthorization",
     "DiagnosticTerminalReport",
@@ -38,7 +50,9 @@ __all__ = [
     "Phase0BVllmEventRequest",
     "Phase0BVllmEventResponse",
     "Phase0BVllmTransportEvidence",
+    "apply_diagnostic_vllm_response",
     "build_diagnostic_n20_matrix_candidate",
     "preflight_diagnostic_run",
+    "prepare_diagnostic_event",
     "run_fake_diagnostic_slice",
 ]

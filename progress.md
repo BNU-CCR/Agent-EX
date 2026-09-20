@@ -990,3 +990,14 @@
   新增测试`platform/tests/test_phase0b_run.py`。Phase 0B四组专项为`54 passed in 1.85s`；
   Ruff lint与format check均通过。正式SQLite v6 diagnostic schema union、真实event pipeline
   wrapper和云端480-event runner仍待下一步接入。
+- Phase 0B真实事件pipeline桥已新增`platform/src/agent_ex/phase0b/pipeline.py`：它仍明确
+  `preliminary/not_frozen/formal_parameter_authority=false`，不把真实vLLM响应伪装成
+  MockAdapter脚本；当前提供一个最小单Agent事件桥，能从现有`Phase0BVllmEventRequest`
+  生成真实请求，接收真实vLLM response中的`choices[0].message.content`，按既有
+  `stance/confidence/public_reason`合同解析，并只在解析成功后推进私有状态、feed cursor、
+  `next_event_ordinal`和可选公开帖。timeout或malformed JSON仅生成失败evidence，状态、
+  cursor和ordinal保持不变。新增测试`platform/tests/test_phase0b_pipeline.py`先RED后GREEN。
+  Phase 0B专项（contracts/matrix/vLLM adapter/run/pipeline）为`57 passed in 2.39s`；
+  Ruff lint与format check均通过。pytest默认cache目录仍受Windows/OneDrive权限锁影响，
+  本次验证使用全新`--basetemp`规避，属于测试临时目录问题而非代码失败。下一步仍需把该
+  桥接接入480-event云端runner/外部归档，而不是直接声称正式实验完成。
