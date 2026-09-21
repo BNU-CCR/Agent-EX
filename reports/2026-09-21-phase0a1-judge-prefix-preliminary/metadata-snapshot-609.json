@@ -1,0 +1,40 @@
+{
+  "analysis_method": {
+    "blocking_reason": "no approved raw-free label export is present; raw-bearing reconciliation records were not opened",
+    "method_id": "phase0a1-judge-prefix-metadata-only-v1",
+    "script_sha256": "b9a291f94dfec83379c59381bec51b081849b83d0392a659875d9b1b31dcb509",
+    "semantic_statistics_available": false
+  },
+  "labels": {
+    "calibration_only": true,
+    "formal_parameter_authority": false,
+    "incomplete": true,
+    "preliminary": true,
+    "research_parameter_status": "not_frozen"
+  },
+  "record_hash": "ad9538081b6c5a750af560cd0c5fcc22faeed2b1b7365cf8df766caa36fefb1e",
+  "schema_version": "paper1.calibration.judge-prefix-metadata-snapshot.v1",
+  "snapshot": {
+    "captured_at": "2026-09-21T16:25:38+08:00",
+    "cutoff": 609,
+    "expected_total": 797,
+    "observed_item_count": 610,
+    "prefix_binding_hash": "fad024b7e6c214f60560f763554424fccba6bb25999c9a2f58bec809513e15d7",
+    "source_projection_sequence": 2441,
+    "status_counts": {
+      "coded": 609,
+      "dispatch_unresolved": 1
+    }
+  },
+  "source": {
+    "locator": "ssh://root@connect.bjb2.seetacloud.com:35947/root/autodl-tmp/agent-ex-phase0a1-judge-v2/run-store/staging/projections/000000002441-358adaa062c9f69a2679dd239c5d93c1557fde4b39c8361272aaa0121ec8c2d1.json",
+    "manifest_file_sha256": "266d0ab5edd7992aed4c80418578adfbd47cd14351e8837c98940026a87d3ae9",
+    "manifest_record_hash": "2cf46ae940d904383881ac74e4cc64d1f9bd3cdd623c67e56c52f04a06a567f1",
+    "policy_file_sha256": "abe2dd3841ba582e7cd6f96f92d473ecc6fd3e11ca46e1ebd8680d287faafbe4",
+    "policy_record_hash": "12012960c93b9c55c3ddeff0d7075d0bb5faec5e29b7a35bed7dbb13e2b4e6f9",
+    "projection_file_sha256": "63dae15c80ec8517e625febed3927c37d0024efacc643f33f0315ed25864dcd9",
+    "projection_record_hash": "358adaa062c9f69a2679dd239c5d93c1557fde4b39c8361272aaa0121ec8c2d1",
+    "renderer_file_sha256": "169493f3d72517f548c17ab639b9516f637d3146d1adb849740f248f6506e12b",
+    "renderer_record_hash": "747550632924afbc1adbdb6a07c8fffd469fccc2cefd088878af7c37a6d418fb"
+  }
+}
