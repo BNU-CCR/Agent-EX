@@ -87,22 +87,31 @@ README 整体重写为简洁的项目入口，包含：
 
 当前 Phase 0 worktree 还包含与本次文档任务无关、尚未提交的安全标签导出器和 N=20
 materializer，以及大量测试临时目录和 bundle。这些内容不得被本次文档任务强制完成、丢弃或
-混入提交。文档任务只允许提交明确列出的 README、暑期复盘、设计/计划和必要的进度索引；
-实现改动留在原 worktree，另立经过批准的工作包完成、复核和提交。
+混入提交。本任务的完整路径白名单只有：
+
+- `README.md`；
+- `docs/2026-09-22-summer-progress-review.md`；
+- `docs/superpowers/specs/2026-09-22-summer-review-readme-and-branch-integration-design.md`；
+- `docs/superpowers/plans/2026-09-22-summer-review-readme-and-branch-integration.md`。
+
+不得在执行时临场加入 `progress.md`、`task_plan.md` 或任何实现、测试、bundle、环境与临时目录。
+如确需新增路径，立即停止并重新审查设计。实现改动留在原 worktree，另立经过批准的工作包
+完成、复核和提交。
 
 整合顺序：
 
 1. 盘点 `git status --porcelain=v1 --untracked-files=all`、ignored 文件和所有 worktree；保存但不修改无关实现、bundle、虚拟环境和测试目录；
-2. 只用路径白名单暂存本次 README、暑期复盘、设计/计划和必要的进度索引；禁止 `git add .`、`git clean` 或批量移动；
+2. 只用上一节列出的四个精确仓库相对路径暂存；禁止 `git add .`、`git clean` 或批量移动；
 3. 核对 staged diff、文档链接、敏感信息扫描和量化事实来源后提交文档；
 4. 记录 `PRE_MERGE_MAIN=$(git rev-parse main)` 与 `SOURCE_TIP=$(git rev-parse codex/paper1-phase0)`；该 SOURCE_TIP 只代表已提交快照，不包含仍留在 worktree 的实现；
 5. 更新远端引用后要求本地 `main == origin/main`、`origin/main` 是固定 SOURCE_TIP 的祖先、且 `codex/paper1-phase0 == SOURCE_TIP`；任一 OID 变化均停止并重新审查；
-6. 在 main worktree 执行 `git merge --ff-only "$SOURCE_TIP"`；
-7. 验证 `main == SOURCE_TIP`、`PRE_MERGE_MAIN` 是 main 的祖先、`PRE_MERGE_MAIN..main` 的提交数量与清单、关键文件树和文档链接；
-8. 不使用 force 推送 main，并在推送后核对 `origin/main == SOURCE_TIP`；
-9. 删除每个远端分支前，固定其 tip 并证明该 tip 是已验证 `origin/main` 的祖先；明确区分远端 ref、同名本地 ref 和关联 worktree；
-10. `codex/paper1-phase4b` 可在上述祖先证明和 worktree保留检查后删除远端 ref；`codex/paper1-phase0` 在未提交实现完成独立处置、worktree解除且无需回退前不得删除；
-11. 本地过期 worktree、旧本地分支和损坏的 Codex checkpoint ref 另立清理设计，不与远端合并或文档任务混做。
+6. 在 main worktree 单独要求 `git status --porcelain --untracked-files=no` 为空；随后列出其 untracked/ignored 路径，并与 `git diff --name-only "$PRE_MERGE_MAIN..$SOURCE_TIP"` 做精确路径碰撞检查。任何相同路径、父目录/子目录遮蔽或大小写折叠冲突都停止；不得为通过检查而删除、覆盖或自动移动现有文件；
+7. 仅在上述目标 worktree 前置条件通过后执行 `git merge --ff-only "$SOURCE_TIP"`；
+8. 验证 `main == SOURCE_TIP`、`PRE_MERGE_MAIN` 是 main 的祖先、`PRE_MERGE_MAIN..main` 的提交数量与清单、关键文件树和文档链接；
+9. 不使用 force 推送 main，并在推送后核对 `origin/main == SOURCE_TIP`；
+10. 删除每个远端分支前，固定其 tip 并证明该 tip 是已验证 `origin/main` 的祖先；明确区分远端 ref、同名本地 ref 和关联 worktree；
+11. `codex/paper1-phase4b` 可在上述祖先证明和 worktree保留检查后删除远端 ref；`codex/paper1-phase0` 在未提交实现完成独立处置、worktree解除且无需回退前不得删除；
+12. 本地过期 worktree、旧本地分支和损坏的 Codex checkpoint ref 另立清理设计，不与远端合并或文档任务混做。
 
 任何一步发现远端 main 新增提交、固定 source tip 变化、staged allowlist 外出现文件、验证失败或提交关系不再可 fast-forward，立即停止，不自动制造 merge commit。Phase 0 worktree 可以因被明确保留的实现改动而保持 dirty；这本身不是文档快照 fast-forward 的阻断，但会阻止删除该 worktree 和 Phase 0 分支。
 
@@ -129,4 +138,4 @@ README 和暑期复盘只有在以下证据同时记录时才能写“797 条完
 - `main` 包含固定 SOURCE_TIP 之前 Phase 0 的完整逐提交历史，且保留未提交实现的原 worktree；
 - 删除远端分支前已有可验证的 main 远端副本；
 - 分支整合不使用 squash、rebase、force-push 或非 fast-forward 覆盖。
-- staged diff 只包含明确路径白名单，且 Web-safe handoff 不含私人操作定位。
+- staged diff 只包含上述四个精确路径中的当次目标文件；main 目标 worktree 的 tracked tree 为空且所有 untracked/ignored 路径均与引入路径无碰撞；Web-safe handoff 不含私人操作定位。
