@@ -34,7 +34,7 @@ Paper 1 的直接证据边界是由 LLM-agent 构成的模拟讨论网络，不�
 - 本地仍有 N=20/T=2 materializer 和安全标签导出器改动待独立审查、Linux 验证与正式提交。
 - 797 项盲判的安全语义汇总仍须经过字段白名单、哈希绑定且不含原始文本的批准导出链；完成计数本身不是语义结果。
 
-### 尚未完成
+### 尚未完全完成
 
 - 真实 N=20、12-cell、480-event 动力学诊断运行。
 - Phase 0B 的模型 revision、chat template、generation 参数、B/K、重试/超时、性能门与归档位置冻结。
@@ -103,6 +103,9 @@ Phase 0A-1 的终态事实为：797 个 item states、797 coded、0 unresolved i
 | [`logs/`](logs/) | 经验证的阶段交接与证据摘要 |
 | [`reports/`](reports/) | 脱敏 preliminary/diagnostic 报告 |
 | [`docs/2026-09-22-summer-progress-review.md`](docs/2026-09-22-summer-progress-review.md) | 暑期完整复盘与 Web-safe 接续材料 |
+| [Notion：AI Agent 实验](https://brook-ceiling-fb4.notion.site/AI-Agent-162a7a6cb77f83e2944181eccac5a519?source=copy_link) | 早期研究设计、组会材料、论文初稿与文献追踪的历史资料源 |
+
+> **Notion 使用边界：**该工作区用于追溯尚未完全迁入 Git 的早期初稿和研究演化。新 Agent 可以读取它补充历史语境，但其中的旧参数、旧矩阵和旧实施方案不具备当前规范权威；如与本仓库冻结协议、schema、已确认决策或证据链冲突，以仓库内现行权威文件为准。
 
 ## 五分钟接续顺序
 
