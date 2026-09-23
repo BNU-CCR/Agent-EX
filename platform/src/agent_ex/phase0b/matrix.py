@@ -889,3 +889,32 @@ def initialize_diagnostic_n20_stores(
             storage.close()
         raise
     return stores
+
+
+def open_diagnostic_n20_stores(
+    root: Path, *, matrix: DiagnosticN20MaterializedMatrix
+) -> dict[str, RunStorage]:
+    """Strictly reopen all twelve diagnostic v6 stores from durable SQLite."""
+
+    stores: dict[str, RunStorage] = {}
+    try:
+        for cell in matrix.cells:
+            stores[cell.cell_id] = RunStorage.open(
+                root / f"{cell.cell_id}.sqlite",
+                manifest=cell.manifest,
+                artifact_hashes=_storage_artifact_hashes(matrix.family),
+                expected_agent_ids=matrix.family.agent_ids,
+                expected_exposure_mode=cell.exposure_mode,
+                expected_exposure_graph_hash=(
+                    None
+                    if cell.exposure_graph_artifact is None
+                    else cell.exposure_graph_artifact.output_hash
+                ),
+                expected_exposure_graph_artifact=cell.exposure_graph_artifact,
+                expected_source_ws_artifact=cell.source_ws_artifact,
+            )
+    except BaseException:
+        for storage in stores.values():
+            storage.close()
+        raise
+    return stores

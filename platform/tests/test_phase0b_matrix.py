@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from agent_ex.artifacts import ArtifactEnvelope
+from agent_ex.checkpoint import build_checkpoint
 from agent_ex.mock_matrix import CANONICAL_CELL_IDS, load_mock_scale_cases
 from agent_ex.phase0b import build_diagnostic_n20_matrix_candidate
 from agent_ex.phase0b.contracts import (
@@ -19,11 +20,15 @@ from agent_ex.phase0b.matrix import (
     build_diagnostic_n20_artifact_family,
     initialize_diagnostic_n20_stores,
     materialize_diagnostic_n20_matrix,
+    open_diagnostic_n20_stores,
 )
 from agent_ex.phase0b.real_pipeline import (
     dispatch_real_diagnostic_event_once,
     finalize_real_diagnostic_response,
     prepare_real_diagnostic_event,
+    run_real_diagnostic_cell_events,
+    run_real_diagnostic_matrix_once,
+    verify_real_diagnostic_matrix,
 )
 from agent_ex.phase0b.vllm_event_adapter import (
     PHASE0B_VLLM_ENDPOINT,
@@ -689,6 +694,134 @@ def test_real_n20_first_response_commits_only_scheduled_agent(tmp_path: Path) ->
         assert storage.progress.next_event_ordinal == 2
         assert len(FakeConnection.requests) == 1
         assert dispatch_journal.unresolved_request_ids() == ()
+        remaining = run_real_diagnostic_cell_events(
+            storage=storage,
+            cell=cell,
+            family=family,
+            authorization=authorization,
+            policy=policy,
+            adapter_binding=binding,
+            parser_limits=parser_limits,
+            prompt_limits=prompt_limits,
+            adapter_factory=lambda: Phase0BVllmEventAdapter(
+                PHASE0B_VLLM_ENDPOINT,
+                served_model_name=binding.served_model_name,
+                connection_factory=FakeConnection,
+            ),
+            dispatch_journal=dispatch_journal,
+            checkpoint_root=tmp_path / "checkpoints",
+            clock=lambda: datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+            start_ordinal=2,
+            event_count=38,
+        )
+        assert len(remaining) == 38
+        assert storage.progress.next_event_ordinal == 40
+        assert len(FakeConnection.requests) == 39
+        assert (
+            sum(
+                storage.private_state(agent_id).successful_update_count - 1
+                for agent_id in family.agent_ids
+            )
+            == 40
+        )
+        assert {storage.event_at(ordinal).agent_id for ordinal in range(40)} <= set(
+            family.agent_ids
+        )
+        checkpoint = build_checkpoint(storage)
+        assert checkpoint.next_event_ordinal == 40
+        assert sorted(path.name for path in (tmp_path / "checkpoints").iterdir()) == [
+            f"{cell.cell_id}-00020.checkpoint.json",
+            f"{cell.cell_id}-00040.checkpoint.json",
+        ]
+    finally:
+        for storage in stores.values():
+            storage.close()
+
+
+def test_real_n20_matrix_runs_all_480_network_events_with_fake_http(tmp_path: Path) -> None:
+    family = _production_family()
+    authorization = _authorization(family)
+    binding = _real_binding()
+    policy = DiagnosticAttemptPolicy.create(
+        connect_timeout_seconds=10.0,
+        read_timeout_seconds=120.0,
+        total_timeout_seconds=180.0,
+        retryable_error_codes=("provider_busy", "transport_timeout"),
+        max_same_event_retries=1,
+    )
+    matrix = materialize_diagnostic_n20_matrix(
+        family=family,
+        authorization=authorization,
+        adapter_binding=binding,
+        schedule_uri_root=tmp_path / "schedules",
+        launch_nonce_namespace="diagnostic-480",
+        started_at="2040-01-01T00:00:00Z",
+        environment={
+            "python_version": "3.12.13",
+            "dependency_lock_hash": "a" * 64,
+            "platform": "linux-x86_64",
+        },
+    )
+    stores = initialize_diagnostic_n20_stores(tmp_path / "stores", matrix=matrix)
+    parser_limits, prompt_limits = _limits()
+    FakeConnection.requests = []
+    FakeConnection.status = 200
+    FakeConnection.headers = {"X-Request-Id": "provider-480"}
+    FakeConnection.body = json.dumps(
+        {
+            "id": "provider-480",
+            "model": binding.served_model_name,
+            "choices": [
+                {
+                    "message": {
+                        "content": json.dumps(
+                            {
+                                "stance": family.topic_package.stance_labels[2],
+                                "confidence": 3,
+                                "public_reason": "One synthetic test response.",
+                            }
+                        )
+                    },
+                    "finish_reason": "stop",
+                }
+            ],
+            "usage": {"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+        }
+    ).encode()
+    try:
+        summary = run_real_diagnostic_matrix_once(
+            matrix=matrix,
+            authorization=authorization,
+            adapter_binding=binding,
+            policy=policy,
+            stores=stores,
+            parser_limits=parser_limits,
+            prompt_limits=prompt_limits,
+            adapter_factory=lambda _cell_id: Phase0BVllmEventAdapter(
+                PHASE0B_VLLM_ENDPOINT,
+                served_model_name=binding.served_model_name,
+                connection_factory=FakeConnection,
+            ),
+            run_root=tmp_path / "dispatch-run",
+            clock=lambda: datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+        )
+        assert summary.committed_event_count == 480
+        assert summary.completed_cell_ids == CANONICAL_CELL_IDS
+        assert len(FakeConnection.requests) == 480
+        assert all(store.progress.next_event_ordinal == 40 for store in stores.values())
+        assert len(tuple((tmp_path / "dispatch-run" / "checkpoints").glob("*.json"))) == 24
+        for storage in stores.values():
+            storage.close()
+        stores = open_diagnostic_n20_stores(tmp_path / "stores", matrix=matrix)
+        replayed = verify_real_diagnostic_matrix(
+            matrix=matrix,
+            authorization=authorization,
+            adapter_binding=binding,
+            policy=policy,
+            stores=stores,
+            run_root=tmp_path / "dispatch-run",
+        )
+        assert replayed == summary
     finally:
         for storage in stores.values():
             storage.close()

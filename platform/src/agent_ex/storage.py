@@ -588,6 +588,11 @@ def _validate_diagnostic_terminal_projection(
         or provider_content != dict(parsed.parsed_response or {})
     ):
         raise ValueError("diagnostic parsed response differs from persisted provider body")
+    complete_parsed = {
+        "topic_package_id": parsed.topic_package_id,
+        "topic_package_hash": parsed.topic_package_hash,
+        **provider_content,
+    }
     attempt_started = _require_timestamp("attempt_started_at", terminal.started_at)
     transport_started = _require_timestamp("transport_started_at", transport.started_at)
     if attempt_started is None or transport_started is None or attempt_started > transport_started:
@@ -603,7 +608,7 @@ def _validate_diagnostic_terminal_projection(
         dict(response.usage),
         response.finish_reason,
         raw_text,
-        dict(parsed.parsed_response or {}),
+        complete_parsed,
         None,
     )
     actual = (

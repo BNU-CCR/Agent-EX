@@ -373,6 +373,11 @@ def test_diagnostic_success_terminal_reopens_without_mock_parse(tmp_path: Path) 
     )
     metadata = {"diagnostic_response_hash": response.record_hash}
     raw_text = body.decode("utf-8")
+    complete_parsed = {
+        "topic_package_id": parsed.topic_package_id,
+        "topic_package_hash": parsed.topic_package_hash,
+        **dict(parsed.parsed_response),
+    }
     terminal = replace(
         in_progress,
         status=EventStatus.SUCCEEDED,
@@ -382,8 +387,8 @@ def test_diagnostic_success_terminal_reopens_without_mock_parse(tmp_path: Path) 
         http_status=200,
         raw_response=raw_text,
         raw_response_hash=canonical_payload_hash(raw_text),
-        parsed_response=parsed.parsed_response,
-        parsed_response_hash=canonical_payload_hash(parsed.parsed_response),
+        parsed_response=complete_parsed,
+        parsed_response_hash=canonical_payload_hash(complete_parsed),
         usage=dict(response.usage),
         usage_hash=canonical_payload_hash(response.usage),
         finish_reason="stop",
@@ -547,6 +552,7 @@ def test_real_dispatch_records_intent_before_http_and_halts_on_bad_json(
         values["event_input"], request_evidence.request, request_evidence, pending
     )
     FakeConnection.requests = []
+    FakeConnection.status = 200
     FakeConnection.body = (
         b'{"id":"provider-req-1","model":"qwen3-8b-paper1",'
         b'"choices":[{"message":{"content":"not-json"},"finish_reason":"stop"}],'
