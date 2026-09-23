@@ -6,7 +6,16 @@ from .contracts import (
     DiagnosticRunAuthorization,
     DiagnosticTerminalReport,
 )
-from .matrix import DiagnosticMatrixCandidate, build_diagnostic_n20_matrix_candidate
+from .matrix import (
+    DiagnosticCellInputBundle,
+    DiagnosticMatrixCandidate,
+    DiagnosticN20ArtifactFamily,
+    DiagnosticN20MaterializedMatrix,
+    build_diagnostic_n20_artifact_family,
+    build_diagnostic_n20_matrix_candidate,
+    initialize_diagnostic_n20_stores,
+    materialize_diagnostic_n20_matrix,
+)
 from .pipeline import (
     DiagnosticEventLoopResult,
     DiagnosticEventState,
@@ -49,6 +58,9 @@ __all__ = [
     "DiagnosticFakeSliceResult",
     "DiagnosticMatrixRunResult",
     "DiagnosticMatrixCandidate",
+    "DiagnosticN20ArtifactFamily",
+    "DiagnosticN20MaterializedMatrix",
+    "DiagnosticCellInputBundle",
     "DiagnosticPipelineEvidence",
     "DiagnosticPipelineResult",
     "DiagnosticPreparedEvent",
@@ -64,8 +76,11 @@ __all__ = [
     "Phase0BVllmTransportEvidence",
     "apply_diagnostic_vllm_response",
     "build_diagnostic_n20_matrix_candidate",
+    "build_diagnostic_n20_artifact_family",
     "build_phase0b_preliminary_report",
     "materialize_diagnostic_approval_packet",
+    "materialize_diagnostic_n20_matrix",
+    "initialize_diagnostic_n20_stores",
     "preflight_diagnostic_run",
     "prepare_diagnostic_event",
     "run_fake_diagnostic_matrix",

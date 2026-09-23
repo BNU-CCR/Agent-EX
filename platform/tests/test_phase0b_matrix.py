@@ -8,6 +8,17 @@ import pytest
 from agent_ex.artifacts import ArtifactEnvelope
 from agent_ex.mock_matrix import CANONICAL_CELL_IDS, load_mock_scale_cases
 from agent_ex.phase0b import build_diagnostic_n20_matrix_candidate
+from agent_ex.phase0b.contracts import (
+    DiagnosticAdapterBinding,
+    DiagnosticAttemptPolicy,
+    DiagnosticRunAuthorization,
+)
+from agent_ex.phase0b.matrix import (
+    build_diagnostic_n20_artifact_family,
+    initialize_diagnostic_n20_stores,
+    materialize_diagnostic_n20_matrix,
+)
+from agent_ex.topic import TopicPackage
 from helpers.mock_matrix import build_mock_artifact_family
 
 
@@ -114,3 +125,258 @@ def test_phase0b_matrix_production_code_does_not_import_tests() -> None:
     assert "platform.tests" not in source
     assert "tests.helpers" not in source
     assert "from helpers" not in source
+
+
+def _base_envelope(name: str) -> ArtifactEnvelope:
+    return ArtifactEnvelope.from_payload(
+        json.loads((FIXTURE_DIR / name).read_text(encoding="utf-8"))
+    )
+
+
+def _production_family():
+    frame = _base_envelope("mock_population_frame.artifact.json")
+    frame_payload = frame.payload
+    persona_fixture = _base_envelope("mock_persona_template.artifact.json")
+    persona = ArtifactEnvelope.create(
+        artifact_type=persona_fixture.artifact_type,
+        schema_version=persona_fixture.schema_version,
+        algorithm_id=persona_fixture.algorithm_id,
+        algorithm_version=persona_fixture.algorithm_version,
+        input_hashes={"fixture": persona_fixture.output_hash},
+        payload=persona_fixture.payload,
+        rng_provenance=(),
+    )
+    return build_diagnostic_n20_artifact_family(
+        matched_seed=20260920,
+        population_frame_artifact=frame,
+        population_weights=tuple(frame_payload["weight_profiles"]["20"]),
+        population_constraints=frame_payload["constraints"],
+        population_tolerance=0,
+        topic_package=TopicPackage.from_payload(
+            _base_envelope("mock_topic_package.artifact.json").to_payload()["payload"]
+        ),
+        reason_library_artifact=_base_envelope("mock_reason_library.artifact.json"),
+        persona_template=persona,
+        stance_orthogonal_fields=("gender", "urban", "education"),
+        stance_max_category_imbalance=1.0,
+        ws_k=4,
+        ws_rewire_probability=0.05,
+        shadow_max_attempts=4,
+        shadow_trial_budget_per_edge=500,
+        structural_null_replicates=1,
+        attention_family="equal_weight",
+        attention_parameters={},
+        structural_lurker_probability=0.2,
+        expression_beta_alpha=2.0,
+        expression_beta_beta=2.0,
+        expression_max_beta_attempts_per_agent=100,
+        expression_correlation_mode="independent",
+        sweep_count=2,
+        calibration_only=True,
+        formal_parameter_authority=False,
+        research_parameter_status="not_frozen",
+    )
+
+
+def _real_binding() -> DiagnosticAdapterBinding:
+    return DiagnosticAdapterBinding.create(
+        model_repository="Qwen/Qwen3-8B",
+        model_revision="b" * 40,
+        tokenizer_revision="b" * 40,
+        chat_template_hash="a" * 64,
+        vllm_version="0.23.0",
+        package_lock_hash="a" * 64,
+        image_identity_hash="a" * 64,
+        environment_lock_hash="a" * 64,
+        service_start_identity_hash="a" * 64,
+        endpoint="http://127.0.0.1:8000/v1/chat/completions",
+        served_model_name="qwen3-8b-paper1",
+    )
+
+
+def _authorization(family) -> DiagnosticRunAuthorization:
+    policy = DiagnosticAttemptPolicy.create(
+        connect_timeout_seconds=10.0,
+        read_timeout_seconds=120.0,
+        total_timeout_seconds=180.0,
+        retryable_error_codes=("provider_busy", "transport_timeout"),
+        max_same_event_retries=1,
+    )
+    return DiagnosticRunAuthorization.create(
+        cell_ids=CANONICAL_CELL_IDS,
+        artifact_hashes=family.authorization_artifact_hashes,
+        feed_capacity_candidate=6,
+        feed_capacity_research_qa_id="P1_MAX_NEIGHBORS",
+        memory_window_candidate=3,
+        memory_window_research_qa_id="P1_MEMORY_WINDOW",
+        adapter_binding_hash=_real_binding().record_hash,
+        attempt_policy_hash=policy.record_hash,
+        source_commit="c" * 40,
+        source_dirty=False,
+        source_diff_hash=None,
+        temperature=0.7,
+        top_p=0.8,
+        max_tokens=128,
+        enable_thinking=False,
+        matched_seed=family.matched_seed,
+        model_seed_pairing_rule="sha256-v1:matched-seed+cell-id+event-id",
+        disk_budget_bytes=20_000_000_000,
+        token_budget=200_000,
+        wall_clock_limit_seconds=7200,
+        checkpoint_cadence="completed_sweep_and_cell",
+        archive_uri="/root/autodl-tmp/agent-ex-phase0b-n20-t2-v1",
+        forbidden_claims=(
+            "causal_estimate",
+            "formal_experiment",
+            "independent_agent_replicates",
+            "inferential_statistics",
+            "parameter_freeze",
+            "primary_result",
+        ),
+    )
+
+
+def test_production_artifact_family_exactly_reuses_matched_n20_t2_inputs() -> None:
+    family = _production_family()
+
+    assert family.agent_count == 20
+    assert family.sweep_count == 2
+    assert family.schedule.population_size == 20
+    assert family.schedule.sweep_count == 2
+    assert family.schedule.count == 40
+    assert {slot.agent_id for slot in family.schedule.slots} <= set(family.agent_ids)
+    assert family.calibration_only is True
+    assert family.formal_parameter_authority is False
+    assert family.research_parameter_status == "not_frozen"
+    assert (
+        family.publish_artifact.to_payload()["payload"]["frozen_schedule"]
+        == family.schedule.to_payload()
+    )
+
+
+def test_materializer_builds_real_manifests_personas_and_exact_exposure_wiring(
+    tmp_path: Path,
+) -> None:
+    family = _production_family()
+    matrix = materialize_diagnostic_n20_matrix(
+        family=family,
+        authorization=_authorization(family),
+        adapter_binding=_real_binding(),
+        schedule_uri_root=tmp_path,
+        launch_nonce_namespace="diagnostic-test",
+        started_at="2040-01-01T00:00:00Z",
+        environment={
+            "python_version": "3.12.13",
+            "dependency_lock_hash": "a" * 64,
+            "platform": "linux-x86_64",
+        },
+    )
+
+    assert tuple(cell.cell_id for cell in matrix.cells) == CANONICAL_CELL_IDS
+    assert sum(cell.manifest.schedule.count for cell in matrix.cells) == 480
+    assert len({cell.manifest.run_id for cell in matrix.cells}) == 12
+    assert len({cell.manifest.schedule_hash for cell in matrix.cells}) == 1
+    for cell in matrix.cells:
+        assert cell.manifest.schedule == family.schedule
+        assert cell.manifest.model_identity["provider"] == "vllm"
+        assert cell.manifest.run_spec["diagnostic_authorization_hash"] == matrix.authorization_hash
+        assert len(cell.rendered_personas) == 20
+        sample = cell.rendered_personas[family.agent_ids[0]].payload
+        assert bool(sample["identity_block"]) is cell.identity_present
+        assert bool(sample["continuity_block"]) is cell.continuity_present
+        if cell.exposure_mode == "self_history_only":
+            assert cell.exposure_graph_artifact is None
+            assert cell.source_ws_artifact is None
+            assert all(not neighbors for neighbors in cell.frozen_neighbor_agent_ids.values())
+        elif cell.exposure_mode == "shuffled_social":
+            assert cell.exposure_graph_artifact == family.shadow_artifact
+            assert cell.source_ws_artifact == family.ws_artifact
+        else:
+            assert cell.exposure_mode == "ws_neighbors"
+            assert cell.exposure_graph_artifact == family.ws_artifact
+            assert cell.source_ws_artifact is None
+    for prefix in ("P1-I0-C0", "P1-I0-C1", "P1-I1-C0", "P1-I1-C1"):
+        shadow_cell = next(cell for cell in matrix.cells if cell.cell_id == f"{prefix}-E1")
+        ws_cell = next(cell for cell in matrix.cells if cell.cell_id == f"{prefix}-E2")
+        for agent_id in family.agent_ids:
+            shadow_neighbors = set(shadow_cell.frozen_neighbor_agent_ids[agent_id])
+            ws_neighbors = set(ws_cell.frozen_neighbor_agent_ids[agent_id])
+            assert len(shadow_neighbors) == len(ws_neighbors)
+            assert shadow_neighbors.isdisjoint(ws_neighbors)
+
+
+def test_materializer_initializes_independent_v6_stores_with_exact_round0_state(
+    tmp_path: Path,
+) -> None:
+    family = _production_family()
+    matrix = materialize_diagnostic_n20_matrix(
+        family=family,
+        authorization=_authorization(family),
+        adapter_binding=_real_binding(),
+        schedule_uri_root=tmp_path / "schedules",
+        launch_nonce_namespace="diagnostic-storage-test",
+        started_at="2040-01-01T00:00:00Z",
+        environment={
+            "python_version": "3.12.13",
+            "dependency_lock_hash": "a" * 64,
+            "platform": "linux-x86_64",
+        },
+    )
+
+    stores = initialize_diagnostic_n20_stores(tmp_path / "stores", matrix=matrix)
+    try:
+        assert tuple(stores) == CANONICAL_CELL_IDS
+        assert len(tuple((tmp_path / "stores").glob("*.sqlite"))) == 12
+        assert len({store.binding.run_id for store in stores.values()}) == 12
+        for cell_id, storage in stores.items():
+            assert storage.binding.schema_version == "paper1.run-storage.v6"
+            assert storage.binding.round0_root is not None
+            assert storage.binding.expected_agent_ids == family.agent_ids
+            assert len([agent for agent in family.agent_ids if storage.private_state(agent)]) == 20
+            assert (
+                len([agent for agent in family.agent_ids if storage.public_posts_for_agent(agent)])
+                == 20
+            )
+            expected_mode = next(
+                cell.exposure_mode for cell in matrix.cells if cell.cell_id == cell_id
+            )
+            assert storage.binding.expected_exposure_mode == expected_mode
+    finally:
+        for storage in stores.values():
+            storage.close()
+
+
+def test_production_artifact_family_rejects_unresolved_candidate_input() -> None:
+    frame = _base_envelope("mock_population_frame.artifact.json")
+    frame_payload = frame.payload
+    with pytest.raises(ValueError, match="UNRESOLVED|candidate"):
+        build_diagnostic_n20_artifact_family(
+            matched_seed=20260920,
+            population_frame_artifact=frame,
+            population_weights=tuple(frame_payload["weight_profiles"]["20"]),
+            population_constraints=frame_payload["constraints"],
+            population_tolerance=0,
+            topic_package=TopicPackage.from_payload(
+                _base_envelope("mock_topic_package.artifact.json").to_payload()["payload"]
+            ),
+            reason_library_artifact=_base_envelope("mock_reason_library.artifact.json"),
+            persona_template=_base_envelope("mock_persona_template.artifact.json"),
+            stance_orthogonal_fields=("gender", "urban", "education"),
+            stance_max_category_imbalance=1.0,
+            ws_k=4,
+            ws_rewire_probability=0.05,
+            shadow_max_attempts=4,
+            shadow_trial_budget_per_edge=500,
+            structural_null_replicates=1,
+            attention_family="UNRESOLVED[P1_ATTENTION]",
+            attention_parameters={},
+            structural_lurker_probability=0.2,
+            expression_beta_alpha=2.0,
+            expression_beta_beta=2.0,
+            expression_max_beta_attempts_per_agent=100,
+            expression_correlation_mode="independent",
+            sweep_count=2,
+            calibration_only=True,
+            formal_parameter_authority=False,
+            research_parameter_status="not_frozen",
+        )
