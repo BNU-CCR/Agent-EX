@@ -18,8 +18,14 @@ from agent_ex.phase0b.vllm_event_adapter import (
     Phase0BVllmEventResponse,
     Phase0BVllmTransportEvidence,
 )
+from agent_ex.state import PrivateState, PrivateUpdate
 from agent_ex.storage import RunStorage
-from test_storage import prepared_evidence_bundle, prompt_topic, reopen_evidence_store
+from test_storage import (
+    prepared_evidence_bundle,
+    prompt_topic,
+    reopen_evidence_store,
+    successful_event,
+)
 
 
 SHA = "a" * 64
@@ -393,3 +399,34 @@ def test_diagnostic_success_terminal_reopens_without_mock_parse(tmp_path: Path) 
     assert reopened.parse_evidence(terminal.attempt_id) == parsed
     assert reopened.attempts_for_event(terminal.event_id) == (terminal,)
     assert reopened.progress.next_event_ordinal == 0
+
+    previous_state = reopened.private_state("agent-0001")
+    previous_cursor = reopened.feed_cursor("agent-0001")
+    assert previous_state is not None and previous_cursor is not None
+    update = PrivateUpdate.create(
+        topic_package=prompt_topic(),
+        matched_seed=previous_state.matched_seed,
+        agent_id="agent-0001",
+        event_id=terminal.event_id,
+        event_ordinal=0,
+        sequence_index=previous_state.successful_update_count,
+        stance_label=parsed.parsed_response["stance"],
+        reason=parsed.parsed_response["public_reason"],
+        confidence=parsed.parsed_response["confidence"],
+        published=False,
+        source_attempt_id=terminal.attempt_id,
+        mock_only=True,
+    )
+    reopened.commit_success(
+        successful_event(values["manifest"], ordinal=0),
+        final_attempt=terminal,
+        private_update=update,
+        private_state=PrivateState.from_update(update, previous=previous_state, mock_only=True),
+        feed_cursor=previous_cursor.advance(0),
+        public_post=None,
+        latest_public_pointer=None,
+    )
+    committed = reopen_evidence_store(reopened, values)
+    assert committed.progress.next_event_ordinal == 1
+    assert committed.private_state("agent-0001").stance_label == "label-2"
+    assert committed.feed_cursor("agent-0001").last_scanned_event_ordinal == 0
