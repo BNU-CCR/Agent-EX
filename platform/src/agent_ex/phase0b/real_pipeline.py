@@ -2,11 +2,17 @@
 
 from __future__ import annotations
 
+from contextlib import ExitStack, nullcontext
 from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable, Mapping
 
-from ..checkpoint import build_checkpoint, load_checkpoint, write_checkpoint_atomic
+from ..checkpoint import (
+    build_checkpoint,
+    load_checkpoint,
+    validate_checkpoint,
+    write_checkpoint_atomic,
+)
 from ..domain import EventStatus, GenerationAttempt, RunManifest, canonical_payload_hash
 from ..execution_evidence import (
     DiagnosticAdapterRequestEvidence,
@@ -333,6 +339,28 @@ def dispatch_real_diagnostic_event_once(
     return terminal
 
 
+def _build_real_input_pipeline(
+    *,
+    storage: RunStorage,
+    cell: DiagnosticCellInputBundle,
+    family: DiagnosticN20ArtifactFamily,
+    clock: Callable[[], str],
+) -> MockEventPipeline:
+    return MockEventPipeline(
+        storage=storage,
+        manifest=cell.manifest,
+        topic_package=family.topic_package,
+        persona_template=family.persona_template,
+        population_artifact=family.population_artifact,
+        exposure_graph_artifact=cell.exposure_graph_artifact,
+        source_ws_artifact=cell.source_ws_artifact,
+        agent_node_mapping_artifact=cell.agent_node_mapping_artifact,
+        round0_initialization_artifact=cell.round0_initialization_artifact,
+        frozen_neighbor_agent_ids=cell.frozen_neighbor_agent_ids,
+        clock=clock,
+    )
+
+
 def run_real_diagnostic_cell_events(
     *,
     storage: RunStorage,
@@ -349,6 +377,8 @@ def run_real_diagnostic_cell_events(
     clock: Callable[[], str],
     start_ordinal: int,
     event_count: int,
+    lease_already_owned: bool = False,
+    before_event: Callable[[int], None] | None = None,
 ) -> tuple[GenerationAttempt, ...]:
     """Execute a bounded, strictly serial cell prefix; stop at first failure.
 
@@ -373,22 +403,16 @@ def run_real_diagnostic_cell_events(
         raise ValueError("diagnostic artifact family differs from authorization")
     dispatch_journal.assert_no_unresolved_dispatches()
     checkpoint_root.mkdir(parents=True, exist_ok=True)
-    input_pipeline = MockEventPipeline(
-        storage=storage,
-        manifest=cell.manifest,
-        topic_package=family.topic_package,
-        persona_template=family.persona_template,
-        population_artifact=family.population_artifact,
-        exposure_graph_artifact=cell.exposure_graph_artifact,
-        source_ws_artifact=cell.source_ws_artifact,
-        agent_node_mapping_artifact=cell.agent_node_mapping_artifact,
-        round0_initialization_artifact=cell.round0_initialization_artifact,
-        frozen_neighbor_agent_ids=cell.frozen_neighbor_agent_ids,
-        clock=clock,
+    input_pipeline = _build_real_input_pipeline(
+        storage=storage, cell=cell, family=family, clock=clock
     )
     terminals: list[GenerationAttempt] = []
-    with storage.acquire_run_lease():
+    if lease_already_owned:
+        storage.assert_run_lease_owned()
+    with nullcontext() if lease_already_owned else storage.acquire_run_lease():
         for ordinal in range(start_ordinal, start_ordinal + event_count):
+            if before_event is not None:
+                before_event(ordinal)
             if storage.progress.next_event_ordinal != ordinal:
                 raise ValueError("diagnostic event ordinal changed outside serial execution")
             prepared = prepare_real_diagnostic_event(
@@ -428,6 +452,184 @@ def run_real_diagnostic_cell_events(
                     raise FileExistsError("diagnostic checkpoint target already exists")
                 write_checkpoint_atomic(checkpoint_path, build_checkpoint(storage))
     return tuple(terminals)
+
+
+def _verify_clean_diagnostic_cell_prefix(
+    *,
+    storage: RunStorage,
+    cell: DiagnosticCellInputBundle,
+    family: DiagnosticN20ArtifactFamily,
+    authorization: DiagnosticRunAuthorization,
+    policy: DiagnosticAttemptPolicy,
+    adapter_binding: DiagnosticAdapterBinding,
+    dispatch_journal: Phase0BDispatchJournal,
+    checkpoint_root: Path,
+    verify_storage_integrity: bool = True,
+) -> int:
+    """Refuse any prefix that cannot be proven committed exactly once."""
+
+    if (
+        authorization.artifact_hashes != family.authorization_artifact_hashes
+        or authorization.matched_seed != family.matched_seed
+        or authorization.adapter_binding_hash != adapter_binding.record_hash
+        or authorization.attempt_policy_hash != policy.record_hash
+        or cell.cell_id not in authorization.cell_ids
+        or cell.manifest.run_spec.get("cell_id") != cell.cell_id
+        or cell.manifest.run_spec.get("diagnostic_authorization_hash") != authorization.record_hash
+        or cell.manifest.run_spec.get("adapter_binding_hash") != adapter_binding.record_hash
+        or storage.binding.run_id != cell.manifest.run_id
+        or storage.binding.manifest_hash != canonical_payload_hash(cell.manifest.to_payload())
+    ):
+        raise ValueError(
+            "diagnostic resume authorization, matrix, binding, or run identity drifted"
+        )
+    if verify_storage_integrity:
+        storage.verify_integrity()
+    progress = storage.progress
+    cursor = progress.next_event_ordinal
+    if progress.expected_event_count != 40 or not 0 <= cursor <= 40:
+        raise ValueError("diagnostic resume cursor differs from the 40-event schedule")
+    current = storage.current_event_journal()
+    if cursor < 40 and (current.latest_transition is not None or current.next_attempt_index != 1):
+        raise RuntimeError("diagnostic resume refuses pending, IN_PROGRESS, or failed attempt")
+    records = dispatch_journal._records()
+    dispatch_journal.assert_no_unresolved_dispatches()
+    if len(records["intents"]) != cursor or len(records["resolutions"]) != cursor:
+        raise ValueError("diagnostic dispatch journal does not exact-cover committed prefix")
+    expected_requests: set[str] = set()
+    for ordinal in range(cursor):
+        event = storage.event_at(ordinal)
+        if (
+            event is None
+            or event.status is not EventStatus.SUCCEEDED
+            or event.agent_id != cell.manifest.schedule.slots[ordinal].agent_id
+        ):
+            raise ValueError("diagnostic committed prefix differs from frozen schedule")
+        attempts = storage.attempts_for_event(event.event_id)
+        if len(attempts) != 1 or attempts[0].status is not EventStatus.SUCCEEDED:
+            raise ValueError("diagnostic resume requires one successful attempt per event")
+        attempt = attempts[0]
+        request = storage.adapter_request_evidence(attempt.attempt_id)
+        invocation = storage.invocation_evidence(attempt.attempt_id)
+        parsed = storage.parse_evidence(attempt.attempt_id)
+        if (
+            not isinstance(request, DiagnosticAdapterRequestEvidence)
+            or not isinstance(invocation, DiagnosticPersistedInvocationEvidence)
+            or not isinstance(parsed, DiagnosticParseEvidence)
+            or not parsed.success
+            or request.run_authorization_hash != authorization.record_hash
+            or request.adapter_execution_binding_hash != adapter_binding.record_hash
+            or request.attempt_policy_hash != policy.record_hash
+        ):
+            raise ValueError("diagnostic committed prefix execution evidence drifted")
+        intent = records["intents"].get(request.request_id)
+        resolution = records["resolutions"].get(request.request_id)
+        if (
+            intent is None
+            or resolution is None
+            or intent["request_hash"] != request.request_hash
+            or resolution["response_hash"] != invocation.response_hash
+        ):
+            raise ValueError("diagnostic dispatch evidence differs from committed prefix")
+        expected_requests.add(request.request_id)
+    if (
+        set(records["intents"]) != expected_requests
+        or set(records["resolutions"]) != expected_requests
+    ):
+        raise ValueError("diagnostic dispatch journal contains foreign requests")
+    expected_checkpoints = {
+        f"{cell.cell_id}-{ordinal:05d}.checkpoint.json" for ordinal in (20, 40) if ordinal <= cursor
+    }
+    actual_checkpoints = (
+        {
+            path.name
+            for path in checkpoint_root.iterdir()
+            if path.name.startswith(f"{cell.cell_id}-")
+        }
+        if checkpoint_root.is_dir()
+        else set()
+    )
+    if actual_checkpoints != expected_checkpoints:
+        raise ValueError("diagnostic checkpoint inventory differs from committed prefix")
+    for name in expected_checkpoints:
+        checkpoint = load_checkpoint(checkpoint_root / name)
+        if (
+            checkpoint.run_id != cell.manifest.run_id
+            or checkpoint.next_event_ordinal != int(name.rsplit("-", 1)[1].split(".", 1)[0])
+            or checkpoint.baseline_manifest_hash != storage.binding.manifest_hash
+        ):
+            raise ValueError("diagnostic checkpoint identity differs from committed prefix")
+        freshness = validate_checkpoint(checkpoint, storage)
+        if freshness != ("current" if checkpoint.next_event_ordinal == cursor else "stale"):
+            raise ValueError("diagnostic checkpoint freshness differs from committed prefix")
+    return cursor
+
+
+def resume_real_diagnostic_cell_events(
+    *,
+    storage: RunStorage,
+    cell: DiagnosticCellInputBundle,
+    family: DiagnosticN20ArtifactFamily,
+    authorization: DiagnosticRunAuthorization,
+    policy: DiagnosticAttemptPolicy,
+    adapter_binding: DiagnosticAdapterBinding,
+    parser_limits: ParserLimits,
+    prompt_limits: PromptLimits,
+    adapter_factory: Callable[[], Phase0BVllmEventAdapter],
+    dispatch_journal: Phase0BDispatchJournal,
+    checkpoint_root: Path,
+    clock: Callable[[], str],
+    event_count: int,
+) -> tuple[GenerationAttempt, ...]:
+    """Resume only a fully evidenced success prefix; never retry ambiguity."""
+
+    with storage.acquire_run_lease():
+        cursor = _verify_clean_diagnostic_cell_prefix(
+            storage=storage,
+            cell=cell,
+            family=family,
+            authorization=authorization,
+            policy=policy,
+            adapter_binding=adapter_binding,
+            dispatch_journal=dispatch_journal,
+            checkpoint_root=checkpoint_root,
+        )
+        if cursor == 0:
+            raise ValueError("diagnostic resume requires a known committed prefix")
+
+        def before_event(ordinal: int) -> None:
+            verified_cursor = _verify_clean_diagnostic_cell_prefix(
+                storage=storage,
+                cell=cell,
+                family=family,
+                authorization=authorization,
+                policy=policy,
+                adapter_binding=adapter_binding,
+                dispatch_journal=dispatch_journal,
+                checkpoint_root=checkpoint_root,
+                verify_storage_integrity=False,
+            )
+            if verified_cursor != ordinal:
+                raise ValueError("diagnostic cell cursor changed before dispatch")
+
+        return run_real_diagnostic_cell_events(
+            storage=storage,
+            cell=cell,
+            family=family,
+            authorization=authorization,
+            policy=policy,
+            adapter_binding=adapter_binding,
+            parser_limits=parser_limits,
+            prompt_limits=prompt_limits,
+            adapter_factory=adapter_factory,
+            dispatch_journal=dispatch_journal,
+            checkpoint_root=checkpoint_root,
+            clock=clock,
+            start_ordinal=cursor,
+            event_count=event_count,
+            lease_already_owned=True,
+            before_event=before_event,
+        )
 
 
 def run_real_diagnostic_matrix_once(
@@ -497,6 +699,190 @@ def run_real_diagnostic_matrix_once(
         **content,
         record_hash=canonical_payload_hash(content),
     )
+
+
+def _canonical_materialized_matrix_hash(
+    matrix: DiagnosticN20MaterializedMatrix,
+) -> str:
+    return canonical_payload_hash(
+        {
+            "authorization_hash": matrix.authorization_hash,
+            "adapter_binding_hash": matrix.adapter_binding_hash,
+            "cells": tuple(
+                {
+                    "cell_id": cell.cell_id,
+                    "manifest_hash": canonical_payload_hash(cell.manifest.to_payload()),
+                    "persona_hashes": tuple(
+                        (agent_id, persona.output_hash)
+                        for agent_id, persona in cell.rendered_personas.items()
+                    ),
+                    "neighbor_wiring": tuple(cell.frozen_neighbor_agent_ids.items()),
+                }
+                for cell in matrix.cells
+            ),
+        }
+    )
+
+
+def _resume_real_diagnostic_matrix_with_leases(
+    *,
+    matrix: DiagnosticN20MaterializedMatrix,
+    authorization: DiagnosticRunAuthorization,
+    adapter_binding: DiagnosticAdapterBinding,
+    policy: DiagnosticAttemptPolicy,
+    stores: Mapping[str, RunStorage],
+    parser_limits: ParserLimits,
+    prompt_limits: PromptLimits,
+    adapter_factory: Callable[[str], Phase0BVllmEventAdapter],
+    run_root: Path,
+    clock: Callable[[], str],
+) -> RealDiagnosticMatrixSummary:
+    """Resume a known clean matrix prefix after preflighting every cell.
+
+    No request is sent until every durable store, journal and checkpoint is
+    checked. Failed, pending and post-invocation attempts remain manual stops.
+    """
+
+    if matrix.matrix_hash != _canonical_materialized_matrix_hash(matrix):
+        raise ValueError("diagnostic matrix hash differs from materialized cells")
+    if (
+        matrix.authorization_hash != authorization.record_hash
+        or matrix.adapter_binding_hash != adapter_binding.record_hash
+        or authorization.attempt_policy_hash != policy.record_hash
+        or tuple(stores) != CANONICAL_CELL_IDS
+        or not run_root.is_dir()
+    ):
+        raise ValueError("diagnostic resume matrix authority or archive differs")
+    checkpoints = run_root / "checkpoints"
+    cursors: dict[str, int] = {}
+    for cell in matrix.cells:
+        cursors[cell.cell_id] = _verify_clean_diagnostic_cell_prefix(
+            storage=stores[cell.cell_id],
+            cell=cell,
+            family=matrix.family,
+            authorization=authorization,
+            policy=policy,
+            adapter_binding=adapter_binding,
+            dispatch_journal=Phase0BDispatchJournal(run_root / f"{cell.cell_id}.dispatch.jsonl"),
+            checkpoint_root=checkpoints,
+        )
+    if not any(cursors.values()):
+        raise ValueError("diagnostic resume requires a known committed matrix prefix")
+    seen_incomplete = False
+    for cell_id in CANONICAL_CELL_IDS:
+        cursor = cursors[cell_id]
+        if seen_incomplete and cursor:
+            raise ValueError("diagnostic matrix cells are not a serial committed prefix")
+        if cursor < 40:
+            seen_incomplete = True
+    expected_root = {f"{cell_id}.dispatch.jsonl" for cell_id, cursor in cursors.items() if cursor}
+    if checkpoints.is_dir():
+        expected_root.add("checkpoints")
+    if {path.name for path in run_root.iterdir()} != expected_root:
+        raise ValueError("diagnostic resume archive contains unexpected or missing outputs")
+    expected_checkpoint_names = {
+        f"{cell_id}-{ordinal:05d}.checkpoint.json"
+        for cell_id, cursor in cursors.items()
+        for ordinal in (20, 40)
+        if ordinal <= cursor
+    }
+    if (
+        checkpoints.is_dir()
+        and {path.name for path in checkpoints.iterdir()} != expected_checkpoint_names
+    ):
+        raise ValueError("diagnostic resume checkpoint archive contains foreign outputs")
+
+    # Constructor validates immutable manifest, graph, and neighbor wiring. Do
+    # this for all cells before the first resumed provider invocation.
+    for cell in matrix.cells:
+        _build_real_input_pipeline(
+            storage=stores[cell.cell_id], cell=cell, family=matrix.family, clock=clock
+        )
+
+    for cell in matrix.cells:
+        cursor = cursors[cell.cell_id]
+        if cursor == 40:
+            continue
+        storage = stores[cell.cell_id]
+        journal = Phase0BDispatchJournal(run_root / f"{cell.cell_id}.dispatch.jsonl")
+
+        def before_event(ordinal: int) -> None:
+            verified_cursor = _verify_clean_diagnostic_cell_prefix(
+                storage=storage,
+                cell=cell,
+                family=matrix.family,
+                authorization=authorization,
+                policy=policy,
+                adapter_binding=adapter_binding,
+                dispatch_journal=journal,
+                checkpoint_root=checkpoints,
+                verify_storage_integrity=False,
+            )
+            if verified_cursor != ordinal:
+                raise ValueError("diagnostic cell cursor changed before dispatch")
+
+        run_real_diagnostic_cell_events(
+            storage=storage,
+            cell=cell,
+            family=matrix.family,
+            authorization=authorization,
+            policy=policy,
+            adapter_binding=adapter_binding,
+            parser_limits=parser_limits,
+            prompt_limits=prompt_limits,
+            adapter_factory=lambda cell_id=cell.cell_id: adapter_factory(cell_id),
+            dispatch_journal=journal,
+            checkpoint_root=checkpoints,
+            clock=clock,
+            start_ordinal=cursor,
+            event_count=40 - cursor,
+            lease_already_owned=True,
+            before_event=before_event,
+        )
+    return verify_real_diagnostic_matrix(
+        matrix=matrix,
+        authorization=authorization,
+        adapter_binding=adapter_binding,
+        policy=policy,
+        stores=stores,
+        run_root=run_root,
+    )
+
+
+def resume_real_diagnostic_matrix(
+    *,
+    matrix: DiagnosticN20MaterializedMatrix,
+    authorization: DiagnosticRunAuthorization,
+    adapter_binding: DiagnosticAdapterBinding,
+    policy: DiagnosticAttemptPolicy,
+    stores: Mapping[str, RunStorage],
+    parser_limits: ParserLimits,
+    prompt_limits: PromptLimits,
+    adapter_factory: Callable[[str], Phase0BVllmEventAdapter],
+    run_root: Path,
+    clock: Callable[[], str],
+) -> RealDiagnosticMatrixSummary:
+    """Hold all twelve exclusive writer leases through preflight and execution."""
+
+    if tuple(stores) != CANONICAL_CELL_IDS:
+        raise ValueError("diagnostic matrix stores do not exact-cover canonical cells")
+    if matrix.matrix_hash != _canonical_materialized_matrix_hash(matrix):
+        raise ValueError("diagnostic matrix hash differs from materialized cells")
+    with ExitStack() as leases:
+        for cell_id in CANONICAL_CELL_IDS:
+            leases.enter_context(stores[cell_id].acquire_run_lease())
+        return _resume_real_diagnostic_matrix_with_leases(
+            matrix=matrix,
+            authorization=authorization,
+            adapter_binding=adapter_binding,
+            policy=policy,
+            stores=stores,
+            parser_limits=parser_limits,
+            prompt_limits=prompt_limits,
+            adapter_factory=adapter_factory,
+            run_root=run_root,
+            clock=clock,
+        )
 
 
 def verify_real_diagnostic_matrix(
