@@ -430,3 +430,95 @@ def test_diagnostic_success_terminal_reopens_without_mock_parse(tmp_path: Path) 
     assert committed.progress.next_event_ordinal == 1
     assert committed.private_state("agent-0001").stance_label == "label-2"
     assert committed.feed_cursor("agent-0001").last_scanned_event_ordinal == 0
+
+
+def test_diagnostic_malformed_response_records_failed_terminal_without_state_advance(
+    tmp_path: Path,
+) -> None:
+    store, values, policy, binding, request_evidence, pending = _diagnostic_prefix(tmp_path)
+    before_state = store.private_state("agent-0001")
+    before_cursor = store.feed_cursor("agent-0001")
+    store.record_diagnostic_prepared_attempt(
+        values["event_input"],
+        policy=policy,
+        adapter_binding=binding,
+        request_evidence=request_evidence,
+        pending_attempt=pending,
+    )
+    in_progress = replace(
+        pending, status=EventStatus.IN_PROGRESS, started_at="2026-09-20T00:00:00Z"
+    )
+    store.append_attempt(in_progress)
+    body = b'{"choices":[{"message":{"content":"not-json"}}]}'
+    transport = Phase0BVllmTransportEvidence.create(
+        request=request_evidence.request,
+        http_status=200,
+        response_headers={},
+        provider_request_id="provider-1",
+        request_body=b"{}",
+        raw_body=body,
+        body_truncated=False,
+        started_at="2026-09-20T00:00:00Z",
+        ended_at="2026-09-20T00:00:01Z",
+        latency_seconds=1.0,
+        outcome="response",
+        error_code=None,
+    )
+    response = Phase0BVllmEventResponse.create(
+        request=request_evidence.request,
+        outcome="response",
+        error_code=None,
+        retry_after_seconds=None,
+        provider_request_id="provider-1",
+        usage={"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+        finish_reason="stop",
+        raw_body=body,
+        transport_evidence=transport,
+    )
+    store.record_diagnostic_invocation_evidence(
+        DiagnosticPersistedInvocationEvidence.create(
+            response=response, request_evidence=request_evidence
+        )
+    )
+    parsed = DiagnosticParseEvidence.create(
+        response=response,
+        topic_package=prompt_topic(),
+        parser_limits_hash=values["event_input"].parser_limits.record_hash,
+    )
+    assert parsed.error_code == "json"
+    metadata = {"diagnostic_response_hash": response.record_hash}
+    terminal = replace(
+        in_progress,
+        status=EventStatus.FAILED,
+        provider_request_id=response.provider_request_id,
+        provider_metadata=metadata,
+        provider_metadata_hash=canonical_payload_hash(metadata),
+        http_status=200,
+        raw_response=body.decode(),
+        raw_response_hash=canonical_payload_hash(body.decode()),
+        usage=dict(response.usage),
+        usage_hash=canonical_payload_hash(response.usage),
+        finish_reason="stop",
+        error={"code": "json"},
+        finished_at="2026-09-20T00:00:01Z",
+    )
+    store.record_diagnostic_finalized_attempt(terminal, parsed)
+    reopened = reopen_evidence_store(store, values)
+    assert reopened.parse_evidence(terminal.attempt_id) == parsed
+    assert reopened.attempts_for_event(terminal.event_id) == (terminal,)
+    assert reopened.private_state("agent-0001") == before_state
+    assert reopened.feed_cursor("agent-0001") == before_cursor
+    assert reopened.progress.next_event_ordinal == 0
+    stopped = reopened.record_terminal_failure(
+        event_id=terminal.event_id,
+        reason="diagnostic_parse_failed",
+        policy_evidence={
+            "policy_id": "phase0b-diagnostic-attempt-policy-v1",
+            "policy_hash": policy.record_hash,
+        },
+        recorded_at="2026-09-20T00:00:02Z",
+    )
+    halted = reopen_evidence_store(reopened, values)
+    assert halted.terminal_failure_evidence_prefix() == (stopped,)
+    assert halted.private_state("agent-0001") == before_state
+    assert halted.progress.next_event_ordinal == 0

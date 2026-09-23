@@ -619,6 +619,47 @@ def _validate_diagnostic_terminal_projection(
         raise ValueError("diagnostic terminal execution projection differs from provider evidence")
 
 
+def _validate_diagnostic_failed_terminal_projection(
+    terminal: GenerationAttempt,
+    invocation: DiagnosticPersistedInvocationEvidence,
+    parsed: DiagnosticParseEvidence,
+) -> None:
+    """Bind a failed parse/provider outcome to its immutable transport evidence."""
+
+    response = invocation.response
+    transport = response.transport_evidence
+    if parsed.success or parsed.error_code is None:
+        raise ValueError("diagnostic failure requires failed parse evidence")
+    expected = (
+        EventStatus.FAILED,
+        transport.started_at,
+        transport.ended_at,
+        response.provider_request_id,
+        {"diagnostic_response_hash": response.record_hash},
+        transport.http_status,
+        dict(response.usage),
+        response.finish_reason,
+        response.raw_body.decode("utf-8", errors="replace"),
+        None,
+        {"code": parsed.error_code},
+    )
+    actual = (
+        terminal.status,
+        terminal.started_at,
+        terminal.finished_at,
+        terminal.provider_request_id,
+        dict(terminal.provider_metadata),
+        terminal.http_status,
+        dict(terminal.usage),
+        terminal.finish_reason,
+        terminal.raw_response,
+        terminal.parsed_response,
+        dict(terminal.error or {}),
+    )
+    if actual != expected:
+        raise ValueError("diagnostic failed terminal projection differs from provider evidence")
+
+
 def _load_canonical_json(value: str, label: str) -> object:
     if type(value) is not str:
         raise ValueError(f"stored {label} JSON is not text")
@@ -3121,7 +3162,7 @@ class RunStorage:
     def record_diagnostic_finalized_attempt(
         self, terminal: GenerationAttempt, parsed: DiagnosticParseEvidence
     ) -> None:
-        """Atomically append one successful real-response parse and terminal attempt."""
+        """Atomically append one real-response parse and terminal attempt."""
 
         from .execution_evidence import (
             DiagnosticAdapterRequestEvidence,
@@ -3163,7 +3204,12 @@ class RunStorage:
             or invocation.request_hash != request.request_hash
         ):
             raise ValueError("diagnostic finalization request, parse, or topic binding differs")
-        _validate_diagnostic_terminal_projection(terminal, invocation, parsed)
+        if terminal.status is EventStatus.SUCCEEDED:
+            _validate_diagnostic_terminal_projection(terminal, invocation, parsed)
+        elif terminal.status is EventStatus.FAILED:
+            _validate_diagnostic_failed_terminal_projection(terminal, invocation, parsed)
+        else:
+            raise ValueError("diagnostic finalization requires a terminal attempt")
         self._begin_write()
         try:
             self._connection.execute(
@@ -5583,9 +5629,16 @@ class RunStorage:
                         invocation, DiagnosticPersistedInvocationEvidence
                     ):
                         raise ValueError("v6 diagnostic terminal variant drifted")
-                    if attempt_id in failure_by_attempt:
-                        raise ValueError("diagnostic success cannot have terminal failure evidence")
-                    _validate_diagnostic_terminal_projection(terminal, invocation, parsed)
+                    if terminal.status is EventStatus.SUCCEEDED:
+                        if attempt_id in failure_by_attempt:
+                            raise ValueError(
+                                "diagnostic success cannot have terminal failure evidence"
+                            )
+                        _validate_diagnostic_terminal_projection(terminal, invocation, parsed)
+                    else:
+                        _validate_diagnostic_failed_terminal_projection(
+                            terminal, invocation, parsed
+                        )
                 else:
                     _validate_terminal_execution_projection(terminal, invocation, parsed)
                     failure = failure_by_attempt.get(attempt_id)
