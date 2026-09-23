@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+from datetime import UTC, datetime
 import json
 from pathlib import Path
 
@@ -18,8 +20,24 @@ from agent_ex.phase0b.matrix import (
     initialize_diagnostic_n20_stores,
     materialize_diagnostic_n20_matrix,
 )
+from agent_ex.phase0b.real_pipeline import (
+    dispatch_real_diagnostic_event_once,
+    finalize_real_diagnostic_response,
+    prepare_real_diagnostic_event,
+)
+from agent_ex.phase0b.vllm_event_adapter import (
+    PHASE0B_VLLM_ENDPOINT,
+    Phase0BDispatchJournal,
+    Phase0BVllmEventAdapter,
+    Phase0BVllmEventResponse,
+    Phase0BVllmTransportEvidence,
+)
+from agent_ex.domain import EventStatus
+from agent_ex.pipeline import MockEventPipeline
 from agent_ex.topic import TopicPackage
 from helpers.mock_matrix import build_mock_artifact_family
+from test_pipeline import _limits
+from test_phase0b_vllm_event_adapter import FakeConnection
 
 
 FIXTURE_DIR = Path(__file__).parent / "fixtures" / "paper1"
@@ -380,3 +398,297 @@ def test_production_artifact_family_rejects_unresolved_candidate_input() -> None
             formal_parameter_authority=False,
             research_parameter_status="not_frozen",
         )
+
+
+def test_real_n20_cells_can_prepare_shared_network_event_inputs(tmp_path: Path) -> None:
+    family = _production_family()
+    matrix = materialize_diagnostic_n20_matrix(
+        family=family,
+        authorization=_authorization(family),
+        adapter_binding=_real_binding(),
+        schedule_uri_root=tmp_path / "schedules",
+        launch_nonce_namespace="diagnostic-input-test",
+        started_at="2040-01-01T00:00:00Z",
+        environment={
+            "python_version": "3.12.13",
+            "dependency_lock_hash": "a" * 64,
+            "platform": "linux-x86_64",
+        },
+    )
+    stores = initialize_diagnostic_n20_stores(tmp_path / "stores", matrix=matrix)
+    parser_limits, prompt_limits = _limits()
+    try:
+        for cell in (matrix.cells[0], matrix.cells[1], matrix.cells[2]):
+            storage = stores[cell.cell_id]
+            pipeline = MockEventPipeline(
+                storage=storage,
+                manifest=cell.manifest,
+                topic_package=family.topic_package,
+                persona_template=family.persona_template,
+                population_artifact=family.population_artifact,
+                exposure_graph_artifact=cell.exposure_graph_artifact,
+                source_ws_artifact=cell.source_ws_artifact,
+                agent_node_mapping_artifact=cell.agent_node_mapping_artifact,
+                round0_initialization_artifact=cell.round0_initialization_artifact,
+                frozen_neighbor_agent_ids=cell.frozen_neighbor_agent_ids,
+                clock=lambda: "2040-01-01T00:00:00Z",
+            )
+            event_input = pipeline.prepare_event_input(
+                journal=storage.current_event_journal(),
+                feed_capacity=6,
+                memory_window=3,
+                parser_limits=parser_limits,
+                prompt_limits=prompt_limits,
+            )
+            slot = cell.manifest.schedule.slots[0]
+            assert event_input.receiver_agent_id == slot.agent_id
+            assert event_input.publish_flag == slot.publish_flag
+            assert event_input.exposure_record.exposure_mode == cell.exposure_mode
+            assert storage.progress.next_event_ordinal == 0
+    finally:
+        for storage in stores.values():
+            storage.close()
+
+
+def test_real_n20_first_event_persists_diagnostic_request_for_scheduled_agent(
+    tmp_path: Path,
+) -> None:
+    family = _production_family()
+    authorization = _authorization(family)
+    binding = _real_binding()
+    policy = DiagnosticAttemptPolicy.create(
+        connect_timeout_seconds=10.0,
+        read_timeout_seconds=120.0,
+        total_timeout_seconds=180.0,
+        retryable_error_codes=("provider_busy", "transport_timeout"),
+        max_same_event_retries=1,
+    )
+    matrix = materialize_diagnostic_n20_matrix(
+        family=family,
+        authorization=authorization,
+        adapter_binding=binding,
+        schedule_uri_root=tmp_path / "schedules",
+        launch_nonce_namespace="diagnostic-first-event",
+        started_at="2040-01-01T00:00:00Z",
+        environment={
+            "python_version": "3.12.13",
+            "dependency_lock_hash": "a" * 64,
+            "platform": "linux-x86_64",
+        },
+    )
+    stores = initialize_diagnostic_n20_stores(tmp_path / "stores", matrix=matrix)
+    parser_limits, prompt_limits = _limits()
+    try:
+        cell = matrix.cells[2]
+        storage = stores[cell.cell_id]
+        pipeline = MockEventPipeline(
+            storage=storage,
+            manifest=cell.manifest,
+            topic_package=family.topic_package,
+            persona_template=family.persona_template,
+            population_artifact=family.population_artifact,
+            exposure_graph_artifact=cell.exposure_graph_artifact,
+            source_ws_artifact=cell.source_ws_artifact,
+            agent_node_mapping_artifact=cell.agent_node_mapping_artifact,
+            round0_initialization_artifact=cell.round0_initialization_artifact,
+            frozen_neighbor_agent_ids=cell.frozen_neighbor_agent_ids,
+            clock=lambda: "2040-01-01T00:00:00Z",
+        )
+        with storage.acquire_run_lease():
+            prepared = prepare_real_diagnostic_event(
+                storage=storage,
+                input_pipeline=pipeline,
+                manifest=cell.manifest,
+                authorization=authorization,
+                policy=policy,
+                adapter_binding=binding,
+                parser_limits=parser_limits,
+                prompt_limits=prompt_limits,
+            )
+        assert prepared.event_input.receiver_agent_id == cell.manifest.schedule.slots[0].agent_id
+        assert prepared.request.event_id == storage.current_event_journal().event_id
+        assert prepared.request.attempt_index == 1
+        assert storage.adapter_request_evidence(prepared.request.attempt_id) == (
+            prepared.request_evidence
+        )
+        assert storage.current_event_journal().latest_transition == prepared.pending_attempt
+        assert storage.progress.next_event_ordinal == 0
+    finally:
+        for storage in stores.values():
+            storage.close()
+
+
+def test_real_n20_first_response_commits_only_scheduled_agent(tmp_path: Path) -> None:
+    family = _production_family()
+    authorization = _authorization(family)
+    binding = _real_binding()
+    policy = DiagnosticAttemptPolicy.create(
+        connect_timeout_seconds=10.0,
+        read_timeout_seconds=120.0,
+        total_timeout_seconds=180.0,
+        retryable_error_codes=("provider_busy", "transport_timeout"),
+        max_same_event_retries=1,
+    )
+    matrix = materialize_diagnostic_n20_matrix(
+        family=family,
+        authorization=authorization,
+        adapter_binding=binding,
+        schedule_uri_root=tmp_path / "schedules",
+        launch_nonce_namespace="diagnostic-first-response",
+        started_at="2040-01-01T00:00:00Z",
+        environment={
+            "python_version": "3.12.13",
+            "dependency_lock_hash": "a" * 64,
+            "platform": "linux-x86_64",
+        },
+    )
+    stores = initialize_diagnostic_n20_stores(tmp_path / "stores", matrix=matrix)
+    parser_limits, prompt_limits = _limits()
+    try:
+        cell = matrix.cells[2]
+        storage = stores[cell.cell_id]
+        pipeline = MockEventPipeline(
+            storage=storage,
+            manifest=cell.manifest,
+            topic_package=family.topic_package,
+            persona_template=family.persona_template,
+            population_artifact=family.population_artifact,
+            exposure_graph_artifact=cell.exposure_graph_artifact,
+            source_ws_artifact=cell.source_ws_artifact,
+            agent_node_mapping_artifact=cell.agent_node_mapping_artifact,
+            round0_initialization_artifact=cell.round0_initialization_artifact,
+            frozen_neighbor_agent_ids=cell.frozen_neighbor_agent_ids,
+            clock=lambda: "2040-01-01T00:00:00Z",
+        )
+        receiver = cell.manifest.schedule.slots[0].agent_id
+        receiver_before = storage.private_state(receiver)
+        other = next(agent_id for agent_id in family.agent_ids if agent_id != receiver)
+        other_before = storage.private_state(other)
+        with storage.acquire_run_lease():
+            prepared = prepare_real_diagnostic_event(
+                storage=storage,
+                input_pipeline=pipeline,
+                manifest=cell.manifest,
+                authorization=authorization,
+                policy=policy,
+                adapter_binding=binding,
+                parser_limits=parser_limits,
+                prompt_limits=prompt_limits,
+            )
+            in_progress = replace(
+                prepared.pending_attempt,
+                status=EventStatus.IN_PROGRESS,
+                started_at="2040-01-01T00:00:00Z",
+            )
+            storage.append_attempt(in_progress)
+            content = json.dumps(
+                {
+                    "stance": family.topic_package.stance_labels[2],
+                    "confidence": 3,
+                    "public_reason": "A concise diagnostic reason.",
+                }
+            )
+            body = json.dumps({"choices": [{"message": {"content": content}}]}).encode()
+            transport = Phase0BVllmTransportEvidence.create(
+                request=prepared.request,
+                http_status=200,
+                response_headers={},
+                provider_request_id="provider-first",
+                request_body=b"{}",
+                raw_body=body,
+                body_truncated=False,
+                started_at="2040-01-01T00:00:00.100000Z",
+                ended_at="2040-01-01T00:00:01Z",
+                latency_seconds=0.9,
+                outcome="response",
+                error_code=None,
+            )
+            response = Phase0BVllmEventResponse.create(
+                request=prepared.request,
+                outcome="response",
+                error_code=None,
+                retry_after_seconds=None,
+                provider_request_id="provider-first",
+                usage={"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+                finish_reason="stop",
+                raw_body=body,
+                transport_evidence=transport,
+            )
+            terminal = finalize_real_diagnostic_response(
+                storage=storage,
+                input_pipeline=pipeline,
+                prepared=prepared,
+                in_progress=in_progress,
+                response=response,
+                topic_package=family.topic_package,
+            )
+        assert terminal.status is EventStatus.SUCCEEDED
+        assert storage.progress.next_event_ordinal == 1
+        assert storage.private_state(receiver).successful_update_count == (
+            receiver_before.successful_update_count + 1
+        )
+        assert storage.private_state(other) == other_before
+        assert storage.event_at(0).agent_id == receiver
+        with storage.acquire_run_lease():
+            second = prepare_real_diagnostic_event(
+                storage=storage,
+                input_pipeline=pipeline,
+                manifest=cell.manifest,
+                authorization=authorization,
+                policy=policy,
+                adapter_binding=binding,
+                parser_limits=parser_limits,
+                prompt_limits=prompt_limits,
+            )
+        assert second.event_input.receiver_agent_id == cell.manifest.schedule.slots[1].agent_id
+        assert second.request.event_id != prepared.request.event_id
+        assert second.request.model_seed != prepared.request.model_seed
+        assert storage.progress.next_event_ordinal == 1
+        FakeConnection.requests = []
+        FakeConnection.status = 200
+        FakeConnection.headers = {"X-Request-Id": "provider-second"}
+        FakeConnection.body = json.dumps(
+            {
+                "id": "provider-second",
+                "model": binding.served_model_name,
+                "choices": [
+                    {
+                        "message": {
+                            "content": json.dumps(
+                                {
+                                    "stance": family.topic_package.stance_labels[2],
+                                    "confidence": 3,
+                                    "public_reason": "Second diagnostic reason.",
+                                }
+                            )
+                        },
+                        "finish_reason": "stop",
+                    }
+                ],
+                "usage": {"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+            }
+        ).encode()
+        adapter = Phase0BVllmEventAdapter(
+            PHASE0B_VLLM_ENDPOINT,
+            served_model_name=binding.served_model_name,
+            connection_factory=FakeConnection,
+        )
+        dispatch_journal = Phase0BDispatchJournal(tmp_path / "dispatch.jsonl")
+        with storage.acquire_run_lease():
+            second_terminal = dispatch_real_diagnostic_event_once(
+                storage=storage,
+                input_pipeline=pipeline,
+                prepared=second,
+                adapter=adapter,
+                policy=policy,
+                topic_package=family.topic_package,
+                dispatch_journal=dispatch_journal,
+                clock=lambda: datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+            )
+        assert second_terminal.status is EventStatus.SUCCEEDED
+        assert storage.progress.next_event_ordinal == 2
+        assert len(FakeConnection.requests) == 1
+        assert dispatch_journal.unresolved_request_ids() == ()
+    finally:
+        for storage in stores.values():
+            storage.close()

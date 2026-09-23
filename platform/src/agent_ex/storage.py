@@ -588,10 +588,14 @@ def _validate_diagnostic_terminal_projection(
         or provider_content != dict(parsed.parsed_response or {})
     ):
         raise ValueError("diagnostic parsed response differs from persisted provider body")
+    attempt_started = _require_timestamp("attempt_started_at", terminal.started_at)
+    transport_started = _require_timestamp("transport_started_at", transport.started_at)
+    if attempt_started is None or transport_started is None or attempt_started > transport_started:
+        raise ValueError("diagnostic attempt must begin no later than provider transport")
     raw_text = response.raw_body.decode("utf-8")
     expected = (
         EventStatus.SUCCEEDED,
-        transport.started_at,
+        terminal.started_at,
         transport.ended_at,
         response.provider_request_id,
         {"diagnostic_response_hash": response.record_hash},
@@ -630,9 +634,13 @@ def _validate_diagnostic_failed_terminal_projection(
     transport = response.transport_evidence
     if parsed.success or parsed.error_code is None:
         raise ValueError("diagnostic failure requires failed parse evidence")
+    attempt_started = _require_timestamp("attempt_started_at", terminal.started_at)
+    transport_started = _require_timestamp("transport_started_at", transport.started_at)
+    if attempt_started is None or transport_started is None or attempt_started > transport_started:
+        raise ValueError("diagnostic attempt must begin no later than provider transport")
     expected = (
         EventStatus.FAILED,
-        transport.started_at,
+        terminal.started_at,
         transport.ended_at,
         response.provider_request_id,
         {"diagnostic_response_hash": response.record_hash},

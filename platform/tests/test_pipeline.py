@@ -1031,6 +1031,28 @@ def test_e0_mock_pipeline_records_explicit_empty_feed_and_commits(tmp_path: Path
     assert event_input.prompt_view.social_messages == ()
 
 
+def test_shared_event_input_preparation_matches_mock_execution_without_mutation(
+    tmp_path: Path,
+) -> None:
+    fixture = _fixture(tmp_path, exposure="E2")
+    before = fixture.store.progress
+    journal = fixture.store.current_event_journal()
+    prepared_input = fixture.pipeline.prepare_event_input(
+        journal=journal,
+        feed_capacity=fixture.execute_kwargs["feed_capacity"],
+        memory_window=fixture.execute_kwargs["memory_window"],
+        parser_limits=fixture.execute_kwargs["parser_limits"],
+        prompt_limits=fixture.execute_kwargs["prompt_limits"],
+    )
+    assert fixture.store.progress == before
+    assert fixture.store.event_input_evidence(journal.event_id) is None
+
+    outcome = fixture.pipeline.execute(**fixture.execute_kwargs)
+    assert outcome.lifecycle.state == "committed"
+    persisted = fixture.store.event_input_evidence(journal.event_id)
+    assert persisted == prepared_input
+
+
 def test_e2_mock_pipeline_persists_complete_chain_and_commits_publish_false_true(
     tmp_path: Path,
 ) -> None:

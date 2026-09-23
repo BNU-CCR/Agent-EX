@@ -322,6 +322,108 @@ class MockEventPipeline:
             request_parameters=request_parameters,
             policy=policy,
         )
+        event_input = self.prepare_event_input(
+            journal=journal,
+            feed_capacity=feed_capacity,
+            memory_window=memory_window,
+            parser_limits=parser_limits,
+            prompt_limits=prompt_limits,
+        )
+        prompt = event_input.prompt_view
+        exposure = event_input.exposure_record
+        request = AdapterRequest.create(
+            prompt_view=prompt,
+            attempt_index=journal.next_attempt_index,
+            mock_seed=model_seed,
+            mock_only=True,
+        )
+        request_evidence = AdapterRequestEvidence.create(
+            request=request,
+            model_identity=model_identity,
+            request_parameters=request_parameters,
+            model_seed=model_seed,
+            prompt_limits_hash=prompt_limits.record_hash,
+            parser_limits_hash=parser_limits.record_hash,
+            attempt_policy_hash=policy.record_hash,
+            adapter_execution_binding_hash=adapter_binding.record_hash,
+        )
+        base = {
+            "attempt_id": request.attempt_id,
+            "event_id": journal.event_id,
+            "attempt_index": journal.next_attempt_index,
+            "request_id": request.request_id,
+            "exposure_id": exposure.exposure_id,
+            "rendered_messages": request.rendered_messages,
+            "rendered_prompt_hash": request.rendered_messages_hash,
+            "request_parameters": request_parameters,
+            "request_parameters_hash": canonical_payload_hash(request_parameters),
+            "model_identity": model_identity,
+            "model_identity_hash": canonical_payload_hash(model_identity),
+            "model_seed": model_seed,
+            "provider_request_id": None,
+            "provider_metadata": {},
+            "provider_metadata_hash": canonical_payload_hash({}),
+            "http_status": None,
+            "raw_response": None,
+            "raw_response_hash": None,
+            "parsed_response": None,
+            "parsed_response_hash": None,
+            "usage": {},
+            "usage_hash": canonical_payload_hash({}),
+            "finish_reason": None,
+            "error": None,
+            "finished_at": None,
+        }
+        pending = GenerationAttempt(status=EventStatus.PENDING, started_at=None, **base)
+        in_progress = GenerationAttempt(
+            status=EventStatus.IN_PROGRESS, started_at=self._clock(), **base
+        )
+        authorization = self._storage.resume_authorization_evidence()
+        return PreparedAttempt(
+            authorization=AttemptAuthorization(
+                run_id=self._storage.binding.run_id,
+                event_id=journal.event_id,
+                event_ordinal=ordinal,
+                attempt_index=journal.next_attempt_index,
+                model_seed=model_seed,
+                model_identity=model_identity,
+                model_identity_hash=canonical_payload_hash(model_identity),
+                request_parameters=request_parameters,
+                request_parameters_hash=canonical_payload_hash(request_parameters),
+                resume_authorization_hash=(
+                    authorization.payload_hash
+                    if journal.resume_state == "retry_same_event"
+                    else None
+                ),
+                mock_only=True,
+            ),
+            request=request,
+            pending_attempt=pending,
+            in_progress_attempt=in_progress,
+            context_provenance={
+                "phase": "4B-8C-3",
+                "event_input_evidence_hash": event_input.record_hash,
+            },
+            event_input=event_input,
+            policy=policy,
+            adapter_binding=adapter_binding,
+            request_evidence=request_evidence,
+        )
+
+    def prepare_event_input(
+        self,
+        *,
+        journal: EventJournalState,
+        feed_capacity: int,
+        memory_window: int,
+        parser_limits: ParserLimits,
+        prompt_limits: PromptLimits,
+    ) -> EventInputEvidence:
+        """Prepare the shared synthetic-input feed, persona, and prompt without dispatch."""
+
+        ordinal = journal.event_ordinal
+        if ordinal is None or journal.event_id is None:
+            raise ValueError("preparation requires the current journal event")
         slot = self._storage.schedule_slot(ordinal)
         event = GenerationEvent(
             run_id=self._storage.binding.run_id,
@@ -427,22 +529,6 @@ class MockEventPipeline:
             limits=prompt_limits,
             mock_only=True,
         )
-        request = AdapterRequest.create(
-            prompt_view=prompt,
-            attempt_index=journal.next_attempt_index,
-            mock_seed=model_seed,
-            mock_only=True,
-        )
-        request_evidence = AdapterRequestEvidence.create(
-            request=request,
-            model_identity=model_identity,
-            request_parameters=request_parameters,
-            model_seed=model_seed,
-            prompt_limits_hash=prompt_limits.record_hash,
-            parser_limits_hash=parser_limits.record_hash,
-            attempt_policy_hash=policy.record_hash,
-            adapter_execution_binding_hash=adapter_binding.record_hash,
-        )
         event_input = EventInputEvidence.create(
             exposure_selection=selection,
             exposure_record=exposure,
@@ -458,68 +544,7 @@ class MockEventPipeline:
             ),
             publish_flag=slot.publish_flag,
         )
-        base = {
-            "attempt_id": request.attempt_id,
-            "event_id": event.event_id,
-            "attempt_index": journal.next_attempt_index,
-            "request_id": request.request_id,
-            "exposure_id": exposure.exposure_id,
-            "rendered_messages": request.rendered_messages,
-            "rendered_prompt_hash": request.rendered_messages_hash,
-            "request_parameters": request_parameters,
-            "request_parameters_hash": canonical_payload_hash(request_parameters),
-            "model_identity": model_identity,
-            "model_identity_hash": canonical_payload_hash(model_identity),
-            "model_seed": model_seed,
-            "provider_request_id": None,
-            "provider_metadata": {},
-            "provider_metadata_hash": canonical_payload_hash({}),
-            "http_status": None,
-            "raw_response": None,
-            "raw_response_hash": None,
-            "parsed_response": None,
-            "parsed_response_hash": None,
-            "usage": {},
-            "usage_hash": canonical_payload_hash({}),
-            "finish_reason": None,
-            "error": None,
-            "finished_at": None,
-        }
-        pending = GenerationAttempt(status=EventStatus.PENDING, started_at=None, **base)
-        in_progress = GenerationAttempt(
-            status=EventStatus.IN_PROGRESS, started_at=self._clock(), **base
-        )
-        authorization = self._storage.resume_authorization_evidence()
-        return PreparedAttempt(
-            authorization=AttemptAuthorization(
-                run_id=self._storage.binding.run_id,
-                event_id=event.event_id,
-                event_ordinal=ordinal,
-                attempt_index=journal.next_attempt_index,
-                model_seed=model_seed,
-                model_identity=model_identity,
-                model_identity_hash=canonical_payload_hash(model_identity),
-                request_parameters=request_parameters,
-                request_parameters_hash=canonical_payload_hash(request_parameters),
-                resume_authorization_hash=(
-                    authorization.payload_hash
-                    if journal.resume_state == "retry_same_event"
-                    else None
-                ),
-                mock_only=True,
-            ),
-            request=request,
-            pending_attempt=pending,
-            in_progress_attempt=in_progress,
-            context_provenance={
-                "phase": "4B-8C-3",
-                "event_input_evidence_hash": event_input.record_hash,
-            },
-            event_input=event_input,
-            policy=policy,
-            adapter_binding=adapter_binding,
-            request_evidence=request_evidence,
-        )
+        return event_input
 
     def _finalize(
         self, prepared: PreparedAttempt, result: AttemptInvocationResult

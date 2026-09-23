@@ -13,10 +13,17 @@ from agent_ex.execution_evidence import (
     DiagnosticPersistedInvocationEvidence,
 )
 from agent_ex.phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
+from agent_ex.phase0b.real_pipeline import (
+    PreparedRealDiagnosticEvent,
+    dispatch_real_diagnostic_event_once,
+)
 from agent_ex.phase0b.vllm_event_adapter import (
+    PHASE0B_VLLM_ENDPOINT,
+    Phase0BDispatchJournal,
     Phase0BVllmEventRequest,
     Phase0BVllmEventResponse,
     Phase0BVllmTransportEvidence,
+    Phase0BVllmEventAdapter,
 )
 from agent_ex.state import PrivateState, PrivateUpdate
 from agent_ex.storage import RunStorage
@@ -26,6 +33,7 @@ from test_storage import (
     reopen_evidence_store,
     successful_event,
 )
+from test_phase0b_vllm_event_adapter import FakeConnection
 
 
 SHA = "a" * 64
@@ -336,7 +344,7 @@ def test_diagnostic_success_terminal_reopens_without_mock_parse(tmp_path: Path) 
         request_body=b"{}",
         raw_body=body,
         body_truncated=False,
-        started_at="2026-09-20T00:00:00Z",
+        started_at="2026-09-20T00:00:00.100000Z",
         ended_at="2026-09-20T00:00:01Z",
         latency_seconds=1.0,
         outcome="response",
@@ -522,3 +530,52 @@ def test_diagnostic_malformed_response_records_failed_terminal_without_state_adv
     assert halted.terminal_failure_evidence_prefix() == (stopped,)
     assert halted.private_state("agent-0001") == before_state
     assert halted.progress.next_event_ordinal == 0
+
+
+def test_real_dispatch_records_intent_before_http_and_halts_on_bad_json(
+    tmp_path: Path,
+) -> None:
+    store, values, policy, binding, request_evidence, pending = _diagnostic_prefix(tmp_path)
+    store.record_diagnostic_prepared_attempt(
+        values["event_input"],
+        policy=policy,
+        adapter_binding=binding,
+        request_evidence=request_evidence,
+        pending_attempt=pending,
+    )
+    prepared = PreparedRealDiagnosticEvent(
+        values["event_input"], request_evidence.request, request_evidence, pending
+    )
+    FakeConnection.requests = []
+    FakeConnection.body = (
+        b'{"id":"provider-req-1","model":"qwen3-8b-paper1",'
+        b'"choices":[{"message":{"content":"not-json"},"finish_reason":"stop"}],'
+        b'"usage":{"prompt_tokens":2,"completion_tokens":1,"total_tokens":3}}'
+    )
+    FakeConnection.headers = {"X-Request-Id": "provider-req-1"}
+    adapter = Phase0BVllmEventAdapter(
+        PHASE0B_VLLM_ENDPOINT,
+        served_model_name=binding.served_model_name,
+        connection_factory=FakeConnection,
+    )
+    journal = Phase0BDispatchJournal(tmp_path / "dispatch.jsonl")
+
+    class InputOnly:
+        run_id = store.binding.run_id
+
+    terminal = dispatch_real_diagnostic_event_once(
+        storage=store,
+        input_pipeline=InputOnly(),
+        prepared=prepared,
+        adapter=adapter,
+        policy=policy,
+        topic_package=prompt_topic(),
+        dispatch_journal=journal,
+        clock=lambda: "2026-09-20T00:00:00Z",
+    )
+    assert terminal.status is EventStatus.FAILED
+    assert terminal.error == {"code": "json"}
+    assert len(FakeConnection.requests) == 1
+    assert journal.unresolved_request_ids() == ()
+    assert store.progress.next_event_ordinal == 0
+    assert len(store.terminal_failure_evidence_prefix()) == 1
