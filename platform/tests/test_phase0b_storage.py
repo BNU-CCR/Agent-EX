@@ -302,3 +302,94 @@ def test_diagnostic_parse_evidence_replays_response_without_mock_schema(tmp_path
     assert failed.parsed_response is None
     assert failed.error_code == "json"
     assert DiagnosticParseEvidence.from_payload(failed.to_payload()) == failed
+
+
+def test_diagnostic_success_terminal_reopens_without_mock_parse(tmp_path: Path) -> None:
+    store, values, policy, binding, request_evidence, pending = _diagnostic_prefix(tmp_path)
+    store.record_diagnostic_prepared_attempt(
+        values["event_input"],
+        policy=policy,
+        adapter_binding=binding,
+        request_evidence=request_evidence,
+        pending_attempt=pending,
+    )
+    in_progress = replace(
+        pending, status=EventStatus.IN_PROGRESS, started_at="2026-09-20T00:00:00Z"
+    )
+    store.append_attempt(in_progress)
+    body = (
+        b'{"choices":[{"message":{"content":'
+        + json.dumps('{"stance":"label-2","confidence":3,"public_reason":"reason"}').encode()
+        + b"}}]}"
+    )
+    transport = Phase0BVllmTransportEvidence.create(
+        request=request_evidence.request,
+        http_status=200,
+        response_headers={},
+        provider_request_id="provider-1",
+        request_body=b"{}",
+        raw_body=body,
+        body_truncated=False,
+        started_at="2026-09-20T00:00:00Z",
+        ended_at="2026-09-20T00:00:01Z",
+        latency_seconds=1.0,
+        outcome="response",
+        error_code=None,
+    )
+    response = Phase0BVllmEventResponse.create(
+        request=request_evidence.request,
+        outcome="response",
+        error_code=None,
+        retry_after_seconds=None,
+        provider_request_id="provider-1",
+        usage={"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+        finish_reason="stop",
+        raw_body=body,
+        transport_evidence=transport,
+    )
+    store.record_diagnostic_invocation_evidence(
+        DiagnosticPersistedInvocationEvidence.create(
+            response=response, request_evidence=request_evidence
+        )
+    )
+    parsed = DiagnosticParseEvidence.create(
+        response=response,
+        topic_package=prompt_topic(),
+        parser_limits_hash=values["event_input"].parser_limits.record_hash,
+    )
+    metadata = {"diagnostic_response_hash": response.record_hash}
+    raw_text = body.decode("utf-8")
+    terminal = replace(
+        in_progress,
+        status=EventStatus.SUCCEEDED,
+        provider_request_id=response.provider_request_id,
+        provider_metadata=metadata,
+        provider_metadata_hash=canonical_payload_hash(metadata),
+        http_status=200,
+        raw_response=raw_text,
+        raw_response_hash=canonical_payload_hash(raw_text),
+        parsed_response=parsed.parsed_response,
+        parsed_response_hash=canonical_payload_hash(parsed.parsed_response),
+        usage=dict(response.usage),
+        usage_hash=canonical_payload_hash(response.usage),
+        finish_reason="stop",
+        finished_at="2026-09-20T00:00:01Z",
+    )
+    wrong_metadata = {"diagnostic_response_hash": "f" * 64}
+    with pytest.raises(ValueError, match="projection"):
+        store.record_diagnostic_finalized_attempt(
+            replace(
+                terminal,
+                provider_metadata=wrong_metadata,
+                provider_metadata_hash=canonical_payload_hash(wrong_metadata),
+            ),
+            parsed,
+        )
+    assert store.parse_evidence(terminal.attempt_id) is None
+    assert store.current_event_journal().latest_transition == in_progress
+    store.record_diagnostic_finalized_attempt(terminal, parsed)
+    reopened = reopen_evidence_store(store, values)
+
+    assert reopened.parse_evidence(terminal.attempt_id) == parsed
+    assert reopened.attempts_for_event(terminal.event_id) == (terminal,)
+    assert reopened.progress.next_event_ordinal == 0

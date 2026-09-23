@@ -40,6 +40,7 @@ if TYPE_CHECKING:
         AdapterRequestEvidence,
         DiagnosticAdapterRequestEvidence,
         DiagnosticPersistedInvocationEvidence,
+        DiagnosticParseEvidence,
         EventEvidenceReferences,
         EventInputEvidence,
         FinalizedAttemptEvidence,
@@ -552,6 +553,70 @@ def _validate_terminal_execution_projection(
     )
     if actual != expected:
         raise ValueError("terminal execution projection does not match persisted invocation")
+
+
+def _validate_diagnostic_terminal_projection(
+    terminal: GenerationAttempt,
+    invocation: DiagnosticPersistedInvocationEvidence,
+    parsed: DiagnosticParseEvidence,
+) -> None:
+    """Bind a successful real-provider attempt to its exact durable response."""
+
+    import json
+
+    response = invocation.response
+    transport = response.transport_evidence
+    if (
+        response.outcome != "response"
+        or response.error_code is not None
+        or transport.outcome != "response"
+        or transport.body_truncated
+        or transport.http_status is None
+        or not 200 <= transport.http_status < 300
+        or transport.provider_request_id != response.provider_request_id
+        or not parsed.success
+    ):
+        raise ValueError("diagnostic success requires a parsed provider response")
+    try:
+        envelope = json.loads(response.raw_body)
+        provider_content = json.loads(envelope["choices"][0]["message"]["content"])
+    except (KeyError, IndexError, TypeError, json.JSONDecodeError) as error:
+        raise ValueError("diagnostic terminal response cannot be re-parsed") from error
+    if (
+        type(provider_content) is not dict
+        or tuple(provider_content) != ("stance", "confidence", "public_reason")
+        or provider_content != dict(parsed.parsed_response or {})
+    ):
+        raise ValueError("diagnostic parsed response differs from persisted provider body")
+    raw_text = response.raw_body.decode("utf-8")
+    expected = (
+        EventStatus.SUCCEEDED,
+        transport.started_at,
+        transport.ended_at,
+        response.provider_request_id,
+        {"diagnostic_response_hash": response.record_hash},
+        transport.http_status,
+        dict(response.usage),
+        response.finish_reason,
+        raw_text,
+        dict(parsed.parsed_response or {}),
+        None,
+    )
+    actual = (
+        terminal.status,
+        terminal.started_at,
+        terminal.finished_at,
+        terminal.provider_request_id,
+        dict(terminal.provider_metadata),
+        terminal.http_status,
+        dict(terminal.usage),
+        terminal.finish_reason,
+        terminal.raw_response,
+        dict(terminal.parsed_response or {}),
+        terminal.error,
+    )
+    if actual != expected:
+        raise ValueError("diagnostic terminal execution projection differs from provider evidence")
 
 
 def _load_canonical_json(value: str, label: str) -> object:
@@ -2933,8 +2998,10 @@ class RunStorage:
             return DiagnosticPersistedInvocationEvidence.from_payload(payload)
         raise ValueError("invocation evidence schema is unsupported")
 
-    def parse_evidence(self, attempt_id: str) -> ParseEvidence | ParseNotApplicableEvidence | None:
-        from .execution_evidence import ParseNotApplicableEvidence
+    def parse_evidence(
+        self, attempt_id: str
+    ) -> ParseEvidence | ParseNotApplicableEvidence | DiagnosticParseEvidence | None:
+        from .execution_evidence import DiagnosticParseEvidence, ParseNotApplicableEvidence
         from .parser import ParseEvidence
 
         _require_id("attempt_id", attempt_id)
@@ -2957,6 +3024,8 @@ class RunStorage:
         ):
             raise ValueError("parse evidence row envelope mismatch")
         if row[1] == "parsed":
+            if payload.get("schema_version") == "paper1.phase0b.diagnostic-parse-evidence.v1":
+                return DiagnosticParseEvidence.from_payload(payload)
             parsed = payload.get("parsed")
             if parsed is not None:
                 if type(parsed) is not dict:
@@ -3048,6 +3117,70 @@ class RunStorage:
                 failed_event_ids=(terminal.event_id,),
             )
         )
+
+    def record_diagnostic_finalized_attempt(
+        self, terminal: GenerationAttempt, parsed: DiagnosticParseEvidence
+    ) -> None:
+        """Atomically append one successful real-response parse and terminal attempt."""
+
+        from .execution_evidence import (
+            DiagnosticAdapterRequestEvidence,
+            DiagnosticParseEvidence,
+            DiagnosticPersistedInvocationEvidence,
+        )
+
+        if not isinstance(parsed, DiagnosticParseEvidence):
+            raise TypeError("diagnostic finalization requires typed diagnostic parse evidence")
+        terminal = GenerationAttempt.from_payload(terminal.to_payload())
+        parsed = DiagnosticParseEvidence.from_payload(parsed.to_payload())
+        journal = self.current_event_journal()
+        request = self.adapter_request_evidence(terminal.attempt_id)
+        invocation = self.invocation_evidence(terminal.attempt_id)
+        event_input = self.event_input_evidence(terminal.event_id)
+        if (
+            not isinstance(request, DiagnosticAdapterRequestEvidence)
+            or not isinstance(invocation, DiagnosticPersistedInvocationEvidence)
+            or event_input is None
+        ):
+            raise ValueError("diagnostic finalization requires its exact real evidence prefix")
+        if (
+            journal.latest_transition is None
+            or journal.latest_transition.status is not EventStatus.IN_PROGRESS
+            or journal.latest_transition.attempt_id != terminal.attempt_id
+        ):
+            raise ValueError("diagnostic finalization requires current IN_PROGRESS attempt")
+        if (
+            parsed.event_id != terminal.event_id
+            or parsed.attempt_id != terminal.attempt_id
+            or parsed.attempt_index != terminal.attempt_index
+            or parsed.request_id != request.request_id
+            or parsed.request_hash != request.request_hash
+            or parsed.response_hash != invocation.response_hash
+            or parsed.raw_body_sha256 != invocation.response.raw_body_sha256
+            or parsed.parser_limits_hash != event_input.parser_limits.record_hash
+            or parsed.topic_package_id != event_input.prompt_view.topic_package_id
+            or parsed.topic_package_hash != event_input.prompt_view.topic_hash
+            or invocation.request_hash != request.request_hash
+        ):
+            raise ValueError("diagnostic finalization request, parse, or topic binding differs")
+        _validate_diagnostic_terminal_projection(terminal, invocation, parsed)
+        self._begin_write()
+        try:
+            self._connection.execute(
+                """INSERT INTO parse_evidence (attempt_id, kind, payload, record_hash)
+                   VALUES (?, ?, ?, ?)""",
+                (
+                    terminal.attempt_id,
+                    "parsed",
+                    _canonical_json(parsed.to_payload()),
+                    parsed.record_hash,
+                ),
+            )
+            self._append_attempt_in_transaction(terminal)
+            self._commit_write()
+        except BaseException:
+            self._connection.rollback()
+            raise
 
     def record_finalized_attempt(self, evidence: FinalizedAttemptEvidence) -> None:
         from .execution_evidence import (
@@ -5205,6 +5338,8 @@ class RunStorage:
 
         from .execution_evidence import (
             DiagnosticAdapterRequestEvidence,
+            DiagnosticParseEvidence,
+            DiagnosticPersistedInvocationEvidence,
             FinalizedAttemptEvidence,
         )
         from .phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
@@ -5389,24 +5524,77 @@ class RunStorage:
                 != request.adapter_execution_binding_hash
             ):
                 raise ValueError("v6 invocation evidence binding drifted")
-            if parsed is not None and (
-                parsed.attempt_id != attempt_id
-                or parsed.request_id != request.request_id
-                or parsed.request_hash != request.request_hash
-                or parsed.response_id != invocation.response_id
-                or parsed.response_hash != invocation.response_hash
-                or parsed.parser_limits_hash != request.parser_limits_hash
-            ):
-                raise ValueError("v6 parse evidence binding drifted")
+            if diagnostic != isinstance(invocation, DiagnosticPersistedInvocationEvidence):
+                raise ValueError("v6 invocation evidence variant drifted")
+            if parsed is not None:
+                if diagnostic:
+                    if not isinstance(parsed, DiagnosticParseEvidence) or not isinstance(
+                        invocation, DiagnosticPersistedInvocationEvidence
+                    ):
+                        raise ValueError("v6 diagnostic parse variant drifted")
+                    parse_links = (
+                        parsed.event_id,
+                        parsed.attempt_id,
+                        parsed.attempt_index,
+                        parsed.request_id,
+                        parsed.request_hash,
+                        parsed.response_hash,
+                        parsed.parser_limits_hash,
+                        parsed.raw_body_sha256,
+                        parsed.topic_package_id,
+                        parsed.topic_package_hash,
+                    )
+                    expected_links = (
+                        event_id,
+                        attempt_id,
+                        attempt_index,
+                        request.request_id,
+                        request.request_hash,
+                        invocation.response_hash,
+                        request.parser_limits_hash,
+                        invocation.response.raw_body_sha256,
+                        event_input.prompt_view.topic_package_id,
+                        event_input.prompt_view.topic_hash,
+                    )
+                else:
+                    if isinstance(parsed, DiagnosticParseEvidence):
+                        raise ValueError("v6 mock parse variant drifted")
+                    parse_links = (
+                        parsed.attempt_id,
+                        parsed.request_id,
+                        parsed.request_hash,
+                        parsed.response_id,
+                        parsed.response_hash,
+                        parsed.parser_limits_hash,
+                    )
+                    expected_links = (
+                        attempt_id,
+                        request.request_id,
+                        request.request_hash,
+                        invocation.response_id,
+                        invocation.response_hash,
+                        request.parser_limits_hash,
+                    )
+                if parse_links != expected_links:
+                    raise ValueError("v6 parse evidence binding drifted")
             if terminal is not None and parsed is not None:
-                _validate_terminal_execution_projection(terminal, invocation, parsed)
-                failure = failure_by_attempt.get(attempt_id)
-                FinalizedAttemptEvidence.create(
-                    request_hash=request.request_hash,
-                    attempt=terminal,
-                    parse_evidence=parsed,
-                    terminal_failure_evidence=failure,
-                )
+                if diagnostic:
+                    if not isinstance(parsed, DiagnosticParseEvidence) or not isinstance(
+                        invocation, DiagnosticPersistedInvocationEvidence
+                    ):
+                        raise ValueError("v6 diagnostic terminal variant drifted")
+                    if attempt_id in failure_by_attempt:
+                        raise ValueError("diagnostic success cannot have terminal failure evidence")
+                    _validate_diagnostic_terminal_projection(terminal, invocation, parsed)
+                else:
+                    _validate_terminal_execution_projection(terminal, invocation, parsed)
+                    failure = failure_by_attempt.get(attempt_id)
+                    FinalizedAttemptEvidence.create(
+                        request_hash=request.request_hash,
+                        attempt=terminal,
+                        parse_evidence=parsed,
+                        terminal_failure_evidence=failure,
+                    )
 
     def _verify_attempt_exact_cover(self, progress: StorageProgress) -> None:
         transition_event_ids = {

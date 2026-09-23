@@ -1340,7 +1340,9 @@ class DiagnosticParseEvidence:
                 {
                     "topic_package_id": self.topic_package_id,
                     "topic_package_hash": self.topic_package_hash,
-                    **self.parsed_response,
+                    "stance": self.parsed_response.get("stance"),
+                    "confidence": self.parsed_response.get("confidence"),
+                    "public_reason": self.parsed_response.get("public_reason"),
                 }
             )
             if dict(self.parsed_response) != parsed.provider_payload():
