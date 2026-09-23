@@ -46,6 +46,7 @@ _DIAGNOSTIC_ADAPTER_REQUEST_EVIDENCE_SCHEMA = (
 )
 _INVOCATION_SCHEMA = "paper1.persisted-invocation-evidence.v1"
 _DIAGNOSTIC_INVOCATION_SCHEMA = "paper1.phase0b.diagnostic-invocation-evidence.v1"
+_DIAGNOSTIC_PARSE_SCHEMA = "paper1.phase0b.diagnostic-parse-evidence.v1"
 _PARSE_NA_SCHEMA = "paper1.parse-not-applicable-evidence.v1"
 _FINALIZED_SCHEMA = "paper1.finalized-attempt-evidence.v1"
 _REFERENCES_SCHEMA = "paper1.event-evidence-references.v1"
@@ -1293,6 +1294,138 @@ class DiagnosticPersistedInvocationEvidence:
                 for name in cls.__dataclass_fields__
             }
         )  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class DiagnosticParseEvidence:
+    """Typed interpretation of one real response; never a mock ParseEvidence."""
+
+    evidence_id: str
+    event_id: str
+    attempt_id: str
+    attempt_index: int
+    request_id: str
+    request_hash: str
+    response_hash: str
+    raw_body_sha256: str
+    parser_limits_hash: str
+    topic_package_id: str
+    topic_package_hash: str
+    success: bool
+    parsed_response: Mapping[str, object] | None
+    error_code: str | None
+    record_hash: str = field(repr=False)
+
+    def __post_init__(self) -> None:
+        for name in ("evidence_id", "event_id", "attempt_id", "request_id", "topic_package_id"):
+            _require_id(name, getattr(self, name))
+        _require_int("attempt_index", self.attempt_index, minimum=1)
+        for name in (
+            "request_hash",
+            "response_hash",
+            "raw_body_sha256",
+            "parser_limits_hash",
+            "topic_package_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        if type(self.success) is not bool:
+            raise TypeError("diagnostic parse success must be boolean")
+        if self.success:
+            from .parser import ParsedAgentUpdate
+
+            if type(self.parsed_response) is not dict or self.error_code is not None:
+                raise ValueError("successful diagnostic parse requires exact parsed response")
+            parsed = ParsedAgentUpdate.from_payload(
+                {
+                    "topic_package_id": self.topic_package_id,
+                    "topic_package_hash": self.topic_package_hash,
+                    **self.parsed_response,
+                }
+            )
+            if dict(self.parsed_response) != parsed.provider_payload():
+                raise ValueError("diagnostic parsed response fields differ")
+        elif self.parsed_response is not None or not self.error_code:
+            raise ValueError("failed diagnostic parse requires error without parsed response")
+        expected_id = _derive_record_id(
+            "diagnostic-parse-evidence-", {"attempt_id": self.attempt_id}
+        )
+        if self.evidence_id != expected_id:
+            raise ValueError("diagnostic parse evidence identity differs")
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+        object.__setattr__(self, "parsed_response", _freeze(self.parsed_response))
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": _DIAGNOSTIC_PARSE_SCHEMA,
+            "evidence_id": self.evidence_id,
+            "event_id": self.event_id,
+            "attempt_id": self.attempt_id,
+            "attempt_index": self.attempt_index,
+            "request_id": self.request_id,
+            "request_hash": self.request_hash,
+            "response_hash": self.response_hash,
+            "raw_body_sha256": self.raw_body_sha256,
+            "parser_limits_hash": self.parser_limits_hash,
+            "topic_package_id": self.topic_package_id,
+            "topic_package_hash": self.topic_package_hash,
+            "success": self.success,
+            "parsed_response": self.parsed_response,
+            "error_code": self.error_code,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls, *, response: object, topic_package: object, parser_limits_hash: str
+    ) -> DiagnosticParseEvidence:
+        from .phase0b.pipeline import _parse_vllm_message_content
+        from .phase0b.vllm_event_adapter import Phase0BVllmEventResponse
+        from .topic import TopicPackage
+
+        if not isinstance(response, Phase0BVllmEventResponse):
+            raise TypeError("diagnostic parse requires real vLLM response")
+        if not isinstance(topic_package, TopicPackage):
+            raise TypeError("diagnostic parse requires a typed topic package")
+        _require_sha256("parser_limits_hash", parser_limits_hash)
+        parsed, error = _parse_vllm_message_content(response, topic_package)
+        if response.outcome != "response":
+            parsed, error = None, response.error_code or "provider_error"
+        if parsed is not None and parsed.stance not in topic_package.stance_labels:
+            parsed, error = None, "stance_label"
+        values = {
+            "evidence_id": _derive_record_id(
+                "diagnostic-parse-evidence-", {"attempt_id": response.attempt_id}
+            ),
+            "event_id": response.event_id,
+            "attempt_id": response.attempt_id,
+            "attempt_index": response.attempt_index,
+            "request_id": response.request_id,
+            "request_hash": response.request_hash,
+            "response_hash": response.record_hash,
+            "raw_body_sha256": response.raw_body_sha256,
+            "parser_limits_hash": parser_limits_hash,
+            "topic_package_id": topic_package.topic_id,
+            "topic_package_hash": topic_package.package_hash,
+            "success": parsed is not None,
+            "parsed_response": None if parsed is None else parsed.provider_payload(),
+            "error_code": error,
+        }
+        content = {"schema_version": _DIAGNOSTIC_PARSE_SCHEMA, **values}
+        return cls(**values, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> DiagnosticParseEvidence:
+        _strict_payload(
+            payload, set(cls.__dataclass_fields__) | {"schema_version"}, "diagnostic parse"
+        )
+        if payload["schema_version"] != _DIAGNOSTIC_PARSE_SCHEMA:
+            raise ValueError("diagnostic parse schema is unsupported")
+        if payload["parsed_response"] is not None and type(payload["parsed_response"]) is not dict:
+            raise TypeError("diagnostic parsed response must be a JSON object")
+        return cls(**{name: payload[name] for name in cls.__dataclass_fields__})  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)

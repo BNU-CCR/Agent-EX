@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
+import json
 from pathlib import Path
 
 import pytest
@@ -8,6 +9,7 @@ import pytest
 from agent_ex.domain import EventStatus, GenerationAttempt, canonical_payload_hash
 from agent_ex.execution_evidence import (
     DiagnosticAdapterRequestEvidence,
+    DiagnosticParseEvidence,
     DiagnosticPersistedInvocationEvidence,
 )
 from agent_ex.phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
@@ -17,7 +19,7 @@ from agent_ex.phase0b.vllm_event_adapter import (
     Phase0BVllmTransportEvidence,
 )
 from agent_ex.storage import RunStorage
-from test_storage import prepared_evidence_bundle, reopen_evidence_store
+from test_storage import prepared_evidence_bundle, prompt_topic, reopen_evidence_store
 
 
 SHA = "a" * 64
@@ -210,3 +212,93 @@ def test_diagnostic_post_response_prefix_reopens_without_resend(tmp_path: Path) 
     assert reopened.invocation_evidence(pending.attempt_id) == invocation
     assert reopened.current_event_journal().latest_transition.status.value == "in_progress"
     assert reopened.progress.next_event_ordinal == 0
+
+
+def test_diagnostic_parse_evidence_replays_response_without_mock_schema(tmp_path: Path) -> None:
+    _store, values, _policy, _binding, request_evidence, _pending = _diagnostic_prefix(tmp_path)
+    content = b'{"stance":"label-2","confidence":3,"public_reason":"short reason"}'
+    body = (
+        b'{"choices":[{"message":{"content":'
+        + json.dumps(content.decode("utf-8")).encode("utf-8")
+        + b"}}]}"
+    )
+    transport = Phase0BVllmTransportEvidence.create(
+        request=request_evidence.request,
+        http_status=200,
+        response_headers={},
+        provider_request_id="provider-1",
+        request_body=b"{}",
+        raw_body=body,
+        body_truncated=False,
+        started_at="2026-09-20T00:00:00Z",
+        ended_at="2026-09-20T00:00:01Z",
+        latency_seconds=1.0,
+        outcome="response",
+        error_code=None,
+    )
+    response = Phase0BVllmEventResponse.create(
+        request=request_evidence.request,
+        outcome="response",
+        error_code=None,
+        retry_after_seconds=None,
+        provider_request_id="provider-1",
+        usage={"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+        finish_reason="stop",
+        raw_body=body,
+        transport_evidence=transport,
+    )
+    parsed = DiagnosticParseEvidence.create(
+        response=response,
+        topic_package=prompt_topic(),
+        parser_limits_hash=values["event_input"].parser_limits.record_hash,
+    )
+
+    assert parsed.success is True
+    assert parsed.parsed_response == {
+        "stance": "label-2",
+        "confidence": 3,
+        "public_reason": "short reason",
+    }
+    assert DiagnosticParseEvidence.from_payload(parsed.to_payload()) == parsed
+    assert parsed.to_payload()["schema_version"] == "paper1.phase0b.diagnostic-parse-evidence.v1"
+
+    tampered = parsed.to_payload()
+    tampered["parsed_response"]["stance"] = "label-1"
+    with pytest.raises(ValueError, match="record_hash"):
+        DiagnosticParseEvidence.from_payload(tampered)
+
+    invalid_body = b'{"choices":[{"message":{"content":"not-json"}}]}'
+    invalid_transport = Phase0BVllmTransportEvidence.create(
+        request=request_evidence.request,
+        http_status=200,
+        response_headers={},
+        provider_request_id="provider-1",
+        request_body=b"{}",
+        raw_body=invalid_body,
+        body_truncated=False,
+        started_at="2026-09-20T00:00:00Z",
+        ended_at="2026-09-20T00:00:01Z",
+        latency_seconds=1.0,
+        outcome="response",
+        error_code=None,
+    )
+    invalid_response = Phase0BVllmEventResponse.create(
+        request=request_evidence.request,
+        outcome="response",
+        error_code=None,
+        retry_after_seconds=None,
+        provider_request_id="provider-1",
+        usage={"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+        finish_reason="stop",
+        raw_body=invalid_body,
+        transport_evidence=invalid_transport,
+    )
+    failed = DiagnosticParseEvidence.create(
+        response=invalid_response,
+        topic_package=prompt_topic(),
+        parser_limits_hash=values["event_input"].parser_limits.record_hash,
+    )
+    assert failed.success is False
+    assert failed.parsed_response is None
+    assert failed.error_code == "json"
+    assert DiagnosticParseEvidence.from_payload(failed.to_payload()) == failed
