@@ -1034,3 +1034,5 @@
 - 审计发现已提交的 `run_real_adapter_diagnostic_matrix` 仍以每cell单个占位Agent连续执行40次，不能作为真实N=20网络实验。当前未提交的materializer已构造12-cell、每cell20 Agent/40事件和独立SQLite v6 round-0 store；其本地专项通过，仍待与runner连接。
 - 提交 `3f8bbf7` 增加 SQLite v6 diagnostic-v2 的请求/策略/绑定及真实响应持久化前缀，保持已有mock行的旧schema读取；新增prepared、tamper、post-response重开测试。`test_storage.py`与新增专项为`220 passed, 2 skipped`，Ruff lint/format和diff check通过。该提交只覆盖发送前和收到响应后的可恢复前缀，**尚未**实现真实响应解析后的原子终态提交、checkpoint/replay完整验证或N=20 runner接线。
 - 下一步先把diagnostic解析/终态证据、SQLite事务提交及重开校验补齐，并做旧mock字节级回归；然后接入materialized schedule/persona/E0-E1-E2 feed，验证两事件真实preflight，再申请/生成精确诊断授权包和云端服务交接。不得将现有单Agent占位runner产物视为网络实验结果。
+- 本轮提交 `2279251` 新增与真实 vLLM 响应 hash、原始body SHA、topic及parser limits绑定的独立 `DiagnosticParseEvidence`，不借用mock parse schema。提交 `267e4b8` 增加 SQLite v6 真实响应成功终态的原子 parse+attempt 写入、重开回放和跨variant拒绝；篡改provider绑定先拒绝且不产生部分终态。存储/证据专项 `249 passed, 2 skipped`，Ruff与diff check通过；仅有Windows/OneDrive pytest缓存目录权限警告。
+- 此里程碑**尚未**覆盖 diagnostic 失败终态、成功事件的私有/公开状态与cursor原子提交、完整checkpoint/resume、N=20真实事件循环、Linux复验或云端两事件preflight；AutoDL服务保持原状，未上传、未启动新实验。下一步按此顺序接线并做最小复验，绝不能把当前终态attempt测试等同于480-event实验完成。
