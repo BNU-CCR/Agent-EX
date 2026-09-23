@@ -1042,3 +1042,7 @@
 - 下一步先把diagnostic解析/终态证据、SQLite事务提交及重开校验补齐，并做旧mock字节级回归；然后接入materialized schedule/persona/E0-E1-E2 feed，验证两事件真实preflight，再申请/生成精确诊断授权包和云端服务交接。不得将现有单Agent占位runner产物视为网络实验结果。
 - 本轮提交 `2279251` 新增与真实 vLLM 响应 hash、原始body SHA、topic及parser limits绑定的独立 `DiagnosticParseEvidence`，不借用mock parse schema。提交 `267e4b8` 增加 SQLite v6 真实响应成功终态的原子 parse+attempt 写入、重开回放和跨variant拒绝；篡改provider绑定先拒绝且不产生部分终态。存储/证据专项 `249 passed, 2 skipped`，Ruff与diff check通过；仅有Windows/OneDrive pytest缓存目录权限警告。
 - 后续专项又确认已成功的真实响应可以经既有 `commit_success` 推进私有状态和feed cursor，并在重开后保持ordinal=1；测试仍使用明确标记的合成候选状态。此里程碑**尚未**覆盖 diagnostic 失败终态、公开状态分支、完整checkpoint/resume、N=20真实事件循环、Linux复验或云端两事件preflight；AutoDL服务保持原状，未上传、未启动新实验。下一步按此顺序接线并做最小复验，绝不能把当前单事件测试等同于480-event实验完成。
+- 提交 `235125b` 为diagnostic-v2补上失败解析的原子终态写入与重开校验，测试证明畸形真实响应留下FAILED attempt和failure evidence，而私有状态、feed cursor、ordinal不前进。存储相关专项`223 passed, 2 skipped`。
+- 提交 `a821dd7` 把原有社会曝光/记忆/persona/prompt构造提取成无发送的共享事件输入步骤；新 `phase0b/real_pipeline.py` 将冻结N=20排程对应的Agent生成真实vLLM请求与diagnostic-v2证据。两条真实响应形状的测试依次提交不同Agent、第二条经过fake HTTP dispatch journal，证明不再是单Agent占位循环。同期修正IN_PROGRESS先于实际网络发送的时间戳先后约束。专项`91 passed`。
+- 提交 `b10c589` 增加单格40事件及12格480事件的一次性真实事件编排原语；假HTTP全量跑通并产出24个扫次checkpoint，关闭重开12个SQLite后只读核对480个成功事件、请求/响应/parse/dispatch exact cover。过程中发现真实attempt须保留topic id/hash在完整解析记录中，否则社会候选帖的因果校验会拒绝后续事件，现已修复。相关专项`80 passed`，全矩阵专测另`1 passed`。**以上均为本地假HTTP响应，不是云端真实Qwen实验数据。**
+- 尚需失败/未决dispatch恢复合同、真实SQLite脱敏报告、Linux验证、精确授权哈希与服务交接。AutoDL在本轮未使用；旧vLLM服务保持原状。云端预检和480真实请求未启动。

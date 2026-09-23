@@ -1198,3 +1198,10 @@
 - 修复后full/coverage均为1463 passed、2 skipped、1显式release-scale deselected，production
   coverage为86%。三路独立终审P0--P3均为零；这只证明Phase 0A-0离线骨架，不证明真实
   Qwen/vLLM吞吐、语义质量、云端恢复或正式实验ready。
+
+## 2026-09-23：Phase 0B N=20真实事件接线发现
+
+- 真实HTTP attempt须先写IN_PROGRESS，再发送网络请求；transport的实际开始时间可晚于attempt开始时间。终态校验应绑定同一attempt并检查时间顺序，不能强求毫秒级时间戳相等。
+- 真实响应的provider JSON只有`stance/confidence/public_reason`，但已提交的`GenerationAttempt.parsed_response`还必须含topic package ID/hash。否则后续社会曝光读取邻居公开帖时，现有严格因果校验会拒绝来源私有更新。两种记录应分别保留provider原貌与完整内部解析身份。
+- N=20表示20名Agent的网络人口，不保证每名Agent在每个20抽取扫次恰好激活一次。检查应使用冻结schedule exact cover和总40次更新，而非误断言每人两次。
+- 本地假HTTP全矩阵480事件通过，只证明事件/证据/存储链机械完整；不证明真实Qwen响应质量、吞吐、拒答率、云盘语义或可恢复性。
