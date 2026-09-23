@@ -30,6 +30,10 @@ from agent_ex.phase0b.real_pipeline import (
     run_real_diagnostic_matrix_once,
     verify_real_diagnostic_matrix,
 )
+from agent_ex.phase0b.report import (
+    _verified_public_posts,
+    build_real_diagnostic_sqlite_report,
+)
 from agent_ex.phase0b.vllm_event_adapter import (
     PHASE0B_VLLM_ENDPOINT,
     Phase0BDispatchJournal,
@@ -39,6 +43,7 @@ from agent_ex.phase0b.vllm_event_adapter import (
 )
 from agent_ex.domain import EventStatus
 from agent_ex.pipeline import MockEventPipeline
+from agent_ex.state import PrivateUpdate, PublicPost
 from agent_ex.topic import TopicPackage
 from helpers.mock_matrix import build_mock_artifact_family
 from test_pipeline import _limits
@@ -46,6 +51,44 @@ from test_phase0b_vllm_event_adapter import FakeConnection
 
 
 FIXTURE_DIR = Path(__file__).parent / "fixtures" / "paper1"
+
+
+def test_report_rejects_missing_or_mismatched_public_posts() -> None:
+    family = _production_family()
+    initial = PrivateUpdate.create(
+        topic_package=family.topic_package,
+        matched_seed=family.matched_seed,
+        agent_id=family.agent_ids[0],
+        event_id=None,
+        event_ordinal=None,
+        sequence_index=0,
+        stance_label=family.topic_package.stance_labels[0],
+        reason="Initial reason",
+        confidence=None,
+        published=True,
+        source_attempt_id=None,
+        mock_only=True,
+    )
+    expected_post = PublicPost.from_private_update(initial, mock_only=True)
+    assert _verified_public_posts((initial,), (expected_post,)) == (expected_post,)
+    with pytest.raises(ValueError, match="public post"):
+        _verified_public_posts((initial,), ())
+    other = PrivateUpdate.create(
+        topic_package=family.topic_package,
+        matched_seed=family.matched_seed,
+        agent_id=family.agent_ids[1],
+        event_id=None,
+        event_ordinal=None,
+        sequence_index=0,
+        stance_label=family.topic_package.stance_labels[1],
+        reason="Different reason",
+        confidence=None,
+        published=True,
+        source_attempt_id=None,
+        mock_only=True,
+    )
+    with pytest.raises(ValueError, match="public post"):
+        _verified_public_posts((initial,), (PublicPost.from_private_update(other, mock_only=True),))
 
 
 def _scale_case(case_id: str = "mock-n20-fault-recovery"):
@@ -738,7 +781,9 @@ def test_real_n20_first_response_commits_only_scheduled_agent(tmp_path: Path) ->
             storage.close()
 
 
-def test_real_n20_matrix_runs_all_480_network_events_with_fake_http(tmp_path: Path) -> None:
+def test_real_n20_matrix_runs_all_480_network_events_with_fake_http(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     family = _production_family()
     authorization = _authorization(family)
     binding = _real_binding()
@@ -822,6 +867,159 @@ def test_real_n20_matrix_runs_all_480_network_events_with_fake_http(tmp_path: Pa
             run_root=tmp_path / "dispatch-run",
         )
         assert replayed == summary
+        report = build_real_diagnostic_sqlite_report(
+            matrix=matrix,
+            authorization=authorization,
+            adapter_binding=binding,
+            policy=policy,
+            stores=stores,
+            run_root=tmp_path / "dispatch-run",
+        )
+        assert report["completion_summary_hash"] == replayed.record_hash
+        assert report["source_projection_hash"] != replayed.record_hash
+        assert report["labels"] == ["preliminary", "diagnostic", "not_frozen"]
+        assert len(report["cells"]) == 12
+        assert all(len(cell["sweeps"]) == 2 for cell in report["cells"])
+        assert all(
+            sum(cell["sweeps"][-1]["private_stock"].values()) == 20 for cell in report["cells"]
+        )
+        assert report["research_parameter_status"] == "not_frozen"
+        assert report["retry_count"] == 0
+        assert report["usage_totals"] == {
+            "prompt_tokens": 960,
+            "completion_tokens": 480,
+            "total_tokens": 1440,
+        }
+        assert (
+            report["unavailable_metrics"]["refusal_proxy"] == "not_recorded_as_structured_evidence"
+        )
+        for cell in report["cells"]:
+            for sweep in cell["sweeps"]:
+                assert sum(sweep["private_stock"].values()) == 20
+                assert sum(sweep["public_stock"].values()) == 20
+                assert sum(sweep["public_flow"].values()) == sweep["publication_count"]
+                assert sweep["selected_message_count"] + sweep["empty_feed_event_count"] >= 0
+                assert sweep["private_mean"] >= 1
+                assert sweep["private_variance"] >= 0
+                assert 0 <= sweep["fraction_changing_stance"] <= 1
+                assert sweep["mean_absolute_change"] >= 0
+                assert sweep["expired_message_count"] >= 0
+        assert "raw_response" not in json.dumps(report)
+        assert "public_reason" not in json.dumps(report)
+        assert "One synthetic test response." not in json.dumps(report)
+        first_cell = CANONICAL_CELL_IDS[0]
+        first_agent, second_agent = family.agent_ids[:2]
+        storage_type = type(stores[first_cell])
+        original_posts = storage_type.public_posts_for_agent
+
+        def missing_post(self, agent_id):
+            posts = original_posts(self, agent_id)
+            if self is stores[first_cell] and agent_id == first_agent:
+                return posts[:-1]
+            return posts
+
+        with monkeypatch.context() as patcher:
+            patcher.setattr(storage_type, "public_posts_for_agent", missing_post)
+            with pytest.raises(ValueError, match="public posts"):
+                build_real_diagnostic_sqlite_report(
+                    matrix=matrix,
+                    authorization=authorization,
+                    adapter_binding=binding,
+                    policy=policy,
+                    stores=stores,
+                    run_root=tmp_path / "dispatch-run",
+                )
+
+        def mismatched_post(self, agent_id):
+            posts = original_posts(self, agent_id)
+            if self is stores[first_cell] and agent_id == first_agent:
+                other = original_posts(self, second_agent)[0]
+                return (other, *posts[1:])
+            return posts
+
+        with monkeypatch.context() as patcher:
+            patcher.setattr(storage_type, "public_posts_for_agent", mismatched_post)
+            with pytest.raises(ValueError, match="public posts"):
+                build_real_diagnostic_sqlite_report(
+                    matrix=matrix,
+                    authorization=authorization,
+                    adapter_binding=binding,
+                    policy=policy,
+                    stores=stores,
+                    run_root=tmp_path / "dispatch-run",
+                )
+        swapped = dict(stores)
+        first, second = CANONICAL_CELL_IDS[:2]
+        swapped[first] = stores[second]
+        with pytest.raises(ValueError, match="run identity"):
+            build_real_diagnostic_sqlite_report(
+                matrix=matrix,
+                authorization=authorization,
+                adapter_binding=binding,
+                policy=policy,
+                stores=swapped,
+                run_root=tmp_path / "dispatch-run",
+            )
+        alternate_stores = initialize_diagnostic_n20_stores(
+            tmp_path / "alternate-stores", matrix=matrix
+        )
+        try:
+            FakeConnection.body = json.dumps(
+                {
+                    "id": "provider-480-alternate",
+                    "model": binding.served_model_name,
+                    "choices": [
+                        {
+                            "message": {
+                                "content": json.dumps(
+                                    {
+                                        "stance": family.topic_package.stance_labels[4],
+                                        "confidence": 3,
+                                        "public_reason": "Alternate synthetic test response.",
+                                    }
+                                )
+                            },
+                            "finish_reason": "stop",
+                        }
+                    ],
+                    "usage": {
+                        "prompt_tokens": 5,
+                        "completion_tokens": 1,
+                        "total_tokens": 6,
+                    },
+                }
+            ).encode()
+            alternate_summary = run_real_diagnostic_matrix_once(
+                matrix=matrix,
+                authorization=authorization,
+                adapter_binding=binding,
+                policy=policy,
+                stores=alternate_stores,
+                parser_limits=parser_limits,
+                prompt_limits=prompt_limits,
+                adapter_factory=lambda _cell_id: Phase0BVllmEventAdapter(
+                    PHASE0B_VLLM_ENDPOINT,
+                    served_model_name=binding.served_model_name,
+                    connection_factory=FakeConnection,
+                ),
+                run_root=tmp_path / "alternate-dispatch-run",
+                clock=lambda: datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+            )
+            assert alternate_summary == replayed
+            alternate_report = build_real_diagnostic_sqlite_report(
+                matrix=matrix,
+                authorization=authorization,
+                adapter_binding=binding,
+                policy=policy,
+                stores=alternate_stores,
+                run_root=tmp_path / "alternate-dispatch-run",
+            )
+            assert alternate_report["source_projection_hash"] != report["source_projection_hash"]
+            assert alternate_report["usage_totals"] != report["usage_totals"]
+            assert alternate_report["cells"] != report["cells"]
+        finally:
+            for storage in alternate_stores.values():
+                storage.close()
     finally:
         for storage in stores.values():
             storage.close()
