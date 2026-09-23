@@ -41,7 +41,11 @@ _POLICY_SCHEMA = "paper1.mock-attempt-policy-binding.v1"
 _ADAPTER_BINDING_SCHEMA = "paper1.mock-adapter-execution-binding.v2"
 _EVENT_INPUT_SCHEMA = "paper1.event-input-evidence.v1"
 _ADAPTER_REQUEST_EVIDENCE_SCHEMA = "paper1.adapter-request-evidence.v1"
+_DIAGNOSTIC_ADAPTER_REQUEST_EVIDENCE_SCHEMA = (
+    "paper1.phase0b.diagnostic-adapter-request-evidence.v1"
+)
 _INVOCATION_SCHEMA = "paper1.persisted-invocation-evidence.v1"
+_DIAGNOSTIC_INVOCATION_SCHEMA = "paper1.phase0b.diagnostic-invocation-evidence.v1"
 _PARSE_NA_SCHEMA = "paper1.parse-not-applicable-evidence.v1"
 _FINALIZED_SCHEMA = "paper1.finalized-attempt-evidence.v1"
 _REFERENCES_SCHEMA = "paper1.event-evidence-references.v1"
@@ -809,6 +813,177 @@ class AdapterRequestEvidence:
         )  # type: ignore[arg-type]
 
 
+@dataclass(frozen=True, slots=True)
+class DiagnosticAdapterRequestEvidence:
+    """Hash-bound Phase 0B request envelope without mock schema laundering."""
+
+    request_id: str
+    request_hash: str
+    event_id: str
+    attempt_id: str
+    attempt_index: int
+    request: object
+    run_authorization_hash: str
+    model_identity: Mapping[str, str]
+    model_identity_hash: str
+    request_parameters: Mapping[str, object]
+    request_parameters_hash: str
+    model_seed: int
+    prompt_limits_hash: str
+    parser_limits_hash: str
+    attempt_policy_hash: str
+    adapter_execution_binding_hash: str
+    record_hash: str = field(repr=False)
+
+    def __post_init__(self) -> None:
+        from .phase0b.vllm_event_adapter import Phase0BVllmEventRequest
+
+        if not isinstance(self.request, Phase0BVllmEventRequest):
+            raise TypeError("diagnostic request must be a typed Phase0BVllmEventRequest")
+        for name in ("request_id", "event_id", "attempt_id"):
+            _require_id(name, getattr(self, name))
+        for name in (
+            "request_hash",
+            "run_authorization_hash",
+            "model_identity_hash",
+            "request_parameters_hash",
+            "prompt_limits_hash",
+            "parser_limits_hash",
+            "attempt_policy_hash",
+            "adapter_execution_binding_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        _require_int("attempt_index", self.attempt_index, minimum=1)
+        _require_int("model_seed", self.model_seed)
+        if not isinstance(self.model_identity, Mapping) or not self.model_identity:
+            raise ValueError("diagnostic model identity must be a non-empty mapping")
+        if not isinstance(self.request_parameters, Mapping):
+            raise TypeError("diagnostic request parameters must be a mapping")
+        if (
+            self.request_id != self.request.request_id
+            or self.request_hash != self.request.record_hash
+            or self.event_id != self.request.event_id
+            or self.attempt_id != self.request.attempt_id
+            or self.attempt_index != self.request.attempt_index
+            or self.model_seed != self.request.model_seed
+            or self.prompt_limits_hash != self.request.prompt_hash
+            or self.request_parameters != self.request.generation_settings
+            or self.request_parameters_hash != self.request.generation_settings_hash
+            or self.adapter_execution_binding_hash != self.request.adapter_binding_hash
+        ):
+            raise ValueError("diagnostic request envelope identity or hash binding drifted")
+        _require_payload_hash("model_identity_hash", self.model_identity_hash, self.model_identity)
+        _require_payload_hash(
+            "request_parameters_hash", self.request_parameters_hash, self.request_parameters
+        )
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+        object.__setattr__(self, "model_identity", _freeze(self.model_identity))
+        object.__setattr__(self, "request_parameters", _freeze(self.request_parameters))
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": _DIAGNOSTIC_ADAPTER_REQUEST_EVIDENCE_SCHEMA,
+            "request_id": self.request_id,
+            "request_hash": self.request_hash,
+            "event_id": self.event_id,
+            "attempt_id": self.attempt_id,
+            "attempt_index": self.attempt_index,
+            "request": self.request.to_payload(),  # type: ignore[union-attr]
+            "run_authorization_hash": self.run_authorization_hash,
+            "model_identity": self.model_identity,
+            "model_identity_hash": self.model_identity_hash,
+            "request_parameters": self.request_parameters,
+            "request_parameters_hash": self.request_parameters_hash,
+            "model_seed": self.model_seed,
+            "prompt_limits_hash": self.prompt_limits_hash,
+            "parser_limits_hash": self.parser_limits_hash,
+            "attempt_policy_hash": self.attempt_policy_hash,
+            "adapter_execution_binding_hash": self.adapter_execution_binding_hash,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        request: object,
+        run_authorization_hash: str,
+        parser_limits_hash: str,
+        attempt_policy_hash: str,
+        adapter_binding: object,
+    ) -> DiagnosticAdapterRequestEvidence:
+        from .phase0b.contracts import DiagnosticAdapterBinding
+        from .phase0b.vllm_event_adapter import Phase0BVllmEventRequest
+
+        if not isinstance(request, Phase0BVllmEventRequest):
+            raise TypeError("request must be a typed Phase0BVllmEventRequest")
+        if not isinstance(adapter_binding, DiagnosticAdapterBinding):
+            raise TypeError("adapter_binding must be a typed DiagnosticAdapterBinding")
+        if request.adapter_binding_hash != adapter_binding.record_hash:
+            raise ValueError("diagnostic request does not bind the supplied adapter identity")
+        model_identity = {
+            "model_repository": adapter_binding.model_repository,
+            "model_revision": adapter_binding.model_revision,
+            "tokenizer_revision": adapter_binding.tokenizer_revision,
+            "served_model_name": adapter_binding.served_model_name,
+            "environment_lock_hash": adapter_binding.environment_lock_hash,
+            "service_start_identity_hash": adapter_binding.service_start_identity_hash,
+        }
+        values = {
+            "request_id": request.request_id,
+            "request_hash": request.record_hash,
+            "event_id": request.event_id,
+            "attempt_id": request.attempt_id,
+            "attempt_index": request.attempt_index,
+            "request": request,
+            "run_authorization_hash": run_authorization_hash,
+            "model_identity": model_identity,
+            "model_identity_hash": canonical_payload_hash(model_identity),
+            "request_parameters": request.generation_settings,
+            "request_parameters_hash": request.generation_settings_hash,
+            "model_seed": request.model_seed,
+            "prompt_limits_hash": request.prompt_hash,
+            "parser_limits_hash": parser_limits_hash,
+            "attempt_policy_hash": attempt_policy_hash,
+            "adapter_execution_binding_hash": adapter_binding.record_hash,
+        }
+        content = {
+            "schema_version": _DIAGNOSTIC_ADAPTER_REQUEST_EVIDENCE_SCHEMA,
+            **{key: value for key, value in values.items() if key != "request"},
+            "request": request.to_payload(),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> DiagnosticAdapterRequestEvidence:
+        from .phase0b.vllm_event_adapter import Phase0BVllmEventRequest
+
+        expected = set(cls.__dataclass_fields__) | {"schema_version"}
+        _strict_payload(payload, expected, "diagnostic adapter request evidence")
+        if payload["schema_version"] != _DIAGNOSTIC_ADAPTER_REQUEST_EVIDENCE_SCHEMA:
+            raise ValueError("diagnostic adapter request evidence schema is unsupported")
+        if type(payload["request"]) is not dict:
+            raise TypeError("diagnostic adapter request must be a JSON object")
+        request_payload = dict(payload["request"])
+        messages = request_payload.get("rendered_messages")
+        if type(messages) is not list or any(type(item) is not dict for item in messages):
+            raise TypeError("diagnostic rendered_messages must be a JSON array of objects")
+        request_payload["rendered_messages"] = tuple(messages)
+        return cls(
+            **{
+                name: (
+                    Phase0BVllmEventRequest(**request_payload)
+                    if name == "request"
+                    else payload[name]
+                )
+                for name in cls.__dataclass_fields__
+            }
+        )  # type: ignore[arg-type]
+
+
 def _has_trusted_adapter_request_evidence(value: AdapterRequestEvidence) -> bool:
     try:
         return (
@@ -974,6 +1149,150 @@ class PersistedInvocationEvidence:
         values = {name: payload[name] for name in cls.__dataclass_fields__}
         values["response"] = AdapterResponse.from_payload(payload["response"])
         return cls(**values)  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
+class DiagnosticPersistedInvocationEvidence:
+    """Durable real-provider response linked to one diagnostic request prefix."""
+
+    evidence_id: str
+    attempt_id: str
+    request_id: str
+    request_hash: str
+    response_hash: str
+    transport_evidence_hash: str
+    response: object
+    run_authorization_hash: str
+    parser_limits_hash: str
+    attempt_policy_hash: str
+    adapter_execution_binding_hash: str
+    record_hash: str = field(repr=False)
+
+    def __post_init__(self) -> None:
+        from .phase0b.vllm_event_adapter import Phase0BVllmEventResponse
+
+        if not isinstance(self.response, Phase0BVllmEventResponse):
+            raise TypeError("diagnostic response must be a typed Phase0BVllmEventResponse")
+        for name in ("evidence_id", "attempt_id", "request_id"):
+            _require_id(name, getattr(self, name))
+        for name in (
+            "request_hash",
+            "response_hash",
+            "transport_evidence_hash",
+            "run_authorization_hash",
+            "parser_limits_hash",
+            "attempt_policy_hash",
+            "adapter_execution_binding_hash",
+            "record_hash",
+        ):
+            _require_sha256(name, getattr(self, name))
+        if (
+            self.attempt_id != self.response.attempt_id
+            or self.request_id != self.response.request_id
+            or self.request_hash != self.response.request_hash
+            or self.response_hash != self.response.record_hash
+            or self.transport_evidence_hash != self.response.transport_evidence.record_hash
+            or self.response.transport_evidence.request_hash != self.request_hash
+        ):
+            raise ValueError("diagnostic invocation request, response, or transport link drifted")
+        expected_id = _derive_record_id(
+            "diagnostic-invocation-evidence-", {"attempt_id": self.attempt_id}
+        )
+        if self.evidence_id != expected_id:
+            raise ValueError("diagnostic invocation evidence_id does not match attempt")
+        _require_payload_hash("record_hash", self.record_hash, self.content_payload())
+
+    @staticmethod
+    def _response_payload(response: object) -> dict[str, object]:
+        return _json_ready(
+            {
+                **response.content_payload(),  # type: ignore[union-attr]
+                "record_hash": response.record_hash,  # type: ignore[union-attr]
+            }
+        )
+
+    def content_payload(self) -> dict[str, object]:
+        return {
+            "schema_version": _DIAGNOSTIC_INVOCATION_SCHEMA,
+            "evidence_id": self.evidence_id,
+            "attempt_id": self.attempt_id,
+            "request_id": self.request_id,
+            "request_hash": self.request_hash,
+            "response_hash": self.response_hash,
+            "transport_evidence_hash": self.transport_evidence_hash,
+            "response": self._response_payload(self.response),
+            "run_authorization_hash": self.run_authorization_hash,
+            "parser_limits_hash": self.parser_limits_hash,
+            "attempt_policy_hash": self.attempt_policy_hash,
+            "adapter_execution_binding_hash": self.adapter_execution_binding_hash,
+        }
+
+    def to_payload(self) -> dict[str, object]:
+        return _json_ready({**self.content_payload(), "record_hash": self.record_hash})
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        response: object,
+        request_evidence: DiagnosticAdapterRequestEvidence,
+    ) -> DiagnosticPersistedInvocationEvidence:
+        from .phase0b.vllm_event_adapter import Phase0BVllmEventResponse
+
+        if not isinstance(response, Phase0BVllmEventResponse):
+            raise TypeError("response must be a typed Phase0BVllmEventResponse")
+        if not isinstance(request_evidence, DiagnosticAdapterRequestEvidence):
+            raise TypeError("request_evidence must be diagnostic-v2")
+        values = {
+            "evidence_id": _derive_record_id(
+                "diagnostic-invocation-evidence-", {"attempt_id": response.attempt_id}
+            ),
+            "attempt_id": response.attempt_id,
+            "request_id": response.request_id,
+            "request_hash": response.request_hash,
+            "response_hash": response.record_hash,
+            "transport_evidence_hash": response.transport_evidence.record_hash,
+            "response": response,
+            "run_authorization_hash": request_evidence.run_authorization_hash,
+            "parser_limits_hash": request_evidence.parser_limits_hash,
+            "attempt_policy_hash": request_evidence.attempt_policy_hash,
+            "adapter_execution_binding_hash": request_evidence.adapter_execution_binding_hash,
+        }
+        content = {
+            "schema_version": _DIAGNOSTIC_INVOCATION_SCHEMA,
+            **{key: value for key, value in values.items() if key != "response"},
+            "response": cls._response_payload(response),
+        }
+        return cls(**values, record_hash=canonical_payload_hash(content))  # type: ignore[arg-type]
+
+    @classmethod
+    def from_payload(cls, payload: Mapping[str, object]) -> DiagnosticPersistedInvocationEvidence:
+        from .phase0b.vllm_event_adapter import (
+            Phase0BVllmEventResponse,
+            Phase0BVllmTransportEvidence,
+        )
+
+        expected = set(cls.__dataclass_fields__) | {"schema_version"}
+        _strict_payload(payload, expected, "diagnostic invocation evidence")
+        if payload["schema_version"] != _DIAGNOSTIC_INVOCATION_SCHEMA:
+            raise ValueError("diagnostic invocation evidence schema is unsupported")
+        if type(payload["response"]) is not dict:
+            raise TypeError("diagnostic response must be a JSON object")
+        response_payload = dict(payload["response"])
+        transport_payload = response_payload.get("transport_evidence")
+        if type(transport_payload) is not dict:
+            raise TypeError("diagnostic transport evidence must be a JSON object")
+        response_payload["transport_evidence"] = Phase0BVllmTransportEvidence.from_payload(
+            transport_payload
+        )
+        response_payload["usage"] = dict(response_payload["usage"])  # type: ignore[arg-type]
+        response = Phase0BVllmEventResponse(**response_payload)  # type: ignore[arg-type]
+        return cls(
+            **{
+                name: response if name == "response" else payload[name]
+                for name in cls.__dataclass_fields__
+            }
+        )  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)

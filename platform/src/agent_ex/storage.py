@@ -38,6 +38,8 @@ from .state import LatestPublicPointer, PrivateState, PrivateUpdate, PublicPost
 if TYPE_CHECKING:
     from .execution_evidence import (
         AdapterRequestEvidence,
+        DiagnosticAdapterRequestEvidence,
+        DiagnosticPersistedInvocationEvidence,
         EventEvidenceReferences,
         EventInputEvidence,
         FinalizedAttemptEvidence,
@@ -46,6 +48,7 @@ if TYPE_CHECKING:
         ParseNotApplicableEvidence,
         PersistedInvocationEvidence,
     )
+    from .phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
     from .parser import ParseEvidence
 
 
@@ -1017,7 +1020,7 @@ class RunStorage:
             identity_value.st_ino,
         )
         self._verified_connection_signature: tuple[int, int] | None = None
-        self._adapter_execution_binding_cache: MockAdapterExecutionBinding | None = None
+        self._adapter_execution_binding_cache: object | None = None
         self._execution_state_cache: ExecutionState | None = None
         self._pending_execution_state: ExecutionState | None = None
         self._trusted_write_transaction = False
@@ -2192,6 +2195,201 @@ class RunStorage:
             self._connection.rollback()
             raise
 
+    def record_diagnostic_prepared_attempt(
+        self,
+        event_input: EventInputEvidence,
+        *,
+        policy: DiagnosticAttemptPolicy,
+        adapter_binding: DiagnosticAdapterBinding,
+        request_evidence: DiagnosticAdapterRequestEvidence,
+        pending_attempt: GenerationAttempt,
+    ) -> None:
+        """Atomically persist one honest diagnostic-v2 pre-dispatch prefix.
+
+        Diagnostic records reuse the v6 causal tables and transaction boundary, but
+        retain their own explicit payload schemas.  No legacy row is migrated.
+        """
+
+        from .execution_evidence import DiagnosticAdapterRequestEvidence, EventInputEvidence
+        from .phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
+
+        self._begin_write()
+        try:
+            self._assert_not_halted()
+            if self.binding.round0_root is None:
+                raise ValueError("initial state must be sealed before preparing attempts")
+            if not isinstance(event_input, EventInputEvidence):
+                raise TypeError("event_input must be typed EventInputEvidence")
+            if not isinstance(policy, DiagnosticAttemptPolicy):
+                raise TypeError("policy must be typed DiagnosticAttemptPolicy")
+            if not isinstance(adapter_binding, DiagnosticAdapterBinding):
+                raise TypeError("adapter_binding must be typed DiagnosticAdapterBinding")
+            if not isinstance(request_evidence, DiagnosticAdapterRequestEvidence):
+                raise TypeError("request_evidence must be typed DiagnosticAdapterRequestEvidence")
+            pending = GenerationAttempt.from_payload(pending_attempt.to_payload())
+            if pending.status is not EventStatus.PENDING:
+                raise ValueError("prepared diagnostic attempt must be PENDING")
+            journal = self.current_event_journal()
+            slot = self.schedule_slot(journal.event_ordinal)
+            request = request_evidence.request
+            if (
+                journal.event_id is None
+                or journal.event_id != event_input.event_id
+                or journal.event_id != request_evidence.event_id
+                or journal.next_attempt_index != request_evidence.attempt_index
+                or event_input.receiver_agent_id != slot.agent_id
+                or event_input.publish_flag != slot.publish_flag
+                or event_input.exposure_record.exposure_mode != self.binding.expected_exposure_mode
+                or event_input.exposure_record.exposure_graph_hash
+                != self.binding.expected_exposure_graph_hash
+            ):
+                raise ValueError("diagnostic evidence does not bind current journal and schedule")
+            if (
+                request.prompt_hash != event_input.prompt_view.record_hash
+                or request.rendered_messages_hash != pending.rendered_prompt_hash
+                or request.rendered_messages != pending.rendered_messages
+                or pending.exposure_id != event_input.exposure_record.exposure_id
+                or request_evidence.prompt_limits_hash != event_input.prompt_view.record_hash
+                or request_evidence.parser_limits_hash != event_input.parser_limits.record_hash
+                or request_evidence.attempt_policy_hash != policy.record_hash
+                or request_evidence.adapter_execution_binding_hash != adapter_binding.record_hash
+                or request.adapter_binding_hash != adapter_binding.record_hash
+            ):
+                raise ValueError(
+                    "diagnostic prompt, parser, policy, or adapter binding hash drifted"
+                )
+            pending_links = (
+                pending.event_id,
+                pending.attempt_id,
+                pending.attempt_index,
+                pending.request_id,
+                pending.rendered_messages,
+                pending.rendered_prompt_hash,
+                pending.request_parameters,
+                pending.request_parameters_hash,
+                pending.model_identity,
+                pending.model_identity_hash,
+                pending.model_seed,
+            )
+            request_links = (
+                request_evidence.event_id,
+                request_evidence.attempt_id,
+                request_evidence.attempt_index,
+                request_evidence.request_id,
+                request.rendered_messages,
+                request.rendered_messages_hash,
+                request_evidence.request_parameters,
+                request_evidence.request_parameters_hash,
+                request_evidence.model_identity,
+                request_evidence.model_identity_hash,
+                request_evidence.model_seed,
+            )
+            if pending_links != request_links:
+                raise ValueError("PENDING attempt does not bind diagnostic request authorization")
+
+            binding_id = "diagnostic-adapter-binding-" + adapter_binding.record_hash
+            binding_rows = self._connection.execute(
+                "SELECT binding_id, payload, record_hash FROM adapter_execution_bindings"
+            ).fetchall()
+            expected_binding_row = (
+                binding_id,
+                _canonical_json(adapter_binding.to_payload()),
+                adapter_binding.record_hash,
+            )
+            if binding_rows and (len(binding_rows) != 1 or binding_rows[0] != expected_binding_row):
+                raise ValueError("one run requires one exact adapter attestation")
+
+            prior_row = self._connection.execute(
+                """SELECT payload FROM adapter_requests
+                   WHERE event_id = ? ORDER BY rowid DESC LIMIT 1""",
+                (event_input.event_id,),
+            ).fetchone()
+            if prior_row is not None:
+                prior_payload = _load_canonical_json(
+                    prior_row[0], "diagnostic adapter request evidence"
+                )
+                prior = DiagnosticAdapterRequestEvidence.from_payload(prior_payload)
+                invariant = (
+                    prior.request.prompt_hash,
+                    prior.request.rendered_messages,
+                    prior.request.generation_settings,
+                    prior.model_identity,
+                    prior.parser_limits_hash,
+                    prior.attempt_policy_hash,
+                    prior.adapter_execution_binding_hash,
+                    prior.run_authorization_hash,
+                    prior.model_seed,
+                )
+                current = (
+                    request.prompt_hash,
+                    request.rendered_messages,
+                    request.generation_settings,
+                    request_evidence.model_identity,
+                    request_evidence.parser_limits_hash,
+                    request_evidence.attempt_policy_hash,
+                    request_evidence.adapter_execution_binding_hash,
+                    request_evidence.run_authorization_hash,
+                    request_evidence.model_seed,
+                )
+                if invariant != current:
+                    raise ValueError("diagnostic retry changed invariant evidence")
+
+            self._insert_or_exact_match_evidence(
+                "event_input_evidence",
+                "event_id",
+                event_input.event_id,
+                event_input.to_payload(),
+                event_input.record_hash,
+            )
+            self._insert_or_exact_match_evidence(
+                "attempt_policy_evidence",
+                "event_id",
+                event_input.event_id,
+                policy.to_payload(),
+                policy.record_hash,
+            )
+            if not binding_rows:
+                self._insert_or_exact_match_evidence(
+                    "adapter_execution_bindings",
+                    "binding_id",
+                    binding_id,
+                    adapter_binding.to_payload(),
+                    adapter_binding.record_hash,
+                )
+            self._insert_or_exact_match_evidence(
+                "adapter_requests",
+                "attempt_id",
+                request_evidence.attempt_id,
+                request_evidence.to_payload(),
+                request_evidence.record_hash,
+                extra_columns=(
+                    "event_id",
+                    "adapter_binding_hash",
+                    "parser_limits_hash",
+                    "policy_hash",
+                ),
+                extra_values=(
+                    event_input.event_id,
+                    adapter_binding.record_hash,
+                    event_input.parser_limits.record_hash,
+                    policy.record_hash,
+                ),
+            )
+            has_landed = self._connection.execute(
+                "SELECT 1 FROM attempt_transitions WHERE attempt_id = ?",
+                (pending.attempt_id,),
+            ).fetchone()
+            if has_landed:
+                if self.attempt_transitions(pending.attempt_id) != (pending,):
+                    raise ValueError("conflicting diagnostic PENDING attempt replay")
+            else:
+                self._append_attempt_in_transaction(pending)
+            self._commit_write()
+            self._adapter_execution_binding_cache = adapter_binding
+        except BaseException:
+            self._connection.rollback()
+            raise
+
     def _record_prepared_attempt_in_transaction(
         self,
         event_input: EventInputEvidence,
@@ -2434,22 +2632,38 @@ class RunStorage:
         )
         return None if row is None else EventInputEvidence.from_payload(row[0])
 
-    def attempt_policy_evidence(self, event_id: str) -> MockAttemptPolicyBinding | None:
+    def attempt_policy_evidence(
+        self, event_id: str
+    ) -> MockAttemptPolicyBinding | DiagnosticAttemptPolicy | None:
         from .execution_evidence import MockAttemptPolicyBinding
+        from .phase0b.contracts import DiagnosticAttemptPolicy
 
         _require_id("event_id", event_id)
         row = self._read_evidence_payload("attempt_policy_evidence", "event_id", event_id)
-        return None if row is None else MockAttemptPolicyBinding.from_payload(row[0])
+        if row is None:
+            return None
+        schema = row[0].get("schema_version")
+        if schema == "paper1.mock-attempt-policy-binding.v1":
+            return MockAttemptPolicyBinding.from_payload(row[0])
+        if schema == DiagnosticAttemptPolicy._SCHEMA:
+            return DiagnosticAttemptPolicy.from_payload(row[0])
+        raise ValueError("attempt policy evidence schema is unsupported")
 
     def adapter_execution_binding(
         self, binding_id_or_attempt_id: str
-    ) -> MockAdapterExecutionBinding | None:
+    ) -> MockAdapterExecutionBinding | DiagnosticAdapterBinding | None:
         from .execution_evidence import MockAdapterExecutionBinding
+        from .phase0b.contracts import DiagnosticAdapterBinding
 
         _require_id("binding_id_or_attempt_id", binding_id_or_attempt_id)
         cached = self._adapter_execution_binding_cache
         if cached is not None and self._connection_state_is_verified():
-            if binding_id_or_attempt_id == cached.binding_id:
+            cached_id = getattr(
+                cached,
+                "binding_id",
+                "diagnostic-adapter-binding-" + cached.record_hash,
+            )
+            if binding_id_or_attempt_id == cached_id:
                 return cached
             linked = self._connection.execute(
                 "SELECT adapter_binding_hash FROM adapter_requests WHERE attempt_id = ?",
@@ -2463,7 +2677,7 @@ class RunStorage:
             "adapter_execution_bindings",
             "binding_id",
             binding_id_or_attempt_id,
-            payload_key="binding_id",
+            payload_key=None,
         )
         if row is None:
             linked = self._connection.execute(
@@ -2480,8 +2694,14 @@ class RunStorage:
             if raw is None:
                 raise ValueError("adapter request binding row is missing")
             payload = _load_canonical_json(raw[1], "adapter execution binding")
+            schema = payload.get("schema_version")
+            expected_id = (
+                payload.get("binding_id")
+                if schema == "paper1.mock-adapter-execution-binding.v2"
+                else "diagnostic-adapter-binding-" + raw[2]
+            )
             if (
-                payload.get("binding_id") != raw[0]
+                expected_id != raw[0]
                 or payload.get("record_hash") != raw[2]
                 or canonical_payload_hash(
                     {name: value for name, value in payload.items() if name != "record_hash"}
@@ -2491,13 +2711,24 @@ class RunStorage:
             ):
                 raise ValueError("adapter execution binding row envelope mismatch")
             row = (payload, raw[2])
-        binding = MockAdapterExecutionBinding.from_payload(row[0])
+        schema = row[0].get("schema_version")
+        if schema == "paper1.mock-adapter-execution-binding.v2":
+            binding = MockAdapterExecutionBinding.from_payload(row[0])
+        elif schema == DiagnosticAdapterBinding._SCHEMA:
+            binding = DiagnosticAdapterBinding.from_payload(row[0])
+        else:
+            raise ValueError("adapter execution binding schema is unsupported")
         if self._connection_state_is_verified():
             self._adapter_execution_binding_cache = binding
         return binding
 
-    def adapter_request_evidence(self, attempt_id: str) -> AdapterRequestEvidence | None:
-        from .execution_evidence import AdapterRequestEvidence
+    def adapter_request_evidence(
+        self, attempt_id: str
+    ) -> AdapterRequestEvidence | DiagnosticAdapterRequestEvidence | None:
+        from .execution_evidence import (
+            AdapterRequestEvidence,
+            DiagnosticAdapterRequestEvidence,
+        )
 
         _require_id("attempt_id", attempt_id)
         row = self._connection.execute(
@@ -2516,7 +2747,13 @@ class RunStorage:
             != row[6]
         ):
             raise ValueError("adapter request raw payload hash drifted")
-        value = AdapterRequestEvidence.from_payload(payload)
+        schema = payload.get("schema_version")
+        if schema == "paper1.adapter-request-evidence.v1":
+            value = AdapterRequestEvidence.from_payload(payload)
+        elif schema == "paper1.phase0b.diagnostic-adapter-request-evidence.v1":
+            value = DiagnosticAdapterRequestEvidence.from_payload(payload)
+        else:
+            raise ValueError("adapter request evidence schema is unsupported")
         if (
             row[0] != attempt_id
             or value.attempt_id != row[0]
@@ -2592,8 +2829,77 @@ class RunStorage:
             self._connection.rollback()
             raise
 
-    def invocation_evidence(self, attempt_id: str) -> PersistedInvocationEvidence | None:
-        from .execution_evidence import PersistedInvocationEvidence
+    def record_diagnostic_invocation_evidence(
+        self, evidence: DiagnosticPersistedInvocationEvidence
+    ) -> None:
+        from .execution_evidence import (
+            DiagnosticAdapterRequestEvidence,
+            DiagnosticPersistedInvocationEvidence,
+        )
+        from .phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
+
+        self._assert_not_halted()
+        if not isinstance(evidence, DiagnosticPersistedInvocationEvidence):
+            raise TypeError("invocation evidence must be diagnostic-v2")
+        journal = self.current_event_journal()
+        if (
+            journal.latest_transition is None
+            or journal.latest_transition.status is not EventStatus.IN_PROGRESS
+            or journal.latest_transition.attempt_id != evidence.attempt_id
+        ):
+            raise ValueError("diagnostic invocation requires the current IN_PROGRESS attempt")
+        request = self.adapter_request_evidence(evidence.attempt_id)
+        binding = self.adapter_execution_binding(evidence.attempt_id)
+        policy = self.attempt_policy_evidence(evidence.response.event_id)
+        if (
+            not isinstance(request, DiagnosticAdapterRequestEvidence)
+            or not isinstance(binding, DiagnosticAdapterBinding)
+            or not isinstance(policy, DiagnosticAttemptPolicy)
+        ):
+            raise ValueError("diagnostic invocation requires matching persisted variant evidence")
+        if (
+            evidence.request_id != request.request_id
+            or evidence.request_hash != request.request_hash
+            or evidence.run_authorization_hash != request.run_authorization_hash
+            or evidence.parser_limits_hash != request.parser_limits_hash
+            or evidence.attempt_policy_hash != policy.record_hash
+            or evidence.adapter_execution_binding_hash != binding.record_hash
+            or evidence.response.event_id != request.event_id
+            or evidence.response.attempt_index != request.attempt_index
+            or evidence.response.request_hash != request.request_hash
+        ):
+            raise ValueError("diagnostic invocation request or binding evidence drifted")
+        payload = evidence.to_payload()
+        encoded = _canonical_json(payload)
+        self._begin_write()
+        try:
+            existing = self._connection.execute(
+                """SELECT response_payload, execution_payload, record_hash
+                   FROM invocation_evidence WHERE attempt_id = ?""",
+                (evidence.attempt_id,),
+            ).fetchone()
+            expected = (encoded, encoded, evidence.record_hash)
+            if existing is None:
+                self._connection.execute(
+                    """INSERT INTO invocation_evidence
+                       (attempt_id, response_payload, execution_payload, record_hash)
+                       VALUES (?, ?, ?, ?)""",
+                    (evidence.attempt_id, *expected),
+                )
+            elif existing != expected:
+                raise ValueError("conflicting immutable diagnostic invocation replay")
+            self._commit_write()
+        except BaseException:
+            self._connection.rollback()
+            raise
+
+    def invocation_evidence(
+        self, attempt_id: str
+    ) -> PersistedInvocationEvidence | DiagnosticPersistedInvocationEvidence | None:
+        from .execution_evidence import (
+            DiagnosticPersistedInvocationEvidence,
+            PersistedInvocationEvidence,
+        )
 
         _require_id("attempt_id", attempt_id)
         row = self._connection.execute(
@@ -2613,10 +2919,19 @@ class RunStorage:
                 {name: value for name, value in payload.items() if name != "record_hash"}
             )
             != row[3]
-            or payload.get("execution_payload") != execution
+            or (
+                payload.get("execution_payload") != execution
+                if payload.get("schema_version") == "paper1.persisted-invocation-evidence.v1"
+                else payload != execution
+            )
         ):
             raise ValueError("invocation evidence row envelope is inconsistent")
-        return PersistedInvocationEvidence.from_payload(payload)
+        schema = payload.get("schema_version")
+        if schema == "paper1.persisted-invocation-evidence.v1":
+            return PersistedInvocationEvidence.from_payload(payload)
+        if schema == "paper1.phase0b.diagnostic-invocation-evidence.v1":
+            return DiagnosticPersistedInvocationEvidence.from_payload(payload)
+        raise ValueError("invocation evidence schema is unsupported")
 
     def parse_evidence(self, attempt_id: str) -> ParseEvidence | ParseNotApplicableEvidence | None:
         from .execution_evidence import ParseNotApplicableEvidence
@@ -4888,7 +5203,11 @@ class RunStorage:
             if event_input.event_id != event_id:
                 raise ValueError("v6 event input identity drifted")
 
-        from .execution_evidence import FinalizedAttemptEvidence
+        from .execution_evidence import (
+            DiagnosticAdapterRequestEvidence,
+            FinalizedAttemptEvidence,
+        )
+        from .phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
 
         terminal_by_id: dict[str, GenerationAttempt] = {}
         for event_id in expected_event_ids:
@@ -4898,7 +5217,9 @@ class RunStorage:
         failure_by_attempt = {
             item.attempt_id: item for item in self.terminal_failure_evidence_prefix()
         }
-        prior_request_by_event: dict[str, AdapterRequestEvidence] = {}
+        prior_request_by_event: dict[
+            str, AdapterRequestEvidence | DiagnosticAdapterRequestEvidence
+        ] = {}
         for attempt_id, (event_id, attempt_index, status) in latest.items():
             request = self.adapter_request_evidence(attempt_id)
             event_input = self.event_input_evidence(event_id)
@@ -4909,13 +5230,18 @@ class RunStorage:
                 request.request_parameters,
                 request.request_parameters,
             )
+            diagnostic = isinstance(request, DiagnosticAdapterRequestEvidence)
+            if diagnostic != isinstance(
+                policy, DiagnosticAttemptPolicy
+            ) or diagnostic != isinstance(binding, DiagnosticAdapterBinding):
+                raise ValueError("v6 execution evidence variants are cross-wired")
             if (
                 request.event_id != event_id
                 or request.attempt_index != attempt_index
                 or request.attempt_policy_hash != policy.record_hash
                 or request.parser_limits_hash != event_input.parser_limits.record_hash
                 or request.adapter_execution_binding_hash != binding.record_hash
-                or request.model_identity_hash != binding.model_identity_hash
+                or (not diagnostic and request.model_identity_hash != binding.model_identity_hash)
             ):
                 raise ValueError("v6 request evidence binding drifted")
             transitions = self.attempt_transitions(attempt_id)
@@ -4924,18 +5250,24 @@ class RunStorage:
             pending = transitions[0]
             adapter_request = request.request
             slot = self.schedule_slot(event_input.prompt_view.event_ordinal)
+            prompt_drift = (
+                adapter_request.prompt_hash != event_input.prompt_view.record_hash
+                or request.prompt_limits_hash != event_input.prompt_view.record_hash
+                if diagnostic
+                else adapter_request.prompt_view_id != event_input.prompt_view.view_id
+                or adapter_request.prompt_view_hash != event_input.prompt_view.record_hash
+                or request.prompt_limits_hash != event_input.prompt_view.limits_hash
+            )
             if (
                 event_input.receiver_agent_id != slot.agent_id
                 or event_input.publish_flag != slot.publish_flag
                 or event_input.exposure_record.exposure_mode != self.binding.expected_exposure_mode
                 or event_input.exposure_record.exposure_graph_hash
                 != self.binding.expected_exposure_graph_hash
-                or adapter_request.prompt_view_id != event_input.prompt_view.view_id
-                or adapter_request.prompt_view_hash != event_input.prompt_view.record_hash
+                or prompt_drift
                 or adapter_request.rendered_messages_hash != pending.rendered_prompt_hash
                 or adapter_request.rendered_messages != pending.rendered_messages
                 or pending.exposure_id != event_input.exposure_record.exposure_id
-                or request.prompt_limits_hash != event_input.prompt_view.limits_hash
             ):
                 raise ValueError("v6 request prompt, schedule, or exposure binding drifted")
             pending_links = (
@@ -4964,43 +5296,72 @@ class RunStorage:
                 raise ValueError("v6 PENDING attempt does not bind request authorization")
             prior = prior_request_by_event.get(event_id)
             if prior is not None:
-                invariant = (
-                    prior.request.topic_package_id,
-                    prior.request.topic_package_hash,
-                    prior.request.prompt_view_id,
-                    prior.request.prompt_view_hash,
-                    prior.request.rendered_messages,
-                    prior.request.rendered_messages_hash,
-                    prior.model_identity,
-                    prior.model_identity_hash,
-                    prior.prompt_limits_hash,
-                    prior.parser_limits_hash,
-                    prior.attempt_policy_hash,
-                    prior.adapter_execution_binding_hash,
-                )
-                current = (
-                    adapter_request.topic_package_id,
-                    adapter_request.topic_package_hash,
-                    adapter_request.prompt_view_id,
-                    adapter_request.prompt_view_hash,
-                    adapter_request.rendered_messages,
-                    adapter_request.rendered_messages_hash,
-                    request.model_identity,
-                    request.model_identity_hash,
-                    request.prompt_limits_hash,
-                    request.parser_limits_hash,
-                    request.attempt_policy_hash,
-                    request.adapter_execution_binding_hash,
-                )
+                if diagnostic:
+                    if not isinstance(prior, DiagnosticAdapterRequestEvidence):
+                        raise ValueError("v6 retry request variant changed")
+                    invariant = (
+                        prior.request.prompt_hash,
+                        prior.request.rendered_messages,
+                        prior.request.generation_settings,
+                        prior.model_identity,
+                        prior.prompt_limits_hash,
+                        prior.parser_limits_hash,
+                        prior.attempt_policy_hash,
+                        prior.adapter_execution_binding_hash,
+                        prior.run_authorization_hash,
+                        prior.model_seed,
+                    )
+                    current = (
+                        adapter_request.prompt_hash,
+                        adapter_request.rendered_messages,
+                        adapter_request.generation_settings,
+                        request.model_identity,
+                        request.prompt_limits_hash,
+                        request.parser_limits_hash,
+                        request.attempt_policy_hash,
+                        request.adapter_execution_binding_hash,
+                        request.run_authorization_hash,
+                        request.model_seed,
+                    )
+                else:
+                    invariant = (
+                        prior.request.topic_package_id,
+                        prior.request.topic_package_hash,
+                        prior.request.prompt_view_id,
+                        prior.request.prompt_view_hash,
+                        prior.request.rendered_messages,
+                        prior.request.rendered_messages_hash,
+                        prior.model_identity,
+                        prior.model_identity_hash,
+                        prior.prompt_limits_hash,
+                        prior.parser_limits_hash,
+                        prior.attempt_policy_hash,
+                        prior.adapter_execution_binding_hash,
+                    )
+                    current = (
+                        adapter_request.topic_package_id,
+                        adapter_request.topic_package_hash,
+                        adapter_request.prompt_view_id,
+                        adapter_request.prompt_view_hash,
+                        adapter_request.rendered_messages,
+                        adapter_request.rendered_messages_hash,
+                        request.model_identity,
+                        request.model_identity_hash,
+                        request.prompt_limits_hash,
+                        request.parser_limits_hash,
+                        request.attempt_policy_hash,
+                        request.adapter_execution_binding_hash,
+                    )
                 if invariant != current:
                     raise ValueError("v6 retry request changed invariant evidence")
-                changed = changed_request_parameter_paths(
-                    prior.request_parameters, request.request_parameters
-                )
-                if prior.model_seed != request.model_seed:
-                    changed.add("model_seed")
-                if not changed.issubset(set(policy.allowed_difference_fields)):
-                    raise ValueError("v6 retry request changed an unauthorized field")
+                if not diagnostic:
+                    changed = changed_request_parameter_paths(
+                        prior.request_parameters, request.request_parameters
+                    )
+                    if prior.model_seed != request.model_seed:
+                        changed.add("model_seed")
+                    if not changed.issubset(set(policy.allowed_difference_fields)):
+                        raise ValueError("v6 retry request changed an unauthorized field")
             prior_request_by_event[event_id] = request
             invocation = self.invocation_evidence(attempt_id)
             parsed = self.parse_evidence(attempt_id)
