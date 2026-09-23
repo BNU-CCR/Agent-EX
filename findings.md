@@ -1,5 +1,13 @@
 # 发现与决策
 
+## 2026-09-23：AutoDL 到期与迁移核查
+
+- AutoDL 官方 [实例数据](https://www.autodl.com/docs/instance_data/) 文档称普通容器实例“包年包月到期”不影响数据；连续关机 15 天触发释放后全部数据清空且不可恢复。主机下架/磁盘故障另有风险，因此不能把“到期”与“释放”等同。
+- AutoDL 官方 [本地数据盘](https://www.autodl.com/docs/local_disk/) 文档称包年包月到期后付费数据盘仍可能按量计费；需要查看控制台实际状态与费用。
+- 官方 [同地区迁移](https://www.autodl.com/docs/migrate_instance_2/) 推荐关机后克隆实例并勾选数据盘；仅保存系统镜像不会自动保存 `/root/autodl-tmp`。官方 [文件存储](https://www.autodl.com/docs/fs/) 同地区实例共享且不随单个实例释放，但属于网络存储，应避免直接承载高 I/O 的事件数据库。
+- 本轮旧实例只读 SSH 检查：`agent-ex-phase0a1-judge-v2/run-store` 存在，judge 根目录约 2.1 GB，数据盘 150 GB、已用 61 GB、可用 90 GB，端口 8000 一个监听；`/root/autodl-fs` 目录当前不存在，不能假定已挂载共享备份。GPU 查询命令的 `head` 参数受到 PowerShell→SSH CRLF 干扰而失败；没有据此推断 GPU 状态，也未读取任何 raw response。后续可直接运行不带 `head` 的单条 GPU 查询。
+- 当前本地 `codex/paper1-phase0` 相对已知远端跟踪分支领先 117 个提交；未验证远端最新引用前不能保证新服务器 `git clone` 得到本地当前代码。Phase 0B `run.py` 尚无正式 CLI 入口，旧 `run_real_adapter_diagnostic_matrix` 仍有单 Agent 占位语义，不能教用户现在执行该入口冒充真实 N=20 网络实验。
+
 ## 需求
 - 首先推进 Paper 1。
 - 在现有预实验基础上重新搭建正式代码，不继续堆叠旧 Notebook。
