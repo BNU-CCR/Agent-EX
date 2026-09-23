@@ -1027,3 +1027,10 @@
   `preliminary/diagnostic/not_frozen`标签，不包含raw prompt/response/reason text。Phase 0B专项更新为
   `64 passed in 47.07s`；Ruff lint与format check通过。下一步是生成实际云端授权/审批包并在judge
   服务交接后执行两事件preflight与480-event真实诊断run。
+
+### 2026-09-23：Phase 0B 真实存储前缀接续
+
+- 云端 Phase 0A-1 judge v2 已确认客户端退出，797条 attempt、dispatch、reconciliation 齐全；最终 projection 文件 SHA-256 为 `6c65dbc6b7d27f709821b8da1751b5eca7b18b6e377efa7b66fde7cae898fd0e`。vLLM仍监听端口8000，尚未做 Phase 0B 服务交接。
+- 审计发现已提交的 `run_real_adapter_diagnostic_matrix` 仍以每cell单个占位Agent连续执行40次，不能作为真实N=20网络实验。当前未提交的materializer已构造12-cell、每cell20 Agent/40事件和独立SQLite v6 round-0 store；其本地专项通过，仍待与runner连接。
+- 提交 `3f8bbf7` 增加 SQLite v6 diagnostic-v2 的请求/策略/绑定及真实响应持久化前缀，保持已有mock行的旧schema读取；新增prepared、tamper、post-response重开测试。`test_storage.py`与新增专项为`220 passed, 2 skipped`，Ruff lint/format和diff check通过。该提交只覆盖发送前和收到响应后的可恢复前缀，**尚未**实现真实响应解析后的原子终态提交、checkpoint/replay完整验证或N=20 runner接线。
+- 下一步先把diagnostic解析/终态证据、SQLite事务提交及重开校验补齐，并做旧mock字节级回归；然后接入materialized schedule/persona/E0-E1-E2 feed，验证两事件真实preflight，再申请/生成精确诊断授权包和云端服务交接。不得将现有单Agent占位runner产物视为网络实验结果。
