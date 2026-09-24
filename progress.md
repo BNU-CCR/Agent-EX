@@ -1061,3 +1061,4 @@
 - 本轮云端只读检查：SSH 可达、judge store 在、旧 vLLM 仍监听 `127.0.0.1:8000`、`/root/autodl-tmp` 约剩 90 GB；未停止、重启或启动任何云端进程。真实 N=20 实验仍未启动。
 - 提交 `464a8fc` 实现独立 `Phase0BLaunchIntent`，在服务启动前绑定source bundle、显式候选配置/11类工件、模型/环境/服务配置与两个互不重叠外部归档根；最终授权与服务启动身份不能提前进入此记录。专项测试 fresh 18 passed，Ruff/format/diff check通过，规格与质量复核均可继续。首次复验尝试关闭pytest cache plugin触发项目配置 `cache_dir` unknown，改用独立临时cache后成功；云URI百分号编码别名是非阻断后续加固项，当前限定本地 `/root/autodl-tmp` 归档。
 - 提交 `ddb434f` 实现显式 `Phase0BCandidateConfig` 与跨进程冷重建，不内置任何候选数值；质量审查发现可接受 topic 指向与实际 round-0 理由库不同的两份独立有效制品。提交 `b9a95cc` 以先RED后GREEN的回归测试补上跨制品 ID 校验；fresh 24项合同专项、Ruff/format/diff check通过，质量复核确认无剩余重要问题。尚无云端请求。
+- 本轮在本地新增 Phase 0B 服务身份桥合同：只接收已核验的 797 项终态 judge projection 哈希、旧服务启动/停止证据、真实 preliminary environment inspection、新服务 start-first 身份及预先绑定的服务配置；检查旧进程退出、8000端口释放、GPU空观测哈希、新服务 manifest/inspection/PID/命令哈希一致性。先见缺模块 RED，再见命令身份与GPU空观测的两个针对性 RED，最终桥接+意向+候选配置专项 35 passed；Ruff lint 与 git diff check通过。桥接记录仍需在云端用真实证据实例化；本轮未停止旧服务、未上传、未发送 Phase 0B 模型请求。

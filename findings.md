@@ -1213,3 +1213,9 @@
 - 真实响应的provider JSON只有`stance/confidence/public_reason`，但已提交的`GenerationAttempt.parsed_response`还必须含topic package ID/hash。否则后续社会曝光读取邻居公开帖时，现有严格因果校验会拒绝来源私有更新。两种记录应分别保留provider原貌与完整内部解析身份。
 - N=20表示20名Agent的网络人口，不保证每名Agent在每个20抽取扫次恰好激活一次。检查应使用冻结schedule exact cover和总40次更新，而非误断言每人两次。
 - 本地假HTTP全矩阵480事件通过，只证明事件/证据/存储链机械完整；不证明真实Qwen响应质量、吞吐、拒答率、云盘语义或可恢复性。
+
+## 2026-09-24：Phase 0B 服务交接合同发现
+
+- `phase0a1-judge-service.sh stop` 只有在 GPU compute-process 观测文件为空时才成功写入停止证据，因此其 SHA-256 必须是空文件哈希；仅检查“看起来像 64 位哈希”不足以证明 GPU 已释放。
+- 新服务脚本会记录 `/proc/<pid>/cmdline` 的 SHA-256。预启动服务配置也应绑定这项命令身份；只比对 serve 脚本、Python、模型路径，不能排除同一路径下不同的实际启动参数。
+- 服务桥中的 `judge_replay_verified_projection_hash` 只是对独立 journal replay 结果的绑定，桥记录自身不读取 raw journal，也不能凭单独一个自报哈希证明 journal 已被重放。云端实例化前必须另行完成终态 replay 核验。
