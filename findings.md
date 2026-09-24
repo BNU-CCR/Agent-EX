@@ -1,5 +1,10 @@
 # 发现与决策
 
+## 2026-09-24：迁移副本核验路径
+
+- `JudgeRunStore.open` 已内建 staging 顶层布局、服务子目录、journal 与 projection 的精确重放检查，且在 `projection.json` 存在时复核终态封存。因此副本完整性分两层：先比较整个 `run-store` 源/目标文件树，再在目标端重开与重放；不能只靠一份自洽但漏文件的选择性清单。
+- `JudgeRunStore.open` 可能清理临时文件或恢复事务，故未来目标端调用前后还须复查树身份；若发生变化，不能把先前副本 hash 当作最终状态。当前 `archive_copy.py` 仅完成第一层，不声称已完成迁移验收。独立复核发现的 Windows junction 和单次路径替换已通过先测后修补拦截；仍须保证真实源/目标在扫描期间静止，软件无法用两次读取证明一个可任意变动的远端文件树始终不变。
+
 ## 2026-09-24：冷关机合同的证据边界
 
 - 现有旧 judge start record 不包含可直接核验的 AutoDL 实例 ID；新增 `ColdPoweroffObservation.instance_id` 是现场观察值，不得单靠一份自哈希记录声称旧实例/进程状态已获证。未来 Linux 采集器必须从真实主机生成并复核 boot、PID、端口、GPU 观测，迁移桥还须绑定保留归档的外部定位和完整性证明。

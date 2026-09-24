@@ -1,5 +1,11 @@
 # 进度日志
 
+## 2026-09-24：judge 迁移副本的完整文件树比对（本地）
+
+- 新增 `phase0b/archive_copy.py` 的只读 `inventory_tree`/`verify_tree_copy`：源与目标根目录下所有目录（包括空目录）、常规文件相对路径、大小与流式 SHA-256 必须完全一致；拒绝软链接与特殊文件。不读取或输出 raw response 文本，也不执行复制。
+- 先见缺模块 RED，后见归档专项；独立复核发现 Windows 联接点和扫描期路径替换风险，新增两个负例先 RED 后 GREEN。归档专项 `7 passed, 1 skipped`，连同原冷关机/正常停机合同最终合跑 `35 passed, 1 skipped`；Windows 无法创建真实软链接的负例须在 Linux 上补验。Ruff lint/format 和 diff 检查通过。**这不是目标端 judge journal 重放，也不证明源本来完整；源/目标必须保持静止。**
+- 接下来需在目标端调用现有 `JudgeRunStore.open` 复核精确目录布局与 journal/projection 重放，并绑定迁移桥；旧实例和新实例均未启动实验。
+
 ## 2026-09-24：Phase 0B 冷关机缺席合同（本地）
 
 - 按先测后实现新增 `phase0b/cold_handoff.py`：独立 `cold-poweroff-observation.v1` 记录不能冒充旧 judge 正常 stop；要求进程和端口缺席、GPU compute-process 空观测哈希，并绑定原服务启动记录、旧 manifest/lock、797 项 coded 且无 unresolved 的终态投影与外部重放哈希。旧 normal-stop 桥未改。
