@@ -5,6 +5,7 @@
 - `phase0a1-service.sh` 在启动前要求 `manifest_hash`，并将其写进启动身份；Phase 0B adapter binding 则要求启动身份哈希，后续授权和十二个 manifest 又依赖 binding。因此不能把最终授权或任一最终 manifest 哈希作为服务启动输入。
 - 现有 `DiagnosticApprovalPacket` 依赖最终授权/binding，且使用旧 mock candidate，不能拿来做预启动包。获批的最小方案是独立、初始即可哈希的 launch intent；其哈希供服务脚本使用。新服务身份出现后再派生最终授权与矩阵，并另行核对精确哈希。
 - `phase0b/cli.py`、云端 wrapper 和矩阵冷进程重建入口尚不存在；测试中的 `_production_family()` 候选参数不是已批准生产配置。两事件执行原语存在，但还缺独立前缀验证与服务交接。
+- 新服务可复用 `phase0a1-service.sh start-first`，但该脚本把最后一项 hash 记作 `preliminary-inspection`。必须先实际生成/核验独立预检查记录，再将其 hash 传入；不能拿 launch intent 或环境锁 hash 冒充，也不能直接用要求同目录旧代已停机的 `start-recovery`。旧 judge 必须由 `phase0a1-judge-service.sh stop` 按原身份停止，并额外核验其终态/manifest/lock 与 stop 证据的关系。
 
 ## 2026-09-23：AutoDL 到期与迁移核查
 
