@@ -17,6 +17,7 @@ from agent_ex.phase0b.real_pipeline import (
     resume_real_diagnostic_cell_events,
     resume_real_diagnostic_matrix,
     run_real_diagnostic_cell_events,
+    verify_two_event_diagnostic_prefix,
 )
 from agent_ex.phase0b.vllm_event_adapter import (
     PHASE0B_VLLM_ENDPOINT,
@@ -126,6 +127,43 @@ def test_clean_committed_prefix_resumes_without_resending_success(setup) -> None
     assert setup["storage"].progress.next_event_ordinal == 2
     assert len(FakeConnection.requests) == 2
     assert FakeConnection.requests[0] == first_request
+
+
+def test_two_event_preflight_verifies_clean_committed_prefix(setup) -> None:
+    run_real_diagnostic_cell_events(**setup, start_ordinal=0, event_count=2)
+    summary = verify_two_event_diagnostic_prefix(
+        storage=setup["storage"],
+        cell=setup["cell"],
+        family=setup["family"],
+        authorization=setup["authorization"],
+        policy=setup["policy"],
+        adapter_binding=setup["adapter_binding"],
+        dispatch_journal=setup["dispatch_journal"],
+        checkpoint_root=setup["checkpoint_root"],
+    )
+    assert summary.committed_event_count == 2
+    assert summary.transport_count == 2
+    assert summary.cell_id == setup["cell"].cell_id
+    assert summary.authorization_hash == setup["authorization"].record_hash
+    assert summary.calibration_only is True
+    assert summary.formal_parameter_authority is False
+    assert summary.research_parameter_status == "not_frozen"
+    assert len(FakeConnection.requests) == 2
+
+
+def test_two_event_preflight_rejects_partial_prefix(setup) -> None:
+    run_real_diagnostic_cell_events(**setup, start_ordinal=0, event_count=1)
+    with pytest.raises(ValueError, match="exactly two"):
+        verify_two_event_diagnostic_prefix(
+            storage=setup["storage"],
+            cell=setup["cell"],
+            family=setup["family"],
+            authorization=setup["authorization"],
+            policy=setup["policy"],
+            adapter_binding=setup["adapter_binding"],
+            dispatch_journal=setup["dispatch_journal"],
+            checkpoint_root=setup["checkpoint_root"],
+        )
 
 
 def test_unresolved_dispatch_intent_refuses_resume_before_provider_call(setup) -> None:

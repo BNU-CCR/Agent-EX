@@ -66,6 +66,23 @@ class RealDiagnosticMatrixSummary:
     record_hash: str
 
 
+@dataclass(frozen=True, slots=True)
+class TwoEventDiagnosticPrefixSummary:
+    """Sanitized local acceptance of exactly two committed real-adapter events."""
+
+    calibration_only: bool
+    formal_parameter_authority: bool
+    research_parameter_status: str
+    authorization_hash: str
+    adapter_binding_hash: str
+    service_start_identity_hash: str
+    cell_id: str
+    committed_event_count: int
+    transport_count: int
+    committed_event_hashes: tuple[str, str]
+    record_hash: str
+
+
 def prepare_real_diagnostic_event(
     *,
     storage: RunStorage,
@@ -563,6 +580,58 @@ def _verify_clean_diagnostic_cell_prefix(
         if freshness != ("current" if checkpoint.next_event_ordinal == cursor else "stale"):
             raise ValueError("diagnostic checkpoint freshness differs from committed prefix")
     return cursor
+
+
+def verify_two_event_diagnostic_prefix(
+    *,
+    storage: RunStorage,
+    cell: DiagnosticCellInputBundle,
+    family: DiagnosticN20ArtifactFamily,
+    authorization: DiagnosticRunAuthorization,
+    policy: DiagnosticAttemptPolicy,
+    adapter_binding: DiagnosticAdapterBinding,
+    dispatch_journal: Phase0BDispatchJournal,
+    checkpoint_root: Path,
+) -> TwoEventDiagnosticPrefixSummary:
+    """Verify a two-event prefix without contacting the provider or returning raw text.
+
+    This is a local prefix gate, not the full cloud preflight authorization or
+    archive-isolation gate. A launcher must separately bind its archive root.
+    """
+
+    if storage.progress.next_event_ordinal != 2:
+        raise ValueError("two-event diagnostic prefix requires exactly two committed events")
+    cursor = _verify_clean_diagnostic_cell_prefix(
+        storage=storage,
+        cell=cell,
+        family=family,
+        authorization=authorization,
+        policy=policy,
+        adapter_binding=adapter_binding,
+        dispatch_journal=dispatch_journal,
+        checkpoint_root=checkpoint_root,
+    )
+    if cursor != 2:
+        raise ValueError("two-event diagnostic prefix requires exactly two committed events")
+    event_hashes: list[str] = []
+    for ordinal in range(2):
+        event = storage.event_at(ordinal)
+        if event is None:
+            raise ValueError("two-event diagnostic prefix has a missing committed event")
+        event_hashes.append(canonical_payload_hash(event.to_payload()))
+    content = {
+        "calibration_only": True,
+        "formal_parameter_authority": False,
+        "research_parameter_status": "not_frozen",
+        "authorization_hash": authorization.record_hash,
+        "adapter_binding_hash": adapter_binding.record_hash,
+        "service_start_identity_hash": adapter_binding.service_start_identity_hash,
+        "cell_id": cell.cell_id,
+        "committed_event_count": 2,
+        "transport_count": 2,
+        "committed_event_hashes": tuple(event_hashes),
+    }
+    return TwoEventDiagnosticPrefixSummary(**content, record_hash=canonical_payload_hash(content))
 
 
 def resume_real_diagnostic_cell_events(

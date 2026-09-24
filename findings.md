@@ -1219,3 +1219,5 @@
 - `phase0a1-judge-service.sh stop` 只有在 GPU compute-process 观测文件为空时才成功写入停止证据，因此其 SHA-256 必须是空文件哈希；仅检查“看起来像 64 位哈希”不足以证明 GPU 已释放。
 - 新服务脚本会记录 `/proc/<pid>/cmdline` 的 SHA-256。预启动服务配置也应绑定这项命令身份；只比对 serve 脚本、Python、模型路径，不能排除同一路径下不同的实际启动参数。
 - 服务桥中的 `judge_replay_verified_projection_hash` 只是对独立 journal replay 结果的绑定，桥记录自身不读取 raw journal，也不能凭单独一个自报哈希证明 journal 已被重放。云端实例化前必须另行完成终态 replay 核验。
+- 原AutoDL实例到期后，旧服务停机证据可能无法再从该实例取得。现有服务桥的“同一主机旧服务正常stop→新服务start-first”分支不能被伪造来代替跨主机冷启动；须先核对原始judge归档是否可恢复，并为新主机建立独立来源/冷启动证据路径。
+- 两事件本地前缀验收可复用既有SQLite v6完整性、dispatch exact cover和checkpoint空清单检查；这只证明局部已提交证据干净，不能自行证明预检归档与完整480事件归档互不重叠，也不能代替真实vLLM/provider身份核验。
