@@ -1,11 +1,16 @@
 # 发现与决策
 
+## 2026-09-24：旧实例关机但保留
+
+- 用户确认旧 AutoDL 实例仍在，故归档与进程状态可在迁移准备就绪后重新检查；关机本身既不证明优雅停止，也不证明数据完整。旧服务正常 stop 只适用于原进程仍可验证为 live 的情形；若重启后已无原进程，须使用独立的冷关机缺席记录，不能伪造 `judge-service-stop-evidence.v1`。
+- Phase 0B 换机必须重新核验旧 judge 终态、对源/目标归档做精确哈希清单，在新主机生成新 inspection、launch intent 与 start-first 身份；旧 judge 的服务身份不能复用。见 `docs/superpowers/specs/2026-09-24-phase0b-retained-instance-migration-design.md`。
+
 ## 2026-09-24：Phase 0B 云端启动顺序
 
 - `phase0a1-service.sh` 在启动前要求 `manifest_hash`，并将其写进启动身份；Phase 0B adapter binding 则要求启动身份哈希，后续授权和十二个 manifest 又依赖 binding。因此不能把最终授权或任一最终 manifest 哈希作为服务启动输入。
 - 现有 `DiagnosticApprovalPacket` 依赖最终授权/binding，且使用旧 mock candidate，不能拿来做预启动包。获批的最小方案是独立、初始即可哈希的 launch intent；其哈希供服务脚本使用。新服务身份出现后再派生最终授权与矩阵，并另行核对精确哈希。
 - `phase0b/cli.py`、云端 wrapper 和矩阵冷进程重建入口尚不存在；测试中的 `_production_family()` 候选参数不是已批准生产配置。两事件执行原语存在，但还缺独立前缀验证与服务交接。
-- 新服务可复用 `phase0a1-service.sh start-first`，但该脚本把最后一项 hash 记作 `preliminary-inspection`。必须先实际生成/核验独立预检查记录，再将其 hash 传入；不能拿 launch intent 或环境锁 hash 冒充，也不能直接用要求同目录旧代已停机的 `start-recovery`。旧 judge 必须由 `phase0a1-judge-service.sh stop` 按原身份停止，并额外核验其终态/manifest/lock 与 stop 证据的关系。
+- 新服务可复用 `phase0a1-service.sh start-first`，但该脚本把最后一项 hash 记作 `preliminary-inspection`。必须先实际生成/核验独立预检查记录，再将其 hash 传入；不能拿 launch intent 或环境锁 hash 冒充，也不能直接用要求同目录旧代已停机的 `start-recovery`。旧 judge 若仍有可验证的原服务进程，须由 `phase0a1-judge-service.sh stop` 按原身份停止；若重启后原服务已不存在，则另行记录冷关机缺席证据。无论哪条路径，都要重核其终态/manifest/lock，不得伪造 stop 证据。
 - 当前 vLLM 环境可复用既有 `smoke-preliminary-inspection` 命令，前提是用已验证的原始 wheel manifest、真正的当前 vLLM Python 环境重新执行，并产生新 create-only 记录。它会检查已安装 wheel/torch/vLLM 版本及环境来源；不能直接复用 Phase 0A 旧记录。旧服务停机脚本本身也不能替代旧 judge 797 项终态重放校验。
 
 ## 2026-09-23：AutoDL 到期与迁移核查
