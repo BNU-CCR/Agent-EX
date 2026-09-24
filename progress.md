@@ -1053,3 +1053,9 @@
 - 提交 `a821dd7` 把原有社会曝光/记忆/persona/prompt构造提取成无发送的共享事件输入步骤；新 `phase0b/real_pipeline.py` 将冻结N=20排程对应的Agent生成真实vLLM请求与diagnostic-v2证据。两条真实响应形状的测试依次提交不同Agent、第二条经过fake HTTP dispatch journal，证明不再是单Agent占位循环。同期修正IN_PROGRESS先于实际网络发送的时间戳先后约束。专项`91 passed`。
 - 提交 `b10c589` 增加单格40事件及12格480事件的一次性真实事件编排原语；假HTTP全量跑通并产出24个扫次checkpoint，关闭重开12个SQLite后只读核对480个成功事件、请求/响应/parse/dispatch exact cover。过程中发现真实attempt须保留topic id/hash在完整解析记录中，否则社会候选帖的因果校验会拒绝后续事件，现已修复。相关专项`80 passed`，全矩阵专测另`1 passed`。**以上均为本地假HTTP响应，不是云端真实Qwen实验数据。**
 - 尚需失败/未决dispatch恢复合同、真实SQLite脱敏报告、Linux验证、精确授权哈希与服务交接。AutoDL在本轮未使用；旧vLLM服务保持原状。云端预检和480真实请求未启动。
+
+### 2026-09-24：Phase 0B 服务启动身份桥接
+
+- 用户批准独立预启动意向方案。确认现有服务生命周期在启动前要求 `manifest_hash`，但 Phase 0B 授权依赖启动后才出现的服务身份；不能把最终授权哈希作为启动输入，也不能复用旧 judge 身份。
+- 新增 `docs/superpowers/specs/2026-09-24-phase0b-launch-identity-bridge.md` 并修订 Phase 0B 快线计划的云端顺序：先预启动意向哈希，再完成 judge 服务交接，生成新服务身份，派生最终授权/矩阵并再次核对审批，最后独立两事件预检和 480 事件运行。
+- 本轮云端只读检查：SSH 可达、judge store 在、旧 vLLM 仍监听 `127.0.0.1:8000`、`/root/autodl-tmp` 约剩 90 GB；未停止、重启或启动任何云端进程。真实 N=20 实验仍未启动。

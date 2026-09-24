@@ -1,5 +1,11 @@
 # 发现与决策
 
+## 2026-09-24：Phase 0B 云端启动顺序
+
+- `phase0a1-service.sh` 在启动前要求 `manifest_hash`，并将其写进启动身份；Phase 0B adapter binding 则要求启动身份哈希，后续授权和十二个 manifest 又依赖 binding。因此不能把最终授权或任一最终 manifest 哈希作为服务启动输入。
+- 现有 `DiagnosticApprovalPacket` 依赖最终授权/binding，且使用旧 mock candidate，不能拿来做预启动包。获批的最小方案是独立、初始即可哈希的 launch intent；其哈希供服务脚本使用。新服务身份出现后再派生最终授权与矩阵，并另行核对精确哈希。
+- `phase0b/cli.py`、云端 wrapper 和矩阵冷进程重建入口尚不存在；测试中的 `_production_family()` 候选参数不是已批准生产配置。两事件执行原语存在，但还缺独立前缀验证与服务交接。
+
 ## 2026-09-23：AutoDL 到期与迁移核查
 
 - AutoDL 官方 [实例数据](https://www.autodl.com/docs/instance_data/) 文档称普通容器实例“包年包月到期”不影响数据；连续关机 15 天触发释放后全部数据清空且不可恢复。主机下架/磁盘故障另有风险，因此不能把“到期”与“释放”等同。

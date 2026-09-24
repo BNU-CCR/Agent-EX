@@ -229,15 +229,17 @@ Produce tables/figures from committed states only:
 
 ## Phase 7: Cloud launch sequence
 
-Run only after the owner approves the final source bundle hash and the exact diagnostic authorization hash.
+The 2026-09-24 approved [launch identity bridge](../specs/2026-09-24-phase0b-launch-identity-bridge.md) refines the order below. The lifecycle script's startup `manifest_hash` is the **independent pre-service launch-intent hash**, never the eventual Phase 0B authorization or any of its twelve run-manifest hashes. This breaks the service-start/authorization hash cycle without reusing the judge's service identity. The derived authorization/manifests require a second exact-hash approval before the first Phase 0B request.
 
-Local implementation and tests may proceed while the 797-item blind judge runs. Cloud execution may not: the two-event Phase 0B preflight and the 480-event run must wait until the judge client reaches a verified terminal state, its durable projection and dispatch journal are checked, and service ownership is explicitly handed from the judge manifest to the Phase 0B manifest. Never stop or restart a service still owned by the active judge, never bind Phase 0B evidence to the judge's service identity, and never launch a second process on port 8000. If the judge exits ambiguously or retains an unresolved dispatch, Phase 0B cloud launch remains blocked while local work continues.
+No Phase 0B model request may run until the owner approves the final source bundle hash, the launch-intent hash, and the exact diagnostic authorization hash derived after the new service starts. The judge-service stop and new service start are separately controlled lifecycle actions after source/intent approval, not model requests.
 
-1. Apply the verified source bundle to a clean cloud checkout and rerun the focused Linux suite.
-2. Materialize the N=20/T=2 authorization/matrix in a fresh absent archive root.
-3. After verified judge/service handoff, reuse the existing pinned Qwen/vLLM model files and create a fresh service start identity bound to the new diagnostic manifest.
-4. Run a two-event preflight in a separate archive. Verify parsing, raw evidence, stop/resume, and provider identity; do not splice it into the 480-event run.
-5. Launch the 480-event run once. Monitor every 20 minutes or on process exit; never restart while the client is healthy.
+Local implementation and tests may proceed while the 797-item blind judge runs. Cloud execution may not: the two-event Phase 0B preflight and the 480-event run must wait until the judge client reaches a verified terminal state, its durable projection and dispatch journal are checked, and service ownership is explicitly handed from the judge identity to the independent Phase 0B launch intent. Never stop or restart a service still owned by the active judge, never bind Phase 0B evidence to the judge's service identity, and never launch a second process on port 8000. If the judge exits ambiguously or retains an unresolved dispatch, Phase 0B cloud launch remains blocked while local work continues.
+
+1. Build and obtain exact approval for the verified source bundle and independent pre-service launch intent; apply the bundle to a clean cloud checkout and rerun the focused Linux suite.
+2. Verify the judge's terminal evidence and stop its service with its own identity, retaining stop evidence. Reuse only pinned Qwen/vLLM model files, not the judge service identity.
+3. Start a fresh service with the launch-intent hash, retain its actual start evidence, then derive the adapter binding, N=20/T=2 authorization, matrix and twelve manifests from explicit inputs. Verify and obtain approval for the final derived hashes before dispatch.
+4. Run a two-event preflight in a separate absent archive. Verify parsing, raw evidence, clean-prefix stop/resume safety and provider identity; do not splice it into the 480-event run.
+5. Launch the 480-event run once in another absent archive. Monitor every 20 minutes or on process exit; never restart while the client is healthy.
 6. Verify the terminal matrix, build the sanitized report, record hashes and archive location, then stop the service if no next job is queued.
 
 ### Expected wall clock

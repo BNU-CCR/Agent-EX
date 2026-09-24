@@ -246,6 +246,7 @@ Phase 0A-1 云端盲判已完成797/797项的终态重放核验，正式证据�
 - [ ] 实现 Paper 1 机器可读协议和配置
 - [ ] 完成构念与 prompt Phase 0
 - [x] 完成 Phase 0A-0 离线 probe 骨架、确定性 dry run、盲审/gate/report/bundle 与交接
+- [ ] Phase 0B 初步真实 N=20/T=2 诊断：预启动意向合同与冷重建入口 → 新服务身份桥接 → 独立两事件预检 → 480 事件运行 → 脱敏报告（仅 preliminary/not_frozen；2026-09-24 用户批准独立启动意向方案）
 - [x] 完成 mock N=20/100/1000 验证（已由Phase 4B-9 release/coverage gates完成）
 - [ ] 完成真实 API 小规模校准与成本评估
 - [ ] 冻结正式主实验矩阵
