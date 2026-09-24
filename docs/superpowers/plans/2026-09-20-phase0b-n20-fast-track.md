@@ -237,7 +237,7 @@ Local implementation and tests may proceed while the 797-item blind judge runs. 
 
 1. Build and obtain exact approval for the verified source bundle and independent pre-service launch intent; apply the bundle to a clean cloud checkout and rerun the focused Linux suite.
 2. Verify the judge's terminal evidence and stop its service with its own identity, retaining stop evidence. Reuse only pinned Qwen/vLLM model files, not the judge service identity.
-3. Start a fresh service with the launch-intent hash, retain its actual start evidence, then derive the adapter binding, N=20/T=2 authorization, matrix and twelve manifests from explicit inputs. Verify and obtain approval for the final derived hashes before dispatch.
+3. Start a fresh service with the launch-intent hash, retain its actual start evidence, and verify a bridge record binding launch intent, old judge-service stop evidence and new service-start evidence. Only then derive the adapter binding, N=20/T=2 authorization, matrix and twelve manifests from explicit inputs. Verify and obtain approval for the final derived hashes before dispatch.
 4. Run a two-event preflight in a separate absent archive. Verify parsing, raw evidence, clean-prefix stop/resume safety and provider identity; do not splice it into the 480-event run.
 5. Launch the 480-event run once in another absent archive. Monitor every 20 minutes or on process exit; never restart while the client is healthy.
 6. Verify the terminal matrix, build the sanitized report, record hashes and archive location, then stop the service if no next job is queued.
@@ -269,13 +269,13 @@ The following read-only/lightweight evidence was obtained on 2026-09-20 in the P
 
 ## Go/no-go decisions still requiring explicit owner approval
 
-Before the first 480-event launch, approve one immutable diagnostic authorization containing:
+Before **any** Phase 0B model request, including the two-event preflight, approve one immutable diagnostic authorization containing:
 
 1. reuse of the Phase 0A candidate generation settings (`temperature=0.7`, `top_p=0.8`, `max_tokens=128`) for this diagnostic only;
 2. B=6 and K=3 as diagnostic candidates only;
 3. one exact matched seed and the diagnostic model-seed pairing rule;
 4. timeout/error classes and at most one same-event retry;
 5. N=20, T=2, all 12 cells, 480 expected events and 960-transport hard ceiling;
-6. the exact source bundle, environment lock, service identity, archive URI, and authorization record hashes.
+6. the exact source bundle, environment lock, service identity, two separate archive URIs bound by the launch-intent hash, and authorization record hash.
 
 No other research decision needs to be silently filled to obtain the first preliminary dynamics data.

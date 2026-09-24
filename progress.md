@@ -1059,3 +1059,4 @@
 - 用户批准独立预启动意向方案。确认现有服务生命周期在启动前要求 `manifest_hash`，但 Phase 0B 授权依赖启动后才出现的服务身份；不能把最终授权哈希作为启动输入，也不能复用旧 judge 身份。
 - 新增 `docs/superpowers/specs/2026-09-24-phase0b-launch-identity-bridge.md` 并修订 Phase 0B 快线计划的云端顺序：先预启动意向哈希，再完成 judge 服务交接，生成新服务身份，派生最终授权/矩阵并再次核对审批，最后独立两事件预检和 480 事件运行。
 - 本轮云端只读检查：SSH 可达、judge store 在、旧 vLLM 仍监听 `127.0.0.1:8000`、`/root/autodl-tmp` 约剩 90 GB；未停止、重启或启动任何云端进程。真实 N=20 实验仍未启动。
+- 提交 `464a8fc` 实现独立 `Phase0BLaunchIntent`，在服务启动前绑定source bundle、显式候选配置/11类工件、模型/环境/服务配置与两个互不重叠外部归档根；最终授权与服务启动身份不能提前进入此记录。专项测试 fresh 18 passed，Ruff/format/diff check通过，规格与质量复核均可继续。首次复验尝试关闭pytest cache plugin触发项目配置 `cache_dir` unknown，改用独立临时cache后成功；云URI百分号编码别名是非阻断后续加固项，当前限定本地 `/root/autodl-tmp` 归档。
