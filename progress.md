@@ -1,5 +1,11 @@
 # 进度日志
 
+## 2026-09-24：Phase 0B 冷关机缺席合同（本地）
+
+- 按先测后实现新增 `phase0b/cold_handoff.py`：独立 `cold-poweroff-observation.v1` 记录不能冒充旧 judge 正常 stop；要求进程和端口缺席、GPU compute-process 空观测哈希，并绑定原服务启动记录、旧 manifest/lock、797 项 coded 且无 unresolved 的终态投影与外部重放哈希。旧 normal-stop 桥未改。
+- 两次 RED 分别验证缺模块/缺核验函数，另以无效日历日期验证校验漏洞；独立代码复核又发现 manifest/lock/授权链与 797 唯一 ID 缺口，先加负例后修复。当前 cold + 原服务桥专项 `28 passed`，Ruff lint/format 与 diff 检查通过。pytest 有项目配置 `cache_dir` 的非失败警告。
+- 这仅证明本地合同对合成证据的验证，不证明旧实例已重启、旧进程真实缺席或迁移归档完整。下一步仍是目标端完整性/重放与跨主机桥；尚未启动云端真实 N=20 请求。
+
 ## 2026-09-24：保留旧实例的 Phase 0B 换机交接设计
 
 - 用户确认旧 AutoDL 实例目前关机但仍保留实例，并批准“旧服务若仍运行则正常停止；若已消失则如实记录冷关机观测”的双分支迁移设计。已写入 `docs/superpowers/specs/2026-09-24-phase0b-retained-instance-migration-design.md`，并修订启动身份桥和 Phase 7 路线；独立书面复核提出的原始启动/投影身份链、目的地完整性与重放要求均已补入并复审通过。完整书面修订仍待用户审阅，尚未实现冷关机证据合同。

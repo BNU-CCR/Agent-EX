@@ -1,5 +1,10 @@
 # 发现与决策
 
+## 2026-09-24：冷关机合同的证据边界
+
+- 现有旧 judge start record 不包含可直接核验的 AutoDL 实例 ID；新增 `ColdPoweroffObservation.instance_id` 是现场观察值，不得单靠一份自哈希记录声称旧实例/进程状态已获证。未来 Linux 采集器必须从真实主机生成并复核 boot、PID、端口、GPU 观测，迁移桥还须绑定保留归档的外部定位和完整性证明。
+- 本地核验函数复用原服务桥的旧 start schema/hash 校验，同时重开完整 `JudgeExecutionManifest`，核对其 authorization/lock/start/preflight 与 797 个唯一 ID 的终态投影及独立重放 hash。旧 lock 不在 start record 中，而是经 manifest 与明确提供的预期值相连；旧实例 ID 仍缺历史链上字段。不能把本地通过解释为云端交接完成。
+
 ## 2026-09-24：旧实例关机但保留
 
 - 用户确认旧 AutoDL 实例仍在，故归档与进程状态可在迁移准备就绪后重新检查；关机本身既不证明优雅停止，也不证明数据完整。旧服务正常 stop 只适用于原进程仍可验证为 live 的情形；若重启后已无原进程，须使用独立的冷关机缺席记录，不能伪造 `judge-service-stop-evidence.v1`。
