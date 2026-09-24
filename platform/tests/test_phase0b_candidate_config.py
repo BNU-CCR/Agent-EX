@@ -162,6 +162,16 @@ def test_config_copies_mutable_inputs() -> None:
     assert config.to_payload()["population_weights"][0] != weights[0]
 
 
+def test_config_rejects_topic_pointing_to_another_reason_library() -> None:
+    inputs = _inputs()
+    topic_payload = inputs["topic_package"].to_payload()
+    topic_payload["round0_reason_library_artifact_id"] = "artifact-" + "f" * 64
+    inputs["topic_package"] = TopicPackage.from_payload(topic_payload)
+
+    with pytest.raises(ValueError, match="round0_reason_library_artifact_id"):
+        Phase0BCandidateConfig.create(**inputs)
+
+
 def _intent(config: Phase0BCandidateConfig) -> Phase0BLaunchIntent:
     return Phase0BLaunchIntent.create(
         source_commit="a" * 40,

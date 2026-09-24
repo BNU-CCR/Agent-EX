@@ -131,9 +131,16 @@ class Phase0BCandidateConfig:
         _require_sha256("record_hash", self.record_hash)
         _require_payload_hash("record_hash", self.record_hash, self.content_payload())
         # Inner payloads have separate identities, which must survive cold transport.
-        for name in self._ARTIFACT_FIELDS:
-            ArtifactEnvelope.from_payload(_json_ready(getattr(self, name)))
-        TopicPackage.from_payload(_json_ready(self.topic_package))
+        source_artifacts = {
+            name: ArtifactEnvelope.from_payload(_json_ready(getattr(self, name)))
+            for name in self._ARTIFACT_FIELDS
+        }
+        topic = TopicPackage.from_payload(_json_ready(self.topic_package))
+        if (
+            topic.round0_reason_library_artifact_id
+            != source_artifacts["reason_library_artifact"].artifact_id
+        ):
+            raise ValueError("round0_reason_library_artifact_id does not match reason library")
         for name in (
             *self._ARTIFACT_FIELDS,
             "topic_package",
