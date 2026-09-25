@@ -3,21 +3,23 @@ status: owner-approved concept; pending written-spec review
 authority: performance and evidence-storage design for future Phase 0A judge runs only
 approved-by: user
 approved-date: 2026-09-25
-supersedes: none; existing Phase 0A-1 v1 judge archive remains authoritative and immutable
+supersedes: none; completed judge-v2 run using v1 store schema remains immutable
 ---
 
 # Future judge-run storage without per-append full replay
 
 ## Scope and reason
 
-The completed 797-item Phase 0A-1 judge v2 run remains a historical, read-only
-archive. Its `JudgeRunStore.append` reads all earlier records and replays them
+The completed 797-item Phase 0A-1 judge v2 run, which uses the v1 judge-store
+schema, remains a historical, read-only archive. Its `JudgeRunStore.append` reads all earlier records and replays them
 twice per append. `replay_judge_records` constructs and hashes a full item-state
 projection after each record even when only the last projection is returned.
 The append path also scans prepared transactions and projection filenames and
 writes a growing full-state projection into each prepared transaction and the
 projection directory. The `bf2f63a` change removed one historical-projection
-read but did not remove these growth paths. No measured speedup is claimed.
+read but did not remove these growth paths. The runner also calls
+`reconstruct_judge_projection(store)` after every resolved attempt, performing
+another full-journal replay. No measured speedup is claimed.
 
 This design replaces the storage format **for newly authorized judge runs**. It
 does not modify or resume the completed 797-item archive, change judge prompts
@@ -46,11 +48,15 @@ synthetic timing check and real-cloud preflight before throughput claims.
   continues to verify historical archives. There is no implicit conversion or
   rewrite of the completed 797-item run.
 - Before each outbound judge request, commit its dispatch intent. After a
-  response, atomically append the response/audit/attempt/resolution evidence
-  and update the in-memory state from only the newly appended record. Each
-  stored record contains the previous record hash, its own canonical payload
-  hash, sequence, item/attempt identity and manifest binding. A terminal judge
-  projection is written once after exact completion, not on every append.
+  response, atomically append each required response/audit/attempt/resolution
+  transition and advance the in-memory state using only that newly committed
+  record. The runner must consume this current validated state; it must not
+  call `reconstruct_judge_projection` or otherwise replay the whole journal
+  between normal requests. Each stored record contains the previous record
+  hash, its own canonical payload hash, sequence and manifest binding;
+  item/attempt identity is required for item-level records, not preflight or
+  service-start records. A terminal judge projection is written once after
+  exact completion, not on every append.
 - Raw response bytes may reside in an access-restricted SQLite BLOB and must
   have an exact recorded SHA-256. They stay outside Git and must never appear
   in progress logs, test output, chat, or aggregate reports. The database and
@@ -66,6 +72,11 @@ synthetic timing check and real-cloud preflight before throughput claims.
   it. Explicit reconciliation uses the existing approved policy and retains
   the same item/attempt identity. A corrupted or ambiguous archive is not
   repaired by inventing evidence.
+- If the final resolution transaction committed but terminal sealing did not,
+  open/resume must replay to the exact completed state and permit one
+  create-only terminal seal without sending a new request. Reopening an
+  already sealed store must verify and return the existing terminal projection,
+  never create a second seal.
 - At terminal verification, independently replay all records, require exact
   approved item coverage, no unresolved intents and complete attempt/resolution
   linkage, and compare the resulting full projection with the sealed terminal
@@ -86,9 +97,10 @@ synthetic timing check and real-cloud preflight before throughput claims.
    boundary, restart/replay, duplicate rejection, tamper rejection, unresolved
    intent refusal, and terminal projection verification. Independently compare
    final semantic state with the old replay logic on small fixtures.
-3. Instrument the new append path and assert that a normal append invokes no
-   full-history replay, full projection serialization or history directory
-   traversal. Report early/middle/late per-append wall time, total storage
+3. Instrument the complete new-store **runner path** and assert that a normal
+   append and the subsequent request decision invoke no full-history replay,
+   full projection serialization or history directory traversal. Report
+   early/middle/late per-attempt wall time, total storage
    bytes and durable write count for at least 100, 400 and 800 synthetic items
    on the same host. A claimed performance fix requires observed improvement
    without loss of evidence integrity; no model/GPU throughput claim follows
