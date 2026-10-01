@@ -1,5 +1,17 @@
 # 发现与决策
 
+## 2026-10-01：SIS 运行绑定复用 SQLite 的边界
+
+- 不应放宽原全局十二格校验。共享 RunStorage 增加默认 legacy exposure strategy，
+  SIS subclass 显式核验自己的完整绑定；底层表、事务、lease 和文件身份不复制。
+- SIS 两种社会网络复用 fixed-neighbor FeedCursor 的 ws_neighbors 机械遍历模式；
+  研究条件由 SIS cell 与实际图类型/hash 决定，不把随机图解释为 WS 条件。
+- 未封存的部分人口也必须核验 bound topic/seed/initial stance，不能只验证封存根。
+  新verify_integrity保留partial cover但复核已存在记录；审查负例已闭环。
+- common_inputs_hash 当前只是候选制品引用，人口persona、round-0理由、memory/feed
+  和模型/发布配置的完整共同制品还须由materializer绑定。数据库初始事务成功
+  不代表可以绕过SIS event prefix或正式授权；模型事件写入入口目前明确关闭。
+
 ## 2026-10-01：事件输入不能绑定尝试身份
 
 - PreparedStudyEvent 包含一次尝试的请求，不适合作为跨重试不可变 SQLite 输入。

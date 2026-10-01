@@ -1,5 +1,23 @@
 # 进度日志
 
+## 2026-10-01：六条件 SQLite 运行绑定与初始事务
+
+- 新增 StudyRunBinding / StudyRunStorage，完整绑定 matched seed、分组、topic、
+  中性别名、图节点到 agent 的映射、冻结日程及 WS/randomized 图。绑定保存在
+  run_spec，参与 manifest/run 身份；common_inputs_hash 只是显式候选引用，不是
+  正式协议冻结或已获准服务身份。
+- 复用 SQLite v6 原表、单写者 lease、数据库身份与事务；共享 RunStorage 仅增加
+  可覆写的 exposure 验证策略，默认仍执行原十二格校验。旧入口仍拒绝 SIS。
+- 六格分别真实创建本地 SQLite，初始化20个测试 agent、封存、关闭并重开；
+  非法初始立场、manifest/网络/日程漂移拒绝，写入及 seal 中断回滚。
+- 审查发现未封存的部分初始化库漏查 SIS 初始状态，先复现 RED 后修复；
+  wrong stance/topic 部分重开负例通过，独立审查收口。
+- 存储相关回归 **265 passed, 2 skipped in 32.45s**；最后修复后新存储/输入/事件
+  接口专项 **64 passed in 4.40s**；Ruff通过。两项跳过仍为Windows符号链接权限
+  和POSIX专项。未全仓测试、未启动云端。
+- 本阶段原子事务是 round-0 初始化/封存，不是模型事件提交。SIS event writes
+  仍关闭；下阶段接 causal prefix、响应落盘、成功事件提交与完整恢复。
+
 ## 2026-10-01：SIS 可恢复输入与存储读取分流（Step 5b-1）
 
 - 新增 StudyEventInputEvidence，保存完整 TopicPackage、parser limits、原私人状态

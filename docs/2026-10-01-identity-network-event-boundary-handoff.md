@@ -19,6 +19,23 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
+### 六条件运行绑定与 round-0 存储已接通
+
+identity_network/storage.py 新增 StudyRunBinding 与 StudyRunStorage。
+绑定包括完整 group/topic/schedule/WS/randomized 制品、节点agent映射、中性别名和
+显式common_inputs_hash，完整payload存入manifest.run_spec.identity_network_binding。
+先以binding.storage_arguments()提供共享create/open所需参数；实例复用原SQLite v6。
+默认RunStorage仍拒绝SIS，SIS subclass也拒绝legacy manifest。
+
+已测试六格创建、20个测试agent初始化、seal、关闭和重开，及初始化/seal中断回滚。
+未封存的partial状态也核验bound stance/topic；独立审查收口。
+旧存储相关回归265 passed/2环境skip；最终新接口专项64 passed。
+这不是完整事件恢复：record_prepared_attempt、record_diagnostic_prepared_attempt、
+append_attempt、commit_success在SIS subclass上仍明确拒绝调用。
+下一批实现SIS自己的causal prefix/finalization/commit入口，保留共用底层事务。
+common_inputs_hash并非正式参数授权，也未替代materializer对共同persona/reason/
+memory/feed/model/publication制品的核验。云服务器仍无需开启。
+
 ### 已接续完成 Step 5b-1
 
 新增 identity_network/evidence.py 的 StudyEventInputEvidence，含 to_payload /

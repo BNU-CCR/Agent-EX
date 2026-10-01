@@ -1137,6 +1137,11 @@ def _validate_attempt_transition_prefix(
 class RunStorage:
     """Single-writer SQLite store bound to exactly one immutable run."""
 
+    @staticmethod
+    def _validate_run_exposure(*args):
+        """Legacy strategy; study-specific stores must supply their own validator."""
+        return _validate_expected_exposure(*args)
+
     def __init__(
         self,
         path: Path,
@@ -1247,7 +1252,7 @@ class RunStorage:
             source_ws_hash,
             source_ws_id,
             source_ws_type,
-        ) = _validate_expected_exposure(
+        ) = cls._validate_run_exposure(
             manifest,
             artifacts,
             len(roster),
@@ -1613,7 +1618,7 @@ class RunStorage:
             source_ws_hash,
             source_ws_id,
             source_ws_type,
-        ) = _validate_expected_exposure(
+        ) = cls._validate_run_exposure(
             manifest,
             artifacts,
             len(roster),
