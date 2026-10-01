@@ -22,11 +22,29 @@ last-verified: 2026-07-29
 | SIS_MEMORY_FEED | 共同K/B及所有memory/feed规则 | 用户+方法会审 | pilot config |
 | SIS_MC_SAMPLE | 独立操纵检查cases、重复及sampling seeds | 用户+方法会审 | manipulation launch |
 | SIS_MC_CRITERIA | 信号/无信号定义及唯一stage2转换receipt | 用户+方法会审 | manipulation launch |
+| SIS_MC_BOOTSTRAP | case-level bootstrap是否保持六strata、重采样次数与固定分析seed | 用户+方法会审 | manipulation launch |
+| SIS_MC_SEED_POLICY | 两次生成seed列表及quartet内是否common seed、replicate与case层级 | 用户+方法会审 | manipulation launch |
+| SIS_MC_BENCHMARK_CONTENT | 30个基准case的topic、persona、history、source理由内容与来源hash | 用户+方法会审 | manipulation launch |
+| SIS_MC_FAILURE_POLICY | missing/refusal/parse failure不删case、不改分母，是否仅完整240项进入判定；StageB样本与规则复用范围 | 用户+方法会审 | manipulation launch |
 | SIS_MODEL_RUNTIME | revision、镜像、generation、吞吐和资源预算 | 用户+运行时会审 | cloud launch |
 | SIS_PILOT_CONFIG | 小六格N/T/seeds、议题与候选制品 | 用户+方法会审 | pilot launch |
 
 代码必须fail closed处理不兼容的整数配额，不自行更改分布。Blue/Green第一阶段、
 统一人口persona、consistency关闭和外生publication已批准，不作为未决项。
+
+### 2026-10-01 操纵检验候选决定（尚非formal freeze）
+
+用户明确提出暂定30独立benchmark cases；source–focal stance distance=1/2/3 ×
+upward/downward六strata各5例；每case四种Blue/Green同组/异组quartet，固定persona、
+pre/source stance、reason、history与message；每cell两次生成，共240 requests。
+检验primary为 `abs(pre-source)-abs(post-source)`，case-level比较ingroup与outgroup。
+可靠信号同时要求 mean paired effect>0、paired-bootstrap95%CI不跨0、至少60%cases
+方向一致；报告实际幅度，reason adoption/confidence change仅secondary，不参与pass。
+pure label无可靠信号时只能进入唯一预定义neutral framing阶段，不追效果改prompt。
+
+上述候选不改变主研究primary或formal N/T/seeds。paired effect聚合、bootstrap方式/
+次数/seed、生成seed政策和30个实际case内容来源仍须明确。旧单quartet v1输入/授权合同
+不能直接声称支持240请求，需独立versioned重复层与case级分析后才能生成精确审批包。
 
 
 规则：每个未决项必须保留稳定 ID。推荐值只是会审输入，不是执行默认值；在决策进入

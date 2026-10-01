@@ -46,6 +46,10 @@ service_bridge已接vacancy/start/current runtime证据纯校验：固定model p
 manipulation_sources已接显式round0 controlled-check来源物化与独立candidate冷重建：
 persona/初态/共享初始memory/公开source帖子及alias不可被renderer合法替代品覆盖。
 不抽样、不模拟network feed、不填满K，不证明来源真实性；实际selections与规则仍待选择。
+stage-one manipulation_authorization已接显式preregistration、source/bridge全重放与scoped
+dispatch receipt纯门；不是现场发送入口。用户候选已更新为30cases/六strata/两次生成/
+240请求及toward_source_shift三条件判定；保留v1，新增重复层与case级bootstrap设计待确认。
+详见docs/identity-network-manipulation-240-candidate.md；未决bootstrap/seed/content不可默认。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
 到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见

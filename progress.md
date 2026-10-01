@@ -1,5 +1,25 @@
 # 进度日志
 
+## 2026-10-01：首阶段发送前授权合同与240请求候选增补
+
+- 上轮263451d为实质进展；manipulation_authorization新增研究者显式sample/analysis/
+  success/no_signal文字规则的preregistration，绑定case/trial counts、seeds/order，不
+  默认任何研究值或自动评估文字规则。完整来源包与service bridge分别独立重建。
+- stage1 target绑定来源/规则/bridge/adapter/start、inventory和endpoint/archive/generation；
+  exact diagnostic_dispatch人类receipt必须符合target/scope/time；builder自身仍无发送权。
+  StageTwoReceipt形状不能绕过真实stage1结果门，当前stage1 gate拒绝StageB dispatch。
+- TDD8 missingmodule RED→8 passed in33.32s；补StageB拒绝后fresh9 passed in41.54s。
+  独立限定stage1 cold/stage2拒绝复跑2 passed,7 deselected in7.31s，无确定Important/
+  Critical。Ruff lint/format及diff check通过；仍不证明服务现场truth或批准真实性。
+- 用户明确新增候选：30case/六distance-direction strata各5，四label cells各2生成共240；
+  toward_source_shift及mean>0/paired-bootstrap95%CI不跨0/>=60%方向一致三条件。
+  已准确记录research-qa与240-candidate设计稿，不把v1单quartet解释成240实现。
+  replicate层、case级聚合与bootstrap/seed/content细节须书面确认后实现；不擅自freeze。
+  限定书面复核无直接矛盾，补独立case操作定义、缺失不删样本/不触发无信号、StageB
+  同样本规则复用及confidence baseline不可猜测等待确认边界。
+- 无云端/上传/推送，legacy不变。长期目标active。暂不需开服务器；待确认增补接法，
+  后续versioned重复/统计、独立runner与现场collector仍有实质本地工作。
+
 ## 2026-10-01：操纵检验样本的候选来源绑定
 
 - 上轮7905c91为实质进展。本轮manipulation_sources以完整六格candidate和显式

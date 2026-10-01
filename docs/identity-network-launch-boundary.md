@@ -41,3 +41,15 @@ bundle核验，不能用合成test fixture替代现场证据。端口/GPU忙时�
 
 以上均未由当前纯合同测试证明。当前无自动start/run命令，也没有现成获批的真实
 bundle/receipt，尚不需要开启服务器；本地补齐后再列出云端启动所需批准项。
+# Stage-one manipulation dispatch target（2026-10-01）
+
+`manipulation_authorization` 已接纯合同：显式研究者sample/analysis/success/no-signal文本
+与样本inventory、seeds/order绑定为preregistration；来源包按独立candidate重建，service
+bridge按全evidence重放；最终target包含pack/criteria/bridge/adapter/start hashes及endpoint/
+archive/generation settings。`validate_manipulation_dispatch_approval` 只接受精确target的
+diagnostic_dispatch人类receipt，并要求其不早于criteria/service观察、不晚于检查时间。
+
+文本规则不是自动可执行判定器，create receipt不是取得人类批准，现场服务truth、fresh
+archive与Git bundle内容验证仍需真实入口。Stage-two素材receipt不能绕过stage1结果门。
+当前v1对应原四配对素材；用户新240请求候选见
+`identity-network-manipulation-240-candidate.md`，尚未用v1冒充重复层或case级推断实现。
