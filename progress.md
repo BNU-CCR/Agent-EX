@@ -1,5 +1,19 @@
 # 进度日志
 
+## 2026-10-01：新 2×3 单事件接口收口（Step 5a）
+
+- renderer v2 改为绑定 TopicPackage 的文字 stance labels 和整数 1–5 confidence，
+  修复旧版新 prompt 与共享解析器的格式冲突；旧解析器与旧实验执行代码未改。
+- 新增 prepare_study_event / finalize_study_response，复用共享 vLLM adapter、
+  DiagnosticParseEvidence 和私人状态/公开帖子类型；失败保留原状态，重试保留事件身份。
+- 六条件假 HTTP 专项通过。独立审查指出可见 prompt 与后台证据、实际 wire body
+  与请求身份两处绑定缺口；均先复现失败，再修复并通过复核。
+- 最终相关专项 **106 passed in 1.42s**；Ruff check 通过。未运行全仓 pytest，
+  未向 AutoDL 发送请求。输出明确是 prospective / committed=false，不代表持久化提交。
+- 下一阶段为 SIS 专属 SQLite 输入/记录 union、原子提交、重开恢复与六条件
+  materializer；实际模型身份、跨事件来源/alias 和 manipulation 参数仍须绑定。
+- 交接：`docs/2026-10-01-identity-network-event-boundary-handoff.md`。
+
 ## 2026-10-01：旧实验归档与新 2×3 主研究本地准备
 
 - 用户十项决策批准，旧 2×2×3 作为 legacy pilot/supplementary。合并 main 文档

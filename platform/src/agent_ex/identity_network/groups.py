@@ -12,7 +12,7 @@ from ..rng import RNGProvenance
 
 
 def build_group_assignment(
-    *, initial_stances: Mapping[str, int], matched_seed: int
+    *, initial_stances: Mapping[str, int | str], matched_seed: int
 ) -> ArtifactEnvelope:
     _require_int("matched_seed", matched_seed)
     if not isinstance(initial_stances, Mapping) or not initial_stances:
@@ -21,9 +21,11 @@ def build_group_assignment(
     for agent, stance in initial_stances.items():
         if not isinstance(agent, str) or not agent.strip():
             raise ValueError("agent IDs must be nonempty strings")
-        if type(stance) is not int:
-            raise TypeError("initial stance must be an integer label")
+        if type(stance) not in (int, str) or (isinstance(stance, str) and not stance.strip()):
+            raise TypeError("initial stance must be an explicit integer or text label")
         strata[stance].append(agent)
+    if len({type(stance) for stance in strata}) != 1:
+        raise TypeError("initial stance labels must have one homogeneous type")
     inputs = dict(sorted(initial_stances.items()))
     input_hash = canonical_payload_hash(inputs)
     memberships = {}

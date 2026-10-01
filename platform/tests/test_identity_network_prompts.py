@@ -5,6 +5,7 @@ import pytest
 from agent_ex.identity_network.contracts import study_cells
 from agent_ex.identity_network.groups import GroupContext, build_group_assignment
 from agent_ex.identity_network.prompts import ShownPost, render_study_prompt
+from test_prompt import topic
 
 
 def render(cell, posts=None):
@@ -19,17 +20,15 @@ def render(cell, posts=None):
         groups=context,
         receiver_id="receiver",
         persona_text="Age 25.",
-        fact_card="Evidence is uncertain.",
-        core_statement="Policy X is desirable.",
-        stance_labels=(-1, 0, 1),
-        pre_state={"stance": -1, "reason": "Prior evidence."},
-        self_history=({"stance": 0, "reason": "Earlier evidence.", "published": False},),
+        topic_package=topic(),
+        pre_state={"stance": "label-2", "reason": "Prior evidence."},
+        self_history=({"stance": "label-3", "reason": "Earlier evidence.", "published": False},),
         posts=tuple(posts or ()),
     )
 
 
 def test_blind_and_salient_only_differ_in_group_metadata():
-    post = ShownPost("post-1", "source", "member-1", 1, "New evidence.")
+    post = ShownPost("post-1", "source", "member-1", "label-5", "New evidence.")
     blind = render(study_cells()[1], [post])
     salient = render(study_cells()[4], [post])
     b = json.loads(blind.messages[1]["content"])
@@ -53,16 +52,16 @@ def test_no_social_retains_self_group_but_refuses_posts():
     assert visible["self_group"] in ("Blue", "Green")
     assert not visible["social_messages"]
     with pytest.raises(ValueError, match="no_social"):
-        render(study_cells()[0], [ShownPost("p", "source", "member-1", 0, "reason")])
+        render(study_cells()[0], [ShownPost("p", "source", "member-1", "label-3", "reason")])
 
 
 def test_original_text_is_not_censored_and_unknown_source_rejected():
     result = render(
-        study_cells()[1], [ShownPost("p", "source", "member-1", 0, "I mentioned Blue.")]
+        study_cells()[1], [ShownPost("p", "source", "member-1", "label-3", "I mentioned Blue.")]
     )
     assert "I mentioned Blue." in result.messages[1]["content"]
     with pytest.raises(ValueError, match="unknown"):
-        render(study_cells()[1], [ShownPost("p", "missing", "member-1", 0, "reason")])
+        render(study_cells()[1], [ShownPost("p", "missing", "member-1", "label-3", "reason")])
 
 
 def test_trace_content_is_hashed_and_immutable():
@@ -75,13 +74,13 @@ def test_trace_content_is_hashed_and_immutable():
 
 def test_alias_cannot_leak_metadata_or_split_one_source():
     with pytest.raises(ValueError, match="neutral"):
-        ShownPost("p", "source", "Blue-member", 0, "reason")
+        ShownPost("p", "source", "Blue-member", "label-3", "reason")
     with pytest.raises(ValueError, match="alias"):
         render(
             study_cells()[1],
             [
-                ShownPost("p1", "source", "member-1", 0, "one"),
-                ShownPost("p2", "source", "member-2", 0, "two"),
+                ShownPost("p1", "source", "member-1", "label-3", "one"),
+                ShownPost("p2", "source", "member-2", "label-3", "two"),
             ],
         )
 
@@ -91,8 +90,8 @@ def test_alias_cannot_merge_distinct_sources():
         render(
             study_cells()[1],
             [
-                ShownPost("p1", "source", "member-1", 0, "one"),
-                ShownPost("p2", "receiver", "member-1", 0, "two"),
+                ShownPost("p1", "source", "member-1", "label-3", "one"),
+                ShownPost("p2", "receiver", "member-1", "label-3", "two"),
             ],
         )
 
@@ -101,8 +100,8 @@ def test_multiple_posts_from_one_source_are_allowed():
     result = render(
         study_cells()[1],
         [
-            ShownPost("p1", "source", "member-1", 0, "one"),
-            ShownPost("p2", "source", "member-1", 1, "two"),
+            ShownPost("p1", "source", "member-1", "label-3", "one"),
+            ShownPost("p2", "source", "member-1", "label-5", "two"),
         ],
     )
     assert len(json.loads(result.messages[1]["content"])["social_messages"]) == 2

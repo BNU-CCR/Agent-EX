@@ -1,5 +1,16 @@
 # 发现与决策
 
+## 2026-10-01：新研究事件接口与证据绑定
+
+- 共享 TopicPackage/解析器使用文字 stance labels 与整数 1–5 confidence；
+  新准备 renderer 原先整数 stance / 0–1 confidence 不兼容，现已版本化修正。
+- 哈希自洽不足以证明语义一致：新接口分别重建模型可见 JSON，并核对真实
+  transport wire body 的 messages、seed、generation settings 与 non-thinking 设置。
+  重新计算哈希的篡改负例已覆盖并拦截。
+- 单事件结果仅是候选状态/公开输出。尚未证明来自真实公共帖子、冻结跨事件别名、
+  获准服务模型，亦未执行 SQLite 原子提交；这些是后续运行器的强制门，不能以
+  committed=false 的 trace 冒充实际发表或完整六条件运行。
+
 ## 2026-09-24：迁移副本核验路径
 
 - `JudgeRunStore.open` 已内建 staging 顶层布局、服务子目录、journal 与 projection 的精确重放检查，且在 `projection.json` 存在时复核终态封存。因此副本完整性分两层：先比较整个 `run-store` 源/目标文件树，再在目标端重开与重放；不能只靠一份自洽但漏文件的选择性清单。

@@ -62,3 +62,20 @@ def test_rehashed_membership_tampering_is_rejected():
     )
     with pytest.raises(ValueError, match="replay"):
         GroupContext.from_artifact(tampered)
+
+
+def test_text_label_strata_replay_and_exact_balance():
+    labels = {a: f"label-{s + 2}" for a, s in STANCES.items()}
+    artifact = build_group_assignment(initial_stances=labels, matched_seed=7)
+    context = GroupContext.from_artifact(artifact)
+    for label in set(labels.values()):
+        assert Counter(context.group_for(a) for a, s in labels.items() if s == label) == {
+            "blue": 2,
+            "green": 2,
+        }
+
+
+@pytest.mark.parametrize("stances", [{"a": "", "b": ""}, {"a": 1, "b": "1"}])
+def test_empty_and_mixed_strata_labels_fail(stances):
+    with pytest.raises(TypeError):
+        build_group_assignment(initial_stances=stances, matched_seed=7)

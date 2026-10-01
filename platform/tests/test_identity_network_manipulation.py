@@ -1,6 +1,7 @@
 import json
 
 import pytest
+from test_prompt import topic
 
 from agent_ex.identity_network.contracts import study_cells
 from agent_ex.identity_network.groups import GroupContext, build_group_assignment
@@ -24,12 +25,10 @@ def case():
         groups=groups,
         receiver_id="receiver",
         persona_text="Adult participant.",
-        fact_card="Uncertain evidence.",
-        core_statement="Policy X is desirable.",
-        stance_labels=(-1, 0, 1),
-        pre_state={"stance": 0, "reason": "Undecided."},
+        topic_package=topic(),
+        pre_state={"stance": "label-3", "reason": "Undecided."},
         self_history=(),
-        posts=(ShownPost("p1", "source", "member-1", 1, "Reason one."),),
+        posts=(ShownPost("p1", "source", "member-1", "label-5", "Reason one."),),
     )
     return CheckCase("fixture-1", base, 17)
 
