@@ -19,6 +19,20 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
+### 读侧因果输入已接通
+
+StudyRunStorage.snapshot_next_input(persona_text=..., feed_capacity=..., memory_window=...)
+要求本实例持有writer lease、round-0已封存且还有schedule slot；只读事务内复核库，
+根据bound node mapping/实际B1或B2图读取neighbors的公开未读帖子，读取接收者私人
+历史，复用共享选择规则并调用renderer v2。返回包含完整source rows、selection、
+memory、pre-state、chain head、publish flag和prompt evidence的ArtifactEnvelope。
+返回后read transaction rollback；没有写入状态、游标、attempt或发送请求。
+
+最终专项114 passed，独立审查无阻断问题；含邻居帖子超容量的过期覆盖。
+候选capacity/window仍限共享Phase0 challenge值（4/6/8与1/3/5），
+不是正式参数；persona/feed/memory共同制品完整绑定仍需完成。通用envelope roundtrip
+并不是授权输入reader，后续prefix必须复核数据源并拒绝rehashed语义篡改。
+
 ### 六条件运行绑定与 round-0 存储已接通
 
 identity_network/storage.py 新增 StudyRunBinding 与 StudyRunStorage。

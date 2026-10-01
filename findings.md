@@ -1,5 +1,15 @@
 # 发现与决策
 
+## 2026-10-01：SIS输入须从数据库构造，不能仅核验prompt内部一致
+
+- 新读侧接口在持有lease的SQLite read transaction中，从实际公开帖子与接收者
+  private history构造prompt，按完整绑定图推导neighbors，复用共享feed/memory规则。
+- snapshot envelope是prospective候选；其通用ArtifactEnvelope读取只验证哈希/结构，
+  不等于已验证授权的SIS causal input reader。后续durable prefix必须将快照和当前
+  数据库/绑定/policy逐项核对，不能接受任意重新哈希的快照作为dispatch权限。
+- persona/capacity/window目前必须显式提供，仍未绑定完整common-inputs制品。
+  原memory/feed primitive继续保留mock_only标签，不能据此声称正式冻结或真实运行。
+
 ## 2026-10-01：SIS 运行绑定复用 SQLite 的边界
 
 - 不应放宽原全局十二格校验。共享 RunStorage 增加默认 legacy exposure strategy，

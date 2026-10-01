@@ -15,6 +15,7 @@ from ..domain import (
     _require_int,
     _require_sha256,
     canonical_payload_hash,
+    derive_event_id,
 )
 from ..network import validate_ws_artifact
 from ..storage import RunStorage, _load_canonical_json
@@ -285,6 +286,129 @@ class StudyRunStorage(RunStorage):
         for entry in entries:
             self._validate_initial_update(PrivateUpdate.from_payload(entry["private_update"]))
         return entries
+
+    def snapshot_next_input(self, *, persona_text, feed_capacity, memory_window):
+        """Read the next causal input under a lease; neither dispatch nor commit.
+
+        Capacity/window are explicit candidate values accepted by the shared
+        preliminary feed/memory primitives, not a formal protocol freeze.
+        """
+        from ..feed import select_unread_feed
+        from ..memory import build_memory_view
+        from .prompts import ShownPost, render_study_prompt
+
+        self.assert_run_lease_owned()
+        if self._connection.in_transaction:
+            raise RuntimeError("input snapshot cannot nest a storage transaction")
+        self._connection.execute("BEGIN")
+        try:
+            self.verify_integrity()
+            if self.binding.round0_root is None:
+                raise ValueError("input snapshot requires sealed round-0")
+            binding = self.study_binding
+            progress = self.progress
+            ordinal = progress.next_event_ordinal
+            if ordinal >= len(binding.schedule.slots):
+                raise ValueError("input snapshot has no next scheduled event")
+            slot = binding.schedule.slots[ordinal]
+            receiver = slot.agent_id
+            neighbors = []
+            if binding.exposure_graph is not None:
+                node = binding.node_agent_ids.index(receiver)
+                for left, right in binding.exposure_graph.payload["edges"]:
+                    if left == node:
+                        neighbors.append(binding.node_agent_ids[right])
+                    elif right == node:
+                        neighbors.append(binding.node_agent_ids[left])
+            neighbors = tuple(sorted(neighbors))
+            state = self.private_state(receiver)
+            cursor = self.feed_cursor(receiver)
+            unread = self.unread_public_posts_for_agents(
+                neighbors, cursor.last_scanned_event_ordinal
+            )
+            history = self.private_updates_for_agent(receiver)
+            selection = select_unread_feed(
+                unread_public_posts=unread,
+                topic_package=binding.topic_package,
+                neighbor_agent_ids=neighbors,
+                cursor=cursor,
+                receiver_event_id=derive_event_id(self.binding.run_id, ordinal),
+                receiver_event_ordinal=ordinal,
+                matched_seed=binding.matched_seed,
+                exposure_mode=binding.cursor_mode,
+                exposure_graph_hash=binding.exposure_graph_hash,
+                capacity=feed_capacity,
+                mock_only=True,
+            )
+            memory = build_memory_view(
+                private_updates=history,
+                topic_package=binding.topic_package,
+                matched_seed=binding.matched_seed,
+                agent_id=receiver,
+                window=memory_window,
+                mock_only=True,
+            )
+            posts = tuple(
+                ShownPost(
+                    p.post_id,
+                    p.source_agent_id,
+                    binding.aliases[p.source_agent_id],
+                    p.stance_label,
+                    p.public_reason,
+                )
+                for p in sorted(selection.selected, key=lambda p: p.display_slot)
+            )
+            prompt = render_study_prompt(
+                cell=binding.cell,
+                groups=binding.groups,
+                receiver_id=receiver,
+                persona_text=persona_text,
+                topic_package=binding.topic_package,
+                pre_state={"stance": state.stance_label, "reason": state.reason},
+                self_history=tuple(
+                    {"stance": i.stance_label, "reason": i.private_reason, "published": i.published}
+                    for i in memory.items
+                ),
+                posts=posts,
+            )
+            return ArtifactEnvelope.create(
+                artifact_type="sis-input-snapshot",
+                schema_version="paper1.identity-network.input-snapshot.v1",
+                algorithm_id="sis-sqlite-input-snapshot",
+                algorithm_version="1.0.0",
+                input_hashes={"study-binding": binding.record_hash},
+                rng_provenance=(),
+                payload={
+                    "run_id": self.binding.run_id,
+                    "study_binding_hash": binding.record_hash,
+                    "round0_root": self.binding.round0_root,
+                    "event_id": derive_event_id(self.binding.run_id, ordinal),
+                    "event_ordinal": ordinal,
+                    "receiver_agent_id": receiver,
+                    "previous_event_hash": progress.event_chain_head,
+                    "publish_flag": slot.publish_flag,
+                    "pre_state": state.to_payload(),
+                    "potential_neighbor_ids": neighbors,
+                    "unread_public_posts": tuple(p.to_payload() for p in unread),
+                    "private_history": tuple(u.to_payload() for u in history),
+                    "selection": selection.to_payload(),
+                    "memory": memory.to_payload(),
+                    "prompt": {
+                        "messages": prompt.messages,
+                        "prompt_hash": prompt.prompt_hash,
+                        "evidence": prompt.evidence,
+                        "evidence_hash": prompt.evidence_hash,
+                    },
+                    "metadata": {
+                        "status": "preliminary",
+                        "research_parameter_status": "not_frozen",
+                        "formal_parameter_authority": False,
+                        "committed": False,
+                    },
+                },
+            )
+        finally:
+            self._connection.rollback()
 
     def record_prepared_attempt(self, *args, **kwargs):
         raise ValueError("SIS event writes require the SIS causal-prefix integration")

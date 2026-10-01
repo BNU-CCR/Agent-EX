@@ -1,5 +1,20 @@
 # 进度日志
 
+## 2026-10-01：SIS 数据库因果输入快照
+
+- 新增 StudyRunStorage.snapshot_next_input：持有 writer lease，在一个只读 SQLite
+  transaction 内复核完整性、按已绑定图/节点映射读取公开未读帖子和接收者私人历史，
+  复用原有限 feed 与 memory 选择后生成 exact SIS prompt。
+- 快照保留 potential neighbors、原帖子/历史、候选/过期/选中及槽位顺序、游标前后
+  候选、pre-state、前一事件链 hash、发布标记、完整 prompt 和 source groups。
+  游标后值只是候选，不写入库；外层标记 preliminary/not_frozen/committed=false。
+- RED 为7项缺失接口失败；最终专项114 passed in 24.18s，Ruff/format/diff check通过。
+  覆盖六格真实SQLite初始输入、重开一致、render中断回滚及非法候选参数不写入。
+  独立审查无Critical/Important；补齐degree=8/capacity=4过期帖子覆盖，选中与过期
+  集合严格不相交且精确覆盖所有候选。
+- 这是读侧连接层，不是请求前持久化或完整恢复。SIS模型事件写入仍关闭，
+  尚未产生新研究真实模型数据；不需开启AutoDL。
+
 ## 2026-10-01：六条件 SQLite 运行绑定与初始事务
 
 - 新增 StudyRunBinding / StudyRunStorage，完整绑定 matched seed、分组、topic、
