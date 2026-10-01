@@ -2,10 +2,21 @@
 status: active
 authority: project agent operating rules; subordinate to the specification chain and verified against the evidence chain
 supersedes: informal handoff instructions in README.md and logs/notion-2026-05-31.md for future Paper 1 work
-last-verified: 2026-07-29
+last-verified: 2026-10-01
 ---
 
 # Agent-EX 协作规则
+
+## 2026-10-01 当前主研究路由
+
+用户已批准新主研究 `social identity salience 2 × network structure 3`。
+先读 `docs/superpowers/specs/2026-10-01-identity-network-2x3-design.md`、
+`docs/identity-network-protocol.md` 及对应本地准备计划。
+新分支为 `codex/social-identity-network-2x3`，旧实验固定在
+`legacy-2x2x3-2026-10-01` / `codex/legacy-experiment-20261001`。
+以下旧路由和07-29决定继续约束legacy及共享事件机制，但旧12格、
+N=1000/T=50/10-seed与旧primary对比不再规定新主研究。
+旧机器YAML/schema保留原义，不得用它们授权新cell的正式运行。
 
 ## 五分钟路由
 
@@ -26,8 +37,11 @@ last-verified: 2026-07-29
 
 ## Paper 1 红线
 
-- 主矩阵固定为 `identity 2 × continuity 2 × exposure 3 = 12 cells`。
-- 正式规模固定为 N=1000、T=50、首批10个 matched seeds，盲态规则最多扩到20个。
+- 新主矩阵为群体身份显著性2 × 网络结构3；旧12格为legacy。
+- 新正式N/T/seeds和primary在正式run前冻结，使用research-qa的`SIS_*` ID。
+- 六格人口persona和memory相同，explicit consistency关闭，发布仍为外生冻结。
+- Blue/Green分配与初始立场平衡；blind只隐藏可见标签，后台分组不变。
+- pure-label只按预定义规则进入一次stance-neutral framing，不调prompt直到有效。
 - 主模型路线为自部署 Qwen3-8B BF16、non-thinking、vLLM；具体 revision 在 Phase 0B 冻结。
 - API 仅作固定 snapshot 的外部稳健性子集，不解释为“API 部署效应”。
 - Paper 1 主实验不微调权重。

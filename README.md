@@ -1,5 +1,13 @@
 # Agent-EX
 
+## 新主研究（2026-10-01）
+
+当前主研究改为 **social identity salience × communication network structure = 2×3**：group-blind / group-salient × no-social / degree-preserving randomized / clustered WS。六条件共用 demographic persona、self-history 与 memory rule，不使用 explicit consistency instruction。先完成 identity manipulation check，再做小规模六条件 pilot；正式规模及 primary outcome 尚未冻结。
+
+新设计入口：[协议](docs/identity-network-protocol.md)、[已批准规格](docs/superpowers/specs/2026-10-01-identity-network-2x3-design.md)、[本地实施计划](docs/superpowers/plans/2026-10-01-identity-network-local-preparation.md)。以下 2026-09-22 内容属于 legacy 研究进度，不再规定新主矩阵。
+
+旧实验的完整 Git 历史保存在 `codex/legacy-experiment-20261001` 和固定标签 `legacy-2x2x3-2026-10-01`；新开发分支为 `codex/social-identity-network-2x3`。不复制第二套 platform，也不删除原工作树。源码归档不等于云端原始数据备份，见 [快照边界](docs/2026-10-01-legacy-experiment-snapshot.md)。新六条件尚未执行真实云端实验。
+
 Agent-EX 是一个研究 **LLM-agent 在多轮在线讨论中的意见、理由与公开表达如何演化** 的可复现实验平台。当前首要项目是 Paper 1：在固定网络结构中识别人口身份线索、历史立场连续性要求与社会暴露方式对生成式 Agent 意见动力学的影响。
 
 > **截至 2026-09-22：**正式平台的协议、事件执行、持久化、恢复和证据链已经搭建；真实 Qwen 校准与 797 项盲判证据链已经完成并核验。真实 N=20 动力学仍在 Phase 0B 接入阶段，N=1000、T=50 的正式主实验尚未启动。

@@ -7,6 +7,22 @@ last-verified: 2026-07-29
 
 # 决策记录
 
+## D-2026-10-01-01：新主研究与旧实验归档
+
+用户于2026-10-01在当前会话明确批准十项决策：新2×3为主；人口persona、
+self-history与memory统一，explicit consistency关闭；发布保留外生日程；
+后台保存与初始立场平衡的中性两组，只操纵self/source标签可见性；
+纯Blue/Green检查后最多一次预定义中性framing；真正保度随机换边并保存
+WS配对诊断；完整event证据可重建；暂不做迎合自动分类；先architecture、
+操纵检查和小pilot再冻formal值；从完整phase0代码建立新分支并保留legacy。
+
+规格为`2026-10-01-identity-network-2x3-design.md`。旧12格固定样本量、persona
+因素和主对比只属于legacy。该批准是研究方向与工程授权，未生成任何新的
+机器formal审批记录；不得把候选数值或讨论稿直接当作冻结参数。
+
+新标签`legacy-2x2x3-2026-10-01`保留完整代码历史、main文档和投稿文件。
+
+
 下列 fenced YAML 是 formal gate 唯一可读取的审批记录。当前机器协议仍为 draft，
 因此尚无已冻结字段记录；后续每条记录必须完整填写
 `decision_record_id`、UTC `approved_at`、`approvers`、`field_ids` 与

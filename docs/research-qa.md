@@ -7,6 +7,28 @@ last-verified: 2026-07-29
 
 # Paper 1 研究问答与未决项
 
+## 2026-10-01 新主研究的未决项
+
+旧`P1_*`仍供legacy追溯。新study不从旧矩阵或旧样本量推导formal权限。
+
+| ID | 待冻结内容 | 决策者 | 最迟阶段 |
+|---|---|---|---|
+| SIS_FORMAL_N | 正式人口规模及可精确平衡的初始整数配额 | 用户+方法会审 | formal freeze |
+| SIS_FORMAL_T | sweep数及观测终点 | 用户+方法会审 | formal freeze |
+| SIS_FORMAL_SEEDS | matched seeds及精度规则 | 用户+方法会审 | formal freeze |
+| SIS_PRIMARY_OUTCOME | 单一convergence metric公式与汇总方式 | 用户+方法会审 | analysis freeze |
+| SIS_PRIMARY_INFERENCE | estimand、配对推断及多重比较 | 用户+方法会审 | analysis freeze |
+| SIS_NETWORK_PARAMETERS | WS参数、换边目标/预算和结构验收 | 用户+方法会审 | pilot config |
+| SIS_MEMORY_FEED | 共同K/B及所有memory/feed规则 | 用户+方法会审 | pilot config |
+| SIS_MC_SAMPLE | 独立操纵检查cases、重复及sampling seeds | 用户+方法会审 | manipulation launch |
+| SIS_MC_CRITERIA | 信号/无信号定义及唯一stage2转换receipt | 用户+方法会审 | manipulation launch |
+| SIS_MODEL_RUNTIME | revision、镜像、generation、吞吐和资源预算 | 用户+运行时会审 | cloud launch |
+| SIS_PILOT_CONFIG | 小六格N/T/seeds、议题与候选制品 | 用户+方法会审 | pilot launch |
+
+代码必须fail closed处理不兼容的整数配额，不自行更改分布。Blue/Green第一阶段、
+统一人口persona、consistency关闭和外生publication已批准，不作为未决项。
+
+
 规则：每个未决项必须保留稳定 ID。推荐值只是会审输入，不是执行默认值；在决策进入
 `docs/decisions.md` 的 fenced YAML 审批记录前，配置必须保留对应的
 `UNRESOLVED[ID]` 并拒绝 formal run。审批记录中的 `approvers` 至少要包含本表“决策者”

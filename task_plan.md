@@ -4,6 +4,12 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+2026-10-01 用户已批准新主研究为 social identity salience × communication
+network structure（2×3），旧 2×2×3 转为 legacy pilot / supplementary。
+当前执行 `docs/superpowers/plans/2026-10-01-identity-network-local-preparation.md`。
+旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
+以下历史 Phase 0B 状态不构成新主研究的正式参数或启动授权。
+
 Phase 0A-1 云端盲判已完成797/797项的终态重放核验，正式证据封存仍有后续工作。
 当前优先推进 Phase 0B 的 N=20/T=2、12-cell、480事件真实Qwen诊断实验；本地
 已用假HTTP响应通过完整480事件、SQLite v6重开和只读终态核验，**尚未**执行云端
