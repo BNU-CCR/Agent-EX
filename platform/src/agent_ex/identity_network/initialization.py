@@ -132,8 +132,7 @@ def _initial_bundle(update, binding):
     )
 
 
-def initialize_candidate_family(packet, *, stores):
-    """Preflight every store before filling only missing source-bound agents."""
+def _preflight_candidate_family(packet, stores, *, require_leases):
     bindings = validate_six_cell_candidate(packet)
     if (
         type(stores) is not tuple
@@ -152,7 +151,8 @@ def initialize_candidate_family(packet, *, stores):
     updates = tuple(PrivateUpdate.from_payload(u) for u in common["payload"]["initial_updates"])
     missing = []
     for store, binding in zip(stores, bindings, strict=True):
-        store.assert_run_lease_owned()
+        if require_leases:
+            store.assert_run_lease_owned()
         store.verify_integrity()
         manifest = RunManifest.from_payload(
             _load_canonical_json(
@@ -206,11 +206,33 @@ def initialize_candidate_family(packet, *, stores):
         ):
             raise ValueError("existing round-0 differs from candidate initial evidence")
         missing.append(tuple(u for u in updates if u.agent_id not in observed))
+    return bindings, tuple(missing)
+
+
+def initialize_candidate_family(packet, *, stores):
+    """Preflight every store before filling only missing source-bound agents."""
+    bindings, missing = _preflight_candidate_family(packet, stores, require_leases=True)
     for store, binding, remaining in zip(stores, bindings, missing, strict=True):
         for update in remaining:
             store.initialize_agent(**_initial_bundle(update, binding))
         if store.binding.round0_root is None:
             store.seal_initial_state()
+    return _initialization_report(packet, stores, bindings)
+
+
+def verify_initialized_candidate_family(packet, *, stores):
+    """Read-only initial archive check; never fill missing agents or acquire leases."""
+    signatures = tuple(s._connection_signature() for s in stores)
+    bindings, missing = _preflight_candidate_family(packet, stores, require_leases=False)
+    if any(missing) or any(s.binding.round0_root is None for s in stores):
+        raise ValueError("candidate initialization is incomplete")
+    report = _initialization_report(packet, stores, bindings)
+    if signatures != tuple(s._connection_signature() for s in stores):
+        raise RuntimeError("candidate evidence changed during read-only verification")
+    return report
+
+
+def _initialization_report(packet, stores, bindings):
     return ArtifactEnvelope.create(
         artifact_type="sis-candidate-initialization",
         schema_version="paper1.identity-network.initialization.v1",

@@ -1,5 +1,23 @@
 # 进度日志
 
+## 2026-10-01：可移植候选初始化与只读命令入口
+
+- 上轮c593770为实质进展；本轮复查clean工作树，新增candidate_cli模块入口，
+  prepare/resume-init/check-initial三命令。全量来源及显式context通过后先保存fsync计划，
+  再创建独立六格SQLite。首次目录必须全新，resume须与原request/plan完全一致。
+- 提取共同初始化preflight供只读initial verifier使用；check不填缺失agent、
+  不创建缺失数据库、不持有writer lease、无模型/云端操作，检测读取期间DB变化。
+  candidate CLI明确拒绝非空authorization hash，不把来源初始化当真实启动授权。
+- TDD首8项缺模块RED；真实SQLite、独立Python子进程、归档逐文件字节不变、
+  创建/初态中断接续、错请求零创建和原request漂移保留证据通过。路径静态拒绝
+  symlink/reparse，但Windows缺symlink权限导致两项skip，待Linux补验。
+- fresh专项52 passed, 2 skipped in37.34s；Ruff lint通过。独立限定复核8 passed,
+  2 skipped in16.28s，未发现确证Critical/Important；未宣称敌对路径竞态沙箱或
+  真实服务验证。使用说明见docs/identity-network-local-candidate-cli.md。
+- 尚无实际研究配置/人类receipt/真实操纵检验请求；声明模型/环境不等于现场观察。
+  无上传、GitHub推送或云端连接，legacy未变。长期目标保持active，下一步独立
+  SIS真实启动/服务交接gate与identity check执行接线；目前无需开启服务器。
+
 ## 2026-10-01：完整候选包的受控六格初始化
 
 - 新增initialization.py：fresh manifest来自完整六格source candidate，而非legacy spec；

@@ -29,7 +29,9 @@ SIS run binding 与六格 SQLite round-0 初始化/封存/重开已接通；
 人口/persona来源、attention/expression/外生schedule来源与自包含六格候选包已实现。
 候选包受控初始化已接入：从完整共同来源构造fresh manifest、六格初态与封存，
 全家族写前核对模型/环境/来源；中断仅补齐同一候选，不覆盖已有证据。
-下一步接可移植文件入口、独立真实启动/服务交接、失败重试授权及真实identity check。
+可移植candidate_cli prepare/resume-init/check-initial已接入，支持独立进程冷核验，
+拒绝任何真实授权hash，不会发送模型请求。下一步独立真实启动/服务交接、
+失败重试授权及真实identity check；Linux路径专项仍待补验。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
 到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见

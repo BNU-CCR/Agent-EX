@@ -27,7 +27,11 @@ schedule URI和时间。无授权hash时不生成运行器所需引用；即使�
 调用者创建六个独立SQLite并持有全部lease后，可从共同initial updates派生完整初态，
 封存round0。写前检查全部数据库来源、既有初态、模型/环境/Python和无attempt状态。
 中断保留已写证据，只补齐同一候选缺失agents；封存后的相同调用不再写入。
-本模块无HTTP、目录创建/覆盖、上传或服务操作；可移植文件入口和真实启动门仍待实现。
+本初始化模块无HTTP、目录创建/覆盖、上传或服务操作。
+candidate_cli已另接可移植prepare/resume-init/check-initial文件入口；只接受无授权hash
+的候选请求，使用完整持久化计划和新目录，恢复只接受同一request。独立子进程与
+只读逐文件字节一致验证已通过；Linux symlink现场专项尚未跑。真实启动门仍待实现。
+命令和输入边界见`docs/identity-network-local-candidate-cli.md`。
 
 ### 上阶段：完整共同来源与六格候选包
 
