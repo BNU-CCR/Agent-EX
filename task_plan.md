@@ -8,6 +8,8 @@
 network structure（2×3），旧 2×2×3 转为 legacy pilot / supplementary。
 当前执行 `docs/superpowers/plans/2026-10-01-identity-network-local-preparation.md`。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
+本地准备模块已实现；六条件真实运行器、提交侧完整日志与真实 manipulation check
+仍待接入，见 `docs/2026-10-01-identity-network-preparation-handoff.md`。
 以下历史 Phase 0B 状态不构成新主研究的正式参数或启动授权。
 
 Phase 0A-1 云端盲判已完成797/797项的终态重放核验，正式证据封存仍有后续工作。

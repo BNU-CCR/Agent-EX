@@ -1,5 +1,23 @@
 # 进度日志
 
+## 2026-10-01：旧实验归档与新 2×3 主研究本地准备
+
+- 用户十项决策批准，旧 2×2×3 作为 legacy pilot/supplementary。合并 main 文档
+  到完整 phase0 历史，归档提交 `91661b4` 已推送；固定标签
+  `legacy-2x2x3-2026-10-01` 和远端归档分支保留。未覆盖 main 或旧工作树。
+- 新分支 `codex/social-identity-network-2x3` 写入设计、协议、SIS 未决 ID、
+  决策和协作路由。新增六条件、正交平衡 groups、blind/salient prompt、
+  连通度数保持重连以及四向配对 manipulation 输入包；旧运行器不改。
+- 测试先观察缺模块 RED，后专项 GREEN。独立实现复核指出匿名别名可泄露群组；
+  增加失败回归后限制中性别名、一一对应并保留同源多帖，复核收口批准。
+- 最终专项：新增四文件加 domain/persona/network/prompt/phase0b_candidate_config，
+  **217 passed in 22.56s**；新增模块/测试与 rng 的 Ruff check 通过，
+  新增十个 Python 文件 format check 通过，git diff check 通过。未跑全仓测试。
+- 已实现的是输入和制品准备，不是六条件云端运行：尚待共享 runtime/SQLite union、
+  post-state/confidence/actual-public-output 提交日志、跨事件 alias 冻结与假HTTP六格验证。
+  manipulation check 和新 pilot 均未真实执行；本轮不需要开 AutoDL。
+- 详细交接：`docs/2026-10-01-identity-network-preparation-handoff.md`。
+
 ## 2026-09-24：judge 迁移副本的完整文件树比对（本地）
 
 - 新增 `phase0b/archive_copy.py` 的只读 `inventory_tree`/`verify_tree_copy`：源与目标根目录下所有目录（包括空目录）、常规文件相对路径、大小与流式 SHA-256 必须完全一致；拒绝软链接与特殊文件。不读取或输出 raw response 文本，也不执行复制。

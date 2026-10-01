@@ -8,6 +8,8 @@
 
 旧实验的完整 Git 历史保存在 `codex/legacy-experiment-20261001` 和固定标签 `legacy-2x2x3-2026-10-01`；新开发分支为 `codex/social-identity-network-2x3`。不复制第二套 platform，也不删除原工作树。源码归档不等于云端原始数据备份，见 [快照边界](docs/2026-10-01-legacy-experiment-snapshot.md)。新六条件尚未执行真实云端实验。
 
+当前已增加六条件定义、平衡分组、标签可见性、度数保持重连及 manipulation-check 输入包；这是本地准备能力，尚未接入六条件真实事件运行器。详情及下一步见 [本次交接](docs/2026-10-01-identity-network-preparation-handoff.md)。
+
 Agent-EX 是一个研究 **LLM-agent 在多轮在线讨论中的意见、理由与公开表达如何演化** 的可复现实验平台。当前首要项目是 Paper 1：在固定网络结构中识别人口身份线索、历史立场连续性要求与社会暴露方式对生成式 Agent 意见动力学的影响。
 
 > **截至 2026-09-22：**正式平台的协议、事件执行、持久化、恢复和证据链已经搭建；真实 Qwen 校准与 797 项盲判证据链已经完成并核验。真实 N=20 动力学仍在 Phase 0B 接入阶段，N=1000、T=50 的正式主实验尚未启动。

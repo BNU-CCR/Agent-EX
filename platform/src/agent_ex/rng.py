@@ -35,6 +35,9 @@ _REGISTERED_NAMESPACES = frozenset(
         "publish_ledger",
         "round0_tiebreak",
         "message_slot",
+        "minimal_groups",
+        "identity_network_randomized",
+        "identity_check_order",
     }
 )
 _EVENT_LEVEL_NAMESPACES = frozenset(
