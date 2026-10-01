@@ -19,6 +19,26 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
+### 共同执行制品已绑定（当前最新阶段）
+
+execution_inputs.build_execution_inputs显式传入StudyRunBinding、完整persona_by_agent、
+initial_updates tuple、feed_capacity、memory_window、typed parser_limits、generation
+settings、完整model_seeds tuple、DiagnosticAdapterBinding和DiagnosticAttemptPolicy。
+输出payload是六格共同身份与实际配置；common_inputs_hash引用artifact.output_hash。
+可先用候选binding构造制品，再用相同不可变基础制品重新创建binding写入该hash；
+不含cell或binding.record_hash以避免循环，不改变已创建数据库manifest。
+
+validate_execution_inputs重建全包并核对输出hash/envelope/嵌套权限/完整覆盖。
+StudyRunStorage.prepare_bound_snapshot_event(snapshot, common_inputs, attempt_index=...)
+核对actual round-0完整updates，并从artifact得到接收者persona、feed/memory、parser、
+当前event seed、generation及adapter binding，不接受调用者覆盖这些设置。
+
+同对象的深度不可变制品/binding在同一store内仅校验一次；数据库每次仍先复核
+connection signature。完整性重放已调用SIS sealed round0 validator，避免额外反复
+全人口扫描；unsealed partial仍检查，重开无缓存，两种数据库篡改路径有负例。
+该接口仍不派发/写入/授权retry。候选population注意与表达的抽样provenance须由
+materializer另行关联；正式N/T/seeds/outcome仍未冻结。下一步接durable lifecycle。
+
 ### 读侧因果输入已接通
 
 新增 prepare_snapshot_event(snapshot, persona_text=..., feed_capacity=..., memory_window=...,

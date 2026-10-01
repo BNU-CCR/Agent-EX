@@ -1,5 +1,18 @@
 # 发现与决策
 
+## 2026-10-01：共同制品不能只保留不透明哈希；静态验证不能随事件重复
+
+- Execution-input artifact记录实际prompt persona、初始update和解析/模型/policy
+  参数，并将其output_hash写入StudyRunBinding.common_inputs_hash。六格的共同
+  身份不包含cell/commonhash，避免循环引用；条件差异由独立run binding表示。
+- 已消除重复准备时的整包重建、全人口初始扫描及整份payload JSON拷贝；固定
+  输入包可能含全部event seeds，若逐event重建会引入随event数增长的严重开销。
+- 缓存只适用于同一个深度不可变artifact和binding对象；数据库签名仍逐次检查。
+  sealed cold replay已经经SIS override核验round-0，无需每次额外扫描；unsealed
+  partial仍独立核验。未知或变更数据库不能因静态cache而跳过完整性检查。
+- 配置制品不等于formal authorization；注意/表达的抽样provenance和完整人口来源
+  仍需由materializer关联，durable lifecycle尚未开放。
+
 ## 2026-10-01：快照哈希正确不代表快照可以用于当前请求
 
 - prepare_snapshot_event不接受通用envelope哈希作为权限。持有lease重新构造当前

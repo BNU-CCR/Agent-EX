@@ -59,7 +59,7 @@ def setup(cell, *, k=4):
     return StudyRunStorage, binding, m
 
 
-def initialize(store, binding, agent, stance="label-2", topic_package=None):
+def initialize(store, binding, agent, stance="label-2", topic_package=None, reason="Prior."):
     update = PrivateUpdate.create(
         topic_package=binding.topic_package if topic_package is None else topic_package,
         matched_seed=17,
@@ -68,7 +68,7 @@ def initialize(store, binding, agent, stance="label-2", topic_package=None):
         event_ordinal=None,
         sequence_index=0,
         stance_label=stance,
-        reason="Prior.",
+        reason=reason,
         confidence=None,
         published=True,
         source_attempt_id=None,

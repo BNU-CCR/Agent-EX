@@ -1,5 +1,26 @@
 # 进度日志
 
+## 2026-10-01：共同执行输入制品与静态校验缓存
+
+- 新增 execution_inputs.py，六条件共用同一候选ArtifactEnvelope：完整rendered
+  persona、round-0 PrivateUpdate、显式feed/memory/parser、generation settings、
+  每个event的model seed、DiagnosticAdapterBinding与DiagnosticAttemptPolicy。
+  共同身份包含seed、roster/alias、topic/groups/schedule及两种图，不含cell以保持配对。
+- common_inputs_hash 明确引用本制品output_hash；完整重建校验拒绝重哈希后的
+  nested contract/metadata/envelope/共同身份篡改。严格完整人口和schedule-seed覆盖。
+- 新增 prepare_bound_snapshot_event：核对actual round-0完整update，再只从共同
+  制品解析请求参数，通过当前数据库快照核验生成候选请求。此入口没有SQLite写入，
+  不授权dispatch/retry，不代表正式冻结。attention/expression生成provenance还需
+  materializer明确绑定，durable input/policy/intent与成功事件提交仍未接通。
+- 测试先行：15项缺失模块RED→15 passed；扩大负例后28 passed。静态重复校验
+  计数RED：两次准备执行2次整包校验/4次round-0扫描，修复为1次/1次。
+  不可变制品与binding按object identity缓存；每次先核验SQLite签名，same/external
+  connection篡改均被拒绝，unsealed partial检查仍保留，重开重建缓存。
+- 独立审查两轮无Critical/Important；审查者复验47项。Ruff/format/diff通过。
+  最终新接口与旧存储回归353 passed, 2 skipped in 64.05s；环境skip是Windows
+  符号链接权限和POSIX no-follow专项。没有跑全仓pytest或启动AutoDL。
+  尚未进行完整事件循环性能测量，不能声称旧797云端慢速问题已全部解决。
+
 ## 2026-10-01：数据库快照到SIS请求的读侧连接
 
 - 新增 prepare_snapshot_event：持有lease，按显式persona/feed/memory参数重新构造

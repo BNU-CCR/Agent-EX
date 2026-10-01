@@ -10,7 +10,8 @@ network structure（2×3），旧 2×2×3 转为 legacy pilot / supplementary。
 SIS run binding 与六格 SQLite round-0 初始化/封存/重开已接通；
 已接通从已封存SQLite读取真实公开帖子/私人历史并构造下一事件输入快照；
 快照经当前数据库完整重建核验后可生成候选SIS请求，六格假HTTP响应链路已验证；
-下一步是绑定共同persona/feed/memory制品、请求前 causal prefix、成功事件原子提交与六条件运行器接入。
+共同persona/初始状态/feed/memory/parser/model/policy执行制品已绑定，并完成不重复扫描
+整包/初始人口的读侧缓存；下一步是请求前 causal prefix、成功事件原子提交与六条件运行器接入。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备和六条件假 HTTP 单事件验证已实现；SQLite 原子提交、恢复、六条件真实
 运行器与真实 manipulation check 仍待接入，见

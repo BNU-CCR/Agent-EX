@@ -247,6 +247,7 @@ class StudyRunStorage(RunStorage):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._execution_inputs_cache = None
         payload = _load_canonical_json(
             self._connection.execute(
                 "SELECT manifest_payload_json FROM binding WHERE singleton=1"
@@ -277,7 +278,11 @@ class StudyRunStorage(RunStorage):
 
     def verify_integrity(self):
         super().verify_integrity()
-        self._round0_entries(require_exact=self.binding.round0_root is not None)
+        # A sealed cold replay already calls our typed _round0_entries override;
+        # the parent's connection-signature cache then protects trusted writes.
+        # Partial initialization still needs SIS checks even without a root.
+        if self.binding.round0_root is None:
+            self._round0_entries(require_exact=False)
 
     def _round0_entries(self, *, require_exact):
         from ..state import PrivateUpdate
@@ -461,6 +466,48 @@ class StudyRunStorage(RunStorage):
             model_seed=model_seed,
             generation_settings=generation_settings,
             adapter_binding_hash=adapter_binding_hash,
+        )
+
+    def prepare_bound_snapshot_event(self, snapshot, common_inputs, *, attempt_index):
+        """Candidate request with all settings resolved from one bound artifact.
+
+        Does not authorize dispatch, a retry or a formal run. In particular, no
+        durable policy/input/intent has been written by this read-side method.
+        """
+        from ..parser import ParserLimits
+        from ..phase0b.contracts import DiagnosticAdapterBinding
+        from .execution_inputs import validate_execution_inputs
+
+        self.assert_run_lease_owned()
+        # Verify database mutations before consulting the immutable-object cache.
+        self.verify_integrity()
+        cached = self._execution_inputs_cache
+        if cached is None or cached[0] is not common_inputs or cached[4] is not self.study_binding:
+            validate_execution_inputs(common_inputs, self.study_binding)
+            payload = common_inputs.payload
+            actual = {
+                e["agent_id"]: e["private_update"] for e in self._round0_entries(require_exact=True)
+            }
+            expected = {u["agent_id"]: _json_ready(u) for u in payload["initial_updates"]}
+            if actual != expected:
+                raise ValueError("execution-input initial updates differ from actual round-0")
+            limits = ParserLimits.from_payload(_json_ready(payload["parser_limits"]))
+            adapter = DiagnosticAdapterBinding.from_payload(_json_ready(payload["adapter_binding"]))
+            cached = (common_inputs, payload, limits, adapter, self.study_binding)
+            self._execution_inputs_cache = cached
+        _, payload, limits, adapter, _ = cached
+        ordinal = self.progress.next_event_ordinal
+        slot = self.schedule_slot(ordinal)
+        return self.prepare_snapshot_event(
+            snapshot,
+            persona_text=payload["persona_by_agent"][slot.agent_id],
+            feed_capacity=payload["feed_capacity"],
+            memory_window=payload["memory_window"],
+            attempt_index=attempt_index,
+            parser_limits=limits,
+            model_seed=payload["model_seeds"][ordinal],
+            generation_settings=payload["generation_settings"],
+            adapter_binding_hash=adapter.record_hash,
         )
 
     def record_prepared_attempt(self, *args, **kwargs):
