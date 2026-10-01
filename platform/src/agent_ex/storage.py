@@ -3254,6 +3254,7 @@ class RunStorage:
             or journal.latest_transition.attempt_id != terminal.attempt_id
         ):
             raise ValueError("diagnostic finalization requires current IN_PROGRESS attempt")
+        input_projection = self._diagnostic_input_projection(event_input)
         if (
             parsed.event_id != terminal.event_id
             or parsed.attempt_id != terminal.attempt_id
@@ -3263,8 +3264,8 @@ class RunStorage:
             or parsed.response_hash != invocation.response_hash
             or parsed.raw_body_sha256 != invocation.response.raw_body_sha256
             or parsed.parser_limits_hash != event_input.parser_limits.record_hash
-            or parsed.topic_package_id != event_input.prompt_view.topic_package_id
-            or parsed.topic_package_hash != event_input.prompt_view.topic_hash
+            or parsed.topic_package_id != input_projection["topic_package_id"]
+            or parsed.topic_package_hash != input_projection["topic_hash"]
             or invocation.request_hash != request.request_hash
         ):
             raise ValueError("diagnostic finalization request, parse, or topic binding differs")
@@ -5674,8 +5675,8 @@ class RunStorage:
                         invocation.response_hash,
                         request.parser_limits_hash,
                         invocation.response.raw_body_sha256,
-                        event_input.prompt_view.topic_package_id,
-                        event_input.prompt_view.topic_hash,
+                        projection["topic_package_id"],
+                        projection["topic_hash"],
                     )
                 else:
                     if isinstance(parsed, DiagnosticParseEvidence):

@@ -1,5 +1,14 @@
 # 发现与决策
 
+## 2026-10-01：响应记录必须绑定实际模型与同一授权，解析不能接受调用者替代品
+
+- 从已落盘SIS因果输入及请求重建准备对象，复用bounded finalizer；terminal的
+  parse必须与该独立结果完全相等，通用parse成功不能绕过reason/byte/depth上限。
+- 审查发现wire只要求非空model，cold replay也漏比invocation授权。先复现负例，
+  再统一live/cold核对served model及durable授权；成功provider响应必须声明同一模型。
+- 响应与终态持久化不等于事件state commit。advanced ordinal仍拒绝，IN_PROGRESS
+  只能进入reconciliation而非自动重发；后续还需发送意向及恢复编排。
+
 ## 2026-10-01：请求前记录必须保存实际来源，阶段门也须覆盖冷重开
 
 - 新stored-input.v2包含完整因果快照，与实际SQLite source rows、排程、状态、

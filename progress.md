@@ -1,5 +1,26 @@
 # 进度日志
 
+## 2026-10-01：SIS 响应与成功/失败终态落盘
+
+- 新增start_diagnostic_attempt，只接受当前已落盘精确PENDING，保存IN_PROGRESS，
+  不发送HTTP、不授权真实运行。普通append及commit仍关闭；advanced ordinal仍拒绝。
+- invocation从durable input/request重建准备对象并复用bounded finalizer，核对
+  actual source/common、exact wire/messages/settings/seed；parse/terminal在原v6
+  事务原子落盘。成功和失败六格均关闭重开核验，状态/游标/ordinal保持不变。
+- terminal拒绝调用者提供的loose parse（越reason上限却被通用解析器判成功）；
+  插入中断不留下parse/terminal部分行。共享diagnostic topic引用改为受保护
+  input projection，默认legacy类型约束不变。
+- 审查发现wire模型名未绑定served_model、cold invocation漏比授权，均先复现
+  RED再修复：统一live/cold验证；成功provider响应须声明同一模型。wrong wire、
+  rehashed model/authorization及bounded parse负例拒绝。独立复核4项通过，无
+  剩余Important/Critical。14项缺接口RED→14 passed；最终response新增20项。
+- 最终新旧存储相关回归391 passed, 2 skipped in85.21s；环境skip仍是Windows
+  symlink权限与POSIX no-follow。Ruff lint/format及git diff check通过。
+  所有响应为合成测试provider数据；未云端运行，未全仓pytest，未推送GitHub。
+- 下一步：historical causal input replay与成功state atomic commit，再接发送
+  intent、失败收口/重试授权和六格runner。IN_PROGRESS重开仍需provider reconciliation，
+  不自动重发；本阶段不等于完整实验/断点恢复，服务器仍无需开启。
+
 ## 2026-10-01：SIS 请求前 PENDING 原子前缀
 
 - 新增 StoredStudyInput（stored-event-input.v2），保存typed SIS input与完整causal

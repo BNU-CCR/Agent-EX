@@ -19,7 +19,29 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
-### 当前最新阶段：SIS 请求前 PENDING 原子落盘
+### 当前最新阶段：SIS 响应与成功/失败终态前缀
+
+`start_diagnostic_attempt`只接受当前已落盘的精确PENDING，保存IN_PROGRESS；
+不发送HTTP，也不构成真实运行授权。IN_PROGRESS重开仍要求provider reconciliation，
+不能自动重发。普通append与commit仍关闭。
+
+`record_diagnostic_invocation_evidence`从durable input/request重建PreparedStudyEvent，
+核对实际source/common contract与exact wire消息、settings、seed、served model。
+invocation授权必须与durable request相同；成功响应必须声明相同provider model。
+调用共享bounded finalizer，保留畸形/越限响应为失败解析而非丢弃响应证据。
+
+`record_diagnostic_finalized_attempt`要求parse与独立bounded重放完全相等，复用
+共享v6事务原子保存parse及成功/失败terminal。插入中断parse/terminal均回滚。
+六格成功和失败终态关闭重开核验通过，private state/cursor/ordinal仍不变。
+冷重放也核对wire/model/authorization及bounded parse，重哈希不能绕过这些合同。
+
+本阶段支持当前未提交事件的response/terminal；historical input replay、状态
+atomic commit、失败收口/重试授权、发送意向/恢复编排、六格runner仍待接入。
+不要用旧MockEventPipeline读取SIS输入。所有新测试为合成provider响应，
+没有新真实模型数据、没有云端调用；服务器仍不需开启。
+验证：391 passed、2环境skip；Ruff/format/diff通过，独立响应阶段审查收口。
+
+### 上一阶段：SIS 请求前 PENDING 原子落盘
 
 `StoredStudyInput`（stored-event-input.v2）保存 typed SIS input 与完整 causal
 snapshot；不是旧 ExposureRecord，也不通过旧十二格输入 reader 冒充兼容。
@@ -33,10 +55,10 @@ adapter binding、request 与 PENDING transition。核对实际 round-0、当前
 prompt；模型seed/settings和policy来自共同制品。重复相同PENDING不会增行；
 插入中断全部回滚。六格关闭重开可重放，重新哈希的错误来源绑定仍拒绝。
 
-本阶段只接受当前未提交事件的PENDING：advanced ordinal、IN_PROGRESS、
-invocation或parse行均拒绝重开，响应/finalization/append/commit入口仍关闭。
-下一步接发送意向与响应/终态落盘，并扩展已提交历史输入重放及topic引用，
-之后才能开放原子commit和后续事件。不能仅删除这些阶段门就认为运行器可用。
+最初PENDING阶段门已按上述response阶段扩展；advanced ordinal仍拒绝，
+普通append/commit入口仍关闭。共享diagnostic topic引用已改为受保护投影，
+下一步扩展历史输入重放和atomic commit，随后接发送意向与运行编排。
+不能仅删除这些阶段门就认为运行器可用。
 没有真实HTTP、云端使用或新实验数据；云服务器仍不需要开启。
 
 ### 共同执行制品已绑定（上一阶段）

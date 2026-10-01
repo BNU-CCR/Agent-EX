@@ -285,7 +285,7 @@ def test_self_consistent_request_with_wrong_common_model_seed_is_rejected(tmp_pa
         store.close()
 
 
-def test_cold_reopen_rejects_out_of_scope_in_progress_prefix(tmp_path):
+def test_cold_reopen_in_progress_never_implies_resend_permission(tmp_path):
     store, cls, binding, manifest, path, stored_input, kwargs = prefix_store(
         tmp_path, study_cells()[1]
     )
@@ -301,19 +301,23 @@ def test_cold_reopen_rejects_out_of_scope_in_progress_prefix(tmp_path):
         ),
     )
     store.close()
-    with pytest.raises(ValueError, match="PENDING-only"):
-        reopened = cls.open(path, manifest=manifest, **binding.storage_arguments())
+    reopened = cls.open(path, manifest=manifest, **binding.storage_arguments())
+    try:
+        assert (
+            reopened.current_event_journal().resume_state
+            == "in_progress_requires_provider_reconciliation"
+        )
+        assert reopened.progress.next_event_ordinal == 0
+    finally:
         reopened.close()
 
 
-def test_sis_response_writers_remain_closed(tmp_path):
+def test_sis_response_writers_require_typed_evidence(tmp_path):
     store, _, _, _, _, _, _ = prefix_store(tmp_path, study_cells()[1])
     try:
-        for writer in (
-            store.record_diagnostic_invocation_evidence,
-            store.record_diagnostic_finalized_attempt,
-        ):
-            with pytest.raises(ValueError, match="PENDING-only"):
-                writer(None)
+        with pytest.raises(TypeError, match="typed diagnostic"):
+            store.record_diagnostic_invocation_evidence(None)
+        with pytest.raises(TypeError, match="typed diagnostic"):
+            store.record_diagnostic_finalized_attempt(None, None)
     finally:
         store.close()

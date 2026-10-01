@@ -12,7 +12,8 @@ SIS run binding 与六格 SQLite round-0 初始化/封存/重开已接通；
 快照经当前数据库完整重建核验后可生成候选SIS请求，六格假HTTP响应链路已验证；
 共同persona/初始状态/feed/memory/parser/model/policy执行制品已绑定，并完成不重复扫描
 整包/初始人口的读侧缓存；请求前 input/policy/adapter/request/PENDING 已原子落盘并支持重开。
-下一步接发送意向、响应/终态证据、历史输入重放与成功事件原子提交，再接六条件运行器。
+响应/解析/成功或失败终态证据也已接通，状态尚不推进；下一步接历史输入重放、
+成功事件原子提交，再接发送意向、失败恢复和六条件运行器。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备和六条件假 HTTP 单事件验证已实现；SQLite 原子提交、恢复、六条件真实
 运行器与真实 manipulation check 仍待接入，见

@@ -3,13 +3,15 @@
 Event writes are gated off until SIS causal-prefix and commit integration exists.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+import json
 import re
 from typing import Mapping
 
 from ..artifacts import ArtifactEnvelope
 from ..domain import (
     FrozenSchedule,
+    EventStatus,
     _freeze,
     _json_ready,
     _require_int,
@@ -287,18 +289,10 @@ class StudyRunStorage(RunStorage):
 
     def verify_integrity(self):
         super().verify_integrity()
-        # This integration deliberately supports only a pre-dispatch prefix.
-        # Enforce the boundary even after a trusted base-class write updated its
-        # integrity cache; later lifecycle work must explicitly replace this gate.
-        if (
-            self.progress.next_event_ordinal != 0
-            or self._connection.execute(
-                "SELECT 1 FROM attempt_transitions WHERE status != 'pending' LIMIT 1"
-            ).fetchone()
-            or self._connection.execute("SELECT 1 FROM invocation_evidence LIMIT 1").fetchone()
-            or self._connection.execute("SELECT 1 FROM parse_evidence LIMIT 1").fetchone()
-        ):
-            raise ValueError("SIS storage currently supports a PENDING-only prefix")
+        # Response prefixes are supported; state commits remain closed until
+        # historical causal-input replay is implemented.
+        if self.progress.next_event_ordinal != 0:
+            raise ValueError("SIS storage does not yet support committed historical inputs")
         # A sealed cold replay already calls our typed _round0_entries override;
         # the parent's connection-signature cache then protects trusted writes.
         # Partial initialization still needs SIS checks even without a root.
@@ -671,11 +665,120 @@ class StudyRunStorage(RunStorage):
     def append_attempt(self, *args, **kwargs):
         raise ValueError("SIS event writes require the SIS causal-prefix integration")
 
-    def record_diagnostic_invocation_evidence(self, *args, **kwargs):
-        raise ValueError("SIS storage currently supports a PENDING-only prefix")
+    def start_diagnostic_attempt(self, pending, *, started_at):
+        """Persist IN_PROGRESS without sending or authorizing any HTTP request."""
+        self.assert_run_lease_owned()
+        self.verify_integrity()
+        if (
+            self.current_event_journal().latest_transition != pending
+            or pending.status is not EventStatus.PENDING
+        ):
+            raise ValueError("SIS start requires the exact durable PENDING attempt")
+        self._prepared_for_attempt(pending.attempt_id)
+        in_progress = replace(pending, status=EventStatus.IN_PROGRESS, started_at=started_at)
+        RunStorage.append_attempt(self, in_progress)
+        return in_progress
 
-    def record_diagnostic_finalized_attempt(self, *args, **kwargs):
-        raise ValueError("SIS storage currently supports a PENDING-only prefix")
+    def _prepared_for_attempt(self, attempt_id):
+        from ..execution_evidence import DiagnosticAdapterRequestEvidence
+        from .execution import prepare_study_event
+
+        request = self.adapter_request_evidence(attempt_id)
+        if not isinstance(request, DiagnosticAdapterRequestEvidence):
+            raise ValueError("SIS response requires its diagnostic request prefix")
+        stored = self.event_input_evidence(request.event_id)
+        if stored is None:
+            raise ValueError("SIS response requires its stored causal input")
+        self._diagnostic_input_projection(stored)
+        self._validate_diagnostic_request_contract(
+            stored,
+            request,
+            self.attempt_policy_evidence(request.event_id),
+            self.adapter_execution_binding(attempt_id),
+        )
+        i, r = stored.input, request.request
+        prepared = prepare_study_event(
+            run_id=i.run_id,
+            event_ordinal=i.event_ordinal,
+            attempt_index=r.attempt_index,
+            previous_event_hash=i.previous_event_hash,
+            publish_flag=i.publish_flag,
+            prompt=i.prompt,
+            private_state=i.private_state,
+            topic_package=i.topic_package,
+            parser_limits=i.parser_limits,
+            model_seed=r.model_seed,
+            generation_settings=dict(r.generation_settings),
+            adapter_binding_hash=r.adapter_binding_hash,
+        )
+        if prepared.request != r:
+            raise ValueError("SIS reconstructed request differs from durable request")
+        return prepared
+
+    def _validate_study_invocation(self, evidence):
+        from ..execution_evidence import DiagnosticPersistedInvocationEvidence
+        from .execution import finalize_study_response
+
+        if not isinstance(evidence, DiagnosticPersistedInvocationEvidence):
+            raise TypeError("SIS response requires typed diagnostic invocation")
+        request = self.adapter_request_evidence(evidence.attempt_id)
+        if request is None or evidence.run_authorization_hash != request.run_authorization_hash:
+            raise ValueError("SIS invocation authorization differs from durable request")
+        result = finalize_study_response(
+            prepared=self._prepared_for_attempt(evidence.attempt_id), response=evidence.response
+        )
+        adapter = self.adapter_execution_binding(evidence.attempt_id)
+        wire = json.loads(evidence.response.transport_evidence.request_body)
+        if wire["model"] != adapter.served_model_name:
+            raise ValueError("SIS wire model differs from bound served model")
+        # Invalid provider JSON is retained as a failed parse, not discarded.
+        # When a provider declares a model, it must agree with the bound name.
+        try:
+            provider = json.loads(evidence.response.raw_body)
+        except (ValueError, UnicodeError, RecursionError):
+            provider = None
+        if result.parse.success and (
+            not isinstance(provider, dict) or provider.get("model") != adapter.served_model_name
+        ):
+            raise ValueError("SIS successful response lacks the bound provider model")
+        if (
+            isinstance(provider, dict)
+            and "model" in provider
+            and provider["model"] != adapter.served_model_name
+        ):
+            raise ValueError("SIS response model differs from bound served model")
+        return result
+
+    def record_diagnostic_invocation_evidence(self, evidence):
+        self.assert_run_lease_owned()
+        self.verify_integrity()
+        self._validate_study_invocation(evidence)
+        return RunStorage.record_diagnostic_invocation_evidence(self, evidence)
+
+    def record_diagnostic_finalized_attempt(self, terminal, parsed):
+        from ..domain import GenerationAttempt
+        from ..execution_evidence import DiagnosticParseEvidence
+
+        self.assert_run_lease_owned()
+        self.verify_integrity()
+        if not isinstance(terminal, GenerationAttempt) or not isinstance(
+            parsed, DiagnosticParseEvidence
+        ):
+            raise TypeError("SIS finalization requires typed diagnostic terminal and parse")
+        result = self._validate_study_invocation(self.invocation_evidence(terminal.attempt_id))
+        if result.parse != parsed:
+            raise ValueError("SIS parse differs from bounded response replay")
+        return RunStorage.record_diagnostic_finalized_attempt(self, terminal, parsed)
+
+    def _verify_v6_evidence_exact_cover(self):
+        super()._verify_v6_evidence_exact_cover()
+        for (attempt_id,) in self._connection.execute(
+            "SELECT attempt_id FROM invocation_evidence"
+        ).fetchall():
+            result = self._validate_study_invocation(self.invocation_evidence(attempt_id))
+            parsed = self.parse_evidence(attempt_id)
+            if parsed is not None and parsed != result.parse:
+                raise ValueError("SIS stored parse differs from bounded response replay")
 
     def commit_success(self, *args, **kwargs):
         raise ValueError("SIS event writes require the SIS atomic event integration")
