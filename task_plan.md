@@ -26,10 +26,11 @@ SIS run binding 与六格 SQLite round-0 初始化/封存/重开已接通；
 已保存响应可本地恢复提交，失败保留并停止；未决发送或缺历史intent不能重发。
 有界六条件运行原语与独立只读verify/report CLI已接入，支持相同前缀不重复发送、
 已保存响应本地收口、六格发送前统一预检；真实启动CLI与人工审批入口尚未接入。
-下一步接候选输入物化、失败重试授权及真实identity manipulation check。
+人口/persona来源、attention/expression/外生schedule来源与自包含六格候选包已实现。
+下一步接候选包受控初始化、独立真实启动/服务交接、失败重试授权及真实identity check。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
-本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、输入制品
-来源物化与真实 manipulation check 仍待接入，见
+本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
+到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见
 `docs/2026-10-01-identity-network-event-boundary-handoff.md`。
 以下历史 Phase 0B 状态不构成新主研究的正式参数或启动授权。
 

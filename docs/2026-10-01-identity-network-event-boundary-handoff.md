@@ -19,7 +19,19 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
-### 当前最新阶段：六条件有界运行原语与只读归档核验
+### 当前最新阶段：完整共同来源与六格候选包
+
+population/persona materialization、attention/expression/外生schedule sources与
+自包含六格candidate包已接入，保持pure candidate/无启动权限。candidate cold
+validator完整重建共同来源与六格binding，拒绝包括late-cell合法alias重哈希
+在内的跨格漂移。shared population/persona/schedule实现未修改。
+
+Python/random runtime不符会拒绝schedule重放，不按OS名称判定。目标端若重新
+物化必须有新hash及再次批准；当前未实测Linux/模型服务。本轮相关专项152通过，
+来源与组合层均经限定独立复核，无确证Important/Critical。
+下一步：受控初始化与独立launch/receipt/服务交接、可移植入口和identity check。
+
+### 上一阶段：六条件有界运行原语与只读归档核验
 
 identity_network/runner.py增加run_study_cells_prefix、verify_study_cells，
 以及独立的verify/report CLI。六格首次发送前统一核对common、实际round-0、

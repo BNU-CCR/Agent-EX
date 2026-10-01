@@ -1,5 +1,16 @@
 # 发现与决策
 
+## 2026-10-01：完整来源包与真实启动授权必须分离
+
+- schedule source保存完整显式参数、attention/expression/activation/publish和实际
+  FrozenSchedule；不仅绑定hash，还需cold重建并比较与执行binding的全部slot。
+- 共有来源通过后，从唯一A0B0 base机械生成六格。仅逐格合法不够：late cell的
+  alias/common输入即使合法且重哈希，也必须与来源家族严格一致。
+- Python runtime是既有调度RNG provenance的一部分，OS不是身份字段。不同runtime
+  必须明确拒绝，保持同一批准候选；确需目标端重新物化时需新hash及重新批准。
+- 统一候选包的launch_authorized固定false；受控初始化/真实launch gate必须显式
+  接入它，现有低层runner不能因为引用候选hash而推定获批。
+
 ## 2026-10-01：来源物化不等于来源真实性，类别审计需类型保真
 
 - Candidate donor frame和研究者显式初态可机械重建人口/persona/common；应保存

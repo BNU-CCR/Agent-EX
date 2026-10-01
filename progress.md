@@ -1,5 +1,27 @@
 # 进度日志
 
+## 2026-10-01：排程来源重放与完整六条件候选包
+
+- 上一目标轮为实质进展：人口/persona来源物化已提交20ecc6d；本轮先核对clean
+  工作树及现有交接，继续其未完成的schedule来源和全家族组合。
+- 新增schedule_sources.py，所有注意/表达/激活/发布参数显式传入；复用未修改
+  的shared generators，保留正权重sum=N、hurdle–Beta independent expression、
+  weighted activation及外生publish。包保存完整参数与四来源制品、FrozenSchedule。
+  cold validator完整重建并核对SIS seed/有序roster/全部slot。
+- 源provenance含Python implementation/version/random，不要求同一OS；runtime不
+  匹配在重建前拒绝，不能在换机后重新抽样或把新hash冒充同一来源。没有设置研究
+  参数默认值或正式权限；来源仍candidate_unattested。
+- 新增candidate.py，将人口/persona来源、schedule来源与canonical六格binding
+  合成自包含候选包。先核验共同来源，再从唯一A0B0 base派生六格；完整cold读者
+  拒绝缺格/错序/duplicate、权限漂移和完整重哈希的合法late-cell alias漂移。
+- TDD：schedule源17项缺模块RED、组合层9项缺模块RED；补完整late-cell测试。
+  fixture中的publish flag篡改必须取反而非固定False，避免没有实际变化的假负例。
+  最新相关专项152 passed in33.78s，Ruff/format/diff通过；独立限定复核schedule
+  17 passed in1.28s、组合层10 passed in2.97s，无确证Critical/Important。
+- 无文件/DB创建能力、无HTTP/云端/GitHub操作，来源包不是human receipt。
+  仍需接受控六格初始化、独立真实启动/服务交接与可移植CLI，以及真实identity
+  check候选。当前无需开启云服务器，长期目标保持active。
+
 ## 2026-10-01：长期目标与候选人口/persona来源物化
 
 - 按用户请求设定活跃长期目标：持续推进新2×3本地前置工作，直到需要开启

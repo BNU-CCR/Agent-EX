@@ -50,7 +50,18 @@ continuity-absent persona，绑定实际round-0初始更新、理由类别标签
 这是机械来源验证，不验证donor真实性或研究者理由类别编码；source仍unattested。
 当前运行器尚未强制要求此来源包，后续启动gate将绑定它；不能仅凭该包开始真实run。
 
-候选人口/注意/发布输入的来源物化、独立真实启动receipt与服务所有权交接、
+新增`schedule_sources.build_schedule_candidate/validate_schedule_candidate`，从完整
+显式参数重建attention、independent expression、activation及外生publish，核对实际
+FrozenSchedule。`candidate.build_six_cell_candidate/validate_six_cell_candidate`将
+该来源与人口/persona来源、canonical六格bindings合成自包含包并完整重放。
+两类source仍candidate_unattested，组合包launch_authorized=false。
+
+源调度算法绑定Python implementation/version/random；cold重放要求该runtime一致，
+不要求操作系统相同。不兼容时明确拒绝，不能偷偷重新生成已批准候选；若在目标端
+重新物化，必须保存新的来源hash并重新批准。跨平台入口不等于任意Python版本可
+保持同一随机来源身份。当前测试未实测Linux环境。
+
+候选包到实际运行器的受控初始化、独立真实启动receipt与服务所有权交接、
 可移植真实run CLI/运行卡、失败重试授权以及真实identity manipulation check
 仍待接入。先完成这些入口，准备候选制品及审批，再请用户开启云服务器。
 先检验纯Blue/Green操纵，再按批准规则决定六条件真实小pilot；不以合成测试
