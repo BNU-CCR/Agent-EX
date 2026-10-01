@@ -19,8 +19,20 @@ service_start批准，核对调用者报告的实际commit、实际bundle字节�
 
 ## 必须继续完成的接线
 
-1. 校验真实环境inspection、原服务收口/冷关机/迁移证据、新服务start-first记录和
-   服务配置，将真实服务身份绑定到新SIS意向。不得把旧Phase0B 12格/N20授权套给SIS。
+当前service_bridge已接纯合同验证：启动前vacancy绑定intent/inspection/host，要求
+8000端口无监听及GPU compute进程空观察；新start-first记录须绑定本次intent和inspection，
+与固定服务配置、PID/proc tick及时间顺序一致。环境锁仅作为固定模型/依赖profile，
+不把旧scope授权给SIS；当前环境记录绑定本次intent，新代码必须clean且commit相同。
+模型/分词器/制品、chat template、package/image/vLLM、non-thinking render和serve参数
+与固定profile一致，并要求明确loopback/8000/served name/BF16，拒绝equals-form覆盖。
+输出桥仍dispatch_authorized=false。
+
+这些输入必须来自真实host collector；当前纯合同不证明进程仍活着、观察来源诚实或
+旧797归档已经迁移完成。后续启动入口须读取实际PID/start tick/cmdline/host并做Git及
+bundle核验，不能用合成test fixture替代现场证据。端口/GPU忙时拒绝，不自动kill。
+
+1. 将上述纯合同接到真实观察与运行入口；原服务收口/冷关机/迁移保留原有独立证据。
+   不得把旧Phase0B 12格/N20授权套给SIS，也不把新host空闲观察当作旧数据归档证明。
 2. 为真实身份操纵检验生成具体来源/规模/criteria和独立执行授权；pure-label first，
    只接受已绑定stage-one report/criteria的人类no_signal决定进入预定义stage-two。
 3. 最终诊断授权绑定实际candidate、服务证据、源码、scope和独立人工receipt。

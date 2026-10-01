@@ -37,6 +37,9 @@ service_inputs已解耦pre-service固定来源投影与post-start机械身份绑
 launch.py已接SIS service intent与scoped human receipt纯合同，绑定source bundle
 大小/hash和固定输入，service_start不替代dispatch授权。真实服务证据bridge、
 最终dispatch authorization及独立run CLI仍待接；见docs/identity-network-launch-boundary.md。
+service_bridge已接vacancy/start/current runtime证据纯校验：固定model profile匹配、
+本次intent授权、host/时间/config身份一致、loopback/8000/servedname/BF16唯一参数。
+下一步真实collector与final dispatch gate；纯校验不证明live PID或旧797归档迁移。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
 到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见

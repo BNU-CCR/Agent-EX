@@ -1,5 +1,23 @@
 # 进度日志
 
+## 2026-10-01：SIS新服务空闲/启动/运行环境证据桥
+
+- 上轮bb4ca84为实质进展。新增service_bridge纯合同：vacancy要求loopback8000无
+  监听、GPU compute空观察，绑定intent/inspection/host/time；start-first记录必须
+  匹配当前intent/config/inspection、PID/tick和approval/vacancy/start/observation顺序。
+- 固定environment lock仅提供已绑定model/install profile，不覆盖旧authorization。
+  当前EnvironmentObservation派生的新记录绑定本次SIS intent；clean源码commit必须
+  与intent一致，模型/tokenizer制品、package/image/vLLM/chat/non-thinking render及
+  serve args与profile一致，并要求loopback/8000/servedname/explicit BF16。
+- TDD11项缺模块RED；正例wheel hash不一致拒绝，修正合成fixture而非放宽检查。
+  新BF16 wrong-profile RED后加精度检查；当前环境授权RED后绑定新intent。
+  独立review发现equals-form flag覆盖，四项完整profile匹配RED复现并拒绝覆盖。
+- fresh相关专项42 passed in31.98s；Ruff lint/format/diff通过；独立限定闭环
+  5 passed,11 deselected in6.92s，无该范围剩余Important。未宣称真实host collector、
+  live PID验证、旧797迁移或dispatch权限完成；所有输入仍为合成测试。
+- 无云端、上传、GitHub推送或未决参数默认值；legacy不变。长期目标active，
+  下一步final dispatch gate、真实操纵检验/独立run入口与观察接线；暂不需开服务器。
+
 ## 2026-10-01：SIS服务启动意向与分作用域人类批准合同
 
 - 上轮6a2b937为实质进展；继续新SIS启动边界，不改变旧Phase0B scope/合同。
