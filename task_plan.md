@@ -4,6 +4,9 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+preflight_cli已接完整证据JSON的严格cold读取与独立命令；旧env lock保留、current env
+绑定本次intent，最终仍调用full preflight而非凭cached hash放行。尚无run/dispatch；
+用法docs/identity-network-preflight-cli.md。240设计与真实来源待确认，服务器暂无需开。
 preflight已将stage1 v1全来源/规则/bridge/scoped receipt、实际bundle和clean checkout、
 fresh service_health组合只读验证；不执行dispatch。拒绝index隐藏flags；独立CLI/full
 runner、执行origin及240重复/统计仍待接，见docs/identity-network-manipulation-preflight.md。

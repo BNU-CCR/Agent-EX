@@ -1,5 +1,20 @@
 # 进度日志
 
+## 2026-10-01：完整证据冷读取与独立预检命令
+
+- 上轮4f40e07为实质进展；新增preflight_cli完整request serializer/parser。精确root/
+  evidence/service字段，candidate不重复；原envlock保留，current observation经本次intent
+  绑定EnvironmentLock规范排序后冷还原。JSON strict bounded reader沿用，拒绝额外字段/
+  重复键/改hash后current authorization不匹配；最终调用完整preflight而非仅parse。
+- TDD3 missingmodule RED；规范环境tuple排序导致原对象直接相等断言不适用，改为
+  逐个完整artifact/其余证据完全相等+完整current EnvironmentLock相等，并执行全预检。
+  fresh3 passed in16.97s；包含真实独立Python子进程对错误receipt拒绝、没有HTTP。
+  独立限定review无确证Important/Critical，3 passed in16.77s；Ruff lint/format与diff通过。
+- CLI stdout只有false-authority观察，stderr仅异常类别；真实tinyGit、mock procfs/health，
+  不是云端Linux/模型验收。用法docs/identity-network-preflight-cli.md。
+- 无run/dispatch/自动重试，无云端/上传/推送，legacy未变。执行origin、独立runner日志/
+  fresh archive及240设计/实际case仍待；长期目标active，服务器尚不需开。
+
 ## 2026-10-01：Stage-A只读预检组合
 
 - 上轮1dd9f00为实质进展；preflight完整重放来源/preregistration/bridge/dispatch receipt，
