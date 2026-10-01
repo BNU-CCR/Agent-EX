@@ -1,5 +1,21 @@
 # 进度日志
 
+## 2026-10-01：SIS服务启动意向与分作用域人类批准合同
+
+- 上轮6a2b937为实质进展；继续新SIS启动边界，不改变旧Phase0B scope/合同。
+  launch.py以完整固定来源投影、source commit/bundle大小与SHA、精确服务配置和
+  专属归档子目录构造自包含pre-service intent，不依赖未来start身份。
+- StudyApprovalReceipt使用SIS schema，明确service_start/diagnostic_dispatch scope、
+  target/hash、人类归属及UTC时间；formal始终false。create只用于记录可信人类批准，
+  自行构造receipt不是取得批准。start validator独立重放意向、冷核验receipt，并
+  核对实际bundle字节/hash/大小与调用者观察commit，不代替Git bundle内部核验。
+- TDD16项缺模块RED→16 passed in7.46s；fresh intent/service source/candidate
+  专项36 passed in15.78s；独立限定复核16 passed in7.92s，无确证Critical/Important。
+  Ruff lint/format及diff check通过。测试仅为合成纯合同，不证明服务/批准真实性。
+- 真实service bridge、最终dispatch授权/独立run入口与真实identity check仍未接齐。
+  无云端/上传/推送或formal参数默认值；legacy不变。长期目标active，暂不需开云。
+  接线边界见docs/identity-network-launch-boundary.md。
+
 ## 2026-10-01：服务启动前固定输入与启动后身份解耦
 
 - 上轮cef5fd3为实质进展。本轮检查legacy service bridge/intent不能直接授权新SIS：
