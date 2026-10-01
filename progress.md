@@ -1,5 +1,18 @@
 # 进度日志
 
+## 2026-10-01：操纵检验包冷重建核验
+
+- 上轮6ebfadd为实质进展；新增validate_manipulation_pack，严格fixture/receipt字段，
+  独立typed topic校验base renderer，完整重建四配对trial及seed/order/envelope。
+  不把有效hash或自行构造receipt当作来源真实性、研究批准或stage-one结果证据。
+- TDD新增9项缺函数RED；12项GREEN覆盖两stage冷JSON往返、重哈希trial seed/
+  order/metadata/extra字段，以及完整重建但非法system/fact card基准输入。
+- fresh manipulation/prompts/execution相关专项40 passed in0.71s；独立限定复核
+  12 passed in0.15s，无确证Important/Critical；Ruff lint/format及diff check通过。
+- 实际来源绑定、SIS_MC_SAMPLE/CRITERIA选择、独立MC runner和dispatch gate仍待接；
+  测试仅合成数据，不是实证结果。无云端、上传或推送；legacy不变。长期目标active。
+  下一步实际来源case绑定与受控独立检验入口，暂不需开启服务器。
+
 ## 2026-10-01：SIS新服务空闲/启动/运行环境证据桥
 
 - 上轮bb4ca84为实质进展。新增service_bridge纯合同：vacancy要求loopback8000无

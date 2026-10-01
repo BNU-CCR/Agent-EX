@@ -40,6 +40,9 @@ launch.py已接SIS service intent与scoped human receipt纯合同，绑定source
 service_bridge已接vacancy/start/current runtime证据纯校验：固定model profile匹配、
 本次intent授权、host/时间/config身份一致、loopback/8000/servedname/BF16唯一参数。
 下一步真实collector与final dispatch gate；纯校验不证明live PID或旧797归档迁移。
+操纵检验包已补cold derivation validator：独立topic校验base renderer，再重建四个
+配对trial、seed/order、receipt和完整envelope；这不证明fixture来源真实性或研究批准。
+实际来源绑定、采样/判定规则、独立操纵检验runner仍待接，不使用测试fixture跑真实检验。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
 到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见

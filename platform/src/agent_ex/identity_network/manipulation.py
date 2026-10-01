@@ -9,7 +9,8 @@ from typing import Mapping
 from ..artifacts import ArtifactEnvelope
 from ..domain import _require_int, _require_sha256, canonical_payload_hash
 from ..rng import RNGProvenance
-from .prompts import RENDERER_VERSION, StudyPrompt
+from ..topic import TopicPackage
+from .prompts import RENDERER_VERSION, StudyPrompt, validate_study_prompt_projection
 
 
 @dataclass(frozen=True, slots=True)
@@ -181,3 +182,70 @@ def build_manipulation_pack(
             },
         },
     )
+
+
+def validate_manipulation_pack(
+    pack: ArtifactEnvelope, *, topic_package: TopicPackage
+) -> tuple[CheckCase, ...]:
+    """Cold rebuild all paired stimuli against an independently supplied topic.
+
+    This proves derivation, not fixture authenticity, human approval, a valid
+    stage-one result, or a frozen sampling/decision rule. Those remain separate
+    dispatch requirements. No response content or model endpoint is accessed.
+    """
+    try:
+        if not isinstance(pack, ArtifactEnvelope) or not isinstance(topic_package, TopicPackage):
+            raise ValueError("typed pack and trusted topic required")
+        p = pack.payload
+        if not isinstance(p, Mapping) or set(p) != {
+            "stage",
+            "fixtures",
+            "trials",
+            "generation_settings",
+            "stage_two_receipt",
+            "metadata",
+        }:
+            raise ValueError("pack fields drift")
+        if not isinstance(p["fixtures"], tuple) or len(pack.rng_provenance) != 1:
+            raise ValueError("fixtures/order provenance drift")
+        cases = []
+        for fixture in p["fixtures"]:
+            if not isinstance(fixture, Mapping) or set(fixture) != {
+                "case_id",
+                "base_messages",
+                "base_prompt_hash",
+                "base_evidence",
+                "base_evidence_hash",
+                "sampling_seed",
+            }:
+                raise ValueError("fixture fields drift")
+            prompt = StudyPrompt(
+                fixture["base_messages"],
+                fixture["base_prompt_hash"],
+                fixture["base_evidence"],
+                fixture["base_evidence_hash"],
+            )
+            validate_study_prompt_projection(prompt, topic_package)
+            cases.append(CheckCase(fixture["case_id"], prompt, fixture["sampling_seed"]))
+        receipt = p["stage_two_receipt"]
+        if receipt is not None:
+            if not isinstance(receipt, Mapping) or set(receipt) != {
+                "stage_one_report_hash",
+                "preregistered_criteria_hash",
+                "decision",
+                "researcher",
+            }:
+                raise ValueError("receipt fields drift")
+            receipt = StageTwoReceipt(**dict(receipt))
+        rebuilt = build_manipulation_pack(
+            cases=tuple(cases),
+            stage=p["stage"],
+            matched_seed=pack.rng_provenance[0].matched_seed,
+            generation_settings=p["generation_settings"],
+            stage_two_receipt=receipt,
+        )
+        if rebuilt != pack:
+            raise ValueError("paired stimuli/order/envelope drift")
+        return tuple(cases)
+    except (KeyError, TypeError, ValueError, IndexError) as exc:
+        raise ValueError("manipulation pack cold derivation validation failed") from exc
