@@ -19,6 +19,7 @@ def bundle(tmp_path):
     git(repo, "init", "-q")
     git(repo, "config", "user.name", "Synthetic Test")
     git(repo, "config", "user.email", "synthetic@example.invalid")
+    git(repo, "config", "core.autocrlf", "false")
     (repo / "code.txt").write_text("initial\n", encoding="utf-8")
     git(repo, "add", "code.txt")
     git(repo, "commit", "-qm", "initial")

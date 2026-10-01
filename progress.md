@@ -1,5 +1,21 @@
 # 进度日志
 
+## 2026-10-01：Stage-A只读预检组合
+
+- 上轮1dd9f00为实质进展；preflight完整重放来源/preregistration/bridge/dispatch receipt，
+  实际bundle pack/tree、精确clean runtime root HEAD/tree、fresh Linux服务health前后观察，
+  再查runtime。只返回hash观察、dispatchFalse，尚无run/独立CLI/输出目录/发送日志。
+- TDD组合fixture先因start inspection错配修正；随后4项missingmodule RED→4GREEN。
+  Windows用户global autocrlf与sanitized Git差异暴露，测试仓库local autocrlf=false后
+  保持严格clean检查。审批/bundle错误不得HTTP，health期间runtime变更必须拒绝。
+- hidden tracked edit先DIDNOTRAISE RED；新增ls-files拒绝assume-unchanged/skip-worktree。
+  独立review也复现同一Important，修复后独立2 passed,6 deselected in2.29s确认关闭。
+  fresh preflight/source_bundle/health相关26 passed in50.64s；Ruff lint/format、diff通过。
+- 实际tinyGit内容核验、typed全部证据；procfs/HTTP模拟，不是云端验收。执行origin/
+  ignored code/current环境真值/fresh archive/durable dispatch与最终CLI仍待接；v1四trial
+  不是240实现。详见docs/identity-network-manipulation-preflight.md。
+- 无云端/上传/推送，legacy未变；目标active，尚不需开服务器。240确认/实际case仍待。
+
 ## 2026-10-01：服务健康观察与独立命令入口
 
 - 上轮e3f0980为实质进展；本轮service_health将Linux recorded PID/listener观察置于

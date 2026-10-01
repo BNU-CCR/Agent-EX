@@ -4,6 +4,9 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+preflight已将stage1 v1全来源/规则/bridge/scoped receipt、实际bundle和clean checkout、
+fresh service_health组合只读验证；不执行dispatch。拒绝index隐藏flags；独立CLI/full
+runner、执行origin及240重复/统计仍待接，见docs/identity-network-manipulation-preflight.md。
 本轮已接service_health独立Linux入口：固定loopback health之前/之后复查服务身份，
 禁proxy/redirect、HTTP200/body bound，仅metadata且无dispatch权；仍需最终入口集成。
 ### 活跃长期目标（2026-10-01）
