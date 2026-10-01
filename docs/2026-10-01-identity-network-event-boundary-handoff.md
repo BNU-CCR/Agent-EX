@@ -19,7 +19,21 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
-### 当前最新阶段：SIS durable dispatch 与本地保存响应恢复
+### 当前最新阶段：六条件有界运行原语与只读归档核验
+
+identity_network/runner.py增加run_study_cells_prefix、verify_study_cells，
+以及独立的verify/report CLI。六格首次发送前统一核对common、实际round-0、
+各自manifest候选授权引用和独立SQLite/journal；发现已有失败先本地收口，
+未决dispatch不重发。运行仍逐事件严格串行，同一已完成前缀不重复请求。
+
+只读CLI从完整baseline manifest与相对路径索引打开归档；verify要求六格完整，
+report可给部分进度。摘要仅含计数、hash与立场分布，不含响应/reason文本。
+读侧变化会拒绝输出；报告保持preliminary/not_frozen且transport unattested。
+API运行原语仍要求调用者持有全部lease并提供adapter，不是独立真实启动授权。
+候选输入物化、human receipt/服务交接、真实run CLI与身份操纵检验尚待接入。
+说明见2026-10-01-sis-runner-local-validation.md；当前无需开启AutoDL。
+
+### 上一阶段：SIS durable dispatch 与本地保存响应恢复
 
 identity_network/dispatch.py新增StudyDispatchJournal与reconcile_study_event。
 前者可接现有vLLM adapter的before_dispatch回调，hash-only条目包含run/

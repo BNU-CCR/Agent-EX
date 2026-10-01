@@ -1,5 +1,26 @@
 # 进度日志
 
+## 2026-10-01：六条件有界运行原语与只读verify/report
+
+- 新增identity_network/runner.py；六格在首次发送前统一核对common、封存初态、
+  候选授权引用和独立SQLite/journal。显式stop ordinal控制前缀，已完成前缀不
+  重发；已保存响应本地reconcile，失败停止全族，未决dispatch不自动重发。
+- 本地六格各20人×2轮共240个合成事件通过现有vLLM adapter假连接链路，完整
+  关闭重开核验；另覆盖部分前缀、失败/发送后中断、跨格错误和共享日志拒绝。
+- 独立审查指出后面cell缺授权/已有失败不能在前面cell发送后才发现，两项已
+  RED→GREEN闭环。读侧审查又指出guard之后重新读取baseline hash的窄race；
+  改用已捕获cell记录，新增RED→GREEN负例。最终这项修复没有再次独立复核：
+  审查代理额度不足，未重复启动；本地对应两项测试通过。
+- 独立CLI只有verify/report，严格六格归档索引与目录内相对路径；缺数据库不
+  创建、失败不输出raw。摘要无响应/reason文本，保持preliminary/not_frozen、
+  formal_parameter_authority=false及transport unattested。读侧变化拒绝摘要。
+- 最新runner专项19 passed in104.82s；合成240事件不构成新研究实证结果。
+  相关新旧存储/dispatch/adapter回归444 passed, 2 skipped in108.89s；两项仍为
+  Windows符号链接权限与POSIX no-follow环境skip。Ruff/format/diff通过。
+  未真实HTTP、未开启AutoDL、未全仓pytest、未推送GitHub。
+- 下一步：候选输入来源物化、SIS独立真实启动receipt/服务交接及可移植运行入口，
+  再做真实identity manipulation check。正式参数未冻结，不填研究默认值。
+
 ## 2026-10-01：SIS durable dispatch 与保存响应本地恢复
 
 - 新增StudyDispatchJournal，绑定run/study/baseline manifest、request及actual

@@ -1,5 +1,15 @@
 # 发现与决策
 
+## 2026-10-01：六格必须在首次发送前统一预检，摘要只使用同一读侧快照
+
+- 后面cell缺授权引用或已有失败响应，不能等前面cell发送之后才发现；全族预检
+  必须先核对完整共同输入、实际初态、六个独立数据库/日志和既有dispatch状态。
+- 已落盘的失败响应可本地收口，但不能继续向其他cell发送；未决发送继续拒绝重发。
+- 只读摘要开始/结束核对数据库与journal签名，发生变化不输出摘要；结束guard后
+  不再读取baseline hash，直接从已采集cell记录派生report input hashes。
+- CLI只提供verify/report，不提供真实run。候选authorization引用不是human receipt；
+  合成provider响应不能支持新设计的实证结论，报告transport仍为unattested。
+
 ## 2026-10-01：发送意向必须先刷盘，恢复不能把“缺日志”当作“未发送”
 
 - SIS 专属journal不修改legacy日志。每条绑定run/study/baseline manifest、request、

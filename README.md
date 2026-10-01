@@ -20,7 +20,12 @@
 日志变化或数据库非受信变更需冷核验；热路径缓存历史，只增量检查新启动尝试。
 六条件均通过现有 vLLM adapter 的本地假连接回调验证，不构成真实模型实验。
 
-下一步为完整六条件 run/verify/report、明确的失败重试授权与新研究真实启动审批、
+已接入有界六条件运行原语和独立只读 `verify/report` CLI；六格在首次发送前统一
+检查输入、初态、独立存储和已有失败，未决发送不重发。核验摘要不含响应文本，
+仍标记为 preliminary / not_frozen / transport unattested。操作边界见
+[本地核验说明](docs/2026-10-01-sis-runner-local-validation.md)。
+
+下一步为候选输入物化、明确的失败重试授权与新研究真实启动入口/审批、
 identity manipulation check。当前无需启动云服务器，暂无新研究实证结果；
 见 [事件接口与恢复交接](docs/2026-10-01-identity-network-event-boundary-handoff.md)。
 
