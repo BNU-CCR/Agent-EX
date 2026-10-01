@@ -1,7 +1,7 @@
 # Independent identity-manipulation runner design
 
-Status: independent written review Approved; awaiting human approval.
-This review is not implementation or cloud authorization.
+Status: independent written review Approved; human approved 2026-10-01.
+Human approval authorizes local implementation, not upload or cloud execution.
 Authority: operational extension of the approved identity-network 2×3 design.
 Research choices remain in `docs/research-qa.md`; no statistical/sample defaults here.
 
@@ -148,4 +148,4 @@ Implement and verify, in order:
    exact source bundle, candidate/receipt targets and operator commands. Ask for cloud
    startup then perform Linux lock/origin/service acceptance and actual Stage-A inference.
 
-No upload, start, stop or experiment execution is authorized by this draft.
+No upload, service start/stop or experiment execution is authorized by this design.

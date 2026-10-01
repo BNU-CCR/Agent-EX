@@ -4,10 +4,12 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
-独立manipulation runner书面规格已通过限定独立review、待用户确认：专用SQLite试次
+独立manipulation runner书面规格已通过限定独立review，用户已于2026-10-01批准：专用SQLite试次
 存储复用vLLM transport，不推进study state；intent先落盘、savedresponse本地恢复、
 ambiguity不重发。见docs/superpowers/specs/2026-10-01-identity-manipulation-runner-design.md。
-按brainstorming书面确认门，确认前不写该新runner实现；原预检CLI仍可用，服务器无需开。
+已完成首个输入组件：完整来源/授权冷重放生成有序、不可变transport请求清单，
+v1明确仅本地合同测试、禁止云端启动；下一步专用SQLite存储与中断恢复。
+原预检CLI仍可用，完整runner尚未完成，服务器无需开。
 preflight_cli已接完整证据JSON的严格cold读取与独立命令；旧env lock保留、current env
 绑定本次intent，最终仍调用full preflight而非凭cached hash放行。尚无run/dispatch；
 用法docs/identity-network-preflight-cli.md。240设计与真实来源待确认，服务器暂无需开。
