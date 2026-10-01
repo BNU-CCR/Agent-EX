@@ -1,5 +1,19 @@
 # 进度日志
 
+## 2026-10-01：数据库快照到SIS请求的读侧连接
+
+- 新增 prepare_snapshot_event：持有lease，按显式persona/feed/memory参数重新构造
+  当前数据库完整快照，逐字段/制品身份比较后从CURRENT快照生成PreparedStudyEvent。
+- 拒绝重新哈希的run/event/receiver/chain/publication/round0/binding/prompt/source rows/
+  selection/metadata篡改，以及不同persona/capacity/window复用快照。
+- RED 16项因缺失接口失败；GREEN 16项通过。随后六格加入实际adapter代码的假HTTP
+  响应/finalization验证和附加篡改负例，最终接口专项101 passed in 20.40s。
+  Ruff/format/diff check通过；独立专项审查无Critical/Important，19项新测试复验通过。
+  没有发送真实云请求、没有写入SQLite事件。
+- 模型seed/settings、parser、attempt index仍显式给入；本接口不是运行授权或重试
+  审批，不替代完整共同制品、durable prefix与dispatch intent。下一步仍需接入
+  这些持久化合同及成功事件原子提交；云服务器继续不需要开启。
+
 ## 2026-10-01：SIS 数据库因果输入快照
 
 - 新增 StudyRunStorage.snapshot_next_input：持有 writer lease，在一个只读 SQLite

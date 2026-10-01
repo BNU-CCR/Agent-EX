@@ -1,5 +1,12 @@
 # 发现与决策
 
+## 2026-10-01：快照哈希正确不代表快照可以用于当前请求
+
+- prepare_snapshot_event不接受通用envelope哈希作为权限。持有lease重新构造当前
+  input snapshot并比较整个envelope，防止经过重新哈希但来源/事件身份变化的候选。
+- 重新生成后从current而非caller payload构造请求；read-side检查仍不替代durable
+  dispatch意向和固定model/policy/attempt authorization，也不能开启模型事件写入。
+
 ## 2026-10-01：SIS输入须从数据库构造，不能仅核验prompt内部一致
 
 - 新读侧接口在持有lease的SQLite read transaction中，从实际公开帖子与接收者

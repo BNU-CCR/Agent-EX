@@ -21,6 +21,14 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ### 读侧因果输入已接通
 
+新增 prepare_snapshot_event(snapshot, persona_text=..., feed_capacity=..., memory_window=...,
+attempt_index=..., parser_limits=..., model_seed=..., generation_settings=...,
+adapter_binding_hash=...)。方法要求lease并重新生成当前完整快照，任何snapshot字段或
+envelope身份不一致就拒绝；之后只从current快照构造原PreparedStudyEvent。
+专项101 passed（包括六格SQLite输入→假HTTP adapter→解析，库状态不变）。
+此接口不派发请求、不持久化input/policy/intent，也不授权retry。必须保留snapshot
+作为未来durable-prefix配套来源证据；单独的PreparedStudyEvent尚无完整候选feed。
+
 StudyRunStorage.snapshot_next_input(persona_text=..., feed_capacity=..., memory_window=...)
 要求本实例持有writer lease、round-0已封存且还有schedule slot；只读事务内复核库，
 根据bound node mapping/实际B1或B2图读取neighbors的公开未读帖子，读取接收者私人

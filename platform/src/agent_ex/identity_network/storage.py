@@ -410,6 +410,59 @@ class StudyRunStorage(RunStorage):
         finally:
             self._connection.rollback()
 
+    def prepare_snapshot_event(
+        self,
+        snapshot,
+        *,
+        persona_text,
+        feed_capacity,
+        memory_window,
+        attempt_index,
+        parser_limits,
+        model_seed,
+        generation_settings,
+        adapter_binding_hash,
+    ):
+        """Build a prospective request only after replaying the whole input snapshot.
+
+        Not a dispatch authorization: no intent/policy/response has been persisted.
+        The caller must retain the lease through later durable-prefix integration.
+        Model settings and candidate policies still need a common-input artifact.
+        """
+        from ..state import PrivateState
+        from .execution import prepare_study_event
+        from .prompts import StudyPrompt
+
+        if not isinstance(snapshot, ArtifactEnvelope):
+            raise TypeError("typed SIS input snapshot required")
+        current = self.snapshot_next_input(
+            persona_text=persona_text, feed_capacity=feed_capacity, memory_window=memory_window
+        )
+        if snapshot != current:
+            raise ValueError("snapshot does not match current SIS database input")
+        payload = current.payload
+        prompt_payload = payload["prompt"]
+        prompt = StudyPrompt(
+            messages=prompt_payload["messages"],
+            prompt_hash=prompt_payload["prompt_hash"],
+            evidence=prompt_payload["evidence"],
+            evidence_hash=prompt_payload["evidence_hash"],
+        )
+        return prepare_study_event(
+            run_id=payload["run_id"],
+            event_ordinal=payload["event_ordinal"],
+            attempt_index=attempt_index,
+            previous_event_hash=payload["previous_event_hash"],
+            publish_flag=payload["publish_flag"],
+            prompt=prompt,
+            private_state=PrivateState.from_payload(_json_ready(payload["pre_state"])),
+            topic_package=self.study_binding.topic_package,
+            parser_limits=parser_limits,
+            model_seed=model_seed,
+            generation_settings=generation_settings,
+            adapter_binding_hash=adapter_binding_hash,
+        )
+
     def record_prepared_attempt(self, *args, **kwargs):
         raise ValueError("SIS event writes require the SIS causal-prefix integration")
 
