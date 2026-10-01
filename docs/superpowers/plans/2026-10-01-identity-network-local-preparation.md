@@ -91,7 +91,7 @@ Create `identity_network/manipulation.py` and `test_identity_network_manipulatio
 
 ## Task 6 — Handoff
 
-- [ ] Record actual test evidence, commit and push the new branch; verify remote
+- [x] Record actual test evidence, commit and push the new branch; verify remote
   tip and archived tag. Do not merge into main or change the tag.
 - [x] Document the remaining runtime subproject: shared event-input/SQLite union
   integration, reconstructable committed traces, six-cell fake-HTTP execution,
@@ -100,3 +100,10 @@ Create `identity_network/manipulation.py` and `test_identity_network_manipulatio
 The preparation milestone alone does not produce a runnable six-cell cloud
 experiment. AutoDL is needed after runtime verification and an explicit small
 candidate pack, not for any task in this local plan.
+
+Execution receipt: implementation `2727120` pushed and remote tip verified;
+archive branch and peeled tag both `91661b4`; remote main unchanged at `28421fa`.
+Final targeted suite: 217 passed (20 new preparation tests), lint/format and
+diff checks passed. Independent review closed the neutral-display-alias issue.
+See `docs/2026-10-01-identity-network-preparation-handoff.md` for remaining
+runtime scope; no real-model requests were dispatched.
