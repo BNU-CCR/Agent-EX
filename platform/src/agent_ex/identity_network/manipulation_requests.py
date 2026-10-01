@@ -47,7 +47,9 @@ def build_manipulation_request_plan(*, auth, receipt, evidence, checked_at):
             event_id=event_id,
             attempt_index=1,
             prompt_hash=trial["prompt_hash"],
-            rendered_messages=tuple(dict(m) for m in trial["messages"]),
+            rendered_messages=tuple(
+                {"role": m["role"], "content": m["content"]} for m in trial["messages"]
+            ),
             generation_settings=generation,
             model_seed=trial["sampling_seed"],
             adapter_binding_hash=adapter.record_hash,
@@ -115,6 +117,8 @@ def validate_manipulation_request_plan(plan, *, checked_at):
     requests = []
     for entry in payload["entries"]:
         values = entry["request"]
-        values["rendered_messages"] = tuple(values["rendered_messages"])
+        values["rendered_messages"] = tuple(
+            {"role": m["role"], "content": m["content"]} for m in values["rendered_messages"]
+        )
         requests.append(Phase0BVllmEventRequest(**values))
     return tuple(requests)

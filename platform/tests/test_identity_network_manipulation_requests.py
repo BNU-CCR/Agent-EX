@@ -129,3 +129,21 @@ def test_fully_rehashed_inventory_substitutions_fail_cold_derivation(bound):
             validate_manipulation_request_plan(
                 rebuild(plan, payload), checked_at=bound["checked_at"]
             )
+
+
+def test_sorted_json_roundtrip_preserves_exact_encoder_wire(bound):
+    from agent_ex.identity_network.manipulation_requests import (
+        build_manipulation_request_plan,
+        validate_manipulation_request_plan,
+    )
+    from agent_ex.phase0b.vllm_event_adapter import Phase0BVllmEventAdapter
+
+    plan = build_manipulation_request_plan(**bound)
+    cold = ArtifactEnvelope.from_payload(json.loads(json.dumps(plan.to_payload(), sort_keys=True)))
+    requests = validate_manipulation_request_plan(cold, checked_at=bound["checked_at"])
+    binding = cold.payload["adapter_binding"]
+    encoder = Phase0BVllmEventAdapter(
+        binding["endpoint"], served_model_name=binding["served_model_name"]
+    )
+    for entry, request in zip(cold.payload["entries"], requests, strict=True):
+        assert hashlib.sha256(encoder._request_body(request)).hexdigest() == entry["wire_sha256"]

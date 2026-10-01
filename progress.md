@@ -1,5 +1,26 @@
 # 进度日志
 
+## 2026-10-01：独立操纵检验专用 SQLite 证据存储
+
+- 延续6263b14与active长期目标，在现有隔离分支实现 manipulation_store/evidence，
+  不修改legacy、六格共享状态或797盲判store。独立SQLite保存完整来源绑定计划、
+  有序试次与hash-chain；intent在发送前提交，typed response在解析前提交。
+- 完整冷重放核验metadata/inventory/schema/每条request与transport/parser证据，
+  保存响应仅本地terminalize；无响应intent不重发，INVALID停止后续试次。
+  summary只输出计数/阶段/hash与preliminary/not_frozen/false-authority标记。
+- 正常写入复用一次核验请求与增量前缀，不逐请求重建全包。专项覆盖外部DB变化、
+  stale caller、BEGIN竞态和一致冷读；独立规格审查发现post-COMMIT缓存代际漏洞，
+  以外部metadata/旧记录修改复现2 failed，再保留已验证data_version并在保护读快照
+  比较变化，针对性5 passed。限定规格复审与独立质量审查均无剩余严重问题。
+- 本轮还实际复现排序JSON重开改变message键顺序而导致wire哈希漂移；仅请求构造/
+  冷返回统一role/content键顺序，sorted roundtrip RED→GREEN，研究消息/seed不变。
+- 控制器最终专项40 passed、2 Linux-only skipped（122.48s），Ruff check/format与
+  git diff check通过。用真实SQLite、完整输入来源和合成响应；lease为明确OS模拟，
+  不称Linux内核/目录fsync验收，不称真实模型检验或速度实测。
+- 下一步独立transport loop与假HTTP崩溃恢复，之后CLI/源码origin/真实授权根目录与
+  服务预检组合。实际240内容、seed、bootstrap与failure规则仍未冻结；v1禁止云启动。
+  无云端/上传/推送、无新真实实验数据；目标继续active，服务器仍无需开启。
+
 ## 2026-10-01：长期目标恢复，独立运行器单写者锁
 
 - 上轮585546a为实质进展；本轮get_goal确认active，继续既定完整目标，不收窄为锁。
