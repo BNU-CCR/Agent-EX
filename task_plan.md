@@ -53,6 +53,9 @@ dispatch receipt纯门；不是现场发送入口。用户候选已更新为30ca
 源码bundle已接独立source_cli verify：精确批准/size/hash/advertised commit、隔离pack/
 reachable tree验证，增量base只读，原仓库不导入。不证明当前runtime checkout或live服务。
 240增补确认前不改统计/重复层；继续不依赖研究选择的独立入口与现场观察接线。
+service_live已接Linux host/service只读CLI：boot/container、recorded PID/tick/cmdline/exe、
+两次netns/loopback8000/FD归属观察，Windows拒绝。仅合成procfs证明，非Linux现场或health。
+下一步真实startup/dispatch入口串接source、bridge与刚发送前观察；240增补仍待确认。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
 到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见

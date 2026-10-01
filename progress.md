@@ -1,5 +1,22 @@
 # 进度日志
 
+## 2026-10-01：Linux只读host/service观察入口
+
+- 上轮413d5ea为实质进展；本轮继续不依赖240统计选择的service_live collector与
+  独立CLI。host=boot/container hash不输出hostname；服务核对record PID、proc field22
+  （comm允许空格与右括号）、NUL cmdline SHA/exe、非Z/X、start<=observation时间。
+- 当前PID与客户端netns相同且稳定；IPv4loopback8000全部listener inode由其FD持有，
+  两次PID/tick/command/exe/listener/FD/host一致，拒绝PID重用、wildcard、foreignowner。
+  不发health/HTTP、不读取环境变量/socket/响应、无GPU/服务stop/start/kill动作。
+- TDD10项missingmodule import errors（功能缺失）→10 passed；补namespace中途变化
+  与standalone CLI缺入口2 RED→fresh12 passed in1.42s；独立限定12 passed in1.40s，
+  无确证Important/Critical。Ruff lint/format与diff check通过。
+- 仅合成procfs/readlink边界和Windows拒绝路径，不是Linux现场证据。瞬时观察不是
+  lease/health/dispatch授权，真实runner须发送前重查，并继续核对source/environment/
+  human receipt。用法见docs/identity-network-linux-observation-cli.md。
+- 无云端/上传/推送，legacy未变；长期目标active，服务器暂不需开。240设计细节仍等
+  用户确认；下一步startup/dispatch串接已核验source、bridge与真实观察。
+
 ## 2026-10-01：独立Git bundle内容核验入口
 
 - 上轮e9fda5b为实质进展，240统计/seed增补尚待确认；本轮推进不依赖这些研究选择
