@@ -1,5 +1,25 @@
 # 进度日志
 
+## 2026-10-01：SIS derived 成功提交与历史输入重放
+
+- commit_study_success仅接受当前durable SUCCEEDED attempt_id，从精确input/request/
+  invocation与独立bounded parse派生private update/state、外生发布分支、cursor。
+  复用共享SQLite事务一次提交event/私人/公开/游标/progress/chain；generic commit
+  仍关闭。失败不能推进，progress写中断全回滚，保留terminal即可重试提交，无HTTP。
+- cold replay一次前向重建历史receiver pre-state/cursor/previous chain，actual public
+  source/private history严格截到event之前；exact prompt/common/source验证继续执行。
+  shared parent仍独立验证状态/公开帖子/游标/event-chain exact cover，未修改legacy逻辑。
+- 新8项缺API RED→8 passed。扩展到11项包括六格各2事件public/private split、
+  单格WS-salient 20agents×2sweeps/40事件全程合成响应提交、重复接收者私人memory、
+  完成重开、重哈希历史chain拒绝及evidence references。标准引用入口暴露missing
+  evidence_id RED后补computed SIS stored-input ID，nested输入schema不变。
+- 独立审查无Critical/Important，审查者8项通过；本地最终commit专项11 passed
+  in20.04s。新旧存储相关回归402 passed, 2 skipped in83.75s，环境skip仍为
+  Windows symlink权限及POSIX no-follow；Ruff/format/diff通过。
+- 未真实HTTP、未启动AutoDL、未全仓pytest、未推送GitHub。合成响应完整单格
+  流程不是六格真实实验。后续接发送intent/reconciliation、失败收口/重试授权、
+  六格runner与真实identity manipulation check；完整运行器性能仍需实测。
+
 ## 2026-10-01：SIS 响应与成功/失败终态落盘
 
 - 新增start_diagnostic_attempt，只接受当前已落盘精确PENDING，保存IN_PROGRESS，

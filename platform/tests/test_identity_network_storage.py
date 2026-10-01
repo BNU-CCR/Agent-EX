@@ -14,7 +14,7 @@ from test_storage import manifest
 from test_prompt import topic
 
 
-def setup(cell, *, k=4):
+def setup(cell, *, k=4, sweeps=1):
     from agent_ex.identity_network.storage import StudyRunBinding, StudyRunStorage
 
     agents = tuple(f"agent-{i:04d}" for i in range(20))
@@ -23,8 +23,12 @@ def setup(cell, *, k=4):
         "sis-schedule",
         "1.0.0",
         20,
-        1,
-        tuple(ScheduleSlot(i, 1, i, a, i % 2 == 0) for i, a in enumerate(agents)),
+        sweeps,
+        tuple(
+            ScheduleSlot(s * 20 + i, s + 1, i, a, i % 2 == 0)
+            for s in range(sweeps)
+            for i, a in enumerate(agents)
+        ),
     )
     groups = build_group_assignment(initial_stances={a: "label-2" for a in agents}, matched_seed=17)
     ws = build_ws_artifact(n=20, k=k, p=0, matched_seed=17, mock_only=True)

@@ -118,6 +118,10 @@ class StoredStudyInput:
         return self.input.event_id
 
     @property
+    def evidence_id(self):
+        return "sis-stored-event-input-" + self.record_hash
+
+    @property
     def receiver_agent_id(self):
         return self.input.receiver_agent_id
 

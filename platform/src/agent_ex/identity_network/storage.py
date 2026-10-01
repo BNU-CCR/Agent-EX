@@ -1,6 +1,6 @@
-"""Explicit SIS binding over the shared SQLite v6 initial-state transactions.
+"""Explicit SIS binding, causal prefixes and derived commits over SQLite v6.
 
-Event writes are gated off until SIS causal-prefix and commit integration exists.
+No HTTP dispatch, real-run authorization or automatic retry is provided here.
 """
 
 from dataclasses import dataclass, replace
@@ -265,6 +265,7 @@ class StudyRunStorage(RunStorage):
         common_payload = payload["run_spec"].get("identity_network_execution_inputs")
         self._stored_common_inputs = None
         self._stored_common_initial_root = None
+        self._historical_input_contexts = {}
         if common_payload is not None:
             from .execution_inputs import validate_execution_inputs
 
@@ -289,10 +290,6 @@ class StudyRunStorage(RunStorage):
 
     def verify_integrity(self):
         super().verify_integrity()
-        # Response prefixes are supported; state commits remain closed until
-        # historical causal-input replay is implemented.
-        if self.progress.next_event_ordinal != 0:
-            raise ValueError("SIS storage does not yet support committed historical inputs")
         # A sealed cold replay already calls our typed _round0_entries override;
         # the parent's connection-signature cache then protects trusted writes.
         # Partial initialization still needs SIS checks even without a root.
@@ -566,11 +563,19 @@ class StudyRunStorage(RunStorage):
             self._stored_common_initial_root = self.binding.round0_root
         i = event_input.input
         s = event_input.snapshot.payload
-        ordinal = self.progress.next_event_ordinal
-        if i.run_id != self.binding.run_id or i.event_ordinal != ordinal:
-            raise ValueError("SIS prefix only supports current uncommitted event input")
+        ordinal = i.event_ordinal
+        if i.run_id != self.binding.run_id or ordinal > self.progress.next_event_ordinal:
+            raise ValueError("SIS input lies outside the actual event prefix")
         slot = self.schedule_slot(ordinal)
-        cursor = self.feed_cursor(slot.agent_id)
+        if ordinal == self.progress.next_event_ordinal:
+            cursor = self.feed_cursor(slot.agent_id)
+            pre_state = self.private_state(slot.agent_id)
+            previous_hash = self.progress.event_chain_head
+        else:
+            context = self._historical_input_contexts.get(ordinal)
+            if context is None:
+                raise ValueError("SIS historical input lacks independently replayed context")
+            pre_state, cursor, previous_hash = context
         selection = ExposureSelection.from_payload(_json_ready(s["selection"]))
         memory = MemoryView.from_payload(_json_ready(s["memory"]))
         neighbors = []
@@ -582,15 +587,23 @@ class StudyRunStorage(RunStorage):
                 elif b == node:
                     neighbors.append(binding.node_agent_ids[a])
         neighbors = tuple(sorted(neighbors))
-        actual_posts = self.unread_public_posts_for_agents(
-            neighbors, cursor.last_scanned_event_ordinal
+        actual_posts = tuple(
+            p
+            for p in self.unread_public_posts_for_agents(
+                neighbors, cursor.last_scanned_event_ordinal
+            )
+            if p.published_event_ordinal is None or p.published_event_ordinal < ordinal
         )
-        actual_history = self.private_updates_for_agent(slot.agent_id)
+        actual_history = tuple(
+            u
+            for u in self.private_updates_for_agent(slot.agent_id)
+            if u.event_ordinal is None or u.event_ordinal < ordinal
+        )
         if (
             i.receiver_agent_id != slot.agent_id
             or i.publish_flag != slot.publish_flag
-            or i.private_state != self.private_state(slot.agent_id)
-            or i.previous_event_hash != self.progress.event_chain_head
+            or i.private_state != pre_state
+            or i.previous_event_hash != previous_hash
             or i.topic_package != binding.topic_package
             or i.parser_limits != ParserLimits.from_payload(_json_ready(common["parser_limits"]))
             or s["study_binding_hash"] != binding.record_hash
@@ -771,6 +784,7 @@ class StudyRunStorage(RunStorage):
         return RunStorage.record_diagnostic_finalized_attempt(self, terminal, parsed)
 
     def _verify_v6_evidence_exact_cover(self):
+        self._rebuild_historical_input_contexts()
         super()._verify_v6_evidence_exact_cover()
         for (attempt_id,) in self._connection.execute(
             "SELECT attempt_id FROM invocation_evidence"
@@ -782,3 +796,119 @@ class StudyRunStorage(RunStorage):
 
     def commit_success(self, *args, **kwargs):
         raise ValueError("SIS event writes require the SIS atomic event integration")
+
+    def _rebuild_historical_input_contexts(self):
+        """One forward pass on cold replay; no per-input prefix re-scans."""
+        from ..state import PrivateUpdate, PrivateState, PublicPost
+        from ..feed import FeedCursor
+
+        self._historical_input_contexts = {}
+        if self.progress.next_event_ordinal == 0:
+            return
+        entries = self._round0_entries(require_exact=True)
+        states = {
+            e["agent_id"]: PrivateState.from_update(
+                PrivateUpdate.from_payload(e["private_update"]), previous=None, mock_only=True
+            )
+            for e in entries
+        }
+        cursors = {
+            agent: self._read_typed_current("initial_feed_cursors", agent, FeedCursor)
+            for agent in states
+        }
+        chain = self._event_chain_genesis(self.binding.round0_root)
+        for ordinal in range(self.progress.next_event_ordinal):
+            event = self.event_at(ordinal)
+            if event is None:
+                raise ValueError("SIS historical event prefix is incomplete")
+            agent = self.schedule_slot(ordinal).agent_id
+            self._historical_input_contexts[ordinal] = (states[agent], cursors[agent], chain)
+            row = self._connection.execute(
+                "SELECT payload_json, payload_hash FROM private_updates WHERE event_ordinal=?",
+                (ordinal,),
+            ).fetchall()
+            if len(row) != 1:
+                raise ValueError("SIS historical update is not exact-cover")
+            payload = _load_canonical_json(row[0][0], "SIS historical update")
+            if canonical_payload_hash(payload) != row[0][1]:
+                raise ValueError("SIS historical update hash mismatch")
+            update = PrivateUpdate.from_payload(payload)
+            state = PrivateState.from_update(update, previous=states[agent], mock_only=True)
+            cursor = cursors[agent].advance(ordinal)
+            post = (
+                PublicPost.from_private_update(update, mock_only=True)
+                if event.publish_flag
+                else None
+            )
+            chain = canonical_payload_hash(
+                {
+                    "previous": chain,
+                    "event": event.to_payload(),
+                    "attempts": self._attempt_chain_entries(
+                        event.event_id, self.attempts_for_event(event.event_id)
+                    ),
+                    "private_update_hash": update.record_hash,
+                    "private_state_hash": state.record_hash,
+                    "public_post_hash": None if post is None else post.record_hash,
+                    "cursor_hash": cursor.record_hash,
+                }
+            )
+            states[agent], cursors[agent] = state, cursor
+
+    def commit_study_success(self, attempt_id):
+        """Derive all state changes from durable SIS evidence, then commit atomically."""
+        from ..domain import GenerationEvent
+        from ..feed import ExposureSelection
+        from ..state import LatestPublicPointer
+
+        self.assert_run_lease_owned()
+        self.verify_integrity()
+        journal = self.current_event_journal()
+        terminal = journal.latest_transition
+        if (
+            terminal is None
+            or terminal.attempt_id != attempt_id
+            or terminal.status is not EventStatus.SUCCEEDED
+        ):
+            raise ValueError("SIS commit requires current durable terminal success")
+        invocation = self.invocation_evidence(attempt_id)
+        result = self._validate_study_invocation(invocation)
+        if not result.parse.success or result.parse != self.parse_evidence(attempt_id):
+            raise ValueError("SIS success parse differs from bounded durable response")
+        stored = self.event_input_evidence(terminal.event_id)
+        slot = self.schedule_slot(self.progress.next_event_ordinal)
+        selection = ExposureSelection.from_payload(
+            _json_ready(stored.snapshot.payload["selection"])
+        )
+        event = GenerationEvent(
+            run_id=self.binding.run_id,
+            event_id=terminal.event_id,
+            event_ordinal=slot.event_ordinal,
+            sweep_index=slot.sweep_index,
+            draw_index=slot.draw_index,
+            agent_id=slot.agent_id,
+            publish_flag=slot.publish_flag,
+            exposure_id=stored.exposure_id,
+            status=EventStatus.SUCCEEDED,
+            attempt_ids=tuple(a.attempt_id for a in self.attempts_for_event(terminal.event_id)),
+            failure_reason=None,
+        )
+        pointer = (
+            None
+            if result.public_post is None
+            else LatestPublicPointer.from_post(
+                result.public_post,
+                previous=self.latest_public_pointer(slot.agent_id),
+                mock_only=True,
+            )
+        )
+        RunStorage.commit_success(
+            self,
+            event,
+            final_attempt=terminal,
+            private_update=result.private_update,
+            private_state=result.private_state,
+            feed_cursor=selection.cursor_after,
+            public_post=result.public_post,
+            latest_public_pointer=pointer,
+        )

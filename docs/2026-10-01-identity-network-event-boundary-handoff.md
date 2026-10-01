@@ -19,7 +19,28 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
-### 当前最新阶段：SIS 响应与成功/失败终态前缀
+### 当前最新阶段：SIS 成功状态提交与历史输入重放
+
+`commit_study_success(attempt_id)`只接受当前durable SUCCEEDED终态，从已落盘
+input/request/invocation及独立bounded parse重建PrivateUpdate/PrivateState与
+可选PublicPost/LatestPublicPointer，cursor使用已验证selection.cursor_after。
+复用共享v6 transaction一次提交event、私人状态、公开分支、游标、progress和链。
+失败不推进；事务中断全回滚，重试提交无需再发HTTP。通用commit入口仍关闭，
+不能由调用者任填状态绕过SIS证据。
+
+冷重放一次前向重建各历史事件的receiver pre-state/cursor/previous chain，
+实际source posts/private history严格截到该事件之前，再核对exact prompt。
+共享parent仍独立验证update/public/cursor/event-chain exact cover；不以当前
+状态或当前帖子反推旧prompt，不按每条input重复重建前序chain。
+
+六条件各两事件验证公开/私人状态分离与重开后下一输入；另一个WS-salient
+20人×2轮、40事件合成响应案例全程成功并完成冷重放，重复激活记忆含此前
+提交状态。重哈希历史chain负例拒绝，已提交event可读取完整evidence references。
+这不是六格全量真实运行或新研究数据。发送意向/恢复编排、失败收口/重试授权、
+六条件runner与真实identity manipulation check仍待接入；服务器无需开启。
+最终相关回归402 passed、2环境skip，Ruff/format/diff通过；独立提交阶段审查收口。
+
+### 上一阶段：SIS 响应与成功/失败终态前缀
 
 `start_diagnostic_attempt`只接受当前已落盘的精确PENDING，保存IN_PROGRESS；
 不发送HTTP，也不构成真实运行授权。IN_PROGRESS重开仍要求provider reconciliation，
@@ -35,8 +56,8 @@ invocation授权必须与durable request相同；成功响应必须声明相同p
 六格成功和失败终态关闭重开核验通过，private state/cursor/ordinal仍不变。
 冷重放也核对wire/model/authorization及bounded parse，重哈希不能绕过这些合同。
 
-本阶段支持当前未提交事件的response/terminal；historical input replay、状态
-atomic commit、失败收口/重试授权、发送意向/恢复编排、六格runner仍待接入。
+上述历史重放和derived commit已新增；失败收口/重试授权、发送意向/恢复编排、
+六格runner仍待接入。
 不要用旧MockEventPipeline读取SIS输入。所有新测试为合成provider响应，
 没有新真实模型数据、没有云端调用；服务器仍不需开启。
 验证：391 passed、2环境skip；Ruff/format/diff通过，独立响应阶段审查收口。

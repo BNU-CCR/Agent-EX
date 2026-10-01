@@ -1,5 +1,16 @@
 # 发现与决策
 
+## 2026-10-01：历史输入必须绑定当时的状态，成功提交必须由durable结果派生
+
+- historical input不能与当前private state/cursor或未来public posts比较。冷重放
+  一次前向建立每event的receiver pre-state/cursor/previous chain，source rows截到
+  event之前；parent原exact-cover/状态/公开帖子/chain复核继续保留。
+- derived commit接口只接attempt_id，不接受独立填入的新意见或public output。
+  publish_flag仍来自排程，非发布事件不改变latest public stock，cursor只在成功
+  原子提交后推进。提交中断可以在同一terminal上重试，无需模型请求。
+- state.successful_update_count包含round-0：初始为1，首次模型提交后为2。
+  重复接收者测试同时验证完整私人历史与memory窗口，而不把该计数当event ordinal。
+
 ## 2026-10-01：响应记录必须绑定实际模型与同一授权，解析不能接受调用者替代品
 
 - 从已落盘SIS因果输入及请求重建准备对象，复用bounded finalizer；terminal的

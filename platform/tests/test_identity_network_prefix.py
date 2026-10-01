@@ -20,10 +20,10 @@ from test_identity_network_storage import setup, initialize
 from test_phase0b_storage import _binding, _policy
 
 
-def prefix_store(tmp_path, cell, *, include_common=True, include_authorization=True):
+def prefix_store(tmp_path, cell, *, include_common=True, include_authorization=True, sweeps=1):
     from agent_ex.identity_network.stored_input import StoredStudyInput
 
-    cls, binding, manifest = setup(cell)
+    cls, binding, manifest = setup(cell, sweeps=sweeps)
     common, _ = inputs(binding)
     binding = rebind(binding, common)
     spec = {
