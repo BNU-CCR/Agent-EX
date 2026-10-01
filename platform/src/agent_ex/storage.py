@@ -66,6 +66,7 @@ def decode_event_input_payload(payload: Mapping[str, object]):
     """
     from .execution_evidence import EventInputEvidence
     from .identity_network.evidence import INPUT_SCHEMA, StudyEventInputEvidence
+    from .identity_network.stored_input import STORED_INPUT_SCHEMA, StoredStudyInput
 
     if not isinstance(payload, Mapping):
         raise TypeError("event input payload must be a mapping")
@@ -74,6 +75,8 @@ def decode_event_input_payload(payload: Mapping[str, object]):
         return EventInputEvidence.from_payload(payload)
     if schema == INPUT_SCHEMA:
         return StudyEventInputEvidence.from_payload(payload)
+    if schema == STORED_INPUT_SCHEMA:
+        return StoredStudyInput.from_payload(payload)
     raise ValueError("unsupported event input evidence schema")
 
 
@@ -2337,6 +2340,25 @@ class RunStorage:
             self._connection.rollback()
             raise
 
+    def _diagnostic_input_projection(self, event_input):
+        """Legacy-only default; study subclasses provide a distinct typed projection."""
+        from .execution_evidence import EventInputEvidence
+
+        if not isinstance(event_input, EventInputEvidence):
+            raise TypeError("legacy diagnostic input must be typed EventInputEvidence")
+        return dict(
+            event_ordinal=event_input.prompt_view.event_ordinal,
+            prompt_hash=event_input.prompt_view.record_hash,
+            exposure_id=event_input.exposure_record.exposure_id,
+            exposure_mode=event_input.exposure_record.exposure_mode,
+            exposure_graph_hash=event_input.exposure_record.exposure_graph_hash,
+            topic_package_id=event_input.prompt_view.topic_package_id,
+            topic_hash=event_input.prompt_view.topic_hash,
+        )
+
+    def _validate_diagnostic_request_contract(self, event_input, request, policy, adapter):
+        """Additional study contract hook; legacy validation remains in the caller."""
+
     def record_diagnostic_prepared_attempt(
         self,
         event_input: EventInputEvidence,
@@ -2352,7 +2374,7 @@ class RunStorage:
         retain their own explicit payload schemas.  No legacy row is migrated.
         """
 
-        from .execution_evidence import DiagnosticAdapterRequestEvidence, EventInputEvidence
+        from .execution_evidence import DiagnosticAdapterRequestEvidence
         from .phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
 
         self._begin_write()
@@ -2360,8 +2382,7 @@ class RunStorage:
             self._assert_not_halted()
             if self.binding.round0_root is None:
                 raise ValueError("initial state must be sealed before preparing attempts")
-            if not isinstance(event_input, EventInputEvidence):
-                raise TypeError("event_input must be typed EventInputEvidence")
+            projection = self._diagnostic_input_projection(event_input)
             if not isinstance(policy, DiagnosticAttemptPolicy):
                 raise TypeError("policy must be typed DiagnosticAttemptPolicy")
             if not isinstance(adapter_binding, DiagnosticAdapterBinding):
@@ -2374,6 +2395,9 @@ class RunStorage:
             journal = self.current_event_journal()
             slot = self.schedule_slot(journal.event_ordinal)
             request = request_evidence.request
+            self._validate_diagnostic_request_contract(
+                event_input, request_evidence, policy, adapter_binding
+            )
             if (
                 journal.event_id is None
                 or journal.event_id != event_input.event_id
@@ -2381,17 +2405,16 @@ class RunStorage:
                 or journal.next_attempt_index != request_evidence.attempt_index
                 or event_input.receiver_agent_id != slot.agent_id
                 or event_input.publish_flag != slot.publish_flag
-                or event_input.exposure_record.exposure_mode != self.binding.expected_exposure_mode
-                or event_input.exposure_record.exposure_graph_hash
-                != self.binding.expected_exposure_graph_hash
+                or projection["exposure_mode"] != self.binding.expected_exposure_mode
+                or projection["exposure_graph_hash"] != self.binding.expected_exposure_graph_hash
             ):
                 raise ValueError("diagnostic evidence does not bind current journal and schedule")
             if (
-                request.prompt_hash != event_input.prompt_view.record_hash
+                request.prompt_hash != projection["prompt_hash"]
                 or request.rendered_messages_hash != pending.rendered_prompt_hash
                 or request.rendered_messages != pending.rendered_messages
-                or pending.exposure_id != event_input.exposure_record.exposure_id
-                or request_evidence.prompt_limits_hash != event_input.prompt_view.record_hash
+                or pending.exposure_id != projection["exposure_id"]
+                or request_evidence.prompt_limits_hash != projection["prompt_hash"]
                 or request_evidence.parser_limits_hash != event_input.parser_limits.record_hash
                 or request_evidence.attempt_policy_hash != policy.record_hash
                 or request_evidence.adapter_execution_binding_hash != adapter_binding.record_hash
@@ -5471,25 +5494,36 @@ class RunStorage:
                 raise ValueError("v6 request lacks its exact PENDING authorization")
             pending = transitions[0]
             adapter_request = request.request
-            slot = self.schedule_slot(event_input.prompt_view.event_ordinal)
-            prompt_drift = (
-                adapter_request.prompt_hash != event_input.prompt_view.record_hash
-                or request.prompt_limits_hash != event_input.prompt_view.record_hash
-                if diagnostic
-                else adapter_request.prompt_view_id != event_input.prompt_view.view_id
-                or adapter_request.prompt_view_hash != event_input.prompt_view.record_hash
-                or request.prompt_limits_hash != event_input.prompt_view.limits_hash
-            )
+            if diagnostic:
+                projection = self._diagnostic_input_projection(event_input)
+                self._validate_diagnostic_request_contract(event_input, request, policy, binding)
+                slot = self.schedule_slot(projection["event_ordinal"])
+                prompt_drift = (
+                    adapter_request.prompt_hash != projection["prompt_hash"]
+                    or request.prompt_limits_hash != projection["prompt_hash"]
+                )
+                exposure_mode = projection["exposure_mode"]
+                exposure_graph_hash = projection["exposure_graph_hash"]
+                exposure_id = projection["exposure_id"]
+            else:
+                slot = self.schedule_slot(event_input.prompt_view.event_ordinal)
+                prompt_drift = (
+                    adapter_request.prompt_view_id != event_input.prompt_view.view_id
+                    or adapter_request.prompt_view_hash != event_input.prompt_view.record_hash
+                    or request.prompt_limits_hash != event_input.prompt_view.limits_hash
+                )
+                exposure_mode = event_input.exposure_record.exposure_mode
+                exposure_graph_hash = event_input.exposure_record.exposure_graph_hash
+                exposure_id = event_input.exposure_record.exposure_id
             if (
                 event_input.receiver_agent_id != slot.agent_id
                 or event_input.publish_flag != slot.publish_flag
-                or event_input.exposure_record.exposure_mode != self.binding.expected_exposure_mode
-                or event_input.exposure_record.exposure_graph_hash
-                != self.binding.expected_exposure_graph_hash
+                or exposure_mode != self.binding.expected_exposure_mode
+                or exposure_graph_hash != self.binding.expected_exposure_graph_hash
                 or prompt_drift
                 or adapter_request.rendered_messages_hash != pending.rendered_prompt_hash
                 or adapter_request.rendered_messages != pending.rendered_messages
-                or pending.exposure_id != event_input.exposure_record.exposure_id
+                or pending.exposure_id != exposure_id
             ):
                 raise ValueError("v6 request prompt, schedule, or exposure binding drifted")
             pending_links = (

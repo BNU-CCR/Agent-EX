@@ -1,5 +1,25 @@
 # 进度日志
 
+## 2026-10-01：SIS 请求前 PENDING 原子前缀
+
+- 新增 StoredStudyInput（stored-event-input.v2），保存typed SIS input与完整causal
+  snapshot；共享diagnostic存储通过受保护投影接入，默认legacy输入类型仍严格。
+- manifest保存完整共同执行制品及候选authorization hash引用；写入前/冷重开
+  均核对actual round-0、state/chain/schedule、source rows、有限feed/memory、
+  group/alias/persona prompt与model/policy。候选hash引用不是正式运行审批。
+- 六格input/policy/adapter/request/PENDING在同一SQLite事务落盘，重复写幂等；
+  请求插入中断全部回滚，关闭重开可核验。输入hash/缺request/重哈希round0引用/
+  不同modelseed/不完整manifest负例均拒绝且不推进state/cursor/ordinal。
+- 测试先行缺失API RED→8 passed，扩大负例18 passed。审查发现IN_PROGRESS
+  冷重开越阶段接受，补RED→GREEN的显式PENDING-only guard及response writer gates；
+  独立复核无剩余Critical/Important，审查者最小复验2 passed。
+- 最终相关新接口与旧存储回归371 passed, 2 skipped in64.66s；两skip为Windows
+  symlink权限与POSIX no-follow。Ruff lint、format、git diff check通过。
+  未跑全仓pytest、未联系云端、未发送真实HTTP；本轮提交只在本地新分支。
+- 下一步接dispatch intent与response/finalization，扩展已提交历史输入重放及
+  diagnostic topic引用，再开放atomic commit/后续事件/六格runner。当前仅支持
+  未提交当前事件的PENDING，不能称完整恢复或正式实验可运行。
+
 ## 2026-10-01：共同执行输入制品与静态校验缓存
 
 - 新增 execution_inputs.py，六条件共用同一候选ArtifactEnvelope：完整rendered

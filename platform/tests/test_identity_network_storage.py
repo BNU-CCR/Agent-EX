@@ -216,8 +216,10 @@ def test_shared_initialization_and_seal_transactions_rollback(tmp_path, monkeypa
                 store.seal_initial_state()
         assert store._read_binding().round0_root is None
         store.seal_initial_state()
-        with pytest.raises(ValueError, match="SIS event writes"):
-            store.record_diagnostic_prepared_attempt(None)
+        with pytest.raises(TypeError, match="StoredStudyInput"):
+            store.record_diagnostic_prepared_attempt(
+                None, policy=None, adapter_binding=None, request_evidence=None, pending_attempt=None
+            )
         with pytest.raises(ValueError, match="SIS event writes"):
             store.commit_success(None)
     store.close()

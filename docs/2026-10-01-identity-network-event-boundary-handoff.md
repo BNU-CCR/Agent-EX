@@ -19,7 +19,27 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
-### 共同执行制品已绑定（当前最新阶段）
+### 当前最新阶段：SIS 请求前 PENDING 原子落盘
+
+`StoredStudyInput`（stored-event-input.v2）保存 typed SIS input 与完整 causal
+snapshot；不是旧 ExposureRecord，也不通过旧十二格输入 reader 冒充兼容。
+manifest 同时保存完整 `identity_network_execution_inputs` 与候选
+`sis_diagnostic_authorization_hash` 引用；缺任一项不得写入请求前记录。
+后者只是候选哈希绑定，尚非真实运行审批凭证或正式参数授权。
+
+`record_diagnostic_prepared_attempt` 在单个 SQLite 事务中写 input、policy、
+adapter binding、request 与 PENDING transition。核对实际 round-0、当前状态、
+排程、source posts/private history、有限feed/memory及exact group/alias/persona
+prompt；模型seed/settings和policy来自共同制品。重复相同PENDING不会增行；
+插入中断全部回滚。六格关闭重开可重放，重新哈希的错误来源绑定仍拒绝。
+
+本阶段只接受当前未提交事件的PENDING：advanced ordinal、IN_PROGRESS、
+invocation或parse行均拒绝重开，响应/finalization/append/commit入口仍关闭。
+下一步接发送意向与响应/终态落盘，并扩展已提交历史输入重放及topic引用，
+之后才能开放原子commit和后续事件。不能仅删除这些阶段门就认为运行器可用。
+没有真实HTTP、云端使用或新实验数据；云服务器仍不需要开启。
+
+### 共同执行制品已绑定（上一阶段）
 
 execution_inputs.build_execution_inputs显式传入StudyRunBinding、完整persona_by_agent、
 initial_updates tuple、feed_capacity、memory_window、typed parser_limits、generation
@@ -72,8 +92,8 @@ identity_network/storage.py 新增 StudyRunBinding 与 StudyRunStorage。
 已测试六格创建、20个测试agent初始化、seal、关闭和重开，及初始化/seal中断回滚。
 未封存的partial状态也核验bound stance/topic；独立审查收口。
 旧存储相关回归265 passed/2环境skip；最终新接口专项64 passed。
-这不是完整事件恢复：record_prepared_attempt、record_diagnostic_prepared_attempt、
-append_attempt、commit_success在SIS subclass上仍明确拒绝调用。
+这不是完整事件恢复：当前仅record_diagnostic_prepared_attempt已开放为上述
+PENDING原子前缀；record_prepared_attempt、append_attempt、commit_success仍关闭。
 下一批实现SIS自己的causal prefix/finalization/commit入口，保留共用底层事务。
 common_inputs_hash并非正式参数授权，也未替代materializer对共同persona/reason/
 memory/feed/model/publication制品的核验。云服务器仍无需开启。

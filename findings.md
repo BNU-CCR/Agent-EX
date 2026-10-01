@@ -1,5 +1,16 @@
 # 发现与决策
 
+## 2026-10-01：请求前记录必须保存实际来源，阶段门也须覆盖冷重开
+
+- 新stored-input.v2包含完整因果快照，与实际SQLite source rows、排程、状态、
+  group/alias/prompt和共同配置核对；不是只保存一个prompt hash。
+- 复用原v6事务写PENDING exact cover，默认legacy输入仍严格要求旧类型。
+  候选authorization hash引用不是真实运行批准凭证。
+- 审查发现共享重放接受无invocation的IN_PROGRESS；虽SIS公共append已关闭，
+  仍需明确拒绝越阶段数据库。新增RED→GREEN证明冷重开及缓存命中后阶段门有效。
+- 后续必须先扩展historical input replay与diagnostic topic引用，再开放响应终态/
+  commit；本阶段不能直接用于派发、重试或完整六条件运行。
+
 ## 2026-10-01：共同制品不能只保留不透明哈希；静态验证不能随事件重复
 
 - Execution-input artifact记录实际prompt persona、初始update和解析/模型/policy

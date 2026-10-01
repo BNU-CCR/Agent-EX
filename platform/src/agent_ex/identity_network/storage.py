@@ -259,6 +259,15 @@ class StudyRunStorage(RunStorage):
         )
         if set(self.binding.expected_agent_ids) != set(self.study_binding.node_agent_ids):
             raise ValueError("SIS stored roster mismatch")
+        self._sis_run_spec = _freeze(payload["run_spec"])
+        common_payload = payload["run_spec"].get("identity_network_execution_inputs")
+        self._stored_common_inputs = None
+        self._stored_common_initial_root = None
+        if common_payload is not None:
+            from .execution_inputs import validate_execution_inputs
+
+            self._stored_common_inputs = ArtifactEnvelope.from_payload(common_payload)
+            validate_execution_inputs(self._stored_common_inputs, self.study_binding)
 
     def _validate_initial_update(self, update):
         binding = self.study_binding
@@ -278,6 +287,18 @@ class StudyRunStorage(RunStorage):
 
     def verify_integrity(self):
         super().verify_integrity()
+        # This integration deliberately supports only a pre-dispatch prefix.
+        # Enforce the boundary even after a trusted base-class write updated its
+        # integrity cache; later lifecycle work must explicitly replace this gate.
+        if (
+            self.progress.next_event_ordinal != 0
+            or self._connection.execute(
+                "SELECT 1 FROM attempt_transitions WHERE status != 'pending' LIMIT 1"
+            ).fetchone()
+            or self._connection.execute("SELECT 1 FROM invocation_evidence LIMIT 1").fetchone()
+            or self._connection.execute("SELECT 1 FROM parse_evidence LIMIT 1").fetchone()
+        ):
+            raise ValueError("SIS storage currently supports a PENDING-only prefix")
         # A sealed cold replay already calls our typed _round0_entries override;
         # the parent's connection-signature cache then protects trusted writes.
         # Partial initialization still needs SIS checks even without a root.
@@ -514,10 +535,147 @@ class StudyRunStorage(RunStorage):
         raise ValueError("SIS event writes require the SIS causal-prefix integration")
 
     def record_diagnostic_prepared_attempt(self, *args, **kwargs):
-        raise ValueError("SIS event writes require the SIS causal-prefix integration")
+        return RunStorage.record_diagnostic_prepared_attempt(self, *args, **kwargs)
+
+    def event_input_evidence(self, event_id):
+        from .stored_input import StoredStudyInput
+
+        row = self._read_evidence_payload(
+            "event_input_evidence", "event_id", event_id, payload_key="event_id"
+        )
+        if row is None:
+            return None
+        return StoredStudyInput.from_payload(row[0])
+
+    def _diagnostic_input_projection(self, event_input):
+        from ..feed import ExposureSelection
+        from ..memory import MemoryView
+        from ..parser import ParserLimits
+        from .prompts import ShownPost, render_study_prompt
+        from .stored_input import StoredStudyInput
+
+        if not isinstance(event_input, StoredStudyInput):
+            raise TypeError("SIS prefix requires typed StoredStudyInput, never legacy input")
+        if self._stored_common_inputs is None:
+            raise ValueError("SIS prefix requires complete execution inputs in manifest")
+        if self.binding.round0_root is None:
+            raise ValueError("SIS prefix requires sealed round-0")
+        binding = self.study_binding
+        common = self._stored_common_inputs.payload
+        if self._stored_common_initial_root != self.binding.round0_root:
+            actual = {
+                e["agent_id"]: e["private_update"] for e in self._round0_entries(require_exact=True)
+            }
+            expected = {u["agent_id"]: _json_ready(u) for u in common["initial_updates"]}
+            if actual != expected:
+                raise ValueError("SIS prefix common initial state differs from actual round-0")
+            self._stored_common_initial_root = self.binding.round0_root
+        i = event_input.input
+        s = event_input.snapshot.payload
+        ordinal = self.progress.next_event_ordinal
+        if i.run_id != self.binding.run_id or i.event_ordinal != ordinal:
+            raise ValueError("SIS prefix only supports current uncommitted event input")
+        slot = self.schedule_slot(ordinal)
+        cursor = self.feed_cursor(slot.agent_id)
+        selection = ExposureSelection.from_payload(_json_ready(s["selection"]))
+        memory = MemoryView.from_payload(_json_ready(s["memory"]))
+        neighbors = []
+        if binding.exposure_graph is not None:
+            node = binding.node_agent_ids.index(slot.agent_id)
+            for a, b in binding.exposure_graph.payload["edges"]:
+                if a == node:
+                    neighbors.append(binding.node_agent_ids[b])
+                elif b == node:
+                    neighbors.append(binding.node_agent_ids[a])
+        neighbors = tuple(sorted(neighbors))
+        actual_posts = self.unread_public_posts_for_agents(
+            neighbors, cursor.last_scanned_event_ordinal
+        )
+        actual_history = self.private_updates_for_agent(slot.agent_id)
+        if (
+            i.receiver_agent_id != slot.agent_id
+            or i.publish_flag != slot.publish_flag
+            or i.private_state != self.private_state(slot.agent_id)
+            or i.previous_event_hash != self.progress.event_chain_head
+            or i.topic_package != binding.topic_package
+            or i.parser_limits != ParserLimits.from_payload(_json_ready(common["parser_limits"]))
+            or s["study_binding_hash"] != binding.record_hash
+            or s["round0_root"] != self.binding.round0_root
+            or tuple(s["potential_neighbor_ids"]) != neighbors
+            or selection.cursor_before != cursor
+            or selection.exposure_mode != binding.cursor_mode
+            or selection.exposure_graph_hash != binding.exposure_graph_hash
+            or selection.capacity != common["feed_capacity"]
+            or memory.window != common["memory_window"]
+            or canonical_payload_hash(s["unread_public_posts"])
+            != canonical_payload_hash(tuple(p.to_payload() for p in actual_posts))
+            or canonical_payload_hash(s["private_history"])
+            != canonical_payload_hash(tuple(u.to_payload() for u in actual_history))
+        ):
+            raise ValueError("SIS prefix input differs from current database/common contract")
+        expected_prompt = render_study_prompt(
+            cell=binding.cell,
+            groups=binding.groups,
+            receiver_id=slot.agent_id,
+            persona_text=common["persona_by_agent"][slot.agent_id],
+            topic_package=binding.topic_package,
+            pre_state={"stance": i.private_state.stance_label, "reason": i.private_state.reason},
+            self_history=tuple(
+                {"stance": m.stance_label, "reason": m.private_reason, "published": m.published}
+                for m in memory.items
+            ),
+            posts=tuple(
+                ShownPost(
+                    p.post_id,
+                    p.source_agent_id,
+                    binding.aliases[p.source_agent_id],
+                    p.stance_label,
+                    p.public_reason,
+                )
+                for p in sorted(selection.selected, key=lambda p: p.display_slot)
+            ),
+        )
+        if i.prompt != expected_prompt:
+            raise ValueError("SIS prefix exact prompt differs from bound group/alias/common inputs")
+        return dict(
+            event_ordinal=i.event_ordinal,
+            prompt_hash=i.prompt.prompt_hash,
+            exposure_id=event_input.exposure_id,
+            exposure_mode=binding.cursor_mode,
+            exposure_graph_hash=binding.exposure_graph_hash,
+            topic_package_id=i.topic_package.topic_id,
+            topic_hash=i.topic_package.package_hash,
+        )
+
+    def _validate_diagnostic_request_contract(self, event_input, request, policy, adapter):
+        from ..execution_evidence import DiagnosticAdapterRequestEvidence
+        from ..phase0b.contracts import DiagnosticAdapterBinding, DiagnosticAttemptPolicy
+
+        if not isinstance(request, DiagnosticAdapterRequestEvidence):
+            raise TypeError("SIS prefix requires diagnostic request evidence")
+        common = self._stored_common_inputs.payload
+        authorization = self._sis_run_spec.get("sis_diagnostic_authorization_hash")
+        _require_sha256("SIS candidate authorization hash", authorization)
+        if request.run_authorization_hash != authorization:
+            raise ValueError("SIS prefix authorization does not match manifest reference")
+        if (
+            policy != DiagnosticAttemptPolicy.from_payload(_json_ready(common["attempt_policy"]))
+            or adapter
+            != DiagnosticAdapterBinding.from_payload(_json_ready(common["adapter_binding"]))
+            or request.request.generation_settings != common["generation_settings"]
+            or request.model_seed != common["model_seeds"][event_input.input.event_ordinal]
+            or request.request.rendered_messages != event_input.input.prompt.messages
+        ):
+            raise ValueError("SIS prefix request/policy/adapter differs from common inputs")
 
     def append_attempt(self, *args, **kwargs):
         raise ValueError("SIS event writes require the SIS causal-prefix integration")
+
+    def record_diagnostic_invocation_evidence(self, *args, **kwargs):
+        raise ValueError("SIS storage currently supports a PENDING-only prefix")
+
+    def record_diagnostic_finalized_attempt(self, *args, **kwargs):
+        raise ValueError("SIS storage currently supports a PENDING-only prefix")
 
     def commit_success(self, *args, **kwargs):
         raise ValueError("SIS event writes require the SIS atomic event integration")
