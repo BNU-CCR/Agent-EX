@@ -1,5 +1,28 @@
 # 进度日志
 
+## 2026-10-01：SIS durable dispatch 与保存响应本地恢复
+
+- 新增StudyDispatchJournal，绑定run/study/baseline manifest、request及actual
+  wire bytes hash，前序record hash构成链；intent在callback返回前flush/fsync，
+  Linux另刷目录。resolution只接受已经SQLite落盘的相同response，无raw入journal。
+- reconcile_study_event没有HTTP能力；保存响应可恢复解析/终态/derived提交，
+  progress写中断可用同一response继续；失败保留并停止，未决发送不重发。
+  PENDING仅分类不发送，缺历史intent/半条日志/跨run条目均拒绝。
+- 12项缺API RED→12 passed，边界扩展暴露缺历史cover；独立审查另发现bool数字
+  loose equality、duplicate keys及全历史response重扫。均补RED→GREEN：严格
+  JSON+类型敏感hash，安全文件/DB缓存，intent/unresolved索引与IN_PROGRESS
+  rowid增量覆盖；trusted新提交不能绕过历史gate。最终聚焦复核无剩余
+  Critical/Important，审查者hot-cover负例1 passed。
+- 六格均经过现有vLLM adapter+FakeConnection callback和本地reconcile；假响应
+  fixture补齐实际provider的usage/finish_reason后六格6 passed。fsync失败时
+  尚未创建连接；热缓存仍核对新响应的精确wire bytes，不只比较semantic JSON。
+- 最终专项及新旧存储/adapter回归444 passed, 2 skipped in97.05s；Windows
+  symlink权限与POSIX no-follow仍为两环境skip。Ruff/format/diff通过。
+  未真实HTTP、未启动AutoDL、未全仓pytest、未推送GitHub；不构成新研究结果。
+- 后续：完整六条件run/verify/report、明确失败重试授权和独立SIS真实启动
+  审批，再运行identity manipulation check。完整runner性能仍需实测，候选
+  authorization hash不充当human receipt，不新增研究参数默认值。
+
 ## 2026-10-01：SIS derived 成功提交与历史输入重放
 
 - commit_study_success仅接受当前durable SUCCEEDED attempt_id，从精确input/request/

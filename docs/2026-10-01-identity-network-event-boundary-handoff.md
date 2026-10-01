@@ -19,6 +19,26 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
+### 当前最新阶段：SIS durable dispatch 与本地保存响应恢复
+
+identity_network/dispatch.py新增StudyDispatchJournal与reconcile_study_event。
+前者可接现有vLLM adapter的before_dispatch回调，hash-only条目包含run/
+study binding/baseline manifest、request/wire bytes hash及前序条目hash；
+flush/fsync完成后回调才返回。后者无HTTP能力，只有durable响应与intent
+匹配才恢复resolution、bounded parse/终态及derived commit；提交中断保留
+同一响应重试，失败保留并停止，未决发送不重发，缺日志不被当作未发送。
+
+JSON wire拒绝重复键/非有限值和bool冒充数字。文件/数据库非受信变化触发
+冷重核；正常热路径缓存历史ledger，核对当前response，并以transition rowid
+增量检查新增IN_PROGRESS的intent覆盖。不能只按data_version缓存覆盖结果，
+trusted新事件同样需要检查。日志不包含模型文本；实际原始数据仍不入Git。
+
+六格关闭重开后的保存响应提交、progress中断回滚恢复、失败停止、缺/半条
+历史日志、wire歧义与fsync失败零连接均有本地测试。六格也经过现有vLLM
+adapter+FakeConnection回调，未联系云端、未取得新的真实模型结果。
+本模块不提供完整launch authorization、失败重试授权或六条件CLI；下一步
+接完整run/verify/report和独立新研究真实启动审批，之后才请求开启服务器。
+
 ### 当前最新阶段：SIS 成功状态提交与历史输入重放
 
 `commit_study_success(attempt_id)`只接受当前durable SUCCEEDED终态，从已落盘

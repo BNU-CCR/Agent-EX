@@ -1,5 +1,19 @@
 # 发现与决策
 
+## 2026-10-01：发送意向必须先刷盘，恢复不能把“缺日志”当作“未发送”
+
+- SIS 专属journal不修改legacy日志。每条绑定run/study/baseline manifest、request、
+  exact wire bytes hash及前序记录；intent回调flush/fsync完成前不进入HTTP连接。
+- 完整durable响应才能本地派生解析、终态及提交；resolution必须引用相同SQLite
+  响应。只有intent、没有响应，或者缺历史intent时停止，绝不重发或修补日志。
+- Python dict equality会把True与1.0视为相同，默认JSON还接受duplicate keys；
+  wire须严格解析并比较canonical hash，不能用loose dict equality。
+- 热路径不能反复解码全历史response。缓存以文件identity/size/mtime/ctime、
+  数据库data_version及受信完整性状态保护；新IN_PROGRESS按transition rowid
+  增量检查历史intent覆盖。仅把覆盖缓存置为True会漏掉后续trusted commit。
+- 完整runner、明确的失败重试授权与真实启动审批仍是后续边界；candidate hash
+  引用不能充当human receipt或正式参数冻结。无需在本阶段开启AutoDL。
+
 ## 2026-10-01：历史输入必须绑定当时的状态，成功提交必须由durable结果派生
 
 - historical input不能与当前private state/cursor或未来public posts比较。冷重放
