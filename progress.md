@@ -1,5 +1,18 @@
 # 进度日志
 
+## 2026-10-01：服务健康观察与独立命令入口
+
+- 上轮e3f0980为实质进展；本轮service_health将Linux recorded PID/listener观察置于
+  固定loopback /health请求前后。禁环境proxy/HTTPredirect，只接受200；body8192上限，
+  仅输出SHA/大小。无completion请求、无stop/start、无任何dispatch授权。
+- TDD模块缺失5 RED→17相关GREEN；独立CLI缺main RED→18GREEN，补初始身份异常
+  不得触及HTTP后fresh19 passed in2.39s。独立限定审查无确证Important/Critical；
+  CLI闭环独立1 passed,5 deselected in0.70s。Ruff lint/format与diff check通过。
+- 合成procfs/mock HTTP，不是Linux现场验收。socket timeout5秒非全程硬截止；
+  瞬时观察不是lease/model身份/审批替代。用法docs/identity-network-health-observation-cli.md。
+- 无云端/上传/推送，legacy不变。真实发送入口组合source/runtime/bridge/approval仍待
+  完成；240重复/统计设计确认及实际benchmark内容仍待。目标active，暂无需开服务器。
+
 ## 2026-10-01：Linux只读host/service观察入口
 
 - 上轮413d5ea为实质进展；本轮继续不依赖240统计选择的service_live collector与
