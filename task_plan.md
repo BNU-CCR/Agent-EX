@@ -50,6 +50,9 @@ stage-one manipulation_authorization已接显式preregistration、source/bridge�
 dispatch receipt纯门；不是现场发送入口。用户候选已更新为30cases/六strata/两次生成/
 240请求及toward_source_shift三条件判定；保留v1，新增重复层与case级bootstrap设计待确认。
 详见docs/identity-network-manipulation-240-candidate.md；未决bootstrap/seed/content不可默认。
+源码bundle已接独立source_cli verify：精确批准/size/hash/advertised commit、隔离pack/
+reachable tree验证，增量base只读，原仓库不导入。不证明当前runtime checkout或live服务。
+240增补确认前不改统计/重复层；继续不依赖研究选择的独立入口与现场观察接线。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
 到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见

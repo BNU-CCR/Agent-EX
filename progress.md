@@ -1,5 +1,22 @@
 # 进度日志
 
+## 2026-10-01：独立Git bundle内容核验入口
+
+- 上轮e9fda5b为实质进展，240统计/seed增补尚待确认；本轮推进不依赖这些研究选择
+  的source_bundle/source_cli。size/hash及fullcandidate/intent/scoped receipt精确匹配，
+  bundle头部/prerequisites/head、真实pack/commit/reachable tree均核验；不上传或启动。
+- TDD7 missingmodule RED→7 GREEN；独立CLI缺入口RED→8 GREEN，正例使用真实小Git
+  full/incremental bundles，整个原仓库文件字节快照未变，输出无源码/persona/作者信息。
+- 独立review找到Important：broad alternates可用原仓库expected commit遮盖无关PACK。
+  两种正确header+无关合法PACK/只有commit缺tree负例先2 RED DIDNOTRAISE，再移除
+  broad alternates，只导出声明prereq reachable graph，verify-pack查本次pack确含commit。
+  后续fsck/tree纯隔离repo完成。两负例GREEN，独立闭环4 passed,6 deselected in4.96s。
+- 补linked-worktree增量base正例；fresh source/launch专项27 passed in21.77s，Ruff lint/
+  format及diff check通过。临时核验objects仅写自建目录，原repo不导入、不checkout。
+- 该入口不证明批准签名、当前runtime clean checkout或现场服务状态；Linux现场复验
+  仍待以后上云。无云端/上传/推送，legacy不变；长期目标active，暂不需开服务器。
+  用法见docs/identity-network-source-bundle-cli.md；后续现场观察与独立运行入口仍待接。
+
 ## 2026-10-01：首阶段发送前授权合同与240请求候选增补
 
 - 上轮263451d为实质进展；manipulation_authorization新增研究者显式sample/analysis/
