@@ -1,5 +1,20 @@
 # 进度日志
 
+## 2026-10-01：独立操纵检验运行器的完整书面设计
+
+- 上轮d015b17为实质进展；本轮检查共享StudyRunStorage、dispatch、Phase0B adapter/
+  evidence/parser与上位MC规格，确认check trial不该假扮study event或797 judge item。
+- 新书面设计推荐专用SQLite，复用typed loopback transport/parser，独立immutable
+  inventory与READY→INTENT→RESPONSE_STORED→VALID/INVALID；intent在HTTP前commit，
+  savedresponse只本地恢复、ambiguity禁重发、Linuxkernel writer lock覆盖运行。
+- 设计含fresh interpreter/module origin、真实preflight/receipt、冷重放与增量前缀、
+  run/resume/verify/report及crash/performance专项要求，避免每请求扫描全包。v1仅test
+  fixture；240重复/统计/seed/content和Stage-B不默认，不用执行失败冒充无信号。
+- brainstorming限定spec review为Approved，无严重规划缺口。规格仍待人类书面确认，
+  确认前不写新runner实现；未启动新测试/云端/上传/推送，legacy未改，diff检查通过。
+- README修正受控初始化/预检已完成的旧next-step描述。目标active；下一步用户确认
+  运行器规格后创建实施计划并TDD实现。服务器仍无需开，暂无新真实实验数据。
+
 ## 2026-10-01：完整证据冷读取与独立预检命令
 
 - 上轮4f40e07为实质进展；新增preflight_cli完整request serializer/parser。精确root/

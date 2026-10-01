@@ -30,8 +30,13 @@
 注意权重、表达倾向和外生schedule完整来源重放也已接入；自包含六格候选包
 绑定两类来源与逐格binding，可拒绝合法重哈希后的跨格输入漂移。
 
-下一步为候选包接入受控六格初始化、明确的失败重试授权与新研究真实启动入口/审批、
-identity manipulation check。当前无需启动云服务器，暂无新研究实证结果；
+候选包受控六格初始化、独立来源bundle校验、service intent/scoped receipt/bridge、
+Linux服务身份/health观察与完整证据 `preflight_cli` 已接入；本地测试不等于云端验收。
+下一步是独立操纵检验运行器及最终六格真实启动入口，尚无新的真实dispatch。
+[预检命令](docs/identity-network-preflight-cli.md)和
+[独立运行器设计（待人类确认）](docs/superpowers/specs/2026-10-01-identity-manipulation-runner-design.md)
+给出实际操作边界。240请求候选的重复/seed/统计细节及benchmark内容尚待确认。
+当前无需启动云服务器，暂无新研究实证结果；
 见 [事件接口与恢复交接](docs/2026-10-01-identity-network-event-boundary-handoff.md)。
 
 Agent-EX 是一个研究 **LLM-agent 在多轮在线讨论中的意见、理由与公开表达如何演化** 的可复现实验平台。当前首要项目是 Paper 1：在固定网络结构中识别人口身份线索、历史立场连续性要求与社会暴露方式对生成式 Agent 意见动力学的影响。
