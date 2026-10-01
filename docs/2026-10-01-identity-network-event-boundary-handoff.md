@@ -19,7 +19,17 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
-### 当前最新阶段：完整共同来源与六格候选包
+### 当前最新阶段：候选包受控初始化
+
+initialization.py 从完整六格候选派生 fresh manifest；显式要求Git、环境、六格nonce/
+schedule URI和时间。无授权hash时不生成运行器所需引用；即使有hash也只是引用，
+不等于核验human receipt。metadata仍launch_authorized=false、not_frozen。
+调用者创建六个独立SQLite并持有全部lease后，可从共同initial updates派生完整初态，
+封存round0。写前检查全部数据库来源、既有初态、模型/环境/Python和无attempt状态。
+中断保留已写证据，只补齐同一候选缺失agents；封存后的相同调用不再写入。
+本模块无HTTP、目录创建/覆盖、上传或服务操作；可移植文件入口和真实启动门仍待实现。
+
+### 上阶段：完整共同来源与六格候选包
 
 population/persona materialization、attention/expression/外生schedule sources与
 自包含六格candidate包已接入，保持pure candidate/无启动权限。candidate cold

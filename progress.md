@@ -1,5 +1,21 @@
 # 进度日志
 
+## 2026-10-01：完整候选包的受控六格初始化
+
+- 新增initialization.py：fresh manifest来自完整六格source candidate，而非legacy spec；
+  显式核对环境锁/Python、Git及六格nonce/URI，未决provenance拒绝。候选协议hash
+  是来源标识，不是正式协议冻结；authorization hash只是引用，不代表human receipt。
+- caller创建独立SQLite并拥有全部lease；family统一核对binding/source/完整既有初态，
+  再从共同initial updates派生state/public post/pointer/cursor并封存。无attempt才可初始化；
+  重复调用不写，注入中断保留证据、下次只补缺失初态，不删除或重建数据库。
+- 首轮10项缺模块RED；修正lock负例与fixture真实hash相同问题。独立审查发现外部合法
+  manifest可绕过builder环境检查，补三个late-store模型/锁/Python漂移RED，再加baseline
+  manifest来源核对；全部漂移在任何六格写入前拒绝。独立限定闭环3 passed in3.48s。
+- fresh初始化/候选/存储相关专项44 passed in20.28s；Ruff lint/format与diff check通过。
+  120初态仅为20人×6格合成测试，不是真实模型请求或实验结果。
+- 无云端、HTTP、上传或GitHub推送；legacy/main未动。下一步可移植文件入口、真实
+  receipt/服务交接边界、identity check候选；长期目标active，服务器仍无需开启。
+
 ## 2026-10-01：排程来源重放与完整六条件候选包
 
 - 上一目标轮为实质进展：人口/persona来源物化已提交20ecc6d；本轮先核对clean
