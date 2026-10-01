@@ -1,5 +1,21 @@
 # 进度日志
 
+## 2026-10-01：操纵检验样本的候选来源绑定
+
+- 上轮7905c91为实质进展。本轮manipulation_sources以完整六格candidate和显式
+  case/receiver/source/seed selections物化round0 controlled-check；来源不同且属于
+  candidate，统一persona/初态/build_memory_view初始历史，实际初始PublicPost与alias。
+  不选network邻居、不抽样、不把初始记忆人工填满K，四pair共享完整基准内容。
+- 独立candidate冷读取重建完整source wrapper及pack，拒绝renderer合法、全hash一致
+  但替换persona的来源；stage2素材仍仅记录receipt，不授权真实第二阶段。
+- TDD12项missingmodule RED；初次实作PublicPost author字段误用，确认state定义后
+  修正为author_agent_id，12 GREEN；补合法全重哈希替代persona、多case/stage2排序覆盖。
+  fresh sources/manipulation/candidate专项36 passed in12.14s；独立限定14 passed
+  in9.63s，无確证Important/Critical。Ruff lint/format与diff check通过。
+- 仅合成来源fixture，不是已选定真实候选或实证数据。SIS_MC_SAMPLE/CRITERIA、
+  实际来源人类核验、独立run入口、最终dispatch gate与现场collector仍待接。
+  无云端/上传/推送，legacy未变，长期目标active；下一步受控独立操纵检验运行入口。
+
 ## 2026-10-01：操纵检验包冷重建核验
 
 - 上轮6ebfadd为实质进展；新增validate_manipulation_pack，严格fixture/receipt字段，
