@@ -43,6 +43,13 @@ reason或raw response。仍标记`preliminary / not_frozen`、
 
 ## 尚未完成与上云顺序
 
+新增`identity_network.materialization`提供候选人口/persona来源物化及完整冷重放。
+它从显式donor frame、TRS权重/约束/容差重建人口，固定渲染identity-present /
+continuity-absent persona，绑定实际round-0初始更新、理由类别标签和共同执行输入；
+六格不再分别生成persona。来源包包含完整source、派生制品和群体平衡计数。
+这是机械来源验证，不验证donor真实性或研究者理由类别编码；source仍unattested。
+当前运行器尚未强制要求此来源包，后续启动gate将绑定它；不能仅凭该包开始真实run。
+
 候选人口/注意/发布输入的来源物化、独立真实启动receipt与服务所有权交接、
 可移植真实run CLI/运行卡、失败重试授权以及真实identity manipulation check
 仍待接入。先完成这些入口，准备候选制品及审批，再请用户开启云服务器。

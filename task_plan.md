@@ -4,6 +4,15 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+### 活跃长期目标（2026-10-01）
+
+按用户要求持续推进新2×3研究的本地前置工作，直到必须开启云服务器才能完成
+真实身份操纵检验的边界。保留legacy可复现，不擅自上传/启动，不填未决参数。
+依次接：候选人口/persona来源物化 → attention/expression/外生schedule来源重放 →
+独立SIS真实启动receipt/服务交接与可移植入口 → identity-check候选及专项验证。
+到上云边界汇报候选制品、剩余用户选择、启动要求和具体执行步骤。默认仅专项测试，
+不重复全仓pytest；目前服务器不需要开启。
+
 2026-10-01 用户已批准新主研究为 social identity salience × communication
 network structure（2×3），旧 2×2×3 转为 legacy pilot / supplementary。
 本地准备、单事件接口 Step 5a 与可恢复输入 Step 5b-1 已完成；

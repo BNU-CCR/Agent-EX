@@ -1,5 +1,24 @@
 # 进度日志
 
+## 2026-10-01：长期目标与候选人口/persona来源物化
+
+- 按用户请求设定活跃长期目标：持续推进新2×3本地前置工作，直到需要开启
+  云服务器进行真实身份操纵检验；不自动上传/启动，不填未决研究参数。
+- 新增materialization.py，从完整显式candidate donor frame、TRS权重/约束/容差
+  机械重建population；固定identity-present/continuity-absent persona，复用共同
+  execution inputs。来源包绑定full frame、人口、模板/实际rendered persona、
+  round-0 updates、理由类别标签、群体平衡计数及共同输入hash；六格包完全一致。
+- 冷validator完整重建后核对严格envelope，不仅比较调用者提供的hash。
+  未决输入、exact-cover不符、重新哈希的派生制品/摘要/权限篡改均拒绝。
+  source_authority=candidate_unattested：不验证donor真实性或研究者理由编码。
+- 12项缺模块RED→GREEN；扩展人口审计reason_family同名字段隔离测试。
+  独立审查发现额外字段数值1与文本"1"分类折叠，先RED再改为类型保真JSON类别键；
+  不收紧legacy donor schema。最新专项及相关回归108 passed in4.48s，Ruff通过。
+  独立限定闭环复核14 passed in1.24s，无剩余确证Critical/Important；format/diff通过。
+- 本阶段无数据库/文件创建、HTTP、云端操作或GitHub推送；运行器尚未强制接收
+  该来源包。下一阶段接attention/expression/外生schedule来源重放和独立launch gate，
+  不将population来源验证说成全部输入来源验证完成。
+
 ## 2026-10-01：六条件有界运行原语与只读verify/report
 
 - 新增identity_network/runner.py；六格在首次发送前统一核对common、封存初态、

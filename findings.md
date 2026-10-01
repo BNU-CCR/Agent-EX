@@ -1,5 +1,16 @@
 # 发现与决策
 
+## 2026-10-01：来源物化不等于来源真实性，类别审计需类型保真
+
+- Candidate donor frame和研究者显式初态可机械重建人口/persona/common；应保存
+  完整source及派生制品，cold replay拒绝重哈希后伪造的rendered text与平衡摘要。
+  donor authenticity、理由类别人工编码和真实启动权限是独立边界。
+- 旧donor schema仅对六个visible persona字段要求文本，额外审计字段可能数值。
+  str(value)会合并1与"1"，cold replay也会重复该错误；新增RED负例后采用JSON
+  编码类别键保留类型。demographic字段与reason-family编码分层，避免同名覆盖。
+- 注意/表达schedule生成器现有provenance包含runtime身份；后续可移植启动入口
+  需明确生成端与核验端runtime匹配，不假称Windows候选可直接跨平台冷重放。
+
 ## 2026-10-01：六格必须在首次发送前统一预检，摘要只使用同一读侧快照
 
 - 后面cell缺授权引用或已有失败响应，不能等前面cell发送之后才发现；全族预检

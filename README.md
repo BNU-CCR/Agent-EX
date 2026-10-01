@@ -25,6 +25,10 @@
 仍标记为 preliminary / not_frozen / transport unattested。操作边界见
 [本地核验说明](docs/2026-10-01-sis-runner-local-validation.md)。
 
+候选人口/persona来源物化已增加：从完整donor输入重建人口并固定渲染共同身份卡，
+输出可冷重放的来源包与群体平衡计数。它不验证donor真实性，也不是启动授权；
+注意权重、表达倾向和外生schedule来源绑定仍待接入。
+
 下一步为候选输入物化、明确的失败重试授权与新研究真实启动入口/审批、
 identity manipulation check。当前无需启动云服务器，暂无新研究实证结果；
 见 [事件接口与恢复交接](docs/2026-10-01-identity-network-event-boundary-handoff.md)。
