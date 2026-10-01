@@ -8,7 +8,9 @@
 存储复用vLLM transport，不推进study state；intent先落盘、savedresponse本地恢复、
 ambiguity不重发。见docs/superpowers/specs/2026-10-01-identity-manipulation-runner-design.md。
 已完成首个输入组件：完整来源/授权冷重放生成有序、不可变transport请求清单，
-v1明确仅本地合同测试、禁止云端启动；下一步专用SQLite存储与中断恢复。
+v1明确仅本地合同测试、禁止云端启动。专用存储的Linux-only单写者锁已实现，
+本机验证Windows拒绝/模拟syscall合同；真实Linux竞争与进程死亡复验待上云。
+下一步专用SQLite不可变元数据、durable intent/response/terminal与完整前缀重放。
 原预检CLI仍可用，完整runner尚未完成，服务器无需开。
 preflight_cli已接完整证据JSON的严格cold读取与独立命令；旧env lock保留、current env
 绑定本次intent，最终仍调用full preflight而非凭cached hash放行。尚无run/dispatch；

@@ -1,5 +1,21 @@
 # 进度日志
 
+## 2026-10-01：长期目标恢复，独立运行器单写者锁
+
+- 上轮585546a为实质进展；本轮get_goal确认active，继续既定完整目标，不收窄为锁。
+  请求清单专项重新验证3 passed（16.97s）。使用现有隔离worktree，无legacy改动。
+- 新增 manipulation_lock：Linux-only、flock EX|NB、持久非截断0600锁文件，
+  fd/path常规文件与inode核对、PID/root/closed/未取得锁检查；整个会话保留fd。
+  close只关fd、不LOCK_UN；上下文进入校验失败同样清理，防止锁残留。
+- TDD覆盖missing feature、直接构造非held以及审查发现的context-entry泄漏。
+  专项11 passed、2 Linux-only skipped；独立规格与质量审查发现entry清理问题后
+  经RED→GREEN修复并限定重审。真实Linux内核竞争/进程死亡/symlink/FIFO验收未执行。
+- 本机WSL只返回安装帮助、无可用Linux环境，不为此安装或开启云端；模拟测试不称
+  Linux验收。完整SQLite store/runner/CLI尚未完成，下一步不可变计划和durable
+  intent/response/terminal及前缀重放，之后接独立运行循环与执行来源检查。
+- 未上传/推送、未开启云端、无新真实实验数据；v1仍禁止云启动，240来源与研究
+  未决选择不默认。目标继续active，服务器仍无需开。
+
 ## 2026-10-01：独立运行器获批，完成来源绑定输入组件
 
 - 用户批准独立运行器设计；只授权本地实现，不等于上传/上云或研究参数冻结。
