@@ -59,6 +59,24 @@ _SQLITE_SIDECAR_SUFFIXES = ("-wal", "-shm", "-journal")
 _EXECUTION_STATE_STORAGE_SCHEMA_VERSION = "paper1.execution-state-storage.v1"
 
 
+def decode_event_input_payload(payload: Mapping[str, object]):
+    """Decode by explicit study schema, never by legacy field similarity.
+
+    This decoding capability is not permission to write SIS into a legacy run.
+    """
+    from .execution_evidence import EventInputEvidence
+    from .identity_network.evidence import INPUT_SCHEMA, StudyEventInputEvidence
+
+    if not isinstance(payload, Mapping):
+        raise TypeError("event input payload must be a mapping")
+    schema = payload.get("schema_version")
+    if schema == "paper1.event-input-evidence.v1":
+        return EventInputEvidence.from_payload(payload)
+    if schema == INPUT_SCHEMA:
+        return StudyEventInputEvidence.from_payload(payload)
+    raise ValueError("unsupported event input evidence schema")
+
+
 def changed_request_parameter_paths(
     before: Mapping[str, object],
     after: Mapping[str, object],
@@ -2749,7 +2767,12 @@ class RunStorage:
         row = self._read_evidence_payload(
             "event_input_evidence", "event_id", event_id, payload_key="event_id"
         )
-        return None if row is None else EventInputEvidence.from_payload(row[0])
+        if row is None:
+            return None
+        decoded = decode_event_input_payload(row[0])
+        if not isinstance(decoded, EventInputEvidence):
+            raise ValueError("SIS input cannot be read as evidence of a legacy run")
+        return decoded
 
     def attempt_policy_evidence(
         self, event_id: str

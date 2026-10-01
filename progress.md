@@ -1,5 +1,19 @@
 # 进度日志
 
+## 2026-10-01：SIS 可恢复输入与存储读取分流（Step 5b-1）
+
+- 新增 StudyEventInputEvidence，保存完整 TopicPackage、parser limits、原私人状态
+  和 exact prompt evidence；不包含 request/attempt，六条件重试输入哈希保持相同。
+- 共享 storage 新增精确 schema decoder；旧输入保留原类型，未知 schema 拒绝。
+  旧 RunStorage 仍明确拒绝 SIS，不借用十二格验证授权六格执行。
+- 独立审查发现嵌套权限/字段、历史语义以及重复帖子/别名读取漏洞；分别先用
+  协调重哈希负例复现，再补齐共享投影校验，最终审查收口。
+- 存储及新模块回归 290 passed, 2 skipped in 29.32s；两项跳过分别为 Windows
+  无符号链接权限和 POSIX no-follow 专项。最后一处修复后接口专项
+  52 passed in 0.80s。未跑全仓 pytest、未启动 AutoDL。
+- 当前完成的是可重建输入与读取边界，不是 SIS SQLite 写入/断点运行。
+  下一步新增 SIS run binding、原子提交与串行恢复，然后接六条件 materializer。
+
 ## 2026-10-01：新 2×3 单事件接口收口（Step 5a）
 
 - renderer v2 改为绑定 TopicPackage 的文字 stance labels 和整数 1–5 confidence，

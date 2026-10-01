@@ -5,7 +5,7 @@ import json
 import re
 from typing import Mapping
 
-from ..domain import _freeze, _json_ready, canonical_payload_hash
+from ..domain import _freeze, _json_ready, _require_sha256, canonical_payload_hash
 from ..topic import TopicPackage
 from ..parser import _object_without_duplicates, _reject_constant
 from .contracts import StudyCell, study_cells
@@ -175,6 +175,65 @@ def validate_study_prompt_projection(prompt: StudyPrompt, topic_package: TopicPa
     """Check exact visible projection without revalidating whole populations."""
     try:
         e = prompt.evidence
+        if set(e) != {
+            "renderer_version",
+            "topic_package_id",
+            "topic_package_hash",
+            "cell_id",
+            "group_artifact_hash",
+            "receiver_id",
+            "receiver_group",
+            "pre_state",
+            "persona_text",
+            "shown_posts",
+            "self_history",
+            "exact_messages_shown",
+            "post_ids",
+            "source_agent_ids",
+            "source_groups",
+            "local_opinion_context",
+            "metadata",
+        }:
+            raise ValueError("prompt evidence fields drift")
+        if canonical_payload_hash(e["metadata"]) != canonical_payload_hash(
+            {
+                "status": "preliminary",
+                "research_parameter_status": "not_frozen",
+                "formal_parameter_authority": False,
+            }
+        ):
+            raise ValueError("prompt evidence metadata drift")
+        if (
+            e["renderer_version"] != RENDERER_VERSION
+            or e["topic_package_id"] != topic_package.topic_id
+            or e["topic_package_hash"] != topic_package.package_hash
+            or e["exact_messages_shown"] != prompt.messages
+        ):
+            raise ValueError("prompt evidence identity drift")
+        _require_sha256("group_artifact_hash", e["group_artifact_hash"])
+        if not isinstance(e["persona_text"], str) or not e["persona_text"].strip():
+            raise ValueError("persona text drift")
+        pre_state = e["pre_state"]
+        if (
+            not isinstance(pre_state, Mapping)
+            or set(pre_state) != {"stance", "reason"}
+            or type(pre_state["stance"]) is not str
+            or pre_state["stance"] not in topic_package.stance_labels
+            or not isinstance(pre_state["reason"], str)
+        ):
+            raise ValueError("private projection drift")
+        if not isinstance(e["self_history"], tuple):
+            raise ValueError("history must be ordered")
+        for entry in e["self_history"]:
+            if (
+                not isinstance(entry, Mapping)
+                or set(entry) != {"stance", "reason", "published"}
+                or type(entry["stance"]) is not str
+                or entry["stance"] not in topic_package.stance_labels
+                or not isinstance(entry["reason"], str)
+                or type(entry["published"]) is not bool
+            ):
+                raise ValueError("history projection drift")
         if len(prompt.messages) != 2 or dict(prompt.messages[0]) != {
             "role": "system",
             "content": CONTROL,
@@ -184,6 +243,18 @@ def validate_study_prompt_projection(prompt: StudyPrompt, topic_package: TopicPa
             raise ValueError("user role drift")
         cell = next(c for c in study_cells() if c.cell_id == e["cell_id"])
         posts = tuple(ShownPost(**dict(p)) for p in e["shown_posts"])
+        if len({p.post_id for p in posts}) != len(posts):
+            raise ValueError("duplicate shown post identity")
+        source_aliases = {}
+        alias_sources = {}
+        for post in posts:
+            if source_aliases.setdefault(post.source_agent_id, post.member_id) != post.member_id:
+                raise ValueError("one source cannot have multiple display aliases")
+            if (
+                alias_sources.setdefault(post.member_id, post.source_agent_id)
+                != post.source_agent_id
+            ):
+                raise ValueError("distinct sources cannot share a display alias")
         groups = e["source_groups"]
         if len(groups) != len(posts) or e["receiver_group"] not in ("blue", "green"):
             raise ValueError("group context drift")

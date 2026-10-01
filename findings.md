@@ -1,5 +1,15 @@
 # 发现与决策
 
+## 2026-10-01：事件输入不能绑定尝试身份
+
+- PreparedStudyEvent 包含一次尝试的请求，不适合作为跨重试不可变 SQLite 输入。
+  新 StudyEventInputEvidence 拆出完整可重建输入，request/attempt 留在尝试证据。
+- 反序列化时必须重新验证渲染器语义，不能只重算哈希：嵌套权限标记、历史
+  stance/reason/published 类型、唯一帖子和双向中性别名映射都须校验。
+- decode_event_input_payload 只是读取能力，不能授权旧 store 接受 SIS；新运行
+  binding 和写入事务仍未实现。当前记录还不能证明公共帖的因果来源、feed
+  候选/过期过程、冻结组别和跨事件 alias，这些须由下一阶段持久化上下文核验。
+
 ## 2026-10-01：新研究事件接口与证据绑定
 
 - 共享 TopicPackage/解析器使用文字 stance labels 与整数 1–5 confidence；

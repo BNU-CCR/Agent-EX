@@ -19,6 +19,17 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ## 下一阶段：持久化与完整六条件运行
 
+### 已接续完成 Step 5b-1
+
+新增 identity_network/evidence.py 的 StudyEventInputEvidence，含 to_payload /
+from_payload / from_prepared，schema 为 paper1.identity-network.event-input.v1。
+其完整 topic、parser、原状态和 prompt 可重建，不含 request/attempt，重试不改输入。
+storage.decode_event_input_payload 明确分流 SIS / legacy；当前旧 RunStorage
+依然拒绝 SIS 记录。独立审查收口了嵌套证据字段/权限、历史类型、重复帖与别名漏洞。
+存储相关回归 290 passed / 2 Windows 环境 skip；最终修复后接口专项 52 passed。
+这是读取前置，不是已经能写入运行。下一步优先是第 1 项的 SIS 运行 binding
+与第 2 项原子提交，仍需将 feed 的候选/过期/选中链和源帖上下文绑定进去。
+
 1. 为 SIS cell 和输入证据新增明确的存储 discriminator / reader union；
    不绕过旧 RunStorage 对 legacy P1 cell 的验证。
 2. 串行原子提交 state/public output/feed cursor，失败不推进；重开、重试、

@@ -6,7 +6,8 @@
 ## 当前阶段
 2026-10-01 用户已批准新主研究为 social identity salience × communication
 network structure（2×3），旧 2×2×3 转为 legacy pilot / supplementary。
-本地准备与单事件接口 Step 5a 已完成；下一步是 SIS 持久化与六条件运行器接入。
+本地准备、单事件接口 Step 5a 与可恢复输入 Step 5b-1 已完成；
+下一步是 SIS run binding、原子提交与六条件运行器接入。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备和六条件假 HTTP 单事件验证已实现；SQLite 原子提交、恢复、六条件真实
 运行器与真实 manipulation check 仍待接入，见
