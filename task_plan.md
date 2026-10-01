@@ -32,6 +32,8 @@ SIS run binding 与六格 SQLite round-0 初始化/封存/重开已接通；
 可移植candidate_cli prepare/resume-init/check-initial已接入，支持独立进程冷核验，
 拒绝任何真实授权hash，不会发送模型请求。下一步独立真实启动/服务交接、
 失败重试授权及真实identity check；Linux路径专项仍待补验。
+service_inputs已解耦pre-service固定来源投影与post-start机械身份绑定，固定来源
+重建一致性已验证；不证明实际服务身份，也不替代下一步SIS intent/receipt/bridge。
 旧实验已归档并推送；新架构、manipulation check 与六条件小 pilot 优先。
 本地准备、合成响应状态提交与保存响应恢复已实现；完整真实启动/重试授权、来源包
 到实际运行器的受控初始化绑定与真实 manipulation check 仍待接入，见

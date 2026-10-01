@@ -1,5 +1,22 @@
 # 进度日志
 
+## 2026-10-01：服务启动前固定输入与启动后身份解耦
+
+- 上轮cef5fd3为实质进展。本轮检查legacy service bridge/intent不能直接授权新SIS：
+  scope固定旧N20/T2/12格，不能改它的含义。现SIS完整candidate含adapter start hash，
+  真实start记录仅启动后出现，必须避免用尚未知的最终候选hash反向授权启动。
+- 新增service_inputs.py，完整cold验证后投影全部固定population/execution/schedule/
+  六格binding；只移除未来start身份及依赖其派生wrapper/record/common hashes，
+  保留模型revision/环境/profile、初态/persona、排程/feed/memory与图等完整来源。
+- bind_candidate_service仅以显式SHA机械重建population/common及六bindings，
+  并要求重建前后固定来源投影完全一致。不读服务/HTTP/文件、不授权；draft中
+  declared start hash不代表observed evidence，最终候选仍须独立receipt和service核验。
+- TDD：10项缺模块RED；首GREEN两fixture错误（memory/feed加1落到不允许值），
+  改为相邻有效挑战值加2，不修改shared参数限制。fresh相关专项62 passed in12.19s；
+  独立限定复核10 passed in6.10s，无确证Critical/Important；Ruff lint通过。
+- 仍未实现SIS launch intent、human receipt、真实handover/启动CLI及identity-check
+  真实执行。此源码阶段不使用云端、不推送；长期目标active，服务器仍可关闭。
+
 ## 2026-10-01：可移植候选初始化与只读命令入口
 
 - 上轮c593770为实质进展；本轮复查clean工作树，新增candidate_cli模块入口，

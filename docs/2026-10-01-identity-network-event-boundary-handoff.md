@@ -21,6 +21,12 @@ publish_flag 和显式模型 seed/settings。完成接口复核响应与 transpo
 
 ### 当前最新阶段：候选包受控初始化
 
+服务启动前来源可用service_inputs.project_pre_service_inputs绑定：完整source replay
+后保留全部固定输入，只排除未来服务start身份及依赖它的派生hash。启动后
+bind_candidate_service机械重建candidate，要求固定投影不变。两函数均不验证真实
+服务或授予权限，不能把draft placeholder hash当observed service identity。后续SIS
+intent/receipt/bridge必须按此顺序接入，不能直接套用旧12格/N20 Phase0B授权。
+
 initialization.py 从完整六格候选派生 fresh manifest；显式要求Git、环境、六格nonce/
 schedule URI和时间。无授权hash时不生成运行器所需引用；即使有hash也只是引用，
 不等于核验human receipt。metadata仍launch_authorized=false、not_frozen。
