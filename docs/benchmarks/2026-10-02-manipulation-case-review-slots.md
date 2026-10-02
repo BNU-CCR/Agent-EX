@@ -18,10 +18,12 @@ schema设计见 `../superpowers/specs/2026-10-02-manipulation-benchmark-case-des
 ## 本次固定的结构
 
 按用户2026-10-02确认，focal=4，source分别为4±distance；若需改变baseline必须先报告。
-六层各5个独立内容槽位；本结构不证明中立起点代表正式动力学，未取得正文不计算内容hash。
+六层各5个独立内容槽位；focal=4仅为MC sensitivity design，不代表正式实验初始stance分布，
+不修改study初始化；未取得正文不计算内容hash。
 case slot不等于模型repeat，后者为每case四配对中的每个cell两次生成。
 
-所有行共享：topic_reference未决；persona_context规则为固定neutral citizen profile，
+所有行共享：topic_reference未决；persona_context暂定为固定neutral but socially situated citizen profile，
+不是完全无社会背景，也不得夹带方向立场或群体规范；
 具体文本待填；self_history规则统一且无consistency instruction，具体内容/长度不默认。
 focal_context、source_message、source_reason、reason_family、argument_provenance均未生成，
 human_review=pending。表中“待填”表示这些字段均为
@@ -73,7 +75,7 @@ focal_context: null
 source_message: null
 source_reason: null
 persona_context:
-  profile_kind: fixed_neutral_citizen
+  profile_kind: fixed_neutral_socially_situated_citizen
   exact_profile: null
 self_history:
   rule: uniform_no_consistency_instruction
@@ -97,4 +99,5 @@ pool entry与原文定位、编辑说明、独立内容单元、近重复风险�
 逐case检查：distance/direction、reason支持source stance、message自然度、无group cue、
 无明显事实错误、source/reason近重复，以及是否过度依赖同一argument。
 正文不合格或不足时保留缺口，不复制文本或改ID凑足30。
-内容编制尚未授权；本轮先审核结构与框架。审核通过仍不等于云端执行授权。
+schema已通过；内容编制须等用户确认topic及题干版本，本轮仍不生成正文。
+审核通过仍不等于云端执行授权。

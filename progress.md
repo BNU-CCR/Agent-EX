@@ -1,5 +1,16 @@
 # 进度日志
 
+## 2026-10-02：schema获批，读取三topic并等待具体题干版本确认
+
+- 完整读取protocol.yaml、proposal v2三个topic与DR-P1-045及相邻046/047；formal机器
+  topic仍未决。输出比较表，区分设计/文献台账与未找到的完整argument正文，未查网页。
+- 发现GM proposal测个人购买意愿而046测市场销售支持；AI proposal测广义AI净增加，
+  047测生成式AI在中国净减少。不是同义版本，不能只按topic名称绑定或自动倒分。
+- schema与审核表补充focal4仅MC sensitivity，不代表正式初始分布；persona暂定
+  neutral but socially situated citizen，具体社会背景仍待审核，不默认利益/立场。
+- 保存D-2026-10-02-02。等待用户确认topic及题干版本；没有生成message/刺激/请求，
+  没有模型、云端、运行功能或额外测试。已有未提交loop plan/test保持不动。
+
 ## 2026-10-02：按用户最终规则收口30-case draft review table
 
 - 用户确认schema并锁定独立MC用途/六层/focal4/source4±distance/中性群体四配对/

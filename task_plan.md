@@ -4,6 +4,11 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+最新用户确认：schema通过，先完成三topic比较并等待topic/题干版本确认，不生成message。
+比较文档为docs/benchmarks/2026-10-02-manipulation-topic-comparison.md；formal配置仍未冻结topic。
+focal4仅MC sensitivity、不代表study初态；persona暂定neutral but socially situated citizen，
+不填具体年龄/职业等默认值。topic确认后再编制30case draft，不扩展运行功能。
+
 2026-10-02最新确认优先于下方同日较早的准备描述：本轮只固化benchmark schema、
 review template与generation framework，不扩展功能、不生成刺激、不调用模型。
 focal=4和六层source已锁定，profile为固定neutral citizen，history统一无consistency；

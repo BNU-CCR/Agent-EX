@@ -13,8 +13,12 @@
 message、reason、persona/context；四配对counterbalance × 两次生成，共240请求。
 本检验不是正式opinion dynamics，不从正式round0 population抽取case，不使用mock库。
 focal baseline采用4，source=4±distance；如需改变先报告、经用户确认后才能修改。
+focal=4仅作为manipulation check sensitivity design，不代表正式opinion dynamics的
+初始stance分布；不据此改study初始化，也不把该检验概括为对所有初始立场的结论。
 六层的5个case槽位不是模型生成repeat；每case的两repeat另在后续request层记录。
-persona只采用一个固定neutral citizen profile；history使用共同规则，不含consistency instruction。
+persona暂定为一个固定neutral but socially situated citizen profile：保留社会情境，
+但不夹带方向性立场或group规范；不是完全无社会背景。具体背景字段/文本待审核，
+不默认年龄、职业、利益位置或既有意见。history使用共同规则，不含consistency instruction。
 配对主指标是 toward_source_shift；三项信号条件沿用此前约定。
 
 尚未确定：实际议题精确版本、30条基准内容/来源、persona/history、生成seed政策、
@@ -56,7 +60,7 @@ schema不得把这些未决项变成coder默认值。
 | focal_context | 精确基准上下文或审核阶段null | 不编造前史；各变体一致 |
 | source_reason | 精确文本或审核阶段null | 与source立场人工检查一致性 |
 | source_message | 精确公开消息正文或审核阶段null | 实际展示文本；四配对/两repeat逐字相同 |
-| persona_context | 固定neutral citizen profile引用及文本 | 不测试persona effect，不含group cue |
+| persona_context | 固定neutral but socially situated citizen profile引用及文本 | 不测试persona effect；有社会背景但不含方向立场/group cue |
 | self_history | 固定有序历史及visibility | 空/非空须显式批准，不能虚构来源 |
 | pre_confidence | 来源支持的值或null | null时confidence change不可计算 |
 | source_identity | 稳定匿名ID | 各变体不变，ID不得泄露group |
@@ -121,3 +125,7 @@ hash仍为UNRESOLVED[P1_TOPIC_PRIMARY]；该文件属于legacy，不授权新top
 审核槽位见 `docs/benchmarks/2026-10-02-manipulation-case-review-slots.md`。
 下一步仅请用户审核30行draft table的结构；待topic、内容编制与具体persona/history批准后，
 再整理真实文本供逐case人工审核。本次不请求或推定允许提前生成刺激，不调用模型。
+
+2026-10-02补充确认：schema通过，下一阶段可进入内容编制，但先等待topic冻结；
+当前仍不生成message正文。topic比较见
+`docs/benchmarks/2026-10-02-manipulation-topic-comparison.md`，尤其须确认题干版本/命题方向。

@@ -7,6 +7,19 @@ last-verified: 2026-07-29
 
 # 决策记录
 
+## D-2026-10-02-02：schema通过；topic冻结前不编制message
+
+用户确认schema设计通过，下一阶段进入case内容编制，但先读取formal protocol、
+phase0a1 topic candidates与DR-P1-045并输出三topic比较，等待topic确认后才生成30draft。
+本轮不生成message正文、不调用实验模型。当前formal机器配置topic仍UNRESOLVED，
+三个topic的proposal与历史rationale版本不能混用；AI命题方向、GM测量对象尤其须明确。
+
+focal=4仅为manipulation check sensitivity design，不代表正式实验初始stance分布，
+不得改变study初始化。persona_context暂定neutral but socially situated citizen profile，
+保持社会背景而非完全空白；具体字段/文本仍待审核，不夹带方向立场/group规范。
+schema与draft table已同步；比较保存于
+`docs/benchmarks/2026-10-02-manipulation-topic-comparison.md`。没有冻结topic或执行权限。
+
 ## D-2026-10-02-01：独立manipulation benchmark结构冻结；正文暂不生成
 
 用户确认case schema方向，本轮仅schema、review template与case generation framework，
