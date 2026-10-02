@@ -1,63 +1,100 @@
-# 30-case 审核槽位与来源缺口
+# 30-case draft review table（结构已确认，正文未生成）
 
 2026-10-02；pending / not_frozen / dispatch_authorized=false。
 **这是30个配额槽位，不是已经具备message/reason/persona的30个完整候选case。**
 schema设计见 `../superpowers/specs/2026-10-02-manipulation-benchmark-case-design.md`。
 
-## 可用议题来源
+## Topic核对：保留未决
 
 - probe包：`platform/configs/paper1/phase0a1-approval-proposal-v2/probe_specification.json`，
   `specification.payload.topic_candidates`中的retirement-delay / gm-soybean-oil /
   ai-net-employment。
-- 延迟退休probe陈述：“总体而言，我支持逐步提高法定退休年龄。”
-  mapping：1非常不支持、2不支持、3比较不支持、4中立或不确定、5比较支持、6支持、7非常支持。
+- 正式机器配置 `platform/configs/paper1/protocol.yaml` status=draft且topic仍UNRESOLVED，
+  新2×3协议也未冻结topic。因此每case的topic_reference为
+  `UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]`。不自行选AI、退休或GM，不修改stance mapping。
 - 历史具体政策版本另见DR-P1-045；不能自动选它或把两版事实卡合并。
 - 没有找到可直接摘录的正式argument pool；mock理由库不使用，历史模型输出也不擅自代替pool。
 
-## 供审核的stance配额示意
+## 本次固定的结构
 
-下表**建议**暂统一focal=4，source分别为4±distance，便于镜像控制；这不是用户已冻结的
-baseline，也没有声称这种中立起点代表正式动力学。若需要不同focal基准，审核时修改，
-仍须保持六层各5及有效量表范围。未取得正文前不计算内容hash。
+按用户2026-10-02确认，focal=4，source分别为4±distance；若需改变baseline必须先报告。
+六层各5个独立内容槽位；本结构不证明中立起点代表正式动力学，未取得正文不计算内容hash。
+case slot不等于模型repeat，后者为每case四配对中的每个cell两次生成。
 
-所有槽位的message_content、source_reason、focal_pre_reason、persona/context、history、
-argument_provenance均为 `UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]`，不是可发送文本。
+所有行共享：topic_reference未决；persona_context规则为固定neutral citizen profile，
+具体文本待填；self_history规则统一且无consistency instruction，具体内容/长度不默认。
+focal_context、source_message、source_reason、reason_family、argument_provenance均未生成，
+human_review=pending。表中“待填”表示这些字段均为
+`UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]`，不是可发送文本，不代表待抽正式round0素材。
 
-| 槽位ID | distance | direction | 建议focal→source | 内容/来源 | 审核 |
+| case_id | stance_distance | direction | focal→source | 必需正文/来源字段 | human_review |
 |---|---:|---|---|---|---|
-| MC-D1-U-01 | 1 | upward | 4→5 | 待pool | pending |
-| MC-D1-U-02 | 1 | upward | 4→5 | 待pool | pending |
-| MC-D1-U-03 | 1 | upward | 4→5 | 待pool | pending |
-| MC-D1-U-04 | 1 | upward | 4→5 | 待pool | pending |
-| MC-D1-U-05 | 1 | upward | 4→5 | 待pool | pending |
-| MC-D1-D-01 | 1 | downward | 4→3 | 待pool | pending |
-| MC-D1-D-02 | 1 | downward | 4→3 | 待pool | pending |
-| MC-D1-D-03 | 1 | downward | 4→3 | 待pool | pending |
-| MC-D1-D-04 | 1 | downward | 4→3 | 待pool | pending |
-| MC-D1-D-05 | 1 | downward | 4→3 | 待pool | pending |
-| MC-D2-U-01 | 2 | upward | 4→6 | 待pool | pending |
-| MC-D2-U-02 | 2 | upward | 4→6 | 待pool | pending |
-| MC-D2-U-03 | 2 | upward | 4→6 | 待pool | pending |
-| MC-D2-U-04 | 2 | upward | 4→6 | 待pool | pending |
-| MC-D2-U-05 | 2 | upward | 4→6 | 待pool | pending |
-| MC-D2-D-01 | 2 | downward | 4→2 | 待pool | pending |
-| MC-D2-D-02 | 2 | downward | 4→2 | 待pool | pending |
-| MC-D2-D-03 | 2 | downward | 4→2 | 待pool | pending |
-| MC-D2-D-04 | 2 | downward | 4→2 | 待pool | pending |
-| MC-D2-D-05 | 2 | downward | 4→2 | 待pool | pending |
-| MC-D3-U-01 | 3 | upward | 4→7 | 待pool | pending |
-| MC-D3-U-02 | 3 | upward | 4→7 | 待pool | pending |
-| MC-D3-U-03 | 3 | upward | 4→7 | 待pool | pending |
-| MC-D3-U-04 | 3 | upward | 4→7 | 待pool | pending |
-| MC-D3-U-05 | 3 | upward | 4→7 | 待pool | pending |
-| MC-D3-D-01 | 3 | downward | 4→1 | 待pool | pending |
-| MC-D3-D-02 | 3 | downward | 4→1 | 待pool | pending |
-| MC-D3-D-03 | 3 | downward | 4→1 | 待pool | pending |
-| MC-D3-D-04 | 3 | downward | 4→1 | 待pool | pending |
-| MC-D3-D-05 | 3 | downward | 4→1 | 待pool | pending |
+| MC-D1-U-01 | 1 | upward | 4→5 | 待填 | pending |
+| MC-D1-U-02 | 1 | upward | 4→5 | 待填 | pending |
+| MC-D1-U-03 | 1 | upward | 4→5 | 待填 | pending |
+| MC-D1-U-04 | 1 | upward | 4→5 | 待填 | pending |
+| MC-D1-U-05 | 1 | upward | 4→5 | 待填 | pending |
+| MC-D1-D-01 | 1 | downward | 4→3 | 待填 | pending |
+| MC-D1-D-02 | 1 | downward | 4→3 | 待填 | pending |
+| MC-D1-D-03 | 1 | downward | 4→3 | 待填 | pending |
+| MC-D1-D-04 | 1 | downward | 4→3 | 待填 | pending |
+| MC-D1-D-05 | 1 | downward | 4→3 | 待填 | pending |
+| MC-D2-U-01 | 2 | upward | 4→6 | 待填 | pending |
+| MC-D2-U-02 | 2 | upward | 4→6 | 待填 | pending |
+| MC-D2-U-03 | 2 | upward | 4→6 | 待填 | pending |
+| MC-D2-U-04 | 2 | upward | 4→6 | 待填 | pending |
+| MC-D2-U-05 | 2 | upward | 4→6 | 待填 | pending |
+| MC-D2-D-01 | 2 | downward | 4→2 | 待填 | pending |
+| MC-D2-D-02 | 2 | downward | 4→2 | 待填 | pending |
+| MC-D2-D-03 | 2 | downward | 4→2 | 待填 | pending |
+| MC-D2-D-04 | 2 | downward | 4→2 | 待填 | pending |
+| MC-D2-D-05 | 2 | downward | 4→2 | 待填 | pending |
+| MC-D3-U-01 | 3 | upward | 4→7 | 待填 | pending |
+| MC-D3-U-02 | 3 | upward | 4→7 | 待填 | pending |
+| MC-D3-U-03 | 3 | upward | 4→7 | 待填 | pending |
+| MC-D3-U-04 | 3 | upward | 4→7 | 待填 | pending |
+| MC-D3-U-05 | 3 | upward | 4→7 | 待填 | pending |
+| MC-D3-D-01 | 3 | downward | 4→1 | 待填 | pending |
+| MC-D3-D-02 | 3 | downward | 4→1 | 待填 | pending |
+| MC-D3-D-03 | 3 | downward | 4→1 | 待填 | pending |
+| MC-D3-D-04 | 3 | downward | 4→1 | 待填 | pending |
+| MC-D3-D-05 | 3 | downward | 4→1 | 待填 | pending |
 
-## 正文到位后的人工审核表
+## 每行完整review template（未填正文，不可执行）
+
+```yaml
+case_id: MC-D1-U-01
+topic_reference: UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]
+focal_stance: 4
+source_stance: 5
+stance_distance: 1
+direction: upward
+focal_context: null
+source_message: null
+source_reason: null
+persona_context:
+  profile_kind: fixed_neutral_citizen
+  exact_profile: null
+self_history:
+  rule: uniform_no_consistency_instruction
+  exact_history: null
+reason_family: null
+argument_provenance: null
+human_review:
+  status: pending
+  reviewer: null
+  notes: null
+```
+
+此模板适用于全部30行，只替换表中的ID/distance/direction/source stance。
+null均为待审核草稿字段，不是“空history”或“无persona”的执行决定。
+BB/BG/GG/GB及两repeat在case审核后派生，当前没有240条request，也没有刺激正文。
+
+## 后续人工审核标准
 
 每条显示：topic原文/version、focal/source label、精确reason/message、persona/history、
 pool entry与原文定位、编辑说明、独立内容单元、近重复风险、approve/revise/reject及备注。
-正文不合格或不足时保留缺口，不复制文本或改ID凑足30。审核通过仍不等于云端执行授权。
+逐case检查：distance/direction、reason支持source stance、message自然度、无group cue、
+无明显事实错误、source/reason近重复，以及是否过度依赖同一argument。
+正文不合格或不足时保留缺口，不复制文本或改ID凑足30。
+内容编制尚未授权；本轮先审核结构与框架。审核通过仍不等于云端执行授权。

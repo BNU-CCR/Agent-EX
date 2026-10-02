@@ -1,5 +1,17 @@
 # 进度日志
 
+## 2026-10-02：按用户最终规则收口30-case draft review table
+
+- 用户确认schema并锁定独立MC用途/六层/focal4/source4±distance/中性群体四配对/
+  固定neutral citizen与统一无consistency的history；限定本轮不扩展功能、不生成刺激。
+- 核对formal机器配置为draft且topic仍UNRESOLVED，新2×3协议也未冻结topic；保留
+  topic_reference未决，不自行选择三个probe候选，不改stance mapping或旧protocol。
+- 更新schema为用户指定字段名stance_distance/focal_context/source_message/reason_family，
+  与source_reason分别保存；30行draft table统一待填，附每case完整review template。
+  不将30slot当有效case，不将null当empty history，不生成240请求。
+- 更新D-2026-10-02-01与未决登记；精确刺激、persona/history、seed、bootstrap/failure
+  规则仍未决，设计确认不变成执行授权。无模型/云端/额外测试/源码功能改动。
+
 ## 2026-10-02：优先准备30-case schema与人工审核素材
 
 - 用户明确优先schema与从现有议题/argument pool整理30候选；六distance/direction strata

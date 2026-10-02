@@ -4,6 +4,12 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+2026-10-02最新确认优先于下方同日较早的准备描述：本轮只固化benchmark schema、
+review template与generation framework，不扩展功能、不生成刺激、不调用模型。
+focal=4和六层source已锁定，profile为固定neutral citizen，history统一无consistency；
+正式topic未冻结，topic_reference保持未决。30行draft table保留待填，不算有效case；
+先审核框架，再经授权准备正文，不继续运行循环实现或提前构造240 inventory。
+
 2026-10-02用户调整当前优先级：先准备30个benchmark case schema和人工审核候选，
 不调用模型。已保存schema书面草案与30配额槽位；正式argument pool尚未定位、
 不能用mock理由库或重复内容凑足30。先获取pool路径并请用户审核schema，之后实现

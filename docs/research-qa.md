@@ -34,6 +34,13 @@ last-verified: 2026-07-29
 
 ### 2026-10-01 操纵检验候选决定（尚非formal freeze）
 
+2026-10-02进一步确认（D-2026-10-02-01）：30case六层各5、focal=4/source=4±distance，
+四配对×两repeat、固定neutral citizen profile与统一无consistency的history规则。
+这些结构规则已锁定；topic/30条正文/provenance/精确persona与history仍未决，
+本轮禁止生成刺激或调用实验模型。只交付schema与30行draft table，不将slot算作
+有效case。现有SIS_MC_BENCHMARK_CONTENT、SEED_POLICY、BOOTSTRAP和FAILURE_POLICY
+未决项保留，不因schema获批自动解决。不得从正式round0或mock理由库取case。
+
 用户明确提出暂定30独立benchmark cases；source–focal stance distance=1/2/3 ×
 upward/downward六strata各5例；每case四种Blue/Green同组/异组quartet，固定persona、
 pre/source stance、reason、history与message；每cell两次生成，共240 requests。

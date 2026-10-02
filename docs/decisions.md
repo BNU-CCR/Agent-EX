@@ -7,6 +7,30 @@ last-verified: 2026-07-29
 
 # 决策记录
 
+## D-2026-10-02-01：独立manipulation benchmark结构冻结；正文暂不生成
+
+用户确认case schema方向，本轮仅schema、review template与case generation framework，
+不扩展运行功能。此检验不是正式opinion dynamics，不从正式round0 population抽取、
+不使用mock reason library、不直接调用实验模型生成刺激。流程固定为独立benchmark→
+人工审核→240 inventory；当前禁止提前生成刺激正文或最终刺激。
+
+30case六层为distance1/2/3×up/down各5。基准focal=4，source分别5/3、6/2、7/1；
+改baseline须先报告并再次确认。每case正文/理由/persona/context/history固定，
+BB/BG/GG/GB只改变self/source中性group label，再每cell两repeat。Blue/Green无
+价值意义、不绑定stance、不加入群体规范/信任/护群或consistency指令。
+
+Persona采用一个固定neutral citizen profile，history采用统一规则；精确文本/长度
+仍待确认，不把null当作empty-history。source_message与source_reason分别记录。
+用户指定的全部case字段与审核标准见已更新schema与30-case draft review table。
+
+读取当前配置未证明formal topic已冻结；topic_reference继续
+UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]，不得按三个候选的历史优先级自行选题。
+Primary与三个信号条件保持原约定，secondary不参与pass/fail；bootstrap/seed等
+未决细节不填默认。本决定冻结结构规则，不冻结刺激/机器执行候选、不授予云端权限。
+
+文档：`docs/superpowers/specs/2026-10-02-manipulation-benchmark-case-design.md`；
+`docs/benchmarks/2026-10-02-manipulation-case-review-slots.md`。
+
 ## D-2026-10-01-01：新主研究与旧实验归档
 
 用户于2026-10-01在当前会话明确批准十项决策：新2×3为主；人口persona、
