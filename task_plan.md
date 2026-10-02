@@ -5,6 +5,11 @@
 
 ## 当前阶段
 
+最新：用户通过v2方向，要求v3最终人工小修。当前审核稿为
+docs/benchmarks/retirement-30-case-draft-v3.md；focal明确中立（4分），
+保留persona/topic/mapping/原30case，重点替换022/025/028理由。待逐条人工确认，
+不生成240 requests；下方较早版本进度保留追溯，不覆盖本更新。
+
 最新用户审核：30case结构通过，进入内容审核。当前稿为
 docs/benchmarks/retirement-30-case-draft-v2.md，保留v1且不扩展数量；
 persona使用用户指定原文，下一步逐条人工审核v2正文/论据与统一history方案。

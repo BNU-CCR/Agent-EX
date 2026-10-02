@@ -1,5 +1,15 @@
 # 进度日志
 
+## 2026-10-02：v2方向通过；v3最终人工小修
+
+- focal_context改为明确中立（4分），persona/topic/原量表及六层30case保留。
+- AD-025改为条件性人手需求、AD-022改为日常交往、AD-028改为发言空间；
+  其他27条message/reason沿用v2，保存实质修订及剩余语义风险，不扩展case。
+- 独立保存retirement-30-case-draft-v3.md，保留v1/v2；正文仍pending。
+  无实验模型调用、240请求或代码功能扩展，history与统计细节仍未决。
+- 只读核对通过：原30ID/六层各5、指定persona/context、两句式及理由精确摘录，
+  仅022/025/028正文变更；19个上位family、最高频3，不等于统计独立性或强度等值。
+
 ## 2026-10-02：结构通过；30-case内容修订v2
 
 - 按用户要求保留30case/六层/原ID与stance，独立保存retirement-30-case-draft-v2.md，不覆盖v1。
