@@ -5,6 +5,11 @@
 
 ## 当前阶段
 
+最新用户审核：30case结构通过，进入内容审核。当前稿为
+docs/benchmarks/retirement-30-case-draft-v2.md，保留v1且不扩展数量；
+persona使用用户指定原文，下一步逐条人工审核v2正文/论据与统一history方案。
+不调用模型、不生成240 requests、不扩展运行功能。
+
 2026-10-02最新：用户确认MC采用通用延迟退休题干/原事实卡，DR-P1-045只供排除边界。
 30条内容审核稿已编制于docs/benchmarks/2026-10-02-retirement-30-case-draft.md，
 全部pending。下一步人工审正文/近重复/共同context与persona，确认history与统计细节；
