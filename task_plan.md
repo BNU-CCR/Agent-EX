@@ -4,6 +4,11 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+2026-10-02用户调整当前优先级：先准备30个benchmark case schema和人工审核候选，
+不调用模型。已保存schema书面草案与30配额槽位；正式argument pool尚未定位、
+不能用mock理由库或重复内容凑足30。先获取pool路径并请用户审核schema，之后实现
+独立benchmark来源/validator/materializer；运行循环尚未完成，未提交测试保留。
+
 独立manipulation runner书面规格已通过限定独立review，用户已于2026-10-01批准：专用SQLite试次
 存储复用vLLM transport，不推进study state；intent先落盘、savedresponse本地恢复、
 ambiguity不重发。见docs/superpowers/specs/2026-10-01-identity-manipulation-runner-design.md。

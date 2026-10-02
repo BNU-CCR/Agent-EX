@@ -1,5 +1,18 @@
 # 进度日志
 
+## 2026-10-02：优先准备30-case schema与人工审核素材
+
+- 用户明确优先schema与从现有议题/argument pool整理30候选；六distance/direction strata
+  各5、固定内容、四配对×两repeat、既有三项primary判据与secondary边界不变。
+  本轮不调用实验模型，不继续执行运行循环实现，不启动云端。
+- 已核对三个probe议题包，延迟退休是优先候选但不是新主议题正式冻结；历史DR-P1-045
+  与probe题干存在版本差异，不能混用。当前checkout及已检查本地源目录中未定位
+  正式argument pool；按名称找到的理由库明确mock-only，不用于候选case。
+- 保存case schema书面草案和六层各5审核槽位；两者明确pending，不是机器validator，
+  不声称已有30条完整正文。统一focal=4仅为未批准的镜像建议，不能默认进入执行包。
+- 等用户提供pool文件/路径或明确批准另外起草刺激，并审核schema后，才进入
+  validator/materializer实施与完整候选文本整理。未决seed/bootstrap/failure规则不默认。
+
 ## 2026-10-01：独立操纵检验专用 SQLite 证据存储
 
 - 延续6263b14与active长期目标，在现有隔离分支实现 manipulation_store/evidence，
