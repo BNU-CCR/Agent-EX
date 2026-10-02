@@ -1,5 +1,9 @@
 # 30-case draft review table（结构已确认，正文未生成）
 
+历史结构模板，保留当时未决状态。最新MC通用退休版本已确认；30条内容审核稿见
+`2026-10-02-retirement-30-case-draft.md`，版本见`2026-10-02-retirement-benchmark-version.md`。
+本表不是当前内容稿，也不是执行候选。
+
 2026-10-02；pending / not_frozen / dispatch_authorized=false。
 **这是30个配额槽位，不是已经具备message/reason/persona的30个完整候选case。**
 schema设计见 `../superpowers/specs/2026-10-02-manipulation-benchmark-case-design.md`。

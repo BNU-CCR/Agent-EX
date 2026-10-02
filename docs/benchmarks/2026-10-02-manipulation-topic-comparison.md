@@ -1,5 +1,9 @@
 # Manipulation benchmark：三个topic比较与待确认版本
 
+后续决定：用户已确认MC采用proposal通用延迟退休原题干/事实卡，只借用DR-P1-045
+排除边界；见`2026-10-02-retirement-benchmark-version.md`。以下保留选择前比较，
+不据此冻结新主研究topic；最新30条待审核内容见`2026-10-02-retirement-30-case-draft.md`。
+
 2026-10-02；仅本地材料审计，不是topic冻结、不生成message/刺激或请求。
 
 ## 当前配置结论

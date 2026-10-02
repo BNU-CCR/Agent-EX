@@ -4,7 +4,7 @@
 候选制品仍为 preliminary / not_frozen / formal_parameter_authority=false。
 本文件是字段与验证规则设计，不是已实现的 JSON Schema、正式候选或执行授权。
 来源：2026-10-02 用户要求；继承已批准独立操纵检验运行器设计。
-本轮只做schema、review template与case generation framework，不生成刺激正文、
+最新用户确认通用延迟退休版本并要求30条内容审核稿；允许助手编制draft，但不生成最终刺激、
 不调用实验模型、不运行云端、不导入历史模型响应充当 argument pool。
 
 ## 已确定与未确定
@@ -21,21 +21,22 @@ persona暂定为一个固定neutral but socially situated citizen profile：保�
 不默认年龄、职业、利益位置或既有意见。history使用共同规则，不含consistency instruction。
 配对主指标是 toward_source_shift；三项信号条件沿用此前约定。
 
-尚未确定：实际议题精确版本、30条基准内容/来源、persona/history、生成seed政策、
+MC议题精确版本已确认，见 `../../benchmarks/2026-10-02-retirement-benchmark-version.md`；
+此决定不冻结新主研究topic。尚未确定：30条基准内容/来源审核、persona/history、生成seed政策、
 bootstrap方法/次数/分析seed及failure/Stage-B复用规则。引用现有稳定ID：
 `UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]`、`UNRESOLVED[SIS_MC_SEED_POLICY]`、
 `UNRESOLVED[SIS_MC_BOOTSTRAP]`、`UNRESOLVED[SIS_MC_FAILURE_POLICY]`。
 schema不得把这些未决项变成coder默认值。
 
-## 已确认的生成框架（不是当前内容生成授权）
+## 已确认的生成框架（内容draft已授权，执行未授权）
 
-1. 核对正式topic配置；若已冻结，绑定同一原文/version/hash/stance mapping；否则保留
-   `UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]`，不按历史probe优先级替用户选议题。
+1. 核对正式topic配置；本次MC单独经用户确认采用proposal的retirement-delay通用版，
+   保留原题干/事实卡/mapping，只借用DR-P1-045排除边界。新主研究topic仍未决。
 2. 固定30独立benchmark槽位：六层各5，focal=4，source分别5/3/6/2/7/1。
-3. 当前只填写结构和审核框架。source_message/source_reason/focal_context/persona正文/
-   history/reason_family/provenance均暂不生成，未提供内容时不计算fixed_content_hash。
-4. 内容编制须另获批准；使用独立benchmark素材与来源记录，不从正式round0抽取，
-   不使用mock理由、不直接调用实验模型生成。保存实际摘录/人工编辑及其来源。
+3. 用户已授权30条内容draft；保存source_message/source_reason与明确助手拟稿来源，
+   不冒充正式argument pool摘录。共同context/persona仍待审核，history不默认补齐。
+4. 使用独立benchmark素材与来源记录，不从正式round0抽取、不使用mock理由、
+   不直接调用实验模型生成。拟稿、摘录与人工编辑必须区别记录。
 5. 人工逐条审核，允许revise/reject，不能为凑30复制文本；全部有效case审核后才构建
    四配对×两repeat的新版request inventory，保留旧v1 quartet与legacy代码原义。
 
@@ -54,7 +55,7 @@ schema不得把这些未决项变成coder默认值。
 | case字段 | 类型/语义 | 审核要求 |
 |---|---|---|
 | case_id | 唯一稳定字符串 | 不能复制ID冒充新case |
-| topic_reference | 完整topic引用，当前为UNRESOLVED标记 | 未冻结不得自行选题 |
+| topic_reference | 用户确认的MC通用延迟退休题干/事实卡/mapping引用 | 不等同正式主研究topic冻结 |
 | stance_distance / direction | 整数1/2/3；upward/downward | 从stance重新计算并比较 |
 | focal_stance / source_stance | 原label+有序整数 | 属于同一topic mapping |
 | focal_context | 精确基准上下文或审核阶段null | 不编造前史；各变体一致 |
@@ -64,7 +65,7 @@ schema不得把这些未决项变成coder默认值。
 | self_history | 固定有序历史及visibility | 空/非空须显式批准，不能虚构来源 |
 | pre_confidence | 来源支持的值或null | null时confidence change不可计算 |
 | source_identity | 稳定匿名ID | 各变体不变，ID不得泄露group |
-| argument_provenance | pool path/version/hash、entry IDs、exact source spans | 区分原样摘录与人工编辑；保存编辑说明 |
+| argument_provenance | 来源类型、文档定位、内容单元ID；摘录时另存pool/version/hash/source spans | 区分助手拟稿、原样摘录与人工编辑；不虚构来源 |
 | reason_family | 可共享的论据家族ID | 同家族不自动视为同case，也不证明独立性 |
 | content_unit_id | 独立内容单元ID | 不同case须人工审查近重复/共同出处依赖 |
 | human_review | pending/approved/revise/reject；reviewer/time/notes | 未审核不进入执行包 |
@@ -111,7 +112,7 @@ reason adoption与confidence仅secondary，不参与首轮pass/fail；不实现�
 2026-10-02复核 `platform/configs/paper1/protocol.yaml`：status=draft，topic.id、statement与
 hash仍为UNRESOLVED[P1_TOPIC_PRIMARY]；该文件属于legacy，不授权新topic。
 新 `docs/identity-network-protocol.md` 同样没有冻结新主议题。
-因此本review的topic_reference保持 `UNRESOLVED[SIS_MC_BENCHMARK_CONTENT]`。
+新主研究topic继续未决；本MC通用版本已由用户单独确认，不反向修改legacy protocol。
 
 已找到 `platform/configs/paper1/phase0a1-approval-proposal-v2/probe_specification.json`
 中的三个topic候选及1—7量表；延迟退休为优先probe候选，**不是已冻结新主议题**。
@@ -120,12 +121,8 @@ hash仍为UNRESOLVED[P1_TOPIC_PRIMARY]；该文件属于legacy，不授权新top
 唯一按名称找到的reason library为 `platform/tests/fixtures/paper1/mock_reason_library.artifact.json`，
 明确mock-only，不取其内容构成benchmark。
 
-当前没有定位到可供摘录的正式argument pool；且本阶段用户明确禁止提前编制30条正文。
-不能声称已整理30个完整case。
-审核槽位见 `docs/benchmarks/2026-10-02-manipulation-case-review-slots.md`。
-下一步仅请用户审核30行draft table的结构；待topic、内容编制与具体persona/history批准后，
-再整理真实文本供逐case人工审核。本次不请求或推定允许提前生成刺激，不调用模型。
-
-2026-10-02补充确认：schema通过，下一阶段可进入内容编制，但先等待topic冻结；
-当前仍不生成message正文。topic比较见
-`docs/benchmarks/2026-10-02-manipulation-topic-comparison.md`，尤其须确认题干版本/命题方向。
+当前没有定位到可供摘录的正式argument pool。按最新授权，30条助手拟稿保存于
+`docs/benchmarks/2026-10-02-retirement-30-case-draft.md`，全部human_review=pending；
+不宣称已有30个审核有效且独立的case。结构槽位表保留为历史模板。
+下一步人工审核正文、近重复与共同persona/context，并确认统一history方案。
+seed/bootstrap/failure政策仍未决；不生成240请求、不调用模型、不新增运行功能。

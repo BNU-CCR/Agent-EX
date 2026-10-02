@@ -1,5 +1,18 @@
 # 进度日志
 
+## 2026-10-02：通用退休benchmark获确认；交付30条内容审核稿
+
+- 用户明确确认proposal原题干/原事实卡，仅采用DR-P1-045排除边界；保存版本比较与
+  D-2026-10-02-03，不改legacy protocol，不把MC topic推广为正式主研究topic。
+- 编制六层各5条内容草稿，明确助手拟稿而非argument pool摘录，全部human_review=pending。
+  source_message与reason分别记录，focal4仅MC sensitivity；共同persona/context待审核，
+  history不默认空值。标出论据近重复与自愿工作/法定年龄构念漂移风险。
+- 尚未确认独立性或说服力匹配，不生成240请求，不调用实验模型或云端服务。
+  原有未提交loop plan/test保留不动；本轮仅研究文档修订。
+- 本地结构检查：30个唯一case/content unit，六层各5；所有审核状态pending，
+  message立场措辞对应六层，message/reason无检查词表中的group cue且无完全重复。
+  这不是语义去重或效度验证。git diff --check通过；未跑无关代码测试。
+
 ## 2026-10-02：schema获批，读取三topic并等待具体题干版本确认
 
 - 完整读取protocol.yaml、proposal v2三个topic与DR-P1-045及相邻046/047；formal机器

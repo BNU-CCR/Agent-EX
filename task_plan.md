@@ -4,6 +4,12 @@
 在保留 pilot-1.0/2.0/3.0 历史证据的前提下，建立清晰的项目知识体系，并重新实现一个以 Paper 1 为首个研究协议、可供后续论文复用的可测试、可恢复、可扩展实验平台。
 
 ## 当前阶段
+
+2026-10-02最新：用户确认MC采用通用延迟退休题干/原事实卡，DR-P1-045只供排除边界。
+30条内容审核稿已编制于docs/benchmarks/2026-10-02-retirement-30-case-draft.md，
+全部pending。下一步人工审正文/近重复/共同context与persona，确认history与统计细节；
+不生成240请求、不调用实验模型、不扩展功能、不需要开启云服务器。
+以下同日较早阶段描述留作追溯，不覆盖此更新。
 最新用户确认：schema通过，先完成三topic比较并等待topic/题干版本确认，不生成message。
 比较文档为docs/benchmarks/2026-10-02-manipulation-topic-comparison.md；formal配置仍未冻结topic。
 focal4仅MC sensitivity、不代表study初态；persona暂定neutral but socially situated citizen，

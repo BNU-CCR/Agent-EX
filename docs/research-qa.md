@@ -34,6 +34,12 @@ last-verified: 2026-07-29
 
 ### 2026-10-01 操纵检验候选决定（尚非formal freeze）
 
+2026-10-02最新确认（D-2026-10-02-03）：MC单独采用proposal通用延迟退休题干与原事实卡，
+只借用DR-P1-045排除边界；MC topic版本已解决，但不冻结新主研究topic。
+已授权30条内容draft，全部待人工审核，不生成240请求；下文“正文禁止生成”为较早阶段记录。
+SIS_MC_BENCHMARK_CONTENT仍保留，用于正文/来源审核、精确persona/history等未决部分，
+SEED_POLICY、BOOTSTRAP、FAILURE_POLICY不变。拟稿不能自动成为有效独立case。
+
 2026-10-02进一步确认（D-2026-10-02-01）：30case六层各5、focal=4/source=4±distance，
 四配对×两repeat、固定neutral citizen profile与统一无consistency的history规则。
 这些结构规则已锁定；topic/30条正文/provenance/精确persona与history仍未决，

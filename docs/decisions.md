@@ -7,6 +7,18 @@ last-verified: 2026-07-29
 
 # 决策记录
 
+## D-2026-10-02-03：MC采用通用延迟退休版本；编制30条待审核内容
+
+用户明确确认benchmark采用proposal原题干“总体而言，我支持逐步提高法定退休年龄。”
+及其原事实卡；DR-P1-045只提供排除边界，不加入具体政策参数、不测个人退休意愿、
+不混入缴费年限等配套政策。1—7支持度mapping保留原义，不绑定DR具体方案。
+精确原文与来源见`docs/benchmarks/2026-10-02-retirement-benchmark-version.md`。
+
+用户授权30-case draft人工审核表，不调用实验模型。未找到正式argument pool，
+本次内容明确为助手拟稿，不冒充既有研究材料；全部human_review=pending。
+这不是正式主研究topic冻结、240请求授权或云端授权；persona/history与统计细节仍待确认。
+本决定更新下方D-01/02的阶段性“正文暂不生成”，不改变六层、focal4与counterbalance。
+
 ## D-2026-10-02-02：schema通过；topic冻结前不编制message
 
 用户确认schema设计通过，下一阶段进入case内容编制，但先读取formal protocol、
