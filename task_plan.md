@@ -5,6 +5,10 @@
 
 ## 当前阶段
 
+2026-10-08恢复：HEAD仍为d9df67a，v3待逐条审核，不把“继续”推定为240启动权限。
+已整理docs/benchmarks/2026-10-08-manipulation-freeze-review.md，集中内容/history/
+统计seed与失败政策四组决定供用户确认。当前不扩展功能、不调刺激、不需要开服务器。
+
 最新：用户通过v2方向，要求v3最终人工小修。当前审核稿为
 docs/benchmarks/retirement-30-case-draft-v3.md；focal明确中立（4分），
 保留persona/topic/mapping/原30case，重点替换022/025/028理由。待逐条人工确认，

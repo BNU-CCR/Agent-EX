@@ -34,6 +34,12 @@ last-verified: 2026-07-29
 
 ### 2026-10-01 操纵检验候选决定（尚非formal freeze）
 
+2026-10-08恢复核对：D-2026-10-02-05已将focal_context明确为中立（4分）；
+当前正文为retirement-30-case-draft-v3.md，逐条最终审核仍pending。
+剩余决定与方法候选集中于docs/benchmarks/2026-10-08-manipulation-freeze-review.md；
+其中空history、confidence缺失、case聚合、bootstrap/seed/failure建议均未生效。
+下文v2与context待审描述保留为较早记录，不覆盖已确认persona/context。
+
 2026-10-02 D-2026-10-02-04：用户批准30case结构，并指定精确persona_context为
 “你是一名成年公民，日常会接触社会公共事务，也会阅读和讨论有关政策的话题。”
 persona文本已确认；SIS_MC_BENCHMARK_CONTENT仍包含v2正文审核/来源冻结、focal_context、
