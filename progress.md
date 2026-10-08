@@ -1,5 +1,29 @@
 # 进度日志
 
+## 2026-10-08：批准renderer/runtime后的本地运行器验收
+
+- renderer v2采用用户精确system，展示完整source_message、不重复source_reason；
+  wire显式包含五采样参数及enable_thinking=false，四配对只改变group字段。
+  benchmark正文hash未改变，Stage-B未启动。精确policy与BB/BG示例已存档。
+- 专用SQLite v2支持INTENT先于HTTP、response先于parse、失败/成功解析与冷重放；
+  已保存响应崩溃恢复不再发送HTTP，含糊dispatch/timeout/5xx不盲目重发。
+  normal hot path不按每项重新全扫描archive，完整校验在open/verify执行。
+- 接通离线materialize/inspect、显式receipt授权的run/resume、只读verify/report；
+  独立2项preflight与240项event identity隔离，Stage-A须完成同runtime/source预检。
+  expiry只限制后续dispatch，历史verify仍可重放；续期追加ledger，不修改原receipt。
+- runtime-snapshot只读本地文件，不加载模型；记录model/tokenizer/template字节hash及
+  vLLM版本。审查发现仅qwen3不足区分尺寸，先RED后GREEN修复8B架构指纹校验；
+  不冒称配置指纹能证明权重真实性或live service身份，二者留给云端核验。
+- TDD与合成HTTP测试覆盖完整240、重试耗尽、429、歧义停止、保存后崩溃、
+  JSON字段/order/type/duplicate验证、外部SQL/响应/绑定篡改与receipt续期。
+  最终专项103 passed, 2 skipped（10.35s）；2 skip仅Linux内核锁，Windows不能冒充验收。
+  12个本轮Python文件Ruff lint/format通过，git diff check通过；独立限定代码复核无P0-P2。
+- 所有响应为合成测试，没有云端连接、上传或真实模型调用，没有实证效应结论。
+  旧v1/legacy及两个既有未提交loop文件未覆盖。交接与命令见
+  docs/benchmarks/2026-10-08-stage-a-local-acceptance.md。
+- 下一步另行申请开机/只读环境核验；实际revision/服务身份绑定、Linux锁与两事件
+  技术preflight完成并单独获准后才运行240。正式2×3网络实验不等同于此MC。
+
 ## 2026-10-08：重试合同与离线transport候选，停在renderer/runtime决定门
 
 - 新增v2纯retry-prefix：同logical trial/wire、最多3attempt，解析失败/明确429可重试，

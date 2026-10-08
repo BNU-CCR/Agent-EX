@@ -5,6 +5,13 @@
 
 ## 当前阶段
 
+2026-10-08最新用户批准renderer/runtime候选后：benchmark专用SQLite v2、adapter、
+run/resume/verify/report与只读runtime-snapshot已接通；完整批准system/五参数进入wire。
+最终专项103 passed/2 Linux-only skipped；Ruff与diff check通过。验收与上云命令记录于
+docs/benchmarks/2026-10-08-stage-a-local-acceptance.md。
+本轮不连接云端、不上传、不调用模型；下一边界是单独开机/环境核验与运行审批。
+旧v1、legacy实验及两个既有未提交loop文件保持原样。以下较早状态仅供追溯。
+
 2026-10-08最新：已新增独立v2纯retry-prefix合同及240试次离线transport候选；
 旧v1 store/runner原样保留。不是SQLite v2/真实loop已完成。
 下一决策边界为renderer与SIS_MODEL_RUNTIME候选确认，见

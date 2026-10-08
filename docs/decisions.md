@@ -7,6 +7,19 @@ last-verified: 2026-07-29
 
 # 决策记录
 
+## D-2026-10-08-02：Stage-A renderer与采样参数批准（不授予dispatch权限）
+
+用户确认完整展示批准的source_message，不重复source_reason；四配对仅改变self/source group。
+精确英文system与五参数保存在renderer-runtime-policy-v2.json：temperature=0.7、top_p=0.8、
+top_k=20、min_p=0、max_tokens=512；chat_template_kwargs.enable_thinking=false。
+模型路线Qwen3-8B BF16/vLLM/non-thinking获批；实际revision、文件/tokenizer/template hash、
+vLLM版本须读取运行环境并绑定，不借用legacy环境假装已验证。
+policy canonical hash：5dc0b73a81f4e3bbff4a2e22810fcc4f00ba3e7ab92fb2fc3872ac283ca439c8。
+
+独立两事件preflight仅技术验收，身份与240正式项隔离；不得据响应调整刺激/采样。
+本地实现通过后另行申请服务器/运行授权；研究批准不是cloud launch approval。
+原失败边界、统计判据、Stage-B禁止启动保持不变。
+
 ## D-2026-10-08-01：Benchmark内容与操纵检验A—D冻结
 
 用户明确批准v3除AD-028外全部正文；028采用用户提供的退出工作选择理由。

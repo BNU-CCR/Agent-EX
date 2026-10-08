@@ -9,6 +9,12 @@ last-verified: 2026-07-29
 
 ## 2026-10-01 新主研究的未决项
 
+2026-10-08最新：D-2026-10-08-02已批准MC专用renderer精确system与五采样参数，
+Qwen3-8B BF16/vLLM/non-thinking路线不再待选择。SIS_MODEL_RUNTIME仍待实际服务器
+revision、权重/tokenizer/chat-template哈希、vLLM版本、服务启动身份与资源观测；
+不能用本地合成runtime或历史runtime填补。SQLite/transport/CLI已接通，Windows专项
+验收不等于Linux内核锁/真实技术preflight已验收。Stage-B运行授权仍关闭。
+
 旧`P1_*`仍供legacy追溯。新study不从旧矩阵或旧样本量推导formal权限。
 
 | ID | 待冻结内容 | 决策者 | 最迟阶段 |
