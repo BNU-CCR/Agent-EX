@@ -1,0 +1,25 @@
+{
+  "schema_version": "sis.manipulation.stage-b-framing.v1",
+  "approval_reference": "D-2026-10-08-01",
+  "display_groups": {
+    "Blue": "蓝组",
+    "Green": "绿组"
+  },
+  "self_frames": {
+    "Blue": "你属于蓝组。蓝组是本次讨论中的一个固定讨论小组，你的组别在整个讨论过程中保持不变。",
+    "Green": "你属于绿组。绿组是本次讨论中的一个固定讨论小组，你的组别在整个讨论过程中保持不变。"
+  },
+  "source_templates": {
+    "Blue": "蓝组成员 Member {source_id}",
+    "Green": "绿组成员 Member {source_id}"
+  },
+  "source_id_policy": "same anonymous source_id across quartet; no group-derived identifier",
+  "changes_allowed": [
+    "self_group_frame",
+    "source_group_prefix"
+  ],
+  "activation_rule": "complete-valid-stage-a-and-not-all-three-signal-criteria",
+  "dispatch_authorized": false,
+  "automatic_transition": false,
+  "formal_parameter_authority": false
+}

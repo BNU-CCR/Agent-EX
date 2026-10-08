@@ -1,5 +1,18 @@
 # 进度日志
 
+## 2026-10-08：A—D获批，研究材料冻结与首个校验器
+
+- 仅修改AD-028，原29条正文保留；004/023明确共享family，不宣称统计独立。
+  保存benchmark、analysis-policy、Stage-B framing三份JSON，无240请求或模型调用。
+- MC专用空history与pre-confidence=null；统计判据/聚合及Stage-B精确文本记录为已批准。
+  派生seed算法/整数表及bootstrap实现版本仍待绑定，不把文本冻结当运行授权。
+- 按TDD先观察16项缺失module失败，再实现纯校验器，16 passed（0.13s），Ruff lint通过。
+  初次pytest禁cache与仓库strict-config不兼容，改为临时目录cache后验证，无代码测试失败遗留。
+- 补入固定hash与v3差异回归后最终20 passed（0.14s），Ruff lint/format与diff check通过。
+  独立限定审查未发现重要问题；仅验收冻结材料/纯校验器，不外推到retry或正式运行。
+- retry规则需要更新旧单attempt/INVALID终态合同；旧loop plan/test原样保留。
+  transport/CLI/materializer/统计测试未完成；不申请开机，不宣称实验已能正式运行。
+
 ## 2026-10-08：恢复断点与集中冻结确认
 
 - 检查本地Git与任务记录：10-02之后无新提交，v3正文仍待最终人工审核，

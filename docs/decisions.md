@@ -7,6 +7,28 @@ last-verified: 2026-07-29
 
 # 决策记录
 
+## D-2026-10-08-01：Benchmark内容与操纵检验A—D冻结
+
+用户明确批准v3除AD-028外全部正文；028采用用户提供的退出工作选择理由。
+004/023允许保留，在metadata标记共享reason family；不宣称30统计独立arguments。
+精确文本见platform/configs/identity-network/manipulation-retirement-20261008/benchmark.json。
+
+MC专用self_history=[]，pre_confidence=null，post-confidence仅描述性，不算change。
+persona/context保持指定文本；不修改正式2×3 memory architecture。
+case/repeat/group聚合、30case等权、正方向d[c]>0且18/30阈值获批；六strata各抽5，
+10,000次percentile95%CI，analysis seed=20261008，分层结果仅描述性。
+生成seed按固定namespace/case/repeat确定，quartet内相同、两repeat不同；
+精确派生实现/整数碰撞检验将在materializer阶段绑定，不从模型效应选择seed。
+
+240项全VALID才判实质pass/fail。明确技术失败可同identity/prompt/参数/seed额外重试至多2次；
+仍失败为INCOMPLETE，不删换case、不改分母、不进入Stage-B。含糊INTENT保留证据，
+先解决歧义再重试，不能把无响应推定为服务未执行。新规则更新旧runner的零retry合同，
+但旧代码/旧制品原义保留；新retry存储/CLI完成之前不声称已支持。
+
+Stage-B精确framing预冻结于stage-b-framing.json；只有完整有效Stage-A不满足三标准，
+且后续取得dispatch授权才运行，不根据Stage-A结果再设计prompt。不加入信任/共同立场/护群。
+研究内容批准不授予上传、服务启动或实际240调用权限。
+
 ## D-2026-10-02-05：v2方向通过；MC明确中立与v3最终人工修订
 
 用户通过v2整体方向，保持30case/退休topic/4→1,2,3,5,6,7/persona与原stance mapping。

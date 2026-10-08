@@ -1,0 +1,55 @@
+{
+  "schema_version": "sis.manipulation.analysis-policy.v1",
+  "approval_reference": "D-2026-10-08-01",
+  "aggregation": {
+    "shift": "abs(pre-source)-abs(post-source)",
+    "per_repeat": "(BB+GG)/2-(BG+GB)/2",
+    "per_case": "mean(two_repeats)",
+    "primary": "equal_weight_mean_30_cases",
+    "positive_case": "d[c]>0",
+    "required_positive_cases": 18
+  },
+  "bootstrap": {
+    "unit": "case-preserve-all-variants-and-repeats",
+    "strata": "distance-x-direction",
+    "draws_per_stratum": 5,
+    "replicates": 10000,
+    "interval": "percentile-95",
+    "analysis_seed": 20261008
+  },
+  "generation_seed": {
+    "namespace": "sis-mc-stage-a-v1",
+    "key_fields": [
+      "case_id",
+      "repeat_id"
+    ],
+    "same_seed_within_quartet": true,
+    "different_repeats": true,
+    "derivation": "UNRESOLVED[SIS_MC_SEED_POLICY]"
+  },
+  "criteria": {
+    "mean_positive": true,
+    "ci_lower_above_zero": true,
+    "positive_case_threshold": 18
+  },
+  "secondary": {
+    "distance_direction": "descriptive-only",
+    "confidence": "post-only-no-change",
+    "reason_adoption": "diagnostic-not-pass-fail"
+  },
+  "failure": {
+    "complete_valid_required": 240,
+    "max_extra_retries": 2,
+    "immutable_retry_fields": [
+      "request_identity",
+      "prompt",
+      "generation_parameters",
+      "seed"
+    ],
+    "incomplete": "no-substantive-pass-fail-no-stage-b-no-case-drop",
+    "ambiguous_dispatch": "retain evidence; no blind resend; resolve before any retry",
+    "stage_b_requires": "complete-valid-stage-a-without-reliable-signal"
+  },
+  "dispatch_authorized": false,
+  "formal_parameter_authority": false
+}

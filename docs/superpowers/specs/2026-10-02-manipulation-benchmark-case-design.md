@@ -1,5 +1,10 @@
 # 30-case 身份操纵检验：已确认规则与审核 schema
 
+2026-10-08更新：用户已批准A—D，v3仅AD-028最终替换后正文冻结；persona/context、
+self_history=[]与pre_confidence=null已确认。最新精确材料与hash见
+`../../benchmarks/2026-10-08-retirement-content-freeze.md`和D-2026-10-08-01。
+下方“内容待审”等保留为10-02设计阶段记录，不覆盖此次决定；实际云端权限仍为false。
+
 状态：2026-10-02用户确认schema方向并冻结下述设计规则；刺激内容仍待审核。
 候选制品仍为 preliminary / not_frozen / formal_parameter_authority=false。
 本文件是字段与验证规则设计，不是已实现的 JSON Schema、正式候选或执行授权。

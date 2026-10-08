@@ -5,6 +5,12 @@
 
 ## 当前阶段
 
+2026-10-08 A—D获批，正文仅改028后冻结；三份机器研究材料保存在
+platform/configs/identity-network/manipulation-retirement-20261008/。
+纯benchmark validator首个slice已实现；下一步repeat/seed物化与合成统计、retry存储合同修订、
+transport/CLI/resume/verify/report。研究批准不授予上云调用，Stage-B禁止提前启动。
+下方“等待A—D”属于批准前历史状态。
+
 2026-10-08恢复：HEAD仍为d9df67a，v3待逐条审核，不把“继续”推定为240启动权限。
 已整理docs/benchmarks/2026-10-08-manipulation-freeze-review.md，集中内容/history/
 统计seed与失败政策四组决定供用户确认。当前不扩展功能、不调刺激、不需要开服务器。

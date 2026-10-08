@@ -34,6 +34,13 @@ last-verified: 2026-07-29
 
 ### 2026-10-01 操纵检验候选决定（尚非formal freeze）
 
+2026-10-08最新D-2026-10-08-01优先于以下历史待审记录：v3仅最终修改028后正文批准，
+空history/pre-confidence缺失、case聚合、bootstrap次数/种类/分析seed、失败最多两额外retry，
+Stage-B精确措辞均已确认。SIS_MC_BENCHMARK_CONTENT正文不再pending。
+SIS_MC_SEED_POLICY的namespace/配对规则已批准，精确派生实现/整数表仍需物化绑定；
+bootstrap RNG算法/版本实现记录、Stage-B入口与retry安全证据须在本地实施中补齐，
+不能因研究规则获批宣称运行器已通过或cloud权限已生效。其余formal SIS_*未决项不变。
+
 2026-10-08恢复核对：D-2026-10-02-05已将focal_context明确为中立（4分）；
 当前正文为retirement-30-case-draft-v3.md，逐条最终审核仍pending。
 剩余决定与方法候选集中于docs/benchmarks/2026-10-08-manipulation-freeze-review.md；

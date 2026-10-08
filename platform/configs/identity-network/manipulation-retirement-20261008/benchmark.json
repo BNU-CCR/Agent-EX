@@ -1,0 +1,605 @@
+{
+  "schema_version": "sis.manipulation.benchmark-frozen.v1",
+  "research_content_status": "frozen",
+  "approved_on": "2026-10-08",
+  "approval_reference": "D-2026-10-08-01",
+  "dispatch_authorized": false,
+  "cloud_launch_eligible": false,
+  "formal_parameter_authority": false,
+  "statistically_independent_arguments": false,
+  "topic": {
+    "candidate_key": "retirement-delay",
+    "statement": "总体而言，我支持逐步提高法定退休年龄。",
+    "fact_card": "本题讨论是否逐步提高法定退休年龄。评价对象仅是对这一政策方向的总体支持程度；不要求判断具体实施年份、幅度或某一群体的例外安排。",
+    "stance_mapping": [
+      "非常不支持",
+      "不支持",
+      "比较不支持",
+      "中立或不确定",
+      "比较支持",
+      "支持",
+      "非常支持"
+    ]
+  },
+  "focal_context": "当前讨论的是逐步提高法定退休年龄的总体政策方向。你的当前态度为中立（4分）。",
+  "persona_context": "你是一名成年公民，日常会接触社会公共事务，也会阅读和讨论有关政策的话题。",
+  "self_history": [],
+  "pre_confidence": null,
+  "confidence_policy": "post-only-descriptive-no-change",
+  "cases": [
+    {
+      "case_id": "MC-D1-U-01",
+      "content_unit_id": "AD-001",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 5,
+      "stance_distance": 1,
+      "direction": "upward",
+      "source_message": "我比较支持逐步提高法定退休年龄。我觉得慢慢调整，至少可以给受影响的人留些适应的时间。",
+      "source_reason": "我觉得慢慢调整，至少可以给受影响的人留些适应的时间。",
+      "reason_family": "过渡安排：适应时间",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-U-02",
+      "content_unit_id": "AD-002",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 5,
+      "stance_distance": 1,
+      "direction": "upward",
+      "source_message": "我比较支持逐步提高法定退休年龄。如果一些工作还能用上多年积累的经验，我觉得把工作期适当延长也有道理。",
+      "source_reason": "如果一些工作还能用上多年积累的经验，我觉得把工作期适当延长也有道理。",
+      "reason_family": "技能利用：经验发挥",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-U-03",
+      "content_unit_id": "AD-003",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 5,
+      "stance_distance": 1,
+      "direction": "upward",
+      "source_message": "我比较支持逐步提高法定退休年龄。如果岗位上的人员更替不用太集中，我觉得日常工作的交接可能更好安排。",
+      "source_reason": "如果岗位上的人员更替不用太集中，我觉得日常工作的交接可能更好安排。",
+      "reason_family": "组织协调：人员衔接",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-U-04",
+      "content_unit_id": "AD-004",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 5,
+      "stance_distance": 1,
+      "direction": "upward",
+      "source_message": "我比较支持逐步提高法定退休年龄。我不觉得原来的年龄界线就一定最合适，适当提高它是可以考虑的。",
+      "source_reason": "我不觉得原来的年龄界线就一定最合适，适当提高它是可以考虑的。",
+      "reason_family": "规则依据：年龄界线",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": [
+        "age-rule-justification"
+      ]
+    },
+    {
+      "case_id": "MC-D1-U-05",
+      "content_unit_id": "AD-005",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 5,
+      "stance_distance": 1,
+      "direction": "upward",
+      "source_message": "我比较支持逐步提高法定退休年龄。我觉得安排退休时间时，也可以给共同事务的需要多留一点分量，不只考虑早点离开工作。",
+      "source_reason": "我觉得安排退休时间时，也可以给共同事务的需要多留一点分量，不只考虑早点离开工作。",
+      "reason_family": "公共权衡：工作与退休",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-D-01",
+      "content_unit_id": "AD-006",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 3,
+      "stance_distance": 1,
+      "direction": "downward",
+      "source_message": "我比较不支持逐步提高法定退休年龄。我担心有人已经按原来的时间安排好了生活，再慢慢改也会打乱这些计划。",
+      "source_reason": "我担心有人已经按原来的时间安排好了生活，再慢慢改也会打乱这些计划。",
+      "reason_family": "生活安排：计划变动",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-D-02",
+      "content_unit_id": "AD-007",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 3,
+      "stance_distance": 1,
+      "direction": "downward",
+      "source_message": "我比较不支持逐步提高法定退休年龄。我担心比较吃体力的工作，再多做几年会让人更难承受。",
+      "source_reason": "我担心比较吃体力的工作，再多做几年会让人更难承受。",
+      "reason_family": "劳动负担：体力差异",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-D-03",
+      "content_unit_id": "AD-008",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 3,
+      "stance_distance": 1,
+      "direction": "downward",
+      "source_message": "我比较不支持逐步提高法定退休年龄。如果有些岗位更晚空出来，我担心正在找工作的人会等得更久。",
+      "source_reason": "如果有些岗位更晚空出来，我担心正在找工作的人会等得更久。",
+      "reason_family": "就业机会：岗位进入",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-D-04",
+      "content_unit_id": "AD-009",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 3,
+      "stance_distance": 1,
+      "direction": "downward",
+      "source_message": "我比较不支持逐步提高法定退休年龄。我担心退休时间往后移了，却不一定有合适的工作能一直做下去。",
+      "source_reason": "我担心退休时间往后移了，却不一定有合适的工作能一直做下去。",
+      "reason_family": "就业条件：岗位可得",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D1-D-05",
+      "content_unit_id": "AD-010",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 3,
+      "stance_distance": 1,
+      "direction": "downward",
+      "source_message": "我比较不支持逐步提高法定退休年龄。我想先弄清楚为什么非得延长工作期，再考虑接受这个改变。",
+      "source_reason": "我想先弄清楚为什么非得延长工作期，再考虑接受这个改变。",
+      "reason_family": "决策依据：必要性",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-U-01",
+      "content_unit_id": "AD-011",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 6,
+      "stance_distance": 2,
+      "direction": "upward",
+      "source_message": "我支持逐步提高法定退休年龄。如果熟悉工作的人能多留一段时间，我觉得带新人、传经验会更从容些。",
+      "source_reason": "如果熟悉工作的人能多留一段时间，我觉得带新人、传经验会更从容些。",
+      "reason_family": "技能利用：经验传递",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-U-02",
+      "content_unit_id": "AD-012",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 6,
+      "stance_distance": 2,
+      "direction": "upward",
+      "source_message": "我支持逐步提高法定退休年龄。如果需要供养的人更多了，我觉得多一些工作时间可以作为分担压力的一种办法。",
+      "source_reason": "如果需要供养的人更多了，我觉得多一些工作时间可以作为分担压力的一种办法。",
+      "reason_family": "公共资源：供养压力",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-U-03",
+      "content_unit_id": "AD-013",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 6,
+      "stance_distance": 2,
+      "direction": "upward",
+      "source_message": "我支持逐步提高法定退休年龄。如果人生中可以工作的时间变长了，我觉得退休的时间点也可以相应往后挪一点。",
+      "source_reason": "如果人生中可以工作的时间变长了，我觉得退休的时间点也可以相应往后挪一点。",
+      "reason_family": "人生阶段：时间比例",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-U-04",
+      "content_unit_id": "AD-014",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 6,
+      "stance_distance": 2,
+      "direction": "upward",
+      "source_message": "我支持逐步提高法定退休年龄。如果有人到工作后期才找到适合自己的方向，我觉得延长工作期可能让这段发展不那么仓促。",
+      "source_reason": "如果有人到工作后期才找到适合自己的方向，我觉得延长工作期可能让这段发展不那么仓促。",
+      "reason_family": "人生阶段：职业发展",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-U-05",
+      "content_unit_id": "AD-015",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 6,
+      "stance_distance": 2,
+      "direction": "upward",
+      "source_message": "我支持逐步提高法定退休年龄。如果继续工作能让一些人多保留一段有工作收入的时间，我觉得这也是值得考虑的好处。",
+      "source_reason": "如果继续工作能让一些人多保留一段有工作收入的时间，我觉得这也是值得考虑的好处。",
+      "reason_family": "收入安排：收入延续",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-D-01",
+      "content_unit_id": "AD-016",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 2,
+      "stance_distance": 2,
+      "direction": "downward",
+      "source_message": "我不支持逐步提高法定退休年龄。我觉得退休后能自己安排时间很重要，不想让这段时间再被工作挤掉一些。",
+      "source_reason": "我觉得退休后能自己安排时间很重要，不想让这段时间再被工作挤掉一些。",
+      "reason_family": "非工作时间：自主安排",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-D-02",
+      "content_unit_id": "AD-017",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 2,
+      "stance_distance": 2,
+      "direction": "downward",
+      "source_message": "我不支持逐步提高法定退休年龄。我觉得照顾家人、参与社区事务也有价值，担心工作期延长会挤掉做这些事的时间。",
+      "source_reason": "我觉得照顾家人、参与社区事务也有价值，担心工作期延长会挤掉做这些事的时间。",
+      "reason_family": "非工作贡献：照护服务",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-D-03",
+      "content_unit_id": "AD-018",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 2,
+      "stance_distance": 2,
+      "direction": "downward",
+      "source_message": "我不支持逐步提高法定退休年龄。如果还要换岗位、重新学技能，我担心多出来的工作时间反而会让一些人更难应付。",
+      "source_reason": "如果还要换岗位、重新学技能，我担心多出来的工作时间反而会让一些人更难应付。",
+      "reason_family": "就业条件：转岗成本",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-D-04",
+      "content_unit_id": "AD-019",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 2,
+      "stance_distance": 2,
+      "direction": "downward",
+      "source_message": "我不支持逐步提高法定退休年龄。我担心等到更晚退休时，已经没有合适的身心状态去做原先想做的事了。",
+      "source_reason": "我担心等到更晚退休时，已经没有合适的身心状态去做原先想做的事了。",
+      "reason_family": "非工作时间：健康窗口",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D2-D-05",
+      "content_unit_id": "AD-020",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 2,
+      "stance_distance": 2,
+      "direction": "downward",
+      "source_message": "我不支持逐步提高法定退休年龄。我担心工作稳定的人和总要找新工作的人，对多做几年能承受的程度很不一样。",
+      "source_reason": "我担心工作稳定的人和总要找新工作的人，对多做几年能承受的程度很不一样。",
+      "reason_family": "分配公平：岗位差异",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-U-01",
+      "content_unit_id": "AD-021",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 7,
+      "stance_distance": 3,
+      "direction": "upward",
+      "source_message": "我非常支持逐步提高法定退休年龄。我觉得分担共同负担时，也可以考虑多工作一些时间，不只让后来的人承担。",
+      "source_reason": "我觉得分担共同负担时，也可以考虑多工作一些时间，不只让后来的人承担。",
+      "reason_family": "公共权衡：代际分担",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-U-02",
+      "content_unit_id": "AD-022",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 7,
+      "stance_distance": 3,
+      "direction": "upward",
+      "source_message": "我非常支持逐步提高法定退休年龄。如果工作也是一些人与人来往的机会，我觉得延长工作期可以多保留一段这样的联系。",
+      "source_reason": "如果工作也是一些人与人来往的机会，我觉得延长工作期可以多保留一段这样的联系。",
+      "reason_family": "社会联系：日常交往",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-U-03",
+      "content_unit_id": "AD-023",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 7,
+      "stance_distance": 3,
+      "direction": "upward",
+      "source_message": "我非常支持逐步提高法定退休年龄。我觉得一个年龄标准用了很久，不代表以后就该一直沿用，也可以改成更晚的时间。",
+      "source_reason": "我觉得一个年龄标准用了很久，不代表以后就该一直沿用，也可以改成更晚的时间。",
+      "reason_family": "决策依据：规则可改",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": [
+        "age-rule-justification"
+      ]
+    },
+    {
+      "case_id": "MC-D3-U-04",
+      "content_unit_id": "AD-024",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 7,
+      "stance_distance": 3,
+      "direction": "upward",
+      "source_message": "我非常支持逐步提高法定退休年龄。我愿意把更长远的资源安排也算进去，不只看多工作几年带来的眼前不便。",
+      "source_reason": "我愿意把更长远的资源安排也算进去，不只看多工作几年带来的眼前不便。",
+      "reason_family": "公共资源：长期安排",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-U-05",
+      "content_unit_id": "AD-025",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 7,
+      "stance_distance": 3,
+      "direction": "upward",
+      "source_message": "我非常支持逐步提高法定退休年龄。如果有些工作确实需要人手，我觉得延长工作期可以多留一份做事的力量。",
+      "source_reason": "如果有些工作确实需要人手，我觉得延长工作期可以多留一份做事的力量。",
+      "reason_family": "人力供给：人手需求",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-D-01",
+      "content_unit_id": "AD-026",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 1,
+      "stance_distance": 3,
+      "direction": "downward",
+      "source_message": "我非常不支持逐步提高法定退休年龄。我觉得生活不应该总围着工作转，给工作之外的时间留个边界也很重要。",
+      "source_reason": "我觉得生活不应该总围着工作转，给工作之外的时间留个边界也很重要。",
+      "reason_family": "非工作时间：生活边界",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-D-02",
+      "content_unit_id": "AD-027",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 1,
+      "stance_distance": 3,
+      "direction": "downward",
+      "source_message": "我非常不支持逐步提高法定退休年龄。我更在意那些已经很难继续工作的人，不愿为了整体安排让他们再多撑几年。",
+      "source_reason": "我更在意那些已经很难继续工作的人，不愿为了整体安排让他们再多撑几年。",
+      "reason_family": "分配公平：困难保护",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-D-03",
+      "content_unit_id": "AD-028",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 1,
+      "stance_distance": 3,
+      "direction": "downward",
+      "source_message": "我非常不支持逐步提高法定退休年龄。我觉得什么时候退出长期工作应该尽量给个人留出选择，而不是统一把法定退休年龄往后推。",
+      "source_reason": "我觉得什么时候退出长期工作应该尽量给个人留出选择，而不是统一把法定退休年龄往后推。",
+      "reason_family": "选择自主：退出工作选择",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-D-04",
+      "content_unit_id": "AD-029",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 1,
+      "stance_distance": 3,
+      "direction": "downward",
+      "source_message": "我非常不支持逐步提高法定退休年龄。我想先看看还有没有别的办法，不愿先拿更多工作年份去解决问题。",
+      "source_reason": "我想先看看还有没有别的办法，不愿先拿更多工作年份去解决问题。",
+      "reason_family": "决策依据：替代办法",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    },
+    {
+      "case_id": "MC-D3-D-05",
+      "content_unit_id": "AD-030",
+      "topic_reference": "retirement-delay-generic-proposal-v2",
+      "focal_stance": 4,
+      "source_stance": 1,
+      "stance_distance": 3,
+      "direction": "downward",
+      "source_message": "我非常不支持逐步提高法定退休年龄。我担心已经工作多年的人，再多做几年也不轻松，不只是慢慢调整就能消除这种负担。",
+      "source_reason": "我担心已经工作多年的人，再多做几年也不轻松，不只是慢慢调整就能消除这种负担。",
+      "reason_family": "劳动负担：累积疲劳",
+      "argument_provenance": {
+        "kind": "assistant_draft_human_approved",
+        "revision": "v3-plus-AD028-final",
+        "source": "docs/benchmarks/retirement-30-case-draft-v3.md"
+      },
+      "human_review": "approved",
+      "shared_reason_family_ids": []
+    }
+  ]
+}
