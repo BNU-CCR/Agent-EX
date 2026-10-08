@@ -45,3 +45,19 @@ percentile端点采用h=(n-1)*p的线性插值，p=0.025/0.975。
 独立限定审查未发现重要问题。无云端、无模型请求、无原始response读取。
 下一项为版本化retry存储/transport/CLI：同request最多3attempt，完整证据保留，
 歧义INTENT不得盲目重发；后续Linux锁/来源/服务验收尚未完成。现在无需开服务器。
+
+## 后续本地slice：retry与实际曝光候选
+
+benchmark_retry.py建立v2纯journal合同；逻辑trial+wire identity稳定，3个physical
+attempt不同；技术性解析失败/明确429可重试；未决INTENT、timeout、连接歧义或5xx
+不重发；3次已核实技术失败为INCOMPLETE。此纯模块不认证response、不证明240项已完成。
+旧SQLite v1没有改动，新的durable integration/CLI仍待做。
+
+benchmark_transport.py离线编码240个候选，每项3个attempt精确body一致；仅展示冻结
+source_message，不再重复source_reason；Member编号避免显示case/stratum研究ID。
+沿用旧CONTROL作为待审system，user renderer另版本化；模型名加入event identity，
+避免改变模型时physical request ID混淆。没有默认采样参数，无模型/网络调用。
+候选一律renderer_approved/runtime_approved/dispatch_authorized=false。
+
+下一人工决定见2026-10-08-stage-a-renderer-runtime-review.md：具体renderer与采样
+候选不能因为代码可编码就视为获批。原正文/统计设计不重新优化。

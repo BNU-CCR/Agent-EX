@@ -5,6 +5,12 @@
 
 ## 当前阶段
 
+2026-10-08最新：已新增独立v2纯retry-prefix合同及240试次离线transport候选；
+旧v1 store/runner原样保留。不是SQLite v2/真实loop已完成。
+下一决策边界为renderer与SIS_MODEL_RUNTIME候选确认，见
+docs/benchmarks/2026-10-08-stage-a-renderer-runtime-review.md。
+无需开机；确认后继续durable store、fake HTTP与run/resume/verify/report。
+
 最新本地实现：240离线试次物化、60seed版本化绑定与case统计组件已完成首轮专项，
 共41项通过。记录docs/benchmarks/2026-10-08-manipulation-offline-implementation.md。
 下一步retry存储/transport/CLI与恢复验证；没有实际模型请求，服务器仍不需要开。

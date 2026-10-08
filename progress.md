@@ -1,5 +1,22 @@
 # 进度日志
 
+## 2026-10-08：重试合同与离线transport候选，停在renderer/runtime决定门
+
+- 新增v2纯retry-prefix：同logical trial/wire、最多3attempt，解析失败/明确429可重试，
+  未决INTENT或timeout/transport/5xx歧义不能重发；耗尽INCOMPLETE，不跳case。
+  它不是durable SQLite实现，也不认证调用者的响应分类；旧v1原样保留。
+- 离线candidate编码240项/各3attempt，相同prompt/参数/seed/body；只展示批准的
+  source_message，reason不重复展示；中性Member alias不泄露case/stratum ID。
+- TDD观察两个缺失module失败；修复接入时sampling_seed字段误读。
+  限定独立审查指出模型变更可alias请求，复现后把served_model_name绑定event，
+  新回归通过；纯retry审查无重要问题。无云端/真实model/raw读取。
+- 最终专项及legacy store/request回归83 passed（122.34s）；Ruff lint/format、
+  git diff check通过。全部新结果为合成/纯编码测试，不是实证结果。
+- 决策材料：docs/benchmarks/2026-10-08-stage-a-renderer-runtime-review.md。
+  需确认新曝光renderer、temperature/top_p/max_tokens候选；未擅自沿用旧runtime。
+  确认后继续SQLite v2/假HTTP/CLI；本地总验收尚未完成，此刻无需开启服务器。
+  两个旧未提交loop文件未覆盖未纳入本次提交；原30正文与统计冻结hash不变。
+
 ## 2026-10-08：离线240试次物化与合成统计
 
 - TDD先观察trial7项/analysis11项缺失模块失败，再实现两个纯组件；保留原30正文。
