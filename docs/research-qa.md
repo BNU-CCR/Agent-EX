@@ -34,6 +34,13 @@ last-verified: 2026-07-29
 
 ### 2026-10-01 操纵检验候选决定（尚非formal freeze）
 
+2026-10-08实施补充：SIS_MC_SEED_POLICY的精确派生/60个整数seed已绑定于
+seed-analysis-implementation-v1.json，算法为canonicalSHA前uint32按位mask31，实际无碰撞。
+SIS_MC_BOOTSTRAP的RNG/版本与percentile插值同样已记录，见
+docs/benchmarks/2026-10-08-manipulation-offline-implementation.md。
+这解决本地实施绑定，不覆盖原analysis-policy快照hash，不授予运行权限；
+真实环境复现/运行源码授权仍待完成。正文不再优化；retry/CLI/Linux验收未完成。
+
 2026-10-08最新D-2026-10-08-01优先于以下历史待审记录：v3仅最终修改028后正文批准，
 空history/pre-confidence缺失、case聚合、bootstrap次数/种类/分析seed、失败最多两额外retry，
 Stage-B精确措辞均已确认。SIS_MC_BENCHMARK_CONTENT正文不再pending。

@@ -1,0 +1,335 @@
+{
+  "schema_version": "sis.manipulation.seed-analysis-implementation.v1",
+  "benchmark_hash": "9c2345580024523794a2d433500229d55e166414f18f5c0bd06baba893c8eb10",
+  "base_analysis_policy_hash": "06cde384ae6bcd89f77deb628110dad5a8777f7bbdfc21e9f2505c5e894093c0",
+  "inventory_payload_hash": "6aba583ad74921a4a3d0e9822b985d6385176fd04e31e1db7eea901473336e6f",
+  "inventory_artifact_id": "artifact-31dcf1af8cb276e142d77b3ae23204789d52ae8e53be2b750bfbad6b3b7382ed",
+  "generation_seed_recipe": {
+    "namespace": "sis-mc-stage-a-v1",
+    "algorithm": "canonical-json-sha256-first-u32-big-endian-mask31-v1",
+    "input_fields": [
+      "namespace",
+      "case_id",
+      "repeat_id"
+    ],
+    "collision_policy": "fail-no-reseed"
+  },
+  "seed_table": [
+    {
+      "case_id": "MC-D1-U-01",
+      "repeat_id": 1,
+      "seed": 1663292628
+    },
+    {
+      "case_id": "MC-D1-U-01",
+      "repeat_id": 2,
+      "seed": 295758171
+    },
+    {
+      "case_id": "MC-D1-U-02",
+      "repeat_id": 1,
+      "seed": 2053257953
+    },
+    {
+      "case_id": "MC-D1-U-02",
+      "repeat_id": 2,
+      "seed": 1191999694
+    },
+    {
+      "case_id": "MC-D1-U-03",
+      "repeat_id": 1,
+      "seed": 1483899024
+    },
+    {
+      "case_id": "MC-D1-U-03",
+      "repeat_id": 2,
+      "seed": 1725438645
+    },
+    {
+      "case_id": "MC-D1-U-04",
+      "repeat_id": 1,
+      "seed": 1023664200
+    },
+    {
+      "case_id": "MC-D1-U-04",
+      "repeat_id": 2,
+      "seed": 59955026
+    },
+    {
+      "case_id": "MC-D1-U-05",
+      "repeat_id": 1,
+      "seed": 572547888
+    },
+    {
+      "case_id": "MC-D1-U-05",
+      "repeat_id": 2,
+      "seed": 1205670693
+    },
+    {
+      "case_id": "MC-D1-D-01",
+      "repeat_id": 1,
+      "seed": 1704392079
+    },
+    {
+      "case_id": "MC-D1-D-01",
+      "repeat_id": 2,
+      "seed": 1430856018
+    },
+    {
+      "case_id": "MC-D1-D-02",
+      "repeat_id": 1,
+      "seed": 2077649491
+    },
+    {
+      "case_id": "MC-D1-D-02",
+      "repeat_id": 2,
+      "seed": 1333248991
+    },
+    {
+      "case_id": "MC-D1-D-03",
+      "repeat_id": 1,
+      "seed": 531871448
+    },
+    {
+      "case_id": "MC-D1-D-03",
+      "repeat_id": 2,
+      "seed": 20361326
+    },
+    {
+      "case_id": "MC-D1-D-04",
+      "repeat_id": 1,
+      "seed": 392601456
+    },
+    {
+      "case_id": "MC-D1-D-04",
+      "repeat_id": 2,
+      "seed": 589234668
+    },
+    {
+      "case_id": "MC-D1-D-05",
+      "repeat_id": 1,
+      "seed": 1815194292
+    },
+    {
+      "case_id": "MC-D1-D-05",
+      "repeat_id": 2,
+      "seed": 1237658377
+    },
+    {
+      "case_id": "MC-D2-U-01",
+      "repeat_id": 1,
+      "seed": 1276453033
+    },
+    {
+      "case_id": "MC-D2-U-01",
+      "repeat_id": 2,
+      "seed": 2023024563
+    },
+    {
+      "case_id": "MC-D2-U-02",
+      "repeat_id": 1,
+      "seed": 1060466209
+    },
+    {
+      "case_id": "MC-D2-U-02",
+      "repeat_id": 2,
+      "seed": 797936313
+    },
+    {
+      "case_id": "MC-D2-U-03",
+      "repeat_id": 1,
+      "seed": 213383011
+    },
+    {
+      "case_id": "MC-D2-U-03",
+      "repeat_id": 2,
+      "seed": 1526810374
+    },
+    {
+      "case_id": "MC-D2-U-04",
+      "repeat_id": 1,
+      "seed": 534859029
+    },
+    {
+      "case_id": "MC-D2-U-04",
+      "repeat_id": 2,
+      "seed": 338282087
+    },
+    {
+      "case_id": "MC-D2-U-05",
+      "repeat_id": 1,
+      "seed": 939928422
+    },
+    {
+      "case_id": "MC-D2-U-05",
+      "repeat_id": 2,
+      "seed": 1902021440
+    },
+    {
+      "case_id": "MC-D2-D-01",
+      "repeat_id": 1,
+      "seed": 1005157769
+    },
+    {
+      "case_id": "MC-D2-D-01",
+      "repeat_id": 2,
+      "seed": 1872307051
+    },
+    {
+      "case_id": "MC-D2-D-02",
+      "repeat_id": 1,
+      "seed": 1678379825
+    },
+    {
+      "case_id": "MC-D2-D-02",
+      "repeat_id": 2,
+      "seed": 1884989920
+    },
+    {
+      "case_id": "MC-D2-D-03",
+      "repeat_id": 1,
+      "seed": 1826466318
+    },
+    {
+      "case_id": "MC-D2-D-03",
+      "repeat_id": 2,
+      "seed": 1811671583
+    },
+    {
+      "case_id": "MC-D2-D-04",
+      "repeat_id": 1,
+      "seed": 426821278
+    },
+    {
+      "case_id": "MC-D2-D-04",
+      "repeat_id": 2,
+      "seed": 1146862032
+    },
+    {
+      "case_id": "MC-D2-D-05",
+      "repeat_id": 1,
+      "seed": 2021429408
+    },
+    {
+      "case_id": "MC-D2-D-05",
+      "repeat_id": 2,
+      "seed": 622753303
+    },
+    {
+      "case_id": "MC-D3-U-01",
+      "repeat_id": 1,
+      "seed": 1664668458
+    },
+    {
+      "case_id": "MC-D3-U-01",
+      "repeat_id": 2,
+      "seed": 1375439289
+    },
+    {
+      "case_id": "MC-D3-U-02",
+      "repeat_id": 1,
+      "seed": 563356988
+    },
+    {
+      "case_id": "MC-D3-U-02",
+      "repeat_id": 2,
+      "seed": 1984022220
+    },
+    {
+      "case_id": "MC-D3-U-03",
+      "repeat_id": 1,
+      "seed": 1625454459
+    },
+    {
+      "case_id": "MC-D3-U-03",
+      "repeat_id": 2,
+      "seed": 2100452392
+    },
+    {
+      "case_id": "MC-D3-U-04",
+      "repeat_id": 1,
+      "seed": 1870971931
+    },
+    {
+      "case_id": "MC-D3-U-04",
+      "repeat_id": 2,
+      "seed": 365261789
+    },
+    {
+      "case_id": "MC-D3-U-05",
+      "repeat_id": 1,
+      "seed": 668824247
+    },
+    {
+      "case_id": "MC-D3-U-05",
+      "repeat_id": 2,
+      "seed": 1160872693
+    },
+    {
+      "case_id": "MC-D3-D-01",
+      "repeat_id": 1,
+      "seed": 676221966
+    },
+    {
+      "case_id": "MC-D3-D-01",
+      "repeat_id": 2,
+      "seed": 1009470567
+    },
+    {
+      "case_id": "MC-D3-D-02",
+      "repeat_id": 1,
+      "seed": 681617402
+    },
+    {
+      "case_id": "MC-D3-D-02",
+      "repeat_id": 2,
+      "seed": 1977390483
+    },
+    {
+      "case_id": "MC-D3-D-03",
+      "repeat_id": 1,
+      "seed": 1952276130
+    },
+    {
+      "case_id": "MC-D3-D-03",
+      "repeat_id": 2,
+      "seed": 1178246103
+    },
+    {
+      "case_id": "MC-D3-D-04",
+      "repeat_id": 1,
+      "seed": 497082475
+    },
+    {
+      "case_id": "MC-D3-D-04",
+      "repeat_id": 2,
+      "seed": 764831288
+    },
+    {
+      "case_id": "MC-D3-D-05",
+      "repeat_id": 1,
+      "seed": 1432765842
+    },
+    {
+      "case_id": "MC-D3-D-05",
+      "repeat_id": 2,
+      "seed": 790210516
+    }
+  ],
+  "bootstrap_implementation": {
+    "rng": "stdlib-random.Random-MT19937-randrange",
+    "python_version": [
+      3,
+      12,
+      14
+    ],
+    "replicates": 10000,
+    "seed": 20261008,
+    "strata_order": "distance-ascending-then-direction-lexical",
+    "draws_per_stratum": 5,
+    "quantile": "h=(n-1)*p-linear-interpolation"
+  },
+  "dispatch_authorized": false,
+  "cloud_launch_eligible": false,
+  "formal_parameter_authority": false
+}

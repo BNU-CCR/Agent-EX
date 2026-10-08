@@ -5,6 +5,10 @@
 
 ## 当前阶段
 
+最新本地实现：240离线试次物化、60seed版本化绑定与case统计组件已完成首轮专项，
+共41项通过。记录docs/benchmarks/2026-10-08-manipulation-offline-implementation.md。
+下一步retry存储/transport/CLI与恢复验证；没有实际模型请求，服务器仍不需要开。
+
 2026-10-08 A—D获批，正文仅改028后冻结；三份机器研究材料保存在
 platform/configs/identity-network/manipulation-retirement-20261008/。
 纯benchmark validator首个slice已实现；下一步repeat/seed物化与合成统计、retry存储合同修订、
