@@ -1,0 +1,12 @@
+{
+  "mode": "stage-b",
+  "phase": "COMPLETE",
+  "valid_count": 240,
+  "run_elapsed_seconds": 165.868,
+  "technical_or_complete_passed": true,
+  "archive_bytes": 612504,
+  "archive_sha256": "5d2ff837082538fe1e2ab78b5bec74138a319c1e465ddbe7e59609a997e68326",
+  "stage_b_authorized": true,
+  "stage_c_authorized": false,
+  "required_stage_a_archive_sha256": "ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211"
+}

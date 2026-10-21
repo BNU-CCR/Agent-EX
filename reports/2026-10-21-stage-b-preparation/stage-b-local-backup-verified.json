@@ -1,0 +1,15 @@
+{
+  "required_stage_a_archive_sha256": "ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211",
+  "archive_bytes": 612504,
+  "valid_count": 240,
+  "run_file_count": 2,
+  "archive_sha256": "5d2ff837082538fe1e2ab78b5bec74138a319c1e465ddbe7e59609a997e68326",
+  "mode": "stage-b",
+  "local_archive": "C:\\Users\\Bai Yuexi\\Agent-EX-evidence\\2026-10-21\\stage-b-evidence.tar.gz",
+  "verified_at": "2026-10-21T09:12:32.5740219+00:00",
+  "local_copy_sha256": "5d2ff837082538fe1e2ab78b5bec74138a319c1e465ddbe7e59609a997e68326",
+  "stage_c_authorized": false,
+  "run_files_verified": true,
+  "technical_preflight_passed": false,
+  "stage_b_authorized": true
+}

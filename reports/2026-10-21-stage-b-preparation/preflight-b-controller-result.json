@@ -1,0 +1,12 @@
+{
+  "mode": "preflight-b",
+  "phase": "COMPLETE",
+  "valid_count": 2,
+  "run_elapsed_seconds": 5.412,
+  "technical_or_complete_passed": true,
+  "archive_bytes": 17946,
+  "archive_sha256": "6c3cfa88203528f9aa56805bd889388e7b52646b5d6427499300e5b4a3353fb5",
+  "stage_b_authorized": true,
+  "stage_c_authorized": false,
+  "required_stage_a_archive_sha256": "ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211"
+}

@@ -1,0 +1,12 @@
+{
+  "model_id": "Qwen/Qwen3-8B",
+  "model_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "model_files_hash": "f17ee1a31beb2f31426551664e884485df6569377c81ab59be49127ae1dd7066",
+  "tokenizer_hash": "90a2903e36317f2a873560235218be86367fa0ed4209f53096b6d59325fed333",
+  "chat_template_hash": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "vllm_version": "0.23.0",
+  "dtype": "bfloat16",
+  "enable_thinking": false,
+  "served_model_name": "Qwen3-8B",
+  "endpoint": "http://127.0.0.1:8000/v1/chat/completions"
+}

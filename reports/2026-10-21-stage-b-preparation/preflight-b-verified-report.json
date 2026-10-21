@@ -1,0 +1,31 @@
+{
+  "phase": "COMPLETE",
+  "ordinal": 2,
+  "attempt_index": 1,
+  "valid_count": 2,
+  "trial_count": 2,
+  "transition_count": 4,
+  "tail_hash": "058dce3763a1b81de83a01a9975983c3a4f20b50d5517d1f7d65996bea760938",
+  "next_action": "VERIFY_TRANSPORT",
+  "transport_evidence_verified": true,
+  "dispatch_authorized": false,
+  "formal_parameter_authority": false,
+  "saved_response_pending": false,
+  "packet_hash": "2ec259ac6fe22e3474a48279409ffa1ae35f43204b7d3559937f5d277a1a74ec",
+  "mode": "preflight-b",
+  "execution_approval_hash": "9dfbe8b634624fa7f595657123e21a1d981c29a39d9ef5a613ed9d9b3eb826c2",
+  "post_confidence_histogram": {
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 2,
+    "5": 0
+  },
+  "runtime_hash": "7b907741fc7c2065435539bb1d07c3a958ab915ea784b7ad67910164ba98c5cf",
+  "stage_b_dispatch_authorized": false,
+  "status": "preliminary",
+  "outcomes_hash": "3189cb1485480b41c8794a717d0aa2d181927e6a3f854a9341b5f60a8872bc3d",
+  "stage": "stable_group",
+  "stage_c_dispatch_authorized": false,
+  "technical_preflight_passed": true
+}

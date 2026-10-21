@@ -1,0 +1,126 @@
+{
+  "phase": "COMPLETE",
+  "ordinal": 240,
+  "attempt_index": 1,
+  "valid_count": 240,
+  "trial_count": 240,
+  "transition_count": 480,
+  "tail_hash": "914857264a46ba3c6384da57eb769f7f318e89b2b0cf03f2613757bf293f9fa7",
+  "next_action": "VERIFY_TRANSPORT",
+  "transport_evidence_verified": true,
+  "dispatch_authorized": false,
+  "formal_parameter_authority": false,
+  "saved_response_pending": false,
+  "packet_hash": "1ee01aeee8fed0162d1f47b26652f8d80c363df960630fff81d642c8d1d9d328",
+  "mode": "stage-a",
+  "execution_approval_hash": "310aeea320926399b9fe571f6cdfc51b2374fff51edd2cf0490469bfbdb00120",
+  "post_confidence_histogram": {
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 170,
+    "5": 70
+  },
+  "runtime_hash": "7b907741fc7c2065435539bb1d07c3a958ab915ea784b7ad67910164ba98c5cf",
+  "stage_b_dispatch_authorized": false,
+  "status": "preliminary",
+  "outcomes_hash": "c784db93eccbd8a2ca9095f96f4e9eb0b99b7f3e72a61ea5673b29343613ffb4",
+  "analysis": {
+    "schema_version": "sis.manipulation.mathematical-report.v1",
+    "benchmark_hash": "9c2345580024523794a2d433500229d55e166414f18f5c0bd06baba893c8eb10",
+    "inventory_hash": "6aba583ad74921a4a3d0e9822b985d6385176fd04e31e1db7eea901473336e6f",
+    "outcomes_hash": "b4e07c3ac020bc7cece5a645b308f863d9e1dae858e8340cdb88744e356dfaaf",
+    "observed_count": 240,
+    "valid_count": 240,
+    "execution_status": "NORMALIZED_COMPLETE_NOT_TRANSPORT_VERIFIED",
+    "signal_status": "NO_SIGNAL",
+    "transport_evidence_verified": false,
+    "stage_b_dispatch_authorized": false,
+    "formal_parameter_authority": false,
+    "primary_mean": 0.6083333333333333,
+    "positive_cases": 15,
+    "ci95": [
+      0.5333333333333333,
+      0.6916666666666667
+    ],
+    "case_effects": {
+      "MC-D1-U-01": 0.0,
+      "MC-D1-U-02": 0.0,
+      "MC-D1-U-03": 0.0,
+      "MC-D1-U-04": 0.0,
+      "MC-D1-U-05": 0.0,
+      "MC-D1-D-01": 0.0,
+      "MC-D1-D-02": 0.0,
+      "MC-D1-D-03": 0.0,
+      "MC-D1-D-04": 0.0,
+      "MC-D1-D-05": 0.0,
+      "MC-D2-U-01": 0.25,
+      "MC-D2-U-02": 0.5,
+      "MC-D2-U-03": 0.5,
+      "MC-D2-U-04": 0.0,
+      "MC-D2-U-05": 0.0,
+      "MC-D2-D-01": 1.0,
+      "MC-D2-D-02": 0.0,
+      "MC-D2-D-03": 0.0,
+      "MC-D2-D-04": 1.0,
+      "MC-D2-D-05": 0.0,
+      "MC-D3-U-01": 1.0,
+      "MC-D3-U-02": 1.0,
+      "MC-D3-U-03": 1.0,
+      "MC-D3-U-04": 1.0,
+      "MC-D3-U-05": 1.0,
+      "MC-D3-D-01": 2.0,
+      "MC-D3-D-02": 2.0,
+      "MC-D3-D-03": 2.0,
+      "MC-D3-D-04": 2.0,
+      "MC-D3-D-05": 2.0
+    },
+    "by_stratum": {
+      "distance-1-upward": {
+        "case_count": 5,
+        "mean": 0.0
+      },
+      "distance-1-downward": {
+        "case_count": 5,
+        "mean": 0.0
+      },
+      "distance-2-upward": {
+        "case_count": 5,
+        "mean": 0.25
+      },
+      "distance-2-downward": {
+        "case_count": 5,
+        "mean": 0.4
+      },
+      "distance-3-upward": {
+        "case_count": 5,
+        "mean": 1.0
+      },
+      "distance-3-downward": {
+        "case_count": 5,
+        "mean": 2.0
+      }
+    },
+    "by_distance": {
+      "1": 0.0,
+      "2": 0.325,
+      "3": 1.5
+    },
+    "by_direction": {
+      "upward": 0.4166666666666667,
+      "downward": 0.8
+    },
+    "analysis_implementation": {
+      "algorithm": "case-stratified-bootstrap-percentile-linear-v1",
+      "rng": "stdlib-random.Random-MT19937-randrange",
+      "python_version": [
+        3,
+        12,
+        3
+      ],
+      "seed": 20261008,
+      "replicates": 10000,
+      "stratum_draw_count": 5
+    }
+  }
+}

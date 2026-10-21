@@ -1,5 +1,258 @@
 # 进度日志
 
+## 2026-10-21：Stage-B240/240与完整备份完成；A/B均未过联合标准
+
+- B控制12629 exit0，240/240 VALID、480 journal transitions、无pending，
+  run+冷验收+打包165.868秒；预检2/2另计。没有修改A或新增prompt试验。
+- B冻结判定：mean0.45、95%CI[0.275,0.616667]为正，但12/30=40%<18/30，
+  未通过三项联合标准。A同样未通过（15/30），不解释成零效应，也不事后下调门槛。
+- Git外B完整原始tar612,504字节，SHA5d2ff837082538fe1e2ab78b5bec74138a319c1e465ddbe7e59609a997e68326，
+  包和每run文件SHA/大小/数量核验通过，17:12:32北京时间自动备份完成，watcher26248正常结束。
+  A依赖归档重核SHA仍ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211。
+- 安全B report/result/备份记录已复制reports/2026-10-21-stage-b-preparation，
+  两阶段并列表、证据定位与下一研究选择见stage-b-result-brief.md。
+  480条是同30case两阶段请求量，不是480独立重复或正式六格结果。
+- 后续需研究选择：保留失败操纵准入结果做显式探索性六格pilot，或先重新讨论构念/操纵。
+  不自动Stage-C/调prompt，不把准入失败包装成已验证身份效应；SIS_*候选/正式参数不补默认。
+- 服务仍保持，已无run在执行。暂停部署心跳，长期目标保留未完成，等待研究方向决定。
+
+## 2026-10-21：B运行获批，2/2真实预检及备份通过，240运行中
+
+- 用户明确“批准”Stage-B运行单，记录于09:06:49Z，两个独立receipt至2026-10-23T09:06:49Z。
+  只复用健康9943服务，客户端源af084独立checkout、运行根与A分离，冻结文本/参数/seed不变。
+- B专用外置controller已上传v=/root/autodl-tmp/agent-ex-sis-stage-b-acceptance-20261021，
+  文件agent-ex-stage-b-run-controller-20261021.py，不修改Git源码。CLI全部显式--stage-a-root
+  冷核验A，并绑定B独立receipt/preflight；不自动resume，不发Stage-C或六格请求。
+- 预检控制12473：2/2VALID、COMPLETE、run+验收打包5.412秒。完整原始tar17946字节，
+  SHA6c3cfa88203528f9aa56805bd889388e7b52646b5d6427499300e5b4a3353fb5，
+  Git外本地C:/Users/Bai Yuexi/Agent-EX-evidence/2026-10-21，包与每run文件清单/SHA通过，
+  backup marker已上传，之后才自动启动240控制12629。
+- 240根/root/autodl-tmp/agent-ex-sis-stage-b-20261021，v/stage-b-controller.log/pid/exit。
+  端点/原A数据不改动，服务不重启。Windows隐藏watcher26248每60秒无AI检查，
+  完成后自动冷报告/完整tar下载及SHA核验。脚本和日志位置已写入heartbeat prompt。
+- 心跳恢复每30分钟，无变化安静；原A归档需继续保留作为B前提，不合并A/B样本。
+
+## 2026-10-21：Stage-B源码上传、Linux验收及实际离线绑定完成
+
+- 用户明确批准上传Stage-B源码包及Linux/离线绑定，不含真实模型请求。
+  bundle16,043字节远端SHA b7c6174a17784fa63f42ad926126519bb06e00c7935160575c5d20d1ec879f7f一致。
+  原A repo验证delta通过；独立checkout /root/autodl-tmp/agent-ex-sis-mc-stage-b
+  干净HEAD af08446623021450f57dfa5ea802186116445d16。A目录/store不改动。
+- Linux后台PID12091专项exit0：85 passed/1 skipped in53.98s，0错误/失败；
+  剩余skip为Linux不适用的native unsupported-platform check，Linux内核锁专项已实际执行。
+- 从实际240项A store冷重放并CLI materialize/inspect，两B包与本地候选一致：
+  preflight-b 2ec259ac6fe22e3474a48279409ffa1ae35f43204b7d3559937f5d277a1a74ec；
+  stage-b 4ac85e6605c7df7dcf967a39f06220a006e557bae4b49d57e515c3ec2ca3cfe8。
+- 只GET健康/模型元数据，核对PID9943、全argv/env/model路径/alias/4096上下文，
+  仍是原已批准服务launch e61b9...。未重启服务、未POST模型请求、无B receipt/run store。
+- JUnit/log/实际服务及离线验收/两包/两inspection共7文件已下载并逐文件核对本地远端SHA。
+  运行批准门与完整hash/命令在reports/2026-10-21-stage-b-preparation/run-approval.md。
+  等待独立B两请求+备份通过后240运行授权；不借用A批准，不启动六格/Stage-C，不填SIS_*。
+
+## 2026-10-21：Stage-B确认、本地实现与73项验收完成；待上传批准
+
+- 用户明确确认同30×4×2=240、同seed/判据、仅冻结framing、独立请求/存储。
+  已记录D-2026-10-21-01，SIS_MC_FAILURE_POLICY中的B复用范围不再未决；正式SIS_*不变。
+- 规格审查Approved，规格/计划commit82074c4；TDD完成独立B inventory/wire/evidence gate、
+  四mode SQLite/CLI、实际A冷核验、B独立预检/receipt与B分析。A inventory及真实两个packet
+  黄金hash保持不变，不修改任何A run。限定代码审查无P1/P2，无新每event冷重放。
+- 最终8个命名文件73 passed in98.48s；Ruff lint/format和diff check通过。
+  所有新响应均合成测试，不是B真实数据。源码commitaf08446623021450f57dfa5ea802186116445d16。
+- 生成未授权离线B候选2/240，真实A报告JSON只作候选绑定；实际Linux仍需冷验A store。
+  精确hash、候选文件、剩余边界见reports/2026-10-21-stage-b-preparation/README.md。
+- 增量bundle16,043字节，SHA b7c6174a17784fa63f42ad926126519bb06e00c7935160575c5d20d1ec879f7f。
+  原worktree bundle verify可达性检查报错；从已批准A bundle导入干净bare后验证本delta
+  exit0，fetch精确commit且fsck通过，不重写历史。未上传，未pushGitHub。
+- 到精确上传门：只请批准上传及Linux专项/离线绑定，不包含B真实请求或服务变更。
+  目标继续保留；不擅自填SIS_*、不重跑797/全仓pytest，部署心跳保持暂停避免空转。
+
+## 2026-10-21：Stage-B本地范围核对与待确认提案
+
+- 核对AGENTS新2×3路由、研究协议/research-qa与冻结stage-b-framing：B虽有固定文本，
+  automatic_transition与dispatch仍false，现8d入口只支持A/preflight。
+- SIS_MC_FAILURE_POLICY仍列Stage-B样本/规则复用范围；建议明确同30case×四配对×2重复=240，
+  同seed/统计/失败规则，仅新增预冻结framing，B预检/包/receipt/store完全独立，A黄金hash不变。
+- 三种接入方案与边界已保存reports/2026-10-21-cloud-deployment/stage-b-next-step-proposal.md。
+  推荐最小扩展共享合同而非复制运行器；拒绝用A身份伪装B。不扩大样本、不调整刺激追效果。
+- 等待人类确认该范围/设计后再实施；尚未改源码、未上传新代码、未启动B，服务不改动。
+
+## 2026-10-21：240/240真实Stage-A终态与完整原始备份完成
+
+- 云端控制10898 exit0，240/240 VALID、COMPLETE，480 journal transitions；
+  run+冷验收+打包151.340秒，2分31秒。2项独立预检不计入240。
+- 冻结分析：primary mean0.608333，分层bootstrap95%CI[0.533333,0.691667]，
+  positive cases15/30=50%<18/30要求。三项未全满足，故未通过联合信号标准，
+  不是技术失败，也不能将NO_SIGNAL标签解释为证明零效应。
+- Windows watcher29824已正常完成，16:26:14北京时间验证完整原始tar本地备份，
+  585,565字节，SHA ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211，
+  包内SQLite/0字节锁两文件逐项SHA/大小/数量均通过。位置Git外
+  C:/Users/Bai Yuexi/Agent-EX-evidence/2026-10-21；原始数据不提交Git。
+- 6份安全preflight/Stage-A报告/result/备份证明已复制reports，中文结果及证据定位见
+  reports/2026-10-21-cloud-deployment/stage-a-result-brief.md。未读取/输出raw response/public_reason。
+- Stage-B满足研究激活前提，但未获运行授权；现8d入口禁止Stage-B。下一步准备预冻结
+  framing的独立最小实现和绑定，专项验证后单独申请，不把它伪装成旧stage-a请求。
+  六格pilot与正式N/T/seeds仍未冻结/未执行。服务保持健康，不擅自停止或重启。
+- 本轮MC实质里程碑完成，部署心跳暂停，不缩减/完成长期目标。
+
+## 2026-10-21：启动修订获批，真实预检与备份通过，240 Stage-A运行中
+
+- 用户明确“批准启动修订”；只新增已列VLLM_USE_FLASHINFER_SAMPLER=0环境开关，
+  精确launch hash e61b9e1fca37fa57848bcc276c1a3c6741bd5663585dbaf30d9b9ad15f5c1a44。
+  service-v2 PID9943北京时间16:20:03启动，完整实际cmdline/env/models核验通过。
+  source8d、runtime与两个packet未变；旧失败日志不覆盖。
+- preflight-v2控制PID10400：2/2 VALID，COMPLETE，run+冷验证1.934秒，exit0。
+  完整原始tar SHA953dc170db30f4dbb177a08bf36d344c650d924ead60447ebaa8ddcb58d21e91，
+  15,040字节，存Git外C:/Users/Bai Yuexi/Agent-EX-evidence/2026-10-21。
+  本地包与远端hash一致；SQLite和0字节锁文件均按清单核对SHA/大小。
+- 本地备份校验器首轮漏计0字节Tar entry而中止，未启动240；修复其空文件处理并只重验
+  已有备份后通过，没有重发/重跑模型预检。错误记录保留，既有文件只比hash不覆盖。
+- 远端收到preflight-local-backup-verified.json后，240 Stage-A控制PID10898于
+  08:23:09Z开始，stage-a-v2-controller.log/exit，独立后台不依赖聊天。
+  早期只读计数89个已存response、ordinal89，下一个INTENT在途；未读取回复正文。
+- Windows隐藏watcher PID29824每60秒无AI轮询，终态自动下载完整Stage-A tar/清单/report，
+  核对包/所有run文件SHA后写stage-a-local-backup-verified.json。其脚本在系统Temp，
+  stdout/stderr/final/error在Git外上述证据目录。电脑需保持开机，云run不依赖本地连接。
+- 30分钟心跳已恢复；只终态/失败/需用户处置通知。Stage-B、六格pilot仍未授权，
+  不据2请求预检响应调整任何刺激或采样参数。
+
+## 2026-10-21：首次真实加载后的预热失败，最小启动修订待补批
+
+- 首次服务8261在权重/图捕获后，V2 sampler无seed warmup进入FlashInfer JIT，
+  默认nvcc12.8使SM120架构检测失败；16:12:08北京时间退出。预检8869安全退出1，
+  尚未创建run store/发送任何实验请求。当前端口空/GPU2MiB，未自动重发或重启。
+- 诊断进一步确认现有nvcc13.2与头文件不匹配，停止追改编译链，未安装/修改包或base。
+  vLLM原生采样可通过官方支持开关选择；且MC显式seed请求原本就走原生路径。
+  新开关VLLM_USE_FLASHINFER_SAMPLER=0下合成张量实际CUDA采样通过，0.41秒。
+- 仅新增该开关的launch canonical hash为
+  e61b9e1fca37fa57848bcc276c1a3c6741bd5663585dbaf30d9b9ad15f5c1a44。
+  source/runtime/两packet及已批准条件范围不变；最小修订/诊断和失败备份详见
+  reports/2026-10-21-cloud-deployment/launch-amendment.md。5份工件本地远端SHA核对一致。
+- 精确launch环境变更另请补批，旧批准不改写/不作废。heartbeat暂停避免空转；
+  尚不能宣称完整服务修复，0/2预检、0/240Stage-A。收到补批后以独立v2控制记录继续。
+
+## 2026-10-21：用户批准，服务及独立预检后台启动
+
+- 用户明确“批准所有”，覆盖run-approval.md全部source/runtime/launch/2与240哈希，
+  以及预检+本地备份通过后的条件执行；Stage-B与六格pilot未授权。
+  两receipt有效至2026-10-23T08:09:17Z，已保存至reports并上传远端。
+- 启动前确认远端HEAD8d干净、8000空闲、无GPU计算进程。按已批argv/env启动PID8261，
+  service-start.json绑定命令/环境/哈希，服务进程独立SSH。模型5/5权重加载3.75秒，
+  占15.27GiB，随后首次编译/FlashInfer预热及CUDA图捕获，未为提速更改启动参数。
+- 外置运维脚本agent-ex-approved-run-controller-20261021.py已上传环境目录（不修改Git源码）；
+  preflight后台控制PID8869等待健康/实际cmdline/env/model identity核验，再执行2项及冷report，
+  生成完整原始证据tar/逐文件hash清单。脚本不自动resume，不根据意见改研究参数。
+- 下一步：预检成功后备份tar到Git外C:/Users/Bai Yuexi/Agent-EX-evidence/2026-10-21，
+  核对完整清单/本地远端SHA后写backup marker，才启动240控制器。
+- heartbeat已恢复每30分钟；无变化安静。长期目标已恢复active，范围不缩减。
+
+## 2026-10-21：离线部署验收收口，进入精确运行批准门
+
+- install-v2已exit0；推理venv pip check通过。vLLM0.23.0/torch2.11.0+cu130/
+  Transformers4.57.6/tokenizers0.22.2；CUDA13.0可用，小型BF16计算已通过。
+- 实际CLI全帮助确认启动flags；runtime及2/240 packets按干净8d源码冷重建通过，
+  trial identities互不重叠。真实tokenizer测得输入295–306 tokens；启动候选4096上下文
+  容纳全部输入+512输出，单序列/90%显存是待批技术候选，不改变冻结采样。
+- runtime canonical hash 7b907741fc7c2065435539bb1d07c3a958ab915ea784b7ad67910164ba98c5cf。
+  launch、两个packet精确hash和完整启动/运行命令见reports/2026-10-21-cloud-deployment/run-approval.md。
+- 新增runtime/packets/environment/launch/renderer/安装报告/JUnit共9份文件已本地备份，
+  本地与远端逐文件SHA完全一致；没有原始实验回复，也没有模型权重本地副本。
+- vLLM尚未启动，真实请求0，未创建人类receipt。等待用户明确批准服务+2请求以及
+  预检/备份通过后条件执行240项Stage-A；Stage-B与六格pilot不在该批准范围。
+- 到达审批门暂停heartbeat（不是暂停/完成长期目标）；不重复全仓测试、不重下模型。
+
+## 2026-10-21：权重完整性与Linux验收完成（仍无真实实验请求）
+
+- HF官方固定revision模型下载14文件完成（21分51秒），5权重共16,381,516,776字节。
+  通过官方HEAD size/etag建立参考清单，后台PID5963逐文件SHA验证全部匹配，exit0。
+  一次API blobs参数未返回LFS字段，未据此猜hash，改用官方huggingface_hub HEAD元数据。
+- 使用下载结束后的轻量venv补入同版平台测试依赖，PID6047专项结束exit0：
+  新机Linux104 passed/1 skipped（6.72秒），真实Linux内核锁两项已执行。
+  不代表推理venv/vLLM服务通过验收，没有模型加载或模型请求。
+- 模型参考/验证/下载工具报告已拉回本地reports/2026-10-21-cloud-deployment，
+  三文件与远端SHA逐一一致；JUnit也保存本地。没有复制公开17GB权重作为实验数据。
+- 大包CUDA依赖仍慢；另测Aliyun同cuBLAS16MiB为83.84秒（0.191MiB/s），比当前源更慢，
+  因此不盲目再次切源。安装PID2932仍活跃，保留已下载数据，不重复重建。
+
+## 2026-10-21：模型下载与推理依赖安装并行
+
+- 切源后vLLM完整wheel实测SHA与官方872aeb7c...一致；32分钟时90条下载完成日志，
+  64分钟时仍下载CUDA依赖（torch、triton、cuDNN等已落盘），不是进程死亡。
+- 为缩短串行等待，未改安装2932；对只等安装的下载控制2964核验cmdline后TERM。
+  新PID4958/download-v3.*在独立download-venv先装huggingface_hub0.36.0，再下载同revision。
+  两套venv作用不同，不并发写推理环境，不启动两份模型下载。
+- 心跳更新为安装install-v2、下载download-v3当前PID，保留30分钟与量化汇报规则。
+  下载工具和依赖安装均不代表vLLM或模型正式验收通过；无模型服务/真实请求。
+
+## 2026-10-21：定位并修复依赖下载速度
+
+- 用户要求检查network_turbo。官方文档列加速GitHub/HF，不含PyPI；之前HF直连失败、
+  source学术代理后metadata成功，本轮重核文档并保留模型下载代理范围。
+- 原pip 25分钟才解析约211条收集项，vLLM wheel约一分钟只增加2MB；不是GPU推理慢。
+  Aliyun/清华同wheel均找到；清华8MiB测速6.345秒，1.261MiB/s。
+- 官方PyPI metadata确认wheel 274,070,565字节、SHA256 872aeb7c36a1ea942216af067ce870ffdf960804e829367e1b4eb36d4831c03c，
+  与镜像一致。按系统化定位先测后修，不盲目换模型/版本。
+- 确认原pip PID1799命令身份、尚未进入Installing阶段后TERM，等待其退出才启动替代任务。
+  原exit143和原日志保留；新安装PID2932、install-v2.*，仍用原隔离venv和相同版本参数。
+  新下载控制PID2964等待v2成功，download-v2.*，官方HF固定revision不变；没有模型调用。
+- 心跳通过工具更新到v2 PID/log/exit，并增加量化进度格式；不再把旧退出当故障或重复启动。
+  8MiB测速仅证明链路改善，整体安装/大文件持续速度仍待实际下载核验。
+
+## 2026-10-21：源码上传通过与30分钟心跳
+
+- 用户明确批准上传7,693,152字节源码bundle；上传前再次核对本地SHA，远端不存在目标后
+  scp上传，并验证远端SHA d08f85e9c60950d29415ef14f9d43bc90800cbf3d5e5fb751c7969e01e46fc1f。
+  远端/root/autodl-tmp/agent-ex-sis-mc已clone，HEAD精确8d0682a，git status干净。
+- 后台安装PID1798仍解析/下载依赖，候选vllm0.23.0会在独立环境带入torch2.11/CUDA13依赖；
+  没有改基础torch2.8/cu128，安装完成后仍须兼容性实测；下载PID1907等待安装成功。
+- 用户要求定时检查：旧monitor不存在，update返回明确失败后创建新的heartbeat `agent-ex`；
+  ACTIVE/每30分钟/当前线程已从本地配置读回核对，避免误称旧任务已更新。
+  原生codex_app工具报已不可用，改用codex_app MCP成功；未手写automation配置。
+- 长期目标在当前turn查询为空，按用户请求重新建立active目标。运行许可仍须具体hash，
+  没有启动vLLM、2请求、240或Stage-B；没有将源码上传批准伪装为模型调用批准。
+
+## 2026-10-21：新长期目标与实际部署启动
+
+- 用户要求以尽快正式实验为目标持续推进。旧“直到需要云端”的目标已达边界后收口；
+  新goal active，覆盖新机恢复→2请求→240MC→六格pilot→正式参数冻结→正式采集。
+- 新机安装采用数据盘独立venv，不改base：PID1798，官方PyPI、binary-only，vllm0.23.0候选；
+  日志/exit/report均在/root/autodl-tmp/agent-ex-sis-env-20261021。
+- HF直连API失败；使用用户此前指定的AutoDL学术加速后官方metadata成功核对候选revision。
+  PID1907仅在安装成功后下载同revision模型；当前没有真实模型调用或服务启动。
+- 构建并验证完整源码bundle，7,693,152字节，SHA256 d08f85e9c60950d29415ef14f9d43bc90800cbf3d5e5fb751c7969e01e46fc1f。
+  源码/历史上传仍停在精确批准门；未上传、未push，未伪造runtime或run receipt。
+- 新路线与可恢复操作位置已落盘；新实测数据备份作为运行步骤，不再仅保存摘要/hash。
+  后台任务持续不等于已安装/已下载完成，后续须读exit、验证依赖与文件hash。
+
+## 2026-10-21：核对本地实验备份
+
+- 只读检查主目录/工作树、报告、Git bundle heads及文档指向的Temp位置；未修改原始文件，
+  未读取raw回答正文，未连接服务器、安装或启动实验。
+- 五月原pilot输出仍在；九月云端完整816/797证据目录未找到，现有摘要/hash不等于备份。
+  记录docs/benchmarks/2026-10-21-local-backup-audit.md，未夸称全盘检索或数据已可恢复。
+- 首次文件遍历遇到旧测试缓存权限拒绝，未改权限；一次相对pilot路径指向phase0工作树
+  不存在，改主目录绝对路径确认28个raw文件/30个结果目录。没有删除任何数据。
+
+## 2026-10-21：新机52439免密与CUDA只读检查
+
+- 新SSH可达、原专用密钥有效；独立known-hosts记录新主机，随后严格host-key校验通过。
+- RTX5090 32GB、torch2.8/cu128与CUDA查询正常，8000无服务。
+- 只读观察发现新200GB数据盘近空、base仅PyTorch，无已发现vLLM/模型/源码；
+  不是可以直接续跑的完整旧实例。详细位置/版本/观测局限见findings.md。
+- 未安装依赖、上传源码、下载模型、运行模型或改服务；等待用户确认自定义镜像实际
+  应用状态，或授权在当前基础环境补齐。既有本地研究/运行配置没有改变。
+
+## 2026-10-21：恢复研究交接与新服务器迁移前核对
+
+- 使用Notion研究核对流程读取最新相关交接，区分已批准研究决定、写作建议与旧工程快照；
+  关键差异和来源保存在findings.md，未修改Notion、刺激、renderer或采样参数。
+- 对照当前worktree/HEAD、决策和机器材料；实查GitHub refs，发现新分支落后本地40提交。
+  只读核查，无fetch/merge/push/upload；两个既有未提交loop文件保持不动。
+- 今日重跑11个命名专项文件：103 passed, 2 skipped（18.11s），两项为Linux内核锁。
+  CLI --help可用，git diff check通过。没有全仓测试或真实模型请求。
+- 用户新机镜像待核验，尚缺新SSH地址；不连接已释放的旧地址，不启动服务。
+  下一步先核查保留环境/模型/归档，再安排精确源码迁移及真实runtime绑定；
+  仍需Linux验收和独立两事件技术preflight，240及Stage-B不因本轮核查自动获准。
+
 ## 2026-10-08：批准renderer/runtime后的本地运行器验收
 
 - renderer v2采用用户精确system，展示完整source_message、不重复source_reason；

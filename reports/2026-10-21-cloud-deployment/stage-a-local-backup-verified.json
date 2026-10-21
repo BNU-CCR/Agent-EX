@@ -1,0 +1,13 @@
+{
+  "mode": "stage-a",
+  "run_files_verified": true,
+  "technical_preflight_passed": false,
+  "verified_at": "2026-10-21T08:26:14.7955698+00:00",
+  "run_file_count": 2,
+  "stage_b_authorized": false,
+  "local_copy_sha256": "ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211",
+  "archive_bytes": 585565,
+  "local_archive": "C:\\Users\\Bai Yuexi\\Agent-EX-evidence\\2026-10-21\\stage-a-evidence.tar.gz",
+  "archive_sha256": "ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211",
+  "valid_count": 240
+}

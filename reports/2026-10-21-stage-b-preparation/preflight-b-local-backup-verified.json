@@ -1,0 +1,15 @@
+{
+  "required_stage_a_archive_sha256": "ddaf37487812f6f11cf2fdb85c90ee18ff801b32b42c2bae14f66910ba5f0211",
+  "archive_bytes": 17946,
+  "valid_count": 2,
+  "run_file_count": 2,
+  "archive_sha256": "6c3cfa88203528f9aa56805bd889388e7b52646b5d6427499300e5b4a3353fb5",
+  "mode": "preflight-b",
+  "local_archive": "C:\\Users\\Bai Yuexi\\Agent-EX-evidence\\2026-10-21\\preflight-b-evidence.tar.gz",
+  "verified_at": "2026-10-21T09:09:25.6721718+00:00",
+  "local_copy_sha256": "6c3cfa88203528f9aa56805bd889388e7b52646b5d6427499300e5b4a3353fb5",
+  "stage_c_authorized": false,
+  "run_files_verified": true,
+  "technical_preflight_passed": true,
+  "stage_b_authorized": true
+}

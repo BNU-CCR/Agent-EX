@@ -1,0 +1,67 @@
+{
+  "observed_at": "2026-10-21T09:03:09.963808+00:00",
+  "source_commit": "af08446623021450f57dfa5ea802186116445d16",
+  "runtime_hash": "7b907741fc7c2065435539bb1d07c3a958ab915ea784b7ad67910164ba98c5cf",
+  "launch_intent_hash": "e61b9e1fca37fa57848bcc276c1a3c6741bd5663585dbaf30d9b9ad15f5c1a44",
+  "service_pid": 9943,
+  "argv_verified": true,
+  "environment_verified": true,
+  "model_metadata": {
+    "object": "list",
+    "data": [
+      {
+        "id": "Qwen3-8B",
+        "object": "model",
+        "created": 1792573389,
+        "owned_by": "vllm",
+        "root": "/root/autodl-tmp/models/qwen3-8b-b968826",
+        "parent": null,
+        "max_model_len": 4096,
+        "permission": [
+          {
+            "id": "modelperm-bdd80f57e588424f",
+            "object": "model_permission",
+            "created": 1792573389,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "linux_tests": {
+    "tests": 86,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1
+  },
+  "packages": {
+    "vllm": "0.23.0",
+    "torch": "2.11.0",
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2"
+  },
+  "model_post_requests_sent": 0,
+  "stage_b_execution_authorized": false,
+  "packets": {
+    "preflight-b": {
+      "hash": "2ec259ac6fe22e3474a48279409ffa1ae35f43204b7d3559937f5d277a1a74ec",
+      "entries": 2,
+      "actual_a_cold_replay_matched": true,
+      "dispatch_authorized": false
+    },
+    "stage-b": {
+      "hash": "4ac85e6605c7df7dcf967a39f06220a006e557bae4b49d57e515c3ec2ca3cfe8",
+      "entries": 240,
+      "actual_a_cold_replay_matched": true,
+      "dispatch_authorized": false
+    }
+  }
+}
