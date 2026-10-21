@@ -7,6 +7,17 @@ last-verified: 2026-07-29
 
 # 决策记录
 
+## D-2026-10-21-01：Stage-B复用范围与最小独立接入（非运行授权）
+
+用户明确确认：Stage-B沿用同30case×BB/BG/GG/GB×2重复=240项，同generation seeds、
+采样和统计判据，仅加入2026-10-08已冻结的中性固定群体框架；独立请求与存储。
+不重新生成刺激，不调整判据，不把A/B合成更大样本，不解释为独立重复。
+实现采用明确stable_group inventory及stage-b/preflight-b模式，沿用共享SQLite/HTTP/retry原语，
+A默认wire/packet/hash保持不变；只有完整有效且未通过联合标准的A冷验收可作为B输入。
+使用独立B两请求技术preflight，独立receipt/store；不借用A预检或授权。
+具体设计见superpowers/specs/2026-10-21-stage-b-benchmark-design.md。
+本确认允许本地实现与专项验证，不授权上传新源码、发送B请求、六格pilot或改变正式SIS_*。
+
 ## D-2026-10-08-02：Stage-A renderer与采样参数批准（不授予dispatch权限）
 
 用户确认完整展示批准的source_message，不重复source_reason；四配对仅改变self/source group。

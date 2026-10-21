@@ -13,6 +13,7 @@ from ..domain import _json_ready, _require_sha256, canonical_payload_hash
 from ..phase0b.vllm_event_adapter import Phase0BVllmEventRequest
 from .benchmark_adapter import BenchmarkVllmAdapter, SAMPLING, SYSTEM
 from .benchmark_trials import build_benchmark_trial_inventory
+from .benchmark_stage_b import B_MODES, FRAMING_HASH, load_frozen_framing, validate_stage_a_report
 
 RENDERER = "sis.manipulation.benchmark-prompt.v2"
 
@@ -25,21 +26,29 @@ def build_benchmark_transport_candidate(
     served_model_name,
     adapter_binding_hash,
     mode="stage-a",
+    stage_a_report=None,
 ):
     """Encode explicit parameter candidates, not researcher-approved requests."""
-    inventory = build_benchmark_trial_inventory(benchmark, expected_hash=expected_hash)
+    is_b = mode in B_MODES
+    stage = "stable_group" if is_b else "pure_label"
+    inventory = build_benchmark_trial_inventory(benchmark, expected_hash=expected_hash, stage=stage)
     if not isinstance(generation_settings, Mapping) or canonical_payload_hash(
         generation_settings
     ) != canonical_payload_hash(SAMPLING):
         raise ValueError("explicit approved five-parameter sampling required")
-    if mode not in {"stage-a", "preflight"}:
-        raise ValueError("Stage-B dispatch is disabled")
+    if mode not in {"stage-a", "preflight"} | B_MODES:
+        raise ValueError("unknown benchmark mode")
+    if is_b:
+        validate_stage_a_report(stage_a_report, runtime_hash=adapter_binding_hash)
+        framing = load_frozen_framing()
+    elif stage_a_report is not None:
+        raise ValueError("Stage-A packet must not contain Stage-B activation evidence")
     _require_sha256("adapter_binding_hash", adapter_binding_hash)
     effective_binding = canonical_payload_hash(
         {
             "runtime_binding": adapter_binding_hash,
             "sampling": dict(SAMPLING),
-            "renderer": RENDERER,
+            "renderer": RENDERER + ".stage-b" if is_b else RENDERER,
             "system": SYSTEM,
             "mode": mode,
         }
@@ -52,7 +61,7 @@ def build_benchmark_transport_candidate(
     cases = {case["case_id"]: case for case in benchmark["cases"]}
     aliases = {case_id: f"Member {i:03d}" for i, case_id in enumerate(cases, 1)}
     entries = []
-    for trial in data["trials"] if mode == "stage-a" else data["trials"][:2]:
+    for trial in data["trials"] if mode in {"stage-a", "stage-b"} else data["trials"][:2]:
         case = cases[trial["case_id"]]
         visible = {
             "persona_context": benchmark["persona_context"],
@@ -70,6 +79,11 @@ def build_benchmark_transport_candidate(
                 }
             ],
         }
+        if is_b:
+            visible["self_group_frame"] = framing["self_frames"][trial["focal_group"]]
+            visible["social_messages"][0]["member_id"] = framing["source_templates"][
+                trial["source_group"]
+            ].format(source_id=aliases[trial["case_id"]].removeprefix("Member "))
         # reason/provenance are archive metadata, not a duplicate extra exposure.
         messages = (
             {"role": "system", "content": SYSTEM},
@@ -85,7 +99,7 @@ def build_benchmark_transport_candidate(
             {
                 "inventory_hash": inventory.output_hash,
                 "trial_id": trial["trial_id"],
-                "renderer": RENDERER,
+                "renderer": RENDERER + ".stage-b" if is_b else RENDERER,
                 "served_model_name": served_model_name,
                 "mode": mode,
                 "effective_adapter_binding_hash": effective_binding,
@@ -110,8 +124,8 @@ def build_benchmark_transport_candidate(
         entries.append(
             {
                 "trial_id": trial["trial_id"]
-                if mode == "stage-a"
-                else "preflight-" + trial["trial_id"],
+                if mode in {"stage-a", "stage-b"}
+                else mode + "-" + trial["trial_id"],
                 "case_id": trial["case_id"],
                 "attempt_requests": requests,
                 "wire_body": wires[0].decode("utf-8"),
@@ -127,14 +141,19 @@ def build_benchmark_transport_candidate(
             "benchmark": expected_hash,
             "inventory": inventory.output_hash,
             "adapter": adapter_binding_hash,
+            **(
+                {"stage_a_report": canonical_payload_hash(stage_a_report), "framing": FRAMING_HASH}
+                if is_b
+                else {}
+            ),
         },
         rng_provenance=(),
         payload={
-            "renderer_version": RENDERER,
+            "renderer_version": RENDERER + ".stage-b" if is_b else RENDERER,
             "renderer_approved": True,
             "sampling_approved": True,
             "runtime_approved": False,
-            "stage": "pure_label",
+            "stage": stage,
             "mode": mode,
             "effective_adapter_binding_hash": effective_binding,
             "entries": entries,
@@ -143,6 +162,11 @@ def build_benchmark_transport_candidate(
             "dispatch_authorized": False,
             "cloud_launch_eligible": False,
             "formal_parameter_authority": False,
+            **(
+                {"stage_a_evidence": _json_ready(stage_a_report), "framing_hash": FRAMING_HASH}
+                if is_b
+                else {}
+            ),
         },
     )
 
@@ -156,6 +180,7 @@ def replay_benchmark_transport_candidate(pack, benchmark, *, expected_hash):
         served_model_name=values["served_model_name"],
         adapter_binding_hash=pack.input_hashes["adapter"],
         mode=values["mode"],
+        stage_a_report=values.get("stage_a_evidence"),
     )
     if pack != rebuilt:
         raise ValueError("saved transport candidate differs from frozen derivation")

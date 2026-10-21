@@ -10,6 +10,18 @@
 规格：../specs/2026-10-21-stage-b-benchmark-design.md（独立规格审查Approved）。
 范围来自用户本轮明确确认；在当前专用worktree inline执行，其他未提交文件不stage。
 
+## 本地执行结果（2026-10-21）
+
+- [x] Task1：9项RED后最小实现，inventory/transport/B gate相关21项GREEN；A inventory hash不变。
+- [x] Task2：3项针对性RED后GREEN；合成实际A store冷核验、独立B预检/240假HTTP与篡改拒绝通过。
+- [x] Task3：CLI新mode与缺失A-root先RED后GREEN；B歧义恢复/三次失败不重发、
+  原A真实preflight/Stage-A两个packet golden hashes及8个命名文件的最终专项共73 passed，
+  98.48秒；Ruff lint/format、diff check通过。
+- [x] 独立规格审查Approved；限定代码审查无P1/P2，未引入每event的包重建/冷重放。
+- [ ] Linux新源码验收、服务实际绑定、B真实预检与240：未执行，等待精确上传/运行批准。
+
+以下步骤保留原TDD实施顺序；完成状态以上述验收为准。不把本地假HTTP当真实B结果。
+
 ## Task 1: 独立inventory、固定framing与A证据门
 
 Files: platform/src/agent_ex/identity_network/benchmark_trials.py、benchmark_transport.py、

@@ -31,9 +31,11 @@ def derive_generation_seed(case_id, repeat_id):
     return int(digest[:8], 16) & 0x7FFFFFFF
 
 
-def build_benchmark_trial_inventory(benchmark, *, expected_hash):
+def build_benchmark_trial_inventory(benchmark, *, expected_hash, stage="pure_label"):
     """Pure, content-bound materialization; no renderer, model, endpoint or HTTP."""
     validate_frozen_benchmark(benchmark, expected_hash=expected_hash)
+    if stage not in {"pure_label", "stable_group"}:
+        raise ValueError("only frozen Stage-A/Stage-B inventories allowed")
     cases, trials = [], []
     seed_keys = set()
     for case in benchmark["cases"]:
@@ -61,7 +63,7 @@ def build_benchmark_trial_inventory(benchmark, *, expected_hash):
             seed_keys.add(seed)
             for variant in VARIANTS:
                 identity = {
-                    "stage": "pure_label",
+                    "stage": stage,
                     "benchmark_hash": expected_hash,
                     "case_id": case["case_id"],
                     "repeat_id": repeat,
@@ -88,7 +90,7 @@ def build_benchmark_trial_inventory(benchmark, *, expected_hash):
         input_hashes={"benchmark": expected_hash},
         rng_provenance=(),
         payload={
-            "stage": "pure_label",
+            "stage": stage,
             "trial_count": 240,
             "cases": cases,
             "trials": trials,
@@ -104,7 +106,11 @@ def build_benchmark_trial_inventory(benchmark, *, expected_hash):
 
 def replay_benchmark_trial_inventory(inventory, benchmark, *, expected_hash):
     """Cold recomputation rejects drift even if the attacker rehashes an envelope."""
-    rebuilt = build_benchmark_trial_inventory(benchmark, expected_hash=expected_hash)
-    if not isinstance(inventory, ArtifactEnvelope) or inventory != rebuilt:
+    if not isinstance(inventory, ArtifactEnvelope):
+        raise ValueError("benchmark trial inventory required")
+    rebuilt = build_benchmark_trial_inventory(
+        benchmark, expected_hash=expected_hash, stage=inventory.payload["stage"]
+    )
+    if inventory != rebuilt:
         raise ValueError("benchmark trial inventory replay mismatch")
     return rebuilt

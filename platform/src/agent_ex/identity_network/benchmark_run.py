@@ -13,6 +13,7 @@ from .benchmark_analysis import analyze_benchmark_outcomes
 from .benchmark_store import BenchmarkStore
 from .benchmark_trials import build_benchmark_trial_inventory
 from .benchmark_transport import build_benchmark_transport_candidate
+from .benchmark_stage_b import B_MODES, validate_stage_a_report, stage_a_report_payload
 from .manipulation_lock import ManipulationRunLock
 
 BENCHMARK_HASH = "9c2345580024523794a2d433500229d55e166414f18f5c0bd06baba893c8eb10"
@@ -59,8 +60,15 @@ def validate_runtime(runtime):
     return canonical_payload_hash(runtime)
 
 
-def build_bound_packet(benchmark, runtime, *, mode):
+def build_bound_packet(benchmark, runtime, *, mode, stage_a_report=None):
     runtime_hash = validate_runtime(runtime)
+    if mode in B_MODES:
+        stage_a_report = stage_a_report_payload(stage_a_report)
+        validate_stage_a_report(
+            stage_a_report,
+            runtime_hash=runtime_hash,
+            packet_hash=build_bound_packet(benchmark, runtime, mode="stage-a").output_hash,
+        )
     candidate = build_benchmark_transport_candidate(
         benchmark=benchmark,
         expected_hash=BENCHMARK_HASH,
@@ -68,11 +76,16 @@ def build_bound_packet(benchmark, runtime, *, mode):
         served_model_name=runtime["served_model_name"],
         adapter_binding_hash=runtime_hash,
         mode=mode,
+        stage_a_report=stage_a_report,
     )
     return ArtifactEnvelope.create(
-        artifact_type="sis-stage-a-bound-packet",
-        schema_version="sis.stage-a.bound-packet.v1",
-        algorithm_id="sis-stage-a-runtime-binding",
+        artifact_type="sis-stage-b-bound-packet" if mode in B_MODES else "sis-stage-a-bound-packet",
+        schema_version="sis.stage-b.bound-packet.v1"
+        if mode in B_MODES
+        else "sis.stage-a.bound-packet.v1",
+        algorithm_id="sis-stage-b-runtime-binding"
+        if mode in B_MODES
+        else "sis-stage-a-runtime-binding",
         algorithm_version="1.0.0",
         input_hashes={**dict(candidate.input_hashes), "runtime": runtime_hash},
         rng_provenance=(),
@@ -88,7 +101,12 @@ def build_bound_packet(benchmark, runtime, *, mode):
 
 
 def _validate_packet(benchmark, packet, runtime):
-    if packet != build_bound_packet(benchmark, runtime, mode=packet.payload["mode"]):
+    if packet != build_bound_packet(
+        benchmark,
+        runtime,
+        mode=packet.payload["mode"],
+        stage_a_report=packet.payload.get("stage_a_evidence"),
+    ):
         raise ValueError("packet differs from frozen source/runtime derivation")
 
 
@@ -144,6 +162,22 @@ def _verify_source_checkout(commit):
         raise ValueError("module origin differs from approved source checkout")
 
 
+def _verify_stage_a_store(stage_a_root, *, benchmark, packet, runtime):
+    if packet.payload["mode"] not in B_MODES:
+        return
+    if stage_a_root is None:
+        raise ValueError("actual complete Stage-A store required for Stage-B")
+    a_packet = build_bound_packet(benchmark, runtime, mode="stage-a")
+    actual = verify_benchmark(stage_a_root, benchmark=benchmark, packet=a_packet, runtime=runtime)
+    validate_stage_a_report(
+        actual, runtime_hash=validate_runtime(runtime), packet_hash=a_packet.output_hash
+    )
+    if canonical_payload_hash(stage_a_report_payload(actual)) != canonical_payload_hash(
+        packet.payload["stage_a_evidence"]
+    ):
+        raise ValueError("Stage-A cold execution evidence differs from bound report")
+
+
 def run_benchmark(
     root,
     *,
@@ -153,15 +187,22 @@ def run_benchmark(
     receipt,
     resume,
     preflight_root=None,
+    stage_a_root=None,
     connection_factory=http.client.HTTPConnection,
 ):
     _validate_packet(benchmark, packet, runtime)
     validate_receipt(receipt, packet, runtime)
+    _verify_stage_a_store(stage_a_root, benchmark=benchmark, packet=packet, runtime=runtime)
     _verify_source_checkout(receipt["source_commit"])
-    if packet.payload["mode"] == "stage-a":
+    if packet.payload["mode"] in {"stage-a", "stage-b"}:
         if preflight_root is None:
             raise ValueError("verified independent two-event preflight required")
-        preflight = build_bound_packet(benchmark, runtime, mode="preflight")
+        preflight = build_bound_packet(
+            benchmark,
+            runtime,
+            mode="preflight-b" if packet.payload["mode"] == "stage-b" else "preflight",
+            stage_a_report=packet.payload.get("stage_a_evidence"),
+        )
         technical = BenchmarkStore.verify(preflight_root, pack=preflight)
         if technical["phase"] != "COMPLETE" or technical["valid_count"] != 2:
             raise ValueError("two-event technical preflight incomplete")
@@ -189,8 +230,9 @@ def run_benchmark(
                     return store.summary()
 
 
-def verify_benchmark(root, *, benchmark, packet, runtime):
+def verify_benchmark(root, *, benchmark, packet, runtime, stage_a_root=None):
     _validate_packet(benchmark, packet, runtime)
+    _verify_stage_a_store(stage_a_root, benchmark=benchmark, packet=packet, runtime=runtime)
     evidence = BenchmarkStore.verify(root, pack=packet)
     outcomes = evidence.pop("outcomes")
     historical_receipt = evidence.pop("execution_receipt")
@@ -202,13 +244,20 @@ def verify_benchmark(root, *, benchmark, packet, runtime):
         "stage_b_dispatch_authorized": False,
         "status": "preliminary",
         "outcomes_hash": canonical_payload_hash(outcomes),
+        **(
+            {"stage": "stable_group", "stage_c_dispatch_authorized": False}
+            if packet.payload["mode"] in B_MODES
+            else {}
+        ),
     }
-    if packet.payload["mode"] == "preflight":
+    if packet.payload["mode"] in {"preflight", "preflight-b"}:
         return {
             **result,
             "technical_preflight_passed": evidence["phase"] == "COMPLETE" and len(outcomes) == 2,
         }
-    inventory = build_benchmark_trial_inventory(benchmark, expected_hash=BENCHMARK_HASH)
+    inventory = build_benchmark_trial_inventory(
+        benchmark, expected_hash=BENCHMARK_HASH, stage=packet.payload["stage"]
+    )
     analysis = analyze_benchmark_outcomes(
         benchmark, inventory, outcomes, expected_hash=BENCHMARK_HASH
     )

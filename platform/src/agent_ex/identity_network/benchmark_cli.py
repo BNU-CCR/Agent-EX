@@ -9,7 +9,14 @@ import sys
 
 from ..artifacts import ArtifactEnvelope
 from ..domain import _json_ready
-from .benchmark_run import build_bound_packet, run_benchmark, verify_benchmark, _validate_packet
+from .benchmark_run import (
+    build_bound_packet,
+    run_benchmark,
+    verify_benchmark,
+    _validate_packet,
+    _verify_stage_a_store,
+)
+from .benchmark_stage_b import B_MODES
 from .dispatch import _strict_json
 from .manipulation_store import file_signature
 
@@ -54,8 +61,11 @@ def main(argv=None):
         item = sub.add_parser(command)
         item.add_argument("--benchmark", required=True)
         item.add_argument("--runtime", required=True)
+        item.add_argument("--stage-a-root")
         if command == "materialize":
-            item.add_argument("--mode", choices=("preflight", "stage-a"), required=True)
+            item.add_argument(
+                "--mode", choices=("preflight", "stage-a", "preflight-b", "stage-b"), required=True
+            )
             item.add_argument("--out", required=True)
         else:
             item.add_argument("--packet", required=True)
@@ -82,7 +92,17 @@ def main(argv=None):
             return 0
         benchmark, runtime = _load(args.benchmark), _load(args.runtime)
         if args.command == "materialize":
-            packet = build_bound_packet(benchmark, runtime, mode=args.mode)
+            stage_a_report = None
+            if args.mode in B_MODES:
+                if args.stage_a_root is None:
+                    raise ValueError("actual Stage-A store required to materialize Stage-B")
+                a_packet = build_bound_packet(benchmark, runtime, mode="stage-a")
+                stage_a_report = verify_benchmark(
+                    args.stage_a_root, benchmark=benchmark, packet=a_packet, runtime=runtime
+                )
+            packet = build_bound_packet(
+                benchmark, runtime, mode=args.mode, stage_a_report=stage_a_report
+            )
             _write_new(args.out, packet.to_payload())
             result = {
                 "packet_hash": packet.output_hash,
@@ -93,6 +113,9 @@ def main(argv=None):
             packet = ArtifactEnvelope.from_payload(_load(args.packet))
             _validate_packet(benchmark, packet, runtime)
             if args.command == "inspect":
+                _verify_stage_a_store(
+                    args.stage_a_root, benchmark=benchmark, packet=packet, runtime=runtime
+                )
                 result = {
                     "packet_hash": packet.output_hash,
                     "mode": packet.payload["mode"],
@@ -112,10 +135,15 @@ def main(argv=None):
                     receipt=_load(args.receipt),
                     resume=args.command == "resume",
                     preflight_root=args.preflight_root,
+                    stage_a_root=args.stage_a_root,
                 )
             else:
                 result = verify_benchmark(
-                    args.root, benchmark=benchmark, packet=packet, runtime=runtime
+                    args.root,
+                    benchmark=benchmark,
+                    packet=packet,
+                    runtime=runtime,
+                    stage_a_root=args.stage_a_root,
                 )
                 if args.command == "report":
                     _write_new(args.out, result)

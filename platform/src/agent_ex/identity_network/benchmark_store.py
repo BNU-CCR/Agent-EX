@@ -59,9 +59,9 @@ class BenchmarkStore:
         self.pack, self.lease = pack, lease
         self._expected_receipt = receipt
         entries = pack.payload["entries"]
-        if pack.payload["mode"] not in {"stage-a", "preflight"} or len(entries) != (
-            240 if pack.payload["mode"] == "stage-a" else 2
-        ):
+        if pack.payload["mode"] not in {"stage-a", "preflight", "stage-b", "preflight-b"} or len(
+            entries
+        ) != (240 if pack.payload["mode"] in {"stage-a", "stage-b"} else 2):
             raise ValueError("exact benchmark or technical preflight required")
         self.bindings = tuple((e["trial_id"], e["wire_hash"]) for e in entries)
         encoder = BenchmarkVllmAdapter(

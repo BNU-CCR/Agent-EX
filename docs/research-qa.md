@@ -7,6 +7,13 @@ last-verified: 2026-07-29
 
 # Paper 1 研究问答与未决项
 
+2026-10-21更新：D-2026-10-21-01确认Stage-B同30case×四配对×2重复=240，
+同generation seeds/采样/统计/失败规则，仅加入已冻结framing，独立请求与存储。
+SIS_MC_FAILURE_POLICY中Stage-B样本与规则复用范围不再未决；下方旧待确认表述保留追溯。
+Stage-A真实240/240已验收备份但未通过三项联合信号标准，满足B研究激活前提。
+新B代码/包/Linux与实际绑定仍须验收，运行授权仍关闭；不自动授予B或六格正式权限。
+其余正式N/T/seeds、memory/feed、network、primary outcome/inference仍未冻结。
+
 ## 2026-10-01 新主研究的未决项
 
 2026-10-08最新：D-2026-10-08-02已批准MC专用renderer精确system与五采样参数，
