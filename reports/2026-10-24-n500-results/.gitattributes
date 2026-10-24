@@ -1,0 +1,2 @@
+# Preserve verified numeric source exports byte-for-byte, including CSV CRLF.
+data/** -text
