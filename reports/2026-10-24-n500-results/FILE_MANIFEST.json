@@ -1,0 +1,222 @@
+{
+  "schema": "agent-ex.numeric-results-publication.v1",
+  "date": "2026-10-24",
+  "seeds": 10,
+  "runs": 60,
+  "events": 900000,
+  "trajectory_rows": 1860,
+  "source_fingerprint": "f687f0547c5925d5f57240da3a244f894dad7fc085b9abfa733fd152d69baef9",
+  "raw_text_included": false,
+  "files": [
+    {
+      "path": "data/seed-20261201/summary.json",
+      "source_relative": "finalized/seed-20261201/summary.json",
+      "bytes": 1014,
+      "source_sha256": "689a54c10a12c823dc1be12d9f278275ff71ff4da1b89dbd4373e9dd147dfdcb",
+      "repo_sha256": "689a54c10a12c823dc1be12d9f278275ff71ff4da1b89dbd4373e9dd147dfdcb"
+    },
+    {
+      "path": "data/seed-20261201/verification.json",
+      "source_relative": "finalized/seed-20261201/verification.json",
+      "bytes": 2847,
+      "source_sha256": "07aa07a59e4b0a9342c0923149d7c92635e29c2f1b1c41e2592fbf86833db40c",
+      "repo_sha256": "07aa07a59e4b0a9342c0923149d7c92635e29c2f1b1c41e2592fbf86833db40c"
+    },
+    {
+      "path": "data/seed-20261201/trajectories.csv",
+      "source_relative": "finalized/seed-20261201/trajectories.csv",
+      "bytes": 28912,
+      "source_sha256": "2ee3965e7d2af9455d48f3e7bfcab509bf5072bc11604ef9195f2fc421fd9851",
+      "repo_sha256": "2ee3965e7d2af9455d48f3e7bfcab509bf5072bc11604ef9195f2fc421fd9851"
+    },
+    {
+      "path": "data/seed-20261202/summary.json",
+      "source_relative": "finalized/seed-20261202/summary.json",
+      "bytes": 1035,
+      "source_sha256": "50400883583fb1b596044a182a2fd622cb3a7d3c50ef83ba8dedbdc75d47bad5",
+      "repo_sha256": "50400883583fb1b596044a182a2fd622cb3a7d3c50ef83ba8dedbdc75d47bad5"
+    },
+    {
+      "path": "data/seed-20261202/verification.json",
+      "source_relative": "finalized/seed-20261202/verification.json",
+      "bytes": 2847,
+      "source_sha256": "3e6d4ec20fcf77d7379fbb89d7b9d6d0de3f385f6b5f9f5abc46171bc1541795",
+      "repo_sha256": "3e6d4ec20fcf77d7379fbb89d7b9d6d0de3f385f6b5f9f5abc46171bc1541795"
+    },
+    {
+      "path": "data/seed-20261202/trajectories.csv",
+      "source_relative": "finalized/seed-20261202/trajectories.csv",
+      "bytes": 28637,
+      "source_sha256": "3e459e44ee49713282082e78370e86d5bc8589b27d0ef209fb775e1fae360dfe",
+      "repo_sha256": "3e459e44ee49713282082e78370e86d5bc8589b27d0ef209fb775e1fae360dfe"
+    },
+    {
+      "path": "data/seed-20261203/summary.json",
+      "source_relative": "finalized/seed-20261203/summary.json",
+      "bytes": 1037,
+      "source_sha256": "e04b06f5f8ae815bfdb524f7613f33f326464b2b97024ac15d88c7152e8a0949",
+      "repo_sha256": "e04b06f5f8ae815bfdb524f7613f33f326464b2b97024ac15d88c7152e8a0949"
+    },
+    {
+      "path": "data/seed-20261203/verification.json",
+      "source_relative": "finalized/seed-20261203/verification.json",
+      "bytes": 2847,
+      "source_sha256": "d6a3f5bd7c0058c08b919d40f9897764831a890f75f73125953e960a53a17455",
+      "repo_sha256": "d6a3f5bd7c0058c08b919d40f9897764831a890f75f73125953e960a53a17455"
+    },
+    {
+      "path": "data/seed-20261203/trajectories.csv",
+      "source_relative": "finalized/seed-20261203/trajectories.csv",
+      "bytes": 28616,
+      "source_sha256": "1a1092c4d271c5d0ca2d7a3dd607e5fa293c489b4b7838765041b3e3c42bcadd",
+      "repo_sha256": "1a1092c4d271c5d0ca2d7a3dd607e5fa293c489b4b7838765041b3e3c42bcadd"
+    },
+    {
+      "path": "data/seed-20261204/summary.json",
+      "source_relative": "finalized/seed-20261204/summary.json",
+      "bytes": 1013,
+      "source_sha256": "252b5066e0f71545726f5a03a3704a936a7761631e2746b34c37a833cff4ecd4",
+      "repo_sha256": "252b5066e0f71545726f5a03a3704a936a7761631e2746b34c37a833cff4ecd4"
+    },
+    {
+      "path": "data/seed-20261204/verification.json",
+      "source_relative": "finalized/seed-20261204/verification.json",
+      "bytes": 2847,
+      "source_sha256": "a9f2a508663fcf9df181e1abf1b1bf66b76ad3f0eb6225a04c262477507cc721",
+      "repo_sha256": "a9f2a508663fcf9df181e1abf1b1bf66b76ad3f0eb6225a04c262477507cc721"
+    },
+    {
+      "path": "data/seed-20261204/trajectories.csv",
+      "source_relative": "finalized/seed-20261204/trajectories.csv",
+      "bytes": 28937,
+      "source_sha256": "688a9746936d4b48b2d1186c2ea3e236bc1ba00a86dc5fa0425af4b8a571877a",
+      "repo_sha256": "688a9746936d4b48b2d1186c2ea3e236bc1ba00a86dc5fa0425af4b8a571877a"
+    },
+    {
+      "path": "data/seed-20261205/summary.json",
+      "source_relative": "finalized/seed-20261205/summary.json",
+      "bytes": 1024,
+      "source_sha256": "d0fbaf871fe585108b2ebf2793de2c46b6d2d8ed7834068d490788b43e8ceb42",
+      "repo_sha256": "d0fbaf871fe585108b2ebf2793de2c46b6d2d8ed7834068d490788b43e8ceb42"
+    },
+    {
+      "path": "data/seed-20261205/verification.json",
+      "source_relative": "finalized/seed-20261205/verification.json",
+      "bytes": 2847,
+      "source_sha256": "a352b469756f2e3fdd96937ac5d7fc9271ff907ff9aa90984ccc907f675e5713",
+      "repo_sha256": "a352b469756f2e3fdd96937ac5d7fc9271ff907ff9aa90984ccc907f675e5713"
+    },
+    {
+      "path": "data/seed-20261205/trajectories.csv",
+      "source_relative": "finalized/seed-20261205/trajectories.csv",
+      "bytes": 28666,
+      "source_sha256": "09d1401b1944236473f8ea761288a37c3797bee2bb591086a4566b2b6ff38c95",
+      "repo_sha256": "09d1401b1944236473f8ea761288a37c3797bee2bb591086a4566b2b6ff38c95"
+    },
+    {
+      "path": "data/seed-20261206/summary.json",
+      "source_relative": "finalized/seed-20261206/summary.json",
+      "bytes": 1035,
+      "source_sha256": "7327575ae565a2b5120e3db89be1453c638a6c6ea9047d7f9db66a95c4a31cad",
+      "repo_sha256": "7327575ae565a2b5120e3db89be1453c638a6c6ea9047d7f9db66a95c4a31cad"
+    },
+    {
+      "path": "data/seed-20261206/verification.json",
+      "source_relative": "finalized/seed-20261206/verification.json",
+      "bytes": 2847,
+      "source_sha256": "a13d48d4b147a5f3eef4f202738651ed51e9d8b83dfdb4d3abde492188086d95",
+      "repo_sha256": "a13d48d4b147a5f3eef4f202738651ed51e9d8b83dfdb4d3abde492188086d95"
+    },
+    {
+      "path": "data/seed-20261206/trajectories.csv",
+      "source_relative": "finalized/seed-20261206/trajectories.csv",
+      "bytes": 28735,
+      "source_sha256": "154d9749d70d085fe78b9a3c332a8b567b9739a0b474eb9c6900bf4fcd78d671",
+      "repo_sha256": "154d9749d70d085fe78b9a3c332a8b567b9739a0b474eb9c6900bf4fcd78d671"
+    },
+    {
+      "path": "data/seed-20261207/summary.json",
+      "source_relative": "finalized/seed-20261207/summary.json",
+      "bytes": 1044,
+      "source_sha256": "192ee4e05026609c154f83f06375659255a10798bf19bc80aab4185dcbf039d1",
+      "repo_sha256": "192ee4e05026609c154f83f06375659255a10798bf19bc80aab4185dcbf039d1"
+    },
+    {
+      "path": "data/seed-20261207/verification.json",
+      "source_relative": "finalized/seed-20261207/verification.json",
+      "bytes": 2847,
+      "source_sha256": "260dd76a103a2c507f15452226fed30aee54da24dbb2dbf196cb183e75d07f11",
+      "repo_sha256": "260dd76a103a2c507f15452226fed30aee54da24dbb2dbf196cb183e75d07f11"
+    },
+    {
+      "path": "data/seed-20261207/trajectories.csv",
+      "source_relative": "finalized/seed-20261207/trajectories.csv",
+      "bytes": 28598,
+      "source_sha256": "c7217c656588536a36ec6ee0f7b831b3ddc51507586b6f687897269ca28baec8",
+      "repo_sha256": "c7217c656588536a36ec6ee0f7b831b3ddc51507586b6f687897269ca28baec8"
+    },
+    {
+      "path": "data/seed-20261208/summary.json",
+      "source_relative": "finalized/seed-20261208/summary.json",
+      "bytes": 1002,
+      "source_sha256": "6ff0fa211705cce756f327b6bf3ce176ed9a290848255aad2c4e1cca0a8ac2e4",
+      "repo_sha256": "6ff0fa211705cce756f327b6bf3ce176ed9a290848255aad2c4e1cca0a8ac2e4"
+    },
+    {
+      "path": "data/seed-20261208/verification.json",
+      "source_relative": "finalized/seed-20261208/verification.json",
+      "bytes": 2847,
+      "source_sha256": "93175210eb48fd49ccfac26967b9bdef5ffa0d7015b4ead82e0a06d543e16e92",
+      "repo_sha256": "93175210eb48fd49ccfac26967b9bdef5ffa0d7015b4ead82e0a06d543e16e92"
+    },
+    {
+      "path": "data/seed-20261208/trajectories.csv",
+      "source_relative": "finalized/seed-20261208/trajectories.csv",
+      "bytes": 28844,
+      "source_sha256": "e447a69c42f7bfbc3f0dacaf420cb07595513a86dc73245f8917bd15d8ec845b",
+      "repo_sha256": "e447a69c42f7bfbc3f0dacaf420cb07595513a86dc73245f8917bd15d8ec845b"
+    },
+    {
+      "path": "data/seed-20261209/summary.json",
+      "source_relative": "finalized/seed-20261209/summary.json",
+      "bytes": 938,
+      "source_sha256": "caf3c2ecd908a66f8a143b01ff86bcca88a4bd3a348aa86e967ec190540fd339",
+      "repo_sha256": "caf3c2ecd908a66f8a143b01ff86bcca88a4bd3a348aa86e967ec190540fd339"
+    },
+    {
+      "path": "data/seed-20261209/verification.json",
+      "source_relative": "finalized/seed-20261209/verification.json",
+      "bytes": 2847,
+      "source_sha256": "4344df40364e78bf6b8b76f8b5a33b3575696794d790390f72cbeb8c30da2833",
+      "repo_sha256": "4344df40364e78bf6b8b76f8b5a33b3575696794d790390f72cbeb8c30da2833"
+    },
+    {
+      "path": "data/seed-20261209/trajectories.csv",
+      "source_relative": "finalized/seed-20261209/trajectories.csv",
+      "bytes": 28736,
+      "source_sha256": "f30d4a79b93f30abcaab7d2a2c1bc75695d315833537a63fb39e65bf18805597",
+      "repo_sha256": "f30d4a79b93f30abcaab7d2a2c1bc75695d315833537a63fb39e65bf18805597"
+    },
+    {
+      "path": "data/seed-20261210/summary.json",
+      "source_relative": "finalized/seed-20261210/summary.json",
+      "bytes": 1030,
+      "source_sha256": "82fd525b46a4d9caaf87b28c807d0b62072444608bdae8ec6c867b22ea9d83f9",
+      "repo_sha256": "82fd525b46a4d9caaf87b28c807d0b62072444608bdae8ec6c867b22ea9d83f9"
+    },
+    {
+      "path": "data/seed-20261210/verification.json",
+      "source_relative": "finalized/seed-20261210/verification.json",
+      "bytes": 2847,
+      "source_sha256": "a939c8e7af74292240c73f2ffcc7cba06f469e0e12369770cf1770d6689c02f5",
+      "repo_sha256": "a939c8e7af74292240c73f2ffcc7cba06f469e0e12369770cf1770d6689c02f5"
+    },
+    {
+      "path": "data/seed-20261210/trajectories.csv",
+      "source_relative": "finalized/seed-20261210/trajectories.csv",
+      "bytes": 28757,
+      "source_sha256": "03c8adf03dd2ad8fcb19003a3761cead75d7de37372285637552662b427dc886",
+      "repo_sha256": "03c8adf03dd2ad8fcb19003a3761cead75d7de37372285637552662b427dc886"
+    }
+  ]
+}

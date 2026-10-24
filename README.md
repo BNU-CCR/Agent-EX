@@ -1,5 +1,18 @@
 # Agent-EX
 
+## 最新真实结果入口（2026-10-24）
+
+**N500六格核心批次已完成：10个matched seeds、60个run、900000研究事件，pending=0；全部完成冷核验和双端归档验证。**
+
+- [完整结果与解释边界](reports/2026-10-24-n500-results/README.md)
+- [给网页端GPT的读取与讨论交接](reports/2026-10-24-n500-results/AI_HANDOFF.md)
+- [数字数据字典及复算口径](reports/2026-10-24-n500-results/DATA_DICTIONARY.md)
+- [10个seed数字结果：summary、verification、Round 0–30轨迹](reports/2026-10-24-n500-results/data/)
+
+这次发布仅包括匿名数字结果、核验摘要和研究说明，不含原始响应、理由正文、SQLite、tar、凭据或云端操作入口。结果应按当前配置下的探索性/描述性仿真实验解释，不能等同真实公众或自动升级为验证性结论。当前身份线索可见性2×网络结构3；下文10月1日、9月22日的未执行描述是历史快照，不代表最新状态。此次结果发布不代表未提交工程工作树已完整归档为Git源码；实际执行源码指纹见结果页。
+
+---
+
 ## 新主研究（2026-10-01）
 
 当前主研究改为 **social identity salience × communication network structure = 2×3**：group-blind / group-salient × no-social / degree-preserving randomized / clustered WS。六条件共用 demographic persona、self-history 与 memory rule，不使用 explicit consistency instruction。先完成 identity manipulation check，再做小规模六条件 pilot；正式规模及 primary outcome 尚未冻结。
