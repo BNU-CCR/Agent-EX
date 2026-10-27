@@ -7,6 +7,23 @@ last-verified: 2026-07-29
 
 # Paper 1 研究问答与未决项
 
+<!-- next-phase-20261027:start -->
+## 2026-10-27 下一阶段稳定未决ID（非旧formal参数重开）
+
+下列ID只约束新的探索性诊断/模型/时间扩展；研究路线已批准不表示这些参数已冻结。所有owner为用户研究决策，实施者仅准备证据；formal配置引用任一UNRESOLVED即拒绝启动。
+
+| ID | 标记 | 决策证据与关闭条件 |
+|---|---|---|
+| SIS_NEXT_DIRECTIONALITY_CONTRACT | UNRESOLVED[SIS_NEXT_DIRECTIONALITY_CONTRACT] | P0逐case语义反转/编码/理由/技术预算及pilot判断，人工审定独立合同 |
+| SIS_NEXT_SECOND_MODEL | UNRESOLVED[SIS_NEXT_SECOND_MODEL] | GLM HF/Gemma候选、许可及部署GPU选择，不按意见效应选模型 |
+| SIS_NEXT_MODEL_REVISION | UNRESOLVED[SIS_NEXT_MODEL_REVISION] | 精确commit与权重/tokenizer/template全部成员hash，不用floating alias |
+| SIS_NEXT_SECOND_MODEL_PILOT | UNRESOLVED[SIS_NEXT_SECOND_MODEL_PILOT] | 资源、输出合同、真实格式门和N100/T10请求上限分别批准 |
+| SIS_NEXT_GM_T90_SCOPE | UNRESOLVED[SIS_NEXT_GM_T90_SCOPE] | A或B及研究/额外/总数/截止/容量合同，旧额度不继承 |
+| SIS_NEXT_GM_T90_RNG | UNRESOLVED[SIS_NEXT_GM_T90_RNG] | 前30000排程不变、tail流公式/namespace与模型seed匹配/恢复测试通过 |
+
+P3/P4仅backlog，不因本表建立而开展题目筛选或正式跨模型矩阵。
+<!-- next-phase-20261027:end -->
+
 2026-10-21执行更新：A/B各240/240有效并完成原始本地备份，但均未通过原三项联合标准
 （A15/30正方向，B12/30；门槛18/30）。MC实施/采集已完成，不等于构念准入通过。
 需要人类决定是否先做明确探索性六格技术pilot，或先复盘/另行冻结构念与操纵设计；

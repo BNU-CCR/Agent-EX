@@ -1,5 +1,17 @@
 # 发现与决策
 
+<!-- next-phase-20261027:start -->
+## 2026-10-27 状态闭合及新阶段准备
+
+现阶段研究全部完成而非旧日志的运行中。跨题24run/720000研究+4技术，V2真实Linux/Windows严格复算、4原始包和私有账本备份完成；V盘迁移后351项当前文件hash通过。已有数据支持跨题网络收缩和分布形态差异，不确认统一身份机制/纯拓扑或议题因果。
+
+新GM12父DB只读初审各30000commit/ordinal0..29999/61snapshot/无未决，无WAL/SHM；此为状态可用线索，不是T90恢复验收。云盘余6504673280字节；GPU32607MiB/已用29278/余2834。P0离线与文档可先推进，新T90和第二BF16模型不能直接准入。
+
+官方来源：GLM HF模型卡https://huggingface.co/zai-org/glm-4-9b-chat-hf 与Gemma3-12B-IT模型卡https://huggingface.co/google/gemma-3-12b-it；vLLM0.23.0支持表https://docs.vllm.ai/en/v0.23.0/models/supported_models/。已核文档支持，不当本机性能实测。实际来源与未测项见docs/research/2026-10-27-model-extension-review.md。
+
+用户收窄至P0–P2规划；P3/P4仅backlog。详情见docs/research/2026-10-27-next-phase-research-roadmap.md。本轮无新模型、无删除或服务变更。
+<!-- next-phase-20261027:end -->
+
 ## 2026-10-01：完整来源包与真实启动授权必须分离
 
 - schedule source保存完整显式参数、attention/expression/activation/publish和实际

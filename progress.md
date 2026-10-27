@@ -1,5 +1,19 @@
 # 进度日志
 
+<!-- next-phase-20261027:start -->
+## 2026-10-27：跨议题N500/T60完成与下一阶段研究路线确定
+
+本段为当前状态；下方旧“运行中/等待归档/I盘”等均按当时历史保留。原退休N500/T30为10seed/60run/900000研究；原3seed的18条T60尾段新增270000；新GM与AI各2seed/12run/T60，合计720000研究+4技术=720004，全部完成。
+
+新两题全24冷验、V2 Linux/Windows严格可移植复算、四原始归档及独立账本备份均闭合；V2不改原事件，Stage-A/B原联合准入未通过结论不变。网络意见收缩跨题复现，但3/5形态/群体差异/拓扑积累具有议题和条件异质，不能声称2seed正式显著性、纯议题因果或数学稳态。
+
+当前备份根V:/Agent EX/Agent-EX-evidence；17研究tar及公开V2等351文件迁移SHA通过。跨题completion SHA d904f0b074de77ee2f136230e298820078a15593dcceb3f90333ae722223fa76；数据/hash/三个RQ边界集中于 [阶段归档](docs/research/2026-10-27-stage-status-and-evidence.md)。原始大数据不入Git，历史I路径不改已hash证据。
+
+按用户最新收窄，本轮完成P0–P2规划，P3/P4只记backlog：P0零新增请求诊断流程及受控一步实验候选预算；P1 GLM HF/Gemma官方初审与GPU/磁盘限制；P2 GM12父DB新只读初审（各30000commit、61snapshot、0未决、无WAL/SHM）和A/B续跑准备。P0-A新分析、P1下载部署和P2续跑实现/真实请求均未执行。
+
+下一验收：P0数值守恒与语义配对、P1精确模型/许可/GPU及pilot合同、P2父链/排程/RNG与新合同/Linux恢复/容量/新预算。云盘余6.5GB、GPU余2.8GB，不足直接新实验或并行第二模型；本轮不删/不买/不改服务/不发模型。详见 [下一阶段路线](docs/research/2026-10-27-next-phase-research-roadmap.md)。本轮仅文档同步指定分支，旧心跳不恢复。
+<!-- next-phase-20261027:end -->
+
 ## 2026-10-21：Stage-B240/240与完整备份完成；A/B均未过联合标准
 
 - B控制12629 exit0，240/240 VALID、480 journal transitions、无pending，
