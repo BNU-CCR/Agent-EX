@@ -1,0 +1,17 @@
+{
+  "schema": "p0c.github.sync.v1",
+  "repository": "BNU-CCR/Agent-EX",
+  "branch": "codex/social-identity-network-2x3",
+  "verified_substantive_commit": "a9bffecab0c14d7930876532f86553333dc950a4",
+  "observed_remote_head": "a9bffecab0c14d7930876532f86553333dc950a4",
+  "substantive_commit_files": 45,
+  "push_type": "ordinary_non_force",
+  "shared_document_staging": "only new P0-C marker blocks; previous dirty changes preserved",
+  "public_manifest_sha256": "34f5e8b7ec00c77bfa32a594d2d5ede42beb204cc0a00ee6ed647882f6a78991",
+  "staged_payload_members_byte_exact": 24,
+  "staged_clean_tree_tests_passed": 10,
+  "staged_clean_tree_public_verify": true,
+  "raw_private_data_committed": false,
+  "new_model_requests": 0,
+  "note": "This receipt certifies the substantive commit. A separate documentation follow-up records closure; its final HEAD is verified externally to avoid a self-referential commit hash."
+}
