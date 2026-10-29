@@ -1,0 +1,268 @@
+{
+  "base_manifest_sha256": "36f3db1a6fcc1b0f5519e0d49baffbe4960f814bc88434ea085147471b731fe3",
+  "research_count": 1512,
+  "schema": "p0b.findings.aggregate.v1",
+  "topics": {
+    "genai-net-job-loss": {
+      "feed": {
+        "high_none_mean": {
+          "denominator": 56,
+          "numerator": 13
+        },
+        "low_none_mean": {
+          "denominator": 6,
+          "numerator": -5
+        },
+        "triplets": 168
+      },
+      "midpoint": {
+        "baseline_adjusted_asymmetry_mean": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "direction_counts": {
+          "high": {
+            "above4": 0,
+            "at4": 24,
+            "below4": 0
+          },
+          "low": {
+            "above4": 0,
+            "at4": 24,
+            "below4": 0
+          },
+          "none": {
+            "above4": 0,
+            "at4": 24,
+            "below4": 0
+          }
+        },
+        "means": {
+          "high": {
+            "denominator": 1,
+            "numerator": 4
+          },
+          "low": {
+            "denominator": 1,
+            "numerator": 4
+          },
+          "none": {
+            "denominator": 1,
+            "numerator": 4
+          }
+        },
+        "raw_asymmetry_mean": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "triplets": 24
+      },
+      "no_feed": {
+        "cases": 168,
+        "mapping": {
+          "both_same": 12,
+          "difference_mean": {
+            "denominator": 7,
+            "numerator": -1
+          },
+          "display_same": 13,
+          "pairs": 84,
+          "semantic_same": 77
+        },
+        "proposition": {
+          "both_same": 12,
+          "difference_mean": {
+            "denominator": 1,
+            "numerator": 0
+          },
+          "display_same": 13,
+          "pairs": 84,
+          "semantic_same": 77
+        },
+        "semantic_counts": [
+          31,
+          18,
+          24,
+          24,
+          24,
+          24,
+          23
+        ]
+      }
+    },
+    "gm-market-support": {
+      "feed": {
+        "high_none_mean": {
+          "denominator": 84,
+          "numerator": 127
+        },
+        "low_none_mean": {
+          "denominator": 56,
+          "numerator": 3
+        },
+        "triplets": 168
+      },
+      "midpoint": {
+        "baseline_adjusted_asymmetry_mean": {
+          "denominator": 4,
+          "numerator": 7
+        },
+        "direction_counts": {
+          "high": {
+            "above4": 17,
+            "at4": 7,
+            "below4": 0
+          },
+          "low": {
+            "above4": 4,
+            "at4": 20,
+            "below4": 0
+          },
+          "none": {
+            "above4": 0,
+            "at4": 24,
+            "below4": 0
+          }
+        },
+        "means": {
+          "high": {
+            "denominator": 12,
+            "numerator": 65
+          },
+          "low": {
+            "denominator": 3,
+            "numerator": 13
+          },
+          "none": {
+            "denominator": 1,
+            "numerator": 4
+          }
+        },
+        "raw_asymmetry_mean": {
+          "denominator": 4,
+          "numerator": 7
+        },
+        "triplets": 24
+      },
+      "no_feed": {
+        "cases": 168,
+        "mapping": {
+          "both_same": 12,
+          "difference_mean": {
+            "denominator": 7,
+            "numerator": -5
+          },
+          "display_same": 18,
+          "pairs": 84,
+          "semantic_same": 69
+        },
+        "proposition": {
+          "both_same": 12,
+          "difference_mean": {
+            "denominator": 7,
+            "numerator": -5
+          },
+          "display_same": 18,
+          "pairs": 84,
+          "semantic_same": 69
+        },
+        "semantic_counts": [
+          36,
+          24,
+          24,
+          24,
+          21,
+          18,
+          21
+        ]
+      }
+    },
+    "retirement": {
+      "feed": {
+        "high_none_mean": {
+          "denominator": 56,
+          "numerator": 43
+        },
+        "low_none_mean": {
+          "denominator": 84,
+          "numerator": 1
+        },
+        "triplets": 168
+      },
+      "midpoint": {
+        "baseline_adjusted_asymmetry_mean": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "direction_counts": {
+          "high": {
+            "above4": 0,
+            "at4": 24,
+            "below4": 0
+          },
+          "low": {
+            "above4": 0,
+            "at4": 24,
+            "below4": 0
+          },
+          "none": {
+            "above4": 0,
+            "at4": 24,
+            "below4": 0
+          }
+        },
+        "means": {
+          "high": {
+            "denominator": 1,
+            "numerator": 4
+          },
+          "low": {
+            "denominator": 1,
+            "numerator": 4
+          },
+          "none": {
+            "denominator": 1,
+            "numerator": 4
+          }
+        },
+        "raw_asymmetry_mean": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "triplets": 24
+      },
+      "no_feed": {
+        "cases": 168,
+        "mapping": {
+          "both_same": 12,
+          "difference_mean": {
+            "denominator": 7,
+            "numerator": 3
+          },
+          "display_same": 18,
+          "pairs": 84,
+          "semantic_same": 66
+        },
+        "proposition": {
+          "both_same": 12,
+          "difference_mean": {
+            "denominator": 7,
+            "numerator": 3
+          },
+          "display_same": 18,
+          "pairs": 84,
+          "semantic_same": 66
+        },
+        "semantic_counts": [
+          20,
+          24,
+          24,
+          24,
+          18,
+          24,
+          34
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,726 @@
+{
+  "actual_feed_slots": 453,
+  "actual_wire_replayed": true,
+  "all_sources_unchanged": true,
+  "historical_profile_files": {
+    "V:\\Agent EX\\Agent-EX-evidence\\2026-10-22\\core-service-v1\\amendment.json": "7ee0552fb1fdc15713d23cac4bc8c35cd2e83c0376ad334baeca039ad99f97ea",
+    "V:\\Agent EX\\Agent-EX-evidence\\2026-10-25\\cross-context-capacity-8192-v1\\start-identity.json": "49feb017a786def780896efc2230ae4ad1b086717eb14aa6b2b362cd6c2837d5",
+    "V:\\Agent EX\\Agent-EX-evidence\\2026-10-25\\cross-topic-n500-t60-v1\\frozen-v1\\run\\inputs\\genai-net-job-loss\\seed-20261201\\common.json": "d8f7c55ca50b48d55697681b17ff78edc6b7735b209c804dcaa09e74df2cb021",
+    "V:\\Agent EX\\Agent-EX-evidence\\2026-10-25\\cross-topic-n500-t60-v1\\frozen-v1\\run\\inputs\\genai-net-job-loss\\seed-20261202\\common.json": "fc74fbf3a25e76f555728e30d237edc97bdcad64f4ac19f5038c40f92eefd343",
+    "V:\\Agent EX\\Agent-EX-evidence\\2026-10-25\\cross-topic-n500-t60-v1\\frozen-v1\\run\\inputs\\gm-market-support\\seed-20261201\\common.json": "68afd11cb9d56442f1d48774914390f2ef707710a70166f8ba7325d29156a03b",
+    "V:\\Agent EX\\Agent-EX-evidence\\2026-10-25\\cross-topic-n500-t60-v1\\frozen-v1\\run\\inputs\\gm-market-support\\seed-20261202\\common.json": "fdd8b8a6e689a42e57aa733f8ae5531d7bfd69b0454f8e5d4f3712ef3c8c4141"
+  },
+  "private_archive_sha256": "7ffb7c55c55b27955c1eaa313113d47b0f5d86c1e4a60bc05222f4acb8b7d112",
+  "raw_text_published": false,
+  "round0_update_offset": 1,
+  "sample_index_sha256": "2a37151aaa6e0c4a09b200a6668654deb4f954363e53b1509f72b508976de398",
+  "sampled_events": 331,
+  "schema": "p0c.sample.recovery.v1",
+  "source_dbs": 88,
+  "source_proofs": [
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261201/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "15e3a88d5e2a64c0629aa4c6cc41a777280174585afe220952556f1febcdf7f2",
+      "source_sha256_before": "15e3a88d5e2a64c0629aa4c6cc41a777280174585afe220952556f1febcdf7f2"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261201/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "3007baef06b81587f80dd73fffe7d0e49e3332c93aec5a934fb3963ab6e4e446",
+      "source_sha256_before": "3007baef06b81587f80dd73fffe7d0e49e3332c93aec5a934fb3963ab6e4e446"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261201/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "a6c37f0181d6cb283dd0a2b095fe834c431e171f51d923d5b0cdccd370be7fba",
+      "source_sha256_before": "a6c37f0181d6cb283dd0a2b095fe834c431e171f51d923d5b0cdccd370be7fba"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261201/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "aee8612325cba6dd0716aecef27eba0f48545f2c4cfa929147d5df45c1026dee",
+      "source_sha256_before": "aee8612325cba6dd0716aecef27eba0f48545f2c4cfa929147d5df45c1026dee"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261201/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "9d0f488d558f4fc84669db26e63d0ffb1df08860855fc1eff8ff3cc3778d2c18",
+      "source_sha256_before": "9d0f488d558f4fc84669db26e63d0ffb1df08860855fc1eff8ff3cc3778d2c18"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 8,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261201/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "9d0e7a1f6bebb7a16429a8744f9ce74c5fde17334c37ba3d80b27345ccc76e36",
+      "source_sha256_before": "9d0e7a1f6bebb7a16429a8744f9ce74c5fde17334c37ba3d80b27345ccc76e36"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 5,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261202/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "3f9e393cb94c6dfb0ebe0cb7d96cc0f2bd4b9145fc9e4305026f26b47e3e8096",
+      "source_sha256_before": "3f9e393cb94c6dfb0ebe0cb7d96cc0f2bd4b9145fc9e4305026f26b47e3e8096"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261202/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "fdb0b4822dc6f70196cfad23d074c64060babf277d0e1f9817285cd3bc1c7c5a",
+      "source_sha256_before": "fdb0b4822dc6f70196cfad23d074c64060babf277d0e1f9817285cd3bc1c7c5a"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261202/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "6c36021c3ecc31a38d0b10dfaefdb9de847ae79fc7f4c4dd8efa6784859795ae",
+      "source_sha256_before": "6c36021c3ecc31a38d0b10dfaefdb9de847ae79fc7f4c4dd8efa6784859795ae"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261202/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "a04c066b2f749dd305821e853ec4fcb809e4db6fbdeb6529762e02c3a217b0a3",
+      "source_sha256_before": "a04c066b2f749dd305821e853ec4fcb809e4db6fbdeb6529762e02c3a217b0a3"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261203/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "4e0c56c23d2e6f39dfde801a2fa77b7e534e1d5f7a355abd257fd1826fc6cc6d",
+      "source_sha256_before": "4e0c56c23d2e6f39dfde801a2fa77b7e534e1d5f7a355abd257fd1826fc6cc6d"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261203/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "437a9ca5b3702f90df927f53ae4a5095cecc810a8dcb99a1ff100d14ce7f8421",
+      "source_sha256_before": "437a9ca5b3702f90df927f53ae4a5095cecc810a8dcb99a1ff100d14ce7f8421"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261203/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "a9ca9d4b3c9a87c5140ca0e5d045d1f7b2850c9986ba0a0bc80a3951b4b2136e",
+      "source_sha256_before": "a9ca9d4b3c9a87c5140ca0e5d045d1f7b2850c9986ba0a0bc80a3951b4b2136e"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261203/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "5a36fcc8c8ad914215922c26f6cdbae28206a6d8ed9508880c155efcc1524370",
+      "source_sha256_before": "5a36fcc8c8ad914215922c26f6cdbae28206a6d8ed9508880c155efcc1524370"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261203/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "826469982e2e9f11c550547def4152a9332d44a20cfab7d60b91f1730e0eedb8",
+      "source_sha256_before": "826469982e2e9f11c550547def4152a9332d44a20cfab7d60b91f1730e0eedb8"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "171750c3191ba1dd4a912bc441c300b132d52d8f20b9b02d988533a49600eac8",
+      "source_sha256_before": "171750c3191ba1dd4a912bc441c300b132d52d8f20b9b02d988533a49600eac8"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 7,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "fd3f4e76b0334db0cdfa7d06aced6bf43cb02986983d700eaaad781e084b1955",
+      "source_sha256_before": "fd3f4e76b0334db0cdfa7d06aced6bf43cb02986983d700eaaad781e084b1955"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 5,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "105c5d63fafcc8c10587312eff5508dce9125e9762465a50e6fc64d12560761b",
+      "source_sha256_before": "105c5d63fafcc8c10587312eff5508dce9125e9762465a50e6fc64d12560761b"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "9963a80379d2469b8db48426dc2fcedc413a4a45e9a4c5ea891670efc5c52333",
+      "source_sha256_before": "9963a80379d2469b8db48426dc2fcedc413a4a45e9a4c5ea891670efc5c52333"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "95f58debadbe904a0b44ce4ddedc2aafed6ee415a2da2c26f2147cf42699d750",
+      "source_sha256_before": "95f58debadbe904a0b44ce4ddedc2aafed6ee415a2da2c26f2147cf42699d750"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "d93ae2846325397f959cb156dbecb0a3c164391834dae1b4b84aee0077aefc30",
+      "source_sha256_before": "d93ae2846325397f959cb156dbecb0a3c164391834dae1b4b84aee0077aefc30"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "cda6b374bc899aaa0f6e1a6cf5e4f7396231d94c95c9b2c9b48ffb967bb84652",
+      "source_sha256_before": "cda6b374bc899aaa0f6e1a6cf5e4f7396231d94c95c9b2c9b48ffb967bb84652"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "47536eeaa9507cb9d956ecb5e615592d21d878f4dd31481f3ece9b77c8ad4bc5",
+      "source_sha256_before": "47536eeaa9507cb9d956ecb5e615592d21d878f4dd31481f3ece9b77c8ad4bc5"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "ab67588abacc83869afa18538ee45599924c27e6e298d1362494080094fb57b2",
+      "source_sha256_before": "ab67588abacc83869afa18538ee45599924c27e6e298d1362494080094fb57b2"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "2df5c0389d4295f19682d0efeb52a2040c7d1e0de98ae2fe9c6c0c68987206d9",
+      "source_sha256_before": "2df5c0389d4295f19682d0efeb52a2040c7d1e0de98ae2fe9c6c0c68987206d9"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "badebf31f322714ee28ec4dfc5b0ce5debed682dbb3bd6e254de93c901d4a27c",
+      "source_sha256_before": "badebf31f322714ee28ec4dfc5b0ce5debed682dbb3bd6e254de93c901d4a27c"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "fcdfba594cdefd1142e54c32d178b1e332e8bad7fcc3aa89f4d17b9b49d97d5e",
+      "source_sha256_before": "fcdfba594cdefd1142e54c32d178b1e332e8bad7fcc3aa89f4d17b9b49d97d5e"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "12170c8cd9ff831988c05f3d43b01d99ff45b6534745bab17db31ab6a2cd991d",
+      "source_sha256_before": "12170c8cd9ff831988c05f3d43b01d99ff45b6534745bab17db31ab6a2cd991d"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 5,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "5dea172e510338cd1ac0cbeaad1bd325f95f9d180fe7417784ad3a05c4eee171",
+      "source_sha256_before": "5dea172e510338cd1ac0cbeaad1bd325f95f9d180fe7417784ad3a05c4eee171"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "bfd261c38f4ed5bfef8b74063b3b9b177a604b1ece94c0bf0038650b4d6883eb",
+      "source_sha256_before": "bfd261c38f4ed5bfef8b74063b3b9b177a604b1ece94c0bf0038650b4d6883eb"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "a2c6b85d14337cbeaf29590822229e85bdc2c4c1c0871253c23ef815b3ff7d7d",
+      "source_sha256_before": "a2c6b85d14337cbeaf29590822229e85bdc2c4c1c0871253c23ef815b3ff7d7d"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "35b245d1da01289f3545bef166bf2158eeaffce0d6e446c58392329226b7cd96",
+      "source_sha256_before": "35b245d1da01289f3545bef166bf2158eeaffce0d6e446c58392329226b7cd96"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "31ea2eed3bb1ae22e9def557cd6f0f4728010d6b69cc4c5fb8d3cfacf1cfa9c9",
+      "source_sha256_before": "31ea2eed3bb1ae22e9def557cd6f0f4728010d6b69cc4c5fb8d3cfacf1cfa9c9"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "53cf2447275e44a1d3378c36549540308df78255a258e5913ce26792bdf3c1db",
+      "source_sha256_before": "53cf2447275e44a1d3378c36549540308df78255a258e5913ce26792bdf3c1db"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "b476fa1610f8b56f122c6c898dae7597c0e53a5955a397037d28efb24f32244d",
+      "source_sha256_before": "b476fa1610f8b56f122c6c898dae7597c0e53a5955a397037d28efb24f32244d"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "32f5f6d33ba19d42dc6c00e3492265ec60b2f83b0589be374a14268acebb4524",
+      "source_sha256_before": "32f5f6d33ba19d42dc6c00e3492265ec60b2f83b0589be374a14268acebb4524"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "344f95c3f6f5db7e630979833b6046e7e6948d58b1324b0057f0acc897f753c4",
+      "source_sha256_before": "344f95c3f6f5db7e630979833b6046e7e6948d58b1324b0057f0acc897f753c4"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "be06ace6ee2a421281dc3b3390f47c6564a7f31bfa6f8f9426c2bcdcf7da9fd2",
+      "source_sha256_before": "be06ace6ee2a421281dc3b3390f47c6564a7f31bfa6f8f9426c2bcdcf7da9fd2"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "64845e584a48b11e7586460e4b42506ac13a9282c5f64d26f5e97fc702bba0e2",
+      "source_sha256_before": "64845e584a48b11e7586460e4b42506ac13a9282c5f64d26f5e97fc702bba0e2"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "97aeee9ce399fac99a2d74143187e38cd20a2d502cbbbd30066aa891b70d19e4",
+      "source_sha256_before": "97aeee9ce399fac99a2d74143187e38cd20a2d502cbbbd30066aa891b70d19e4"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "1e3601043fc603371dbdeadfe50d0d592495e97d85b82f54c24bd9e611f0f1e7",
+      "source_sha256_before": "1e3601043fc603371dbdeadfe50d0d592495e97d85b82f54c24bd9e611f0f1e7"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 6,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "122977fc7592404821a01aa3805c0025e2847aa3f76f1261ce5519c10a6282a9",
+      "source_sha256_before": "122977fc7592404821a01aa3805c0025e2847aa3f76f1261ce5519c10a6282a9"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "5e0720d81ffb81fbc22b87a856035a6a7dc68f5664285af3047bf507336df21a",
+      "source_sha256_before": "5e0720d81ffb81fbc22b87a856035a6a7dc68f5664285af3047bf507336df21a"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "5b243a76d479e0f9205d919b3a93d840643e77d8ce34563e3f88ade3b85cf5cd",
+      "source_sha256_before": "5b243a76d479e0f9205d919b3a93d840643e77d8ce34563e3f88ade3b85cf5cd"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "d9761b8cd40bab44b7805b519df851e3ceed3a574935158856dde254fe9ee472",
+      "source_sha256_before": "d9761b8cd40bab44b7805b519df851e3ceed3a574935158856dde254fe9ee472"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "443282e6f0236c8b453ab89cb7ca3bc84e0e2d96354698bf4d4862a7b33bbfec",
+      "source_sha256_before": "443282e6f0236c8b453ab89cb7ca3bc84e0e2d96354698bf4d4862a7b33bbfec"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 6,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "386c4dff82a1b40714fdda5828de2cf26c319e4c6fcbd4c7228517b10ae52983",
+      "source_sha256_before": "386c4dff82a1b40714fdda5828de2cf26c319e4c6fcbd4c7228517b10ae52983"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "15be8ff4ddcb87205218fbde354f2e2d4efce2eb24acdd4393b039b7c60dfd26",
+      "source_sha256_before": "15be8ff4ddcb87205218fbde354f2e2d4efce2eb24acdd4393b039b7c60dfd26"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 5,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "440a65a3ac1ea07044fc38b1e2863000c1660066c8a53b894990ca8c81053230",
+      "source_sha256_before": "440a65a3ac1ea07044fc38b1e2863000c1660066c8a53b894990ca8c81053230"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 6,
+      "source_db": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "8c555f9cc67950b83495614d725c36b3e844df6024a71be718a89c29c30bb043",
+      "source_sha256_before": "8c555f9cc67950b83495614d725c36b3e844df6024a71be718a89c29c30bb043"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261201/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "5fb8d7d4c16cbcc793751081547ce932067e2bf6221da5306db0eebaeb44e927",
+      "source_sha256_before": "5fb8d7d4c16cbcc793751081547ce932067e2bf6221da5306db0eebaeb44e927"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 7,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261201/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "8eec7273989b0926d71f2e92bcee59ddfb24a097d2c85b82f3a338bd3b159f42",
+      "source_sha256_before": "8eec7273989b0926d71f2e92bcee59ddfb24a097d2c85b82f3a338bd3b159f42"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 9,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261201/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "2dcd95872653a70f663df02e334baaf11f49fe1ee3819ea888f981a77b0a6705",
+      "source_sha256_before": "2dcd95872653a70f663df02e334baaf11f49fe1ee3819ea888f981a77b0a6705"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 6,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261201/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "34802d29d0022dd0f00af08b3b2b36a5dc1a4ac58d22470880583b2dc0cad42d",
+      "source_sha256_before": "34802d29d0022dd0f00af08b3b2b36a5dc1a4ac58d22470880583b2dc0cad42d"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261201/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "68af8e2c796c32e7c3a24c748c8e41810708d3c48d53acdaa369bda82dc079b1",
+      "source_sha256_before": "68af8e2c796c32e7c3a24c748c8e41810708d3c48d53acdaa369bda82dc079b1"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261202/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "d7320b9f1122c3002ff978d536d081d06e63733af6f36194a6bc27445f235d92",
+      "source_sha256_before": "d7320b9f1122c3002ff978d536d081d06e63733af6f36194a6bc27445f235d92"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 11,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261202/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "4acee8cae3f2bcf40713d7548f5fe91f7f6e4f019f8ed8318e3fdc46a4287679",
+      "source_sha256_before": "4acee8cae3f2bcf40713d7548f5fe91f7f6e4f019f8ed8318e3fdc46a4287679"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 8,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261202/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "7a7388da38101d391404297125e2c173a68cb22ffdd86e7d2a965f45c34e4922",
+      "source_sha256_before": "7a7388da38101d391404297125e2c173a68cb22ffdd86e7d2a965f45c34e4922"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261202/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "1f406e38ace387a117ee25e05d7ba667fa11df416bc35f34539f21ac9e177a5c",
+      "source_sha256_before": "1f406e38ace387a117ee25e05d7ba667fa11df416bc35f34539f21ac9e177a5c"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 5,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261202/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "13776291ebd166b0f26ab4e73c539d3d1950e78cdd98fb905d6f326ef277f589",
+      "source_sha256_before": "13776291ebd166b0f26ab4e73c539d3d1950e78cdd98fb905d6f326ef277f589"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 12,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/genai-net-job-loss/seed-20261202/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "76b2e4ab332ef33a9c05999f155e3b26a1424e19572898a494e00ffed93b2cac",
+      "source_sha256_before": "76b2e4ab332ef33a9c05999f155e3b26a1424e19572898a494e00ffed93b2cac"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261201/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "28057593ab72651cdddff917db0f6a8f5cfeff837a8ed38ae6807b29ab9644e1",
+      "source_sha256_before": "28057593ab72651cdddff917db0f6a8f5cfeff837a8ed38ae6807b29ab9644e1"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 10,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261201/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "0d18142221dc315f28f76d16d61f2b77bb0fe0f4db01ba88b0390d0f1b5d9956",
+      "source_sha256_before": "0d18142221dc315f28f76d16d61f2b77bb0fe0f4db01ba88b0390d0f1b5d9956"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 5,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261201/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "8b0a69da06ece22e77f079dffca2c29128ef836a9d9379b2dfec8f7cae53dc3c",
+      "source_sha256_before": "8b0a69da06ece22e77f079dffca2c29128ef836a9d9379b2dfec8f7cae53dc3c"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261201/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "7d559f854c16c06dd5c9692e4332f9e9d3b3110ecc71fa0ff47a507f9fdca8e6",
+      "source_sha256_before": "7d559f854c16c06dd5c9692e4332f9e9d3b3110ecc71fa0ff47a507f9fdca8e6"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 6,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261201/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "3881a0a89bd27549c77d7f0a5c06aab1b0c119a5e830d6ec865f42040f6e0b40",
+      "source_sha256_before": "3881a0a89bd27549c77d7f0a5c06aab1b0c119a5e830d6ec865f42040f6e0b40"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 10,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261201/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "5f482de96cf2ac1b9f80bab0306c2cbe85aca016e15b899ee04f1afec4d20e1a",
+      "source_sha256_before": "5f482de96cf2ac1b9f80bab0306c2cbe85aca016e15b899ee04f1afec4d20e1a"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261202/SIS-A0-B0/run.sqlite3",
+      "source_sha256_after": "3dad050f4c837cb03c3c8deab7a0da7a881ee65cb0ac36d21f0dea4f742a3202",
+      "source_sha256_before": "3dad050f4c837cb03c3c8deab7a0da7a881ee65cb0ac36d21f0dea4f742a3202"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 8,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261202/SIS-A0-B1/run.sqlite3",
+      "source_sha256_after": "7647f5e91a3f36266cf9abaca9ea9d709207cef8f41811dbe23a34a1c635a97d",
+      "source_sha256_before": "7647f5e91a3f36266cf9abaca9ea9d709207cef8f41811dbe23a34a1c635a97d"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 5,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261202/SIS-A0-B2/run.sqlite3",
+      "source_sha256_after": "df50126101b9a53e894e10f21655b382cdf96dad28121f18a67b0372ce726dda",
+      "source_sha256_before": "df50126101b9a53e894e10f21655b382cdf96dad28121f18a67b0372ce726dda"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261202/SIS-A1-B0/run.sqlite3",
+      "source_sha256_after": "cd4bd9aee46f95a0c463a3a41ee6d303b959ca918ae74982d5070de879ceb1b7",
+      "source_sha256_before": "cd4bd9aee46f95a0c463a3a41ee6d303b959ca918ae74982d5070de879ceb1b7"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 9,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261202/SIS-A1-B1/run.sqlite3",
+      "source_sha256_after": "0306706299655968a5f1b1cb50d413bca175cd2acd7a5a4028f66211252107cd",
+      "source_sha256_before": "0306706299655968a5f1b1cb50d413bca175cd2acd7a5a4028f66211252107cd"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 10,
+      "source_db": "/root/autodl-tmp/agent-ex-cross-topic-run-20261025-v1/research/gm-market-support/seed-20261202/SIS-A1-B2/run.sqlite3",
+      "source_sha256_after": "b00e463bceb554aa99949516ce85debb5f5b24f13b2cb0895ee80bc2512dbefd",
+      "source_sha256_before": "b00e463bceb554aa99949516ce85debb5f5b24f13b2cb0895ee80bc2512dbefd"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261201/SIS-A0-B1/extension.sqlite3",
+      "source_sha256_after": "1d2926e11694795f93720983984425b3028ec39bb18c1b5d693db0aceb8ef5d9",
+      "source_sha256_before": "1d2926e11694795f93720983984425b3028ec39bb18c1b5d693db0aceb8ef5d9"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 7,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261201/SIS-A0-B2/extension.sqlite3",
+      "source_sha256_after": "a03ba8ecad42574a067300ffc6b5d5debe0896614c2fd4409b7cfca4524c5d49",
+      "source_sha256_before": "a03ba8ecad42574a067300ffc6b5d5debe0896614c2fd4409b7cfca4524c5d49"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261201/SIS-A1-B0/extension.sqlite3",
+      "source_sha256_after": "7a97cca9ffd158790f8d4fbdceef4e7aa8c44c1c838e5d8e36a42c6025640dac",
+      "source_sha256_before": "7a97cca9ffd158790f8d4fbdceef4e7aa8c44c1c838e5d8e36a42c6025640dac"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 6,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261201/SIS-A1-B1/extension.sqlite3",
+      "source_sha256_after": "a7fdf7746198f41921ca80963dd3aec93ca7745bfa1c471fcfac2d042a62ab45",
+      "source_sha256_before": "a7fdf7746198f41921ca80963dd3aec93ca7745bfa1c471fcfac2d042a62ab45"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261201/SIS-A1-B2/extension.sqlite3",
+      "source_sha256_after": "02be7037caa37c9c42aa1d982173b0d4f47950de5b45eb952dfa3b5d1647098e",
+      "source_sha256_before": "02be7037caa37c9c42aa1d982173b0d4f47950de5b45eb952dfa3b5d1647098e"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261202/SIS-A0-B0/extension.sqlite3",
+      "source_sha256_after": "665a69bad55cf5b28fc112a294e0adb5d17514b419e3cc4dbb05cc0554f2cefa",
+      "source_sha256_before": "665a69bad55cf5b28fc112a294e0adb5d17514b419e3cc4dbb05cc0554f2cefa"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261202/SIS-A0-B1/extension.sqlite3",
+      "source_sha256_after": "9862938d843f05243e6185540f4377889c6bd23f66863007e479812c818d562b",
+      "source_sha256_before": "9862938d843f05243e6185540f4377889c6bd23f66863007e479812c818d562b"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261202/SIS-A0-B2/extension.sqlite3",
+      "source_sha256_after": "0d0966e9fdf027f8b04e89cdfbb3a8faf6de441ee2d592f28c76499c9ffc766d",
+      "source_sha256_before": "0d0966e9fdf027f8b04e89cdfbb3a8faf6de441ee2d592f28c76499c9ffc766d"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261202/SIS-A1-B1/extension.sqlite3",
+      "source_sha256_after": "a3f1b177446eb43756c7b11982f740f4b63097f50d972dc6f5166f63d1041e9f",
+      "source_sha256_before": "a3f1b177446eb43756c7b11982f740f4b63097f50d972dc6f5166f63d1041e9f"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261202/SIS-A1-B2/extension.sqlite3",
+      "source_sha256_after": "d6d0d51b2d5cb253763e846c00e2125bc1d9f13a53c2f3660cf528caba0ebf32",
+      "source_sha256_before": "d6d0d51b2d5cb253763e846c00e2125bc1d9f13a53c2f3660cf528caba0ebf32"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 1,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261203/SIS-A0-B0/extension.sqlite3",
+      "source_sha256_after": "3c47c60875bd735b657e51f33fb1b4f6906ad6ffd2c275cd8e6eb6c8d8ff252e",
+      "source_sha256_before": "3c47c60875bd735b657e51f33fb1b4f6906ad6ffd2c275cd8e6eb6c8d8ff252e"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 2,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261203/SIS-A0-B1/extension.sqlite3",
+      "source_sha256_after": "bac2291128f1ba0780404968603dc403f99dcbb4d6a2108ee501c8079b748d8b",
+      "source_sha256_before": "bac2291128f1ba0780404968603dc403f99dcbb4d6a2108ee501c8079b748d8b"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261203/SIS-A0-B2/extension.sqlite3",
+      "source_sha256_after": "ebaa0697578693872318168d3866faa16dc34f9a7f83c139e107e604be158fd9",
+      "source_sha256_before": "ebaa0697578693872318168d3866faa16dc34f9a7f83c139e107e604be158fd9"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 4,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261203/SIS-A1-B1/extension.sqlite3",
+      "source_sha256_after": "43069a31d974ebee965baee30ea1a1a96620a2e8c4183c670be5b0d36e70710f",
+      "source_sha256_before": "43069a31d974ebee965baee30ea1a1a96620a2e8c4183c670be5b0d36e70710f"
+    },
+    {
+      "kind": "source_proof",
+      "read_only": true,
+      "selected_events": 3,
+      "source_db": "/root/autodl-tmp/agent-ex-temporal-run-20261025-v1/research/seed-20261203/SIS-A1-B2/extension.sqlite3",
+      "source_sha256_after": "26eef8ac1096f4706c165b172991e432d8fdd232295b2b8ad2444f30af58ef74",
+      "source_sha256_before": "26eef8ac1096f4706c165b172991e432d8fdd232295b2b8ad2444f30af58ef74"
+    }
+  ]
+}

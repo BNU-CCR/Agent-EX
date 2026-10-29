@@ -1,0 +1,8 @@
+{
+  "chat_template_utf8_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "model_calls": 0,
+  "model_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "schema": "p0c.template.observation.v1",
+  "scope": "current clone file identity, not retrospective server token IDs",
+  "tokenizer_config_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+}

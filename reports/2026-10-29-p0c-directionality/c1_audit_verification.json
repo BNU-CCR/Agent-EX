@@ -1,0 +1,48 @@
+{
+  "actual_wires_verified": 1526,
+  "model_request_parameters": [
+    {
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      },
+      "max_tokens": 512,
+      "min_p": 0,
+      "model": "Qwen3-8B",
+      "temperature": 0.7,
+      "top_k": 20,
+      "top_p": 0.8
+    }
+  ],
+  "no_feed": {
+    "genai-net-job-loss": {
+      "all_three_same": 159,
+      "initial_retained": 161,
+      "no_feed_count": 168,
+      "output3": 24,
+      "three_draw_groups": 168
+    },
+    "gm-market-support": {
+      "all_three_same": 161,
+      "initial_retained": 153,
+      "no_feed_count": 168,
+      "output3": 24,
+      "three_draw_groups": 168
+    },
+    "retirement": {
+      "all_three_same": 161,
+      "initial_retained": 150,
+      "no_feed_count": 168,
+      "output3": 24,
+      "three_draw_groups": 168
+    }
+  },
+  "numeric_manifest_sha256": "36f3db1a6fcc1b0f5519e0d49baffbe4960f814bc88434ea085147471b731fe3",
+  "private_text_published": false,
+  "schema": "p0c.c1.wire.audit.v1",
+  "source_cases_sha256": "78618901ea876decfef00c0a8cf74c7108059fad5b316db18485e3719f9eead9",
+  "source_ledger_sha256": "8e4c2ea9b084f09f3bf40ca2e17a798a032a2036945ddfd7d5cdcce7e85c1caf",
+  "system_prompt_hashes": [
+    "677c72f0a61fa442aa6d87d997c2b0a4123ef6e448f9bf73bb66b47caddaee0d"
+  ],
+  "template_scope": "HTTP messages verified; no saved server-side token IDs, cannot prove tokenized template from wire alone"
+}

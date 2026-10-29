@@ -1,0 +1,458 @@
+{
+  "coverage": [
+    {
+      "events": 360000,
+      "source_version": "cross-topic-20261025",
+      "topic": "genai-net-job-loss"
+    },
+    {
+      "events": 360000,
+      "source_version": "cross-topic-20261025",
+      "topic": "gm-market-support"
+    },
+    {
+      "events": 900000,
+      "source_version": "retirement-t30-20261022",
+      "topic": "retirement"
+    },
+    {
+      "events": 270000,
+      "source_version": "retirement-tail-20261025",
+      "topic": "retirement"
+    }
+  ],
+  "duplicate_parent_tail_events": 0,
+  "events": 1890000,
+  "p0a_events_sha256": "c9225e9e137e41a998125cf454c74112b00144c700a9a16d262c447cc8efc770",
+  "p0a_manifest_sha256": "d5fdff0833a86ac4c16d7647d9f74afde6fd229dec156ae03f9e1975ab5bd86a",
+  "prior_exposure_scope": "cumulative actual feed slots before event within original full trajectory; not neighbors or potential posts",
+  "quota_per_overlapping_category": 48,
+  "sampling_seed": 20261029,
+  "schema": "p0c.c2.sampling.v1",
+  "seven_seed_sources": [
+    {
+      "cell": "SIS-A0-B0",
+      "db_sha256": "171750c3191ba1dd4a912bc441c300b132d52d8f20b9b02d988533a49600eac8",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-dab31d4b670e1417e8bea988b4552a2e3c8319ae5d16e3080bf576bcf1923821",
+      "seed": 20261204,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A0-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B1",
+      "db_sha256": "fd3f4e76b0334db0cdfa7d06aced6bf43cb02986983d700eaaad781e084b1955",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-9408a767c5064d408715046f919f47bc1e0e01e6996be2fce2e79c20a7de6642",
+      "seed": 20261204,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A0-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B2",
+      "db_sha256": "105c5d63fafcc8c10587312eff5508dce9125e9762465a50e6fc64d12560761b",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-ebb3e06dd60238de60ae32339efb7d998ce19ae729f9bb436e9b5caafcd80fc9",
+      "seed": 20261204,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A0-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B0",
+      "db_sha256": "9963a80379d2469b8db48426dc2fcedc413a4a45e9a4c5ea891670efc5c52333",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-7cef731b6491dea25506d535f674118c2661d5c569682bd4987438d6688d71d7",
+      "seed": 20261204,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A1-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B1",
+      "db_sha256": "95f58debadbe904a0b44ce4ddedc2aafed6ee415a2da2c26f2147cf42699d750",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-dae43161d8c6973f05069bb0aa0dcf115247ff4076b33141c4ede77d85bea072",
+      "seed": 20261204,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A1-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B2",
+      "db_sha256": "d93ae2846325397f959cb156dbecb0a3c164391834dae1b4b84aee0077aefc30",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-ea0a7b3d20155312e042c50b1f26089518d6a95b1bb0117c5d513984b500643c",
+      "seed": 20261204,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261204/SIS-A1-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B0",
+      "db_sha256": "960fb308be1eca231439eb849bce02a36cab694cecae862a3b1c7af22378d89b",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-73b7dfe10dde4a4825ba68e629bb92cc7638e896085f1ffb392daa5ba2f18c73",
+      "seed": 20261205,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A0-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B1",
+      "db_sha256": "cda6b374bc899aaa0f6e1a6cf5e4f7396231d94c95c9b2c9b48ffb967bb84652",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-8dae7f8e314deaf1ff44d3d46e3798f2f0b4669ccd61e3f51ca2bbed13dbf6c7",
+      "seed": 20261205,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A0-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B2",
+      "db_sha256": "47536eeaa9507cb9d956ecb5e615592d21d878f4dd31481f3ece9b77c8ad4bc5",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-459b5c627a17e75a986fa9c0cfbe58d947e0ab2b7999b39ca5ca34e04d6a5b37",
+      "seed": 20261205,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A0-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B0",
+      "db_sha256": "12af9b668a1ef5f00ee38a53e4c5430a8361f06d42d8d2c554015bfca1c6b80e",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-a1f7deda725787f19a429d892f1d2624103b6b7a01f4852f50ea32b66e6f6a73",
+      "seed": 20261205,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A1-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B1",
+      "db_sha256": "ab67588abacc83869afa18538ee45599924c27e6e298d1362494080094fb57b2",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-45542d07114ff021814ddce72878066d54b9a5cda4cc143a78c13b1bb380f362",
+      "seed": 20261205,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A1-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B2",
+      "db_sha256": "2df5c0389d4295f19682d0efeb52a2040c7d1e0de98ae2fe9c6c0c68987206d9",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-6914820e5c9edfb49573ea14cbd086b8ef5e5d7ad01c4dfef5390f41866e9441",
+      "seed": 20261205,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261205/SIS-A1-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B0",
+      "db_sha256": "e872e9bebcd52c5b3bdbc7f082e6e69dfbfd0113562a978ad6421ca4ba6f2b03",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-53c1b96d25519bfd71d3a8f0c74af9804fdfb19176da0b42fd6999b96daed2ee",
+      "seed": 20261206,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A0-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B1",
+      "db_sha256": "badebf31f322714ee28ec4dfc5b0ce5debed682dbb3bd6e254de93c901d4a27c",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-6c68e6e8f1e52022c3c4814a70dcd5ae541429c2963c1d17660f2f83bf245c14",
+      "seed": 20261206,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A0-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B2",
+      "db_sha256": "fcdfba594cdefd1142e54c32d178b1e332e8bad7fcc3aa89f4d17b9b49d97d5e",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-ade2cf9073cf687fb25ac39468f9464a5967d3f838b10401e8ba72f567670ead",
+      "seed": 20261206,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A0-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B0",
+      "db_sha256": "5de3e97a13a717832c6e75118c2a24d724e5d4389de044c668f71ebea0ddbb0a",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-93e8277303df0e2e180f29ac4961ea526b3cfd2dc0e952177a036e2cee430e0d",
+      "seed": 20261206,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A1-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B1",
+      "db_sha256": "12170c8cd9ff831988c05f3d43b01d99ff45b6534745bab17db31ab6a2cd991d",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-d99f9fe34950c5d2fbfa4ed49795eadc84bb4ec1c6dfa7b1edab5300b4feeb7c",
+      "seed": 20261206,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A1-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B2",
+      "db_sha256": "5dea172e510338cd1ac0cbeaad1bd325f95f9d180fe7417784ad3a05c4eee171",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-0127f1c10331a3f6f2b46a34446a1cccc35b680bc1961465a3ed1f9c2de771cb",
+      "seed": 20261206,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261206/SIS-A1-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B0",
+      "db_sha256": "bfd261c38f4ed5bfef8b74063b3b9b177a604b1ece94c0bf0038650b4d6883eb",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-ee73ffbcee4c91df5ce24ebb02fefdfbee4a17db849182961ab1b470ccc81211",
+      "seed": 20261207,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A0-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B1",
+      "db_sha256": "a2c6b85d14337cbeaf29590822229e85bdc2c4c1c0871253c23ef815b3ff7d7d",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-8b6ac78a2b77444cb700c4182b96c338b0e8c77d89066c044ee9d7591e2a1d21",
+      "seed": 20261207,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A0-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B2",
+      "db_sha256": "35b245d1da01289f3545bef166bf2158eeaffce0d6e446c58392329226b7cd96",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-8199dc4b3c9d4028bb082af1f22db67a18925a1db6737309097236db66156fe8",
+      "seed": 20261207,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A0-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B0",
+      "db_sha256": "31ea2eed3bb1ae22e9def557cd6f0f4728010d6b69cc4c5fb8d3cfacf1cfa9c9",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-128215fae649381ad16d73a2b4337f849997d9c5b5b719615cafdf34dd615f95",
+      "seed": 20261207,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A1-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B1",
+      "db_sha256": "53cf2447275e44a1d3378c36549540308df78255a258e5913ce26792bdf3c1db",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-60a13d5bbd5ae54e153371f403e02f08186b1647f130626706087647c30d0c80",
+      "seed": 20261207,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A1-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B2",
+      "db_sha256": "b476fa1610f8b56f122c6c898dae7597c0e53a5955a397037d28efb24f32244d",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-799773ab203f7bc1806320c9321e6b27b013b801dde7bb6a64ee5fe6ba2c372a",
+      "seed": 20261207,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261207/SIS-A1-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B0",
+      "db_sha256": "32f5f6d33ba19d42dc6c00e3492265ec60b2f83b0589be374a14268acebb4524",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-ffb05d995cc777c074bdcb56882114226e94b4c3b7daa4d72bfde9a71e4353a3",
+      "seed": 20261208,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A0-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B1",
+      "db_sha256": "344f95c3f6f5db7e630979833b6046e7e6948d58b1324b0057f0acc897f753c4",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-f23cbdffd8eac026136d6c11a6b5e7890e3c6416560d38928ddc0da674e30b12",
+      "seed": 20261208,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A0-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B2",
+      "db_sha256": "be06ace6ee2a421281dc3b3390f47c6564a7f31bfa6f8f9426c2bcdcf7da9fd2",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-8f927e030b56373b483f2cd18fe43b463a76cfbcc098a5206b602a2c9f0ec201",
+      "seed": 20261208,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A0-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B0",
+      "db_sha256": "8bec145bfa080a6af0a84ecf58b69f61b96cc72e1e1e58c690e4ac0fedb19fb7",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-10ac4352d36d1de9895c9e83810250e77782583f8015c33f5521b2b2428a79cf",
+      "seed": 20261208,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A1-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B1",
+      "db_sha256": "64845e584a48b11e7586460e4b42506ac13a9282c5f64d26f5e97fc702bba0e2",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-cbc84fd3e700b263239a16a53c13597dae9bc0ce21f6ba0e182e4805918a7d04",
+      "seed": 20261208,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A1-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B2",
+      "db_sha256": "97aeee9ce399fac99a2d74143187e38cd20a2d502cbbbd30066aa891b70d19e4",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-c7baf6898bf8795b4b7d1817fbdca7120e5d2e99a03373ef1099d466d0eaa2de",
+      "seed": 20261208,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261208/SIS-A1-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B0",
+      "db_sha256": "1e3601043fc603371dbdeadfe50d0d592495e97d85b82f54c24bd9e611f0f1e7",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-616e896c8e051205dcea4992242b13391179ff2452cadeacaf58a0c99231c284",
+      "seed": 20261209,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A0-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B1",
+      "db_sha256": "122977fc7592404821a01aa3805c0025e2847aa3f76f1261ce5519c10a6282a9",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-5d1fe2af6509fb6f099477e9a18791612c2d74549606bac640ee28ec1017506c",
+      "seed": 20261209,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A0-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B2",
+      "db_sha256": "5e0720d81ffb81fbc22b87a856035a6a7dc68f5664285af3047bf507336df21a",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-d0c4fb98d9ef4cad460b0bf48be217111dbd06b4f477139deeb535100cf98fe6",
+      "seed": 20261209,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A0-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B0",
+      "db_sha256": "44396727cb9848f0d0de5c93b43b86ef7cb8412221c9d957d253f4dc97c63ead",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-788f950f6ffd7a3026cb0e6c9566ba3e7919e091a41d211fc59524dd99f4eb43",
+      "seed": 20261209,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A1-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B1",
+      "db_sha256": "5b243a76d479e0f9205d919b3a93d840643e77d8ce34563e3f88ade3b85cf5cd",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-4063e24ebd462c0ffe0a551174b1b64ba9877e2ba7096b00c35ac8bcb0f9c1b9",
+      "seed": 20261209,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A1-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B2",
+      "db_sha256": "d9761b8cd40bab44b7805b519df851e3ceed3a574935158856dde254fe9ee472",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-b01568e0bba2b68fa0d7195233fe2fb0817c8b75f7f6c8c51801fb25bfe92c52",
+      "seed": 20261209,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261209/SIS-A1-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B0",
+      "db_sha256": "bc005e1308d0bc5d75fde8b05232607d837837a99cfeb101aab7015f3e6909d9",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-3e343317263682b890564d8c580b44ceec2138b8c5d48d95ab9e3215e66e9f6d",
+      "seed": 20261210,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A0-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B1",
+      "db_sha256": "443282e6f0236c8b453ab89cb7ca3bc84e0e2d96354698bf4d4862a7b33bbfec",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-9c0b7a50b1f0496098cd009855aaa5a4eeee47608ad0a50b1bd2f7c074dbce09",
+      "seed": 20261210,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A0-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A0-B2",
+      "db_sha256": "386c4dff82a1b40714fdda5828de2cf26c319e4c6fcbd4c7228517b10ae52983",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-c2e1b481bd0c37f260df2eba00084a6db14b6045a89e4cb09588b02d77c830c9",
+      "seed": 20261210,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A0-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B0",
+      "db_sha256": "15be8ff4ddcb87205218fbde354f2e2d4efce2eb24acdd4393b039b7c60dfd26",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-df6b11b18c83df516bf2cc7be00d3e03059329c38b5d0d16702b3cc62fa23052",
+      "seed": 20261210,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A1-B0/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B1",
+      "db_sha256": "440a65a3ac1ea07044fc38b1e2863000c1660066c8a53b894990ca8c81053230",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-46393e7318e7be67733f6d681574f8886f08e0d90cc202b9ae8f2ef3634f2472",
+      "seed": 20261210,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A1-B1/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    },
+    {
+      "cell": "SIS-A1-B2",
+      "db_sha256": "8c555f9cc67950b83495614d725c36b3e844df6024a71be718a89c29c30bb043",
+      "kind": "run_start",
+      "renderer": "paper1.identity-network.prompt.v3",
+      "run_id": "run-5fab48f16fbde9c2720a488f6a964cf592fa4e141dc2ca8e4f1da7eccd878a9c",
+      "seed": 20261210,
+      "source_path": "/root/autodl-tmp/agent-ex-core-run-20261022-v1/research/seed-20261210/SIS-A1-B2/run.sqlite3",
+      "source_version": "retirement-t30-20261022"
+    }
+  ],
+  "seven_seed_stream_sha256": "4b538d272fa183656c94971cd871b94a7dfd65d7f6d132d594eb62a9561ad6aa",
+  "source_validation": "Existing P0A verified numeric package + original core read-only seven-seed SQL with payload hashes/run identity and source SHA before/after; not a new full causal cold replay",
+  "text_used_to_select": false,
+  "unique_sampled": 331
+}

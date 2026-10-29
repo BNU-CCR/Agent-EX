@@ -1,0 +1,7 @@
+topic,p,statement_sha256,characters,operation,equality_note
+genai-net-job-loss,0,01ad00070b355693bcef3e150451f5ddf0a8dbfa71e3f50c48bdd19ca72f330b,34,original,AI negative includes equality; do not equate not-net-loss with net-gain
+genai-net-job-loss,1,3715b68c0767572bfe3342065c6931394758d2cc8e05552ef6b81134ceb41080,36,operational_opposition_not_proven_logical_complement,AI negative includes equality; do not equate not-net-loss with net-gain
+gm-market-support,0,592e199d91598897d4713caf8a01f38f403120e7900e74a8a24ef32d7837b18f,29,original,"support/opposition wording, not measurement invariance"
+gm-market-support,1,d63294644f9689c42d0e1b968195fb1f4b650f9b1dce19bdec07fd266a5a0ccb,29,operational_opposition_not_proven_logical_complement,"support/opposition wording, not measurement invariance"
+retirement,0,16ac6885c14a138ad478cbec89f1c40361dd0dfdd56a377ca9857de40c955658,19,original,"support/opposition wording, not measurement invariance"
+retirement,1,6f2a96b9b3fdffd1be82315b1d0e19693b5cc406ff0acc9b14546f2b7ef18771,19,operational_opposition_not_proven_logical_complement,"support/opposition wording, not measurement invariance"

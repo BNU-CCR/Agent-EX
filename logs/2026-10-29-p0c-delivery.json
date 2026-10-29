@@ -1,0 +1,103 @@
+{
+  "cloud": {
+    "archives": [
+      {
+        "members": 26,
+        "name": "p0c-public-results-v1.zip",
+        "sha256": "46b5c7c53b473efa59b8f01ed4ef5d5062cd284b00bb200e51aa9d8c01a16059",
+        "whole_member_crc_passed": true
+      },
+      {
+        "members": 21,
+        "name": "p0c-private-evidence-v1.zip",
+        "sha256": "32b279b43268266141ea565e055b1ee2f895350d363b8ea7e4f613b1e0c5059a",
+        "whole_member_crc_passed": true
+      }
+    ],
+    "cloud_free_bytes": 6239965184,
+    "linux_public_recompute": {
+      "actual_feed_slots": 453,
+      "categories": {
+        "3_to_5": 490,
+        "5_to_3": 3160,
+        "empty_changed": 2761,
+        "extreme_toward_3_or_5": 18838,
+        "nonempty_unchanged": 550685,
+        "stay_3": 665964,
+        "stay_5": 454369
+      },
+      "events": 1890000,
+      "opportunities": {
+        "genai-net-job-loss|cross-topic-20261025": {
+          "3_higher_opportunities": 13978,
+          "3_higher_to5": 24,
+          "3_to_5": 133,
+          "5_lower_opportunities": 8812,
+          "5_lower_to3": 1207,
+          "5_to_3": 1251,
+          "all": 360000,
+          "before3": 169671,
+          "before5": 59393
+        },
+        "gm-market-support|cross-topic-20261025": {
+          "3_higher_opportunities": 19123,
+          "3_higher_to5": 115,
+          "3_to_5": 150,
+          "5_lower_opportunities": 16525,
+          "5_lower_to3": 606,
+          "5_to_3": 606,
+          "all": 360000,
+          "before3": 144191,
+          "before5": 80114
+        },
+        "retirement|retirement-t30-20261022": {
+          "3_higher_opportunities": 44438,
+          "3_higher_to5": 133,
+          "3_to_5": 183,
+          "5_lower_opportunities": 57019,
+          "5_lower_to3": 1038,
+          "5_to_3": 1038,
+          "all": 900000,
+          "before3": 249881,
+          "before5": 240119
+        },
+        "retirement|retirement-tail-20261025": {
+          "3_higher_opportunities": 15828,
+          "3_higher_to5": 21,
+          "3_to_5": 24,
+          "5_lower_opportunities": 17366,
+          "5_lower_to3": 265,
+          "5_to_3": 265,
+          "all": 270000,
+          "before3": 103386,
+          "before5": 78650
+        }
+      },
+      "sampled_events": 331,
+      "scope": "public table algebra and exact file hash cover; full source/sampling replay requires separately archived numeric sources",
+      "verified": true
+    },
+    "model_calls": 0,
+    "passed": true,
+    "schema": "p0c.cloud.delivery.v1",
+    "scientific_sources_unchanged": "separate original read-only source proofs; no runtime/service changes"
+  },
+  "cloud_root": "/root/autodl-tmp/agent-ex-p0c-delivery-20261029-v1",
+  "local": {
+    "full_sampling_recomputed_byte_exact": true,
+    "model_calls": 0,
+    "passed": true,
+    "private_members": 21,
+    "private_restoration_verified": true,
+    "private_zip_sha256": "32b279b43268266141ea565e055b1ee2f895350d363b8ea7e4f613b1e0c5059a",
+    "public_manifest_sha256": "34f5e8b7ec00c77bfa32a594d2d5ede42beb204cc0a00ee6ed647882f6a78991",
+    "public_members": 26,
+    "public_zip_sha256": "46b5c7c53b473efa59b8f01ed4ef5d5062cd284b00bb200e51aa9d8c01a16059",
+    "schema": "p0c.local.delivery.v1"
+  },
+  "local_root": "V:\\Agent EX\\Agent-EX-evidence\\2026-10-29\\p0c-directionality-v1",
+  "privacy_full_reason_hits": 0,
+  "schema": "p0c.delivery.locators.v1",
+  "scope": "Offline C1-C4 complete; no new model requests or deployment. C3/C4 budgets remain proposals.",
+  "source_authorization_sha256": "f43193e9380468122b717f79ff8c6c4db8c8542b7a1eeb4706bc567ced06bf02"
+}

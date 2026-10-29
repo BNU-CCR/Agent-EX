@@ -1,0 +1,2 @@
+# Preserve byte-exact hashes for the versioned P0-C public evidence bundle.
+reports/2026-10-29-p0c-directionality/** -text

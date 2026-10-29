@@ -1,0 +1,13 @@
+topic,p,m,display_codes,semantic_order,label_list_sha256,numeric_mapping_changed,semantic_label_order_reversed,parser_rule
+genai-net-job-loss,0,0,"[1, 2, 3, 4, 5, 6, 7]","[1, 2, 3, 4, 5, 6, 7]",d2f66a5d8a9e3bbfddebcb8fd065c12805b0a12ed6a3f36019cff6c8985d2e4f,0,0,q=8-code if m else code; y=8-q if p else q
+genai-net-job-loss,0,1,"[1, 2, 3, 4, 5, 6, 7]","[7, 6, 5, 4, 3, 2, 1]",1f69ac8062ee8176ee3295f06b969028fb5b098701e7aa93a7fb0d22cb262138,1,1,q=8-code if m else code; y=8-q if p else q
+genai-net-job-loss,1,0,"[1, 2, 3, 4, 5, 6, 7]","[7, 6, 5, 4, 3, 2, 1]",d2f66a5d8a9e3bbfddebcb8fd065c12805b0a12ed6a3f36019cff6c8985d2e4f,0,0,q=8-code if m else code; y=8-q if p else q
+genai-net-job-loss,1,1,"[1, 2, 3, 4, 5, 6, 7]","[1, 2, 3, 4, 5, 6, 7]",1f69ac8062ee8176ee3295f06b969028fb5b098701e7aa93a7fb0d22cb262138,1,1,q=8-code if m else code; y=8-q if p else q
+gm-market-support,0,0,"[1, 2, 3, 4, 5, 6, 7]","[1, 2, 3, 4, 5, 6, 7]",d2f66a5d8a9e3bbfddebcb8fd065c12805b0a12ed6a3f36019cff6c8985d2e4f,0,0,q=8-code if m else code; y=8-q if p else q
+gm-market-support,0,1,"[1, 2, 3, 4, 5, 6, 7]","[7, 6, 5, 4, 3, 2, 1]",1f69ac8062ee8176ee3295f06b969028fb5b098701e7aa93a7fb0d22cb262138,1,1,q=8-code if m else code; y=8-q if p else q
+gm-market-support,1,0,"[1, 2, 3, 4, 5, 6, 7]","[7, 6, 5, 4, 3, 2, 1]",d2f66a5d8a9e3bbfddebcb8fd065c12805b0a12ed6a3f36019cff6c8985d2e4f,0,0,q=8-code if m else code; y=8-q if p else q
+gm-market-support,1,1,"[1, 2, 3, 4, 5, 6, 7]","[1, 2, 3, 4, 5, 6, 7]",1f69ac8062ee8176ee3295f06b969028fb5b098701e7aa93a7fb0d22cb262138,1,1,q=8-code if m else code; y=8-q if p else q
+retirement,0,0,"[1, 2, 3, 4, 5, 6, 7]","[1, 2, 3, 4, 5, 6, 7]",d2f66a5d8a9e3bbfddebcb8fd065c12805b0a12ed6a3f36019cff6c8985d2e4f,0,0,q=8-code if m else code; y=8-q if p else q
+retirement,0,1,"[1, 2, 3, 4, 5, 6, 7]","[7, 6, 5, 4, 3, 2, 1]",1f69ac8062ee8176ee3295f06b969028fb5b098701e7aa93a7fb0d22cb262138,1,1,q=8-code if m else code; y=8-q if p else q
+retirement,1,0,"[1, 2, 3, 4, 5, 6, 7]","[7, 6, 5, 4, 3, 2, 1]",d2f66a5d8a9e3bbfddebcb8fd065c12805b0a12ed6a3f36019cff6c8985d2e4f,0,0,q=8-code if m else code; y=8-q if p else q
+retirement,1,1,"[1, 2, 3, 4, 5, 6, 7]","[1, 2, 3, 4, 5, 6, 7]",1f69ac8062ee8176ee3295f06b969028fb5b098701e7aa93a7fb0d22cb262138,1,1,q=8-code if m else code; y=8-q if p else q
