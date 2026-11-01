@@ -15,7 +15,7 @@ Deliver Package A (A1-A3), Package B (B1-B4), English Figure A1/Figure5/FigureS1
 5. [complete] B3 matched identity/interactions and B4 four-layer distributions, age/turnover/gaps.
 6. [complete] A3 deterministic150-case human-review selector/framework/private-text casebook preparation; semantic codes explicitly remain pending human review, not inferred mechanisms.
 7. [complete] Four SVG/PDF/600dpiPNG figure sets and English narrative briefs;102-run independent583,494 arithmetic checks passed; legacy endpoint/triple-flow comparisons matched; PDF contact sheet visually inspected.
-8. [in_progress] Package ZIP/hash/CRC/restoration verification running; scoped Git commit and remote sync next. No unrelated changes staged.
+8. [complete] Three ZIPs verified, small public result/code changes committed as c6de9ea08c9f6ef366ce025e9ba4134bba32e4d3 and remote branch identity confirmed by ls-remote. Private full text and original archives remain outside Git; unrelated dirty changes preserved.
 
 ## Analysis rules
 

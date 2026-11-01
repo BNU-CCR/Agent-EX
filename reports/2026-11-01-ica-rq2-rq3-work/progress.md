@@ -25,3 +25,7 @@ Original batch finished102 trajectories /1,890,000 unique underlying events (2,1
 150 distinct genuine cases generated, all300 before/after reasons and271 actual selected message texts recovered;41 cases correctly marked no selected feed. Semantic labels remain pending human review. FullA/private text is outside Git and absent from Review Packet.
 
 Final packages: fullA57 members, fullB57, Review79; all SHA/CRC/exact coverage and restored-CSV checks passed. Small public copies totaling about4.1MB prepared in the two report directories. All four PDF/SVG/600dpiPNG figure sets rendered and inspected. Scoped publication follows; no unrelated existing changes staged.
+
+## GitHub publication confirmed
+
+Scientific code and small public results committed as c6de9ea08c9f6ef366ce025e9ba4134bba32e4d3 and pushed to origin/codex/social-identity-network-2x3. Independent git ls-remote returned exactly that SHA. Only this task's78 new paths were committed; unrelated pre-existing/Gemma changes were not staged. No raw reasons, full SQLite or canonical initialization entered Git. This completion note is a separate small tracking commit; final chat reports its verified remote SHA. Gemma remains paused; completing this offline delivery does not complete the separate unfinished experimental goal.
