@@ -1,0 +1,300 @@
+{
+  "unique_network_events": 1890000,
+  "horizon_trajectories": 102,
+  "original_p0_research_cases": 1512,
+  "network_model_requests_added": 0,
+  "packages": [
+    {
+      "zip_path": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\packages\\ICA2027_RQ2_MicroMacro_Evidence_v1.zip",
+      "zip_sha256": "3503c514b7c9c13c2ab4f06f94c32191cc54dfaee555867e18b2501239bbc7c5",
+      "members_verified": 57,
+      "crc_ok": true,
+      "small_csv_restored_exactly": true,
+      "source_hashes_unchanged_after": true
+    },
+    {
+      "zip_path": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\packages\\ICA2027_RQ3_StructureIdentity_Evidence_v1.zip",
+      "zip_sha256": "caf8d72609912028dfb7362b06ba98585288b66510d4a4f1b39aadebbb4f7c11",
+      "members_verified": 57,
+      "crc_ok": true,
+      "small_csv_restored_exactly": true,
+      "source_hashes_unchanged_after": true
+    },
+    {
+      "zip_path": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\packages\\ICA2027_RQ2_RQ3_Review_Packet_v1.zip",
+      "zip_sha256": "d893ba6b7c7bc93861a90c98815f22f1e3cb55068554b8c371a2f0d8624842fb",
+      "members_verified": 79,
+      "crc_ok": true,
+      "small_csv_restored_exactly": true,
+      "source_hashes_unchanged_after": true
+    }
+  ],
+  "small_public_copies": [
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/A1_FINDINGS.md",
+      "sha256": "5df82987081034e6981a3fb5641b5eeb30883987392c222ac2e5b2ded4651b81",
+      "bytes": 5797,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\evidence-packages\\A\\A1_FINDINGS.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/A2_FINDINGS.md",
+      "sha256": "bbd6abb437c42263635967fab5b332677e8c94c7021e623be2afea76bf0a194b",
+      "bytes": 4755,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\evidence-packages\\A\\A2_FINDINGS.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/CORE_FINDINGS.md",
+      "sha256": "481c8896048afe3b5c75d696fe8e239406d5623c4aa491107adc29907f6f3e3e",
+      "bytes": 9872,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\evidence-packages\\A\\CORE_FINDINGS.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/tables/A1_round_transition_matrices.csv.gz",
+      "sha256": "f2229c6aa980d9626851858a01fb4d91574c084d14eb32cd756706e2916c006c",
+      "bytes": 668538,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\A1_round_transition_matrices.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/tables/A1_net_stance_flows.csv.gz",
+      "sha256": "be014c370f4201e2a8e57429e86b10ea7327ad1d7654910d83ed7905dbe3eef0",
+      "bytes": 231740,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\A1_net_stance_flows.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/tables/A1_cumulative_flow.csv.gz",
+      "sha256": "7eb7bd6ecf78468c77eb1cd652be6bd2490ac16b52871a35751a42d9d15fbe04",
+      "bytes": 188508,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\A1_cumulative_flow.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/tables/A1_dominant_stance_round_shares.csv.gz",
+      "sha256": "db191f56d59e21d13522732acf8d39cc5c9f0f8648e22763fddd99ea10467734",
+      "bytes": 276094,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\A1_dominant_stance_round_shares.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/tables/A2_directional_update_rates.csv.gz",
+      "sha256": "f1bb108f862eadc5f86e1ae88116d77ef471f038b03548a99da4a677808f7503",
+      "bytes": 42461,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\A2_directional_update_rates.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/tables/A2_seed_level_contrasts.csv.gz",
+      "sha256": "2c7810ac0c2f7740113b5bfc9a341de2ea1de60a5ab31bdca39f4008d4c2140a",
+      "bytes": 37085,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\A2_seed_level_contrasts.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/figures/Figure6_Realized_Exposure_Updating.pdf",
+      "sha256": "5a8d9f1b6e04cf10191e39ddfb0f2168d5d730be46dd300a5b3a8954cdf6fe8b",
+      "bytes": 23626,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\Figure6_Realized_Exposure_Updating.pdf"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/figures/Figure6_Realized_Exposure_Updating.svg",
+      "sha256": "0515708cfe2f80f1eeee91120c7502b379a42a2085d99a38a4e18c1eb7429bbb",
+      "bytes": 30237,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\Figure6_Realized_Exposure_Updating.svg"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/figures/Figure6_Realized_Exposure_Updating_caption.md",
+      "sha256": "d440cf087b8b38a99d172e2bffc086b51f6bf1263f0f86f3c5abea1bd11054e8",
+      "bytes": 683,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\Figure6_Realized_Exposure_Updating_caption.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/figures/FigureA1_Asymmetric_Flows.pdf",
+      "sha256": "c18f21acb1cacb95d48403dec909caeb6d0df3f428d4f597380b78d61aa69d9c",
+      "bytes": 50849,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\FigureA1_Asymmetric_Flows.pdf"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/figures/FigureA1_Asymmetric_Flows.svg",
+      "sha256": "b779a28345a5b91059e72c5261a12505df4fafb8bd7b6c539ae8f33ea496baeb",
+      "bytes": 178991,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\FigureA1_Asymmetric_Flows.svg"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/figures/FigureA1_Asymmetric_Flows_caption.md",
+      "sha256": "2dce4f156932d52ff0d41f033a4266dcbc28ccfcdb4697c821f538308f83c3e3",
+      "bytes": 610,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\FigureA1_Asymmetric_Flows_caption.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/verification/independent-verification.json",
+      "sha256": "673c5cbb9cfcbfd30575404fff936bbc82a79829f3c9de3fb1712a2913e6abd3",
+      "bytes": 77064,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\independent-verification.json"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/verification/legacy-endpoint-comparison.json",
+      "sha256": "059171894605f1c55bf72dc53377bbd4140ed3472d00cfb8df4cc5f0f24a507c",
+      "bytes": 17174,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\legacy-endpoint-comparison.json"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-micro-macro-v1/verification/runtime-and-figure-verification.json",
+      "sha256": "851011852fa81d794a847743ecca05e58e45ef2dcb0e9a1a7e69e6209d59ef4c",
+      "bytes": 6272,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\runtime-and-figure-verification.json"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/B2_FINDINGS.md",
+      "sha256": "6c8a7d2e907f203b67fd789c25b3f321f3fc8df3150a57185f1d951aff9a08ed",
+      "bytes": 6103,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\evidence-packages\\B\\B2_FINDINGS.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/B3_FINDINGS.md",
+      "sha256": "daf90a65ad153ee780c85334acd04436d1b859b87af060ab3f842c761da9d10b",
+      "bytes": 7288,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\evidence-packages\\B\\B3_FINDINGS.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/B4_FINDINGS.md",
+      "sha256": "fc4f0e5cf215fd99ad5cca98c11afb2d9f92e1f1c8aac479a8a6b62717281563",
+      "bytes": 13853,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\evidence-packages\\B\\B4_FINDINGS.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/CORE_FINDINGS.md",
+      "sha256": "e24019defeb8d0a43be96c8dc384fa9f614241bea3b7aebdf05631e8d0448747",
+      "bytes": 20109,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\evidence-packages\\B\\CORE_FINDINGS.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B1_global_convergence_by_run.csv.gz",
+      "sha256": "60f4f280fccba6863c46ebb3de063a5bd0c04f4d9d456dacbec141f17e92cb92",
+      "bytes": 16368,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B1_global_convergence_by_run.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B1_paired_network_effects.csv.gz",
+      "sha256": "fb1c9cebd69ee651e4d1f1e0064c0ce4f4fdc7cf23c1e4a86ab01544d3063d84",
+      "bytes": 6145,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B1_paired_network_effects.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B1_topology_contrasts.csv.gz",
+      "sha256": "b70c3348e7394e6d3a8369dafd92c2686bfcbeaf62333a2a949085594a487a4e",
+      "bytes": 5161,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B1_topology_contrasts.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B1_time_trajectories.csv.gz",
+      "sha256": "222eb936f3f1a80560bd159db225fdd20d4d32b6ed76f579785d89f6d2179d94",
+      "bytes": 249631,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B1_time_trajectories.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B2_edge_opinion_similarity.csv.gz",
+      "sha256": "b373a091ef94b13bf84073d5ddab0633b49f2e8b5d8dcb975740997bbb47a0e8",
+      "bytes": 201810,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B2_edge_opinion_similarity.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B2_local_excess_homophily.csv.gz",
+      "sha256": "a1917236b8b3e03ce6e29c74d6c800b029cbb14eee6366037b9714262879b574",
+      "bytes": 417803,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B2_local_excess_homophily.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B3_identity_effects_by_seed.csv.gz",
+      "sha256": "406787cd2d094b3f7ff978d618beba91df0000eff11506800aa3df46181731b9",
+      "bytes": 11878,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B3_identity_effects_by_seed.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B3_identity_network_interactions.csv.gz",
+      "sha256": "0357dd39d81b289db850bad61d7e89317bbd6d1c7fc467c2a191236945a02f79",
+      "bytes": 4057,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B3_identity_network_interactions.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B4_private_public_distributions.csv.gz",
+      "sha256": "a242876da9e15286af2cd6e5ce8d21252e394d2f53261dd6113e08c26e369a1a",
+      "bytes": 713323,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B4_private_public_distributions.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B4_visibility_gap_by_round.csv.gz",
+      "sha256": "cfffb8a9b3f5776ddda061006381754cccb82c81c9db741dc1429ef153255638",
+      "bytes": 62718,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B4_visibility_gap_by_round.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/tables/B4_public_stock_age.csv.gz",
+      "sha256": "241c90c8ba22265abfeff2b535fc438519db8cf1c84199739a657757a5526b1e",
+      "bytes": 28977,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\analysis-v1\\tables\\B4_public_stock_age.csv.gz"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/figures/Figure5_Communication_Structure.pdf",
+      "sha256": "82a4d802a54df449fc8d1d828f1e0874b826a9fb119deab69efc25923f7109c2",
+      "bytes": 41755,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\Figure5_Communication_Structure.pdf"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/figures/Figure5_Communication_Structure.svg",
+      "sha256": "28f18f0437e81813b91561534591acb95278849f51578ebc603908dac5a8c0ac",
+      "bytes": 112584,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\Figure5_Communication_Structure.svg"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/figures/Figure5_Communication_Structure_caption.md",
+      "sha256": "5b650fee264632b76ddb77657497f5c156ba8a80c141f7dfab6a5ae71bbf7ea7",
+      "bytes": 1055,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\Figure5_Communication_Structure_caption.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/figures/FigureS1_Private_to_Visible.pdf",
+      "sha256": "35564e485ffda8429d6b28544ffc102a46a916697d363a86a5c598d3a62f5ba2",
+      "bytes": 46045,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\FigureS1_Private_to_Visible.pdf"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/figures/FigureS1_Private_to_Visible.svg",
+      "sha256": "396931615c57a0ce9c5efb4306b3d1cc83d9ed8f094bb5e21adf35383dc5ab7d",
+      "bytes": 158846,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\FigureS1_Private_to_Visible.svg"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/figures/FigureS1_Private_to_Visible_caption.md",
+      "sha256": "74f131b3bef7e96cf6288b03d02fbfefd604712657cc1f4177c10cf6ae700f5d",
+      "bytes": 671,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figures-v1\\FigureS1_Private_to_Visible_caption.md"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/verification/independent-verification.json",
+      "sha256": "673c5cbb9cfcbfd30575404fff936bbc82a79829f3c9de3fb1712a2913e6abd3",
+      "bytes": 77064,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\independent-verification.json"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/verification/legacy-endpoint-comparison.json",
+      "sha256": "059171894605f1c55bf72dc53377bbd4140ed3472d00cfb8df4cc5f0f24a507c",
+      "bytes": 17174,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\legacy-endpoint-comparison.json"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq3-communication-structure-v1/verification/runtime-and-figure-verification.json",
+      "sha256": "851011852fa81d794a847743ecca05e58e45ef2dcb0e9a1a7e69e6209d59ef4c",
+      "bytes": 6272,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\runtime-and-figure-verification.json"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-rq3-work/p0_context.csv",
+      "sha256": "5b7f46a79b4d951dce6fafa4a4423d58cd431bc3fd0f7ba10ebf8e65123754f9",
+      "bytes": 16775,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\p0-context\\p0_context.csv"
+    },
+    {
+      "path": "reports/2026-11-01-ica-rq2-rq3-work/p0_context_verification.json",
+      "sha256": "e5d4345db97949d4865373025618ad3a51cfcf2d96837c0341fa61a9ef0b6ebe",
+      "bytes": 3828,
+      "controlled_source": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\p0-context\\verification.json"
+    }
+  ],
+  "private_data_in_Git": false,
+  "Gemma_repair": "paused by user; not resumed"
+}

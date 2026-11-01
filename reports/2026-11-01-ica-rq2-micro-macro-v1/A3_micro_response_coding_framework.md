@@ -1,0 +1,44 @@
+# A3 Micro-response coding framework
+
+Status: prereview coding instrument, not completed semantic findings. The casebook contains genuine selected events and exact recoverable source text; semantic assessments remain pending human reading. No synthetic quotation is a research example. Raw reasons and feed texts belong only in the controlled V evidence directory, not this repository or the public Review Packet.
+
+## Unit, sampling, and interpretation
+
+The unit of coding is one successful event: the same receiver's immediately preceding private stance/reason, actually read public feed, and resulting private stance/reason. Read the full event before coding; preserve message source, publication identity, and display order in the controlled source adapter when available. Source stance means the historical public post actually shown, not its author's current private stance or newest public post.
+
+The deterministic 150-event sample provides purposive coverage across issue, matched seed, A0/A1, B0/B1/B2, changed/retained stance, response relative to actual-feed dominance, and changed/unchanged/missing reason. A strict local dominant stance is a unique stance occupying more than half of actual feed slots. Equal-distance movement, ties, empty feed, and missing reasons remain separate numeric strata. These are selection descriptors, not semantic category assignments. The sample does not estimate population mechanism prevalence. For fewer than 150 available distinct events the output explicitly contains only the available events; do not fabricate replacements. Overlapping horizon records must first be canonicalized.
+
+Independent experimental replication remains matched seed/run, not sampled event, agent, feed slot, or edge. No coding counts warrant event-level significance claims.
+
+## Six categories
+
+| ID and category | Definition and necessary evidence | Candidate numeric descriptors, not automatic codes | Confounds and additional identification needed |
+|---|---|---|---|
+| C1 New-argument adoption | A substantively new proposition present in actually read feed is accurately incorporated into the updated reason, with an explicit connection to the revised judgment. Compare against the entire before reason. | Changed stance; changed reason; movement relative to feed. | Paraphrase of an already-held reason, shared generic language, or a new claim unrelated to the change. Content-controlled single-step comparisons are needed to isolate argument novelty/quality. |
+| C2 Directionally selective adoption | The receiver differentially accepts/rejects identifiable competing arguments or positions, and explains a reason-specific distinction. Requires competing material in the actual feed or traceable prior exposure, not direction alone. | Asymmetric response opportunities by starting stance, exact target, distance, and exposure history. | Unequal argument strength, scale boundaries, unequal exposure distance, prior convictions, and selective exposure. Matched competing messages and randomized direction/content controls are needed to distinguish selectivity from content effects. |
+| C3 Movement toward locally dominant stance | Numeric movement approaches a strictly dominant actually exposed stance; textual assessment separately records whether the reason invokes social support, prevalence, consensus, or the source's social standing. | Strict-majority share and decrease in absolute distance to its stance; include countercases retaining/moving away. | Argument persuasion, repeated content, starting-point effects, and endogenous network/feed composition can produce the same movement. Without fixed-content randomized support/cue manipulations this is social-alignment-consistent evidence, not identified sycophancy. |
+| C4 Stance adjustment with largely retained reasons | Stance changes while the substantive before/after justificatory claims and their weighting remain largely unchanged. Human comparison is required even when strings differ. | Stance changed; reason string/hash changed or unchanged. | Rephrasing, truncation, implicit weighting, scale recalibration, or missing reason text. Exact-string sameness is supportive but not sufficient; unchanged hash is not a semantic code. Fixed-reason/response-scale controls help distinguish recalibration from compliance. |
+| C5 Retention of original stance | The event preserves the immediate pre-event stance; code whether the reason engages with, rebuts, ignores, or cannot be compared to actual opposing messages. | after=before, with below/above/equal feed composition and reason-change flag. | No-feed inertia, congenial exposure, repeated/old posts, and substantive counterargument are distinct. Retention alone is not selective agreement or resistance. Opposing, matched-distance content and no-feed controls are needed. |
+| C6 Mixed or indeterminate response | Evidence supports multiple incompatible interpretations or cannot distinguish them because key texts/links are absent. Record the exact limitation rather than assigning a more specific mechanism. | Missing reasons/feed text, mixed exposure, tied/no dominance, or conflicting numeric/textual signals. | Missingness is not proof of any mechanism. Recovery of source evidence or new controlled data may be required. |
+
+### Text examples
+
+No actual example has been semantically adjudicated in this framework. For each category, coders must enter a controlled `case_id`, exact before/after quotation and feed quotation, their source locations, and a counterexample from the genuine selected casebook. Category-specific example slots C1–C6 remain **PENDING HUMAN REVIEW**. Do not substitute illustrative invented text or silently turn hash/string differences into semantic examples.
+
+## Coding workflow and evidence matrix
+
+1. Verify event identity and numeric chain, actual exposure, publication timing, and before/after text availability. Mark `MISSING_NOT_RECOVERED` for absent material; do not reconstruct plausible reasons.
+2. Read each event independently of the aggregate directionality result. Record `supports`, `contradicts`, `insufficient`, or `not_applicable` for each C1–C6 category, with exact controlled quotations. Multiple supported descriptive categories are allowed; C6 records unresolved alternatives.
+3. Record argument novelty, differential adoption, explicit social-support references, substantive reason retention, and response to opposing messages as separate human judgments. Numeric direction is visible but never a semantic shortcut.
+4. Use at least two independent readers if resources permit; retain original judgments and adjudication. Otherwise disclose single-reader status and do not report intercoder reliability. No reliability statistic exists before coding.
+5. The generated mechanism matrix has six rows per candidate, all `pending_human_review`, with necessary evidence and counterexplanations. Researchers replace pending assessments only after actually reading the controlled texts; empty quotations mean missing evidence, not a negative finding.
+
+Suggested completed matrix fields: case_id; category_id; coder_id; assessment; exact_evidence_location; exact_quote_controlled_only; counterevidence; alternative_explanation; confidence; adjudication_status. Public matrices must omit raw quotations.
+
+## Connecting micro responses and aggregate flows
+
+Directionally asymmetric local updating is quantified by per-seed event opportunity denominators, exact i→j transitions under pure target-j feed, broader toward-target updates, and conserved cumulative stance flows. C1/C2 coding may supply process-consistent evidence of argument adoption/selectivity only after human inspection. C3 combines observed local dominance with textual assessment; movement toward stance 3 or 5 alone never demonstrates sycophancy. C4/C5 countercases constrain interpretation rather than being discarded.
+
+Recursive social influence requires an observed publication after an update and a subsequent actual-feed link to that historical publication. A changed private stance that was never published cannot be treated as a transmitted cause. Link selected cases to genuine publication/event identities and then to cumulative conserved flows; do not infer an individual causal mediation chain from shared timing or aggregate convergence.
+
+Stage-A/B joint manipulation did not pass; preserve that historical judgment. Source-group associations do not identify trust or an identity mechanism. Network, identity cue, content, exposure selection, and accumulated history remain competing explanations without the relevant controlled design. Current automatic outputs establish only descriptive numeric coverage and a reproducible review instrument; selective agreement, sycophantic alignment, and recursive propagation process claims remain conditional on the evidence actually read and linked.

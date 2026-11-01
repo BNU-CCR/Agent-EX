@@ -1,0 +1,727 @@
+{
+  "source_sha256_before_after": {
+    "C:\\Users\\Bai Yuexi\\.codex\\worktrees\\social-identity-network-2x3\\Agent ex\\reports\\2026-10-24-n500-poster-analysis-v1\\process\\tables\\agents_endpoint.csv": "e6348592626430e9e19406f3436830cf751240fcbff0dacf76de3a7802e79b42",
+    "C:\\Users\\Bai Yuexi\\.codex\\worktrees\\social-identity-network-2x3\\Agent ex\\reports\\2026-10-25-t60-process-evidence-v1\\core\\agent_endpoints.csv": "9e2eb33ea9618cdc4416850613e3ac80da6cdb82161dac3b529f3d8056644214",
+    "V:\\Agent EX\\Agent-EX-evidence\\2026-10-25\\cross-topic-n500-t60-v1\\public-results-v2\\tables\\transition_matrices.csv": "2618f91fee7ce5e2a731b86225c892de2aada7bef31269f1f745e7c87e6d6c99"
+  },
+  "sources_unchanged": true,
+  "checks": [
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "genai-net-job-loss",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "gm-market-support",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261201,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261202,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261203,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 60,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261204,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261204,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261204,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261204,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261204,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261204,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261205,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261205,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261205,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261205,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261205,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261205,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261206,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261206,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261206,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261206,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261206,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261206,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261207,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261207,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261207,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261207,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261207,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261207,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261208,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261208,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261208,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261208,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261208,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261208,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261209,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261209,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261209,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261209,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261209,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261209,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261210,
+      "cell_id": "SIS-A0-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261210,
+      "cell_id": "SIS-A0-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261210,
+      "cell_id": "SIS-A0-B2",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261210,
+      "cell_id": "SIS-A1-B0",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261210,
+      "cell_id": "SIS-A1-B1",
+      "horizon": 30,
+      "matched": true
+    },
+    {
+      "topic_key": "retirement",
+      "matched_seed": 20261210,
+      "cell_id": "SIS-A1-B2",
+      "horizon": 30,
+      "matched": true
+    }
+  ],
+  "mismatches": [],
+  "n_horizon_trajectories": 102,
+  "new_tables_derived_from_original_records_not_old_tables": true
+}

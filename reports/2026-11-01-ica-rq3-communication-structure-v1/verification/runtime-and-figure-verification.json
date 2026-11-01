@@ -1,0 +1,118 @@
+{
+  "plotting_runtime": {
+    "python_executable": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "python": "3.14.3",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "matplotlib": "3.10.9",
+    "pymupdf": "1.26.6",
+    "pillow": "12.0.0"
+  },
+  "analysis_runtime": "Codex bundled Python; original extraction/metrics run separately",
+  "new_packages_installed": false,
+  "figures": [
+    {
+      "figure": "FigureA1_Asymmetric_Flows",
+      "png_pixels": [
+        6909,
+        3669
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "pdf_text_characters": 278,
+      "sha256": {
+        "png": "3cb64f81fc11d59a7362205a4a7053c4ab40f52524b38a9df5bf3c4b623d5ba7",
+        "svg": "b779a28345a5b91059e72c5261a12505df4fafb8bd7b6c539ae8f33ea496baeb",
+        "pdf": "c18f21acb1cacb95d48403dec909caeb6d0df3f428d4f597380b78d61aa69d9c"
+      },
+      "rendered_pdf": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figure-qa-v1\\FigureA1_Asymmetric_Flows_pdf.png"
+    },
+    {
+      "figure": "Figure5_Communication_Structure",
+      "png_pixels": [
+        7989,
+        5109
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "pdf_text_characters": 941,
+      "sha256": {
+        "png": "d2a61d5806fafe90673fd05cca6834e2b6c5c4e481a23e8f5a1a609ccedc4d9d",
+        "svg": "28f18f0437e81813b91561534591acb95278849f51578ebc603908dac5a8c0ac",
+        "pdf": "82a4d802a54df449fc8d1d828f1e0874b826a9fb119deab69efc25923f7109c2"
+      },
+      "rendered_pdf": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figure-qa-v1\\Figure5_Communication_Structure_pdf.png"
+    },
+    {
+      "figure": "Figure6_Realized_Exposure_Updating",
+      "png_pixels": [
+        6909,
+        2169
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "pdf_text_characters": 186,
+      "sha256": {
+        "png": "ca732a08e4f8d15a318291f9b2bd65a3ba13cb28b4789e3e7874439dbc85cc93",
+        "svg": "0515708cfe2f80f1eeee91120c7502b379a42a2085d99a38a4e18c1eb7429bbb",
+        "pdf": "5a8d9f1b6e04cf10191e39ddfb0f2168d5d730be46dd300a5b3a8954cdf6fe8b"
+      },
+      "rendered_pdf": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figure-qa-v1\\Figure6_Realized_Exposure_Updating_pdf.png"
+    },
+    {
+      "figure": "FigureS1_Private_to_Visible",
+      "png_pixels": [
+        7269,
+        4749
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "pdf_text_characters": 369,
+      "sha256": {
+        "png": "41c696dd65cbb52b2d54c2bf7976081d7cf9ba47b74592e3582dc80dcf7eaf8a",
+        "svg": "396931615c57a0ce9c5efb4306b3d1cc83d9ed8f094bb5e21adf35383dc5ab7d",
+        "pdf": "35564e485ffda8429d6b28544ffc102a46a916697d363a86a5c598d3a62f5ba2"
+      },
+      "rendered_pdf": "V:\\Agent EX\\Agent-EX-evidence\\2026-11-01\\ica-rq2-rq3-v1\\figure-qa-v1\\FigureS1_Private_to_Visible_pdf.png"
+    }
+  ],
+  "figure_source_table_sha256": {
+    "A1_cumulative_flow.csv.gz": "7eb7bd6ecf78468c77eb1cd652be6bd2490ac16b52871a35751a42d9d15fbe04",
+    "A1_dominant_stance_formation.csv.gz": "5bfc24b25a9e0078f8442b9638093a3edd4458c20280bf869e27e59b14d2cf28",
+    "A1_dominant_stance_round_shares.csv.gz": "db191f56d59e21d13522732acf8d39cc5c9f0f8648e22763fddd99ea10467734",
+    "A1_net_stance_flows.csv.gz": "be014c370f4201e2a8e57429e86b10ea7327ad1d7654910d83ed7905dbe3eef0",
+    "A1_origin_destination_paths.csv.gz": "45553b25329572519eb4ba613e0bc54fe26eb78edc0ce2abeff00737c042c5f4",
+    "A1_round_transition_matrices.csv.gz": "f2229c6aa980d9626851858a01fb4d91574c084d14eb32cd756706e2916c006c",
+    "A2_directional_update_rates.csv.gz": "f1bb108f862eadc5f86e1ae88116d77ef471f038b03548a99da4a677808f7503",
+    "A2_event_exposure_numeric.csv.gz": "0217821317ec5fe7820a7cb08ecd2dc03fc16a78617d6dc50eb7eb64e1cd82ee",
+    "A2_exposure_history_summary.csv.gz": "40a29844becc87223d5065c08b2865a3d97868c3a6e0a70e2c8106537a8318f3",
+    "A2_exposure_response_cells.csv.gz": "36f076f9ebbbf033333fc3f52677c7ac55e55f081785b87cb8b08a358d836254",
+    "A2_seed_level_contrasts.csv.gz": "2c7810ac0c2f7740113b5bfc9a341de2ea1de60a5ab31bdca39f4008d4c2140a",
+    "B1_global_convergence_by_run.csv.gz": "60f4f280fccba6863c46ebb3de063a5bd0c04f4d9d456dacbec141f17e92cb92",
+    "B1_paired_network_effects.csv.gz": "fb1c9cebd69ee651e4d1f1e0064c0ce4f4fdc7cf23c1e4a86ab01544d3063d84",
+    "B1_time_trajectories.csv.gz": "222eb936f3f1a80560bd159db225fdd20d4d32b6ed76f579785d89f6d2179d94",
+    "B1_topology_contrasts.csv.gz": "b70c3348e7394e6d3a8369dafd92c2686bfcbeaf62333a2a949085594a487a4e",
+    "B2_edge_opinion_similarity.csv.gz": "b373a091ef94b13bf84073d5ddab0633b49f2e8b5d8dcb975740997bbb47a0e8",
+    "B2_local_excess_homophily.csv.gz": "a1917236b8b3e03ce6e29c74d6c800b029cbb14eee6366037b9714262879b574",
+    "B2_permutation_baselines.csv.gz": "5f05b797ee5d51549b3368d91550eacbde9fcb33e541b8bbcc02dafeb3c4c67d",
+    "B2_realized_exposure_homophily.csv.gz": "37be18ea3c0b85b14fe6bb50971edcce6d19819d528e79d79ede567138841880",
+    "B3_identity_effects_by_seed.csv.gz": "406787cd2d094b3f7ff978d618beba91df0000eff11506800aa3df46181731b9",
+    "B3_identity_network_interactions.csv.gz": "0357dd39d81b289db850bad61d7e89317bbd6d1c7fc467c2a191236945a02f79",
+    "B3_source_conditional_updating.csv.gz": "8d09655f433d063193385840a0ddae6f7976dd9f98e66695efe386fcd5d36e73",
+    "B4_private_public_distributions.csv.gz": "a242876da9e15286af2cd6e5ce8d21252e394d2f53261dd6113e08c26e369a1a",
+    "B4_public_stock_age.csv.gz": "241c90c8ba22265abfeff2b535fc438519db8cf1c84199739a657757a5526b1e",
+    "B4_realized_exposure_distributions.csv.gz": "8c4c6578f8cfc378fc5d10a145964aaa9e57caa42d5d48a65b45650f6111a886",
+    "B4_visibility_gap_by_round.csv.gz": "cfffb8a9b3f5776ddda061006381754cccb82c81c9db741dc1429ef153255638"
+  },
+  "plot_script_sha256": "55ad2f82246e2d00306bceae0a352c6e133b077fcd3baa3ef438422f2858b3f5",
+  "visual_review": "PDF contact sheet and full-resolution figure previews must also be inspected before delivery",
+  "unit_suite": "59 tests passed in installed plotting runtime; one pandas all-NA concat fixture FutureWarning, no test failures"
+}
