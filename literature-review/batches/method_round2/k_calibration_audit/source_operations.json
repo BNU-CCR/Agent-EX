@@ -1,0 +1,119 @@
+[
+  {
+    "search_id": "S-M2-K-PROGRAM-SEARCH",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.icwsm.org/2026 \"Simulating Online Social Media\"",
+    "source_url": "https://www.icwsm.org/2026/program.html",
+    "status": "indexed_official_program_checked",
+    "notes": "OfficialindexedShortlabel andauthors verified; livebodydynamic"
+  },
+  {
+    "search_id": "S-M2-K-M021-VERSION",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/abs/2509.18985",
+    "source_url": "https://arxiv.org/abs/2509.18985",
+    "status": "version_history_checked",
+    "notes": "v1 Sep23,2025;v2 Apr3,2026;notformalpubdate"
+  },
+  {
+    "search_id": "S-M2-K-M021-FULL",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/html/2509.18985v2",
+    "source_url": "https://arxiv.org/html/2509.18985v2",
+    "status": "author_v2_focused_fulltext_checked",
+    "notes": "Design/results/discussion/appendixresourcesdataread; HTMLpromptbodymissing; lineopens/findsconsolidated"
+  },
+  {
+    "search_id": "S-M2-K-M019-FULL",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.sagepub.com/doi/full/10.1177/00375497241239360",
+    "source_url": "https://journals.sagepub.com/doi/full/10.1177/00375497241239360",
+    "status": "not_accessible",
+    "notes": "Fulltextstillnotread; officialTOCnotreplacement"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-ROOT",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://api.github.com/repos/HongboBo/QTMD/contents",
+    "source_url": "https://api.github.com/repos/HongboBo/QTMD/contents",
+    "status": "directory_inspected",
+    "notes": "Sourcefile discovery;notexecution"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-COMMIT",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://api.github.com/repos/HongboBo/QTMD/commits/main",
+    "source_url": "https://api.github.com/repos/HongboBo/QTMD/commits/main",
+    "status": "commit_pinned",
+    "notes": "93256122ecaa76943b0702cc6c6317765398b397;Oct1,2026;not proved publicationartifact"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-evaluator-py",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/evaluator.py",
+    "source_url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/evaluator.py",
+    "status": "static_file_read",
+    "notes": "Pinnedcommit;blobSHA=9f7c923dfb96a72e6348cbeb77f74f344ecf2d26;no execution"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-main-py",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/main.py",
+    "source_url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/main.py",
+    "status": "static_file_read",
+    "notes": "Pinnedcommit;blobSHA=1b7b3ae7e62c0b61ba640297645fe0d781a82492;no execution"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-agent_farmer-py",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_farmer.py",
+    "source_url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_farmer.py",
+    "status": "static_file_read",
+    "notes": "Pinnedcommit;blobSHA=3dc564704fa52b840d592f101c2392bf7bbe762f;no execution"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-agent_conservation-py",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_conservation.py",
+    "source_url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_conservation.py",
+    "status": "static_file_read",
+    "notes": "Pinnedcommit;blobSHA=2912838ac60e415ee26dc159ad6dfcbb95846044;no execution"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-agent_community-py",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_community.py",
+    "source_url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_community.py",
+    "status": "static_file_read",
+    "notes": "Pinnedcommit;blobSHA=2978d1b63ed8f4d6c302637ff01710cc100c63ca;no execution"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-dialogue_runner-py",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/dialogue_runner.py",
+    "source_url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/dialogue_runner.py",
+    "status": "static_file_read",
+    "notes": "Pinnedcommit;blobSHA=905e6bb99e936c5ca4e8bfa666912e521e5594c5;no execution"
+  },
+  {
+    "search_id": "S-M2-K-QTMD-README-md",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-26",
+    "query_exact": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/README.md",
+    "source_url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/README.md",
+    "status": "static_file_read",
+    "notes": "Pinnedcommit;blobSHA=54ec020266ae1777722fb83a70044ba839689f94;no execution"
+  }
+]

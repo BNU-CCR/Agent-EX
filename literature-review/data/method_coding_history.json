@@ -1218,5 +1218,85 @@
     "batch": "J-venue-gaps",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_type",
+    "old": "",
+    "new": "empirically_initialized_LLM_social_simulation",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_evidence_location",
+    "old": "Publisher/institution abstract",
+    "new": "Authorv2 ExperimentalDesign;Interactions;Toxicity;OpinionDynamics;Discussion;Appendix",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_source",
+    "old": "https://re.public.polimi.it/handle/11311/1317866",
+    "new": "reading-cards/M021.md",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_pending_fields",
+    "old": "fulltext;validation_design",
+    "new": "formal_version_text;first_online_date;formal_DOI;heldout_validation;full_prompt_text;code_reexecution",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_date;judge_human_validation;code_reexecution",
+    "new": "first_formal_online_date;publication_artifact_match;judge_human_validation;exact_model_digest;code_reexecution",
+    "date": "2026-11-26",
+    "batch": "K-calibration-and-artifact-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/k_calibration_audit/results.json"
   }
 ]

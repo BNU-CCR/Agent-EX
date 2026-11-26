@@ -20,3 +20,5 @@
 任务书表中未对账载体须逐个实际检索；WoS/Scopus/CNKI仍无授权完整导出，不能用公开样本填补。新增刊索引/MJL、费用和部分指南未核。M020代码、judge具体身份/指标实现未审；M021正式全文/DOI/日期及M019全文为下一批优先。检索操作数是合并的查询/来源获取事件，不是命中论文数；行开/重试合并说明在source_operations中。
 
 官方依据：[CMOT范围](https://link.springer.com/journal/10588/aims-and-scope)、[作者指南](https://link.springer.com/journal/10588/submission-guidelines)、[SIMULATION学会范围](https://scs.org/publications/)、[正式TOC](https://journals.sagepub.com/toc/sim/100/7)、[AAMAS正式目录](https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm)、[ICWSM机构题录](https://re.public.polimi.it/handle/11311/1317866)。
+
+批次K：补M021作者v2方法/经验评价精读及M020固定代码快照的七文件静态核查；累计78条/35卡/25验证单元。正式纳入仍27项，作者稿不升级为正式版全文。详见[校准与制品核查](calibration_and_artifact_audit.md)。

@@ -1,0 +1,44 @@
+{
+  "checked_date": "2026-11-26",
+  "repository": "HongboBo/QTMD",
+  "commit": "93256122ecaa76943b0702cc6c6317765398b397",
+  "commit_date": "2026-10-01T09:50:25Z",
+  "scope": "Read-only static inspection of seven files; no code execution; this October commit is not proved to be the May2026 publication artifact",
+  "files": [
+    {
+      "path": "evaluator.py",
+      "blob_sha": "9f7c923dfb96a72e6348cbeb77f74f344ecf2d26",
+      "url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/evaluator.py"
+    },
+    {
+      "path": "main.py",
+      "blob_sha": "1b7b3ae7e62c0b61ba640297645fe0d781a82492",
+      "url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/main.py"
+    },
+    {
+      "path": "agent_farmer.py",
+      "blob_sha": "3dc564704fa52b840d592f101c2392bf7bbe762f",
+      "url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_farmer.py"
+    },
+    {
+      "path": "agent_conservation.py",
+      "blob_sha": "2912838ac60e415ee26dc159ad6dfcbb95846044",
+      "url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_conservation.py"
+    },
+    {
+      "path": "agent_community.py",
+      "blob_sha": "2978d1b63ed8f4d6c302637ff01710cc100c63ca",
+      "url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/agent_community.py"
+    },
+    {
+      "path": "dialogue_runner.py",
+      "blob_sha": "905e6bb99e936c5ca4e8bfa666912e521e5594c5",
+      "url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/dialogue_runner.py"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "54ec020266ae1777722fb83a70044ba839689f94",
+      "url": "https://github.com/HongboBo/QTMD/blob/93256122ecaa76943b0702cc6c6317765398b397/README.md"
+    }
+  ]
+}

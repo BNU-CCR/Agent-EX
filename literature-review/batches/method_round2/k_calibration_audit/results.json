@@ -1,0 +1,50 @@
+{
+  "batch_id": "K-calibration-and-artifact-audit",
+  "date": "2026-11-26",
+  "expected_master_sha256": "a37fbe2a2e2db464e35d5c1ec1da3778a52d1a6fde402a3200ba7ec8d480ccb7",
+  "updates": [
+    {
+      "record_id": "M021",
+      "preprint_date": "2025-09-23",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://arxiv.org/html/2509.18985v2",
+      "card_path": "reading-cards/M021.md",
+      "supplement_status": "partial_appendix_checked_prompts_missing_in_HTML",
+      "research_question": "经验初始化能在多大程度再现互动、毒性及意见变化？",
+      "simulation_purpose": "empirical_pattern_comparison;method_evaluation",
+      "method_type": "empirically_initialized_LLM_social_simulation",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_coding_status": "fulltext_supported",
+      "method_evidence_location": "Authorv2 ExperimentalDesign;Interactions;Toxicity;OpinionDynamics;Discussion;Appendix",
+      "method_coding_source": "reading-cards/M021.md",
+      "method_pending_fields": "formal_version_text;first_online_date;formal_DOI;heldout_validation;full_prompt_text;code_reexecution",
+      "method_last_checked": "2026-11-26",
+      "disciplinary_home": "计算社会科学/社交媒体模拟的经验拟真评估",
+      "findings": "同一选举数据集初始化与模式比较；FJ沿模拟网络作条件模型对照；不等于留出预测效度。",
+      "evidence_location": "Authorv2 ExperimentalDesign;Interactions;OpinionDynamics;Appendix",
+      "relation_to_agent_ex": "把初始化资料、验证资料和模型对照分开；测量单位与run变异明确。动态重连/uncensored不回填主方案。",
+      "notes": "Actual authorv2 read; formalPDF403 and exactformaldate/DOIpending. HTML prompt bodies missing despite headings. Empiricalcomparison is not claimed validationpass; no rerun."
+    },
+    {
+      "record_id": "M020",
+      "disciplinary_home": "多智能体系统/可控生成式社会对话",
+      "method_pending_fields": "first_formal_online_date;publication_artifact_match;judge_human_validation;exact_model_digest;code_reexecution",
+      "notes": "FormalPDF read; static7file audit pinned93256122ecaa76943b0702cc6c6317765398b397 (Oct1 after Mayconference), not established paper runartifact. Judgeandoneagent both llama3:latest; runner default nonrepetition lexical; evidence first10charsmatch; noexecution.",
+      "method_last_checked": "2026-11-26"
+    },
+    {
+      "record_id": "M017",
+      "disciplinary_home": "组织科学/传统ABM敏感性分析"
+    },
+    {
+      "record_id": "M018",
+      "disciplinary_home": "组织管理/ABM理论发展与方法综述"
+    },
+    {
+      "record_id": "M019",
+      "disciplinary_home": "建模与仿真/LLM辅助模型构建"
+    }
+  ],
+  "new_records": []
+}
