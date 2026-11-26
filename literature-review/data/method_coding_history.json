@@ -648,5 +648,575 @@
     "batch": "I-survey-scope",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_type",
+    "old": "",
+    "new": "traditional_ABM_sensitivity_protocol",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "validation_and_external_validity;measurement;theory_to_model_translation",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_transferability",
+    "old": "",
+    "new": "传统ABM的参数与程序敏感性方法，可用于组织LLM模拟的结构稳健性分析；不是人类经验效度证据。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "controlled_comparison",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "传统ABM的参数与程序敏感性方法，可用于组织LLM模拟的结构稳健性分析；不是人类经验效度证据。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "code_reexecution;independent_transfer_validation",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Formal HTML §§3–7",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M017.md",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;theory_to_model_translation;reproducibility_and_reporting",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_transferability",
+    "old": "",
+    "new": "组织管理ABM方法与透明度综述；2023首次正式发表，历史语料不逐篇纳入本轮。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "组织管理ABM方法与透明度综述；2023首次正式发表，历史语料不逐篇纳入本轮。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;validation_design",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Publisher/institution abstract",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;reproducibility_and_reporting",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_transferability",
+    "old": "",
+    "new": "LLM帮助叙事到模拟代码的建模过程；不同于LLM直接承担社会主体行为，全文与效果设计待核。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "LLM帮助叙事到模拟代码的建模过程；不同于LLM直接承担社会主体行为，全文与效果设计待核。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;validation_design",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Publisher/institution abstract",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_type",
+    "old": "",
+    "new": "prompt_policy_control",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "interaction_protocol;memory_and_persona;measurement;validation_and_external_validity",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_transferability",
+    "old": "",
+    "new": "正式Research Paper Track的提示控制与测量先例；可控性证据不能替代社会行为外部效度。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "controlled_comparison",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "正式Research Paper Track的提示控制与测量先例；可控性证据不能替代社会行为外部效度。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "first_formal_online_date;judge_human_validation;code_reexecution",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Formal PDF §§3–6",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M020.md",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "model_calibration;validation_and_external_validity;application",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_transferability",
+    "old": "",
+    "new": "机构库确认2026会议出版关系；现实资料校准候选，正式全文、DOI与首次在线日仍需核实。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "机构库确认2026会议出版关系；现实资料校准候选，正式全文、DOI与首次在线日仍需核实。",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;validation_design",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Publisher/institution abstract",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://re.public.polimi.it/handle/11311/1317866",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "J-venue-gaps",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/j_venue_gaps/results.json"
   }
 ]

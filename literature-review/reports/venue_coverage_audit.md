@@ -1,0 +1,22 @@
+# 任务书载体覆盖审计（批次J）
+
+2026-11-26；按任务书§4逐项列出41个入口，IPM跨章节重复只列一次。见[覆盖表](../data/venue_coverage_audit.csv)。其中“已有地图条目”也只表示定向样本；未对账不等于未发现或零发表。原先19载体地图不是任务书完整覆盖。EACL、UIST不能代替ACL、CHI/CSCW；Findings NAACL不能代替主会；ICML position不能代替主研究轨。
+
+本批新增SIMULATION、CMOT、AAMAS、ICWSM四入口，地图23项（15刊、7会议入口、1预印本仓库），15刊投稿表仅列条件候选，不是15项推荐。新M017–M021中只有M017本批正式纳入；M018/M019未读全文，M020正式全文已读但首次在线日未核，M021正式出版关系已核但全文403、DOI与精确日期待核。
+
+## 发表先例改变的判断
+
+- CMOT在2022敏感性协议及2023首次在线的2024卷期综述中显示传统ABM方法脉络；本批没有确认其直接LLM社会模拟共同体。M017 DOI含2021却在2022首次发表，日期以出版社为准。
+- SIMULATION官方学会范围要求一般模拟问题相关性，区分方法与应用。M019是叙事到模拟代码的LLM建模辅助先例，不能据此声称该刊持续发表LLM社会主体方法。其TOC日期2024-04-14已核；相邻论文2023-12-21不能误配。
+- AAMAS官方2026call有SIM与GAAI入口，正式Research Paper Track有M020；FODD正式先例已定位995–1003但未读，不新增记录。该证据支持其是方法共同体入口，尚不足判断当前稿可投或计算接受概率。
+- ICWSM官方索引节目列M021为Short，机构库确认会议出版关系；节目演讲时长不能独立证明论文类型。正式PDF403，不能把预印本当正式全文。
+
+## 对双轨定位的影响
+
+当前应用稿仍优先论证社会过程、测量与替代解释；本批不改变既有JASSS/CCR优先比较。独立方法稿可向一般模拟/多主体共同体组织贡献，但须展示可迁移评价或控制增量。流程透明、输出可控、对话多样与真实社会效度须逐层论证。
+
+## 仍缺什么
+
+任务书表中未对账载体须逐个实际检索；WoS/Scopus/CNKI仍无授权完整导出，不能用公开样本填补。新增刊索引/MJL、费用和部分指南未核。M020代码、judge具体身份/指标实现未审；M021正式全文/DOI/日期及M019全文为下一批优先。检索操作数是合并的查询/来源获取事件，不是命中论文数；行开/重试合并说明在source_operations中。
+
+官方依据：[CMOT范围](https://link.springer.com/journal/10588/aims-and-scope)、[作者指南](https://link.springer.com/journal/10588/submission-guidelines)、[SIMULATION学会范围](https://scs.org/publications/)、[正式TOC](https://journals.sagepub.com/toc/sim/100/7)、[AAMAS正式目录](https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm)、[ICWSM机构题录](https://re.public.polimi.it/handle/11311/1317866)。

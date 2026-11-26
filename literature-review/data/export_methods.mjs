@@ -6,6 +6,7 @@ const root=process.argv[2];if(!root)throw new Error('literature-review root requ
 const input=JSON.parse(await fs.readFile(path.join(root,'exports/methods_workbook_input.json'),'utf8'));
 const wb=Workbook.create(),summary=wb.worksheets.add('方法研究进度');
 const cfg=[['literature_master','文献与方法编码'],['method_venue_map','方法发表地图'],['journal_submission_candidates','双轨投稿'],['method_validation_matrix','验证证据矩阵'],['journals_master','首轮期刊覆盖'],['search_log','检索与核查日志'],['conference_sources','会议来源']];
+cfg.push(['venue_coverage_audit','载体覆盖审计']);
 const label={record_id:'文献编号',work_id:'研究编号',venue_id:'载体编号',title:'题名或刊名',authors:'作者',language:'语言',venue:'载体',document_type:'文献类型',online_first_date:'首次正式发表',volume_year:'卷期年',date_eligibility:'日期资格',screening_status:'筛选状态',reading_status:'实际阅读',research_object:'研究对象',primary_purpose:'主要用途',method_relevance_tier:'首要方法功能',method_contribution_type:'方法贡献标签',method_maturity:'方法成熟度',disciplinary_home:'实际研究共同体',method_transferability:'方法可迁移性',method_evidence_level:'方法证据等级',method_relevance_rationale:'方法分类理由',method_coding_status:'方法编码证据状态',method_pending_fields:'方法待核字段',method_evidence_location:'方法证据位置',method_last_checked:'方法核查日期',research_question:'研究问题',method_type:'模拟或研究方法',reason:'保留理由',official_url:'官方入口',card_path:'阅读卡'};
 const col=n=>{let s='';for(n++;n;n=Math.floor((n-1)/26))s=String.fromCharCode(65+(n-1)%26)+s;return s;};
 for(const [key,name]of cfg){

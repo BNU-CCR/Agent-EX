@@ -1,0 +1,299 @@
+[
+  {
+    "search_id": "S-M2-J-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.journals.sagepub.com \"SIMULATION\" \"large language models\" agent simulation 2024 2025 2026",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.link.springer.com/journal/10588 \"large language\" simulation",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.ifaamas.org \"social simulation\" \"2025\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.ojs.aaai.org/index.php/ICWSM \"simulation\" \"large language\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Computational and Mathematical Organization Theory\" \"large language models\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Computational and Mathematical Organization Theory\" \"validation\" \"2023\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Modeler in a box\" simulation 2024",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q08",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"AAMAS 2025\" \"social simulation\" LLM",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q09",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.link.springer.com/article/10.1007/s10588 \"agent-based\" \"2024\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q10",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.link.springer.com/article/10.1007/s10588 \"2023\" \"model\" \"validation\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q11",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Simulating Online Social Media Conversations on Controversial Topics\" ICWSM",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q12",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"SIMULATION\" \"Aims and Scope\" journals sagepub",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q13",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Modeler in a box\" \"March\" 2024",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q14",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Influencing LLM Multi-Agent Dialogue via Policy-Parameterized Prompts\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-Q15",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Simulating Online Social Media Conversations\" \"42655\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Public discovery; domain restrictions not guaranteed by engine; no stable total count or database export; not zero-hit certification"
+  },
+  {
+    "search_id": "S-M2-J-M017",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/article/10.1007/s10588-021-09358-5",
+    "source_url": "https://link.springer.com/article/10.1007/s10588-021-09358-5",
+    "status": "formal_html_methods_checked",
+    "notes": "Firstpublication2022-01-11;DOIsuffixnotdate;line opens consolidated"
+  },
+  {
+    "search_id": "S-M2-J-M018",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "source_url": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "status": "formal_metadata_abstract_checked",
+    "notes": "Published2023-07-24;issue2024;subscriptionpreview"
+  },
+  {
+    "search_id": "S-M2-J-M019",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "article_timeout",
+    "notes": "OfficialTOC supplies metadata; fulltextnotread"
+  },
+  {
+    "search_id": "S-M2-J-SIM-TOC",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.sagepub.com/toc/sim/100/7",
+    "source_url": "https://journals.sagepub.com/toc/sim/100/7",
+    "status": "official_toc_checked",
+    "notes": "M019 firstpublished2024-04-14;neighbor dates notassigned"
+  },
+  {
+    "search_id": "S-M2-J-SIM-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://scs.org/publications/",
+    "source_url": "https://scs.org/publications/",
+    "status": "official_scope_checked",
+    "notes": "SIMULATION scope distinguished from JDMS on samepage"
+  },
+  {
+    "search_id": "S-M2-J-CMOT-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/journal/10588/aims-and-scope",
+    "source_url": "https://link.springer.com/journal/10588/aims-and-scope",
+    "status": "official_scope_checked",
+    "notes": "TraditionalABM validation/docking welcomed;codeencouraged notmandatory"
+  },
+  {
+    "search_id": "S-M2-J-CMOT-GUIDE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/journal/10588/submission-guidelines",
+    "source_url": "https://link.springer.com/journal/10588/submission-guidelines",
+    "status": "official_guide_checked",
+    "notes": "SNAPPdoubleanonymous;abstract100–150;keywords4–6;guiderevisionwarning"
+  },
+  {
+    "search_id": "S-M2-J-AAMAS-LINK",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://cyprusconferences.org/aamas2026/conference-proceedings/",
+    "source_url": "https://cyprusconferences.org/aamas2026/conference-proceedings/",
+    "status": "official_link_followed",
+    "notes": "Publishedproceedings linked toIFAAMAS"
+  },
+  {
+    "search_id": "S-M2-J-AAMAS-TOC",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm",
+    "source_url": "https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm",
+    "status": "official_proceedings_checked",
+    "notes": "ResearchPaperTrackM020;FODD995–1003queued notdeepread"
+  },
+  {
+    "search_id": "S-M2-J-M020",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ifaamas.org/Proceedings/aamas2026/pdfs/VAVC8140.pdf",
+    "source_url": "https://ifaamas.org/Proceedings/aamas2026/pdfs/VAVC8140.pdf",
+    "status": "formal_pdf_methods_checked",
+    "notes": "9p §§3–6;datepending;no codererun"
+  },
+  {
+    "search_id": "S-M2-J-AAMAS-CFP",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://cyprusconferences.org/aamas2026/call-for-papers-main-track/",
+    "source_url": "https://cyprusconferences.org/aamas2026/call-for-papers-main-track/",
+    "status": "official_scope_checked",
+    "notes": "GAAIandSIMareas;notproof of acceptancefitness"
+  },
+  {
+    "search_id": "S-M2-J-M021",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://re.public.polimi.it/handle/11311/1317866",
+    "source_url": "https://re.public.polimi.it/handle/11311/1317866",
+    "status": "institution_metadata_checked",
+    "notes": "2026yearconfirmed;Jan1placeholder notpreciseonline date"
+  },
+  {
+    "search_id": "S-M2-J-ICWSM-PDF",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+    "source_url": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+    "status": "403_forbidden",
+    "notes": "No fulltextclaim"
+  },
+  {
+    "search_id": "S-M2-J-ICWSM-OJS",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ojs.aaai.org/index.php/ICWSM/article/view/42655",
+    "source_url": "https://ojs.aaai.org/index.php/ICWSM/article/view/42655",
+    "status": "access_denied",
+    "notes": "BotStopper;DOI discoveryunconfirmed"
+  },
+  {
+    "search_id": "S-M2-J-ICWSM-PROGRAM",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.icwsm.org/2026/program.html",
+    "source_url": "https://www.icwsm.org/2026/program.html",
+    "status": "dynamic_body_incomplete",
+    "notes": "Cached search showed Shortlabel;livebody lacks item list;not zero papers"
+  },
+  {
+    "search_id": "S-M2-J-ICWSM-CFP",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.icwsm.org/2026/cfp.html",
+    "source_url": "https://www.icwsm.org/2026/cfp.html",
+    "status": "not_accessible",
+    "notes": "No officialscope claimfrom guessed URL"
+  },
+  {
+    "search_id": "S-M2-J-CR-ICWSM",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://api.crossref.org/works/10.1609/icwsm.v20i1.42655",
+    "source_url": "https://api.crossref.org/works/10.1609/icwsm.v20i1.42655",
+    "status": "not_accessible",
+    "notes": "No DOI/dateverified"
+  },
+  {
+    "search_id": "S-M2-J-CR-AAMAS",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://api.crossref.org/works/10.65109/VAVC8140",
+    "source_url": "https://api.crossref.org/works/10.65109/VAVC8140",
+    "status": "not_accessible",
+    "notes": "PDFDOIconfirmed;datepending"
+  }
+]
