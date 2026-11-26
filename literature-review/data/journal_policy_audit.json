@@ -1,0 +1,103 @@
+{
+  "checked": "2026-11-26",
+  "scope": "Targeted policy sections only;not fees/index nor currentmanuscript compliance audit",
+  "sources": [
+    {
+      "search_id": "S-M2-R-PLOS-CODE",
+      "platform": "official_policy",
+      "search_date": "2026-11-26",
+      "query_exact": "https://journals.plos.org/plosone/s/materials-and-software-sharing",
+      "source_url": "https://journals.plos.org/plosone/s/materials-and-software-sharing",
+      "status": "targeted_policy_sections_checked",
+      "notes": "Sharing Code;Recommendations;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+    },
+    {
+      "search_id": "S-M2-R-PLOS-DATA",
+      "platform": "official_policy",
+      "search_date": "2026-11-26",
+      "query_exact": "https://journals.plos.org/plosone/s/data-availability",
+      "source_url": "https://journals.plos.org/plosone/s/data-availability",
+      "status": "targeted_policy_sections_checked",
+      "notes": "Introduction;Minimal Data Set Definition;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+    },
+    {
+      "search_id": "S-M2-R-PLOS-GUIDE",
+      "platform": "official_policy",
+      "search_date": "2026-11-26",
+      "query_exact": "https://journals.plos.org/plosone/s/submission-guidelines",
+      "source_url": "https://journals.plos.org/plosone/s/submission-guidelines",
+      "status": "targeted_policy_sections_checked",
+      "notes": "Length;Abstract;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+    },
+    {
+      "search_id": "S-M2-R-SREP-GUIDE",
+      "platform": "official_policy",
+      "search_date": "2026-11-26",
+      "query_exact": "https://www.nature.com/srep/author-instructions/submission-guidelines?error=cookies_not_supported",
+      "source_url": "https://www.nature.com/srep/author-instructions/submission-guidelines?error=cookies_not_supported",
+      "status": "targeted_policy_sections_checked",
+      "notes": "Format;Methods;Data availability;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+    },
+    {
+      "search_id": "S-M2-R-SREP-POLICY",
+      "platform": "official_policy",
+      "search_date": "2026-11-26",
+      "query_exact": "https://www.nature.com/srep/journal-policies/editorial-policies?error=cookies_not_supported",
+      "source_url": "https://www.nature.com/srep/journal-policies/editorial-policies?error=cookies_not_supported",
+      "status": "targeted_policy_sections_checked",
+      "notes": "Availability of materials and data;Availability of computer code and algorithm;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+    }
+  ],
+  "evidence": [
+    {
+      "venue_id": "PLOSONE",
+      "kind": "data",
+      "strength": "required_with_legal_ethical_access_exceptions",
+      "finding": "发表时公开复制研究发现所需最小数据与元数据/方法；投稿须DAS；限制需说明获取途径。",
+      "source_id": "S-M2-R-PLOS-DATA"
+    },
+    {
+      "venue_id": "PLOSONE",
+      "kind": "code",
+      "strength": "expectation_and_possible_publication_condition",
+      "finding": "期望支撑发现的作者代码发表时不受限可得；核心代码可能成为发表条件；应可重用并有文档。法律/伦理例外须说明。",
+      "source_id": "S-M2-R-PLOS-CODE"
+    },
+    {
+      "venue_id": "PLOSONE",
+      "kind": "code_archive",
+      "strength": "encouraged",
+      "finding": "DOI仓库、开源许可、依赖文档及DAS代码入口为鼓励实践；不可全部改写为无例外硬性要求。",
+      "source_id": "S-M2-R-PLOS-CODE"
+    },
+    {
+      "venue_id": "PLOSONE",
+      "kind": "format",
+      "strength": "guide",
+      "finding": "正文/图数/SI无上限，鼓励简洁；摘要不超过300词。",
+      "source_id": "S-M2-R-PLOS-GUIDE"
+    },
+    {
+      "venue_id": "SREP",
+      "kind": "data",
+      "strength": "required_statement_and_review_access",
+      "finding": "原创文章必须DAS；投稿时编辑/审稿人须能取得支撑数据；公开限制须说明，优先仓库。",
+      "source_id": "S-M2-R-SREP-POLICY"
+    },
+    {
+      "venue_id": "SREP",
+      "kind": "code",
+      "strength": "required_if_central",
+      "finding": "对结论核心的未报告自编代码/算法须按编辑或审稿人请求提供；Methods须Code availability说明访问/限制；重要代码不可得可被拒。",
+      "source_id": "S-M2-R-SREP-POLICY"
+    },
+    {
+      "venue_id": "SREP",
+      "kind": "format",
+      "strength": "recommendation_except_specified_limits",
+      "finding": "Article/Registered Report；建议11排版页、主文4500词（排除摘要/Methods/参考文献/图注），一般不严格限总字页；摘要≤200词；Methods不限字数；须披露LLM使用。",
+      "source_id": "S-M2-R-SREP-GUIDE"
+    }
+  ],
+  "project_inference": "冻结配置/模型/prompt版本、事件制品定位、分析输入输出及复现文档应作为研究交付候选；具体逐项充分性未审。不把政策可访问性当科学有效性，不修改冻结协议。"
+}

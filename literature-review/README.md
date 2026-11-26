@@ -77,3 +77,5 @@
 批次P补M025方法全文，当前82条/40卡/38验证单元/27载体；29正式纳入不变。见[拟合与机制识别](reports/network_fit_identification.md)；日期/独立验证缺口仍保留。
 
 批次Q：[综合期刊方法先例](reports/general_journal_precedents.md)，补R014/M026两卡、VC39–42，当前83条/42卡/42验证单元；30载体、20刊条件投稿表。统计接续以progress当前区为准，后文批次数字是历史快照。
+
+批次R：[投稿制品政策](reports/journal_reproducibility_policies.md)及[逐条证据](data/journal_policy_audit.json)，两刊官方要求/期望/建议分列，非项目合规审计；509条来源操作，主表计数不变。

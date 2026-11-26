@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "S-M2-R-PLOS-CODE",
+    "platform": "official_policy",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.plos.org/plosone/s/materials-and-software-sharing",
+    "source_url": "https://journals.plos.org/plosone/s/materials-and-software-sharing",
+    "status": "targeted_policy_sections_checked",
+    "notes": "Sharing Code;Recommendations;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+  },
+  {
+    "search_id": "S-M2-R-PLOS-DATA",
+    "platform": "official_policy",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.plos.org/plosone/s/data-availability",
+    "source_url": "https://journals.plos.org/plosone/s/data-availability",
+    "status": "targeted_policy_sections_checked",
+    "notes": "Introduction;Minimal Data Set Definition;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+  },
+  {
+    "search_id": "S-M2-R-PLOS-GUIDE",
+    "platform": "official_policy",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.plos.org/plosone/s/submission-guidelines",
+    "source_url": "https://journals.plos.org/plosone/s/submission-guidelines",
+    "status": "targeted_policy_sections_checked",
+    "notes": "Length;Abstract;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+  },
+  {
+    "search_id": "S-M2-R-SREP-GUIDE",
+    "platform": "official_policy",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/srep/author-instructions/submission-guidelines?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/srep/author-instructions/submission-guidelines?error=cookies_not_supported",
+    "status": "targeted_policy_sections_checked",
+    "notes": "Format;Methods;Data availability;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+  },
+  {
+    "search_id": "S-M2-R-SREP-POLICY",
+    "platform": "official_policy",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/srep/journal-policies/editorial-policies?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/srep/journal-policies/editorial-policies?error=cookies_not_supported",
+    "status": "targeted_policy_sections_checked",
+    "notes": "Availability of materials and data;Availability of computer code and algorithm;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+  }
+]
