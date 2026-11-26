@@ -1306,5 +1306,17 @@
     }
   ],
   "completion": "not_proven;known incomplete requirements remain",
-  "limits": "No fresh paper retrieval,experiment rerun,claim of exhaustive search or independent human screening"
+  "limits": "No fresh paper retrieval,experiment rerun,claim of exhaustive search or independent human screening",
+  "historical_snapshot": "V beforeW;schema_nonempty_outside_dictionary is historical,not current",
+  "resolution_after_W": {
+    "date": "2026-11-26",
+    "nonempty_outside_dictionary": 0,
+    "blank_fields": 14,
+    "cards_restructured": [
+      "M027",
+      "M028"
+    ],
+    "migration": "data/categorical_alias_migration_W.json",
+    "full_goal": "still_not_proven"
+  }
 }

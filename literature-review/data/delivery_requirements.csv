@@ -1,7 +1,7 @@
 requirement_id,requirement,evidence_path,assessment,remaining_gap,checked
 R2-1,北极星/持续接续,GOAL.md;progress.md,implemented_current_protocol,目标未完成，保持active,2026-11-26
 R2-2.1,保留首轮57ID/15卡/原导出/日志,data/round1_preservation_manifest.json;reports/methods_validation.json,verified_by_bounded_preservation_checks,不证明全部研究编码或检索完整,2026-11-26
-R2-2.2,扩展字段/规则/57条重分类,protocol/method_coding_rules.md;reports/method_reclassification.md,implemented_roundA;maintenance_gap,后续新记录旧分类字段存在字典漂移；见JSON逐项,2026-11-26
+R2-2.2,扩展字段/规则/57条重分类,protocol/method_coding_rules.md;reports/method_reclassification.md,implemented_roundA;W_alias_repair_verified,W已修52字段/24新增记录，原值与理由保留；14空字段仍待核，语义不由枚举验证证明,2026-11-26
 R2-3.1,方法范式主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,未取得授权数据库完整导出；字面词匹配不是覆盖率，应用领域不均衡,2026-11-26
 R2-3.2,主体架构主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,未取得授权数据库完整导出；字面词匹配不是覆盖率，应用领域不均衡,2026-11-26
 R2-3.3,校准验证主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,未取得授权数据库完整导出；字面词匹配不是覆盖率，应用领域不均衡,2026-11-26
@@ -39,8 +39,8 @@ R2-8-reports/method_venue_landscape.md,命名交付文件内容/存在,reports/m
 R2-8-reports/two_track_submission_strategy.md,命名交付文件内容/存在,reports/two_track_submission_strategy.md,exists_with_bounded_content_review,存在不等于全项内容验收，关联主题/版本缺口见本表,2026-11-26
 R2-8-progress.md,命名交付文件内容/存在,progress.md,exists_with_bounded_content_review,存在不等于全项内容验收，关联主题/版本缺口见本表,2026-11-26
 R2-8-README.md,命名交付文件内容/存在,README.md,exists_with_bounded_content_review,存在不等于全项内容验收，关联主题/版本缺口见本表,2026-11-26
-R2-8-cards,核心新卡沿用ID与11项结构,reading-cards/;data/delivery_requirement_audit.json,partial,部分新卡为定向简卡，未按原任务书11项结构展开；不能以卡数代替完整卡验收,2026-11-26
-R2-8-export,schema字典/Excel/Bib同步,data/README.md;exports/literature_and_journals_methods.xlsx;exports/references_methods.bib,counts_verified_schema_gap,9表32Bib；旧分类枚举漂移待修；原导出冻结,2026-11-26
+R2-8-cards,核心新卡沿用ID与11项结构,reading-cards/;data/delivery_requirement_audit.json,partial,W补M027/M028的11项结构；其他新卡仍需逐项内容检查，结构不等于证据充分,2026-11-26
+R2-8-export,schema字典/Excel/Bib同步,data/README.md;exports/literature_and_journals_methods.xlsx;exports/references_methods.bib,counts_and_nonempty_categorical_vocabulary_verified,9表32Bib；W补四旧字段词表检查；空字段/语义与原始检索覆盖仍不由此证明,2026-11-26
 R2-9-A,已批准批次A,progress.md,executed_not_goal_completion,后续缺口仍须按范围补齐，不重跑A,2026-11-26
 R2-9-B,已批准批次B,progress.md,executed_not_goal_completion,后续缺口仍须按范围补齐，不重跑A,2026-11-26
 R2-9-C,已批准批次C,progress.md,executed_not_goal_completion,后续缺口仍须按范围补齐，不重跑A,2026-11-26

@@ -20,8 +20,16 @@ for p,h in m['preserved_files'].items():assert hashlib.sha256((R/p).read_bytes()
 oldlog=oldcsv('data/search_log.csv');log=read(R/'data/search_log.csv');assert log[:231]==oldlog
 assert len({x['search_id'] for x in log})==len(log),'duplicate search IDs'
 from method_schema import TIERS,MATURITY,EVIDENCE,TAGS
+categorical=json.loads((R/'data/categorical_schema.json').read_text(encoding='utf8'))['fields']
+categorical_blanks=[]
 dois=[]
 for r in rs:
+ for field,allowed in categorical.items():
+  if not r[field]:
+   categorical_blanks.append(dict(record_id=r['record_id'],field=field))
+   continue
+  values=r[field].split(';') if field=='simulation_purpose' else [r[field]]
+  assert set(values)<=set(allowed),(r['record_id'],field,'outside documented vocabulary',values)
  assert r['method_relevance_tier'] in TIERS and r['method_maturity'] in MATURITY and r['method_evidence_level'] in EVIDENCE,r['record_id']
  assert set(r['method_contribution_type'].split(';'))<=TAGS,r['record_id']
  if r['method_coding_status']=='fulltext_supported':assert r['reading_status']=='fulltext_checked' and r['card_path'] and (R/r['card_path']).exists(),r['record_id']
@@ -39,4 +47,5 @@ assert all(x['venue_type']=='journal' for x in candidates),'conference in journa
 assert all(i in by for x in venues for i in x['record_ids'].split(';') if i),'unknown venue record reference'
 result=dict(checked='2026-11-26',records=len(rs),original_ids_preserved=len(m['record_ids']),original_files_hashed=len(m['preserved_files']),legacy_changes=len(ledger),search_rows=len(log),original_search_prefix_preserved=231,status=dict(collections.Counter(r['screening_status'] for r in rs)),method_tiers=dict(collections.Counter(r['method_relevance_tier'] for r in rs)),fulltext_cards=sum(bool(r['card_path']) for r in rs),date_pending=sum(r['date_eligibility']=='date_pending' for r in rs),checks='passed',limitations='No experiment rerun; workbook visual verification separate; not database coverage certification')
 result.update(validation_matrix_units=len(matrix),venue_types=dict(collections.Counter(x['venue_type'] for x in venues)),journal_candidates=len(candidates))
+result.update(categorical_fields_checked=list(categorical),categorical_nonempty_outside_dictionary=0,categorical_blank_fields=categorical_blanks,categorical_boundary='Vocabulary only; blanks unresolved/not applicable, not semantically complete coding certification')
 (R/'reports/methods_validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8');print(json.dumps(result,ensure_ascii=False))

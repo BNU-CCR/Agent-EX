@@ -87,3 +87,5 @@
 批次U：[方法评价期刊补查](reports/evaluation_venue_updates.md)，JSC/AMPPS官方范围、目标指南与费用分列；32载体、22刊条件表。不是32个成熟共同体或原41入口完整覆盖。
 
 批次V：[66项交付审计](reports/delivery_requirement_audit.md)，发现旧字段别名漂移与新简卡结构缺口；核验通过仅限已列检查范围。目标未完成。
+
+批次W：[分类与卡结构修复](reports/categorical_and_card_repair.md)，24条/52字段原值与映射保留，四旧字段非空词表检查通过；M027/M028恢复11项结构。

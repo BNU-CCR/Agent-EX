@@ -1,0 +1,374 @@
+{
+  "date": "2026-11-26",
+  "source_audit": "data/delivery_requirement_audit.json",
+  "original57_untouched": true,
+  "fields_changed": 52,
+  "records_changed": 24,
+  "empty_values_not_defaulted": true,
+  "changes": [
+    {
+      "record_id": "M001",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M002",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M002",
+      "field": "simulation_purpose",
+      "old": "method_evaluation;framework_development",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M005",
+      "field": "simulation_purpose",
+      "old": "method_evaluation;empirical_reproduction;hypothesis_generation",
+      "new": "method_evaluation;empirical_replication;theory_exploration",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M004",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M004",
+      "field": "simulation_purpose",
+      "old": "method_evaluation;critical_review;framework_development",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M003",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M010",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M011",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M012",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M013",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M013",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M013",
+      "field": "simulation_purpose",
+      "old": "framework_development;method_evaluation",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M014",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M014",
+      "field": "simulation_purpose",
+      "old": "method_evaluation;research_agenda",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M015",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M015",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M015",
+      "field": "simulation_purpose",
+      "old": "framework_development;method_evaluation",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M016",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M016",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M016",
+      "field": "simulation_purpose",
+      "old": "review;method_evaluation",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M017",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M017",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M017",
+      "field": "simulation_purpose",
+      "old": "method_evaluation;mechanism_exploration",
+      "new": "method_evaluation;theory_exploration",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M018",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M018",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M019",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M019",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M020",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M020",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M020",
+      "field": "simulation_purpose",
+      "old": "method_evaluation;controlled_dialogue",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M021",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M021",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M021",
+      "field": "simulation_purpose",
+      "old": "empirical_pattern_comparison;method_evaluation",
+      "new": "empirical_replication;method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M022",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M022",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M022",
+      "field": "simulation_purpose",
+      "old": "retrospective_pattern_reconstruction;controlled_intervention;process_exploration",
+      "new": "empirical_replication;mechanism_test;theory_exploration",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M023",
+      "field": "core_level",
+      "old": "method_core",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M023",
+      "field": "research_object",
+      "old": "research_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M023",
+      "field": "simulation_purpose",
+      "old": "empirical_strategy_identification;calibrated_simulation;policy_scenario",
+      "new": "empirical_replication;method_evaluation;theory_exploration",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M024",
+      "field": "research_object",
+      "old": "dialogue_and_group_simulation_method",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M024",
+      "field": "simulation_purpose",
+      "old": "component_evaluation;human_judgment;simulated_decision_comparison",
+      "new": "method_evaluation",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M025",
+      "field": "core_level",
+      "old": "application",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M025",
+      "field": "research_object",
+      "old": "organizational_advice_network",
+      "new": "human_social_process_simulation",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M025",
+      "field": "primary_purpose",
+      "old": "mechanism_explanation",
+      "new": "theory_exploration",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M025",
+      "field": "simulation_purpose",
+      "old": "mechanism_explanation;empirical_network_fitting",
+      "new": "theory_exploration;empirical_replication",
+      "reason": "Conservative canonical purpose aliases;empirical_replication denotes intended comparison/reconstruction,not validated fidelity;no maturity/evidence/status upgrade"
+    },
+    {
+      "record_id": "M026",
+      "field": "core_level",
+      "old": "method_validation",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M026",
+      "field": "research_object",
+      "old": "synthetic_personality_responses",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M027",
+      "field": "core_level",
+      "old": "method_validation",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M027",
+      "field": "research_object",
+      "old": "social_science_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    },
+    {
+      "record_id": "M028",
+      "field": "core_level",
+      "old": "method_validation",
+      "new": "method_validity",
+      "reason": "Original core_level describes relevance to current study;method tier remains separate and unchanged;M025 supplies method-fit caution while application tier preserved"
+    },
+    {
+      "record_id": "M028",
+      "field": "research_object",
+      "old": "social_science_methodology",
+      "new": "other",
+      "reason": "Four-category object field;method/component subtypes retained in original-value ledger and method_type,not introduced as new object enum"
+    }
+  ]
+}

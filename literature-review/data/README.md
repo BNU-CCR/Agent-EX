@@ -52,3 +52,5 @@ required_writing_changes / required_existing_analyses / required_new_experiments
 method_validation_matrix.csv按证据单元而非论文计数，保留控制、比较、错误、评价靶点、实际证据、未建立结论与项目迁移推论；不称其为已实施实验。后续增补可用apply_method_patch.py，批次JSON须绑定当前主表SHA256；过期批次拒绝执行，旧字段与方法编码另存变更历史。
 
 V批审计：旧分类字段存在字典外别名，详见delivery_requirement_audit.json；当前verify_methods_delivery仅校验方法扩展枚举，不能将通过外推为全部schema合规。W将追溯规范化并补验证。
+
+W已规范化52字段/24新增记录，原值/理由见categorical_alias_migration_W.json；四旧分类字段的规范词表见categorical_schema.json，verify_methods_delivery现在检查所有非空值并报告空白。V段落为修复前历史快照，不表示当前仍有字典外值。词表检查不是科学语义或覆盖验收。

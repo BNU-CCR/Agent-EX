@@ -1,0 +1,11 @@
+{
+  "version": "2026-11-26-W",
+  "authority": "Existing data/README.md categorical definitions; not a new research classification dimension",
+  "empty_policy": "Blank remains unresolved/not applicable; never fill a scientific default just to pass",
+  "fields": {
+    "core_level": ["direct_comparison", "theory_mechanism", "method_validity", "peripheral"],
+    "research_object": ["human_social_process_simulation", "ai_collective_behavior", "human_ai_mixed", "other"],
+    "primary_purpose": ["theory_exploration", "mechanism_test", "empirical_replication", "empirical_prediction", "method_evaluation", "system_development", "other"],
+    "simulation_purpose": ["theory_exploration", "mechanism_test", "empirical_replication", "empirical_prediction", "method_evaluation", "system_development", "other"]
+  }
+}

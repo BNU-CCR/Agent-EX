@@ -29,5 +29,71 @@
     "conference": 8,
     "repository": 1
   },
-  "journal_candidates": 22
+  "journal_candidates": 22,
+  "categorical_fields_checked": [
+    "core_level",
+    "research_object",
+    "primary_purpose",
+    "simulation_purpose"
+  ],
+  "categorical_nonempty_outside_dictionary": 0,
+  "categorical_blank_fields": [
+    {
+      "record_id": "M003",
+      "field": "core_level"
+    },
+    {
+      "record_id": "M003",
+      "field": "primary_purpose"
+    },
+    {
+      "record_id": "M003",
+      "field": "simulation_purpose"
+    },
+    {
+      "record_id": "M010",
+      "field": "core_level"
+    },
+    {
+      "record_id": "M010",
+      "field": "primary_purpose"
+    },
+    {
+      "record_id": "M010",
+      "field": "simulation_purpose"
+    },
+    {
+      "record_id": "M011",
+      "field": "core_level"
+    },
+    {
+      "record_id": "M011",
+      "field": "primary_purpose"
+    },
+    {
+      "record_id": "M011",
+      "field": "simulation_purpose"
+    },
+    {
+      "record_id": "M012",
+      "field": "core_level"
+    },
+    {
+      "record_id": "M012",
+      "field": "primary_purpose"
+    },
+    {
+      "record_id": "M012",
+      "field": "simulation_purpose"
+    },
+    {
+      "record_id": "M018",
+      "field": "simulation_purpose"
+    },
+    {
+      "record_id": "M019",
+      "field": "simulation_purpose"
+    }
+  ],
+  "categorical_boundary": "Vocabulary only; blanks unresolved/not applicable, not semantically complete coding certification"
 }

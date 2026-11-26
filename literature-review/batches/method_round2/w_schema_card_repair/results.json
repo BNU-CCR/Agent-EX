@@ -1,0 +1,156 @@
+{
+  "batch_id": "W-categorical-alias-card-structure",
+  "date": "2026-11-26",
+  "expected_master_sha256": "3c1c577d880d09b3e664014a94733be5d5ca48e7a70d3529cbcb59d4a964838e",
+  "updates": [
+    {
+      "record_id": "M001",
+      "core_level": "method_validity",
+      "notes": "HTML主文已读；表仅标题，补充包未检验，未复跑。 | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M002",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": " | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M005",
+      "simulation_purpose": "method_evaluation;empirical_replication;theory_exploration",
+      "notes": "M2026-11-26:UCpagesJSverification;webPDFsizelimit;curlproducedzero-bytefile;PythonHTTP202emptyHTML;notPDFdownloaded;Chrome/IABunavailable;noformaltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M004",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": " | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M003",
+      "research_object": "other",
+      "notes": "Statistically indistinguishable output under two parameter settings is not proof of equivalence across parameter space or implementation details.; Hosted/local model comparisons confound model capacity and deployment; not evidence of deployment causal effects.; precise first-online date pending; July2026 issue is not first-online proof | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M010",
+      "research_object": "other",
+      "notes": "2021-10-20 codebase-pack update is not first formal publication.; Worked opinion-model example reuses a 2014 paper; do not add that work to a 2022+ corpus or call it a new 2022 validation experiment. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M011",
+      "research_object": "other",
+      "notes": "15 successful, 2 partial, 1 failed; selected mostly simple models, some author help.; 2–12 days, mean5 applies to these exercises; not a causal estimate of ODD/NetLogo efficiency.; Multiple domains do not establish external behavioural validity or automatic upgrade to multi_context_validation. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M012",
+      "research_object": "other",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M013",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": "Framework inspired by same illustrated model; underlying empirical/model papers not independently reread; no rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M014",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": "Formal position track, not empirical benchmark paper; no DOI assigned in visible PMLR metadata; code not rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M015",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": "Publisher and institutional formalPDF403; read earlier authorv1 only; all numeric findings scoped to authorversion; no rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M016",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": "Focused formalHTML methods/evaluation/social-domain/future reading; other domain application entries not individually deep-read;Table1cells not retrieved/recounted; underlying corpus not independently rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M017",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation;theory_exploration",
+      "notes": "DOI suffix2021 is not publication date; formal Published11January2022. Focused methods/results/discussion reading; no rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M018",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "notes": "Publisher abstract only; 133 historical articles is author corpus, not our retrieved count. Fulltext subscription preview. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M019",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "notes": "Article fetch timeout; TOC title/authors/date/abstract inspected. Do not misassign adjacent article December21,2023 date. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M020",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": "FormalPDF read; static7file audit pinned93256122ecaa76943b0702cc6c6317765398b397 (Oct1 after Mayconference), not established paper runartifact. Judgeandoneagent both llama3:latest; runner default nonrepetition lexical; evidence first10charsmatch; noexecution. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M021",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "empirical_replication;method_evaluation",
+      "notes": "Actual authorv2 read; formalPDF403 and exactformaldate/DOIpending. HTML prompt bodies missing despite headings. Empiricalcomparison is not claimed validationpass; no rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M022",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "empirical_replication;mechanism_test;theory_exploration",
+      "notes": "Focusedmethods/controlledcomparison/boundaryreading; some long toolreturns truncated, not claiming allappendix or all platform claims verified. Author-reported acceptance notpublisherconfirmation;template2024/placeholderDOI notpublicationdate. No code run. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M023",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "simulation_purpose": "empirical_replication;method_evaluation;theory_exploration",
+      "notes": "FormalHTML focuseddesign/classification/calibration/policyreading;252students14sessions are humanstudy;1000simulatedsessions nothumanN. No reexecution or supplementaryDOCXcheck. Publication2025 eligible despite labdata2016. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M024",
+      "research_object": "other",
+      "simulation_purpose": "method_evaluation",
+      "notes": "FocusedformalPDFmethods/evaluation/limitationsreading;notcompleteappendix/codeaudit;no rerun. September18–20conference dates notclaimed firstonline;candidate retained. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M025",
+      "core_level": "method_validity",
+      "research_object": "human_social_process_simulation",
+      "primary_purpose": "theory_exploration",
+      "simulation_purpose": "theory_exploration;empirical_replication",
+      "notes": "P:focusedauthorhostedpublisherlayoutPDFmethods/results/discussion/AppendixA read;formalfirstdaystillpending;nocodererun or externalSupplementB. Olddataset is not separatelyincludedpre2022work. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M026",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "notes": "Focused formalHTML, notSI/codererun;single-agent psychometric component, notnetwork simulation. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M027",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "notes": "Formalmetadata notformalPDF;citationsofempiricalpapers are not newexperiments;formalversioncomparison pending. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    },
+    {
+      "record_id": "M028",
+      "core_level": "method_validity",
+      "research_object": "other",
+      "notes": "Personal-site mirroredpublisherlayout,not author-host asserted;no new validationeffectexperiment;no codererun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged."
+    }
+  ],
+  "new_records": []
+}
