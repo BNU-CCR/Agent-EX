@@ -1,0 +1,21 @@
+{
+  "batch_id": "M-version-and-access-audit",
+  "date": "2026-11-26",
+  "expected_master_sha256": "a1cf274d79bb7db1133fca73897dd58d559c473242962a9002f2959547ab1d4f",
+  "updates": [
+    {
+      "record_id": "M005",
+      "metadata_evidence_url": "https://neuroailab.stanford.edu/publications.html | https://repositories.cdlib.org/uc/item/6dg1f4s7",
+      "related_versions": "Author lab explicitly labels same-title work CogSci25 and links arXiv;officialprogram poster association;UC item same-title. Formal proceedings first-date/pages/text stillunverified.",
+      "notes": "M2026-11-26:UCpagesJSverification;webPDFsizelimit;curlproducedzero-bytefile;PythonHTTP202emptyHTML;notPDFdownloaded;Chrome/IABunavailable;noformaltextupgrade."
+    },
+    {
+      "record_id": "M012",
+      "metadata_evidence_url": "https://pure.knaw.nl/portal/en/publications/twenty-years-of-the-odd-protocol-development-usage-extensions-and/ | https://www.ufz.de/index.php?de=20939&pub_id=33063",
+      "supplement_status": "official_mmc1_docx_mmc2_zip_links_verified;retrieval403;not_read",
+      "related_versions": "formal journal article ahead of print; publisher marks open access/Creative Commons | EssOAR10.22541/essoar.15005893/v1 discovered;redirectunavailable;notread",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade."
+    }
+  ],
+  "new_records": []
+}

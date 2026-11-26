@@ -1,0 +1,272 @@
+[
+  {
+    "search_id": "S-M2-M-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Validating Generative Agent-Based Models of Social Norm Enforcement\" CogSci",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Can large language models implement agent-based models\" \"Available online\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Twenty years of the ODD protocol\" \"2026\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"6dg1f4s7\" \"2025\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Cross\" \"Haber\" \"Yamins\" \"CogSci\" \"2025\" \"pages\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Time to Close The Validation Gap\" \"Published\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.escholarship.org/uc/item/6dg1f4s7 \"Publication Date\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q08",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.repositories.cdlib.org/uc/item/6dg1f4s7 \"2025-\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q09",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"qt6dg1f4s7\" pdf",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q10",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"6dg1f4s7\" \"pdf\" \"Logan\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-Q11",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"CrossHY25\" \"2025\" proceedings",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "No exact firstformaldate resolved;engine mayignore domain/title constraints;notzeroresultcertification"
+  },
+  {
+    "search_id": "S-M2-M-UC",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://repositories.cdlib.org/uc/item/6dg1f4s7",
+    "source_url": "https://repositories.cdlib.org/uc/item/6dg1f4s7",
+    "status": "javascript_verification",
+    "notes": "No substantive livepage metadata"
+  },
+  {
+    "search_id": "S-M2-M-UC-ALT",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://escholarship.org/uc/item/6dg1f4s7",
+    "source_url": "https://escholarship.org/uc/item/6dg1f4s7",
+    "status": "javascript_verification",
+    "notes": "Sameofficialitem alternatehost;notnewwork"
+  },
+  {
+    "search_id": "S-M2-M-UC-PDF-WEB",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "source_url": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "status": "web_size_limit",
+    "notes": "Tool reports11853643bytes;notreturned/readPDF"
+  },
+  {
+    "search_id": "S-M2-M-UC-PDF-CURL",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "source_url": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "status": "zero_byte_output_verified",
+    "notes": "curl exit0 doesnotprove download;localfile0bytes;noPDFheader"
+  },
+  {
+    "search_id": "S-M2-M-UC-PDF-HTTP",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "source_url": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "status": "http202_empty_html",
+    "notes": "Pythonurllib withsystemtrust;status202;text/html;0bytes;notPDF"
+  },
+  {
+    "search_id": "S-M2-M-UC-PDF-SCREEN",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "source_url": "https://escholarship.org/content/qt6dg1f4s7/qt6dg1f4s7.pdf",
+    "status": "screenshot_unavailable",
+    "notes": "Notapplication/pdf response;noimage"
+  },
+  {
+    "search_id": "S-M2-M-BROWSER",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://escholarship.org/uc/item/6dg1f4s7",
+    "source_url": "https://escholarship.org/uc/item/6dg1f4s7",
+    "status": "browser_connection_unavailable",
+    "notes": "Chrome andIAB both unavailable;notCAPTCHAsolved;notuserapprovalblock"
+  },
+  {
+    "search_id": "S-M2-M-M003",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+    "status": "403_forbidden",
+    "notes": "Firstformaldaynotresolved"
+  },
+  {
+    "search_id": "S-M2-M-M012",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+    "status": "403_forbidden",
+    "notes": "Maintextnotread"
+  },
+  {
+    "search_id": "S-M2-M-CROSSREF",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://api.crossref.org/works/10.1016/j.envsoft.2026.107203",
+    "source_url": "https://api.crossref.org/works/10.1016/j.envsoft.2026.107203",
+    "status": "not_accessible",
+    "notes": "No newmetadata;deposittimestamp notused"
+  },
+  {
+    "search_id": "S-M2-M-PMLR",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://proceedings.mlr.press/v306/puelma-touzel26a.html",
+    "source_url": "https://proceedings.mlr.press/v306/puelma-touzel26a.html",
+    "status": "formal_metadata_rechecked",
+    "notes": "Conference daterange06–11Jul;compiledOct23 notfirstonline"
+  },
+  {
+    "search_id": "S-M2-M-UFZ-ODD",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.ufz.de/index.php?de=40429",
+    "source_url": "https://www.ufz.de/index.php?de=40429",
+    "status": "official_link_discovery",
+    "notes": "2026worklinked;oldbackgroundPDFsnotopened"
+  },
+  {
+    "search_id": "S-M2-M-UFZ-ITEM",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.ufz.de/index.php?de=20939&pub_id=33063",
+    "source_url": "https://www.ufz.de/index.php?de=20939&pub_id=33063",
+    "status": "official_metadata_and_supplement_links_checked",
+    "notes": "Issue2027/207/article107203;footermodified2016notpubdate"
+  },
+  {
+    "search_id": "S-M2-M-ESSOAR",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://doi.org/10.22541/essoar.15005893/v1",
+    "source_url": "https://doi.org/10.22541/essoar.15005893/v1",
+    "status": "redirect_not_accessible",
+    "notes": "Preprintlineageonly;no fulltext"
+  },
+  {
+    "search_id": "S-M2-M-SUPP1-WEB",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc1.docx",
+    "source_url": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc1.docx",
+    "status": "unsupported_content_type",
+    "notes": "Notread"
+  },
+  {
+    "search_id": "S-M2-M-SUPP2-WEB",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc2.zip",
+    "source_url": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc2.zip",
+    "status": "unsupported_content_type",
+    "notes": "Notread"
+  },
+  {
+    "search_id": "S-M2-M-SUPP1-HTTP",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc1.docx",
+    "source_url": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc1.docx",
+    "status": "403_forbidden",
+    "notes": "No DOCXdownload"
+  },
+  {
+    "search_id": "S-M2-M-SUPP2-HTTP",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc2.zip",
+    "source_url": "https://ars.els-cdn.com/content/image/1-s2.0-S1364815226003506-mmc2.zip",
+    "status": "403_forbidden",
+    "notes": "No ZIPdownload"
+  },
+  {
+    "search_id": "S-M2-M-M005-LAB",
+    "platform": "source_access_or_verification",
+    "search_date": "2026-11-26",
+    "query_exact": "https://neuroailab.stanford.edu/publications.html",
+    "source_url": "https://neuroailab.stanford.edu/publications.html",
+    "status": "author_lab_venue_label_checked",
+    "notes": "CogSci25label linkedtoarXiv;notformaltextidentity/dateproof"
+  }
+]
