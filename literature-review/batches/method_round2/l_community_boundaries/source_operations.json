@@ -1,0 +1,227 @@
+[
+  {
+    "search_id": "S-M2-L-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.ojs.aaai.org \"42655\" \"Published\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.link.springer.com/journal/11403 \"large language\" simulation",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.dl.acm.org \"Transactions on Social Computing\" \"simulation\" \"large language\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Journal of Economic Interaction and Coordination\" \"large language models\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"ACM Transactions on Social Computing\" \"agent-based\" 2024 2025 2026",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"ACM Transactions on Intelligent Systems and Technology\" \"social simulation\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"ACM Transactions on Interactive Intelligent Systems\" \"simulation\" \"large language\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q08",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Self-emotion blended dialogue generation in social simulation agents\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q09",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Computational Multi-Agents Society Experiments\" \"10.1145\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q10",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Journal of Economic Interaction and Coordination\" \"validation\" \"2024\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q11",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Journal of Economic Interaction and Coordination\" \"calibration\" \"2023\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q12",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"ACM Transactions on Intelligent Systems and Technology\" \"agent-based\" \"2025\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-Q13",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"ACM Transactions on Social Computing\" \"Computational Multi-Agents\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Domain filters not guaranteed;no stable totalcount;not zero-result certification or licensed database export"
+  },
+  {
+    "search_id": "S-M2-L-M022",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/html/2508.17366v3",
+    "source_url": "https://arxiv.org/html/2508.17366v3",
+    "status": "author_v3_methods_read",
+    "notes": "Architecture;retrospectivereconstruction;controlleddelivery;limitations;line/findoperationsconsolidated"
+  },
+  {
+    "search_id": "S-M2-L-CMASE-VERSION",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/abs/2508.17366",
+    "source_url": "https://arxiv.org/abs/2508.17366",
+    "status": "author_acceptance_claim_only",
+    "notes": "TSCaccepted comment notpublisherpublication;v3date2026-10-15"
+  },
+  {
+    "search_id": "S-M2-L-M023",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/article/10.1007/s11403-025-00451-5",
+    "source_url": "https://link.springer.com/article/10.1007/s11403-025-00451-5",
+    "status": "formal_html_methods_read",
+    "notes": "Published2025-07-29;humanclassification andABMpolicy separated"
+  },
+  {
+    "search_id": "S-M2-L-JEIC-EDITORIAL",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/article/10.1007/s11403-025-00445-3",
+    "source_url": "https://link.springer.com/article/10.1007/s11403-025-00445-3",
+    "status": "formal_metadata_only",
+    "notes": "2025-04-16editorialsubscriptionpreview;LLMreferences notoriginalLLMvalidation"
+  },
+  {
+    "search_id": "S-M2-L-JEIC-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/journal/11403/aims-and-scope",
+    "source_url": "https://link.springer.com/journal/11403/aims-and-scope",
+    "status": "official_scope_read",
+    "notes": "Behavioralagentbasedeconomics/collectivephenomena;notautomaticcurrentpaperfit"
+  },
+  {
+    "search_id": "S-M2-L-JEIC-GUIDE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://link.springer.com/journal/11403/submission-guidelines",
+    "source_url": "https://link.springer.com/journal/11403/submission-guidelines",
+    "status": "partial_official_guide_read",
+    "notes": "Abstract150–250words;otherlength/code/feeitems pending"
+  },
+  {
+    "search_id": "S-M2-L-TSC-SITE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://tsc.acm.org/",
+    "source_url": "https://tsc.acm.org/",
+    "status": "not_accessible",
+    "notes": "Alternateofficialsite unavailable"
+  },
+  {
+    "search_id": "S-M2-L-TSC-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://dl.acm.org/journal/tsc/about",
+    "source_url": "https://dl.acm.org/journal/tsc/about",
+    "status": "403_forbidden",
+    "notes": "No officialscopeverified"
+  },
+  {
+    "search_id": "S-M2-L-TIST-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://dl.acm.org/journal/tist/about",
+    "source_url": "https://dl.acm.org/journal/tist/about",
+    "status": "403_forbidden",
+    "notes": "Old2013/2018crowd papers discovered but notadded/read"
+  },
+  {
+    "search_id": "S-M2-L-TIIS-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://dl.acm.org/journal/tiis/about",
+    "source_url": "https://dl.acm.org/journal/tiis/about",
+    "status": "403_forbidden",
+    "notes": "Scopeunverified;UIoptimization adjacentnotGABMevidence"
+  },
+  {
+    "search_id": "S-M2-L-CSUR",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://dl.acm.org/doi/10.1145/3800683",
+    "source_url": "https://dl.acm.org/doi/10.1145/3800683",
+    "status": "403_forbidden",
+    "notes": "Secondarydiscovered FromIndividualtoSociety review;notformalverified ornewrecord"
+  },
+  {
+    "search_id": "S-M2-L-SIGDIAL",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://aclanthology.org/2024.sigdial-1.21/",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21/",
+    "status": "official_abstract_screened",
+    "notes": "NotTIST;queuednotnewrecord;no fulltextclaim"
+  }
+]
