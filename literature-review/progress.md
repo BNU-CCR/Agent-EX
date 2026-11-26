@@ -1,20 +1,38 @@
-# 进度
+# 进度与持续接续
 
-2026-11-26（Asia/Shanghai）：使用远端分支起始dd4190c；干净工作副本C:/Users/Bai Yuexi/Agent-EX-literature-20261126。原OneDrive及现有worktree保留原状。四阶段提交aa1dc94、0724c52、262cda6、b9e06b7均已推送到codex/social-identity-network-2x3；远端SHA核对一致。本进度回执随后续文档提交同步。
+## 当前目标
+以 LLM-based Social Simulation / Generative ABM 方法论和发表生态为主线，完成方法知识地图、核心文献库、学术发表地图，以及当前论文/后续方法论文的双轨投稿策略。完整目标见 [GOAL.md](GOAL.md)。
 
-| 阶段 | 当前进度 |
+## 当前状态（2026-11-26，Asia/Shanghai）
+
+| 工作 | 状态 |
 |---|---|
-| 一 项目定位与校准 | 已完成；全部指定项目资料、六种子找回、检索词与日期/方法校准 |
-| 二 新闻传播检索 | 已完成可用公开路径：CSSCI来源20刊及英文12代表刊+2补充刊；完整SSCI目录及WoS/CNKI规定检索仍有缺口 |
-| 三 跨学科与精读 | 已合并57记录、15全文确认纳入/15卡、38候选、2前沿、2排除；13日期待核，重点论文交叉检查已保存 |
-| 四 期刊与交付 | 本轮成果已生成并通过一致性核查：12来源刊、10投稿档案、综合/覆盖/建议报告、15条BibTeX与7表Excel；已提交并同步 |
+| 第一轮文献工作 | 已交付可访问公开证据部分：57条记录、15张全文阅读卡、12本核心来源期刊、10本投稿候选；完整SSCI目录及WoS/CNKI逐刊数据库检索仍有缺口 |
+| 研究主线调整 | 用户已批准：方法论与发表生态为第一优先级；传播应用与Agent-EX直接对照保留为后续层 |
+| 第二轮任务书 | 已创建 `METHODS_FIRST_REORIENTATION.md` |
+| 北极星目标 | 已创建 `GOAL.md` |
+| 第二轮实质执行 | 待开始 |
 
-统一主表schema v1；R/EN/CN编号保留，候选不能当正式核心。检索截止2026-11-26；索引/作者规则同日核验，历史索引空白。231条日志含查询、来源核验、访问记录及批次来源索引，不是231次数据库检索。
+## 已完成
+- 第一轮四阶段可访问部分已提交并同步；详见 [第一轮任务计划](task_plan.md) 和 [覆盖与缺口](reports/coverage_and_gaps.md)。
+- 用户批准方法优先的第二轮调整。
+- 已写入第二轮执行任务书与长期目标。
 
-## 本轮交付与接续
+## 进行中
+- 第二轮批次 A：schema 扩展、现有57条方法重分类、README与项目定位调整。
 
-- 入口README；优先查看reports/research_synthesis.md、reports/submission_recommendations.md、exports/literature_and_journals.xlsx。
-- 已核对ID/DOI去重、日期与全文门、阅读卡、主表/来源/投稿关联、会议分离、BibTeX、Excel行数/编号/公式缓存、本地链接及修改范围；reports/delivery_validation.json为pass。已视觉检查工作簿预览。
-- 当前最重要判断：已有网络极化与偏向分解研究，贡献须收窄到固定网络、匹配无feed基线、实际接触和私公状态分层；优先讨论CCR/JASSS。
-- 全量任务尚有未完成门：完整SSCI目录与WoS/CNKI逐刊规定检索，13条首发日期，38候选全文/筛选，重点论文补充材料及历史索引。具体材料与导出字段见reports/coverage_and_gaps.md。
-- 取得缺失目录/导出/原文后沿原ID继续阶段二/三，刷新综合与投稿判断；无需重复审批。本轮未执行新实验、数据重分析、正文改写或投稿。
+## 阻塞与限制
+- 第一轮完整SSCI Communication目录未取得。
+- WoS/CNKI授权数据库逐刊检索未完成。
+- 13条文献首次正式发表日期待核、38条候选全文筛选未完成。
+- 第二轮方法种子全文与方法发表生态尚待逐项核实。
+
+## 下一项具体任务
+1. 阅读 `METHODS_FIRST_REORIENTATION.md`、现有 `data/literature_master.csv` 和 `data/README.md`。
+2. 为现有57条增加方法导向字段，先完成字段字典和编码规则，再逐条编码；保留所有原 ID 与筛选状态。
+3. 核验并完成首批方法核心文献全文卡，优先 MASS、Larooij & Törnberg、Haase & Pokutta、ODD-based replication study。
+4. 创建 `method_venue_map.csv`，先核实 JASSS、Journal of Simulation、Simulation Modelling Practice and Theory、SSCR 等真实发表先例。
+5. 每批完成后更新本文件并提交，记录最新 commit SHA。
+
+## 接续规则
+每次 Codex 新会话必须先读 GOAL、README、METHODS_FIRST_REORIENTATION 和本文件，从“下一项具体任务”继续。不得重建第一轮数据库，不得把计划当作已经完成的检索，也不得声称会话结束后仍在后台工作。
