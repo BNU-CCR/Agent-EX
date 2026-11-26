@@ -1,0 +1,200 @@
+[
+  {
+    "search_id": "S-M2-O-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Networks\" \"large language models\" simulation 2024 2025 2026",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"agent-based\" 2023 2024 2025",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.cambridge.org \"Political Analysis\" \"large language models\" validation",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"agent-based modeling\" \"2024\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Networks\" journal \"simulation\" \"2024\" \"validation\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"large language models\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"agent-based\" \"2022\" \"2025\" journal simulation",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q08",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Networks\" \"agent-based\" \"2023\" Elsevier",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q09",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"simulation\" \"2024\" \"2025\" homophily",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q10",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"S0049089X\" \"agent-based\"",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-Q11",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"agent-based\" \"2022\" \"2023\" \"2024\" \"2025\" journal -site:arxiv.org -site:researchgate.net",
+    "source_url": "",
+    "status": "public_results_screened",
+    "notes": "Journalname often matchedtopic notvenue;no stabletotalcount;nozero-paperclaim;notlicensedexport"
+  },
+  {
+    "search_id": "S-M2-O-R017",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.cambridge.org/core/journals/political-analysis/article/synthetic-replacements-for-human-survey-data-the-perils-of-large-language-models/B92267DC26195C7F36E63EA04A47D2FE",
+    "source_url": "https://www.cambridge.org/core/journals/political-analysis/article/synthetic-replacements-for-human-survey-data-the-perils-of-large-language-models/B92267DC26195C7F36E63EA04A47D2FE",
+    "status": "formal_focused_fulltext_checked",
+    "notes": "Pubdate17May2024;design/results/sensitivity/discussion;notSI/code;linefindconsolidated"
+  },
+  {
+    "search_id": "S-M2-O-PA-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.cambridge.org/core/journals/political-analysis/information/about-this-journal",
+    "source_url": "https://www.cambridge.org/core/journals/political-analysis/information/about-this-journal",
+    "status": "official_scope_checked",
+    "notes": "Originalpoliticalmethodologyadvances"
+  },
+  {
+    "search_id": "S-M2-O-PA-GUIDE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.cambridge.org/core/journals/political-analysis/information/author-instructions/preparing-your-materials",
+    "source_url": "https://www.cambridge.org/core/journals/political-analysis/information/author-instructions/preparing-your-materials",
+    "status": "official_guide_checked",
+    "notes": "Research6000/letter2500exclrefs;abstract200;notproposedrecommendation"
+  },
+  {
+    "search_id": "S-M2-O-PA-REPL",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.cambridge.org/core/journals/political-analysis/information/journal-policies/research-transparency",
+    "source_url": "https://www.cambridge.org/core/journals/political-analysis/information/journal-policies/research-transparency",
+    "status": "official_replication_policy_checked",
+    "notes": "Materialsrequired;editorcheckscopeandoutcomenotes;subsetallowedwhereconstrained"
+  },
+  {
+    "search_id": "S-M2-O-SN-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/journal/social-networks/about/aims-and-scope",
+    "source_url": "https://www.sciencedirect.com/journal/social-networks/about/aims-and-scope",
+    "status": "403_forbidden",
+    "notes": "Scopestillpending"
+  },
+  {
+    "search_id": "S-M2-O-SSR-SCOPE",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/journal/social-science-research/about/aims-and-scope",
+    "source_url": "https://www.sciencedirect.com/journal/social-science-research/about/aims-and-scope",
+    "status": "403_forbidden",
+    "notes": "Scopestillpending"
+  },
+  {
+    "search_id": "S-M2-O-SN-REPO",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://air.unimi.it/handle/2434/1004970",
+    "source_url": "https://air.unimi.it/handle/2434/1004970",
+    "status": "403_forbidden",
+    "notes": "Authorhostfallbackfound"
+  },
+  {
+    "search_id": "S-M2-O-SN-DOI",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://doi.org/10.1016/j.socnet.2023.09.001",
+    "source_url": "https://doi.org/10.1016/j.socnet.2023.09.001",
+    "status": "redirect_not_accessible",
+    "notes": "No preciseonlinedateverified"
+  },
+  {
+    "search_id": "S-M2-O-SN-AUTHOR",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://federico-bianchi.github.io/publications/",
+    "source_url": "https://federico-bianchi.github.io/publications/",
+    "status": "author_bibliography_checked",
+    "notes": "Exactjournal/DOI;followPDFlink;SSR119102991adjacentnotABMprecedent"
+  },
+  {
+    "search_id": "S-M2-O-SOCNET-PDF",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "source_url": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "status": "formal_layout_abstract_checked",
+    "notes": "10pPDF;metadata/abstractonly;notfullread"
+  },
+  {
+    "search_id": "S-M2-O-SSR-BOUNDARY",
+    "platform": "primary_source_operation",
+    "search_date": "2026-11-26",
+    "query_exact": "https://c2s2.unitn.it/research/collective-behavior-action/",
+    "source_url": "https://c2s2.unitn.it/research/collective-behavior-action/",
+    "status": "institution_seed_screened_out",
+    "notes": "SSR132103232 is schools/politicalinterest, notsimulationsfromtitle/metadata;notadded;notglobalnegative"
+  }
+]

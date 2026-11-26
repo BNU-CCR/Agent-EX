@@ -248,5 +248,95 @@
     "batch": "F-architecture-theory",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "date_basis",
+    "old": "Official article/proceedings page; see URL/evidence",
+    "new": "Publisher explicitly Publishedonline17May2024",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "screening_status",
+    "old": "candidate",
+    "new": "included",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "reading_status",
+    "old": "abstract_read",
+    "new": "fulltext_checked",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "fulltext_url",
+    "old": "",
+    "new": "https://www.cambridge.org/core/journals/political-analysis/article/synthetic-replacements-for-human-survey-data-the-perils-of-large-language-models/B92267DC26195C7F36E63EA04A47D2FE",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "supplement_status",
+    "old": "not_checked",
+    "new": "maintext_and_relevant_footnotes_checked;SI_and_replication_not_read",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "card_path",
+    "old": "",
+    "new": "reading-cards/R017.md",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "findings",
+    "old": "",
+    "new": "合成调查均值近似不保证方差/条件关系；相同提示跨时间变化。不是多主体动态轨迹验证。",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "evidence_location",
+    "old": "官方Abstract；§2.2/Discussion公开段落已读，全文逐段核查未完成",
+    "new": "FormalHTML §§1–4;Footnotes15/19/27;DataAvailability",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "notes",
+    "old": "",
+    "new": "O:focusedformalHTMLdesign/results/sensitivity/discussion reading;SI and replication archive not independentlychecked;no rerun;notclaiming allLLMs fail or exact modelupdatecauseidentified.",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
   }
 ]

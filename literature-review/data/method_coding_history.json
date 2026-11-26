@@ -1658,5 +1658,195 @@
     "batch": "N-self-emotion-validation",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_transferability",
+    "old": "pending：摘要支持ANES均值/方差/条件关系与时间/措辞复现问题；完整验证设计待全文。",
+    "new": "以经验分布/条件关系/时间稳定性分别验证；合成重复不当人类独立样本，调查效度不替代网络轨迹。",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability",
+    "new": "SI_and_replication;exact_model_snapshot;dynamic_multiagent_transfer;independent_reexecution",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_evidence_location",
+    "old": "Abstract及首轮来源核验；不以题名推断成熟度",
+    "new": "§§1–4;footnotes;maintext distribution/regression/time comparisons",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv; batches/crossdisciplinary/records.json",
+    "new": "reading-cards/R017.md",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_type",
+    "old": "",
+    "new": "traditional_rule_ABM",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "application",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "application;interaction_protocol;model_calibration;theory_to_model_translation",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_transferability",
+    "old": "",
+    "new": "规则替代与经验拟合的候选启发；待核全文设计/对照与复现。",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "研究解释组织网络，暂列应用层；不能仅因有拟合就升级通用验证方法。",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "precise_first_online_date;fulltext_design;calibration_validation_separation;scope_and_guide",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "PDFfirstpageAbstract",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "O-social-methods-community",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/o_social_methods/results.json"
   }
 ]

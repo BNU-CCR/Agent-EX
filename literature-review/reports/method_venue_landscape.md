@@ -1,6 +1,6 @@
 # 方法研究发表生态：定向证据版
 
-检索与核验截至2026-11-26。已建立[25载体地图](../data/method_venue_map.csv)及[16刊双轨表](../data/journal_submission_candidates.csv)：16期刊、8会议入口、1预印本仓库。它们是论文驱动的样本地图；不是完成各刊2022起全量检索、索引认证或接受率比较。
+检索与核验截至2026-11-26。已建立[27载体地图](../data/method_venue_map.csv)及[17刊双轨表](../data/journal_submission_candidates.csv)：18期刊、8会议入口、1预印本仓库。它们是论文驱动的样本地图；不是完成各刊2022起全量检索、索引认证或接受率比较。
 
 ## 已出现的共同体与贡献类型
 
@@ -31,3 +31,5 @@
 批次L：JEIC以M023传统经验ABM先例进入条件观察；TSC作者接收声明不计正式发表共同体证据，TIST/TiiS范围仍403。详见[共同体边界补查](community_boundary_updates.md)。
 
 批次N补SIGDIAL正式组件验证先例，scope/指南尚待核，不作当前稿优先渠道，也不代替ACL/TIST覆盖。
+
+批次O补PA与SOCNET地图；17刊条件投稿表只加入PA，SOCNET范围403暂不推荐；SSR仍待有界检索。详见[社会方法共同体](social_methods_community.md)。

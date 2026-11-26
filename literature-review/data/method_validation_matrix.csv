@@ -31,3 +31,6 @@ VC29,M024,核策略评价的信息边界与定义,人工策略标注 vs生成策
 VC30,M024,分开真人评价与真实互动,43标注者评价模型self-chat对话,自然度/像人评分被当群体效度,生成对话感知质量,§5及AppendixD真人偏好评价,formal_human_judgment_of_generated_dialogue,现实互动轨迹或完整社会效度,按真人是行为来源还是评价者分别报告,§5.2;AppendixD,source_read_not_reexecuted,2026-11-26
 VC31,M024,群体决策变化与外部效标分开,模拟有/无情绪的决策比较,模拟变化比例被当现实情绪因果效应,模拟内组件影响,五议题/六成员设置的决策变化,formal_controlled_simulation_comparison,现实人群效应或长期意见演化,操纵检验与真实目标效标另列；不回填情绪/微调路线,§6;Table10,source_read_not_reexecuted,2026-11-26
 VC32,M024,保留模型乘表示的阴性条件,各组合 vs无情绪基线,平均改善被泛化为每模型/每表示都改善,组件效果异质性,Table2部分组合低于各自基线,formal_condition_level_results_not_reexecuted,情绪组件普遍改善拟真,逐条件保留反向/无效结果，避免按期望选组件,Table2,source_read_not_reexecuted,2026-11-26
+VC33,R017,多层经验分布/条件关系分别核,ANES真人与匹配人设合成调查,整体均值接近遮蔽变异压缩/子群偏差,调查分布与条件关系,正式正文报告均值、方差与条件关系分歧,formal_empirical_survey_comparison,多主体动态轨迹效度或所有LLM失败,意见分布/子群/条件关系分列，不以一个宏观量认证,§§1–2,source_read_not_reexecuted,2026-11-26
+VC34,R017,区分随机重复与模型跨时间变化,April/June/July相同提示的生成结果,同模型名称被视为固定生成机制,时间可复现性,作者报告跨时间结果变化；后台具体原因未识别,formal_temporal_model_output_comparison,变化一定由特定训练机制导致,保存模型snapshot/revision/运行时点；不从漂移反推原因,§3.2,source_read_not_reexecuted,2026-11-26
+VC35,R017,合成重复与真人独立单位分开,多次合成回答与原真人调查单位,生成量膨胀被当独立人类N；压缩方差用于功效,不确定性与样本定义,正文区分合成重复、汇总和不确定性处理,formal_synthetic_sampling_design,合成规模可以替代真人功效/独立重复,分开agent/run/人类样本单位与功效目标,§1;§2.1;Footnote15,source_read_not_reexecuted,2026-11-26
