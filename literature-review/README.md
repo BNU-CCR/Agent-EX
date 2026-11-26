@@ -85,3 +85,5 @@
 批次T：[合成抽样与报告边界](reports/sampling_and_reporting_boundaries.md)，M027作者v2/M028正式版式两卡，5个概念证据单元；下载身份/hash分列，未复跑。最新累计见progress，历史批次数字保留。
 
 批次U：[方法评价期刊补查](reports/evaluation_venue_updates.md)，JSC/AMPPS官方范围、目标指南与费用分列；32载体、22刊条件表。不是32个成熟共同体或原41入口完整覆盖。
+
+批次V：[66项交付审计](reports/delivery_requirement_audit.md)，发现旧字段别名漂移与新简卡结构缺口；核验通过仅限已列检查范围。目标未完成。

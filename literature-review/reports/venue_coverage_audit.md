@@ -24,3 +24,5 @@
 批次K：补M021作者v2方法/经验评价精读及M020固定代码快照的七文件静态核查；累计78条/35卡/25验证单元。正式纳入仍27项，作者稿不升级为正式版全文。详见[校准与制品核查](calibration_and_artifact_audit.md)。
 
 批次S见[SSR范围与检索边界](ssr_scope_and_search_boundary.md)：官方范围已补，目录/指南403，未确认先例，不是零发表。
+
+V批确认41命名入口仍16项未对账；其余为局部证据。额外JSC/AMPPS不替代它们。见[交付审计](delivery_requirement_audit.md)。

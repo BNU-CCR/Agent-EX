@@ -39,7 +39,7 @@ exports/references.bib仅导出日期及全文门通过的included条目；候�
 
 ## 第二轮发表生态表与维护
 
-method_venue_map.csv为19个定向载体样本：13期刊、5会议入口、1仓库；venue_type必须分开统计。journal_submission_candidates.csv仅保留13期刊，current_paper_judgment与future_method_paper_judgment分列。scope/guide URLs只是来源入口；verification_status、pending_items、文章先例的实际阅读状态决定可用证据，不把未访问指南写成完成。跨年份sample不等于完整覆盖；publisher_self_list不等于MJL认证。
+method_venue_map.csv当前为32个定向载体样本：23期刊、8会议入口、1仓库；venue_type必须分开统计。journal_submission_candidates.csv当前仅保留22期刊，current_paper_judgment与future_method_paper_judgment分列。scope/guide URLs只是来源入口；verification_status、pending_items、文章先例的实际阅读状态决定可用证据，不把未访问指南写成完成。跨年份sample不等于完整覆盖；publisher_self_list不等于MJL认证。
 
 每条保留precedents_2022_onward、连续性证据、类别/篇幅、代码/数据要求、OA/费用、当前稿写作与分析缺口、方法稿新增实验需求及核查日期。建议等级为条件适配，不含录用概率。原journals_master.csv保持第一轮覆盖快照。
 
@@ -50,3 +50,5 @@ required_writing_changes / required_existing_analyses / required_new_experiments
 发表表venue_id为本轮地图命名空间，master_venue_ids显式列出现有主表载体别名；不为统一显示而改写旧venue_id。
 
 method_validation_matrix.csv按证据单元而非论文计数，保留控制、比较、错误、评价靶点、实际证据、未建立结论与项目迁移推论；不称其为已实施实验。后续增补可用apply_method_patch.py，批次JSON须绑定当前主表SHA256；过期批次拒绝执行，旧字段与方法编码另存变更历史。
+
+V批审计：旧分类字段存在字典外别名，详见delivery_requirement_audit.json；当前verify_methods_delivery仅校验方法扩展枚举，不能将通过外推为全部schema合规。W将追溯规范化并补验证。

@@ -1,0 +1,1310 @@
+{
+  "checked": "2026-11-26",
+  "head_before_audit": "3419ee7",
+  "master_sha256": "3c1c577d880d09b3e664014a94733be5d5ca48e7a70d3529cbcb59d4a964838e",
+  "records": 85,
+  "schema_nonempty_outside_dictionary": [
+    {
+      "record_id": "M001",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M002",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M002",
+      "field": "simulation_purpose",
+      "value": "method_evaluation;framework_development",
+      "outside_dictionary": [
+        "framework_development"
+      ]
+    },
+    {
+      "record_id": "M005",
+      "field": "simulation_purpose",
+      "value": "method_evaluation;empirical_reproduction;hypothesis_generation",
+      "outside_dictionary": [
+        "empirical_reproduction",
+        "hypothesis_generation"
+      ]
+    },
+    {
+      "record_id": "M004",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M004",
+      "field": "simulation_purpose",
+      "value": "method_evaluation;critical_review;framework_development",
+      "outside_dictionary": [
+        "critical_review",
+        "framework_development"
+      ]
+    },
+    {
+      "record_id": "M003",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M010",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M011",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M012",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M013",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M013",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M013",
+      "field": "simulation_purpose",
+      "value": "framework_development;method_evaluation",
+      "outside_dictionary": [
+        "framework_development"
+      ]
+    },
+    {
+      "record_id": "M014",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M014",
+      "field": "simulation_purpose",
+      "value": "method_evaluation;research_agenda",
+      "outside_dictionary": [
+        "research_agenda"
+      ]
+    },
+    {
+      "record_id": "M015",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M015",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M015",
+      "field": "simulation_purpose",
+      "value": "framework_development;method_evaluation",
+      "outside_dictionary": [
+        "framework_development"
+      ]
+    },
+    {
+      "record_id": "M016",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M016",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M016",
+      "field": "simulation_purpose",
+      "value": "review;method_evaluation",
+      "outside_dictionary": [
+        "review"
+      ]
+    },
+    {
+      "record_id": "M017",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M017",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M017",
+      "field": "simulation_purpose",
+      "value": "method_evaluation;mechanism_exploration",
+      "outside_dictionary": [
+        "mechanism_exploration"
+      ]
+    },
+    {
+      "record_id": "M018",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M018",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M019",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M019",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M020",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M020",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M020",
+      "field": "simulation_purpose",
+      "value": "method_evaluation;controlled_dialogue",
+      "outside_dictionary": [
+        "controlled_dialogue"
+      ]
+    },
+    {
+      "record_id": "M021",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M021",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M021",
+      "field": "simulation_purpose",
+      "value": "empirical_pattern_comparison;method_evaluation",
+      "outside_dictionary": [
+        "empirical_pattern_comparison"
+      ]
+    },
+    {
+      "record_id": "M022",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M022",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M022",
+      "field": "simulation_purpose",
+      "value": "retrospective_pattern_reconstruction;controlled_intervention;process_exploration",
+      "outside_dictionary": [
+        "retrospective_pattern_reconstruction",
+        "controlled_intervention",
+        "process_exploration"
+      ]
+    },
+    {
+      "record_id": "M023",
+      "field": "core_level",
+      "value": "method_core",
+      "outside_dictionary": [
+        "method_core"
+      ]
+    },
+    {
+      "record_id": "M023",
+      "field": "research_object",
+      "value": "research_methodology",
+      "outside_dictionary": [
+        "research_methodology"
+      ]
+    },
+    {
+      "record_id": "M023",
+      "field": "simulation_purpose",
+      "value": "empirical_strategy_identification;calibrated_simulation;policy_scenario",
+      "outside_dictionary": [
+        "empirical_strategy_identification",
+        "calibrated_simulation",
+        "policy_scenario"
+      ]
+    },
+    {
+      "record_id": "M024",
+      "field": "research_object",
+      "value": "dialogue_and_group_simulation_method",
+      "outside_dictionary": [
+        "dialogue_and_group_simulation_method"
+      ]
+    },
+    {
+      "record_id": "M024",
+      "field": "simulation_purpose",
+      "value": "component_evaluation;human_judgment;simulated_decision_comparison",
+      "outside_dictionary": [
+        "component_evaluation",
+        "human_judgment",
+        "simulated_decision_comparison"
+      ]
+    },
+    {
+      "record_id": "M025",
+      "field": "core_level",
+      "value": "application",
+      "outside_dictionary": [
+        "application"
+      ]
+    },
+    {
+      "record_id": "M025",
+      "field": "research_object",
+      "value": "organizational_advice_network",
+      "outside_dictionary": [
+        "organizational_advice_network"
+      ]
+    },
+    {
+      "record_id": "M025",
+      "field": "primary_purpose",
+      "value": "mechanism_explanation",
+      "outside_dictionary": [
+        "mechanism_explanation"
+      ]
+    },
+    {
+      "record_id": "M025",
+      "field": "simulation_purpose",
+      "value": "mechanism_explanation;empirical_network_fitting",
+      "outside_dictionary": [
+        "mechanism_explanation",
+        "empirical_network_fitting"
+      ]
+    },
+    {
+      "record_id": "M026",
+      "field": "core_level",
+      "value": "method_validation",
+      "outside_dictionary": [
+        "method_validation"
+      ]
+    },
+    {
+      "record_id": "M026",
+      "field": "research_object",
+      "value": "synthetic_personality_responses",
+      "outside_dictionary": [
+        "synthetic_personality_responses"
+      ]
+    },
+    {
+      "record_id": "M027",
+      "field": "core_level",
+      "value": "method_validation",
+      "outside_dictionary": [
+        "method_validation"
+      ]
+    },
+    {
+      "record_id": "M027",
+      "field": "research_object",
+      "value": "social_science_methodology",
+      "outside_dictionary": [
+        "social_science_methodology"
+      ]
+    },
+    {
+      "record_id": "M028",
+      "field": "core_level",
+      "value": "method_validation",
+      "outside_dictionary": [
+        "method_validation"
+      ]
+    },
+    {
+      "record_id": "M028",
+      "field": "research_object",
+      "value": "social_science_methodology",
+      "outside_dictionary": [
+        "social_science_methodology"
+      ]
+    }
+  ],
+  "blank_categorical_fields": [
+    {
+      "record_id": "M003",
+      "fields": [
+        "core_level",
+        "primary_purpose",
+        "simulation_purpose"
+      ]
+    },
+    {
+      "record_id": "M010",
+      "fields": [
+        "core_level",
+        "primary_purpose",
+        "simulation_purpose"
+      ]
+    },
+    {
+      "record_id": "M011",
+      "fields": [
+        "core_level",
+        "primary_purpose",
+        "simulation_purpose"
+      ]
+    },
+    {
+      "record_id": "M012",
+      "fields": [
+        "core_level",
+        "primary_purpose",
+        "simulation_purpose"
+      ]
+    },
+    {
+      "record_id": "M018",
+      "fields": [
+        "simulation_purpose"
+      ]
+    },
+    {
+      "record_id": "M019",
+      "fields": [
+        "simulation_purpose"
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "record_id": "R001",
+      "path": "reading-cards/R001.md",
+      "chars": 1297,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R002",
+      "path": "reading-cards/R002.md",
+      "chars": 1094,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R003",
+      "path": "reading-cards/R003.md",
+      "chars": 1099,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R004",
+      "path": "reading-cards/R004.md",
+      "chars": 1214,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R006",
+      "path": "reading-cards/R006.md",
+      "chars": 1095,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R007",
+      "path": "reading-cards/R007.md",
+      "chars": 1191,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R008",
+      "path": "reading-cards/R008.md",
+      "chars": 1007,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R009",
+      "path": "reading-cards/R009.md",
+      "chars": 1084,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R010",
+      "path": "reading-cards/R010.md",
+      "chars": 1265,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R013",
+      "path": "reading-cards/R013.md",
+      "chars": 1172,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R014",
+      "path": "reading-cards/R014.md",
+      "chars": 358,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R015",
+      "path": "reading-cards/R015.md",
+      "chars": 1819,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R016",
+      "path": "reading-cards/R016.md",
+      "chars": 1099,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R017",
+      "path": "reading-cards/R017.md",
+      "chars": 672,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "R021",
+      "path": "reading-cards/R021.md",
+      "chars": 1887,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "EN01",
+      "path": "reading-cards/EN01.md",
+      "chars": 856,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "EN08",
+      "path": "reading-cards/EN08.md",
+      "chars": 1033,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "EN11",
+      "path": "reading-cards/EN11.md",
+      "chars": 750,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "CN006",
+      "path": "reading-cards/CN006.md",
+      "chars": 737,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "CN007",
+      "path": "reading-cards/CN007.md",
+      "chars": 781,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M001",
+      "path": "reading-cards/M001.md",
+      "chars": 862,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M002",
+      "path": "reading-cards/M002.md",
+      "chars": 1878,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M005",
+      "path": "reading-cards/M005.md",
+      "chars": 1790,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M004",
+      "path": "reading-cards/M004.md",
+      "chars": 1760,
+      "numbered_section_count": 11,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M003",
+      "path": "reading-cards/M003.md",
+      "chars": 1010,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M010",
+      "path": "reading-cards/M010.md",
+      "chars": 1156,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M011",
+      "path": "reading-cards/M011.md",
+      "chars": 1061,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M006",
+      "path": "reading-cards/M006.md",
+      "chars": 627,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M007",
+      "path": "reading-cards/M007.md",
+      "chars": 527,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M008",
+      "path": "reading-cards/M008.md",
+      "chars": 940,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M013",
+      "path": "reading-cards/M013.md",
+      "chars": 1063,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M014",
+      "path": "reading-cards/M014.md",
+      "chars": 1281,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M015",
+      "path": "reading-cards/M015.md",
+      "chars": 1350,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M016",
+      "path": "reading-cards/M016.md",
+      "chars": 1185,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M017",
+      "path": "reading-cards/M017.md",
+      "chars": 532,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M020",
+      "path": "reading-cards/M020.md",
+      "chars": 923,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M021",
+      "path": "reading-cards/M021.md",
+      "chars": 646,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M022",
+      "path": "reading-cards/M022.md",
+      "chars": 516,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M023",
+      "path": "reading-cards/M023.md",
+      "chars": 534,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M024",
+      "path": "reading-cards/M024.md",
+      "chars": 618,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M025",
+      "path": "reading-cards/M025.md",
+      "chars": 601,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M026",
+      "path": "reading-cards/M026.md",
+      "chars": 501,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M027",
+      "path": "reading-cards/M027.md",
+      "chars": 611,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    },
+    {
+      "record_id": "M028",
+      "path": "reading-cards/M028.md",
+      "chars": 730,
+      "numbered_section_count": 0,
+      "boundary": "Structure indicator only;not proof of semantic completeness/fulltext coverage"
+    }
+  ],
+  "keyword_literal_audit": [
+    {
+      "section": "3.1",
+      "term": "LLM-based social simulation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "large language model social simulation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "generative social simulation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "generative agent-based modeling",
+      "literal_query_log_ids": [
+        "S-X-006",
+        "S-X-014",
+        "S-X-017",
+        "S-X-026"
+      ],
+      "status": "literal_query_text_present",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "generative agent-based modelling",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "LLM-driven agent-based modeling",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "large language models as social simulators",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "synthetic societies",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "agent-based modeling with LLMs",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "social simulation as a research method",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.1",
+      "term": "multi-agent social simulation framework",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "LLM agent architecture",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "generative agents memory planning reflection",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "persona design",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "agent initialization",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "agent memory",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "long-term memory",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "social memory",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "agent environment",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "interaction protocol",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "multi-agent coordination",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "agent communication",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "agent heterogeneity",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "synthetic population",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.2",
+      "term": "agent-based social systems",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "validation of generative social simulation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "LLM agent calibration",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "agent-based model validation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "external validity",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "ecological validity",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "human validation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "human behavior benchmark",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "simulation fidelity",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "behavioral validity",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "model alignment",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "simulation bias",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "sensitivity analysis",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "ablation study",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "benchmark for LLM agents",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "replication study",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.3",
+      "term": "reproducibility",
+      "literal_query_log_ids": [
+        "S-M2-ODD-Q02",
+        "S-M2-C-Q2"
+      ],
+      "status": "literal_query_text_present",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "ODD protocol agent-based model",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "ODD protocol generative agents",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "reporting standards agent-based modeling",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "reproducible agent-based simulation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "simulation experiment design",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "random seed LLM agent simulation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "stochastic reproducibility",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "model documentation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.4",
+      "term": "computational experiment reporting",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.5",
+      "term": "theory-driven agent-based modeling",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.5",
+      "term": "theory formalization agent-based model",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.5",
+      "term": "mechanism-based social simulation",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.5",
+      "term": "micro-macro link agent-based modeling",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.5",
+      "term": "emergence in generative agents",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    },
+    {
+      "section": "3.5",
+      "term": "computational social science methodology",
+      "literal_query_log_ids": [],
+      "status": "no_literal_query_text_match",
+      "boundary": "Not recall estimate,not database execution certification;variants may exist"
+    }
+  ],
+  "coverage_status_counts": {
+    "curated_map_entry_partial": 18,
+    "scope_and_traditional_ABM_sample_partial": 1,
+    "not_yet_reconciled_no_negative_claim": 16,
+    "traditional_ABM_fulltext_sample_scope_date_pending": 1,
+    "publisher_scope_checked_precedent_unresolved": 1,
+    "scope_guide_policy_and_formal_sample_partial": 1,
+    "author_acceptance_claim_publisher_pending": 1,
+    "public_search_no_eligible_precedent_verified": 1,
+    "adjacent_UI_simulation_only_scope_pending": 1
+  },
+  "venues_without_master_link": [
+    "SMPT"
+  ],
+  "venue_count": 32,
+  "journal_candidates": 22,
+  "seeds": [
+    {
+      "record_id": "M001",
+      "title": "Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M001.md",
+      "method_pending_fields": "表格数值逐项复核;补充制品;独立复现;校准与失败分布"
+    },
+    {
+      "record_id": "R015",
+      "title": "Validation is the central challenge for generative social simulation: a critical review of LLMs in agent-based modeling",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/R015.md",
+      "method_pending_fields": "method_transferability"
+    },
+    {
+      "record_id": "M002",
+      "title": "Beyond static responses: multi-agent LLM systems as a new paradigm for social science research",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M002.md",
+      "method_pending_fields": "独立框架操作化/分类信度未完成；Agent-EX等级评估未做"
+    },
+    {
+      "record_id": "M003",
+      "title": "Can large language models implement agent-based models? An ODD-based replication study",
+      "date_eligibility": "date_pending",
+      "screening_status": "candidate",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M003.md",
+      "method_pending_fields": ""
+    },
+    {
+      "record_id": "R008",
+      "title": "Generative agent-based modeling: an introduction and tutorial",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/R008.md",
+      "method_pending_fields": "supplement_or_code_reexecution"
+    },
+    {
+      "record_id": "R006",
+      "title": "Natural-Language Multi-Agent Simulations of Argumentative Opinion Dynamics",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/R006.md",
+      "method_pending_fields": "supplement_or_code_reexecution"
+    },
+    {
+      "record_id": "R001",
+      "title": "Simulating Opinion Dynamics with Networks of LLM-based Agents",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/R001.md",
+      "method_pending_fields": "supplement_or_code_reexecution"
+    },
+    {
+      "record_id": "R002",
+      "title": "Selective agreement, not sycophancy: investigating opinion dynamics in LLM interactions",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/R002.md",
+      "method_pending_fields": "supplement_or_code_reexecution"
+    },
+    {
+      "record_id": "R004",
+      "title": "Disentangling interaction and bias effects in opinion dynamics of large language models",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/R004.md",
+      "method_pending_fields": "supplement_or_code_reexecution"
+    },
+    {
+      "record_id": "R013",
+      "title": "Emergence of polarization in networks of large language model agents",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/R013.md",
+      "method_pending_fields": "supplement_or_code_reexecution"
+    },
+    {
+      "record_id": "R020",
+      "title": "SPARK: Simulating the Co-evolution of Stance and Topic Dynamics in Online Discourse with LLM-based Agents",
+      "date_eligibility": "confirmed",
+      "screening_status": "candidate",
+      "reading_status": "abstract_read",
+      "card_path": "",
+      "method_pending_fields": "method_maturity;method_evidence_level;method_transferability"
+    }
+  ],
+  "completion": "not_proven;known incomplete requirements remain",
+  "limits": "No fresh paper retrieval,experiment rerun,claim of exhaustive search or independent human screening"
+}
