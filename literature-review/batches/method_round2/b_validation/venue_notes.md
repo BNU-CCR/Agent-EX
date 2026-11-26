@@ -6,7 +6,7 @@
 
 **官方范围。** [About](https://www.jasss.org/admin/info.html)的实际[动态内容源](https://www.jasss.org/v02/page_content_includes/_include_about.html)明示以计算机模拟理解社会过程，接收社会模拟与agent societies相关原创研究和批评性综述；官网About自列SSCI。它可支持社会模拟方法定位，但不是新闻传播Communication期刊目录的替代。
 
-**官方投稿页。** [How to submit](https://www.jasss.org/admin/submit.html)正文由站点脚本加载，本次直接取得[同站正文源](https://www.jasss.org/v02/page_content_includes/_include_submit.html)，HTTP200，并保存原文文本以便复核。正常篇幅5,000–8,000词，摘要≤300词、关键词≤6个。建议公开模型代码与文档，推荐CoMSES库和ODD；ODD并非强制格式。文章须可独立理解，不能让读者靠读代码补全正文。About用“requires”描述足够复现信息，投稿页用“strongly encouraged”；两页措辞强度应保留，不能缩成“代码必须公开”。预印本不自动构成重复发表。未核当前费用、匿名材料具体清单；不借旧镜像补成现行规定。
+**官方投稿页。** [How to submit](https://www.jasss.org/admin/submit.html)正文由站点脚本加载，本次直接取得[同站正文源](https://www.jasss.org/v02/page_content_includes/_include_submit.html)，HTTP200，；保留来源入口与摘要笔记。正常篇幅5,000–8,000词，摘要≤300词、关键词≤6个。建议公开模型代码与文档，推荐CoMSES库和ODD；ODD并非强制格式。文章须可独立理解，不能让读者靠读代码补全正文。About用“requires”描述足够复现信息，投稿页用“strongly encouraged”；两页措辞强度应保留，不能缩成“代码必须公开”。预印本不自动构成重复发表。未核当前费用、匿名材料具体清单；不借旧镜像补成现行规定。
 
 **2022后方法先例。**
 
@@ -34,4 +34,4 @@
 
 ## 证据与边界
 
-两个期刊均有2022后正式方法先例；不需靠2018 STRESS补入时间窗来证明。STRESS早于2022，只能背景引用。未把本次新线索自动升级主表纳入；需要root去重、编码或进一步精读。JASSS页面脚本正文已取得；JOS指南仍pending。检索日志见venue_search_log.json；JASSS官方正文文本见同目录jasss_include_submit.txt、jasss_include_about.txt。
+两个期刊均有2022后正式方法先例；不需靠2018 STRESS补入时间窗来证明。STRESS早于2022，只能背景引用。未把本次新线索自动升级主表纳入；需要root去重、编码或进一步精读。JASSS页面脚本正文已取得；JOS指南仍pending。检索日志见venue_search_log.json；JASSS官方正文入口见上文同站链接；临时原文抓取未作为交付物。

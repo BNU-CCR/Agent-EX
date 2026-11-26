@@ -1,25 +1,25 @@
 {
   "checked": "2026-11-26",
-  "records": 65,
+  "records": 69,
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 13,
-  "search_rows": 286,
+  "search_rows": 295,
   "original_search_prefix_preserved": 231,
   "status": {
-    "included": 21,
+    "included": 23,
     "candidate": 39,
-    "frontier": 3,
+    "frontier": 5,
     "excluded": 2
   },
   "method_tiers": {
     "direct_comparator": 15,
-    "method_validation": 14,
-    "core_method": 20,
+    "method_validation": 16,
+    "core_method": 22,
     "peripheral": 11,
     "application": 5
   },
-  "fulltext_cards": 24,
+  "fulltext_cards": 26,
   "date_pending": 15,
   "checks": "passed",
   "limitations": "No experiment rerun; workbook visual verification separate; not database coverage certification"
