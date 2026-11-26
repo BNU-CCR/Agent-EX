@@ -1,0 +1,180 @@
+[
+  {
+    "search_id": "S-M2-Q-SEARCH-01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.nature.com/srep \"large language\" \"agent-based\" simulation",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.journals.plos.org/plosone \"large language\" \"simulation\" agents validation",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.nature.com/ncomms \"large language\" \"social simulation\"",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.nature.com/articles/ \"s41598\" \"agent-based\" \"language models\"",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.nature.com/srep/about/aims",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.journals.plos.org/plosone/s/criteria-for-publication",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.nature.com/ncomms/about/aims",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-08",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Evaluating the ability of large language models to emulate personality\"",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-09",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.nature.com/srep/aims \"psychology\"",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-10",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"s41598-024-84109-5\" \"Published\" authors",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SEARCH-11",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.nature.com/srep/aims \"Scientific Reports\"",
+    "status": "public_bounded_discovery",
+    "notes": "Engine returned off-target results too; not whole-journal search or zero-hit count;dedup existing R004/R013/R014"
+  },
+  {
+    "search_id": "S-M2-Q-SREP-ACCESS",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/articles/s41598-024-84109-5",
+    "source_url": "https://www.nature.com/articles/s41598-024-84109-5",
+    "status": "blocked_redirect",
+    "notes": "PlainHTML andPDF failed idp redirect; noPDFdownload success"
+  },
+  {
+    "search_id": "S-M2-Q-PLOS-FULL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+    "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+    "status": "focused_formal_fulltext_checked",
+    "notes": "Setup/Results/Discussion lineopens consolidated;notcode/SI"
+  },
+  {
+    "search_id": "S-M2-Q-SREP-SCOPE-ACCESS",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/srep/about/aims",
+    "source_url": "https://www.nature.com/srep/about/aims",
+    "status": "blocked_redirect",
+    "notes": "PlainURL andaboutpage redirect failed"
+  },
+  {
+    "search_id": "S-M2-Q-NC-SCOPE-ACCESS",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/ncomms/aims",
+    "source_url": "https://www.nature.com/ncomms/aims",
+    "status": "blocked_redirect",
+    "notes": "PlainURL failed;indexedofficialscope andlatercookieparameter succeeds"
+  },
+  {
+    "search_id": "S-M2-Q-PMC-ACCESS",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11695923/",
+    "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11695923/",
+    "status": "captcha_not_fulltext",
+    "notes": "Searchidentityonly;opengavecheckingbrowser"
+  },
+  {
+    "search_id": "S-M2-Q-SREP-FULL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/articles/s41598-024-84109-5?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/articles/s41598-024-84109-5?error=cookies_not_supported",
+    "status": "focused_formal_fulltext_checked",
+    "notes": "Cookieparameter succeeds;Simulations1/2,methods,discussion;lineopens consolidated;notSI/code"
+  },
+  {
+    "search_id": "S-M2-Q-SREP-SCOPE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/srep/about/aims?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/srep/about/aims?error=cookies_not_supported",
+    "status": "official_scope_checked",
+    "notes": "Psychology included;fees/index/guide notchecked"
+  },
+  {
+    "search_id": "S-M2-Q-NC-SCOPE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/ncomms/aims?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/ncomms/aims?error=cookies_not_supported",
+    "status": "official_scope_checked",
+    "notes": "Importantadvances criterion;index is publisherstatement not independentMJL"
+  },
+  {
+    "search_id": "S-M2-Q-PLOS-CRITERIA",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.plos.org/plosone/s/criteria-for-publication",
+    "source_url": "https://journals.plos.org/plosone/s/criteria-for-publication",
+    "status": "official_criteria_checked",
+    "notes": "Original methods;adequatecontrols/reproducibility;noacceptancerateclaim"
+  },
+  {
+    "search_id": "S-M2-Q-NC-PRECEDENTS",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/articles/s41467-026-77340-3?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/articles/s41467-026-77340-3?error=cookies_not_supported",
+    "status": "existing_precedents_reconfirmed",
+    "notes": "Alsoopened s41467-026-78228-y cookieparameter;formalidentities/dates/abstracts;priorcards retained"
+  }
+]

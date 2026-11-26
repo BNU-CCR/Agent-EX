@@ -338,5 +338,65 @@
     "batch": "O-social-methods-community",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "screening_status",
+    "old": "candidate",
+    "new": "included",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "reason",
+    "old": "同观点双人echo chamber也漂移，问卷偏向不充分代表对话偏向。",
+    "new": "Q核正式方法/结果/讨论与已确认首发日；对话偏差验证先例，非真人动态效度。",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "reading_status",
+    "old": "abstract_read",
+    "new": "fulltext_checked",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "fulltext_url",
+    "old": "",
+    "new": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "card_path",
+    "old": "",
+    "new": "reading-cards/R014.md",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "evidence_location",
+    "old": "Abstract；Experimental setting公开节选，全文核查待完成",
+    "new": "Experimental setup:Opinion agents;Results;Discussion",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
   }
 ]

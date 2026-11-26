@@ -1928,5 +1928,195 @@
     "batch": "P-coding-clarification",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/p_network_fit/coding_clarification/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability",
+    "new": "supplement_and_code;independent_human_dynamic_validation",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_evidence_location",
+    "old": "Abstract及首轮来源核验；不以题名推断成熟度",
+    "new": "Opinion agents;Fig2;Discussion",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv; batches/crossdisciplinary/records.json",
+    "new": "reading-cards/R014.md",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_transferability",
+    "old": "pending：摘要支持将问卷偏向和互动偏向分开；完整评价设计待核。",
+    "new": "对话基准可复用；标签回写提示，须区分测量与状态反馈。",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_type",
+    "old": "",
+    "new": "llm_persona_emulation",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "memory_and_persona;measurement;validation_and_external_validity",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_transferability",
+    "old": "",
+    "new": "量表结构与效标关系可借鉴；提示含目标分数，不能据此证明独立人格推断。",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "empirical_validation",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "验证主体人格构件；不以模拟一词归为网络生成方法。",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "SI;code;longitudinal_multiagent_validity",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Simulations1/2;Discussion",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M026.md",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "Q-general-journal-method-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/q_general_journals/results.json"
   }
 ]
