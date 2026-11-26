@@ -39,7 +39,7 @@ exports/references.bib仅导出日期及全文门通过的included条目；候�
 
 ## 第二轮发表生态表与维护
 
-method_venue_map.csv为18个定向载体样本：13期刊、4会议、1仓库；venue_type必须分开统计。journal_submission_candidates.csv仅保留13期刊，current_paper_judgment与future_method_paper_judgment分列。scope/guide URLs只是来源入口；verification_status、pending_items、文章先例的实际阅读状态决定可用证据，不把未访问指南写成完成。跨年份sample不等于完整覆盖；publisher_self_list不等于MJL认证。
+method_venue_map.csv为19个定向载体样本：13期刊、5会议入口、1仓库；venue_type必须分开统计。journal_submission_candidates.csv仅保留13期刊，current_paper_judgment与future_method_paper_judgment分列。scope/guide URLs只是来源入口；verification_status、pending_items、文章先例的实际阅读状态决定可用证据，不把未访问指南写成完成。跨年份sample不等于完整覆盖；publisher_self_list不等于MJL认证。
 
 每条保留precedents_2022_onward、连续性证据、类别/篇幅、代码/数据要求、OA/费用、当前稿写作与分析缺口、方法稿新增实验需求及核查日期。建议等级为条件适配，不含录用概率。原journals_master.csv保持第一轮覆盖快照。
 

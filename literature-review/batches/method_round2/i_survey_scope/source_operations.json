@@ -1,0 +1,20 @@
+[
+  {
+    "search_id": "S-M2-I-FULL",
+    "platform": "official_publisher_HTML",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/articles/s41599-024-03611-3",
+    "source_url": "https://www.nature.com/articles/s41599-024-03611-3",
+    "status": "formal_html_focused_fulltext_checked",
+    "notes": "Metadata/PRISMA/methods/evaluation/social-domain/future sections read; line opens consolidated; not independent database retrieval"
+  },
+  {
+    "search_id": "S-M2-I-TABLE1",
+    "platform": "official_publisher_HTML",
+    "search_date": "2026-11-26",
+    "query_exact": "Table1 link on https://www.nature.com/articles/s41599-024-03611-3",
+    "source_url": "https://www.nature.com/articles/s41599-024-03611-3",
+    "status": "table_cells_not_retrieved",
+    "notes": "Table link returned mainHTML; title available, cells/denominator not independently counted"
+  }
+]

@@ -528,5 +528,125 @@
     "batch": "H-process-mining-author-version",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_type",
+    "old": "",
+    "new": "crossdisciplinary_method_survey",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;agent_architecture;environment_design;memory_and_persona;validation_and_external_validity;reproducibility_and_reporting",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_maturity",
+    "old": "",
+    "new": "review_or_critique",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_transferability",
+    "old": "",
+    "new": "适合扩展检索与构件地图；效果/验证比例需回到原文语料和逐项评价，不能移植为通用已验证流程。",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "conceptual_claim",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "综述方法范式与组件，不因引用他人经验研究将本综述编码为新增经验验证。",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "complete_search_and_corpus_flow;Table1_recount;underlying_validation_reading;cross_review_denominator_harmonization",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "PRISMA discussion;Evaluation;Recentadvances technical-design proportions;Benchmark",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M016.md",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "I-survey-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/i_survey_scope/results.json"
   }
 ]
