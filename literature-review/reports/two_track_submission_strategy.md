@@ -26,10 +26,12 @@ EPJ Data Science为条件候选：M006证明有直接LLM社会模拟验证先例
 
 ## 下一批可执行任务
 
-THEMP、过程挖掘作者稿、EASE、Gao、R016及M025的定向精读已完成，实际版本边界见阅读卡；不重复当作下一项。现有38单元矩阵与[主张—证据充分性表](claim_evidence_readiness.md)支持更新定位，但不证明项目实验有效。下一批补Social Science Research有界目录检索、未核载体范围，以及M003/M005/M012/M014/M025日期或版本、CCR正式PDF/网页冲突。授权数据库覆盖和优先渠道指南仍按实际访问状态补齐，不估造索引、成功概率或审稿时长。
+THEMP、过程挖掘作者稿、EASE、Gao、R016及M025的定向精读已完成，实际版本边界见阅读卡；不重复当作下一项。现有47单元矩阵与[主张—证据充分性表](claim_evidence_readiness.md)支持更新定位，但不证明项目实验有效。Social Science Research有界检索已做、目录仍403；下一批V对任务书全项逐一核当前证据与缺口，再处理M003/M005/M012/M014/M025日期或版本、CCR正式PDF/网页冲突。授权数据库覆盖和优先渠道指南仍按实际访问状态补齐，不估造索引、成功概率或审稿时长。
 
 批次Q补三刊条件选项，见[综合期刊先例](general_journal_precedents.md)。范围与先例支持进入比较，不证明当前稿已达标；JASSS/CCR优先比较保持。详细指南、APC与独立索引核验尚缺。
 
 R补官方制品要求，见[journal_reproducibility_policies.md](journal_reproducibility_policies.md)。可取得制品不等于科学有效；投稿适配判断仍需独立方法/社会过程贡献。
 
-T新增方法评价/报告规范阅读证据，见[sampling_and_reporting_boundaries.md](sampling_and_reporting_boundaries.md)。未把指南清单当已验证方法贡献；JSC/AMPPS范围留U核查，尚未加入载体地图/投稿表。
+T新增方法评价/报告规范阅读证据，见[sampling_and_reporting_boundaries.md](sampling_and_reporting_boundaries.md)。U已核JSC/AMPPS范围并加入地图/条件表，实际边界见[evaluation_venue_updates.md](evaluation_venue_updates.md)。
+
+U渠道判断：JSC可条件比较受控AI社会过程贡献；AMPPS对当前单应用稿适配较低，后续方法稿须跨心理学读者价值与适当验证。两刊已核费用不改变证据门槛，亦非录用概率建议。

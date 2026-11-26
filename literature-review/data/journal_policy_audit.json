@@ -46,6 +46,33 @@
       "source_url": "https://www.nature.com/srep/journal-policies/editorial-policies?error=cookies_not_supported",
       "status": "targeted_policy_sections_checked",
       "notes": "Availability of materials and data;Availability of computer code and algorithm;open/find/lineopens consolidated;not fees/index or whole-guide certification"
+    },
+    {
+      "search_id": "S-M2-U-AMPPS-GUIDE",
+      "platform": "official_source_access",
+      "search_date": "2026-11-26",
+      "query_exact": "https://www.psychologicalscience.org/publications/ampps/ampps-submission-guidelines",
+      "source_url": "https://www.psychologicalscience.org/publications/ampps/ampps-submission-guidelines",
+      "status": "targeted_official_guide_checked",
+      "notes": "Articletypes/GeneralArticles/empiricalscope/data/code/APC;findsconsolidated;updated10/29/26"
+    },
+    {
+      "search_id": "S-M2-U-JSC-SCOPE",
+      "platform": "official_source_access",
+      "search_date": "2026-11-26",
+      "query_exact": "https://www.sciopen.com/journal/join_journal/about_journal?id=1400738783960883202&issn=2688-5255",
+      "source_url": "https://www.sciopen.com/journal/join_journal/about_journal?id=1400738783960883202&issn=2688-5255",
+      "status": "official_scope_checked",
+      "notes": "Socialinteraction/computation;noauthorfeesstatement;notindexcertification"
+    },
+    {
+      "search_id": "S-M2-U-JSC-GUIDE",
+      "platform": "official_source_access",
+      "search_date": "2026-11-26",
+      "query_exact": "https://www.sciopen.com/journal/join_journal/submission_guidelines?id=1400738783960883202&issn=2688-5255",
+      "source_url": "https://www.sciopen.com/journal/join_journal/submission_guidelines?id=1400738783960883202&issn=2688-5255",
+      "status": "targeted_official_guide_checked",
+      "notes": "10–12templatepages/default;abstract100–150;APC0;codepolicyunresolved"
     }
   ],
   "evidence": [
@@ -97,6 +124,34 @@
       "strength": "recommendation_except_specified_limits",
       "finding": "Article/Registered Report；建议11排版页、主文4500词（排除摘要/Methods/参考文献/图注），一般不严格限总字页；摘要≤200词；Methods不限字数；须披露LLM使用。",
       "source_id": "S-M2-R-SREP-GUIDE"
+    },
+    {
+      "venue_id": "AMPPS",
+      "kind": "scope_and_article_type",
+      "strength": "official_editorial_scope",
+      "finding": "广泛心理学方法价值；General Article不为单一任务/领域最佳实践，普通单实验室实质理论实证稿不匹配。",
+      "source_id": "S-M2-U-AMPPS-GUIDE"
+    },
+    {
+      "venue_id": "AMPPS",
+      "kind": "code_and_data",
+      "strength": "type_specific_official_guide",
+      "finding": "GeneralArticle提供复现代码；经验稿审稿及发表阶段独立第三方归档数据/材料，条件披露见指南。",
+      "source_id": "S-M2-U-AMPPS-GUIDE"
+    },
+    {
+      "venue_id": "AMPPS",
+      "kind": "APC",
+      "strength": "official_current_guide",
+      "finding": "USD1000接受后；可能减免，检索日2026-11-26，投稿时重核。",
+      "source_id": "S-M2-U-AMPPS-GUIDE"
+    },
+    {
+      "venue_id": "JSC",
+      "kind": "format_and_APC",
+      "strength": "official_current_guide",
+      "finding": "默认10–12模板页，超范围投稿前需EiC同意；约100–150词摘要；作者无APC。",
+      "source_id": "S-M2-U-JSC-GUIDE"
     }
   ],
   "project_inference": "冻结配置/模型/prompt版本、事件制品定位、分析输入输出及复现文档应作为研究交付候选；具体逐项充分性未审。不把政策可访问性当科学有效性，不修改冻结协议。"

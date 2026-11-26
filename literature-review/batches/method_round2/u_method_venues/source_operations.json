@@ -1,0 +1,126 @@
+[
+  {
+    "search_id": "S-M2-U-JSC-JOURNAL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciopen.com/journal/2688-5255",
+    "source_url": "https://www.sciopen.com/journal/2688-5255",
+    "status": "journal_identity_read",
+    "notes": "Initialclick succeeded;not fulljournalcensus"
+  },
+  {
+    "search_id": "S-M2-U-AMPPS-SAGE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.sagepub.com/aims-scope/AMP",
+    "source_url": "https://journals.sagepub.com/aims-scope/AMP",
+    "status": "inaccessible",
+    "notes": "Switchedto officialAPS scope"
+  },
+  {
+    "search_id": "S-M2-U-AMPPS-SCOPE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.psychologicalscience.org/publications/ampps",
+    "source_url": "https://www.psychologicalscience.org/publications/ampps",
+    "status": "official_scope_checked",
+    "notes": "Methods/practices acrosspsychology;notsingleapplicationguarantee"
+  },
+  {
+    "search_id": "S-M2-U-JSC-JOURNAL-FAIL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciopen.com/journal/2688-5255",
+    "source_url": "https://www.sciopen.com/journal/2688-5255",
+    "status": "web_timeout",
+    "notes": "Threefinds+laterlineopen consolidated;notabsenceofscope"
+  },
+  {
+    "search_id": "S-M2-U-AMPPS-GUIDE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.psychologicalscience.org/publications/ampps/ampps-submission-guidelines",
+    "source_url": "https://www.psychologicalscience.org/publications/ampps/ampps-submission-guidelines",
+    "status": "targeted_official_guide_checked",
+    "notes": "Articletypes/GeneralArticles/empiricalscope/data/code/APC;findsconsolidated;updated10/29/26"
+  },
+  {
+    "search_id": "S-M2-U-JSC-SCOPE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciopen.com/journal/join_journal/about_journal?id=1400738783960883202&issn=2688-5255",
+    "source_url": "https://www.sciopen.com/journal/join_journal/about_journal?id=1400738783960883202&issn=2688-5255",
+    "status": "official_scope_checked",
+    "notes": "Socialinteraction/computation;noauthorfeesstatement;notindexcertification"
+  },
+  {
+    "search_id": "S-M2-U-JSC-BIB",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciopen.com/article/download_ris?id=1996776021614415873&tag=3",
+    "source_url": "https://www.sciopen.com/article/download_ris?id=1996776021614415873&tag=3",
+    "status": "unsupported_octet_stream",
+    "notes": "Bibexportnotread;notPDFdownload"
+  },
+  {
+    "search_id": "S-M2-U-CROSSREF",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://api.crossref.org/works/10.23919/JSC.2025.0022",
+    "source_url": "https://api.crossref.org/works/10.23919/JSC.2025.0022",
+    "status": "HTTP200_metadata_checked",
+    "notes": "ResourceIEEE11303355;linkvor intendedsimilaritychecking;printDec2025,notexactonline"
+  },
+  {
+    "search_id": "S-M2-U-JSC-GUIDE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciopen.com/journal/join_journal/submission_guidelines?id=1400738783960883202&issn=2688-5255",
+    "source_url": "https://www.sciopen.com/journal/join_journal/submission_guidelines?id=1400738783960883202&issn=2688-5255",
+    "status": "targeted_official_guide_checked",
+    "notes": "10–12templatepages/default;abstract100–150;APC0;codepolicyunresolved"
+  },
+  {
+    "search_id": "S-M2-U-IEEE-DOC",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ieeexplore.ieee.org/document/11303355/",
+    "source_url": "https://ieeexplore.ieee.org/document/11303355/",
+    "status": "robot_JS_check",
+    "notes": "Noformalfulltext"
+  },
+  {
+    "search_id": "S-M2-U-CROSSREF-PDF",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "http://xplorestaging.ieee.org/ielx8/8964404/11303341/11303355.pdf?arnumber=11303355",
+    "source_url": "http://xplorestaging.ieee.org/ielx8/8964404/11303341/11303355.pdf?arnumber=11303355",
+    "status": "HTTP502_zero_bytes",
+    "notes": "NoPDFsaved/noformalversioncomparison"
+  },
+  {
+    "search_id": "S-M2-U-IEEE-STAMP",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11303355",
+    "source_url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11303355",
+    "status": "connection_reset",
+    "notes": "NoPDFsaved;notclaimnotpublished"
+  },
+  {
+    "search_id": "S-M2-U-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Journal of Social Computing\" \"Aims and Scope\" site:sciopen.com",
+    "status": "bounded_discovery",
+    "notes": "Notwholejournalsearch;noindependenttotalhits"
+  },
+  {
+    "search_id": "S-M2-U-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Evaluating the Use of Large Language Models\" \"334\" pdf",
+    "status": "bounded_discovery",
+    "notes": "Notwholejournalsearch;noindependenttotalhits"
+  }
+]

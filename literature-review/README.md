@@ -42,7 +42,7 @@
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
 - [验证证据矩阵](reports/method_validation_matrix.md)：47个证据单元，回答、轨迹、经验效度分列。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
-- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：30载体（21刊/8会议入口/1仓库），定向样本，未声称完整数据库覆盖。
+- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：32载体（23刊/8会议入口/1仓库），定向样本，未声称完整数据库覆盖。
 - [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：9张工作表，书目仅32项正式纳入；前沿/候选见主表。
 - [保留与门控核验](reports/methods_validation.json)：57旧ID、18份首轮文件hash、231原日志前缀保留，旧字段40项实质变化均记账；原导出不覆盖。
 
@@ -83,3 +83,5 @@
 批次S：[Social Science Research范围与覆盖边界](reports/ssr_scope_and_search_boundary.md)。
 
 批次T：[合成抽样与报告边界](reports/sampling_and_reporting_boundaries.md)，M027作者v2/M028正式版式两卡，5个概念证据单元；下载身份/hash分列，未复跑。最新累计见progress，历史批次数字保留。
+
+批次U：[方法评价期刊补查](reports/evaluation_venue_updates.md)，JSC/AMPPS官方范围、目标指南与费用分列；32载体、22刊条件表。不是32个成熟共同体或原41入口完整覆盖。
