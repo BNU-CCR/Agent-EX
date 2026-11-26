@@ -1,32 +1,32 @@
 {
   "checked": "2026-11-26",
-  "records": 80,
+  "records": 81,
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 25,
-  "search_rows": 457,
+  "search_rows": 460,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 28,
-    "candidate": 44,
+    "candidate": 45,
     "frontier": 6,
     "excluded": 2
   },
   "method_tiers": {
     "direct_comparator": 15,
-    "method_validation": 20,
+    "method_validation": 21,
     "core_method": 29,
     "peripheral": 11,
     "application": 5
   },
-  "fulltext_cards": 37,
-  "date_pending": 19,
+  "fulltext_cards": 38,
+  "date_pending": 20,
   "checks": "passed",
   "limitations": "No experiment rerun; workbook visual verification separate; not database coverage certification",
-  "validation_matrix_units": 28,
+  "validation_matrix_units": 32,
   "venue_types": {
     "journal": 16,
-    "conference": 7,
+    "conference": 8,
     "repository": 1
   },
   "journal_candidates": 16

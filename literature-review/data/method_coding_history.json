@@ -1538,5 +1538,125 @@
     "batch": "L-community-boundaries",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/l_community_boundaries/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_type",
+    "old": "",
+    "new": "LLM_self_emotion_component_evaluation",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "agent_architecture;memory_and_persona;measurement;validation_and_external_validity",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_transferability",
+    "old": "",
+    "new": "可复用分层评价与阴性条件报告；原始对话生成persona须审信息边界；cosine策略指标不能直接读成逐项正确率。",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "empirical_validation",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "存在人工策略标注与真人偏好评价，但不证明真实群体决策或长期社会轨迹；独立性与测量门分列。",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "precise_first_formal_online_date;strategy_annotation_protocol;profile_information_leakage_audit;seed_and_nested_uncertainty;code_reexecution",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "§4.1–4.2;Table2;§5.1–5.2;AppendixD;§6;Table10",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M024.md",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "N-self-emotion-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/n_self_emotion/results.json"
   }
 ]

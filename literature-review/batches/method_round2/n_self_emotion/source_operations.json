@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "S-M2-N-META",
+    "platform": "official_ACL_metadata",
+    "search_date": "2026-11-26",
+    "query_exact": "https://aclanthology.org/2024.sigdial-1.21/",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21/",
+    "status": "formal_metadata_checked",
+    "notes": "SIGDIAL2024;DOI/pages/month verified;precisefirstonlinedaypending"
+  },
+  {
+    "search_id": "S-M2-N-FULL",
+    "platform": "official_ACL_PDF",
+    "search_date": "2026-11-26",
+    "query_exact": "https://aclanthology.org/2024.sigdial-1.21.pdf",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21.pdf",
+    "status": "formal_focused_fulltext_checked",
+    "notes": "20p formalPDF;§§3–6/Table2/4/10/AppendixD;lineopens/findsconsolidated;notallappendix/codeaudit"
+  },
+  {
+    "search_id": "S-M2-N-SCREEN",
+    "platform": "official_ACL_PDF",
+    "search_date": "2026-11-26",
+    "query_exact": "PDF screenshot page3 requested",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21.pdf",
+    "status": "screenshot_requested_not_visually_inspected",
+    "notes": "No screenshot image independently inspected;Table2claims use parsed formalPDF text;no visualvalidationclaim"
+  }
+]

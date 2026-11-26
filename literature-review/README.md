@@ -35,14 +35,14 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-26，保留首轮57条及15卡，新增23项工作、补读3条原记录，现80条、37张全文卡；28项正式纳入、44候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-26，保留首轮57条及15卡，新增24项工作、补读3条原记录，现81条、38张全文卡；28项正式纳入、45候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
 - [验证证据矩阵](reports/method_validation_matrix.md)：25个证据单元，回答、轨迹、经验效度分列。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
-- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：24载体（16刊/7会议入口/1仓库），定向样本，未声称完整数据库覆盖。
+- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：25载体（16刊/8会议入口/1仓库），定向样本，未声称完整数据库覆盖。
 - [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：8张工作表，书目仅26项正式纳入；前沿/候选见主表。
 - [保留与门控核验](reports/methods_validation.json)：57旧ID、18份首轮文件hash、231原日志前缀保留，旧字段25项实质变化均记账；原导出不覆盖。
 
@@ -69,3 +69,5 @@
 批次L当前累计80条/37卡/28验证单元/24载体；正式纳入28、候选44、前沿6、排除2。新增CMASE作者v3与JEIC经验异质性方法精读；TSC接收仅作者声明，正式出版仍待核。见[共同体边界补查](reports/community_boundary_updates.md)；历史批次数字仅作快照。
 
 批次M补正式版本与获取核查，未强升任何全文/日期状态；当前80条/37卡。见[版本获取审计](reports/version_access_audit.md)，下一批先读2024 SIGDIAL正式组件验证论文。
+
+批次N当前累计81条/38卡/32验证单元/25载体；28正式纳入、45候选、6前沿、2排除。M024为正式来源全文已读、精确日期待核。见[组件验证分层](reports/component_validation_layers.md)。历史数字保留为各批快照，接续以progress当前统计为准。
