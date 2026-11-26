@@ -1,0 +1,132 @@
+[
+  {
+    "record_id": "R015",
+    "field": "screening_status",
+    "old": "candidate",
+    "new": "included",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R015",
+    "field": "reading_status",
+    "old": "abstract_read",
+    "new": "fulltext_checked",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R015",
+    "field": "fulltext_url",
+    "old": "",
+    "new": "https://link.springer.com/article/10.1007/s10462-025-11412-6",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R015",
+    "field": "card_path",
+    "old": "",
+    "new": "reading-cards/R015.md",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R015",
+    "field": "date_basis",
+    "old": "Official article/proceedings page; see URL/evidence",
+    "new": "Publisher explicit Published 18 November2025;2026 volume59article15",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R015",
+    "field": "evidence_location",
+    "old": "Abstract；主文待精读",
+    "new": "Publisher HTML §§2.2–6; Tables1–2; Data availability; coding limitation in§3",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R015",
+    "field": "findings",
+    "old": "",
+    "new": "分类审查验证靶点与模型目的是否匹配；系统文献整理不等于新模拟效度验证。",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R021",
+    "field": "reading_status",
+    "old": "abstract_read",
+    "new": "fulltext_checked",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R021",
+    "field": "fulltext_url",
+    "old": "",
+    "new": "https://arxiv.org/html/2611.08932v1",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R021",
+    "field": "card_path",
+    "old": "",
+    "new": "reading-cards/R021.md",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R021",
+    "field": "date_basis",
+    "old": "Official article/proceedings page; see URL/evidence",
+    "new": "arXiv v1 submission6November2026; no journal reference verified; workshop comment alone not formal publication",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R021",
+    "field": "evidence_location",
+    "old": "arXiv v1 2026-11-06；仅摘要；NeurIPS workshop评论不等于正式已发表",
+    "new": "arXiv v1 §§3–6; Tables1–6; AppendicesA–E",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R021",
+    "field": "findings",
+    "old": "",
+    "new": "单个原研究已给定指令被遗漏会改变替代模型上的重实现；报告充分性审计并未验证该协议本身能提高重构成功。",
+    "date": "2026-11-26",
+    "batch": "B",
+    "reason": "New fulltext/version evidence; original batch and Git baseline retained",
+    "source": "batches/method_round2/b_validation/results.json"
+  }
+]

@@ -1,0 +1,5 @@
+[
+ {"search_id":"S-M2-MASS-01","date":"2026-11-26","platform":"web discovery and official publisher HTML","query":"Hu Shen MASS multi agent social simulation Artificial Intelligence 2026 framework","scope":"public discovery, not licensed database export","hit_count":"not supplied by engine; not a total-corpus count","selected":"https://www.mdpi.com/2673-2688/7/8/279","result":"official full HTML read; 2026-07-24; DOI10.3390/ai7080279; earlier conference and preprint linked"},
+ {"search_id":"S-M2-MASS-02","date":"2026-11-26","platform":"publisher/direct HTTP","query":"https://www.mdpi.com/2673-2688/7/8/279","result":"requests403; web HTML succeeded; tables not rendered as cells"},
+ {"search_id":"S-M2-MASS-03","date":"2026-11-26","platform":"web official link","query":"https://www.mdpi.com/article/10.3390/ai7080279/s1","result":"unsupported application/octet-stream; supplement NOT inspected"}
+]

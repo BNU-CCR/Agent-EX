@@ -1,0 +1,185 @@
+{
+  "query_date": "2026-11-26",
+  "frontiers_crossref": {
+    "DOI": "10.3389/frai.2026.1988865",
+    "title": [
+      "From the fluency fallacy to the micro-to-macro validity gap: opportunities and pitfalls of LLMs in social simulation"
+    ],
+    "author": [
+      {
+        "given": "Patrick",
+        "family": "Taillandier",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Unité de Recherche Mathématiques et Informatique Appliquées de Toulouse (UR MIAT), University of Toulouse",
+            "place": [
+              "INRAE, Castanet-Tolosan, France"
+            ]
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Jean-Daniel",
+        "family": "Zucker",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Unité Mixte Internationale de Modélisation Mathématique et Informatique des Systémes Complexes (UMI 209 UMMISCO), Institut de Recherche pour le Développement (IRD)/Sorbonne University",
+            "place": [
+              "Bondy, France"
+            ]
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Arnaud",
+        "family": "Grignard",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Unité Mixte Internationale de Modélisation Mathématique et Informatique des Systémes Complexes (UMI 209 UMMISCO), Institut de Recherche pour le Développement (IRD)/Sorbonne University",
+            "place": [
+              "Bondy, France"
+            ]
+          },
+          {
+            "name": "Laboratoire Mixte International ACROSS (LMI ACROSS), Thuyloi University",
+            "place": [
+              "Hanoi, Vietnam"
+            ]
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Benoit",
+        "family": "Gaudou",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Unité Mixte de Recherche 5505 Institut de Recherche en Informatique de Toulouse (UMR 5505 IRIT), University of Toulouse Capitole",
+            "place": [
+              "Toulouse, France"
+            ]
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Quang Nghi",
+        "family": "Huynh",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Laboratoire Mixte International ACROSS (LMI ACROSS), Thuyloi University",
+            "place": [
+              "Hanoi, Vietnam"
+            ]
+          },
+          {
+            "name": "College of Information and Communication Technology (CICT), Can Tho University",
+            "place": [
+              "Can Tho, Vietnam"
+            ]
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Haojia",
+        "family": "Kong",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Unité de Recherche Mathématiques et Informatique Appliquées de Toulouse (UR MIAT), University of Toulouse",
+            "place": [
+              "INRAE, Castanet-Tolosan, France"
+            ]
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Alexis",
+        "family": "Drogoul",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Unité Mixte Internationale de Modélisation Mathématique et Informatique des Systémes Complexes (UMI 209 UMMISCO), Institut de Recherche pour le Développement (IRD)/Sorbonne University",
+            "place": [
+              "Bondy, France"
+            ]
+          },
+          {
+            "name": "Laboratoire Mixte International ACROSS (LMI ACROSS), Thuyloi University",
+            "place": [
+              "Hanoi, Vietnam"
+            ]
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2026,
+          11,
+          17
+        ]
+      ]
+    },
+    "published-online": {
+      "date-parts": [
+        [
+          2026,
+          11,
+          17
+        ]
+      ]
+    },
+    "type": "journal-article",
+    "volume": "9",
+    "article-number": "1988865",
+    "relation": {}
+  },
+  "source_url": "https://api.crossref.org/works/10.3389/frai.2026.1988865"
+}

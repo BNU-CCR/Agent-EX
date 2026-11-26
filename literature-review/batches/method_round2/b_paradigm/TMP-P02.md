@@ -1,0 +1,49 @@
+# TMP-P02｜微观—宏观效度缺口与混合架构
+
+## 1. 正式书目与版本
+
+Taillandier, P., Zucker, J.-D., Grignard, A., Gaudou, B., Huynh, Q. N., Kong, H., & Drogoul, A. (2026). *From the fluency fallacy to the micro-to-macro validity gap: opportunities and pitfalls of LLMs in social simulation*. Frontiers in Artificial Intelligence, 9, 1988865. [正式全文](https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2026.1988865/full)，DOI `10.3389/frai.2026.1988865`，首次正式发表2026-11-17，出版社与Crossref一致。
+
+[arXiv:2507.19364](https://arxiv.org/abs/2507.19364)首次2025-07-25，最新v4为2026-10-09；早题为*Integrating LLM in Agent-Based Social Simulation: Opportunities and Challenges*。本卡采用正式版，预印本只作关联，不另计研究。
+
+实际核查正式§1–6的方法、检索、分类、效度诊断、混合耦合、概念实例及结论；未重算被综述论文。官方作者名为Quang Nghi Huynh，不能直接照抄arXiv摘要页不同顺序。
+
+## 2. 问题与对象
+
+直接方法批评：单次语言输出的限制如何在Agent、互动和宏观层传播。聚焦LLM作为模拟主体的决策部件，不是用LLM辅助写ABM代码。
+
+## 3. 理论框架
+
+提出微观—宏观效度缺口与fluency fallacy，区分环境守恒、决策有效性和真实社会对应。不是“解释流畅，所以机制真实”。
+
+## 4. 方法与架构
+
+批判综述；主张把语言模型限制在显式ABM环境中的子程序/策略部件，并分层评价。§2描述文献选择；这不是新的群体实验。
+
+## 5. 比较设计
+
+§5灌溉例子明确是conceptual blueprint，§4.1诊断指标和§5.5基准为未来验证提议。不能把公式、图表或hypothetical架构写成已执行实验。
+
+## 6. 测量
+
+PAS、DHI等是拟议诊断；作者明确人设遵循不等于匹配真人分布。聚合结果相似还存在多种微观机制产生同结果的可能。
+
+## 7. 主要方法判断
+
+混合架构有助于追踪状态和限制行动，但不会自动提供行为效度；§5.3–5.4提出环境严谨性为未验证行为层背书的风险。§4.8为探索模型提出跨seed、提示、模型与独立经验检验要求。
+
+## 8. 成熟度与证据
+
+编码`method_validation / review_or_critique / conceptual_claim`。它综述已发表验证实践，也提出新的规范性判据；这些判据本身尚不是本文完成的外部经验验证，不能把文献数量当方法验证样本。
+
+## 9. 与Agent-EX的关系（执行者推论）
+
+项目的私人状态、实际曝光、外生发布和串行记录是可检查的环境/过程约束，但Qwen的语义更新仍需外部行为或机制验证。不能以90万事件、hash通过或平台复杂度宣称社会效度。DHI等提议可用于未来指标讨论，不能事后替换原primary。
+
+## 10. 写作与投稿用途
+
+用于方法讨论与边界说明：将数据完整性、模拟内部一致性、构念效度、跨情境外推分别陈述。与M002形成“架构可支持什么主张—如何证明这些主张”的对话，不把批评概念当本研究已验证的发现。
+
+## 11. 待核查
+
+未复核综述逐篇判断与所有引文版本，未执行其新增benchmark；不将其强烈方法边界无条件当成整个领域已达共识。具体诊断公式若拟移植，需独立检查定义、适用条件和已有证据。

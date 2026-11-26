@@ -1,0 +1,80 @@
+{
+  "records": [
+    {
+      "record_id": "M001",
+      "work_id": "WM001",
+      "venue_id": "V-AI-MDPI",
+      "title": "Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method",
+      "authors": "Xiaoli Hu; Yang Shen",
+      "language": "en",
+      "venue": "AI",
+      "document_type": "journal_article",
+      "doi": "10.3390/ai7080279",
+      "official_url": "https://www.mdpi.com/2673-2688/7/8/279",
+      "online_first_date": "2026-07-24",
+      "volume_year": "2026",
+      "preprint_date": "2026-06-25",
+      "date_basis": "Publisher formal HTML 24July2026",
+      "date_eligibility": "confirmed",
+      "related_versions": "2025 Open Conference AI Agents for Science precursor; preprints202606.1832 v1; not independent works",
+      "search_id": "S-M2-MASS-01",
+      "search_date": "2026-11-26",
+      "screening_status": "included",
+      "core_level": "method_core",
+      "reason": "协议化LLM-ABM与跨案例受控示范。",
+      "research_question": "协议控制能否产生可审计、可分析的模拟资料？",
+      "research_object": "human_social_process_simulation",
+      "simulation_purpose": "method_evaluation;mechanism_test",
+      "primary_purpose": "method_evaluation",
+      "method_type": "llm_multiagent_social_simulation",
+      "mechanisms": "role cards;round scheduler;public board;information whitelist;harness;structured state",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://www.mdpi.com/2673-2688/7/8/279",
+      "supplement_status": "access_failed_binary_content_type",
+      "findings": "规则响应与条件差异获支持；不等于真实经济效应/投票预测；版本、运行数不平衡。",
+      "evidence_location": "§3.2–3.5;§4.2–4.5;§5.4",
+      "relation_to_agent_ex": "版本、信息与失败边界可借鉴；需单独验证增量。",
+      "card_path": "batches/method_round2/b_mass/M001.md",
+      "source_batch": "batches/method_round2/b_mass/results.json",
+      "notes": "HTML主文已读；表仅标题，补充包未检验，未复跑。",
+      "method_relevance_tier": "core_method",
+      "method_contribution_type": "simulation_paradigm;interaction_protocol;reproducibility_and_reporting;measurement;validation_and_external_validity",
+      "method_maturity": "empirical_method_test",
+      "disciplinary_home": "计算社会科学；AI方法",
+      "method_transferability": "角色/规则/信息白名单、结构化输出、失败记录、模型版本分离；不直接迁移行为真值。",
+      "method_evidence_level": "controlled_comparison",
+      "method_relevance_rationale": "通用研究协议为主要贡献，三个情境示范未构成独立跨情境外部验证。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "表格数值逐项复核;补充制品;独立复现;校准与失败分布",
+      "method_evidence_location": "§3.5;§4;§5.3–5.4",
+      "method_coding_source": "batches/method_round2/b_mass/M001.md",
+      "method_last_checked": "2026-11-26"
+    }
+  ],
+  "searches": [
+    {
+      "search_id": "S-M2-MASS-01",
+      "date": "2026-11-26",
+      "platform": "web discovery and official publisher HTML",
+      "query": "Hu Shen MASS multi agent social simulation Artificial Intelligence 2026 framework",
+      "scope": "public discovery, not licensed database export",
+      "hit_count": "not supplied by engine; not a total-corpus count",
+      "selected": "https://www.mdpi.com/2673-2688/7/8/279",
+      "result": "official full HTML read; 2026-07-24; DOI10.3390/ai7080279; earlier conference and preprint linked"
+    },
+    {
+      "search_id": "S-M2-MASS-02",
+      "date": "2026-11-26",
+      "platform": "publisher/direct HTTP",
+      "query": "https://www.mdpi.com/2673-2688/7/8/279",
+      "result": "requests403; web HTML succeeded; tables not rendered as cells"
+    },
+    {
+      "search_id": "S-M2-MASS-03",
+      "date": "2026-11-26",
+      "platform": "web official link",
+      "query": "https://www.mdpi.com/article/10.3390/ai7080279/s1",
+      "result": "unsupported application/octet-stream; supplement NOT inspected"
+    }
+  ]
+}
