@@ -35,6 +35,15 @@
 
 ## 第一轮工作状态
 
+## 第二轮方法研究成果
+
+- [方法字段与编码规则](protocol/method_coding_rules.md)：schema v2，仅追加方法字段，首轮语义不变。
+- [57条方法重分类](reports/method_reclassification.md)：方法核心16、方法验证10、应用5、直接对照15、外围11；全文确认方法核心4、方法验证3，其他候选与日期门分别统计。
+- [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：与首轮导出分开维护。
+- 批次A已核对所有旧字段、ID、DOI、状态及15张卡/原导出哈希未改变，基线见data/round1_preservation_manifest.json；现直接开展批次B方法全文。
+
+## 第一轮工作状态与保留
+
 第一轮已建立 57 条文献工作库、15 张全文阅读卡、12 本核心来源期刊、10 本投稿候选期刊，并完成 Excel/BibTeX 和交叉核查。完整 SSCI 目录及 WoS/CNKI 逐刊数据库检索仍有缺口，详见覆盖报告。第一轮成果保留，不因第二轮重分类而删除或重编号。
 
 ## 后续维护

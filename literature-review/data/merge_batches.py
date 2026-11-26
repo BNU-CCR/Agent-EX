@@ -1,6 +1,8 @@
 """Rebuild auditable CSV views from research batches; never infer unknown dates."""
 import collections, csv, json, pathlib, re, shutil
 ROOT=pathlib.Path(__file__).resolve().parents[1]
+if (ROOT/'data/round1_preservation_manifest.json').exists():
+    raise SystemExit('Round2 schema is active. Legacy rebuild is disabled to preserve extended fields and later records; use the existing master and methods update workflow.')
 def read(p): return json.loads((ROOT/p).read_text(encoding='utf-8-sig'))
 def write_csv(name,rows,fields=None):
     fields=fields or list(dict.fromkeys(k for r in rows for k in r))

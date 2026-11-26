@@ -11,15 +11,17 @@
 | 研究主线调整 | 用户已批准：方法论与发表生态为第一优先级；传播应用与Agent-EX直接对照保留为后续层 |
 | 第二轮任务书 | 已创建 `METHODS_FIRST_REORIENTATION.md` |
 | 北极星目标 | 已创建 `GOAL.md` |
-| 第二轮实质执行 | 待开始 |
+| 第二轮实质执行 | 批次A已完成；直接继续批次B核心方法全文，随后跨学科方法检索与发表生态 |
 
 ## 已完成
 - 第一轮四阶段可访问部分已提交并同步；详见 [第一轮任务计划](task_plan.md) 和 [覆盖与缺口](reports/coverage_and_gaps.md)。
 - 用户批准方法优先的第二轮调整。
 - 已写入第二轮执行任务书与长期目标。
+- 批次A：先制定protocol/method_coding_rules.md，再对57条追加12字段；原所有旧字段值、ID/DOI/状态及15卡/首轮导出逐项保留核验。方法核心16、方法验证10、应用5、直接对照15、外围11；全文确认核心4与验证3。报告reports/method_reclassification.md及第二轮工作簿/BibTeX已保存。
+- 本轮读取基线d88ba3c；批次A提交SHA将在提交后补记。
 
 ## 进行中
-- 第二轮批次 A：schema 扩展、现有57条方法重分类、README与项目定位调整。
+- 批次B：M001 MASS（主执行者）、M002 Haase/Pokutta（方法框架工作单元）、M003 ODD代码实现复现（ODD工作单元）、R015验证综述与R021报告规范（验证工作单元）。先核实正式日期/版本和全文，主表由主执行者集中更新。
 
 ## 阻塞与限制
 - 第一轮完整SSCI Communication目录未取得。
@@ -28,11 +30,10 @@
 - 第二轮方法种子全文与方法发表生态尚待逐项核实。
 
 ## 下一项具体任务
-1. 阅读 `METHODS_FIRST_REORIENTATION.md`、现有 `data/literature_master.csv` 和 `data/README.md`。
-2. 为现有57条增加方法导向字段，先完成字段字典和编码规则，再逐条编码；保留所有原 ID 与筛选状态。
-3. 核验并完成首批方法核心文献全文卡，优先 MASS、Larooij & Törnberg、Haase & Pokutta、ODD-based replication study。
-4. 创建 `method_venue_map.csv`，先核实 JASSS、Journal of Simulation、Simulation Modelling Practice and Theory、SSCR 等真实发表先例。
-5. 每批完成后更新本文件并提交，记录最新 commit SHA。
+1. 完成M001 Hu/Shen MASS正式来源与全文精读；把框架主张、示范实验和外部效度证据分开。
+2. 合并M002/M003、R015/R021全文证据，逐项记录旧状态升级理由；R021仅预印本，不能升级正式发表。
+3. 沿校准验证/ODD/报告规范/架构开展方法检索；M003的LLM生成代码与模拟内LLM主体分开编码。
+4. 创建方法发表地图与双轨期刊表，核查真实2022+发表先例及官方scope/作者规则，不因单篇新论文认定持续共同体。
 
 ## 接续规则
 每次 Codex 新会话必须先读 GOAL、README、METHODS_FIRST_REORIENTATION 和本文件，从“下一项具体任务”继续。不得重建第一轮数据库，不得把计划当作已经完成的检索，也不得声称会话结束后仍在后台工作。

@@ -30,3 +30,9 @@ core_source_journals仅统计included的期刊文献，另列候选数量；会�
 exports/references.bib仅导出日期及全文门通过的included条目；候选与前沿仍保留于主表和工作簿。每个条目用稳定record_id作bibkey。Excel各表从同一CSV矩阵生成，不再手改。
 
 原始英文eligible统一为confirmed；中文eligible_year_only统一date_pending；fulltext_partial不得升级为全文纳入。无DOI不补造。机制标签中尚未逐文确认的值保留待核实。本轮只是AI交叉检查，不称独立人工双人筛选。
+
+## 第二轮schema v2：仅扩展方法字段
+
+新增12个方法字段、枚举、pending门与成熟度/验证判据见[method_coding_rules.md](../protocol/method_coding_rules.md)。首轮core_level和screening_status不因方法优先而重定义；method_relevance_tier单独记录首要方法功能。原57条/15卡/原工作簿/BibTeX以round1_preservation_manifest.json绑定，批次A审计所有旧字段值不变。第二轮工作簿与书目使用`literature_and_journals_methods.xlsx`、`references_methods.bib`，保留首轮导出。
+
+首轮merge_batches.py已设扩展保护，避免重跑旧合并器丢失新字段/后续记录。批次A只用method_schema.py追加编码；后续升级旧记录须保留明确的变更证据和理由，不可静默覆盖。

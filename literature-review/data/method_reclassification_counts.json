@@ -1,0 +1,42 @@
+{
+  "application": {
+    "total": 5,
+    "fulltext_confirmed": 1,
+    "abstract_provisional": 4,
+    "date_pending": 1,
+    "frontier": 0,
+    "excluded": 0
+  },
+  "core_method": {
+    "total": 16,
+    "fulltext_confirmed": 4,
+    "abstract_provisional": 9,
+    "date_pending": 5,
+    "frontier": 1,
+    "excluded": 0
+  },
+  "direct_comparator": {
+    "total": 15,
+    "fulltext_confirmed": 7,
+    "abstract_provisional": 4,
+    "date_pending": 3,
+    "frontier": 1,
+    "excluded": 0
+  },
+  "method_validation": {
+    "total": 10,
+    "fulltext_confirmed": 3,
+    "abstract_provisional": 7,
+    "date_pending": 1,
+    "frontier": 0,
+    "excluded": 0
+  },
+  "peripheral": {
+    "total": 11,
+    "fulltext_confirmed": 0,
+    "abstract_provisional": 7,
+    "date_pending": 3,
+    "frontier": 0,
+    "excluded": 2
+  }
+}
