@@ -1,0 +1,346 @@
+[
+  {
+    "search_id": "S-M2-D-ROOT1",
+    "platform": "official_source_direct",
+    "query_exact": "https://www.mdpi.com/journal/ai/about",
+    "source_url": "https://www.mdpi.com/journal/ai/about",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT2",
+    "platform": "official_source_direct",
+    "query_exact": "https://www.mdpi.com/journal/ai/instructions",
+    "source_url": "https://www.mdpi.com/journal/ai/instructions",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT3",
+    "platform": "official_source_direct",
+    "query_exact": "https://www.mdpi.com/journal/ai/apc",
+    "source_url": "https://www.mdpi.com/journal/ai/apc",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT4",
+    "platform": "official_source_direct",
+    "query_exact": "https://link.springer.com/journal/13688/aims-and-scope",
+    "source_url": "https://link.springer.com/journal/13688/aims-and-scope",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT5",
+    "platform": "official_source_direct",
+    "query_exact": "https://link.springer.com/journal/13688/submission-guidelines",
+    "source_url": "https://link.springer.com/journal/13688/submission-guidelines",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT6",
+    "platform": "official_source_direct",
+    "query_exact": "https://www.aup-online.com/content/journals/26659085",
+    "source_url": "https://www.aup-online.com/content/journals/26659085",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT7",
+    "platform": "official_source_direct",
+    "query_exact": "https://www.aup-online.com/upload/IfA/CCR_IfA_2023.pdf",
+    "source_url": "https://www.aup-online.com/upload/IfA/CCR_IfA_2023.pdf",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT8",
+    "platform": "official_source_direct",
+    "query_exact": "https://journals.sagepub.com/aims-scope/ssc",
+    "source_url": "https://journals.sagepub.com/aims-scope/ssc",
+    "status": "access_failed",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT9",
+    "platform": "official_source_direct",
+    "query_exact": "https://www.sagepub.com/docs/default-source/msg/submission-guidelines_-social-science-computer-review_-sage-journals.pdf",
+    "source_url": "https://www.sagepub.com/docs/default-source/msg/submission-guidelines_-social-science-computer-review_-sage-journals.pdf",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "search_id": "S-M2-D-ROOT10",
+    "platform": "official_source_direct",
+    "query_exact": "https://onlinelibrary.wiley.com/page/journal/10991727/homepage/productinformation.html",
+    "source_url": "https://onlinelibrary.wiley.com/page/journal/10991727/homepage/productinformation.html",
+    "status": "official_source_checked",
+    "notes": "Direct scope/guide/fee check; not whole-journal search; SSCR PDF anonymity contradiction retained"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.jasss.org journal aims scope submission methodology simulation 2022 2023 2024",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-001",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com journals tjsm20 aims scope instructions authors Journal of Simulation",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-002",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com \"Journal of Simulation\" \"large language\" methodology",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-003",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.jasss.org \"Harmonising Theory\" THEMP",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-004",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com \"A CRISP-DM-based methodology for assessing agent-based\"",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-005",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.jasss.org \"submission\" \"code\" \"ODD\" authors",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-006",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com \"Journal of Simulation\" \"Instructions for authors\" \"words\"",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-007",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com \"Journal of Simulation\" \"data sharing\"",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-008",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com/action/authorSubmission \"tjsm20\"",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-009",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com/journals/tjsm20 \"Instructions\" \"Double\"",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-010",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "web_search",
+    "query_exact": "site.tandfonline.com/journals/tjsm20 \"Article types\"",
+    "source_url": "",
+    "status": "executed",
+    "result_count": null,
+    "retrieved_count": null,
+    "note": "Returned batch results inspected; per-query count unavailable; discovery only, not exhaustive journal/database search.",
+    "search_id": "S-VENUE-011",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.jasss.org/",
+    "source_url": "https://www.jasss.org/",
+    "status": "blank_redirect",
+    "result_count": 1,
+    "retrieved_count": 0,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-012",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.tandfonline.com/journals/tjsm20",
+    "source_url": "https://www.tandfonline.com/journals/tjsm20",
+    "status": "403_direct_but_official_search_index_read",
+    "result_count": 1,
+    "retrieved_count": 0,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-013",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.tandfonline.com/action/authorSubmission?show=instructions&journalCode=tjsm20",
+    "source_url": "https://www.tandfonline.com/action/authorSubmission?show=instructions&journalCode=tjsm20",
+    "status": "403_web_and_native_http",
+    "result_count": 1,
+    "retrieved_count": 0,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-014",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://jasss.soc.surrey.ac.uk/admin/submit.html",
+    "source_url": "https://jasss.soc.surrey.ac.uk/admin/submit.html",
+    "status": "blank_dynamic_shell",
+    "result_count": 1,
+    "retrieved_count": 0,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-015",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://jasss.soc.surrey.ac.uk/JASSS.html",
+    "source_url": "https://jasss.soc.surrey.ac.uk/JASSS.html",
+    "status": "read_current_titles",
+    "result_count": 1,
+    "retrieved_count": 1,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-016",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.jasss.org/29/4/6.html",
+    "source_url": "https://www.jasss.org/29/4/6.html",
+    "status": "read_metadata_and_targeted_method_sections",
+    "result_count": 1,
+    "retrieved_count": 1,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-017",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.tandfonline.com/doi/full/10.1080/17477778.2025.2508245",
+    "source_url": "https://www.tandfonline.com/doi/full/10.1080/17477778.2025.2508245",
+    "status": "403_direct_search_excerpts_read",
+    "result_count": 1,
+    "retrieved_count": 0,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-018",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.tandfonline.com/journals/tjsm20/author-guidelines",
+    "source_url": "https://www.tandfonline.com/journals/tjsm20/author-guidelines",
+    "status": "inaccessible",
+    "result_count": 1,
+    "retrieved_count": 0,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-019",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.jasss.org/v02/custom_js.js",
+    "source_url": "https://www.jasss.org/v02/custom_js.js",
+    "status": "native_http_200_read_include_paths",
+    "result_count": 1,
+    "retrieved_count": 1,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-020",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.tandfonline.com/action/journalInformation?journalCode=tjsm20&show=instructions",
+    "source_url": "https://www.tandfonline.com/action/journalInformation?journalCode=tjsm20&show=instructions",
+    "status": "403_direct_official_search_index_read",
+    "result_count": 1,
+    "retrieved_count": 0,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-021",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.jasss.org/26/1/10.html",
+    "source_url": "https://www.jasss.org/26/1/10.html",
+    "status": "read_metadata_and_targeted_method_sections",
+    "result_count": 1,
+    "retrieved_count": 1,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-022",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": "native_http_200_saved",
+    "result_count": 1,
+    "retrieved_count": 1,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-023",
+    "checked_date": "2026-11-26"
+  },
+  {
+    "operation": "direct_retrieval",
+    "query_exact": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "status": "native_http_200_saved",
+    "result_count": 1,
+    "retrieved_count": 1,
+    "note": "Partial search-index reading is distinguished from successful direct fulltext retrieval.",
+    "search_id": "S-VENUE-024",
+    "checked_date": "2026-11-26"
+  }
+]

@@ -36,3 +36,11 @@ exports/references.bib仅导出日期及全文门通过的included条目；候�
 新增12个方法字段、枚举、pending门与成熟度/验证判据见[method_coding_rules.md](../protocol/method_coding_rules.md)。首轮core_level和screening_status不因方法优先而重定义；method_relevance_tier单独记录首要方法功能。原57条/15卡/原工作簿/BibTeX以round1_preservation_manifest.json绑定，批次A审计所有旧字段值不变。第二轮工作簿与书目使用`literature_and_journals_methods.xlsx`、`references_methods.bib`，保留首轮导出。
 
 首轮merge_batches.py已设扩展保护，避免重跑旧合并器丢失新字段/后续记录。批次A只用method_schema.py追加编码；后续升级旧记录须保留明确的变更证据和理由，不可静默覆盖。
+
+## 第二轮发表生态表与维护
+
+method_venue_map.csv为18个定向载体样本：13期刊、4会议、1仓库；venue_type必须分开统计。journal_submission_candidates.csv仅保留13期刊，current_paper_judgment与future_method_paper_judgment分列。scope/guide URLs只是来源入口；verification_status、pending_items、文章先例的实际阅读状态决定可用证据，不把未访问指南写成完成。跨年份sample不等于完整覆盖；publisher_self_list不等于MJL认证。
+
+每条保留precedents_2022_onward、连续性证据、类别/篇幅、代码/数据要求、OA/费用、当前稿写作与分析缺口、方法稿新增实验需求及核查日期。建议等级为条件适配，不含录用概率。原journals_master.csv保持第一轮覆盖快照。
+
+合并用merge_methods_round2.py的已审计批次；不要重跑method_schema.py批次A迁移或首轮merge_batches.py。方法合并脚本是一次性批次入口，重跑前先读状态，不能盲目覆盖已经人工修订的数据。verify_methods_delivery.py直接读取保存的首轮hash清单、Git基线与变更账，验证旧ID/字段变更链/231日志前缀和方法门；不验证论文实验正确性。
