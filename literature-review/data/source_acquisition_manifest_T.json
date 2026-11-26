@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://goytoom.github.io/assets/files/primer.pdf",
+    "version": "personal_site_publisher_layout",
+    "sha256": "697deebd570b6425130fe516d9dcbbadd4a0fb46e4eb26683439f6bed91c0c32",
+    "bytes": 376264,
+    "pages": 25,
+    "checked": "2026-11-26",
+    "storage": "scratch_download_not_repository_PDF_archive",
+    "reading_scope": "focused sections as card;no experimentalrerun"
+  },
+  {
+    "url": "https://arxiv.org/pdf/2509.26080v2",
+    "version": "arxiv_v2_2025-10-28",
+    "sha256": "d039aefdbffd471136fb76f567bd3fa506e036b900b75cc79f7374f9f4887916",
+    "bytes": 245037,
+    "pages": 24,
+    "checked": "2026-11-26",
+    "storage": "scratch_download_not_repository_PDF_archive",
+    "reading_scope": "focused sections as card;no experimentalrerun"
+  }
+]

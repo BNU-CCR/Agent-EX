@@ -1,6 +1,6 @@
 # 方法控制—错误—验证证据矩阵
 
-2026-11-26；[42个证据单元](../data/method_validation_matrix.csv)，覆盖R016、M013、M008、M014、M015、M016及既有M006/M007/R021。单元数不是论文数、验证次数或独立重复数。所有“迁移到Agent-EX”均为文献推论，未实施新实验。
+2026-11-26；[47个证据单元](../data/method_validation_matrix.csv)，覆盖R016、M013、M008、M014、M015、M016及既有M006/M007/R021。单元数不是论文数、验证次数或独立重复数。所有“迁移到Agent-EX”均为文献推论，未实施新实验。
 
 ## 新增精读改变了什么判断
 
@@ -49,3 +49,5 @@ M016补充：VC17–18提醒综述语料/评价口径不可直接比较，自述
 批次P新增VC36–38：同目标选择、目标密度停止与横截面—动态机制边界分列。
 
 批次Q新增VC39–42，见[综合期刊报告](general_journal_precedents.md)及两张新卡；证据层级与测量反馈分开，未改项目协议或复跑。
+
+T新增VC43–47，涵盖合成抽样与互动依赖、测量误差及建议/政策边界；conceptual guidance不算新实验验证。详见[sampling_and_reporting_boundaries.md](sampling_and_reporting_boundaries.md)。

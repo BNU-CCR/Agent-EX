@@ -31,3 +31,5 @@ THEMP、过程挖掘作者稿、EASE、Gao、R016及M025的定向精读已完成
 批次Q补三刊条件选项，见[综合期刊先例](general_journal_precedents.md)。范围与先例支持进入比较，不证明当前稿已达标；JASSS/CCR优先比较保持。详细指南、APC与独立索引核验尚缺。
 
 R补官方制品要求，见[journal_reproducibility_policies.md](journal_reproducibility_policies.md)。可取得制品不等于科学有效；投稿适配判断仍需独立方法/社会过程贡献。
+
+T新增方法评价/报告规范阅读证据，见[sampling_and_reporting_boundaries.md](sampling_and_reporting_boundaries.md)。未把指南清单当已验证方法贡献；JSC/AMPPS范围留U核查，尚未加入载体地图/投稿表。

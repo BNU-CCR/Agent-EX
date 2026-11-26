@@ -1,0 +1,130 @@
+[
+  {
+    "search_id": "S-M2-T-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"10.23919/JSC.2025.0022\"",
+    "status": "bounded_discovery",
+    "notes": "Notwholejournal/independenthitcount"
+  },
+  {
+    "search_id": "S-M2-T-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"10.1177/25152459251325174\"",
+    "status": "bounded_discovery",
+    "notes": "Notwholejournal/independenthitcount"
+  },
+  {
+    "search_id": "S-M2-T-Q03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Evaluating the Use\" \"Madden\" \"pdf\"",
+    "status": "bounded_discovery",
+    "notes": "Notwholejournal/independenthitcount"
+  },
+  {
+    "search_id": "S-M2-T-Q04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"JSC.2025.0022\" pdf",
+    "status": "bounded_discovery",
+    "notes": "Notwholejournal/independenthitcount"
+  },
+  {
+    "search_id": "S-M2-T-JSC-META",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciopen.com/article/10.23919/JSC.2025.0022",
+    "source_url": "https://www.sciopen.com/article/10.23919/JSC.2025.0022",
+    "status": "official_metadata_abstract_checked",
+    "notes": "PublishedDec17;notAMinerAIpanel;webopen/findconsolidated"
+  },
+  {
+    "search_id": "S-M2-T-SAGE-META",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.sagepub.com/doi/full/10.1177/25152459251325174",
+    "source_url": "https://journals.sagepub.com/doi/full/10.1177/25152459251325174",
+    "status": "official_identity_date_checked",
+    "notes": "FirstpublishedApr16;officialHTMLbodyinitialread"
+  },
+  {
+    "search_id": "S-M2-T-PRIMER-WEB",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://goytoom.github.io/assets/files/primer.pdf",
+    "source_url": "https://goytoom.github.io/assets/files/primer.pdf",
+    "status": "publisher_layout_pdf_read",
+    "notes": "WebPDFopen/find/lineopens consolidated;Table3read"
+  },
+  {
+    "search_id": "S-M2-T-JSC-HTTP",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciopen.com/article/10.23919/JSC.2025.0022",
+    "source_url": "https://www.sciopen.com/article/10.23919/JSC.2025.0022",
+    "status": "403",
+    "notes": "DirectstaticHTTP could notextract PDFlink;not fulltext"
+  },
+  {
+    "search_id": "S-M2-T-ARXIV-META",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/abs/2509.26080",
+    "source_url": "https://arxiv.org/abs/2509.26080",
+    "status": "version_dates_checked",
+    "notes": "v1Sep30/v2Oct28;do notcallarxivformaljournalversion"
+  },
+  {
+    "search_id": "S-M2-T-PRIMER-DOWNLOAD",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://goytoom.github.io/assets/files/primer.pdf",
+    "source_url": "https://goytoom.github.io/assets/files/primer.pdf",
+    "status": "verified_PDF200",
+    "notes": "25pages/376264bytes;focusedreading andTable3rendered;not rerun"
+  },
+  {
+    "search_id": "S-M2-T-MADDEN-DOWNLOAD",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/pdf/2509.26080v2",
+    "source_url": "https://arxiv.org/pdf/2509.26080v2",
+    "status": "verified_author_v2_PDF200",
+    "notes": "24pages/245037bytes;focused§3–6read;notformalcollation"
+  },
+  {
+    "search_id": "S-M2-T-SAGE-FIND-FAIL",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://journals.sagepub.com/doi/full/10.1177/25152459251325174",
+    "source_url": "https://journals.sagepub.com/doi/full/10.1177/25152459251325174",
+    "status": "webtool_timeout",
+    "notes": "twofinds Table1/Reporting failed;notabsenceofsections"
+  },
+  {
+    "search_id": "S-M2-T-TRANSPORT-1",
+    "platform": "web_tool_transport",
+    "search_date": "2026-11-26",
+    "query_exact": "arxivHTMLclick+primer468/1442",
+    "status": "connection_failed_unconfirmed_targets",
+    "notes": "Batchtoolfailed;notclaimalltargetHTTPfailures;switchedto directPDF200"
+  },
+  {
+    "search_id": "S-M2-T-TRANSPORT-2",
+    "platform": "web_tool_transport",
+    "search_date": "2026-11-26",
+    "query_exact": "arxivHTML+primer468/1442",
+    "status": "connection_failed_unconfirmed_targets",
+    "notes": "Batchtoolfailed;notclaimalltargetHTTPfailures;switchedto directPDF200"
+  },
+  {
+    "search_id": "S-M2-T-TRANSPORT-3",
+    "platform": "web_tool_transport",
+    "search_date": "2026-11-26",
+    "query_exact": "arxivHTMLonly",
+    "status": "connection_failed_unconfirmed_targets",
+    "notes": "Batchtoolfailed;notclaimalltargetHTTPfailures;switchedto directPDF200"
+  }
+]

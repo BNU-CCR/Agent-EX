@@ -41,3 +41,8 @@ VC39,R014,互动式vs单次读出,同立场对话基准,单次量表漏检,对�
 VC40,R014,分类标签回写提示,读出与生成耦合,误差可能反馈,状态更新,主文流程明确,流程证据,无误差反馈已被排除,区别被动测量与状态控制,Opinion agents,source_read_not_reexecuted,2026-11-26
 VC41,M026,给定人格分数生成回答,真人量表性质,过度纯净结构,构件效度,因子结构比较,分数条件化,独立人格推断,标明输入/目标重叠,Simulation1;Discussion,source_read_not_reexecuted,2026-11-26
 VC42,M026,告知年龄/国籍,固定50岁英国样本,外推混淆,稳健性,提示条件比较,固定人群,跨年龄国籍普适性,分清信息操纵与人口异质性,Simulation2;Methods,source_read_not_reexecuted,2026-11-26
+VC43,M027,独立受访者与互动主体分开,作者v2条件化推断批评,混淆依赖来源,推断单位,方法建议,概念论证,新统计定理/效果验证,不把社会互动的刻意依赖当抽样错误,§3–6,conceptual_guidance_not_reexecuted,2026-11-26
+VC44,M027,分组与方差校准,真人基线,均值掩盖错配,人群推断,作者建议,引用研究综合,本文新实验或通用真人预测,AI重复数不能替代经验校准,§5pp12–18,conceptual_guidance_not_reexecuted,2026-11-26
+VC45,M028,输出真值检查,人工/任务效标,测量误差与条件相关,测量效度,报告建议,方法primer,本项目分类器已通过,报告分层误差和选择依据,Table3;pp10–11,conceptual_guidance_not_reexecuted,2026-11-26
+VC46,M028,错误处理披露,原始/处理后输出,选择性排除,推断稳健性,透明处理建议,概念与示例,错误处理流程效果已验证,记录失败/重试/排除，解释偏差,pp13–14,conceptual_guidance_not_reexecuted,2026-11-26
+VC47,M028,建议与政策区分,Required/Optional及虚构示范,把清单当标准,报告规范,作者清单,非效果评估,期刊强制或项目冻结可放宽,保留规范链及项目已批准要求,Table3;Appendixp17,conceptual_guidance_not_reexecuted,2026-11-26

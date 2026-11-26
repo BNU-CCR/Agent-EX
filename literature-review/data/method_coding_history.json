@@ -2118,5 +2118,245 @@
     "batch": "Q-general-journal-method-precedents",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_maturity",
+    "old": "",
+    "new": "review_or_critique",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "conceptual_claim",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_type",
+    "old": "",
+    "new": "methodological_critique",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "validation_and_external_validity;measurement;reproducibility_and_reporting",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_transferability",
+    "old": "",
+    "new": "区分独立合成受访者抽样与动态互动；分组/方差校准是研究建议，未验证通用工作流。",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "检验合成人群推断的统计/认识论边界。",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formal_fulltext_comparison;primary_theory_verification",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "authorv2 §3–6",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M027.md",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_maturity",
+    "old": "",
+    "new": "review_or_critique",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "conceptual_claim",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_type",
+    "old": "",
+    "new": "methodological_primer",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "reproducibility_and_reporting;validation_and_external_validity;measurement",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_transferability",
+    "old": "",
+    "new": "报告与测量核查可迁移；作者Required/Optional不是编辑统一规则，示范不是验证研究。",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接补LLM科学报告、随机性和任务验证。",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "supplement_or_code_reexecution;workflow_effectiveness_validation",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Table3;pp7–14;Appendix opening",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M028",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M028.md",
+    "date": "2026-11-26",
+    "batch": "T-synthetic-agent-evaluation-primer",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/t_evaluation_primer/results.json"
   }
 ]

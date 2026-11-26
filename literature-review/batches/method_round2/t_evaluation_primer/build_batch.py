@@ -1,0 +1,45 @@
+"""Focused method-critique/reporting readings, preserving formal/version gates."""
+import csv,hashlib,json,pathlib,fitz
+R=pathlib.Path(__file__).resolve().parents[3];F=pathlib.Path(__file__).parent
+TMP=pathlib.Path('C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export')
+def save(p,t):p.write_text(t.rstrip()+'\n',encoding='utf8')
+assert not (F/'results.json').exists()
+jsc='https://www.sciopen.com/article/10.23919/JSC.2025.0022'
+ar='https://arxiv.org/pdf/2509.26080v2'
+sage='https://journals.sagepub.com/doi/full/10.1177/25152459251325174'
+pdf='https://goytoom.github.io/assets/files/primer.pdf'
+save(R/'reading-cards/M027.md',f'''# M027 — 合成抽样与人群推断的边界
+
+Emma Rose Madden. Evaluating the Use of Large Language Models as Synthetic Social Agents in Social Science Research. Journal of Social Computing6(4),334–341；DOI10.23919/JSC.2025.0022。[官方题录]({jsc})标Published2025-12-17。2026-11-26实际定向读[作者v2]({ar})（2025-10-28，24页）的§3–6；正式8页版未逐段对照，保留candidate，不把页数差异当内容变化证明。
+
+作者主张：合成输出不自动构成人类总体抽样；需报告分组校准、离散程度、条件与外推限制。本文为方法批评和建议，所引实证不能计作作者新实验。
+
+对Agent-EX的推论：独立受访者抽样与刻意相互依赖的社会互动须分开；主体依赖不应直接编码为错误，独立重复仍以seed/run为主。增大AI模拟规模不能单独缩窄对真人的推断不确定性。贝叶斯一致性的形式化主张需原始理论文献另核，本批不将其当普遍定理。未复跑或修改协议。
+''')
+save(R/'reading-cards/M028.md',f'''# M028 — 研究建议、复现制品与测量验证
+
+Suhaib Abdurahman; Alireza Salkhordeh Ziabari; Alexander K. Moore; Daniel M. Bartels; Morteza Dehghani. A Primer for Evaluating Large Language Models in Social-Science Research. Advances in Methods and Practices in Psychological Science8(2),1–25；DOI10.1177/25152459251325174；[出版社]({sage})标首次在线2025-04-16。2026-11-26定向读[个人站点托管正式版式PDF]({pdf})的Table3、pp7–14及Appendix开头；DOI/题名与官方页相符，未声称文件逐字节同于出版社下载。
+
+作者清单区分Required/Optional；包括可运行制品、随机性/版本、任务真值验证和错误处理。附录是虚构研究示范，非清单效果实验；preregistration列Optional。
+
+本项目推论：作者建议不等于编辑政策，也不覆盖本项目已批准的冻结要求。随机seed需实测复现；平均准确率不能排除与实验条件相关的分类误差。清单齐全仍不能替代独立动态效度。Table3已渲染核对，未复跑论文或Agent-EX。
+''')
+common=dict(language='en',document_type='journal_article',date_eligibility='confirmed',search_date='2026-11-26',core_level='method_validation',research_object='social_science_methodology',simulation_purpose='method_evaluation',primary_purpose='method_evaluation',reading_status='fulltext_checked',supplement_status='not_checked',source_batch='batches/method_round2/t_evaluation_primer/results.json',method_relevance_tier='method_validation',method_maturity='review_or_critique',method_evidence_level='conceptual_claim',method_coding_status='fulltext_supported',method_last_checked='2026-11-26')
+m27=dict(common,record_id='M027',work_id='WM027',venue_id='V-JSC',title='Evaluating the Use of Large Language Models as Synthetic Social Agents in Social Science Research',authors='Emma Rose Madden',venue='Journal of Social Computing',doi='10.23919/JSC.2025.0022',official_url=jsc,metadata_evidence_url=jsc,discovery_url='https://arxiv.org/abs/2509.26080',online_first_date='2025-12-17',volume_year='2025',preprint_date='2025-09-30',date_basis='Publisher page Published17December2025;received/revised/accepted separate',related_versions='arXiv2509.26080v1 Sep30;v2 Oct28,2025;readv2(24p);formal6(4)334-341 notcollated',search_id='S-M2-T-JSC-META',screening_status='candidate',reason='正式身份/日期核实；方法批评作者v2已读，正式全文版本仍待对照。',method_type='methodological_critique',mechanisms='scope-conditioned synthetic responses;subgroup calibration',fulltext_url=ar,evidence_location='authorv2 §3–6;especiallypp12–18',card_path='reading-cards/M027.md',notes='Formalmetadata notformalPDF;citationsofempiricalpapers are not newexperiments;formalversioncomparison pending.',method_contribution_type='validation_and_external_validity;measurement;reproducibility_and_reporting',disciplinary_home='computational social science;political methodology',method_transferability='区分独立合成受访者抽样与动态互动；分组/方差校准是研究建议，未验证通用工作流。',method_relevance_rationale='检验合成人群推断的统计/认识论边界。',method_pending_fields='formal_fulltext_comparison;primary_theory_verification',method_evidence_location='authorv2 §3–6',method_coding_source='reading-cards/M027.md')
+m28=dict(common,record_id='M028',work_id='WM028',venue_id='V-AMPPS',title='A Primer for Evaluating Large Language Models in Social-Science Research',authors='Suhaib Abdurahman; Alireza Salkhordeh Ziabari; Alexander K. Moore; Daniel M. Bartels; Morteza Dehghani',venue='Advances in Methods and Practices in Psychological Science',doi='10.1177/25152459251325174',official_url=sage,metadata_evidence_url=sage,discovery_url=pdf,online_first_date='2025-04-16',volume_year='2025',date_basis='Official SAGE First published online April16,2025',related_versions='25p personal-sitehosted publisher-layout PDF;DOI/title crosschecked;not byteidentity certified',search_id='S-M2-T-SAGE-META',screening_status='included',reason='正式首发核实，正式版式方法/清单定向精读；研究建议非期刊强制政策。',method_type='methodological_primer',mechanisms='reporting;model stability;measurement validation;error handling',fulltext_url=pdf,evidence_location='Table3 p6;pp7–14;Appendix p17hypothetical context',card_path='reading-cards/M028.md',notes='Personal-site mirroredpublisherlayout,not author-host asserted;no new validationeffectexperiment;no codererun.',method_contribution_type='reproducibility_and_reporting;validation_and_external_validity;measurement',disciplinary_home='psychological methods;computational social science',method_transferability='报告与测量核查可迁移；作者Required/Optional不是编辑统一规则，示范不是验证研究。',method_relevance_rationale='直接补LLM科学报告、随机性和任务验证。',method_pending_fields='supplement_or_code_reexecution;workflow_effectiveness_validation',method_evidence_location='Table3;pp7–14;Appendix opening',method_coding_source='reading-cards/M028.md')
+save(F/'results.json',json.dumps(dict(batch_id='T-synthetic-agent-evaluation-primer',date='2026-11-26',expected_master_sha256=hashlib.sha256((R/'data/literature_master.csv').read_bytes()).hexdigest(),updates=[],new_records=[m27,m28]),ensure_ascii=False,indent=2))
+queries=['"10.23919/JSC.2025.0022"','"10.1177/25152459251325174"','"Evaluating the Use" "Madden" "pdf"','"JSC.2025.0022" pdf']
+ops=[dict(search_id=f'S-M2-T-Q{i:02}',platform='public_web_search',search_date='2026-11-26',query_exact=q,status='bounded_discovery',notes='Notwholejournal/independenthitcount') for i,q in enumerate(queries,1)]
+items=[('JSC-META',jsc,'official_metadata_abstract_checked','PublishedDec17;notAMinerAIpanel;webopen/findconsolidated'),('SAGE-META',sage,'official_identity_date_checked','FirstpublishedApr16;officialHTMLbodyinitialread'),('PRIMER-WEB',pdf,'publisher_layout_pdf_read','WebPDFopen/find/lineopens consolidated;Table3read'),('JSC-HTTP',jsc,'403','DirectstaticHTTP could notextract PDFlink;not fulltext'),('ARXIV-META','https://arxiv.org/abs/2509.26080','version_dates_checked','v1Sep30/v2Oct28;do notcallarxivformaljournalversion'),('PRIMER-DOWNLOAD',pdf,'verified_PDF200','25pages/376264bytes;focusedreading andTable3rendered;not rerun'),('MADDEN-DOWNLOAD',ar,'verified_author_v2_PDF200','24pages/245037bytes;focused§3–6read;notformalcollation'),('SAGE-FIND-FAIL',sage,'webtool_timeout','twofinds Table1/Reporting failed;notabsenceofsections')]
+ops += [dict(search_id='S-M2-T-'+key,platform='primary_source_access',search_date='2026-11-26',query_exact=u,source_url=u,status=status,notes=note) for key,u,status,note in items]
+for i,targets in enumerate(['arxivHTMLclick+primer468/1442','arxivHTML+primer468/1442','arxivHTMLonly'],1):ops.append(dict(search_id=f'S-M2-T-TRANSPORT-{i}',platform='web_tool_transport',search_date='2026-11-26',query_exact=targets,status='connection_failed_unconfirmed_targets',notes='Batchtoolfailed;notclaimalltargetHTTPfailures;switchedto directPDF200'))
+save(F/'source_operations.json',json.dumps(ops,ensure_ascii=False,indent=2))
+manifest=[]
+for name,url,version in [('T_primer',pdf,'personal_site_publisher_layout'),('T_madden',ar,'arxiv_v2_2025-10-28')]:
+ p=TMP/(name+'.pdf');b=p.read_bytes();assert b.startswith(b'%PDF');manifest.append(dict(url=url,version=version,sha256=hashlib.sha256(b).hexdigest(),bytes=len(b),pages=len(fitz.open(p)),checked='2026-11-26',storage='scratch_download_not_repository_PDF_archive',reading_scope='focused sections as card;no experimentalrerun'))
+save(R/'data/source_acquisition_manifest_T.json',json.dumps(manifest,ensure_ascii=False,indent=2))
+p=R/'data/method_validation_matrix.csv'
+with p.open(encoding='utf-8-sig',newline='') as f:d=csv.DictReader(f);h=d.fieldnames;rs=list(d)
+units=[('VC43','M027','独立受访者与互动主体分开','作者v2条件化推断批评','混淆依赖来源','推断单位','方法建议','概念论证','新统计定理/效果验证','不把社会互动的刻意依赖当抽样错误','§3–6'),('VC44','M027','分组与方差校准','真人基线','均值掩盖错配','人群推断','作者建议','引用研究综合','本文新实验或通用真人预测','AI重复数不能替代经验校准','§5pp12–18'),('VC45','M028','输出真值检查','人工/任务效标','测量误差与条件相关','测量效度','报告建议','方法primer','本项目分类器已通过','报告分层误差和选择依据','Table3;pp10–11'),('VC46','M028','错误处理披露','原始/处理后输出','选择性排除','推断稳健性','透明处理建议','概念与示例','错误处理流程效果已验证','记录失败/重试/排除，解释偏差','pp13–14'),('VC47','M028','建议与政策区分','Required/Optional及虚构示范','把清单当标准','报告规范','作者清单','非效果评估','期刊强制或项目冻结可放宽','保留规范链及项目已批准要求','Table3;Appendixp17')]
+for u in units:rs.append(dict(zip(h,list(u)+['conceptual_guidance_not_reexecuted','2026-11-26'])))
+with p.open('w',encoding='utf8',newline='') as f:w=csv.DictWriter(f,h);w.writeheader();w.writerows(rs)
