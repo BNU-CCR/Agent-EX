@@ -1,0 +1,1420 @@
+[
+  {
+    "doi": "10.18653/v1/2024.findings-naacl.211",
+    "source_url": "https://api.crossref.org/works/10.18653/v1/2024.findings-naacl.211",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Simulating Opinion Dynamics with Networks of LLM-based Agents"
+    ],
+    "authors": [
+      {
+        "given": "Yun-Shiuan",
+        "family": "Chuang",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Agam",
+        "family": "Goyal",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Nikunj",
+        "family": "Harlalka",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Siddharth",
+        "family": "Suresh",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Robert",
+        "family": "Hawkins",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Sijia",
+        "family": "Yang",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Dhavan",
+        "family": "Shah",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Junjie",
+        "family": "Hu",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Timothy",
+        "family": "Rogers",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "Findings of the Association for Computational Linguistics: NAACL 2024"
+    ],
+    "type": "proceedings-article",
+    "dates": {
+      "published-print": {
+        "date-parts": [
+          [
+            2024
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2024
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2024
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            27
+          ]
+        ],
+        "date-time": "2024-07-27T18:52:20Z",
+        "timestamp": 1722106340000
+      }
+    },
+    "volume": null,
+    "issue": null,
+    "page": "3326-3346",
+    "article_number": null,
+    "publisher_url": {
+      "primary": {
+        "URL": "https://aclanthology.org/2024.findings-naacl.211"
+      }
+    },
+    "links": null
+  },
+  {
+    "doi": "10.1140/epjds/s13688-025-00579-1",
+    "source_url": "https://api.crossref.org/works/10.1140/epjds/s13688-025-00579-1",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Selective agreement, not sycophancy: investigating opinion dynamics in LLM interactions"
+    ],
+    "authors": [
+      {
+        "given": "Erica",
+        "family": "Cau",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Valentina",
+        "family": "Pansanella",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Dino",
+        "family": "Pedreschi",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Giulio",
+        "family": "Rossetti",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "EPJ Data Science"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            15
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            15
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            15
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            15
+          ]
+        ],
+        "date-time": "2025-08-15T13:26:57Z",
+        "timestamp": 1755264417000
+      }
+    },
+    "volume": "14",
+    "issue": "1",
+    "page": null,
+    "article_number": "59",
+    "publisher_url": {
+      "primary": {
+        "URL": "https://epjdatascience.springeropen.com/articles/10.1140/epjds/s13688-025-00579-1"
+      }
+    },
+    "links": [
+      {
+        "URL": "https://link.springer.com/content/pdf/10.1140/epjds/s13688-025-00579-1.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://link.springer.com/article/10.1140/epjds/s13688-025-00579-1/fulltext.html",
+        "content-type": "text/html",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://link.springer.com/content/pdf/10.1140/epjds/s13688-025-00579-1.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  },
+  {
+    "doi": "10.18564/jasss.5726",
+    "source_url": "https://api.crossref.org/works/10.18564/jasss.5726",
+    "error": "429 Client Error: Too Many Requests for url: https://api.crossref.org/works/10.18564/jasss.5726"
+  },
+  {
+    "doi": "10.1038/s41467-026-77340-3",
+    "source_url": "https://api.crossref.org/works/10.1038/s41467-026-77340-3",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Disentangling interaction and bias effects in opinion dynamics of large language models"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0009-0003-3350-5865",
+        "authenticated-orcid": false,
+        "given": "Vincent C.",
+        "family": "Brockers",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0009-4232-9342",
+        "authenticated-orcid": false,
+        "given": "David A.",
+        "family": "Ehrlich",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-8905-5873",
+        "authenticated-orcid": false,
+        "given": "Viola",
+        "family": "Priesemann",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "Nature Communications"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            22
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            22
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            22
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            22
+          ]
+        ],
+        "date-time": "2026-09-22T11:58:36Z",
+        "timestamp": 1790078316000
+      }
+    },
+    "volume": "17",
+    "issue": "1",
+    "page": null,
+    "article_number": "10077",
+    "publisher_url": {
+      "primary": {
+        "URL": "https://www.nature.com/articles/s41467-026-77340-3"
+      }
+    },
+    "links": [
+      {
+        "URL": "https://www.nature.com/articles/s41467-026-77340-3",
+        "content-type": "text/html",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://www.nature.com/articles/s41467-026-77340-3.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://www.nature.com/articles/s41467-026-77340-3.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  },
+  {
+    "doi": "10.1016/j.ipm.2026.104689",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104689",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0003-3267-5769",
+        "authenticated-orcid": false,
+        "given": "Jiaxing",
+        "family": "Zheng",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0006-0136-3710",
+        "authenticated-orcid": false,
+        "given": "Changqing",
+        "family": "Li",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-6294-0431",
+        "authenticated-orcid": false,
+        "given": "Peng",
+        "family": "Wu",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-0424-9845",
+        "authenticated-orcid": false,
+        "given": "Li",
+        "family": "Pan",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "Information Processing &amp; Management"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            23
+          ]
+        ],
+        "date-time": "2026-02-23T10:54:49Z",
+        "timestamp": 1771844089000
+      }
+    },
+    "volume": "63",
+    "issue": "5",
+    "page": "104689",
+    "article_number": "104689",
+    "publisher_url": {
+      "primary": {
+        "URL": "https://linkinghub.elsevier.com/retrieve/pii/S0306457326000804"
+      }
+    },
+    "links": [
+      {
+        "URL": "https://api.elsevier.com/content/article/PII:S0306457326000804?httpAccept=text/xml",
+        "content-type": "text/xml",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://api.elsevier.com/content/article/PII:S0306457326000804?httpAccept=text/plain",
+        "content-type": "text/plain",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      }
+    ]
+  },
+  {
+    "doi": "10.18564/jasss.4725",
+    "source_url": "https://api.crossref.org/works/10.18564/jasss.4725",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Natural-Language Multi-Agent Simulations of Argumentative Opinion Dynamics"
+    ],
+    "authors": [
+      {
+        "given": "Gregor",
+        "family": "Betz",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "Journal of Artificial Societies and Social Simulation"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-online": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2022,
+            2,
+            1
+          ]
+        ],
+        "date-time": "2022-02-01T10:57:52Z",
+        "timestamp": 1643713072000
+      }
+    },
+    "volume": "25",
+    "issue": "1",
+    "page": null,
+    "article_number": "2",
+    "publisher_url": {
+      "primary": {
+        "URL": "https://www.jasss.org/25/1/2.html"
+      }
+    },
+    "links": null
+  },
+  {
+    "doi": "10.1098/rsif.2023.0372",
+    "source_url": "https://api.crossref.org/works/10.1098/rsif.2023.0372",
+    "error": "429 Client Error: Too Many Requests for url: https://api.crossref.org/works/10.1098/rsif.2023.0372"
+  },
+  {
+    "doi": "10.1002/sdr.1761",
+    "source_url": "https://api.crossref.org/works/10.1002/sdr.1761",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Generative agent‐based modeling: an introduction and tutorial"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0003-3632-8588",
+        "authenticated-orcid": false,
+        "given": "Navid",
+        "family": "Ghaffarzadegan",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Industrial and Systems Engineering Virginia Tech  Falls Church Virginia USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-9522-7157",
+        "authenticated-orcid": false,
+        "given": "Aritra",
+        "family": "Majumdar",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Industrial and Systems Engineering Virginia Tech  Falls Church Virginia USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ross",
+        "family": "Williams",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Industrial and Systems Engineering Virginia Tech  Falls Church Virginia USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-3809-3778",
+        "authenticated-orcid": false,
+        "given": "Niyousha",
+        "family": "Hosseinichimeh",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Industrial and Systems Engineering Virginia Tech  Falls Church Virginia USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "System Dynamics Review"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-online": {
+        "date-parts": [
+          [
+            2024,
+            1,
+            10
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            1
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            1
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            1
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            1,
+            11
+          ]
+        ],
+        "date-time": "2024-01-11T01:44:00Z",
+        "timestamp": 1704937440000
+      }
+    },
+    "volume": "40",
+    "issue": "1",
+    "page": null,
+    "article_number": "e1761",
+    "publisher_url": {
+      "primary": {
+        "URL": "https://onlinelibrary.wiley.com/doi/10.1002/sdr.1761"
+      }
+    },
+    "links": [
+      {
+        "URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/sdr.1761",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://onlinelibrary.wiley.com/doi/full-xml/10.1002/sdr.1761",
+        "content-type": "application/xml",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://onlinelibrary.wiley.com/doi/am-pdf/10.1002/sdr.1761",
+        "content-type": "application/pdf",
+        "content-version": "am",
+        "intended-application": "syndication"
+      },
+      {
+        "URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/sdr.1761",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "syndication"
+      },
+      {
+        "URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/sdr.1761",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  },
+  {
+    "doi": "10.1126/sciadv.adu9368",
+    "source_url": "https://api.crossref.org/works/10.1126/sciadv.adu9368",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Emergent social conventions and collective bias in LLM populations"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0009-0004-4356-5949",
+        "authenticated-orcid": true,
+        "given": "Ariel Flint",
+        "family": "Ashery",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Mathematics, City St George’s, University of London, Northampton Square, London EC1V 0HB, UK."
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-0654-2527",
+        "authenticated-orcid": true,
+        "given": "Luca Maria",
+        "family": "Aiello",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Computer Science Department, IT University of Copenhagen, Rued Langgaards Vej 7, 2300 Copenhagen, Denmark."
+          },
+          {
+            "name": "Pioneer Centre for AI, 3 Øster Voldgade, 1350 Copenhagen, Denmark."
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-0255-0829",
+        "authenticated-orcid": true,
+        "given": "Andrea",
+        "family": "Baronchelli",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Mathematics, City St George’s, University of London, Northampton Square, London EC1V 0HB, UK."
+          },
+          {
+            "name": "The Alan Turing Institute, British Library, 96 Euston Road, London NW1 2DB, UK."
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "Science Advances"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            16
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            16
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            16
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            14
+          ]
+        ],
+        "date-time": "2025-05-14T13:59:43Z",
+        "timestamp": 1747231183000
+      }
+    },
+    "volume": "11",
+    "issue": "20",
+    "page": null,
+    "article_number": "eadu9368",
+    "publisher_url": {
+      "primary": {
+        "URL": "https://www.science.org/doi/10.1126/sciadv.adu9368"
+      }
+    },
+    "links": [
+      {
+        "URL": "https://www.science.org/doi/pdf/10.1126/sciadv.adu9368",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  },
+  {
+    "doi": "10.1162/tacl_a_00685",
+    "source_url": "https://api.crossref.org/works/10.1162/tacl_a_00685",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Do LLMs Exhibit Human-like Response Biases? A Case Study in Survey Design"
+    ],
+    "authors": [
+      {
+        "given": "Lindia",
+        "family": "Tjuatja",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, USA. lindiat@andrew.cmu.edu"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Valerie",
+        "family": "Chen",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, USA. vchen2@andrew.cmu.edu"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Tongshuang",
+        "family": "Wu",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ameet",
+        "family": "Talwalkwar",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Graham",
+        "family": "Neubig",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Carnegie Mellon University, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "Transactions of the Association for Computational Linguistics"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-online": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            4
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            4
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2024
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2024
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2024-09-04T09:35:08Z",
+        "timestamp": 1725442508000
+      }
+    },
+    "volume": "12",
+    "issue": null,
+    "page": "1011-1026",
+    "article_number": null,
+    "publisher_url": {
+      "primary": {
+        "URL": "https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00685/124261/Do-LLMs-Exhibit-Human-like-Response-Biases-A-Case"
+      }
+    },
+    "links": [
+      {
+        "URL": "https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl_a_00685/2468689/tacl_a_00685.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "syndication"
+      },
+      {
+        "URL": "https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl_a_00685/2468689/tacl_a_00685.pdf",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  },
+  {
+    "doi": "10.1103/j1zg-ddqv",
+    "source_url": "https://api.crossref.org/works/10.1103/j1zg-ddqv",
+    "retrieved_date": "2026-11-26",
+    "title": [
+      "Opinion dynamics: Statistical physics and beyond"
+    ],
+    "authors": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-9161-5339",
+        "authenticated-orcid": true,
+        "given": "Michele",
+        "family": "Starnini",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/04n0g0b29",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Universitat Pompeu Fabra"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0009-0001-3562-9728",
+        "authenticated-orcid": true,
+        "given": "Fabian",
+        "family": "Baumann",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/00b30xv10",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "University of Pennsylvania"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-3402-2163",
+        "authenticated-orcid": true,
+        "given": "Tobias",
+        "family": "Galla",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/03e10x626",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Universitat de les Illes Balears"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-2820-9151",
+        "authenticated-orcid": true,
+        "given": "David",
+        "family": "Garcia",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/0546hnb39",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "University of Konstanz"
+          },
+          {
+            "id": [
+              {
+                "id": "https://ror.org/023dz9m50",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Complexity Science Hub"
+          },
+          {
+            "id": [
+              {
+                "id": "https://ror.org/05sd8tv96",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Barcelona Supercomputing Center"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7181-5520",
+        "authenticated-orcid": true,
+        "given": "Gerardo",
+        "family": "Iñiguez",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/033003e23",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Tampere University"
+          },
+          {
+            "id": [
+              {
+                "id": "https://ror.org/01tmp8f25",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Universidad Nacional Autónoma de México"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-5382-8950",
+        "authenticated-orcid": true,
+        "given": "Márton",
+        "family": "Karsai",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/02zx40v98",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Central European University"
+          },
+          {
+            "id": [
+              {
+                "id": "https://ror.org/03vw74f64",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Rényi Institute of Mathematics"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-5547-7848",
+        "authenticated-orcid": true,
+        "given": "Jan",
+        "family": "Lorenz",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/02yrs2n53",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Constructor University"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1851-8508",
+        "authenticated-orcid": true,
+        "given": "Katarzyna",
+        "family": "Sznajd-Weron",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "id": [
+              {
+                "id": "https://ror.org/008fyn775",
+                "id-type": "ROR",
+                "asserted-by": "publisher"
+              }
+            ],
+            "name": "Wroclaw University of Science and Technology"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "venue": [
+      "Reviews of Modern Physics"
+    ],
+    "type": "journal-article",
+    "dates": {
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            10
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            10
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            10
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            23
+          ]
+        ],
+        "date-time": "2026-04-23T17:53:28Z",
+        "timestamp": 1776966808000
+      }
+    },
+    "volume": "98",
+    "issue": "3",
+    "page": null,
+    "article_number": "035004",
+    "publisher_url": {
+      "primary": {
+        "URL": "https://link.aps.org/doi/10.1103/j1zg-ddqv"
+      }
+    },
+    "links": [
+      {
+        "URL": "https://link.aps.org/article/10.1103/j1zg-ddqv",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "syndication"
+      },
+      {
+        "URL": "http://harvest.aps.org/v2/journals/articles/10.1103/j1zg-ddqv/fulltext",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  },
+  {
+    "doi": "10.1016/j.ipm.2026.104636",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104636",
+    "error": "429 Client Error: Too Many Requests for url: https://api.crossref.org/works/10.1016/j.ipm.2026.104636"
+  }
+]

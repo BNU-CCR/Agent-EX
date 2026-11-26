@@ -1,0 +1,36 @@
+[
+  {
+    "key": "chuang",
+    "url": "https://aclanthology.org/2024.findings-naacl.211.pdf",
+    "pages": 21,
+    "cache": "C:\\Users\\BAIYUE~1\\AppData\\Local\\Temp\\agentex-literature-20261126\\chuang.txt",
+    "status": "retrieved"
+  },
+  {
+    "key": "steiglechner",
+    "url": "https://cris.leibniz-zmt.de/id/eprint/5307/1/Steiglechner-2023.pdf",
+    "status": "access_blocked",
+    "error": "HTTPSConnectionPool(host='cris.leibniz-zmt.de', port=443): Max retries exceeded with url: /id/eprint/5307/1/Steiglechner-2023.pdf (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)')))"
+  },
+  {
+    "key": "ashery",
+    "url": "https://openaccess.city.ac.uk/id/eprint/35211/1/sciadv.adu9368.pdf",
+    "pages": 11,
+    "cache": "C:\\Users\\BAIYUE~1\\AppData\\Local\\Temp\\agentex-literature-20261126\\ashery.txt",
+    "status": "retrieved"
+  },
+  {
+    "key": "tjuatja",
+    "url": "https://aclanthology.org/2024.tacl-1.56.pdf",
+    "pages": 16,
+    "cache": "C:\\Users\\BAIYUE~1\\AppData\\Local\\Temp\\agentex-literature-20261126\\tjuatja.txt",
+    "status": "retrieved"
+  },
+  {
+    "key": "piao",
+    "url": "https://fi.ee.tsinghua.edu.cn/~gaochen/papers/Nature2026-LLM-Polarization.pdf",
+    "pages": 14,
+    "cache": "C:\\Users\\BAIYUE~1\\AppData\\Local\\Temp\\agentex-literature-20261126\\piao.txt",
+    "status": "retrieved"
+  }
+]
