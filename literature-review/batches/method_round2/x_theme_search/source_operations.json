@@ -1,0 +1,61 @@
+[
+  {
+    "search_id": "S-M2-X-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "validation of generative social simulation 2022 2026",
+    "status": "bounded_theme_search",
+    "notes": "Yeartext is discoveryhint notdatabasefilter;noauditabletotalhits;do notmergeofftopicnews/Reddit intoformalresearch"
+  },
+  {
+    "search_id": "S-M2-X-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "LLM agent calibration social simulation",
+    "status": "bounded_theme_search",
+    "notes": "Yeartext is discoveryhint notdatabasefilter;noauditabletotalhits;do notmergeofftopicnews/Reddit intoformalresearch"
+  },
+  {
+    "search_id": "S-M2-X-Q03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "stochastic reproducibility LLM agent simulation",
+    "status": "bounded_theme_search",
+    "notes": "Yeartext is discoveryhint notdatabasefilter;noauditabletotalhits;do notmergeofftopicnews/Reddit intoformalresearch"
+  },
+  {
+    "search_id": "S-M2-X-Q04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "theory formalization agent-based model 2022 2026",
+    "status": "bounded_theme_search",
+    "notes": "Yeartext is discoveryhint notdatabasefilter;noauditabletotalhits;do notmergeofftopicnews/Reddit intoformalresearch"
+  },
+  {
+    "search_id": "S-M2-X-MOZAIC",
+    "platform": "official_publisher",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full",
+    "status": "metadata_abstract_checked",
+    "notes": "Published12Aug2026;authors/title/abstractonly;bodyaccessiblebutnotyetfocusedread"
+  },
+  {
+    "search_id": "S-M2-X-TRC",
+    "platform": "official_publisher",
+    "search_date": "2026-11-26",
+    "query_exact": "https://doi.org/10.1016/j.trc.2026.105818",
+    "source_url": "https://doi.org/10.1016/j.trc.2026.105818",
+    "status": "redirect_inaccessible",
+    "notes": "Redirectto linkinghub S0968090X26003062 notaccessible;searchsnippet not fulltext"
+  },
+  {
+    "search_id": "S-M2-X-EFECT",
+    "platform": "research_site_pdf",
+    "search_date": "2026-11-26",
+    "query_exact": "https://livermetabolism.com/paper/Sego2024_stochastic_reproducibility.pdf",
+    "source_url": "https://livermetabolism.com/paper/Sego2024_stochastic_reproducibility.pdf",
+    "status": "HTTP404",
+    "notes": "NoPDFsuccess;formalidentity/date need primarysource verification"
+  }
+]

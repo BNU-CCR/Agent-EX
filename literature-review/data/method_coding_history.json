@@ -2358,5 +2358,125 @@
     "batch": "T-synthetic-agent-evaluation-primer",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/t_evaluation_primer/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_type",
+    "old": "",
+    "new": "theory_formalization_framework",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;reproducibility_and_reporting",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending;abstractclaims reusable mathematicalbuildingblocks,not independently verified",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接补理论形式化，而非再以意见应用支配检索。",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "focused_fulltext;framework_evaluation;limits;code_and_supplement",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Abstractonly;foursteps andfiveexampletheories",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "X-method-theme-search",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/x_theme_search/results.json"
   }
 ]

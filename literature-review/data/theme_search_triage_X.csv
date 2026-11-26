@@ -1,0 +1,15 @@
+lead_id,title_as_discovered,identifier_as_discovered,source_url,triage_status,boundary,checked
+LX01,Can large language models implement agent-based models?,10.1016/j.ecolmodel.2026.111624,https://www.sciencedirect.com/science/article/pii/S0304380026001523,existing_M003,复现代码，不重复建档；DOI以主表为准,2026-11-26
+LX02,Integrating LLM in Agent-Based Social Simulation: Opportunities and Challenges,arXiv2507.19364,https://arxiv.org/abs/2507.19364,existing_M004_version,已关联正式fluencyfallacy综述，不重复前沿记录,2026-11-26
+LX03,MOZAIC: A mathematical approach to formalizing behavioral theories – applied to an agent-based model of mobility,10.3389/frsps.2026.1772740,https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full,new_candidate_M029,官方题录/日期/摘要核实；全文待Y,2026-11-26
+LX04,Aligning LLM agents with human learning and adjustment behavior: A dual agent approach,10.1016/j.trc.2026.105818,https://doi.org/10.1016/j.trc.2026.105818,unverified_lead,高优先校准；跳转受阻，作者/日期/设计待核,2026-11-26
+LX05,SanctSim,COLM2025_claim,https://zhijing-jin.com/files/papers/2025_SanctSim.pdf,unverified_lead,搜索页称正式会议；具体题名/轨道/日期待核,2026-11-26
+LX06,Calibrated but Autonomous: Inference-Time Bayesian Logit Correction for LLM,OpenReview9EZgvMOHXn,https://openreview.net/attachment?id=9EZgvMOHXn&name=pdf,unverified_lead,校准线索；不由OpenReview域名推断接收,2026-11-26
+LX07,Harmonising Theory and Empirics: The THEMP Approach,10.18564/jasss.6211,https://jasss.soc.surrey.ac.uk/29/4/6.html,existing_M013,已读，不重复建档,2026-11-26
+LX08,Validation is the central challenge for generative social simulation,10.1007/s10462-025-11412-6,https://doi.org/10.1007/s10462-025-11412-6,existing_R015,已读，不能把重复命中算新增工作,2026-11-26
+LX09,Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method,MASS,https://www.mdpi.com/2673-2688/7/8/279,existing_M001,已读协议先例,2026-11-26
+LX10,VISA: A Structured Description Protocol for Agent-Based Simulation Models Towards Machine Reproducibility,arXiv2607.28027,https://arxiv.org/abs/2607.28027,unverified_frontier_lead,机器可解析规范；不把摘要声称可检查等同有效性,2026-11-26
+LX11,SoAgent: A Real-world Data Empowered Agent Pool to Facilitate LLM-Driven Generative Social Simulation,DATAI25_9,https://www.vldb.org/2025/Workshops/VLDB-Workshops-2025/DATAI/DATAI25_9.pdf,unverified_workshop_lead,须区分VLDBworkshop与主会，日期/全文待核,2026-11-26
+LX12,EFECT – A Method and Metric to Assess the Reproducibility of Stochastic Simulation Studies,EFECT,https://livermetabolism.com/paper/Sego2024_stochastic_reproducibility.pdf,unverified_lead_pdf404,高优先随机模拟复现；正式身份与替代合法全文待核,2026-11-26
+LX13,Theory for and from agent-based modelling: insights from a virtual special issue and a vision,10.1016/j.envsoft.2024.106088,https://tore.tuhh.de/entities/publication/7871d0f6-c7ba-4024-b1c3-ab0c8f7f0bee,unverified_lead,机构全文线索，先核日期与载体；非2022前理论追溯,2026-11-26
+LX14,LLM-driven paradigm for agent-based modeling and simulation: A review and organizing framework,10.1016/j.cosrev.2026.101054,https://doi.org/10.1016/j.cosrev.2026.101054,unverified_lead,建模辅助与模拟内主体分开；身份/日期/方法待核,2026-11-26

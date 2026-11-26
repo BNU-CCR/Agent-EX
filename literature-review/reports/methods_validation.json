@@ -1,21 +1,21 @@
 {
   "checked": "2026-11-26",
-  "records": 85,
+  "records": 86,
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 40,
-  "search_rows": 551,
+  "search_rows": 558,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 32,
-    "candidate": 45,
+    "candidate": 46,
     "frontier": 6,
     "excluded": 2
   },
   "method_tiers": {
     "direct_comparator": 15,
     "method_validation": 24,
-    "core_method": 29,
+    "core_method": 30,
     "peripheral": 11,
     "application": 6
   },

@@ -35,7 +35,7 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-26，保留首轮57条及15卡，新增28项工作、补读5条原记录，现85条、44张全文卡；32项正式纳入、45候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-26，保留首轮57条及15卡，新增29项工作、补读5条原记录，现86条、44张全文卡；32项正式纳入、46候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
@@ -89,3 +89,5 @@
 批次V：[66项交付审计](reports/delivery_requirement_audit.md)，发现旧字段别名漂移与新简卡结构缺口；核验通过仅限已列检查范围。目标未完成。
 
 批次W：[分类与卡结构修复](reports/categorical_and_card_repair.md)，24条/52字段原值与映射保留，四旧字段非空词表检查通过；M027/M028恢复11项结构。
+
+批次X：[方法主题补查](reports/theme_search_followup.md)与14条定向线索表；新增M029摘要候选，未增全文卡；86条、558来源操作，其他当前统计见progress。

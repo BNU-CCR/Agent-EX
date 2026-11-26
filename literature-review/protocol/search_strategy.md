@@ -36,3 +36,5 @@ search_id稳定，平台搜索总数无法可靠读取时result_count留空；re
 - 2026-11-26：RoleSimLLM有官方摘要/节选但全文未得，不制作完整卡；Crossref仅卷期2026-07，不用created=2026-02-23冒充online-first。
 - 2026-11-26：部分Springer/Nature初次cookie跳转失败，公开正式页与机构全文替代；PMC验证码不代表论文不存在。
 - 2026-11-26：Crossref部分429保留失败记录，已可用的出版社页继续核查，不高频重复请求。
+
+第二轮X已实际补validation of generative social simulation、LLM agent calibration、stochastic reproducibility LLM agent simulation、theory formalization agent-based model四组公开查询，精确式在S-M2-X-Q01–04。年份文本不作数据库过滤，字面词匹配不作召回率；后续由真实命中/去重和官方全文推进，见reports/theme_search_followup.md。
