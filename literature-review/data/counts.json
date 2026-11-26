@@ -1,0 +1,29 @@
+{
+  "records": 57,
+  "publication_records_formal": 55,
+  "included_fulltext": 15,
+  "included_work_ids": 15,
+  "included_empirical_work_ids": 13,
+  "status": {
+    "included": 15,
+    "candidate": 38,
+    "frontier": 2,
+    "excluded": 2
+  },
+  "date_status": {
+    "confirmed": 41,
+    "date_pending": 13,
+    "preprint_eligible": 2,
+    "ineligible": 1
+  },
+  "reading_status": {
+    "fulltext_checked": 15,
+    "abstract_read": 32,
+    "metadata_only": 8,
+    "fulltext_partial": 2
+  },
+  "journals": 55,
+  "log_rows": 222,
+  "cards": 15,
+  "core_source_journals": 12
+}
