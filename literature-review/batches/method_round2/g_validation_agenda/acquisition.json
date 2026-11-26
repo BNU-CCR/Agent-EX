@@ -1,0 +1,10 @@
+{
+  "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/puelma-touzel26a/puelma-touzel26a.pdf",
+  "checked": "2026-11-26",
+  "status": 200,
+  "content_type": "application/octet-stream",
+  "bytes": 337068,
+  "pages": 15,
+  "sha256": "cfa321355778db16243b931894fda9bb78d9af5c70df7bb5461a29f50f004a20",
+  "output_display_error": "'gbk' codec can't encode character '\\xb4' in position 128: illegal multibyte sequence"
+}

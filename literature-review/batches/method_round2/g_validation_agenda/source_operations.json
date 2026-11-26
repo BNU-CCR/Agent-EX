@@ -1,0 +1,55 @@
+[
+  {
+    "search_id": "S-M2-G-PMLR",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://proceedings.mlr.press/v306/puelma-touzel26a.html",
+    "source_url": "https://proceedings.mlr.press/v306/puelma-touzel26a.html",
+    "status": "formal_metadata_checked",
+    "notes": "Exact source operation, not whole-conference coverage; mainPDF15pages locally read"
+  },
+  {
+    "search_id": "S-M2-G-PDF-WEB",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/puelma-touzel26a/puelma-touzel26a.pdf",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/puelma-touzel26a/puelma-touzel26a.pdf",
+    "status": "web_unsupported_octet_stream",
+    "notes": "Exact source operation, not whole-conference coverage; mainPDF15pages locally read"
+  },
+  {
+    "search_id": "S-M2-G-PDF-HTTP",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/puelma-touzel26a/puelma-touzel26a.pdf",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/puelma-touzel26a/puelma-touzel26a.pdf",
+    "status": "http200_pdf_extracted_main_read;see acquisition.json",
+    "notes": "Exact source operation, not whole-conference coverage; mainPDF15pages locally read"
+  },
+  {
+    "search_id": "S-M2-G-OPENREVIEW",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://openreview.net/forum?id=LpbxLBcOBf",
+    "source_url": "https://openreview.net/forum?id=LpbxLBcOBf",
+    "status": "verification_challenge;no_content_read",
+    "notes": "Exact source operation, not whole-conference coverage; mainPDF15pages locally read"
+  },
+  {
+    "search_id": "S-M2-G-STAMINA",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.complexdatalab.com/stamina/",
+    "source_url": "https://www.complexdatalab.com/stamina/",
+    "status": "transport_connection_failure;cached_discovery_not_live_status",
+    "notes": "Exact source operation, not whole-conference coverage; mainPDF15pages locally read"
+  },
+  {
+    "search_id": "S-M2-G-TRANSPORT",
+    "platform": "web_tool",
+    "search_date": "2026-11-26",
+    "query_exact": "\"A CRISP-DM-based methodology\" filetype:pdf | \"Gao\" \"Large language models empowered agent-based modeling\" \"2024\" | https://www.nature.com/articles/s41599-024-03611-3",
+    "status": "transport_connection_failure",
+    "notes": "Combined request failed; no query totals, no retrieved results, no screening or zero-hit claim"
+  }
+]

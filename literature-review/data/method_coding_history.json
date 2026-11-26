@@ -288,5 +288,125 @@
     "batch": "F-architecture-theory",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_type",
+    "old": "",
+    "new": "position_paper;formal_abstraction;validation_critique",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;validation_and_external_validity;measurement;reproducibility_and_reporting",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_maturity",
+    "old": "",
+    "new": "review_or_critique",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_transferability",
+    "old": "",
+    "new": "轨迹/评价对象词汇和研究任务可迁移；倡议与形式表达未作为通用验证器实测。",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "conceptual_claim",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "主要批评验证缺口并提出评价研究议程，正式观点发表不等于已验证规范。",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "first_formal_online_date;benchmark_delivery;code_reexecution;independent_validation",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "§§3–7;Table1",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M014.md",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "G-validation-agenda",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/g_validation_agenda/results.json"
   }
 ]
