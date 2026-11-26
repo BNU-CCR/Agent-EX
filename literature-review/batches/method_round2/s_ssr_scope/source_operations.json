@@ -1,0 +1,112 @@
+[
+  {
+    "search_id": "S-M2-S-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" journal \"large language models\" simulation",
+    "status": "bounded_query_not_journal_census",
+    "notes": "Off-targetvenues/SSRN/topickeywordcollisions;noqualifiedSSR2022+methodprecedentverified;notzeropapers or independentlycountedhits"
+  },
+  {
+    "search_id": "S-M2-S-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"agent-based\" 2022 2023 2024 2025",
+    "status": "bounded_query_not_journal_census",
+    "notes": "Off-targetvenues/SSRN/topickeywordcollisions;noqualifiedSSR2022+methodprecedentverified;notzeropapers or independentlycountedhits"
+  },
+  {
+    "search_id": "S-M2-S-Q03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.sciencedirect.com/journal/social-science-research \"agent\" \"simulation\"",
+    "status": "bounded_query_not_journal_census",
+    "notes": "Off-targetvenues/SSRN/topickeywordcollisions;noqualifiedSSR2022+methodprecedentverified;notzeropapers or independentlycountedhits"
+  },
+  {
+    "search_id": "S-M2-S-Q04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"10.1016/j.ssresearch\" \"simulation\"",
+    "status": "bounded_query_not_journal_census",
+    "notes": "Off-targetvenues/SSRN/topickeywordcollisions;noqualifiedSSR2022+methodprecedentverified;notzeropapers or independentlycountedhits"
+  },
+  {
+    "search_id": "S-M2-S-Q05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"large language models\" \"10.1016/j.ssresearch\"",
+    "status": "bounded_query_not_journal_census",
+    "notes": "Off-targetvenues/SSRN/topickeywordcollisions;noqualifiedSSR2022+methodprecedentverified;notzeropapers or independentlycountedhits"
+  },
+  {
+    "search_id": "S-M2-S-Q06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Social Science Research\" \"ISSN\" \"0049-089X\" aims scope",
+    "status": "bounded_query_not_journal_census",
+    "notes": "Off-targetvenues/SSRN/topickeywordcollisions;noqualifiedSSR2022+methodprecedentverified;notzeropapers or independentlycountedhits"
+  },
+  {
+    "search_id": "S-M2-S-Q07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "site.sciencedirect.com/science/article/ \"Social Science Research\" \"agent-based model\" 2023",
+    "status": "bounded_query_not_journal_census",
+    "notes": "Off-targetvenues/SSRN/topickeywordcollisions;noqualifiedSSR2022+methodprecedentverified;notzeropapers or independentlycountedhits"
+  },
+  {
+    "search_id": "S-M2-S-SCOPE-FAIL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/journal/social-science-research/about/aims-and-scope",
+    "source_url": "https://www.sciencedirect.com/journal/social-science-research/about/aims-and-scope",
+    "status": "403",
+    "notes": "Scope andavailability evidence,not paperinclusion or directorycoverage"
+  },
+  {
+    "search_id": "S-M2-S-ISSUES-FAIL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/journal/social-science-research/issues",
+    "source_url": "https://www.sciencedirect.com/journal/social-science-research/issues",
+    "status": "403",
+    "notes": "Scope andavailability evidence,not paperinclusion or directorycoverage"
+  },
+  {
+    "search_id": "S-M2-S-VOL-FAIL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/journal/social-science-research/vol/124/suppl/C",
+    "source_url": "https://www.sciencedirect.com/journal/social-science-research/vol/124/suppl/C",
+    "status": "403",
+    "notes": "Scope andavailability evidence,not paperinclusion or directorycoverage"
+  },
+  {
+    "search_id": "S-M2-S-GUIDE-FAIL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/journal/social-science-research/about/guide-for-authors",
+    "source_url": "https://www.sciencedirect.com/journal/social-science-research/about/guide-for-authors",
+    "status": "403",
+    "notes": "Scope andavailability evidence,not paperinclusion or directorycoverage"
+  },
+  {
+    "search_id": "S-M2-S-SCOPE",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://shop.elsevier.com/journals/social-science-research/0049-089X",
+    "source_url": "https://shop.elsevier.com/journals/social-science-research/0049-089X",
+    "status": "publisher_scope_checked",
+    "notes": "Scope andavailability evidence,not paperinclusion or directorycoverage"
+  },
+  {
+    "search_id": "S-M2-S-MJL",
+    "platform": "official_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://mjl.clarivate.com/cgi-bin/jrnlst/jlresults.cgi?ISSN=0049-089X&PC=D",
+    "source_url": "https://mjl.clarivate.com/cgi-bin/jrnlst/jlresults.cgi?ISSN=0049-089X&PC=D",
+    "status": "search_excerpt_only_render_empty",
+    "notes": "MJLsearch showsSSCI butopenonlyiframe;do notclaim fullyverifiedcurrentindex"
+  }
+]

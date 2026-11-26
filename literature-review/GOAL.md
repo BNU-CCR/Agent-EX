@@ -84,3 +84,5 @@ R016、THEMP与EASE已补精读和25单元矩阵；ICML验证议程已补正式�
 批次Q完成综合期刊先例去重核查，R014正式全文升级、M026人格构件验证新增；83条/42卡/42证据单元/30载体、31正式纳入。下一项R补PLOS ONE/Scientific Reports详细制品政策与指南，再处理Social Science Research有界目录和版本日期缺口；完整目标继续进行。
 
 批次R补PLOS ONE/Scientific Reports数据、代码与格式政策，实际要求与建议分开；未改变实验或纳入状态。下一批S核Social Science Research有界目录与方法先例。
+
+批次S：[Social Science Research范围与覆盖边界](reports/ssr_scope_and_search_boundary.md)。

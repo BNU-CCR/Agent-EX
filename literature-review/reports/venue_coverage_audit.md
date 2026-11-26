@@ -22,3 +22,5 @@
 官方依据：[CMOT范围](https://link.springer.com/journal/10588/aims-and-scope)、[作者指南](https://link.springer.com/journal/10588/submission-guidelines)、[SIMULATION学会范围](https://scs.org/publications/)、[正式TOC](https://journals.sagepub.com/toc/sim/100/7)、[AAMAS正式目录](https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm)、[ICWSM机构题录](https://re.public.polimi.it/handle/11311/1317866)。
 
 批次K：补M021作者v2方法/经验评价精读及M020固定代码快照的七文件静态核查；累计78条/35卡/25验证单元。正式纳入仍27项，作者稿不升级为正式版全文。详见[校准与制品核查](calibration_and_artifact_audit.md)。
+
+批次S见[SSR范围与检索边界](ssr_scope_and_search_boundary.md)：官方范围已补，目录/指南403，未确认先例，不是零发表。
