@@ -16,7 +16,7 @@
 |F|R016、M008补全文，M013 THEMP；70条/29卡；12验证矩阵单元|a5deb0e|
 |G|M014 ICML2026正式position全文，首次在线日未核；71条/30卡；14单元、19载体|b32f97d|
 |H|M015正式题录与2024作者v1方法精读；正式PDF403保留candidate；72条/31卡；16单元|949fbc4|
-|I|M016 Gao正式综述方法/评价定向精读；综述范围比较；73条/32卡；18单元|本批成果提交见Git历史，提交后回填SHA|
+|I|M016 Gao正式综述方法/评价定向精读；综述范围比较；73条/32卡；18单元|d47b60b（已推送）|
 
 ### 当前核验统计
 
@@ -61,3 +61,6 @@
 研究副本C:/Users/Bai Yuexi/Agent-EX-literature-20261126，分支codex/social-identity-network-2x3。原E盘目录有其他工作与Git引用问题，不覆盖或清理。本轮成果均在literature-review/；首轮保留基线d88ba3c。
 
 每次会话读GOAL、METHODS_FIRST_REORIENTATION、README、progress并检查HEAD/远端/工作区。不得重跑批次A覆盖后续状态；apply_method_patch.py以主表SHA256拒绝过期批次，旧字段/方法编码变更可追溯。会话结束后不声称后台仍在运行。
+
+## 最近同步回执
+2026-11-26：F a5deb0e、G b32f97d、H 949fbc4、I d47b60b均已推送。当前73条/32卡/18矩阵单元/19载体；保留与数据交叉核验通过，8表结构/缓存值与汇总页视觉检查通过。下一批按上方具体任务继续。
