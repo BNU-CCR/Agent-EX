@@ -34,3 +34,6 @@ VC32,M024,保留模型乘表示的阴性条件,各组合 vs无情绪基线,平�
 VC33,R017,多层经验分布/条件关系分别核,ANES真人与匹配人设合成调查,整体均值接近遮蔽变异压缩/子群偏差,调查分布与条件关系,正式正文报告均值、方差与条件关系分歧,formal_empirical_survey_comparison,多主体动态轨迹效度或所有LLM失败,意见分布/子群/条件关系分列，不以一个宏观量认证,§§1–2,source_read_not_reexecuted,2026-11-26
 VC34,R017,区分随机重复与模型跨时间变化,April/June/July相同提示的生成结果,同模型名称被视为固定生成机制,时间可复现性,作者报告跨时间结果变化；后台具体原因未识别,formal_temporal_model_output_comparison,变化一定由特定训练机制导致,保存模型snapshot/revision/运行时点；不从漂移反推原因,§3.2,source_read_not_reexecuted,2026-11-26
 VC35,R017,合成重复与真人独立单位分开,多次合成回答与原真人调查单位,生成量膨胀被当独立人类N；压缩方差用于功效,不确定性与样本定义,正文区分合成重复、汇总和不确定性处理,formal_synthetic_sampling_design,合成规模可以替代真人功效/独立重复,分开agent/run/人类样本单位与功效目标,§1;§2.1;Footnote15,source_read_not_reexecuted,2026-11-26
+VC36,M025,区分同目标搜索与独立验证,同一Lazega网络指导逐步假设和参数搜索,目标指导后的适配被当独立留出验证,网络宏观拟合,中央95%模拟区间适配；逐步细化搜索,formal_traditional_ABM_empirical_fit,未知网络/独立纵向预测,报告拟合资料、搜索预算及独立检验资料,§3.3;§3.6–3.7;AppendixA,source_read_not_reexecuted,2026-11-26
+VC37,M025,终止条件与验证指标分开,运行至经验目标密度并比较宏观指标,被停止规则约束的统计被当独立涌现,模型选择与停止条件,作者按目标密度停止，展示最佳拟合选择,formal_empirical_fit_with_selection,目标密度自由预测或机制唯一,冻结停止规则并标注直接/间接受约束的指标,§3.6;§4,source_read_not_reexecuted,2026-11-26
+VC38,M025,横截面结构与动态机制分开,替代生成路径拟合同一横截面,多指标结构吻合被当真实动态机制确认,机制解释的范围,作者明确仅横截面，纵向仍需扩展,formal_fit_not_longitudinal_validation,动态机制已独立验证,过程/纵向/干预效标与终点分别验证,§4,source_read_not_reexecuted,2026-11-26

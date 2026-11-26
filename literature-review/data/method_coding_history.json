@@ -1848,5 +1848,85 @@
     "batch": "O-social-methods-community",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/o_social_methods/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "P-network-fit-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-26",
+    "batch": "P-network-fit-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "P-network-fit-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_transferability",
+    "old": "规则替代与经验拟合的候选启发；待核全文设计/对照与复现。",
+    "new": "经验宏观分布/替代规则比较可借鉴；同网络目标指导搜索，未证明留出动态预测或机制唯一；不把动态重连引入Agent-EX主矩阵。",
+    "date": "2026-11-26",
+    "batch": "P-network-fit-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_pending_fields",
+    "old": "precise_first_online_date;fulltext_design;calibration_validation_separation;scope_and_guide",
+    "new": "precise_first_online_date;externalSupplementB;code_reexecution;independent_longitudinal_validation;scope_and_guide",
+    "date": "2026-11-26",
+    "batch": "P-network-fit-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_evidence_location",
+    "old": "PDFfirstpageAbstract",
+    "new": "§3.3metrics;§3.6search/stopping;§3.7fit;§4limitations;AppendixA",
+    "date": "2026-11-26",
+    "batch": "P-network-fit-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_coding_source",
+    "old": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "new": "reading-cards/M025.md",
+    "date": "2026-11-26",
+    "batch": "P-network-fit-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_relevance_rationale",
+    "old": "研究解释组织网络，暂列应用层；不能仅因有拟合就升级通用验证方法。",
+    "new": "全文主要解释组织咨询网络，保留application层；有经验拟合不等于通用已验证方法。",
+    "date": "2026-11-26",
+    "batch": "P-coding-clarification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/p_network_fit/coding_clarification/results.json"
   }
 ]

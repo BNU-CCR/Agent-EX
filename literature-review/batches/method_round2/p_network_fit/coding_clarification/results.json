@@ -1,0 +1,13 @@
+{
+  "batch_id": "P-coding-clarification",
+  "date": "2026-11-26",
+  "expected_master_sha256": "2af116afc28bb23ba515d01350035250cdf56d7d7dbe105b6e02bfc7f9419d14",
+  "updates": [
+    {
+      "record_id": "M025",
+      "reason": "传统组织网络ABM的经验拟合与替代规则先例；已读方法/结果/讨论，首次在线日期仍待核。",
+      "method_relevance_rationale": "全文主要解释组织咨询网络，保留application层；有经验拟合不等于通用已验证方法。"
+    }
+  ],
+  "new_records": []
+}

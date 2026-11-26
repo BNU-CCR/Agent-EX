@@ -1,0 +1,26 @@
+{
+  "batch_id": "P-network-fit-validation",
+  "date": "2026-11-26",
+  "expected_master_sha256": "9133912933035602e4ca5eb54f8c84752cf9072ef899403baec6b9a8dd80cce2",
+  "updates": [
+    {
+      "record_id": "M025",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M025.md",
+      "supplement_status": "mainAppendixA_checked;externalSupplementB_and_code_notchecked",
+      "findings": "同一Lazega横截面网络用于逐步建模与参数搜索；中央95%模拟区间定义适配，非独立留出验证。",
+      "evidence_location": "§§3.3–3.7;§4;AppendixA Algorithm3",
+      "relation_to_agent_ex": "多个宏观指标吻合不唯一识别微观机制；区分校准/选择与独立验证，并报告拟合停止规则。",
+      "notes": "P:focusedauthorhostedpublisherlayoutPDFmethods/results/discussion/AppendixA read;formalfirstdaystillpending;nocodererun or externalSupplementB. Olddataset is not separatelyincludedpre2022work.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "经验宏观分布/替代规则比较可借鉴；同网络目标指导搜索，未证明留出动态预测或机制唯一；不把动态重连引入Agent-EX主矩阵。",
+      "method_pending_fields": "precise_first_online_date;externalSupplementB;code_reexecution;independent_longitudinal_validation;scope_and_guide",
+      "method_evidence_location": "§3.3metrics;§3.6search/stopping;§3.7fit;§4limitations;AppendixA",
+      "method_coding_source": "reading-cards/M025.md",
+      "method_last_checked": "2026-11-26"
+    }
+  ],
+  "new_records": []
+}
