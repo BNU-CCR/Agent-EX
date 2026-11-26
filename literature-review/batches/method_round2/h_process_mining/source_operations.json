@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "S-M2-H-QUERY",
+    "platform": "public_web_search",
+    "query_exact": "\"A CRISP-DM-based methodology for assessing\" pdf",
+    "source_url": "",
+    "search_date": "2026-11-26",
+    "status": "public_supplement_only",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  },
+  {
+    "search_id": "S-M2-H-FORMAL-PDF-WEB",
+    "platform": "official_institution",
+    "query_exact": "https://research.utwente.nl/files/496473818/published.pdf",
+    "source_url": "https://research.utwente.nl/files/496473818/published.pdf",
+    "search_date": "2026-11-26",
+    "status": "access_failed403",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  },
+  {
+    "search_id": "S-M2-H-FORMAL-PDF-HTTP",
+    "platform": "official_institution",
+    "query_exact": "https://research.utwente.nl/files/496473818/published.pdf",
+    "source_url": "https://research.utwente.nl/files/496473818/published.pdf",
+    "search_date": "2026-11-26",
+    "status": "http403;see acquisition.json",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  },
+  {
+    "search_id": "S-M2-H-PUBLISHER",
+    "platform": "publisher",
+    "query_exact": "https://www.tandfonline.com/doi/full/10.1080/17477778.2025.2508245",
+    "source_url": "https://www.tandfonline.com/doi/full/10.1080/17477778.2025.2508245",
+    "search_date": "2026-11-26",
+    "status": "access_failed403;date available from search index",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  },
+  {
+    "search_id": "S-M2-H-ARXIV-ABS",
+    "platform": "author_preprint",
+    "query_exact": "https://arxiv.org/abs/2404.01114",
+    "source_url": "https://arxiv.org/abs/2404.01114",
+    "search_date": "2026-11-26",
+    "status": "metadata_and_related_DOI_checked",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  },
+  {
+    "search_id": "S-M2-H-INSTITUTION",
+    "platform": "official_institution",
+    "query_exact": "https://research.utwente.nl/en/publications/a-crisp-dm-based-methodology-for-assessing-agent-based-simulation-2/",
+    "source_url": "https://research.utwente.nl/en/publications/a-crisp-dm-based-methodology-for-assessing-agent-based-simulation-2/",
+    "search_date": "2026-11-26",
+    "status": "journal_identity_online_date_and_preprint_relation_checked",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  },
+  {
+    "search_id": "S-M2-H-PDF-LINK",
+    "platform": "institution_link_click",
+    "query_exact": "https://research.utwente.nl/files/496473818/published.pdf",
+    "source_url": "https://research.utwente.nl/files/496473818/published.pdf",
+    "search_date": "2026-11-26",
+    "status": "access_failed403",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  },
+  {
+    "search_id": "S-M2-H-ARXIV-HTML",
+    "platform": "author_preprint",
+    "query_exact": "https://arxiv.org/html/2404.01114v1",
+    "source_url": "https://arxiv.org/html/2404.01114v1",
+    "search_date": "2026-11-26",
+    "status": "method_case_results_discussion_read;not journalVoR",
+    "notes": "Source operation; engine total unavailable; earlier authorversion not treated as publisher fulltext"
+  }
+]

@@ -408,5 +408,125 @@
     "batch": "G-validation-agenda",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/g_validation_agenda/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_type",
+    "old": "",
+    "new": "process_mining_workflow;traditional_abm_worked_example",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;reproducibility_and_reporting;validation_and_external_validity",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_maturity",
+    "old": "",
+    "new": "conceptual_framework",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_transferability",
+    "old": "",
+    "new": "工作流与case/分母/时间投影透明性可迁移；正式版、框架效用和跨场景评价待核。",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "worked_example",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "可复用过程评价框架，以规则ABM和专家判断示范；不是LLM行为或新经验数据验证。",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "published_version_comparison;framework_effectiveness;independent_reexecution;empirical_validation",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "v1§4.3–4.6;§5",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M015.md",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "H-process-mining-author-version",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/h_process_mining/results.json"
   }
 ]

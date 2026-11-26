@@ -30,5 +30,13 @@ for r in rs:
  if r['doi']:dois.append(r['doi'].lower())
 assert len(dois)==len(set(dois)),'duplicate DOI'
 counts=json.loads((R/'data/methods_counts.json').read_text(encoding='utf8'));assert counts['records']==len(rs)
+matrix=read(R/'data/method_validation_matrix.csv') if (R/'data/method_validation_matrix.csv').exists() else []
+assert len({x['comparison_id'] for x in matrix})==len(matrix),'duplicate matrix unit'
+assert all(x['record_id'] in by and x['not_established'] and x['source_location'] and x['evidence_status'] for x in matrix),'matrix evidence boundary missing'
+venues=read(R/'data/method_venue_map.csv');candidates=read(R/'data/journal_submission_candidates.csv')
+assert len({x['venue_id'] for x in venues})==len(venues)
+assert all(x['venue_type']=='journal' for x in candidates),'conference in journal submission table'
+assert all(i in by for x in venues for i in x['record_ids'].split(';') if i),'unknown venue record reference'
 result=dict(checked='2026-11-26',records=len(rs),original_ids_preserved=len(m['record_ids']),original_files_hashed=len(m['preserved_files']),legacy_changes=len(ledger),search_rows=len(log),original_search_prefix_preserved=231,status=dict(collections.Counter(r['screening_status'] for r in rs)),method_tiers=dict(collections.Counter(r['method_relevance_tier'] for r in rs)),fulltext_cards=sum(bool(r['card_path']) for r in rs),date_pending=sum(r['date_eligibility']=='date_pending' for r in rs),checks='passed',limitations='No experiment rerun; workbook visual verification separate; not database coverage certification')
+result.update(validation_matrix_units=len(matrix),venue_types=dict(collections.Counter(x['venue_type'] for x in venues)),journal_candidates=len(candidates))
 (R/'reports/methods_validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8');print(json.dumps(result,ensure_ascii=False))
