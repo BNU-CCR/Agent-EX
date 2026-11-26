@@ -128,5 +128,125 @@
     "batch": "B",
     "reason": "New fulltext/version evidence; original batch and Git baseline retained",
     "source": "batches/method_round2/b_validation/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "screening_status",
+    "old": "candidate",
+    "new": "included",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "reading_status",
+    "old": "abstract_read",
+    "new": "fulltext_checked",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "fulltext_url",
+    "old": "",
+    "new": "https://arxiv.org/html/2304.03442v2",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "preprint_date",
+    "old": "",
+    "new": "2023-04-07",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "related_versions",
+    "old": "",
+    "new": "arXiv2304.03442 v2 2023-08-06; author manuscript carries same UIST DOI; VoR body not compared",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "research_question",
+    "old": "待全文核查；拟对话问题：记忆、反思与架构的必要方法来源；可信行为评价不等于意见更新效度。",
+    "new": "记忆、反思与规划架构是否改善虚构主体访谈可信度与社会演示？",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "mechanisms",
+    "old": "待分主题补充",
+    "new": "memory stream;recency/importance/relevance retrieval;reflection;planning;spatial environment",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "findings",
+    "old": "",
+    "new": "共享完整架构模拟历史的回答消融提升可信度；群体两游戏日仅描述演示，非人类轨迹验证。",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "evidence_location",
+    "old": "ACM Abstract/official date",
+    "new": "arXiv v2 §§4–8;§6.1–6.2;§7;AppendixB",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "card_path",
+    "old": "",
+    "new": "reading-cards/R016.md",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "source_batch",
+    "old": "batches/crossdisciplinary/records.json",
+    "new": "batches/method_round2/f_architecture/results.json",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "notes",
+    "old": "",
+    "new": "Read author HTML, not publisher VoR; DOI403, large PDF web limit, direct PDF SSL failure; no code rerun.",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
   }
 ]

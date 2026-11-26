@@ -4,7 +4,7 @@ ROOT=pathlib.Path(__file__).resolve().parents[1]
 def read(p):
  with p.open(encoding='utf-8-sig',newline='') as f:return list(csv.reader(f))
 tables={p.stem:read(p) for p in [ROOT/'data/literature_master.csv',ROOT/'data/journals_master.csv',ROOT/'data/search_log.csv',ROOT/'data/conference_sources.csv']}
-for name in ['method_venue_map','journal_submission_candidates']:
+for name in ['method_venue_map','journal_submission_candidates','method_validation_matrix']:
  p=ROOT/'data'/f'{name}.csv'
  if p.exists():tables[name]=read(p)
 heads=tables['literature_master'][0];records=[dict(zip(heads,r)) for r in tables['literature_master'][1:]]

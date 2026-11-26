@@ -1,0 +1,99 @@
+[
+  {
+    "search_id": "S-M2-F-R016-ABS",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/abs/2304.03442",
+    "source_url": "https://arxiv.org/abs/2304.03442",
+    "status": "metadata_checked",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-R016-DOI",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://doi.org/10.1145/3586183.3606763",
+    "source_url": "https://doi.org/10.1145/3586183.3606763",
+    "status": "access_failed_403",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-R016-PDF-WEB",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/pdf/2304.03442",
+    "source_url": "https://arxiv.org/pdf/2304.03442",
+    "status": "access_failed_content_too_large_11947867",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-R016-PDF-HTTP",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/pdf/2304.03442v2",
+    "source_url": "https://arxiv.org/pdf/2304.03442v2",
+    "status": "access_failed_SSL_UNEXPECTED_EOF",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-R016-HTML",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/html/2304.03442v2",
+    "source_url": "https://arxiv.org/html/2304.03442v2",
+    "status": "fulltext_main_read;appendix_questions_targeted",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-THEMP",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.jasss.org/29/4/6.html",
+    "source_url": "https://www.jasss.org/29/4/6.html",
+    "status": "fulltext_main_and_table1_read",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-EASE-HTML",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/html/2605.30258v1",
+    "source_url": "https://arxiv.org/html/2605.30258v1",
+    "status": "access_failed_404",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-EASE-PDF",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/pdf/2605.30258",
+    "source_url": "https://arxiv.org/pdf/2605.30258",
+    "status": "fulltext_main_read;appendixC2C3_targeted",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-EASE-NIPS",
+    "platform": "official_or_author_source",
+    "search_date": "2026-11-26",
+    "query_exact": "https://dev.neurips.cc/Downloads/2026",
+    "source_url": "https://dev.neurips.cc/Downloads/2026",
+    "status": "live410;cached_title_not_formal_publication_proof",
+    "notes": "Exact source operation; repeated line opens consolidated; not keyword database coverage"
+  },
+  {
+    "search_id": "S-M2-F-Q1",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"EASE Configuration Facilitates\" publication NeurIPS 2026",
+    "status": "public_supplement_only",
+    "notes": "Engine total not supplied; selected official sources followed; no publication inference from search snippet"
+  },
+  {
+    "search_id": "S-M2-F-Q2",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"Position: Time to Close The Validation Gap in LLM Social Simulations\"",
+    "status": "public_supplement_only",
+    "notes": "Engine total not supplied; selected official sources followed; no publication inference from search snippet"
+  }
+]

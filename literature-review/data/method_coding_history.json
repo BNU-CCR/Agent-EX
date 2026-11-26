@@ -1,0 +1,292 @@
+[
+  {
+    "record_id": "R016",
+    "field": "method_contribution_type",
+    "old": "agent_architecture;memory_and_persona;environment_design",
+    "new": "agent_architecture;memory_and_persona;environment_design;measurement",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_transferability",
+    "old": "pending：记忆/反思/规划架构及消融在摘要有明确描述；完整组件与评价目标待核。",
+    "new": "检索/反思/规划分解与受控访谈探针可复用；共享历史消融不证明长期轨迹效应或人类行为效度。",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_relevance_rationale",
+    "old": "主要提出可复用的生成式主体架构，优先作为方法核心候选；可信行为不等于人类效度。",
+    "new": "主体架构及回答可信度受控消融为主要贡献；真人评估不等于真人行为复现。",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability",
+    "new": "exact_model_snapshot;decoding_parameters;independent_reexecution;long_horizon_and_human_validity",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_evidence_location",
+    "old": "Abstract及首轮来源核验；不以题名推断成熟度",
+    "new": "§6.1–6.4;§7;§8.2",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv; batches/crossdisciplinary/records.json",
+    "new": "reading-cards/R016.md",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_contribution_type",
+    "old": "agent_architecture;reproducibility_and_reporting;environment_design",
+    "new": "agent_architecture;environment_design;interaction_protocol;measurement;reproducibility_and_reporting;validation_and_external_validity",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "组件隔离、动作预算天花板诊断和假设—制品映射；未证明框架提高外部效度或独立复现率。",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_pending_fields",
+    "old": "fulltext;formal_version;calibration_split;validation_protocol",
+    "new": "formal_acceptance/publication;complete_appendix_configuration;independent_reexecution;real_world_validation",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_evidence_location",
+    "old": "abstract",
+    "new": "§4.2–4.3;§5;AppendixC.2/C.3",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/c_crossdisciplinary/",
+    "new": "reading-cards/M008.md",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-26",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_type",
+    "old": "",
+    "new": "theory_to_model_framework;traditional_abm_worked_example",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;model_calibration;validation_and_external_validity;reproducibility_and_reporting",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_maturity",
+    "old": "",
+    "new": "conceptual_framework",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_transferability",
+    "old": "",
+    "new": "可复用理论—构件来源说明、V&V分层与简约机制比较；框架有效性尚非独立方法实验结果。",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "worked_example",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "通用解释性ABM框架，经验锚定案例为示例，不是LLM主体或框架自身的经验验证。",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "independent_framework_effectiveness;original_model_artifacts;calibration_validation_split",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "ApplyingTHEMP introduction;model testing/exploration;Table1",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M013.md",
+    "date": "2026-11-26",
+    "batch": "F-architecture-theory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/f_architecture/results.json"
+  }
+]

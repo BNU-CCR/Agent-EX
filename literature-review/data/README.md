@@ -48,3 +48,5 @@ method_venue_map.csv为18个定向载体样本：13期刊、4会议、1仓库；
 required_writing_changes / required_existing_analyses / required_new_experiments均为本综述的条件建议，requirements_authority明示非期刊强制要求；范围和检索缺口留在gap/pending列，新增实验栏只写相应验证建议或不适用。
 
 发表表venue_id为本轮地图命名空间，master_venue_ids显式列出现有主表载体别名；不为统一显示而改写旧venue_id。
+
+method_validation_matrix.csv按证据单元而非论文计数，保留控制、比较、错误、评价靶点、实际证据、未建立结论与项目迁移推论；不称其为已实施实验。后续增补可用apply_method_patch.py，批次JSON须绑定当前主表SHA256；过期批次拒绝执行，旧字段与方法编码另存变更历史。
