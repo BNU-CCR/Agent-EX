@@ -17,7 +17,7 @@ for(const [key,name]of cfg){
 }
 const counts=input.counts,master=input.literature_master,heads=master[0],last=master.length,scol=col(heads.indexOf('screening_status')),tcol=col(heads.indexOf('method_relevance_tier'));
 summary.showGridLines=false;summary.getRange('A1:F28').format.font.name='Arial';summary.getRange('A1:F28').format.font.size=10;summary.getRange('A1:F28').format.columnWidth=23;summary.getRange('A1:F28').format.rowHeight=30;summary.getRange('A1:F28').format.wrapText=true;summary.getRange('A2').values=[['LLM社会模拟方法研究']];summary.getRange('A2').format.font.size=15;summary.getRange('A2').format.font.bold=true;summary.getRange('A3').values=[['2022-01-01 至 2026-11-26']];
-summary.getRange('A5:C5').values=[['文献状态','数量','解释']];summary.getRange('A6:C10').values=[['全部题录',counts.records,'含首轮保留及后续增补'],['全文确认纳入',null,'日期及主文核查门通过'],['候选',null,'不得作全文证据'],['前沿',null,'仅预印本，正式版分列'],['排除',null,'保留原排除依据']];
+summary.getRange('A5:C5').values=[['文献状态','数量','解释']];summary.getRange('A6:C10').values=[['全部题录',counts.records,'含首轮保留及后续增补'],['全文确认纳入',null,'日期及主文核查门通过'],['候选',null,'部分已读，日期/筛选仍待核'],['前沿',null,'仅预印本，正式版分列'],['排除',null,'保留原排除依据']];
 for(const [i,s]of ['included','candidate','frontier','excluded'].entries())summary.getRange(`B${7+i}`).formulas=[[`=COUNTIF('文献与方法编码'!$${scol}$2:$${scol}$${last},"${s}")`]];
 summary.getRange('A13:C13').values=[['方法首要功能','全部记录','全文确认']];
 for(const [i,t]of ['core_method','method_validation','application','direct_comparator','peripheral'].entries()){

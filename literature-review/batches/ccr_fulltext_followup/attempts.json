@@ -203,5 +203,33 @@
     "bytes": 5787,
     "content_type": "text/html; charset=UTF-8",
     "is_pdf": false
+  },
+  {
+    "url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.9.HUAN?crawler=true&mimetype=application/pdf",
+    "platform": "web.open",
+    "outcome": "PDF returned",
+    "pages": 40,
+    "doi_on_page1": "10.5117/CCR2026.2.9.HUAN",
+    "read_scope": "page1 plus opening introduction; subsequent find requests timed out",
+    "reading_status": "partial_fulltext_version_conflict",
+    "conflict": "landing abstract differs from official PDF abstract"
+  },
+  {
+    "url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.8.LI?crawler=true&mimetype=application/pdf",
+    "platform": "web.open/find",
+    "outcome": "PDF returned",
+    "pages": 29,
+    "doi_on_page1": "10.5117/CCR2026.2.8.LI",
+    "read_scope": "page1, methods pp11-13, empirical validation pp16-18 and selected intervention passages",
+    "reading_status": "partial_fulltext",
+    "version_note": "2024 arxiv v1 differs in model/network N; not a same-version substitute"
+  },
+  {
+    "url": "https://arxiv.org/abs/2410.13909",
+    "platform": "requests and web.open",
+    "outcome": "author preprint discovered",
+    "first_submitted": "2024-10-16",
+    "version": "v1",
+    "formal_relation": "candidate_version_relation_not_confirmed"
   }
 ]

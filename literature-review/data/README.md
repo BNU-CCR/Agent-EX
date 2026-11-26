@@ -44,3 +44,7 @@ method_venue_map.csv为18个定向载体样本：13期刊、4会议、1仓库；
 每条保留precedents_2022_onward、连续性证据、类别/篇幅、代码/数据要求、OA/费用、当前稿写作与分析缺口、方法稿新增实验需求及核查日期。建议等级为条件适配，不含录用概率。原journals_master.csv保持第一轮覆盖快照。
 
 合并用merge_methods_round2.py的已审计批次；不要重跑method_schema.py批次A迁移或首轮merge_batches.py。方法合并脚本是一次性批次入口，重跑前先读状态，不能盲目覆盖已经人工修订的数据。verify_methods_delivery.py直接读取保存的首轮hash清单、Git基线与变更账，验证旧ID/字段变更链/231日志前缀和方法门；不验证论文实验正确性。
+
+required_writing_changes / required_existing_analyses / required_new_experiments均为本综述的条件建议，requirements_authority明示非期刊强制要求；范围和检索缺口留在gap/pending列，新增实验栏只写相应验证建议或不适用。
+
+发表表venue_id为本轮地图命名空间，master_venue_ids显式列出现有主表载体别名；不为统一显示而改写旧venue_id。
