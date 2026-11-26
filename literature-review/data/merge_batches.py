@@ -9,6 +9,10 @@ def write_csv(name,rows,fields=None):
         for r in rows: writer.writerow({k:(';'.join(map(str,v)) if isinstance(v,list) else '' if v is None else v) for k,v in r.items()})
 root=read('batches/crossdisciplinary/records.json'); en=read('batches/english/results.json');cn=read('batches/chinese/records.json');cat=read('batches/chinese/journals_catalog.json')
 logs=read('batches/crossdisciplinary/search_log.json')+en['searches']+read('batches/chinese/search_log.json')
+followup=ROOT/'batches/ccr_fulltext_followup/attempts.json'
+if followup.exists():
+    for i,a in enumerate(read('batches/ccr_fulltext_followup/attempts.json'),1):
+        logs.append(dict(search_id=f'CCR-FOLLOW-{i:02}',venue_id='CCR',platform='official_metadata_or_fulltext_access',search_date='2026-11-26',coverage_start='2022-01-01',coverage_end='2026-11-26',query_exact='GET '+a['url'],query_fields='source_access_verification',result_count='',retrieved_count='',screened_count='',status='verification' if a.get('status')==200 else 'access_blocked',source_url=a['url'],export_path='batches/ccr_fulltext_followup/attempts.json',notes=a.get('error') or ('PDF obtained' if a.get('is_pdf') else 'Metadata or HTML only; no formal full text obtained')))
 for i,r in enumerate(read('batches/crossdisciplinary/publisher_metadata.json'),1):
     logs.append(dict(search_id=f'S-X-META-{i:02}',venue_id='',platform='Crossref_publisher_deposit',search_date='2026-11-26',coverage_start='2022-01-01',coverage_end='2026-11-26',query_exact='GET '+r['source_url'],query_fields='DOI metadata verification',result_count='',retrieved_count=0 if r.get('error') else 1,screened_count=0 if r.get('error') else 1,status='access_blocked' if r.get('error') else 'verification',source_url=r['source_url'],export_path='batches/crossdisciplinary/publisher_metadata.json',notes=r.get('error','created is not publication date')))
 records=[]
@@ -32,6 +36,13 @@ for batch,items in [('crossdisciplinary',root),('english',en['records']),('chine
             if (ROOT/card).resolve()!=dest.resolve():shutil.copyfile(ROOT/card,dest)
             card=f'reading-cards/{rid}.md'
         r['card_path']=card
+        if card:
+            cardtext=(ROOT/card).read_text(encoding='utf-8-sig')
+            question=re.search(r'## 2\..*?\n\n(.*?)(?=\n\n##|\Z)',cardtext,re.S) or re.search(r'^2\.\s+\*\*[^*]+\*\*[:：]?\s*(.+)$',cardtext,re.M)
+            mechanism=re.search(r'## 3\..*?\n\n(.*?)(?=\n\n##|\Z)',cardtext,re.S) or re.search(r'^3\.\s+\*\*[^*]+\*\*[:：]?\s*(.+)$',cardtext,re.M)
+            r['research_question']=question.group(1).strip() if question else r.get('research_question','待核实')
+            if mechanism and r.get('mechanisms','') in ['', '待分主题补充']:r['mechanisms']=mechanism.group(1).strip()
+        else:r.setdefault('research_question','待全文核查；拟对话问题：'+r['reason'])
         if rid=='R007':r.update(reading_status='fulltext_checked',evidence_location='PMC主文§1–4；§2.1–2.5，§3.2–3.6，Figs3–5')
         if rid=='R010':r['notes']=r.get('notes','')+' Official PDF/ACL/Crossref raw author Talwalkwar; TACL author page Talwalkar used as normalized name. Published-online 09-04 vs website09-07 retained.'
         if r['reading_status']!='fulltext_checked' and r['screening_status']=='included':r['screening_status']='candidate'
@@ -56,8 +67,14 @@ for batch,items in [('crossdisciplinary',root),('english',en['records']),('chine
             ids=matches
         r['search_id']=';'.join(ids)
         r.setdefault('relation_to_agent_ex',r['reason']);r.setdefault('notes','')
+        r['research_object']={'human_social_process':'human_social_process_simulation','人类社会过程的模拟':'human_social_process_simulation','AI_collective_behavior':'ai_collective_behavior','AI群体行为':'ai_collective_behavior','其他':'other'}.get(r['research_object'],r['research_object'])
+        purposemap={'方法评估':'method_evaluation','机制检验':'mechanism_test','理论探索':'theory_exploration','其他':'other','mechanism_exploration':'theory_exploration','theory_development':'theory_exploration','tool_development':'system_development'}
+        purposes=list(dict.fromkeys(purposemap.get(x.strip(),x.strip()) for x in r['simulation_purpose'].split(';')))
+        r['simulation_purpose']=';'.join(purposes);r['primary_purpose']=purposes[0]
+        method=r['method_type'].lower()
+        r['method_type']={'llm_multiagent':'llm_multiagent_social_simulation','traditional_rule_abm':'rule_based_abm','traditional_rule_abm_pending':'rule_based_abm_pending'}.get(method,method)
         records.append(r)
-fields=['record_id','work_id','venue_id','title','authors','language','venue','document_type','doi','official_url','discovery_url','metadata_evidence_url','online_first_date','volume_year','preprint_date','date_basis','date_eligibility','related_versions','search_id','search_date','screening_status','core_level','reason','research_object','simulation_purpose','method_type','mechanisms','reading_status','fulltext_url','supplement_status','findings','evidence_location','relation_to_agent_ex','card_path','source_batch','notes']
+fields=['record_id','work_id','venue_id','title','authors','language','venue','document_type','doi','official_url','discovery_url','metadata_evidence_url','online_first_date','volume_year','preprint_date','date_basis','date_eligibility','related_versions','search_id','search_date','screening_status','core_level','reason','research_question','research_object','simulation_purpose','primary_purpose','method_type','mechanisms','reading_status','fulltext_url','supplement_status','findings','evidence_location','relation_to_agent_ex','card_path','source_batch','notes']
 write_csv('literature_master.csv',records,fields)
 journals=[]
 for v in en['journals']:
@@ -83,6 +100,11 @@ for v in journals:
     candidates=[r for r in records if r['venue_id']==v['venue_id'] and r['screening_status']=='candidate']
     if not included:continue
     core.append(dict(venue_id=v['venue_id'],title=v['title'],confirmed_included=len(included),direct_comparison_count=sum(r['core_level']=='direct_comparison' for r in included),record_ids=';'.join(r['record_id'] for r in included),candidate_count=len(candidates),candidate_ids=';'.join(r['record_id'] for r in candidates),publication_years=';'.join(sorted({str(r['volume_year']) for r in included})),continuity_evidence='multiple years' if len({str(r['volume_year']) for r in included})>1 else 'one verified year; not sustained-output proof',contribution_types=';'.join(sorted({r['core_level'] for r in included})),value_to_agent_ex=' / '.join(r['reason'] for r in included),coverage_limit=v['gap']))
+    core[-1]['publication_years']=';'.join(sorted({r['online_first_date'][:4] for r in included}))
+    core[-1]['issue_years']=';'.join(sorted({str(r['volume_year']) for r in included}))
+    core[-1]['method_types']=';'.join(sorted({r['method_type'] for r in included}))
+    core[-1]['major_topics']=' / '.join(r['research_question'] for r in included)
+    core[-1]['tracking_reason']='Prioritize actual relevant papers and methods identified here; count alone does not rank journal importance.'
 write_csv('core_source_journals.csv',core)
 conference=[]
 for r in records:
@@ -90,7 +112,6 @@ for r in records:
 write_csv('conference_sources.csv',conference)
 counts=dict(records=len(records),publication_records_formal=sum(r['document_type']!='preprint' for r in records),included_fulltext=sum(r['screening_status']=='included' for r in records),included_work_ids=len({r['work_id'] for r in records if r['screening_status']=='included'}),included_empirical_work_ids=len({r['work_id'] for r in records if r['screening_status']=='included' and r['document_type'] not in ['review','editorial'] and 'review' not in r['method_type'].lower() and 'conceptual' not in r['method_type'].lower()}),status=dict(collections.Counter(r['screening_status'] for r in records)),date_status=dict(collections.Counter(r['date_eligibility'] for r in records)),reading_status=dict(collections.Counter(r['reading_status'] for r in records)),journals=len(journals),log_rows=len(logs),cards=sum(bool(r['card_path']) for r in records),core_source_journals=len(core))
 (ROOT/'data/counts.json').write_text(json.dumps(counts,ensure_ascii=False,indent=2),encoding='utf8')
-(ROOT/'exports/workbook_data.json').write_text(json.dumps(dict(records=records,journals=journals,logs=logs,core=core,conferences=conference,counts=counts),ensure_ascii=False,indent=2),encoding='utf8')
 def esc(s):return str(s).replace('\\','\\textbackslash{}').replace('&','\\&').replace('%','\\%').replace('_','\\_')
 bib=[]
 for r in records:

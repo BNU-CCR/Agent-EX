@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-26",
+  "checks": "IDs, DOI dedup, source/date/fulltext gates, card links, journal/conference separation, joins, BibTeX, XLSX CRC/rows/IDs/formula cache, local Markdown links, change scope",
+  "status": "pass",
+  "issues": [],
+  "records": 57,
+  "included": 15,
+  "cards": 15,
+  "core_source_journals": 12,
+  "submission_candidates": 10,
+  "log_rows": 231,
+  "xlsx_sha256": "fedeb8da071d2b8143999e18c665958d9114ea887c492cbeb09c12f69e1620a5",
+  "csv_hashes": {
+    "conference_sources.csv": "3dd3d8cac83fcf4217839edfcee352991f3112dbbf81b21a7c86a15a0ebfad80",
+    "core_source_journals.csv": "a82f1cae05bdc338e202ce331a1d5961e277110b3241bcc36c894f7ab80a0900",
+    "journals_master.csv": "3b8a19cac64504f2b35cbe95f68a9f6b3b47878f3b3cfbadecce52c3aa455adf",
+    "literature_master.csv": "e332c1eda206e8132a6a9e7f19e623f26460674110e640065f1c9cc2b8090369",
+    "search_log.csv": "254be0501e267a531401e3d1dee0c063c06c030d25f343996c40af3bd854dbbb",
+    "submission_candidates.csv": "75ed64e689d46a45bd78c9685afff38802a7185e4ea8f6466c2bcd9a1d8f4658"
+  }
+}
