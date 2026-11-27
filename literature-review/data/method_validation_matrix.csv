@@ -68,3 +68,8 @@ VC66,M033,主体信息与生成方式分开,SCRIPT/AGENTS/MINDREADERS,总模式�
 VC67,M033,真人自然度与真实行为分开,GPT4目标评分/9真人偏好,有人评估当人群轨迹验证,效标与分母,评审可见背景目标；每对30标注非30人,生成对话自然度与自动目标代理,真人实际互动/网络动态效度,主体/评价者可见信息分别披露,§3.2/3.4;AppE/Fp21,source_read_not_reexecuted,2026-11-27
 VC68,M033,风格迁移与目标能力分开,SCRIPT训练后AGENTS评估,自然度或成交高当技能提升,合成任务训练迁移,合作目标弱改善；自然度未显著差异不证明等效,作者结果与统计范围判断,真人谈判能力或全任务迁移,指标/任务/训练分布单列,§4pp5–7;AppEp21,source_read_and_reviewer_scope_inference,2026-11-27
 VC69,M033,报告卡与已验证标准分开,SimulationCard/AppA,建议条目当强制或效果验证,报告规范成熟度,提出信息不对称/用途/指标/限制字段,报告提议,清单提升复现成功率或会议强制采纳,借鉴披露维度但不覆盖冻结协议,§5.2p8;AppA/Fig7p15,reporting_proposal_not_effect_validation,2026-11-27
+VC70,M035,生成/全部token/时长分开,Table1/9不同分母,20%当全流程成本节省,效率口径,tweet省20.3/24.7%;总token约3.1/6.2%;HiSim时长13.2%,已四舍五入表值重算/技术计时,完整搜索/judge/数据成本净收益,记录token流/调用/时间与预算范围,Table1p6/Table9p17;costCSV,published_table_arithmetic_not_new_experiment,2026-11-27
+VC71,M035,经验投影与动态等价分开,PHEME/HiSim多指标,指标均值近当过程保持,效度与判据,三run均值，初态/末态/平均偏差与文本指标,两个数据集所选观测,个体路径/依赖/机制等价或非劣,事先定义观测投影及可接受误差,"§4–5/AppBpp6–8,15–17",source_read_not_reexecuted,2026-11-27
+VC72,M035,规则与全流程迁移分开,Qwen/Mistral使用Llama规则,跨模型无退步/词表通用,迁移范围,表4有部分指标退步，AgentTorch36原型另有代价,所测规则/数据/模型,整套词表或多场景人类效度,跨模型/主体粒度与指标单列,Table4p8/Table8p17,source_read_not_reexecuted,2026-11-27
+VC73,M035,公式方向与实现分开,Eq2/+0.6/高fitness选择,看似明确公式当已复现算法,可执行规格,归一化token正项与省token目标方向待核,打印描述的待核项,代码错误/实际优化方向已证明,固定实现后对照公式/目标,Eq2p4/AppA.2pp12–14,reporting_ambiguity_code_pending,2026-11-27
+VC74,M035,优化judge与下游标签验证分开,50对话κ/100实例一致性,混合为通用judge准确率,评价测量,κ0.48与stance.94/belief.78属不同任务,所测样本/指标,所有语言或条件标签可靠,报告样本/任务/标签与不确定性,AppA.2p13/AppB.6p17,source_read_not_reexecuted,2026-11-27

@@ -1,0 +1,27 @@
+{
+  "batch_id": "AI-EcoLANG",
+  "date": "2026-11-27",
+  "expected_master_sha256": "80d2c05d9bf594f92471c504858de1ed39ece8eb99609f0bc9e090665e896dad",
+  "updates": [
+    {
+      "record_id": "M035",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M035.md",
+      "reason": "正式全文方法/表值与限制支持有界经验评价；精确首发日未核保持candidate。",
+      "research_question": "通信压缩在所选经验指标下能否减少token，代价与迁移边界是什么？",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "可迁移规则与成本分母/多层评价；不等于整套词表跨模型或动态过程等价，固定实现/fitness方向待核。",
+      "findings": "Table1生成tweet省20%以上但prompt+completion约3.1%/6.2%；三run均值/选定指标非等效检验；规则跨模型有指标退步；公式效率项方向待代码核。",
+      "evidence_location": "FormalPDFpp3–9,12–17;Eq2;Tables1–4,7–9",
+      "method_evidence_location": "§3–6/AppA/B;reviewtablearithmetic separate",
+      "supplement_status": "selected_appendices_read;checklist404;code_not_read_or_run",
+      "method_coding_source": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv",
+      "method_pending_fields": "first_formal_online_day;fitness_formula_vs_code;full_induction_budget;OASIS_model_revision_seed;rawrun_uncertainty_equivalence;path_dependence",
+      "search_id": "S-M2-AG-ECO;S-M2-AG-ECO-DOI;S-M2-AI-PDF;S-M2-AI-READ;S-M2-AI-COST",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AIofficialPDFfocusedread;tweet/total/runtimecostdistinct;arithmeticfromroundedtable. Empiricalscope two datasets,notvalidatedgeneralworkflow;fitnesssignunresolved notcodeerrorclaim."
+    }
+  ],
+  "new_records": []
+}

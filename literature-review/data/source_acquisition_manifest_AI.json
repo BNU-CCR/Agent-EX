@@ -1,0 +1,22 @@
+[
+  {
+    "record_id": "M035",
+    "version": "official_Findings_PDF",
+    "url": "https://aclanthology.org/2025.findings-emnlp.284.pdf",
+    "sha256": "14547989e0bd9a464c2aefe310161a0d8789349636d1546b2d02fb711b58ae43",
+    "bytes": 850144,
+    "pages": 18,
+    "checked": "2026-11-27",
+    "scope": "focusedpp3–9,12–17;notfullcodeorSI",
+    "storage": "temporaryPDF;repomanifestonly"
+  },
+  {
+    "record_id": "M035",
+    "version": "checklist_attachment",
+    "url": "https://aclanthology.org/2025.findings-emnlp.284.checklist.pdf",
+    "status": "HTTP404",
+    "bytes": 9328,
+    "content_type": "text/html",
+    "read": false
+  }
+]

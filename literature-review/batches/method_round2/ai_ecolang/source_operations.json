@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "S-M2-AI-META",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "status": "official_metadata_rechecked",
+    "notes": "FormalFindings2025/November;exactonlinedaynotresolved"
+  },
+  {
+    "search_id": "S-M2-AI-PDF",
+    "platform": "official_publisher_PDF",
+    "search_date": "2026-11-27",
+    "query_exact": "https://aclanthology.org/2025.findings-emnlp.284.pdf",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284.pdf",
+    "status": "HTTP200_PDF_verified",
+    "notes": "850144bytes/18pages;PDFheader/pages/hash; focusedread"
+  },
+  {
+    "search_id": "S-M2-AI-CHECKLIST",
+    "platform": "official_publisher_attachment",
+    "search_date": "2026-11-27",
+    "query_exact": "https://aclanthology.org/2025.findings-emnlp.284.checklist.pdf",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284.checklist.pdf",
+    "status": "HTTP404_HTML_notPDF",
+    "notes": "9328bytes text/html; notdownloadsuccess; metadata link seen but attachment inaccessible"
+  },
+  {
+    "search_id": "S-M2-AI-READ",
+    "platform": "local_acquired_PDF_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "https://aclanthology.org/2025.findings-emnlp.284.pdf",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284.pdf",
+    "status": "focused_methods_results_appendices_read",
+    "notes": "pp3–9,12–17;Tables1/9 andEq2 rendered/viewed;notallcode/SI;truncatedextractioncriticallimits/A.2 reread"
+  },
+  {
+    "search_id": "S-M2-AI-COST",
+    "platform": "local_published_table_arithmetic",
+    "search_date": "2026-11-27",
+    "query_exact": "https://aclanthology.org/2025.findings-emnlp.284.pdf",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284.pdf",
+    "status": "rounded_table_denominators_recomputed",
+    "notes": "Table1 response/completion/total tokens;notnewsimulation orpreciseunroundedcost"
+  }
+]

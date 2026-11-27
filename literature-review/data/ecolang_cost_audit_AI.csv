@@ -1,0 +1,7 @@
+dataset,metric,unit,base,ecolang,saving_percent_from_rounded_table,formula,source,boundary,checked
+PHEME,generated_tweet_tokens,K_tokens,2.61,2.08,20.30651340996168,100*(1-ecolang/base),M035Table1p6,Roundedpublishedmeans;notunroundedrawestimate;notendtoendinductioncost,2026-11-27
+PHEME,all_completion_tokens,K_tokens,8.44,7.7,8.767772511848337,100*(1-ecolang/base),M035Table1p6,Roundedpublishedmeans;notunroundedrawestimate;notendtoendinductioncost,2026-11-27
+PHEME,prompt_plus_completion,K_tokens,92.87,89.96000000000001,3.1334122967589084,100*(1-ecolang/base),M035Table1p6,Roundedpublishedmeans;notunroundedrawestimate;notendtoendinductioncost,2026-11-27
+HiSim,generated_tweet_tokens,K_tokens,13.02,9.8,24.731182795698913,100*(1-ecolang/base),M035Table1p6,Roundedpublishedmeans;notunroundedrawestimate;notendtoendinductioncost,2026-11-27
+HiSim,all_completion_tokens,K_tokens,283.79,236.83,16.547447055921637,100*(1-ecolang/base),M035Table1p6,Roundedpublishedmeans;notunroundedrawestimate;notendtoendinductioncost,2026-11-27
+HiSim,prompt_plus_completion,K_tokens,2203.79,2066.83,6.214748229186995,100*(1-ecolang/base),M035Table1p6,Roundedpublishedmeans;notunroundedrawestimate;notendtoendinductioncost,2026-11-27

@@ -49,3 +49,5 @@ AF补充：将解析/重试/失败与动作、观察轮与决策事件、图属�
 AG补ACL/EMNLP方法路线见[专题](acl_emnlp_method_ecology.md)：须明确NLP/评价价值，Main与Findings分列；2026征稿已过，当前不据此调整JASSS/CCR优先比较。
 
 AH补信息边界评价：当前稿仍限定AI群体过程；后续方法稿可检验信息/评价可见性错配对方法排名的影响，尚需新证据，未更改实验协议。 见[information_boundary_comparison.md](information_boundary_comparison.md)。
+
+AI补效率方法稿判断：须报告总成本与行为/过程保持，不以输出token下降代替方法有效；尚未执行该方向实验。 见[通信效率专题](communication_efficiency_validity.md)。

@@ -3388,5 +3388,75 @@
     "batch": "AH-information-asymmetry",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AI-EcoLANG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ai_ecolang/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "AI-EcoLANG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ai_ecolang/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AI-EcoLANG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ai_ecolang/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "可迁移规则与成本分母/多层评价；不等于整套词表跨模型或动态过程等价，固定实现/fitness方向待核。",
+    "date": "2026-11-27",
+    "batch": "AI-EcoLANG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ai_ecolang/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_evidence_location",
+    "old": "Officialabstract only",
+    "new": "§3–6/AppA/B;reviewtablearithmetic separate",
+    "date": "2026-11-27",
+    "batch": "AI-EcoLANG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ai_ecolang/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_coding_source",
+    "old": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "new": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv",
+    "date": "2026-11-27",
+    "batch": "AI-EcoLANG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ai_ecolang/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;fulltext_design;calibration_validation_information_boundary;reproducibility_artifacts",
+    "new": "first_formal_online_day;fitness_formula_vs_code;full_induction_budget;OASIS_model_revision_seed;rawrun_uncertainty_equivalence;path_dependence",
+    "date": "2026-11-27",
+    "batch": "AI-EcoLANG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ai_ecolang/results.json"
   }
 ]
