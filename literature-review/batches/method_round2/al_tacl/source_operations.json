@@ -1,0 +1,128 @@
+[
+  {
+    "search_id": "S-M2-AL-ABOUT",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "webopen: https://transacl.org/index.php/tacl/about",
+    "source_url": "https://transacl.org/index.php/tacl/about",
+    "status": "timeout",
+    "notes": "No complete currentportal retrieval"
+  },
+  {
+    "search_id": "S-M2-AL-SUBMISSIONS",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "webopen: https://transacl.org/index.php/tacl/about/submissions",
+    "source_url": "https://transacl.org/index.php/tacl/about/submissions",
+    "status": "HTTP502",
+    "notes": "Scope/guidelines later available as official indexedsearch text, not full live portal success"
+  },
+  {
+    "search_id": "S-M2-AL-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "search: TACL submission guidelines 2026 reproducibility code requirements scope official",
+    "source_url": "",
+    "status": "official_leads_found",
+    "notes": "Not fulljournalquery"
+  },
+  {
+    "search_id": "S-M2-AL-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "search: site:transacl.org \"scope\" \"language\" \"pages\"",
+    "source_url": "",
+    "status": "official_indexed_scope_text",
+    "notes": "Officialindexedguidelines substantiveNLP/CL criteria; crawledolderthancheckdate"
+  },
+  {
+    "search_id": "S-M2-AL-Q3",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "search: site:direct.mit.edu/tacl \"Author Guidelines\" data code",
+    "source_url": "",
+    "status": "policy_leads_found",
+    "notes": "No independentMJL/feecheck"
+  },
+  {
+    "search_id": "S-M2-AL-HTTP-SUB",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "HTTPGET: https://transacl.org/index.php/tacl/about/submissions",
+    "source_url": "https://transacl.org/index.php/tacl/about/submissions",
+    "status": "ProxyError",
+    "notes": "No HTTPstatus/body orlocalHTML acquired"
+  },
+  {
+    "search_id": "S-M2-AL-HTTP-FINAL",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "HTTPGET: https://transacl.org/tacl-submission-templates/tacl2021v1-finalversion-formatting-instructions.pdf",
+    "source_url": "https://transacl.org/tacl-submission-templates/tacl2021v1-finalversion-formatting-instructions.pdf",
+    "status": "ProxyError",
+    "notes": "NotlocalPDFdownloadsuccess"
+  },
+  {
+    "search_id": "S-M2-AL-HTTP-FORMAT",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "HTTPGET: https://transacl.org/tacl-submission-templates/tacl2021v1-submission-formatting-instructions.pdf",
+    "source_url": "https://transacl.org/tacl-submission-templates/tacl2021v1-submission-formatting-instructions.pdf",
+    "status": "ProxyError",
+    "notes": "NotlocalPDFdownloadsuccess"
+  },
+  {
+    "search_id": "S-M2-AL-FINAL",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "webPDFopen: https://transacl.org/tacl-submission-templates/tacl2021v1-finalversion-formatting-instructions.pdf",
+    "source_url": "https://transacl.org/tacl-submission-templates/tacl2021v1-finalversion-formatting-instructions.pdf",
+    "status": "tool_readable_6page_PDF",
+    "notes": "2021base; targetedcode/dataaccesspromises;no localhash"
+  },
+  {
+    "search_id": "S-M2-AL-FORMAT",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "webPDFopen: https://transacl.org/tacl-submission-templates/tacl2021v1-submission-formatting-instructions.pdf",
+    "source_url": "https://transacl.org/tacl-submission-templates/tacl2021v1-submission-formatting-instructions.pdf",
+    "status": "tool_readable_5page_PDF",
+    "notes": "2021base; oldappendixpagestatementnotunqualifiedcurrentpolicy"
+  },
+  {
+    "search_id": "S-M2-AL-ACLREPORT",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "webopen: https://www.aclweb.org/adminwiki/index.php/2024Q1_Reports:_TACL_Journal",
+    "source_url": "https://www.aclweb.org/adminwiki/index.php/2024Q1_Reports:_TACL_Journal",
+    "status": "official2024_policy_report_read",
+    "notes": "Newappendixpolicy/changedanonymity, notlatest2026portalcertification"
+  },
+  {
+    "search_id": "S-M2-AL-ANN",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_report: https://transacl.org/index.php/tacl/announcement/view/105",
+    "source_url": "https://transacl.org/index.php/tacl/announcement/view/105",
+    "status": "official_announcement_readable",
+    "notes": "EffectiveMar1,2024;category1up5/category2up3;notreviewed"
+  },
+  {
+    "search_id": "S-M2-AL-PROMISE",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "findpromised: https://transacl.org/tacl-submission-templates/tacl2021v1-finalversion-formatting-instructions.pdf",
+    "source_url": "https://transacl.org/tacl-submission-templates/tacl2021v1-finalversion-formatting-instructions.pdf",
+    "status": "conditional_artifact_access_requirement_read",
+    "notes": "Ifpromisedatsubmission,mustprovidespecificaccessinstructions;notblanketopensourcemandate"
+  },
+  {
+    "search_id": "S-M2-AL-ANN-DETAIL",
+    "platform": "official_policy_web_or_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "openlines10: https://transacl.org/index.php/tacl/announcement/view/105",
+    "source_url": "https://transacl.org/index.php/tacl/announcement/view/105",
+    "status": "official_appendix_details_checked",
+    "notes": "Body10pages;appendicesafterrefs/samePDFsubmission;publishedseparately"
+  }
+]

@@ -5,7 +5,7 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 40,
-  "search_rows": 699,
+  "search_rows": 713,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 35,
@@ -26,11 +26,11 @@
   "limitations": "No experiment rerun; workbook visual verification separate; not database coverage certification",
   "validation_matrix_units": 81,
   "venue_types": {
-    "journal": 26,
+    "journal": 27,
     "conference": 10,
     "repository": 1
   },
-  "journal_candidates": 25,
+  "journal_candidates": 26,
   "categorical_fields_checked": [
     "core_level",
     "research_object",

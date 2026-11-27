@@ -55,3 +55,5 @@ AI补效率方法稿判断：须报告总成本与行为/过程保持，不以�
 AJ补方法稿取向：效率—聚合—依赖保持可形成可检验问题，需与文本压缩/实现性能分开；尚未执行对应新研究。 见[群体粒度专题](group_granularity_validation.md)。
 
 AK补可复现性要求：固定源码能回答部分算法方向，但论文运行、修改依赖与数据访问仍须映射；当前未执行端到端重建。 见[制品跟进](ecolang_formula_artifact_followup.md)。
+
+AL补TACL：需NLP/评价贡献；当前仍优先比较JASSS/CCR，资料承诺/附录政策不替代经验验证。 见[TACL政策专题](tacl_policy_and_fit.md)。

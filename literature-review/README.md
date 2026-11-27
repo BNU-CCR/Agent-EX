@@ -45,13 +45,14 @@
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
+- [TACL政策与适配](reports/tacl_policy_and_fit.md)：旧模板/新附录政策、条件资料义务及既有测量先例。
 - [EcoLANG公式与制品核查](reports/ecolang_formula_artifact_followup.md)：公开代码惩罚方向、论文表达差异及环境缺口。
 - [群体粒度与验证](reports/group_granularity_validation.md)：人口/主体、模板先验、宏观拟合及内部表值冲突。
 - [通信效率与效度](reports/communication_efficiency_validity.md)：token/时间/全成本、观测投影和迁移边界。
 - [信息边界比较](reports/information_boundary_comparison.md)：全知生成、条件预测、评价者信息与迁移分层。
 - [ACL/EMNLP方法生态](reports/acl_emnlp_method_ecology.md)：Main/Findings、责任清单及候选方法论文分列。
 - [TCSS方法生态](reports/tcss_method_ecology.md)：正式平台先例、历史CFP与费用冲突。
-- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：37载体（26刊/10会议入口/1仓库），定向样本，未声称完整数据库覆盖。
+- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：38载体（27刊/10会议入口/1仓库），定向样本，未声称完整数据库覆盖。
 - [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：9张工作表，书目仅35项正式纳入；前沿/候选见主表。
 - [ODD版本与入口补查](reports/odd_version_access_followup.md)：预印/正式/公告日期与未获取正文分列。
 - [现有证据分类修复](reports/categorical_completion_existing_evidence.md)：9空值补齐、3卡重整，余5空值保留。
