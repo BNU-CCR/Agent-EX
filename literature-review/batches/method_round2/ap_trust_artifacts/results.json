@@ -1,0 +1,19 @@
+{
+  "batch_id": "AP-TRUST-ARTIFACTS",
+  "date": "2026-11-27",
+  "expected_master_sha256": "db289664d4a19fabead88d4b4a45ea17f5616965362b0e3e21cffb7c5fdcfe1d",
+  "updates": [
+    {
+      "record_id": "M037",
+      "search_id": "S-M2-AN-Q4;S-M2-AN-FORMAL;S-M2-AO-PDF;S-M2-AO-READ;S-M2-AO-VISUAL;S-M2-AP-TREE;S-M2-AP-LOCAL",
+      "supplement_status": "selected_appendices_and13pinnedpublicfiles_static_read;no_dependency_install_or_rerun",
+      "findings": "人类概率阈值vs模型逐概率引出不同；历史人类图重画；方向相似非效应等价，BDI解释非独立认知机制；人类/LLM对象为提示操纵。 AP公开非fc/test解析返回1；旧53结果非全1，当前10轮与抽查旧7轮不同；零值触发critic后备，历史影响未证。",
+      "notes": "ANabstracthistoryretained;AOformalPDFfocusedread;no newhumanrecruitment;no code/modelrun;dategateunchanged. | APfixeda3f14f0d/13filesblobverified;2026commitnotprovenformalrun;53persona/32pairedroles;code_resultmappingunresolved.",
+      "method_pending_fields": "first_formal_online_day;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;GPT4_snapshot_seeds;historical_artifact_config_run_mapping;VRR_and_parser_effect;external_transfer",
+      "method_coding_source": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json;data/trust_artifact_audit_AP.json",
+      "method_evidence_location": "§2–5;AppC/D/E/G1/H;checklist4–8/14–15;APall_game_person158–172/462–529;structure_output41–43;multi_round116–166/207–305",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

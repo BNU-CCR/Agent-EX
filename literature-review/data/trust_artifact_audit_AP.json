@@ -1,0 +1,112 @@
+{
+  "batch": "AP",
+  "checked_date": "2026-11-27",
+  "repository": "https://github.com/camel-ai/agent-trust",
+  "commit": "a3f14f0db98c21787a00552f19cd40f21bb4f04c",
+  "commit_date": "2026-07-11T21:25:32Z",
+  "commit_message": "Fix contact email for Canyu Chen",
+  "tree_sha": "a3f14f0db98c21787a00552f19cd40f21bb4f04c",
+  "tree_entry_count": 402,
+  "tree_truncated": false,
+  "files": [
+    {
+      "path": "agent_trust/all_game_person.py",
+      "bytes": 15278,
+      "git_blob_sha": "49807a2eb0d2e84700ebb76ec559e085a11b76d6",
+      "sha256": "39acee7726d0b342d0d3c80122c04a38c87b07106165c729ad34b9c917de61c3"
+    },
+    {
+      "path": "agent_trust/exp_model_class.py",
+      "bytes": 3893,
+      "git_blob_sha": "32df71a9a1241652b2de9a32018fcf58b8846b74",
+      "sha256": "35823bf1c354bfe242a04ed9f05e22abfc2d65f118c259101996358f467ae19b"
+    },
+    {
+      "path": "agent_trust/function_calls.py",
+      "bytes": 4872,
+      "git_blob_sha": "c21942286b1ed71ce59e848220f935822c459b95",
+      "sha256": "0f6b9742a11fa571afa64041fb783af6e9110f8d26ab0531968fdbf54241fe9c"
+    },
+    {
+      "path": "agent_trust/multi_round_person.py",
+      "bytes": 10452,
+      "git_blob_sha": "49f83c95e54f9bf13b2923df2a956cbc3e2a04e7",
+      "sha256": "32601bc39f408b7e1023bc370cbb624b950e6bfbb99ac2925088d32ee87a569e"
+    },
+    {
+      "path": "agent_trust/No repeated res/res/gpt-4_res/Trust_Game_gpt-4.json",
+      "bytes": 105316,
+      "git_blob_sha": "34d09331717e88a4ca7e7c6f516b7973ca60ac63",
+      "sha256": "7ac88c37953fbb8366b4357d97d88a1cea7fb602cb66cc944b06822c1ebe03e4"
+    },
+    {
+      "path": "agent_trust/prompt/character_2.json",
+      "bytes": 29344,
+      "git_blob_sha": "b95db9b28a61a55ca3d325de27a8cb772e0a0ad7",
+      "sha256": "8a180355bf951f86b4ca37d1174d77b7e56bdc66d4693f39799404420a88ba76"
+    },
+    {
+      "path": "agent_trust/prompt/multi_round_chara.json",
+      "bytes": 17245,
+      "git_blob_sha": "7499b681813d907fc3b2e258ad1a85963800ec58",
+      "sha256": "55caae2236b6059e6bae8663fb98a8ef3203b55f8820709e2dfc93f1d1b552af"
+    },
+    {
+      "path": "agent_trust/prompt/trust_game_round_prompt.json",
+      "bytes": 751,
+      "git_blob_sha": "4ca0e1ff6828a55922604a98de2f432e5c809774",
+      "sha256": "d18af06af5aa0d22aaf63d4cccaec39d8fc296260ce61cb7b6b0c71cdbca4c8b"
+    },
+    {
+      "path": "agent_trust/repeated res/gpt-4_res/gpt-4_group_num_1.json",
+      "bytes": 21568,
+      "git_blob_sha": "bc6b774e6970c1b73145b1f9027c81775f446c29",
+      "sha256": "f86a6c1a190895f45332b2f3ab89d3e0f48131074029bf38a4661a8bdae84ace"
+    },
+    {
+      "path": "agent_trust/structure_output.py",
+      "bytes": 3340,
+      "git_blob_sha": "b3278dc9c6b752e893af59dc7a5c4d7824b46054",
+      "sha256": "f8fc370ca96f304c44028237b9bb5535d3507643647572de7f3e51e9acf9dc21"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 2956,
+      "git_blob_sha": "0f47b62d32e1476e7e06da39b6e564845a3b2948",
+      "sha256": "fefc765cd89cf53e494a22f169187738a3eccab7fb7b501efcf3f03a63145942"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7030,
+      "git_blob_sha": "bc804c0b4f04f43940090d5a84ba81aaf1edcba2",
+      "sha256": "4a57687ab656e964fe89921f1cd7127e982642b68ece070b23c72343c505753c"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 1611,
+      "git_blob_sha": "3fade1b6fd78ed23f23246abf33c52804a67263f",
+      "sha256": "a2320b4bed380a425cf008abc6a25d8ee7837a002f92394f17738131958ddb20"
+    }
+  ],
+  "scope": "13filesstaticread/blobandSHA256verified;2archivedresultsstructureonly;notfullrepositoryexecution",
+  "execution": "none",
+  "formal_run_mapping": "unverified;latercommitandobservablecode_resultdifferences",
+  "counts": {
+    "character_2_entries": 53,
+    "character_2_unique_fulltexts": 53,
+    "multi_round_chara_entries": 32,
+    "multi_round_unique_fulltexts": 32,
+    "sample_single_res": 53,
+    "sample_single_dialog": 53,
+    "sample_repeated_rounds": 7
+  },
+  "unresolved": [
+    "GPT4snapshot",
+    "historicalcommit_config_run_mapping",
+    "VRR_statistics_and_zero_boundary",
+    "all_response_extraction_accuracy",
+    "persona_generation",
+    "dependency_execution",
+    "seeds_attempts"
+  ]
+}

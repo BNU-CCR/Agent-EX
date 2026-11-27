@@ -3878,5 +3878,35 @@
     "batch": "AO-TRUST-READING",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ao_trust_reading/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;model_snapshot_seeds;full_artifact_run_mapping;external_transfer",
+    "new": "first_formal_online_day;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;GPT4_snapshot_seeds;historical_artifact_config_run_mapping;VRR_and_parser_effect;external_transfer",
+    "date": "2026-11-27",
+    "batch": "AP-TRUST-ARTIFACTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ap_trust_artifacts/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_coding_source",
+    "old": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json",
+    "new": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json;data/trust_artifact_audit_AP.json",
+    "date": "2026-11-27",
+    "batch": "AP-TRUST-ARTIFACTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ap_trust_artifacts/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_evidence_location",
+    "old": "§2–5;AppC/D/E/G1/H;checklist4–8/14–15",
+    "new": "§2–5;AppC/D/E/G1/H;checklist4–8/14–15;APall_game_person158–172/462–529;structure_output41–43;multi_round116–166/207–305",
+    "date": "2026-11-27",
+    "batch": "AP-TRUST-ARTIFACTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ap_trust_artifacts/results.json"
   }
 ]

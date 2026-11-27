@@ -1,0 +1,182 @@
+[
+  {
+    "search_id": "S-M2-AP-PDFLINK",
+    "platform": "local_PDF_links",
+    "search_date": "2026-11-27",
+    "query_exact": "readactualp53/p56codehyperlinks",
+    "source_url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/1cb57fcf7ff3f6d37eebae5becc9ea6d-Paper-Conference.pdf",
+    "status": "officialPDFlinkedcode",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AP-PROJECT",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openprojecthomepage",
+    "source_url": "https://agent-trust.camel-ai.org/",
+    "status": "codelink_crosschecked",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AP-BRANCH",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET branches/main",
+    "source_url": "https://github.com/camel-ai/agent-trust/tree/main",
+    "status": "commit_pinned",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AP-REPO",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET repositorymetadata",
+    "source_url": "https://github.com/camel-ai/agent-trust",
+    "status": "defaultbranchchecked_notlicensecertification",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AP-TREE",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET recursiveGitTree a3f14f0db98c21787a00552f19cd40f21bb4f04c",
+    "source_url": "https://api.github.com/repos/camel-ai/agent-trust/git/trees/a3f14f0db98c21787a00552f19cd40f21bb4f04c?recursive=1",
+    "status": "402entries_nottruncated",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AP-FILE1",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/all_game_person.py",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/all_game_person.py",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE2",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/exp_model_class.py",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/exp_model_class.py",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE3",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/function_calls.py",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/function_calls.py",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE4",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/multi_round_person.py",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/multi_round_person.py",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE5",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/No repeated res/res/gpt-4_res/Trust_Game_gpt-4.json",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/No repeated res/res/gpt-4_res/Trust_Game_gpt-4.json",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE6",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/prompt/character_2.json",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/prompt/character_2.json",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE7",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/prompt/multi_round_chara.json",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/prompt/multi_round_chara.json",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE8",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/prompt/trust_game_round_prompt.json",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/prompt/trust_game_round_prompt.json",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE9",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/repeated res/gpt-4_res/gpt-4_group_num_1.json",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/repeated res/gpt-4_res/gpt-4_group_num_1.json",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE10",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile agent_trust/structure_output.py",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/structure_output.py",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE11",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile pyproject.toml",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/pyproject.toml",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE12",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile README.md",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/README.md",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-FILE13",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "GET pinnedfile requirements.txt",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/requirements.txt",
+    "status": "blob_SHA256_verified",
+    "notes": "Initial11selectedfiles retrieved twice after client expectedmetadata but connectorreturnedplaintext; oneexp_model_class extra inspection. Two resultfiles fetchedonce. Transfer retries grouped per file; no execution."
+  },
+  {
+    "search_id": "S-M2-AP-EXTRA-ENUM",
+    "platform": "GitHub_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "additionalinspectionexp_model_class afterclientparsemismatch",
+    "source_url": "https://github.com/camel-ai/agent-trust/blob/a3f14f0db98c21787a00552f19cd40f21bb4f04c/agent_trust/exp_model_class.py",
+    "status": "rawresponse_inspected",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AP-LOCAL",
+    "platform": "local_static_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "13filehash/selectedsource_lines/JSONcounts; sequentialreadcallsmerged",
+    "source_url": "https://github.com/camel-ai/agent-trust/tree/a3f14f0db98c21787a00552f19cd40f21bb4f04c",
+    "status": "static_only_no_modelcode_execution",
+    "notes": "One localread useddefaultGBKfailedafterhashpass; UTF8reread; no sourcefailure."
+  }
+]
