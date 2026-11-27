@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "BO-01",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "ITU_public_record_static",
+    "source_url": "https://pure.itu.dk/portal/da/publications/0f4ec58a-7c62-4234-a8e7-a96578c6d0b4",
+    "status": "HTTP200_redirectinstitutionalmetadata",
+    "notes": "182231bytes;hashcrosswalk;notPDF"
+  },
+  {
+    "search_id": "BO-02",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "ITU_web",
+    "source_url": "https://pure.itu.dk/portal/da/publications/0f4ec58a-7c62-4234-a8e7-a96578c6d0b4",
+    "status": "connection_failed",
+    "notes": ""
+  },
+  {
+    "search_id": "BO-03",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "institutional_HTML_accesslinks",
+    "source_url": "https://researcher.itu.dk/p/en/research-outputs/newer-larger-better-a-critique-of-the-unreflective-llm-adoption-i",
+    "status": "metadata_read_no_hostedPDF",
+    "notes": "epdfonly;notfulltext"
+  },
+  {
+    "search_id": "BO-04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "[\"\\\"2618486\\\" \\\"pdf\\\" -site:tandfonline.com -site:researchgate.net\", \"\\\"Newer, Larger, Better\\\" \\\"ssoar\\\"\", \"\\\"Balluff\\\" \\\"Unreflective\\\" \\\"pdf\\\"\"]",
+    "source_url": "",
+    "status": "search_batch_connection_failed_results_unknown",
+    "notes": "onefailedexchange;notthreeconfirmedqueries;notzero_hits"
+  },
+  {
+    "search_id": "BO-05",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "institutionlinked_epdf",
+    "source_url": "https://www.tandfonline.com/doi/epdf/10.1080/10584609.2026.2618486?needAccess=true",
+    "status": "HTTP403_HTML_notPDF",
+    "notes": "5725bytes;hashcrosswalk"
+  },
+  {
+    "search_id": "BO-06",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "eight_card_reference_authority_synthesis",
+    "source_url": "reports/reference_authority_and_method_routes.md",
+    "status": "local_synthesis_8fixedcards",
+    "notes": "canonicalLFhashat420dfd3;no_newpaper/card/validationunit_or_experiment"
+  }
+]

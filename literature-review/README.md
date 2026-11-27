@@ -47,6 +47,7 @@
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
 - [计算社会科学学会与会议](reports/css_societies_and_publication_routes.md)：CSSSA/ISCSS身份、存档路线及工作流复现摘要线索。
+- [参照权威与方法路线](reports/reference_authority_and_method_routes.md)：八项固定源卡、评价单位与三条可证伪方法问题，区分分歧和有真值的误判。
 - [Persona正式版对照](reports/persona_formal_version_comparison.md)：Study6旧稿疑点已解决、34行转录/20加权核查及数据on request。
 - [Persona验证分母与版本](reports/persona_validation_denominators.md)：作者稿19063判断、返回样本/基率、表内一致性及正式版本待核。
 - [传播期刊方法边界](reports/communication_method_venue_boundaries.md)：方法批评与persona验证摘要、正式在线日及JOC分强度政策。

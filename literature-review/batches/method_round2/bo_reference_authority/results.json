@@ -1,0 +1,15 @@
+{
+  "batch_id": "BO-reference-authority-crossstudy-and-method-route-synthesis",
+  "date": "2026-11-27",
+  "expected_master_sha256": "5cc69a9616bb5f2f1233fe96e3c28cdef378af34149c420b921fbb980d812f67",
+  "updates": [
+    {
+      "record_id": "M048",
+      "metadata_evidence_url": "https://api.crossref.org/works/10.1080/10584609.2026.2618486;https://researcher.itu.dk/p/en/research-outputs/newer-larger-better-a-critique-of-the-unreflective-llm-adoption-i",
+      "supplement_status": "KUlinkedfile403;ITUinstitutionmetadata200_epdflink403;noPDF",
+      "notes": "BOITUmetadata200182231bytes_redirectresearcher.itu.dk;noindependentPDF;institutionlinkedepdf4035725bytesHTML;web/searchbatchconnectionfailed_notzerohits;abstractstatusunchanged",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}
