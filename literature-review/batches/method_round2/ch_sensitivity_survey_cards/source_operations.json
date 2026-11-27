@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "CH-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck sensitivity design and synthetic survey denominators",
+    "source_url": "https://link.springer.com/article/10.1007/s10588-021-09358-5",
+    "status": "read_not_reexecuted",
+    "notes": "FormalHTMLreadable"
+  },
+  {
+    "search_id": "CH-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck sensitivity design and synthetic survey denominators",
+    "source_url": "https://www.cambridge.org/core/journals/political-analysis/article/synthetic-replacements-for-human-survey-data-the-perils-of-large-language-models/B92267DC26195C7F36E63EA04A47D2FE",
+    "status": "read_not_reexecuted",
+    "notes": "FormalHTMLreadable"
+  },
+  {
+    "search_id": "CH-03",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck sensitivity design and synthetic survey denominators",
+    "source_url": "https://link.springer.com/article/10.1007/s10588-021-09358-5",
+    "status": "read_not_reexecuted",
+    "notes": "200;hashinmanifest"
+  },
+  {
+    "search_id": "CH-04",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck sensitivity design and synthetic survey denominators",
+    "source_url": "https://www.cambridge.org/core/journals/political-analysis/article/synthetic-replacements-for-human-survey-data-the-perils-of-large-language-models/B92267DC26195C7F36E63EA04A47D2FE",
+    "status": "read_not_reexecuted",
+    "notes": "200;hashinmanifest"
+  },
+  {
+    "search_id": "CH-05",
+    "platform": "local_primary_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck sensitivity design and synthetic survey denominators",
+    "source_url": "reports/sensitivity_survey_cards_CH.md",
+    "status": "read_not_reexecuted",
+    "notes": "Design/repeatedunits/aggregation/temporalcomparison;noexecution"
+  }
+]

@@ -34,6 +34,8 @@
 
 - [议程与综述卡补全](reports/position_survey_cards_CG.md)：M014正式日期、M016代表表61行与评价比例边界。
 
+- [敏感性与合成调查卡补全](reports/sensitivity_survey_cards_CH.md)：配置/种子/人类分母、聚合与时间稳定性。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

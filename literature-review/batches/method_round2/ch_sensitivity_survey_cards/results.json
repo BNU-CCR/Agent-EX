@@ -1,0 +1,18 @@
+{
+  "batch_id": "CH-sensitivity-and-synthetic-survey-cards",
+  "date": "2026-11-27",
+  "expected_master_sha256": "11463d5e4502295179aa23d40ee00a3d6a34ee0de378107cfe1bac2f00ae22a2",
+  "updates": [
+    {
+      "record_id": "M017",
+      "method_coding_source": "reading-cards/M017.md;reports/sensitivity_survey_cards_CH.md;formalHTML_design_reread_CH",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "R017",
+      "method_coding_source": "reading-cards/R017.md;reports/sensitivity_survey_cards_CH.md;formalHTML_design_reread_CH",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

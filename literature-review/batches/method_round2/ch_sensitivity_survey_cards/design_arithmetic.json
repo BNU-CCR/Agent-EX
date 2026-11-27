@@ -1,0 +1,16 @@
+{
+  "M017": {
+    "configurations": 11664,
+    "seeds_per_configuration": 100,
+    "steps_per_run": 1000,
+    "design_runs": 1166400,
+    "pair_types": 45
+  },
+  "R017": {
+    "human_personas": 7530,
+    "repeats": 30,
+    "groups": 16,
+    "responses": 3614400
+  },
+  "boundary": "Reported-design arithmetic, not execution-log or statistical replication"
+}

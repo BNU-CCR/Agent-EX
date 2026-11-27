@@ -1,0 +1,18 @@
+[
+  {
+    "record_id": "M017",
+    "url": "https://link.springer.com/article/10.1007/s10588-021-09358-5",
+    "status": 200,
+    "bytes": 633593,
+    "sha256": "8335ff0b088d009897009508bc3ff10b76203b6fef97dc4393f242093104b7b0",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M017_CH.html"
+  },
+  {
+    "record_id": "R017",
+    "url": "https://www.cambridge.org/core/journals/political-analysis/article/synthetic-replacements-for-human-survey-data-the-perils-of-large-language-models/B92267DC26195C7F36E63EA04A47D2FE",
+    "status": 200,
+    "bytes": 1421188,
+    "sha256": "4d9527588a13e95fbf0caa0335afa4f8eb39b226a8fea52bdc46c3c11121fdd3",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\R017_CH.html"
+  }
+]

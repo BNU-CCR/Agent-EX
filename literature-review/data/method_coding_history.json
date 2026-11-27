@@ -6668,5 +6668,45 @@
     "batch": "CG-position-and-survey-evidence-cards",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cg_position_survey_cards/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_coding_source",
+    "old": "reading-cards/M017.md",
+    "new": "reading-cards/M017.md;reports/sensitivity_survey_cards_CH.md;formalHTML_design_reread_CH",
+    "date": "2026-11-27",
+    "batch": "CH-sensitivity-and-synthetic-survey-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ch_sensitivity_survey_cards/results.json"
+  },
+  {
+    "record_id": "M017",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CH-sensitivity-and-synthetic-survey-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ch_sensitivity_survey_cards/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_coding_source",
+    "old": "reading-cards/R017.md",
+    "new": "reading-cards/R017.md;reports/sensitivity_survey_cards_CH.md;formalHTML_design_reread_CH",
+    "date": "2026-11-27",
+    "batch": "CH-sensitivity-and-synthetic-survey-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ch_sensitivity_survey_cards/results.json"
+  },
+  {
+    "record_id": "R017",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CH-sensitivity-and-synthetic-survey-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ch_sensitivity_survey_cards/results.json"
   }
 ]

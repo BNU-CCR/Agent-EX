@@ -1,0 +1,24 @@
+[
+  {
+    "record_id": "M017",
+    "path": "reading-cards/M017.md",
+    "source_commit": "4760c5a",
+    "backup_path": "batches/method_round2/ch_sensitivity_survey_cards/cards_before/M017.md",
+    "before_raw_sha256": "d97091677892f587dd6517b3abd27a74c97781ef9237de2cdbdea60aca747b86",
+    "before_git_lf_sha256": "7996bcfc593784826ca9d43da37b81374ee07906175b87fc75bfd091aaa5c15e",
+    "current_git_lf_sha256": "afa8f2fe1819f99aa8f39cb2bf1d965daab5826a1aa369be7a3e311419947fc3",
+    "protected": false,
+    "numbered_sections": 11
+  },
+  {
+    "record_id": "R017",
+    "path": "reading-cards/R017.md",
+    "source_commit": "4760c5a",
+    "backup_path": "batches/method_round2/ch_sensitivity_survey_cards/cards_before/R017.md",
+    "before_raw_sha256": "9a0d5791be48aa1b17676acf39109c0cb9fd68516672d75fa70bfc0a42e39ae5",
+    "before_git_lf_sha256": "b2d062987904ad1d4c99eff793d70f02b1f5146f79e9055066bea6f64193490f",
+    "current_git_lf_sha256": "56a97f44e3a8ce92f2ab818c261e6189b77be5a2aa991d3d2ef05c1c79a70786",
+    "protected": false,
+    "numbered_sections": 11
+  }
+]
