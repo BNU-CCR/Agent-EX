@@ -1,0 +1,218 @@
+[
+  {
+    "search_id": "BN-01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"jqaf034.pdf\" \"48.14\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "nonprimaryRG/Mendeleyresultsnotmainreadingbasis"
+  },
+  {
+    "search_id": "BN-02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"jqaf034.pdf\" \"57.7\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "nonprimaryRG/Mendeleyresultsnotmainreadingbasis"
+  },
+  {
+    "search_id": "BN-03",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "formal_article_page",
+    "source_url": "https://academic.oup.com/joc/article/75/6/459/8248850",
+    "status": "500_redirectCDN_unavailable",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-04",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "public_indexed_publisherPDF",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "webPDF_text_accessible",
+    "notes": "earlierpublicsignedlink;notfreshbinary"
+  },
+  {
+    "search_id": "BN-05",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "signed_link_static",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "HTTP400_92bytes_notPDF",
+    "notes": "exactURLinmanifest;hashnotPDFhash"
+  },
+  {
+    "search_id": "BN-06",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_find_Table 1.",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-07",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_find_Data availability",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-08",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_find_57.7",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-09",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_find_Studies 5–8",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-10",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_330",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-11",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_650",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-12",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_1450",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-13",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "formal_Table1_screenshot_page4",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "400_BadRequest_noimage",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-14",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_80",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-15",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_1288",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-16",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_1510",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-17",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_230",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-18",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_960",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-19",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_1380",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-20",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_166",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-21",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_289",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-22",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_1188",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-23",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_open_line_1590",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "parsed_text_read",
+    "notes": ""
+  },
+  {
+    "search_id": "BN-24",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "formal_table_transcription_and_weighted_comparison",
+    "source_url": "data/persona_formal_comparison_BN.json",
+    "status": "checked34rows20weightedchecks",
+    "notes": "Noauthorcode/rawdataexecuted;tableStudy6resolved"
+  }
+]

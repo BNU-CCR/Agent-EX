@@ -1,0 +1,25 @@
+{
+  "batch_id": "BN-persona-formal-version-comparison-and-aggregation",
+  "date": "2026-11-27",
+  "expected_master_sha256": "10df8e18a8d09af92e1d0541ca248986929a594d4fda74d254fa200d539cb5ec",
+  "updates": [
+    {
+      "record_id": "M049",
+      "screening_status": "included",
+      "related_versions": "formalpublisheradvancePDFpp1-9main/Table1readviawebtext_BN;OSF36ppauthorreadBM;formalcorrectsStudy6student46.86;notbinarydownload",
+      "reason": "FormalpublisherPDFmaintext/Table1focusedreadandconfirmed2025-09-07date;includedgatepassed;rawdata/supplementnotrequiredforidentityinclusion",
+      "fulltext_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+      "supplement_status": "formalS1S2referenced_notacquired;dataavailableonrequest_noauthorcontact;formalPDFbinarynotdownloaded",
+      "findings": "FormalTable1Study6student46.86resolvesauthor49.86inconsistency;Study4overall57.70;19063judgments;20aggregationcheckswithinrounding;10000bootstrapCIreported_notrecomputed",
+      "evidence_location": "publisheradvancePDFpp1-9/Table1p4;webparsedlines0-1637;OSFauthorcomparison",
+      "notes": "BNformalpublisherwebPDFread_notfreshbinary;static400/screenshot400;parsedcapturehashnotPDFhash;Study6draftissue_resolvedinpublishedtext;dataonrequest;S1S2pending",
+      "method_transferability": "Formalreportsofconditionalaccuracy/base-rate/personapatterns;usefulmeasurement/denominatorevidence;singleplatform/model/historicalhumanreference_limitsretained",
+      "method_relevance_rationale": "正式研究主体与表1已读；所测合成判断偏向/任务响应与历史人类参照分开，正式修正作者稿汇总问题。",
+      "method_pending_fields": "rawjudgmentcounts/returnedclassfraction;bootstrapunit/resampling;SupplementaryS1S2;model_snapshot/platformconfigs;independenthuman_controls;freshbinaryPDF",
+      "method_evidence_location": "formalPDFpp3-9/Table1p4;dataavailabilityp9;OSFTable1p34forversiononly",
+      "method_coding_source": "reading-cards/M049.md;reports/persona_formal_version_comparison.md;data/persona_formal_comparison_BN.json",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

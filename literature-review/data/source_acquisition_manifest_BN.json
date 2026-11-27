@@ -1,0 +1,25 @@
+{
+  "checked_date": "2026-11-27",
+  "record_id": "M049",
+  "stable_publisher_page": "https://academic.oup.com/joc/article/75/6/459/8248850",
+  "indexed_publisher_pdf_url": "https://watermark02.silverchair.com/jqaf034.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAA2IwggNeBgkqhkiG9w0BBwagggNPMIIDSwIBADCCA0QGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMG1hLvtY1JxQn5Av0AgEQgIIDFTW-LFG4RXhjO089GIVrB7H8xT4B-SVLIcRzidcIZhZEzkE64IZyGTh3CUyF39DsmQSbBu3OWw2V2NaEgoOrVFzdEK6Hd78wj7EkWBzr5QlJo7JQXiVQX95zSLdciU0KX00qzwBMsOvn2hkJQcb_tXR8r87nZmDpH40C6WaItzAaJDQSZOp6uMl0WgyM33Safcax1NOfwU7A_PUWcaue4Z9IL7t4JtoK8mwWQbTlSRtlFsDaexgspdVhpwEOb9VQ4MYxN_QADaJjEEa21UwhvcezuPHZmkZgehA_iieNHlqBRrIlje8K8PFyKhoUuKtcbLbe3i3tKR9yrwc3eRazPPg8FDhn7AU6XJtGWPzYIjaaS_-Xw9zaH-5gZzW45h_MsZffpjLrPBrA2B7TYkkPDOFudV2tjzGch2xxbKFTtZ-Cz0XQod2XM62USOOiDYkWuNQBCLKDbfQhACJZ8y1RYr6HuClsdq37X7hlvtVJtxiUCOkxIrc-kx4lilge0NnaI24B2r5vyQCHDlBi-JjkmDbGoDiQ5QyArKXB-AyIo175DogWOfDOutBbJQSz-Z57wvPEk7NiJT5b-J3TKpQlNSsboE2akxC5qfbbhR2407ujwL2yXtQPCE9ELj9eWV5BH9Qk6vIahhR3PhF6iTt61NEEoBmtt4ZUawQXYm36Og8H0N8jw1Ai5CEsFh59GX0vRh0vNA4zui1-MlQGJC7bV8InwxdRA1edKuKT_zcZyaz34J4eYBgVHKAw64MmedAM0HLT094Gg8sy_I8HcWwqyqczBkjYDskEkhydJKqEAAZ3GkNlSnukJyBCWx6k9vElx7KnGTPlv_TKp8Ku_jRrRdYzljMuogMyB7dgxYC-2BMSIGayvOyl2aHnSSB6IFVQ-rctrzSJY7F_QA_-gkToUgjGFLlF24iOhOnDica_DGuiJffbvose2G9HQQOQs39Ui94HkMGa7MlATHRUmmUIV9J0Z76fJktbVCv23uOh9ks9H9FJzBrqqjqnnw9emwLcmPFw6V611HWlepKXQs6B0Q7upGiARg",
+  "read_mode": "web_indexed_publisher_PDF_text_extraction_not_fresh_binary_download",
+  "read_scope": "advancearticlepp1-9main/Table1;refspp9-11identityonly;SupplementaryS1S2notacquired",
+  "source_license": "CC-BY4.0_verifiedPDFp1",
+  "binary_download": {
+    "status": 400,
+    "bytes": 92,
+    "sha256": "ca3d7c3eda079d7be0d3bcfb9ab80b349b261bcaf5ea3704a045c403644e19da",
+    "pdf": false,
+    "source": "public_search_publisher_signed_link"
+  },
+  "screenshot": {
+    "status": "400_BadRequest",
+    "visual_formal_table_check": false
+  },
+  "binary_pdf_hash": null,
+  "parsed_capture_sha256": "5d2157e75c4b31fbb9b2bff607f73a9e89aee71314518b33829877e2d8274afc",
+  "capture_hash_boundary": "UTF8JSONtooltextcapture_hash_notPDFhash",
+  "data_availability": "Data available on request;formalPDFp9",
+  "source_location": "PDFp4Table1;webparsedlines361-1046;mainlines0-1637"
+}

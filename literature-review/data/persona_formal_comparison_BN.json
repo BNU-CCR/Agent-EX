@@ -1,0 +1,1188 @@
+{
+  "checked_date": "2026-11-27",
+  "record_id": "M049",
+  "attribution": "David M Markowitz and Timothy R Levine (2025), DOI10.1093/joc/jqaf034, publisher advance article PDF pp1-11, CC-BY4.0",
+  "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+  "table1_schema": [
+    "overall_accuracy_mean",
+    "overall_accuracy_sd",
+    "overall_accuracy_lower95",
+    "overall_accuracy_upper95",
+    "truth_bias_mean",
+    "truth_bias_sd",
+    "truth_bias_lower95",
+    "truth_bias_upper95",
+    "truth_accuracy_mean",
+    "truth_accuracy_sd",
+    "truth_accuracy_lower95",
+    "truth_accuracy_upper95",
+    "lie_accuracy_mean",
+    "lie_accuracy_sd",
+    "lie_accuracy_lower95",
+    "lie_accuracy_upper95"
+  ],
+  "formal_table1": [
+    {
+      "study": 1,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 3990,
+      "values": [
+        52.61,
+        49.94,
+        51.08,
+        54.16,
+        16.84,
+        37.43,
+        15.66,
+        17.99,
+        19.45,
+        39.59,
+        17.73,
+        21.24,
+        85.76,
+        34.95,
+        84.25,
+        87.27
+      ],
+      "source_lines": [
+        361,
+        380
+      ]
+    },
+    {
+      "study": 1,
+      "moderator": "Media type",
+      "description": "Audio",
+      "n": 1992,
+      "values": [
+        56.12,
+        49.64,
+        53.92,
+        58.33,
+        18.78,
+        39.06,
+        17.02,
+        20.48,
+        24.9,
+        43.26,
+        22.22,
+        27.57,
+        87.35,
+        33.26,
+        85.25,
+        89.36
+      ],
+      "source_lines": [
+        381,
+        400
+      ]
+    },
+    {
+      "study": 1,
+      "moderator": "Media type",
+      "description": "Audiovisual",
+      "n": 1998,
+      "values": [
+        49.1,
+        50.0,
+        46.95,
+        51.3,
+        14.91,
+        35.63,
+        13.41,
+        16.47,
+        14.01,
+        34.73,
+        11.87,
+        16.19,
+        84.18,
+        36.51,
+        81.91,
+        86.4
+      ],
+      "source_lines": [
+        401,
+        420
+      ]
+    },
+    {
+      "study": 2,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 2263,
+      "values": [
+        42.73,
+        49.48,
+        40.7,
+        44.72,
+        21.96,
+        41.41,
+        20.28,
+        23.69,
+        14.93,
+        35.65,
+        12.87,
+        16.95,
+        70.91,
+        45.44,
+        68.24,
+        73.58
+      ],
+      "source_lines": [
+        421,
+        440
+      ]
+    },
+    {
+      "study": 2,
+      "moderator": "Media type",
+      "description": "Audio",
+      "n": 1997,
+      "values": [
+        42.11,
+        49.39,
+        39.91,
+        44.32,
+        24.79,
+        43.19,
+        22.88,
+        26.69,
+        16.92,
+        37.51,
+        14.56,
+        19.24,
+        67.33,
+        46.92,
+        64.4,
+        70.23
+      ],
+      "source_lines": [
+        441,
+        460
+      ]
+    },
+    {
+      "study": 2,
+      "moderator": "Media type",
+      "description": "Audiovisual",
+      "n": 266,
+      "values": [
+        47.37,
+        50.02,
+        41.35,
+        53.38,
+        0.75,
+        8.65,
+        0.0,
+        1.88,
+        0.71,
+        8.45,
+        0.0,
+        2.33,
+        99.21,
+        8.91,
+        97.44,
+        100.0
+      ],
+      "source_lines": [
+        461,
+        481
+      ]
+    },
+    {
+      "study": 3,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 1127,
+      "values": [
+        15.88,
+        36.57,
+        13.76,
+        18.1,
+        18.99,
+        39.24,
+        16.77,
+        21.3,
+        13.0,
+        33.65,
+        10.95,
+        15.13,
+        37.04,
+        48.47,
+        29.01,
+        45.08
+      ],
+      "source_lines": [
+        482,
+        501
+      ]
+    },
+    {
+      "study": 3,
+      "moderator": "Media type",
+      "description": "Audio",
+      "n": 998,
+      "values": [
+        16.83,
+        37.44,
+        14.43,
+        19.24,
+        21.44,
+        41.06,
+        18.94,
+        23.95,
+        14.76,
+        35.49,
+        12.43,
+        17.14,
+        31.45,
+        46.62,
+        23.21,
+        39.86
+      ],
+      "source_lines": [
+        502,
+        521
+      ]
+    },
+    {
+      "study": 3,
+      "moderator": "Media type",
+      "description": "Audiovisual",
+      "n": 129,
+      "values": [
+        8.53,
+        28.04,
+        3.88,
+        13.18,
+        0.0,
+        0.0,
+        null,
+        null,
+        0.0,
+        0.0,
+        null,
+        null,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        522,
+        541
+      ]
+    },
+    {
+      "study": 4,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 2792,
+      "values": [
+        57.7,
+        49.41,
+        55.8,
+        59.53,
+        71.7,
+        45.05,
+        70.02,
+        73.39,
+        79.43,
+        40.44,
+        77.31,
+        81.54,
+        36.01,
+        48.02,
+        33.48,
+        38.43
+      ],
+      "source_lines": [
+        542,
+        561
+      ]
+    },
+    {
+      "study": 4,
+      "moderator": "Media type",
+      "description": "Audio",
+      "n": 1995,
+      "values": [
+        56.89,
+        49.54,
+        54.69,
+        59.1,
+        81.25,
+        39.04,
+        79.45,
+        82.96,
+        88.16,
+        32.32,
+        86.12,
+        90.12,
+        25.65,
+        43.69,
+        22.94,
+        28.45
+      ],
+      "source_lines": [
+        562,
+        581
+      ]
+    },
+    {
+      "study": 4,
+      "moderator": "Media type",
+      "description": "Audiovisual",
+      "n": 797,
+      "values": [
+        59.72,
+        49.08,
+        56.21,
+        63.11,
+        47.8,
+        49.98,
+        44.29,
+        51.32,
+        57.54,
+        49.49,
+        52.68,
+        62.32,
+        61.9,
+        48.62,
+        57.14,
+        66.75
+      ],
+      "source_lines": [
+        582,
+        601
+      ]
+    },
+    {
+      "study": 5,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 3988,
+      "values": [
+        49.8,
+        50.01,
+        48.24,
+        51.35,
+        54.89,
+        49.77,
+        53.31,
+        56.42,
+        54.69,
+        49.79,
+        52.52,
+        56.9,
+        44.91,
+        49.75,
+        42.73,
+        47.11
+      ],
+      "source_lines": [
+        602,
+        622
+      ]
+    },
+    {
+      "study": 5,
+      "moderator": "Persona",
+      "description": "FBI",
+      "n": 1994,
+      "values": [
+        53.11,
+        49.92,
+        50.9,
+        55.32,
+        61.99,
+        48.55,
+        59.88,
+        64.09,
+        65.07,
+        47.7,
+        62.14,
+        68.01,
+        41.11,
+        49.23,
+        38.04,
+        44.14
+      ],
+      "source_lines": [
+        623,
+        642
+      ]
+    },
+    {
+      "study": 5,
+      "moderator": "Persona",
+      "description": "Student",
+      "n": 1994,
+      "values": [
+        46.49,
+        49.89,
+        44.28,
+        48.7,
+        47.79,
+        49.96,
+        45.59,
+        50.0,
+        44.28,
+        49.7,
+        41.13,
+        47.31,
+        48.7,
+        50.01,
+        45.6,
+        51.81
+      ],
+      "source_lines": [
+        643,
+        662
+      ]
+    },
+    {
+      "study": 6,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 673,
+      "values": [
+        48.14,
+        50.0,
+        44.28,
+        52.01,
+        5.5,
+        22.81,
+        3.86,
+        7.28,
+        4.12,
+        19.9,
+        2.13,
+        6.34,
+        93.09,
+        25.4,
+        90.24,
+        95.71
+      ],
+      "source_lines": [
+        663,
+        682
+      ]
+    },
+    {
+      "study": 6,
+      "moderator": "Persona",
+      "description": "FBI",
+      "n": 370,
+      "values": [
+        49.19,
+        50.06,
+        44.05,
+        54.32,
+        7.3,
+        26.04,
+        4.86,
+        10.0,
+        5.03,
+        21.91,
+        2.16,
+        8.43,
+        90.58,
+        29.29,
+        86.19,
+        94.57
+      ],
+      "source_lines": [
+        683,
+        702
+      ]
+    },
+    {
+      "study": 6,
+      "moderator": "Persona",
+      "description": "Student",
+      "n": 303,
+      "values": [
+        46.86,
+        49.98,
+        41.25,
+        52.48,
+        3.3,
+        17.89,
+        1.32,
+        5.61,
+        3.11,
+        17.4,
+        0.63,
+        6.04,
+        96.48,
+        18.5,
+        93.13,
+        99.28
+      ],
+      "source_lines": [
+        703,
+        722
+      ]
+    },
+    {
+      "study": 7,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 412,
+      "values": [
+        16.99,
+        37.6,
+        13.35,
+        20.63,
+        5.1,
+        22.02,
+        3.16,
+        7.28,
+        5.79,
+        23.38,
+        3.56,
+        8.2,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        723,
+        742
+      ]
+    },
+    {
+      "study": 7,
+      "moderator": "Persona",
+      "description": "FBI",
+      "n": 248,
+      "values": [
+        18.95,
+        39.27,
+        14.11,
+        23.79,
+        4.44,
+        20.63,
+        2.02,
+        7.26,
+        5.19,
+        22.23,
+        2.37,
+        8.37,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        743,
+        763
+      ]
+    },
+    {
+      "study": 7,
+      "moderator": "Persona",
+      "description": "Student",
+      "n": 164,
+      "values": [
+        14.02,
+        34.83,
+        9.15,
+        19.51,
+        6.1,
+        24.0,
+        2.44,
+        9.76,
+        6.62,
+        24.95,
+        2.8,
+        10.81,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        764,
+        783
+      ]
+    },
+    {
+      "study": 8,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 2013,
+      "values": [
+        58.72,
+        49.25,
+        56.43,
+        60.76,
+        48.83,
+        50.0,
+        46.7,
+        51.02,
+        57.58,
+        49.45,
+        54.23,
+        60.38,
+        59.84,
+        49.05,
+        56.79,
+        62.89
+      ],
+      "source_lines": [
+        784,
+        803
+      ]
+    },
+    {
+      "study": 8,
+      "moderator": "Persona",
+      "description": "FBI",
+      "n": 1070,
+      "values": [
+        61.78,
+        48.62,
+        58.69,
+        64.58,
+        52.52,
+        49.96,
+        49.53,
+        55.51,
+        65.09,
+        47.72,
+        60.74,
+        69.0,
+        58.79,
+        49.26,
+        54.69,
+        62.81
+      ],
+      "source_lines": [
+        804,
+        823
+      ]
+    },
+    {
+      "study": 8,
+      "moderator": "Persona",
+      "description": "Student",
+      "n": 943,
+      "values": [
+        55.25,
+        49.75,
+        51.86,
+        58.22,
+        44.64,
+        49.74,
+        41.57,
+        47.83,
+        49.9,
+        50.05,
+        45.07,
+        53.93,
+        61.16,
+        48.79,
+        56.56,
+        65.71
+      ],
+      "source_lines": [
+        824,
+        843
+      ]
+    },
+    {
+      "study": 9,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 971,
+      "values": [
+        53.55,
+        49.9,
+        50.46,
+        56.75,
+        23.58,
+        42.47,
+        20.91,
+        26.26,
+        23.82,
+        42.65,
+        19.86,
+        27.9,
+        76.6,
+        42.38,
+        72.95,
+        80.07
+      ],
+      "source_lines": [
+        844,
+        863
+      ]
+    },
+    {
+      "study": 9,
+      "moderator": "Base-rate",
+      "description": "Context 1",
+      "n": 320,
+      "values": [
+        47.81,
+        50.03,
+        42.19,
+        53.43,
+        60.0,
+        49.07,
+        54.69,
+        65.31,
+        59.26,
+        49.32,
+        51.09,
+        67.41,
+        39.46,
+        49.01,
+        32.64,
+        46.46
+      ],
+      "source_lines": [
+        864,
+        883
+      ]
+    },
+    {
+      "study": 9,
+      "moderator": "Base-rate",
+      "description": "Context 2",
+      "n": 330,
+      "values": [
+        54.55,
+        49.87,
+        49.09,
+        59.7,
+        0.0,
+        0.0,
+        null,
+        null,
+        0.0,
+        0.0,
+        null,
+        null,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        884,
+        903
+      ]
+    },
+    {
+      "study": 9,
+      "moderator": "Base-rate",
+      "description": "Context 1 and 2",
+      "n": 321,
+      "values": [
+        58.26,
+        49.39,
+        52.65,
+        63.55,
+        11.53,
+        31.98,
+        8.1,
+        15.26,
+        15.11,
+        35.94,
+        9.38,
+        21.21,
+        91.21,
+        28.39,
+        86.81,
+        95.11
+      ],
+      "source_lines": [
+        904,
+        924
+      ]
+    },
+    {
+      "study": 10,
+      "moderator": "Overall",
+      "description": "—",
+      "n": 477,
+      "values": [
+        27.25,
+        44.57,
+        23.27,
+        31.45,
+        16.77,
+        37.4,
+        13.63,
+        20.13,
+        18.14,
+        38.58,
+        14.53,
+        21.93,
+        93.1,
+        25.56,
+        85.96,
+        98.46
+      ],
+      "source_lines": [
+        925,
+        944
+      ]
+    },
+    {
+      "study": 10,
+      "moderator": "Base-rate",
+      "description": "Context 1",
+      "n": 127,
+      "values": [
+        59.06,
+        49.37,
+        50.39,
+        67.72,
+        52.76,
+        50.12,
+        44.09,
+        61.42,
+        56.76,
+        49.77,
+        47.66,
+        66.09,
+        75.0,
+        44.72,
+        50.0,
+        94.44
+      ],
+      "source_lines": [
+        945,
+        964
+      ]
+    },
+    {
+      "study": 10,
+      "moderator": "Base-rate",
+      "description": "Context 2",
+      "n": 218,
+      "values": [
+        13.76,
+        34.53,
+        9.17,
+        18.35,
+        0.0,
+        0.0,
+        null,
+        null,
+        0.0,
+        0.0,
+        null,
+        null,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        965,
+        984
+      ]
+    },
+    {
+      "study": 10,
+      "moderator": "Base-rate",
+      "description": "Context 1 and 2",
+      "n": 132,
+      "values": [
+        18.94,
+        39.33,
+        12.88,
+        25.76,
+        9.85,
+        29.91,
+        5.3,
+        15.15,
+        10.83,
+        31.21,
+        5.74,
+        16.67,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        985,
+        1004
+      ]
+    },
+    {
+      "study": 11,
+      "moderator": "Persona",
+      "description": "Autism: 50-50",
+      "n": 226,
+      "values": [
+        45.58,
+        49.91,
+        38.94,
+        52.21,
+        9.73,
+        29.71,
+        6.19,
+        13.72,
+        6.09,
+        24.01,
+        1.92,
+        10.74,
+        86.49,
+        34.34,
+        79.82,
+        92.59
+      ],
+      "source_lines": [
+        1005,
+        1024
+      ]
+    },
+    {
+      "study": 12,
+      "moderator": "Persona",
+      "description": "Autism: Ecological",
+      "n": 131,
+      "values": [
+        13.74,
+        34.56,
+        8.4,
+        19.85,
+        4.58,
+        20.99,
+        1.53,
+        8.4,
+        5.04,
+        21.97,
+        1.65,
+        9.32,
+        100.0,
+        0.0,
+        null,
+        null
+      ],
+      "source_lines": [
+        1025,
+        1044
+      ]
+    }
+  ],
+  "overall_judgments": 19063,
+  "aggregation_checks": [
+    {
+      "study": 1,
+      "metric": "overall_accuracy",
+      "n": 3990,
+      "weighted_mean_percent": 52.60472180451128,
+      "reported": 52.61,
+      "difference_percentage_points": 0.005278195488720883,
+      "within_rounding": true
+    },
+    {
+      "study": 1,
+      "metric": "truth_bias",
+      "n": 3990,
+      "weighted_mean_percent": 16.84209022556391,
+      "reported": 16.84,
+      "difference_percentage_points": 0.002090225563911474,
+      "within_rounding": true
+    },
+    {
+      "study": 2,
+      "metric": "overall_accuracy",
+      "n": 2263,
+      "weighted_mean_percent": 42.72827662395051,
+      "reported": 42.73,
+      "difference_percentage_points": 0.001723376049490355,
+      "within_rounding": true
+    },
+    {
+      "study": 2,
+      "metric": "truth_bias",
+      "n": 2263,
+      "weighted_mean_percent": 21.964264250994255,
+      "reported": 21.96,
+      "difference_percentage_points": 0.004264250994253871,
+      "within_rounding": true
+    },
+    {
+      "study": 3,
+      "metric": "overall_accuracy",
+      "n": 1127,
+      "weighted_mean_percent": 15.87995563442768,
+      "reported": 15.88,
+      "difference_percentage_points": 4.4365572319904345e-05,
+      "within_rounding": true
+    },
+    {
+      "study": 3,
+      "metric": "truth_bias",
+      "n": 1127,
+      "weighted_mean_percent": 18.985909494232477,
+      "reported": 18.99,
+      "difference_percentage_points": 0.00409050576752179,
+      "within_rounding": true
+    },
+    {
+      "study": 4,
+      "metric": "overall_accuracy",
+      "n": 2792,
+      "weighted_mean_percent": 57.69784742120344,
+      "reported": 57.7,
+      "difference_percentage_points": 0.0021525787965614995,
+      "within_rounding": true
+    },
+    {
+      "study": 4,
+      "metric": "truth_bias",
+      "n": 2792,
+      "weighted_mean_percent": 71.701414756447,
+      "reported": 71.7,
+      "difference_percentage_points": 0.0014147564469908502,
+      "within_rounding": true
+    },
+    {
+      "study": 5,
+      "metric": "overall_accuracy",
+      "n": 3988,
+      "weighted_mean_percent": 49.8,
+      "reported": 49.8,
+      "difference_percentage_points": 0.0,
+      "within_rounding": true
+    },
+    {
+      "study": 5,
+      "metric": "truth_bias",
+      "n": 3988,
+      "weighted_mean_percent": 54.89,
+      "reported": 54.89,
+      "difference_percentage_points": 0.0,
+      "within_rounding": true
+    },
+    {
+      "study": 6,
+      "metric": "overall_accuracy",
+      "n": 673,
+      "weighted_mean_percent": 48.14098068350668,
+      "reported": 48.14,
+      "difference_percentage_points": 0.000980683506682567,
+      "within_rounding": true
+    },
+    {
+      "study": 6,
+      "metric": "truth_bias",
+      "n": 673,
+      "weighted_mean_percent": 5.499108469539376,
+      "reported": 5.5,
+      "difference_percentage_points": 0.0008915304606240682,
+      "within_rounding": true
+    },
+    {
+      "study": 7,
+      "metric": "overall_accuracy",
+      "n": 412,
+      "weighted_mean_percent": 16.98757281553398,
+      "reported": 16.99,
+      "difference_percentage_points": 0.002427184466018417,
+      "within_rounding": true
+    },
+    {
+      "study": 7,
+      "metric": "truth_bias",
+      "n": 412,
+      "weighted_mean_percent": 5.100776699029126,
+      "reported": 5.1,
+      "difference_percentage_points": 0.0007766990291262488,
+      "within_rounding": true
+    },
+    {
+      "study": 8,
+      "metric": "overall_accuracy",
+      "n": 2013,
+      "weighted_mean_percent": 58.72098857426727,
+      "reported": 58.72,
+      "difference_percentage_points": 0.0009885742672679498,
+      "within_rounding": true
+    },
+    {
+      "study": 8,
+      "metric": "truth_bias",
+      "n": 2013,
+      "weighted_mean_percent": 48.828574267262795,
+      "reported": 48.83,
+      "difference_percentage_points": 0.0014257327372035888,
+      "within_rounding": true
+    },
+    {
+      "study": 9,
+      "metric": "overall_accuracy",
+      "n": 971,
+      "weighted_mean_percent": 53.555262615859945,
+      "reported": 53.55,
+      "difference_percentage_points": 0.005262615859948028,
+      "within_rounding": true
+    },
+    {
+      "study": 9,
+      "metric": "truth_bias",
+      "n": 971,
+      "weighted_mean_percent": 23.585097837281154,
+      "reported": 23.58,
+      "difference_percentage_points": 0.005097837281155648,
+      "within_rounding": true
+    },
+    {
+      "study": 10,
+      "metric": "overall_accuracy",
+      "n": 477,
+      "weighted_mean_percent": 27.254465408805032,
+      "reported": 27.25,
+      "difference_percentage_points": 0.004465408805032212,
+      "within_rounding": true
+    },
+    {
+      "study": 10,
+      "metric": "truth_bias",
+      "n": 477,
+      "weighted_mean_percent": 16.77299790356394,
+      "reported": 16.77,
+      "difference_percentage_points": 0.002997903563940696,
+      "within_rounding": true
+    }
+  ],
+  "rounding_tolerance_percentage_points": 0.010001,
+  "changed_values": {
+    "study4_overall": [
+      57.49,
+      57.7
+    ],
+    "study4_audio": [
+      56.64,
+      56.89
+    ],
+    "study4_audiovisual": [
+      59.6,
+      59.72
+    ],
+    "study6_student": [
+      49.86,
+      46.86
+    ],
+    "study8_overall": [
+      58.57,
+      58.72
+    ]
+  },
+  "author_snapshot_sha256": "72092bf29fd529b4fcb8e912c97c0ca92f4f1863b036d2633f754260bd412d83",
+  "study6_resolution": "formaltableoverall48.14_isconsistent_withFBI49.19n370_student46.86n303;author49.86superseded",
+  "uncertainty": "Table1reportsSD_and95CI_10000bootstrapreplicates;notindependentlyrecomputed;resamplingunit_andrawdatapending",
+  "limitations": "Texttranscriptionnotformalimagecheck;numericweightedconsistencynotrawdatareanalysis;conditionaltruth/lieaccuracynotweightedbytotalN;S1S2notacquired;noauthorcontact"
+}

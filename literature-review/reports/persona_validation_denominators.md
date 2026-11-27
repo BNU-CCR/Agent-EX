@@ -1,3 +1,5 @@
+> BN接续：正式主体和Table1现已核读，M049已纳入；Study6学生46.86%使48.14%总值一致，作者稿49.86%不再作为正式问题。正式数据仍on request，未复算原始判断或CI。以下为BM作者稿审计历史，当前值见[正式版本对照](persona_formal_version_comparison.md)。
+
 # Persona验证：分母、基率与版本不能合并
 
 2026-11-27，M049实际读OSF作者36页稿件主文/三表，正式首次日期已核但正式正文对照未完成。详见[阅读卡](../reading-cards/M049.md)、[来源与重算账](../data/persona_validation_audit_BM.json)。
