@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "S-M2-AZ-SYNTH",
+    "platform": "local_evidence_synthesis",
+    "search_date": "2026-11-27",
+    "query_exact": "Compare10existingcards and AQ synthesis; identify object/reference/protocol/unit/claim boundaries; update main method and submission reports",
+    "source_url": "reports/evaluation_targets_and_claims.md",
+    "status": "synthesis_no_new_network_search_or_experiment",
+    "notes": "Grouped local reading/synthesis operations, not10newpapers or validation units;each card SHA256 retained;M031authorv1 andM042publisherlayout provenance retained."
+  }
+]
