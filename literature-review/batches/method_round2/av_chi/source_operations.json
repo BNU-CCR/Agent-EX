@@ -1,0 +1,92 @@
+[
+  {
+    "search_id": "S-M2-AV-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Evaluating Large Language Models in Generating Synthetic HCI Research Data\"",
+    "source_url": "",
+    "status": "formalACMindexedmetadata_and_institutionalleads",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org/doi \"Large Language Models as Simulated Users\" CHI",
+    "source_url": "",
+    "status": "trialsearch_noexhaustiveness",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-GUIDE",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2027successguide",
+    "source_url": "https://chi2027.acm.org/guide-to-a-successful-submission/",
+    "status": "official_read",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-PAPERS",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2027papers",
+    "source_url": "https://chi2027.acm.org/Authors/Papers/",
+    "status": "official_read",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-TYPES",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2027contributions",
+    "source_url": "https://chi2027.acm.org/contributions-to-chi/",
+    "status": "overviewread_notalltypesfitchecked",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-DOI",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openDOI",
+    "source_url": "https://doi.org/10.1145/3544548.3580688",
+    "status": "toolHTTP403_notfulltext",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-INST",
+    "platform": "institutional_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openauthorinstitutionpublication",
+    "source_url": "https://research.aalto.fi/en/publications/evaluating-large-language-models-in-generating-synthetic-hci-rese/",
+    "status": "formalidentity_date_finalPDFlead",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-SHARE",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Sharing research material",
+    "source_url": "https://chi2027.acm.org/guide-to-a-successful-submission/",
+    "status": "transparent_reporting_conditionalsharing_checked",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-DATES",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find September",
+    "source_url": "https://chi2027.acm.org/Authors/Papers/",
+    "status": "initialclosed_vsresubmission_APC_wordlimits_checked",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  },
+  {
+    "search_id": "S-M2-AV-METHOD",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find methodological",
+    "source_url": "https://chi2027.acm.org/contributions-to-chi/",
+    "status": "no_match_notabsenceofmethodscontributions",
+    "notes": "AUtrialqueriesalreadyloggedthere;norepeatcount;noPDFdownloadorfulltextcard;yearspecificguide_not2023compliance."
+  }
+]

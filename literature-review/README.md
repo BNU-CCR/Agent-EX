@@ -35,7 +35,7 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-27，保留首轮57条及15卡，新增40项工作、补读5条原记录，现97条、56张全文卡；39项正式纳入、50候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-27，保留首轮57条及15卡，新增41项工作、补读5条原记录，现98条、56张全文卡；39项正式纳入、51候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
@@ -45,6 +45,7 @@
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
+- [CHI方法生态](reports/chi_method_ecology.md)：正式合成HCI数据候选、2027透明性与新稿/返修期限分开。
 - [Turing Experiments保真边界](reports/turing_experiment_fidelity.md)：格式/事实/人类分布、辅助分类流程与模型×任务覆盖。
 - [观点范围与分歧](reports/position_scope_and_disagreement.md)：五挑战、单被试/集体范围、探索用途与原指标口径。
 - [异质性综述分母](reports/heterogeneity_review_denominators.md)：21行表审计、9/21与9/14及方差检查/参考匹配区别。
@@ -61,7 +62,7 @@
 - [信息边界比较](reports/information_boundary_comparison.md)：全知生成、条件预测、评价者信息与迁移分层。
 - [ACL/EMNLP方法生态](reports/acl_emnlp_method_ecology.md)：Main/Findings、责任清单及候选方法论文分列。
 - [TCSS方法生态](reports/tcss_method_ecology.md)：正式平台先例、历史CFP与费用冲突。
-- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：40载体（27刊/12会议入口/1仓库），定向样本，未声称完整数据库覆盖。
+- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：41载体（27刊/13会议入口/1仓库），定向样本，未声称完整数据库覆盖。
 - [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：9张工作表，书目仅39项正式纳入；前沿/候选见主表。
 - [ODD版本与入口补查](reports/odd_version_access_followup.md)：预印/正式/公告日期与未获取正文分列。
 - [现有证据分类修复](reports/categorical_completion_existing_evidence.md)：9空值补齐、3卡重整，余5空值保留。
