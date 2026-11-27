@@ -1,0 +1,23 @@
+{
+  "batch_id": "BT-three-seed-content-review",
+  "date": "2026-11-27",
+  "expected_master_sha256": "2b2d54b3fd3ef55479f373736951888bf2b0dfad50955217cc53c2bc15958254",
+  "updates": [
+    {
+      "record_id": "M002",
+      "method_coding_source": "reading-cards/M002.md;reports/seed_content_review_BT.md;existing_b_paradigm_primary_reading",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "M004",
+      "method_coding_source": "reading-cards/M004.md;reports/seed_content_review_BT.md;existing_b_paradigm_primary_reading",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "M005",
+      "method_coding_source": "reading-cards/M005.md;reports/seed_content_review_BT.md;existing_b_paradigm_primary_reading",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

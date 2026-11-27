@@ -6068,5 +6068,65 @@
     "batch": "BQ-five-core-card-content-and-evidence-repair",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M002",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/b_paradigm/",
+    "new": "reading-cards/M002.md;reports/seed_content_review_BT.md;existing_b_paradigm_primary_reading",
+    "date": "2026-11-27",
+    "batch": "BT-three-seed-content-review",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bt_three_seed_content_review/results.json"
+  },
+  {
+    "record_id": "M002",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BT-three-seed-content-review",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bt_three_seed_content_review/results.json"
+  },
+  {
+    "record_id": "M004",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/b_paradigm/",
+    "new": "reading-cards/M004.md;reports/seed_content_review_BT.md;existing_b_paradigm_primary_reading",
+    "date": "2026-11-27",
+    "batch": "BT-three-seed-content-review",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bt_three_seed_content_review/results.json"
+  },
+  {
+    "record_id": "M004",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BT-three-seed-content-review",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bt_three_seed_content_review/results.json"
+  },
+  {
+    "record_id": "M005",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/b_paradigm/",
+    "new": "reading-cards/M005.md;reports/seed_content_review_BT.md;existing_b_paradigm_primary_reading",
+    "date": "2026-11-27",
+    "batch": "BT-three-seed-content-review",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bt_three_seed_content_review/results.json"
+  },
+  {
+    "record_id": "M005",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BT-three-seed-content-review",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bt_three_seed_content_review/results.json"
   }
 ]

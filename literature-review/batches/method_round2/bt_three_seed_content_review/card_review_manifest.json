@@ -1,0 +1,59 @@
+[
+  {
+    "record_id": "M002",
+    "source_path": "reading-cards/M002.md",
+    "backup_path": "batches/method_round2/bt_three_seed_content_review/cards_before/M002.md",
+    "snapshot_commit": "e384d86",
+    "before_raw_sha256": "4f06385deb7648d877a28bd261b0e9fc123e4d5bdbdfa2397b0151a0f84d3972",
+    "before_git_lf_sha256": "d34bf0eaf7d05faa8264cc2af819b0898cf65fe34fe77faabe3e28b965e41460",
+    "after_git_lf_sha256": "9a1ce1fcdb2a4973c2db337a31a100d4cf374c030c9f3432a89eb1ad1a36852b",
+    "eleven_items_already_present": true,
+    "content_scope_reviewed": true,
+    "boundary": "Classification not independently operationalised or validated; higher level not evidence of better method",
+    "status": {
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "method_maturity": "conceptual_framework",
+      "method_evidence_level": "conceptual_claim",
+      "date_eligibility": "confirmed"
+    }
+  },
+  {
+    "record_id": "M004",
+    "source_path": "reading-cards/M004.md",
+    "backup_path": "batches/method_round2/bt_three_seed_content_review/cards_before/M004.md",
+    "snapshot_commit": "e384d86",
+    "before_raw_sha256": "0da149f25294a7c3f737ef18c7374715c56960ec5710de862282bd9d994a979f",
+    "before_git_lf_sha256": "81e75ef043c6efde67decfe7198e352cc221fc5c8fec13674d6153c65731b9dc",
+    "after_git_lf_sha256": "9cf5d84a3621fe58c1582548e7ff80234c9c2fa3569af98b6e3b90cf0d4aedf0",
+    "eleven_items_already_present": true,
+    "content_scope_reviewed": true,
+    "boundary": "Critical review and proposed diagnostics/conceptual blueprint; not newly executed empirical tests",
+    "status": {
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "method_maturity": "review_or_critique",
+      "method_evidence_level": "conceptual_claim",
+      "date_eligibility": "confirmed"
+    }
+  },
+  {
+    "record_id": "M005",
+    "source_path": "reading-cards/M005.md",
+    "backup_path": "batches/method_round2/bt_three_seed_content_review/cards_before/M005.md",
+    "snapshot_commit": "e384d86",
+    "before_raw_sha256": "b145dd6547a1d1e12284f0edd3c6794a6d2fb399a0783ce096385878ff6b9119",
+    "before_git_lf_sha256": "84424b7215f12d39cae1830b7bad017aad48704d060549bc391b4f4fd685019d",
+    "after_git_lf_sha256": "1c3af8a661297712f6e36d60bc8aea7e1dd2ca1234839c2246f47f360d75ed0d",
+    "eleven_items_already_present": true,
+    "content_scope_reviewed": true,
+    "boundary": "Author arXiv v1; formal conference relationship pending; retrospective effects and architecture selection not independent holdout; agent and run units differ",
+    "status": {
+      "screening_status": "frontier",
+      "reading_status": "fulltext_checked",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "date_eligibility": "preprint_eligible"
+    }
+  }
+]
