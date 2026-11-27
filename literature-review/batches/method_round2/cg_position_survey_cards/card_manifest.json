@@ -1,0 +1,24 @@
+[
+  {
+    "record_id": "M014",
+    "path": "reading-cards/M014.md",
+    "source_commit": "dcefa50",
+    "backup_path": "batches/method_round2/cg_position_survey_cards/cards_before/M014.md",
+    "before_raw_sha256": "ef24f0fdddc24875bced37d680968fe553e3bfb9b5d18c60e50014c5b2e98d97",
+    "before_git_lf_sha256": "248d71fa7f6d2cf9525caa2697e96be742a3e8755770ded837e68d696002fdf2",
+    "current_git_lf_sha256": "744e8d386d00df39ad4238e8c17af3e8c46c2d1cc89a808023a998bae1ee84ef",
+    "protected": false,
+    "numbered_sections": 11
+  },
+  {
+    "record_id": "M016",
+    "path": "reading-cards/M016.md",
+    "source_commit": "dcefa50",
+    "backup_path": "batches/method_round2/cg_position_survey_cards/cards_before/M016.md",
+    "before_raw_sha256": "46d16d53fde199fd631958993f632b94384e2a427f13085eb5e533fa7bec3a69",
+    "before_git_lf_sha256": "46d16d53fde199fd631958993f632b94384e2a427f13085eb5e533fa7bec3a69",
+    "current_git_lf_sha256": "d43aed1fbd4a983c946e3466daaeee2b464c13ac7043ba692127599ad29b5917",
+    "protected": false,
+    "numbered_sections": 11
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "CG-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck official dates, survey eligibility and displayed representative table",
+    "source_url": "https://www.nature.com/articles/s41599-024-03611-3",
+    "status": "read_not_reexecuted",
+    "notes": "Official maintext readable"
+  },
+  {
+    "search_id": "CG-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck official dates, survey eligibility and displayed representative table",
+    "source_url": "https://proceedings.mlr.press/v306/",
+    "status": "read_not_reexecuted",
+    "notes": "Formalvolume Published29September2026"
+  },
+  {
+    "search_id": "CG-03",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck official dates, survey eligibility and displayed representative table",
+    "source_url": "https://www.nature.com/articles/s41599-024-03611-3",
+    "status": "read_not_reexecuted",
+    "notes": "200;hashinmanifest"
+  },
+  {
+    "search_id": "CG-04",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck official dates, survey eligibility and displayed representative table",
+    "source_url": "https://proceedings.mlr.press/v306/",
+    "status": "read_not_reexecuted",
+    "notes": "200;hashinmanifest"
+  },
+  {
+    "search_id": "CG-05",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck official dates, survey eligibility and displayed representative table",
+    "source_url": "https://www.nature.com/articles/s41599-024-03611-3/tables/1",
+    "status": "read_not_reexecuted",
+    "notes": "200;hashinmanifest"
+  },
+  {
+    "search_id": "CG-06",
+    "platform": "local_primary_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "Recheck official dates, survey eligibility and displayed representative table",
+    "source_url": "reports/position_survey_cards_CG.md",
+    "status": "read_not_reexecuted",
+    "notes": "PRISMA/80percent/table61rows;nooriginalstudyreexecution"
+  }
+]

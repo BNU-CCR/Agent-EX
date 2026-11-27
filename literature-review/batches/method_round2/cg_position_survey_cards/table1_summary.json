@@ -1,0 +1,16 @@
+{
+  "rows": 61,
+  "domains": {
+    "Social": 45,
+    "Physical": 5,
+    "Cyber": 6,
+    "Hybrid": 5
+  },
+  "environments": {
+    "Virtual": 40,
+    "Real": 21
+  },
+  "cooperative_task_rows": 10,
+  "individual_social_rows": 11,
+  "boundary": "Displayed representative table rows, not unique works or total review corpus; environment Real is not validation label;80percent not recomputed"
+}

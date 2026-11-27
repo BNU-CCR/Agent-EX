@@ -1,0 +1,62 @@
+source_row,Domain,Environment,Advance,What to simulate
+1,Social,Virtual,Schwitzgebel et al. ( 2024 ),Conversation and interaction
+2,Social,Virtual,Xu et al. ( 2023b ),Werewolf game
+3,Social,Virtual,Acerbi and Stubbersfield ( 2023 ),Information Propagation
+4,Social,Virtual,Zhang et al. ( 2023c ),Collaboration Mechanism
+5,Social,Virtual,Suzuki and Arita ( 2024 ),Cooperation and defection
+6,Social,Virtual,de Zarzà et al. ( 2023 ),Social interaction
+7,Social,Real,Mukobi et al. ( 2023 ),Welfare diplomacy game
+8,Social,Real,"S3 (Gao et al., 2023 )",Online social network
+9,Social,Virtual,"SimReddit (Park et al., 2022 )",Online forum
+10,Social,Real,Cai et al. ( 2024 ),Social Media Langauge
+11,Social,Real,Papachristou and Yuan ( 2024 ),Social Network Dynamics
+12,Social,Real,"COLA (Lan et al., 2024 )",Cooperative task solving
+13,Social,Virtual,"MAD (Liang et al., 2023 )",Cooperative task solving
+14,Social,Virtual,"CHATDEV (Qian et al., 2024 )",Cooperative task solving
+15,Social,Virtual,"MetaGPT (Hong et al., 2024 )",Cooperative task solving
+16,Social,Virtual,"ChatEval (Chan et al., 2024 )",Cooperative task solving
+17,Social,Virtual,"CAMEL (Li et al., 2023d )",Cooperative task solving
+18,Social,Virtual,"AgentVerse (Chen et al., 2024 )",Cooperative task solving
+19,Social,Virtual,"SPP (Wang et al., 2023d )",Cooperative task solving
+20,Social,Virtual,"CoELA (Zhang et al., 2024b )",Cooperative task solving
+21,Social,Real,"Agent Hospital (Li et al., 2024a )",Cooperative task solving
+22,Social,Virtual,"Humanoid Agents (Wang et al., 2023c )",Individual social behavior
+23,Social,Real,"SocioDojo (Cheng and Chin, 2024 )",Individual social behavior
+24,Social,Virtual,Liu et al. ( 2024a ),Individual social behavior
+25,Social,Virtual,Argyle et al. ( 2023 ),Individual social behavior
+26,Social,Virtual,Hämäläinen et al. ( 2023 ),Individual social behavior
+27,Social,Virtual,Singh et al. ( 2023 ),Individual social behavior
+28,Social,Virtual,Binz and Schulz ( 2023 ),Individual social behavior
+29,Social,Virtual,Elyoseph et al. ( 2023 ),Individual social behavior
+30,Social,Virtual,Li et al. ( 2022 ),Individual social behavior
+31,Social,Virtual,Xie and Zou ( 2024 ),Individual social behavior
+32,Social,Virtual,Yoon et al. ( 2024 ),Individual social behavior
+33,Social,Virtual,Horton ( 2023 ),Economic system: individual behavior
+34,Social,Virtual,Chen et al. ( 2023e ),Economic system: individual behavior
+35,Social,Virtual,Geerling et al. ( 2023 ),Economic system: individual behavior
+36,Social,Real,Xie et al. ( 2023 ),Economic system: market behavior
+37,Social,Real,Faria-e Castro and Leibovici ( 2023 ),Economic system: market behavior
+38,Social,Real,Bybee ( 2023 ),Economic system: market behavior
+39,Social,Virtual,Phelps and Russell ( 2023 ),Economic system: game theory
+40,Social,Virtual,Akata et al. ( 2023 ),Economic system: game theory
+41,Social,Virtual,Guo et al. ( 2023 ),Economic system: game theory
+42,Social,Virtual,Zhao et al. ( 2023b ),Economic system: consumption market
+43,Social,Virtual,Han et al. ( 2023 ),Economic system: consumption market
+44,Social,Virtual,Zhao et al. Nascimento et al. ( 2023 ),Economic system: consumption market
+45,Social,Virtual,Chen et al. ( 2023c ),Economic system: auction market
+46,Physical,Real,Shah et al. ( 2023a ),Navigation behavior
+47,Physical,Real,"NLMap (Chen et al., 2023b )",Navigation behavior
+48,Physical,Real,Zou et al. ( 2023 ),Wireless network users
+49,Physical,Real,Cui et al. ( 2024 ),Vehicle drivers
+50,Physical,Virtual,"GITM (Zhu et al., 2023c )",Tool-usage simulation in sandbox game
+51,Cyber,Real,"WebAgent (Gur et al., 2024 )",Human behaviors in Web
+52,Cyber,Real,"Mind2Web (Deng et al., 2024 )",Human behaviors in Web
+53,Cyber,Real,Zhou et al. ( 2024a ),Human behaviors in Web
+54,Cyber,Real,Park et al. ( 2023 ),Human behaviors in Web
+55,Cyber,Virtual,"RecAgent (Wang et al., 2023b )",Interaction with recommender system
+56,Cyber,Virtual,"Agent4Rec (Zhang et al., 2024a )",Interaction with recommender system
+57,Hybrid,Virtual,Williams et al. ( 2023 ),Epidemic spreading
+58,Hybrid,Virtual,"Generative agents (Park et al., 2023 )",Sandbox social life
+59,Hybrid,Real,"WarAgent (Hua et al., 2023 )",War simulation
+60,Hybrid,Real,Li et al. ( 2024b ),Economic system: macroeconomics
+61,Hybrid,Real,"UGI (Xu et al., 2023a )",Human behaviors in real-world city

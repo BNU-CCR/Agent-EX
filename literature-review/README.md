@@ -32,6 +32,8 @@
 
 - [组件与网络拟合卡补全](reports/component_network_cards_CF.md)：原文重核、阴性条件/分母、拟合搜索与机制边界。
 
+- [议程与综述卡补全](reports/position_survey_cards_CG.md)：M014正式日期、M016代表表61行与评价比例边界。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

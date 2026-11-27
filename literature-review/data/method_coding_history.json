@@ -6638,5 +6638,35 @@
     "batch": "CF-component-validation-and-network-fit-cards",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cf_component_network_cards/results.json"
+  },
+  {
+    "record_id": "M014",
+    "field": "method_coding_source",
+    "old": "reading-cards/M014.md",
+    "new": "reading-cards/M014.md;reports/position_survey_cards_CG.md;primary_metadata_and_table_recheck_CG",
+    "date": "2026-11-27",
+    "batch": "CG-position-and-survey-evidence-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cg_position_survey_cards/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_coding_source",
+    "old": "reading-cards/M016.md",
+    "new": "reading-cards/M016.md;reports/position_survey_cards_CG.md;primary_metadata_and_table_recheck_CG",
+    "date": "2026-11-27",
+    "batch": "CG-position-and-survey-evidence-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cg_position_survey_cards/results.json"
+  },
+  {
+    "record_id": "M016",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CG-position-and-survey-evidence-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cg_position_survey_cards/results.json"
   }
 ]

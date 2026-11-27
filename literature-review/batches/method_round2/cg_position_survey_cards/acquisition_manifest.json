@@ -1,0 +1,26 @@
+[
+  {
+    "record_id": "M016",
+    "url": "https://www.nature.com/articles/s41599-024-03611-3",
+    "status": 200,
+    "bytes": 746741,
+    "sha256": "49dd26eb4f15a2d339dbf95f14db08923ffa605ad75cf31c90d264e8c5e916fc",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M016_CG.html"
+  },
+  {
+    "record_id": "M014-date",
+    "url": "https://proceedings.mlr.press/v306/",
+    "status": 200,
+    "bytes": 7156776,
+    "sha256": "b6bb3f3207225197ffe44514c58959f1a103a36d6c2e19e42d96d6e649f45a2e",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M014-date_CG.html"
+  },
+  {
+    "record_id": "M016-table1",
+    "url": "https://www.nature.com/articles/s41599-024-03611-3/tables/1",
+    "status": 200,
+    "bytes": 198425,
+    "sha256": "eb46815d6fac09d2da75cea24a2af60d337785c8ff4fc7ddae997b5f5544b5b7",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M016_CG_table1.html"
+  }
+]

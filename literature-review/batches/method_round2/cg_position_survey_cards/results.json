@@ -1,0 +1,18 @@
+{
+  "batch_id": "CG-position-and-survey-evidence-cards",
+  "date": "2026-11-27",
+  "expected_master_sha256": "367292a6d0d95b3b655c40c7038cdb442044362ba7e6a43276326cc346a16e6f",
+  "updates": [
+    {
+      "record_id": "M014",
+      "method_coding_source": "reading-cards/M014.md;reports/position_survey_cards_CG.md;primary_metadata_and_table_recheck_CG",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "M016",
+      "method_coding_source": "reading-cards/M016.md;reports/position_survey_cards_CG.md;primary_metadata_and_table_recheck_CG",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}
