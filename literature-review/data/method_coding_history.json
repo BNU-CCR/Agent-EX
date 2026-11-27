@@ -4168,5 +4168,85 @@
     "batch": "AR-ICML",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ar_icml/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_type",
+    "old": "position_and_methodological_critique",
+    "new": "position_paper;review_of_validation_practices;heterogeneity_boundary",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "review_or_critique",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_transferability",
+    "old": "pending_fulltext;conceptualboundarycandidate",
+    "new": "输入/输出异质性、参考类型与分母、主张层次可迁移；无通用有效阈值/新模拟验证。",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_pending_fields",
+    "old": "fulltext;review_sample_denominator;empirical_support;alternative_views;version_relations",
+    "new": "review_search_exclusion_reproducibility;coding_agreement;21papers_independent_audit;variance_reference_scale;Table1_2semantic_tension;threshold_validation",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_evidence_location",
+    "old": "OfficialAbstract",
+    "new": "§3–6;Table1/2;AppD/F/G",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M039",
+    "field": "method_coding_source",
+    "old": "reports/icml_position_ecology_and_dates.md",
+    "new": "reading-cards/M039.md;data/heterogeneity_review_audit_AS.json;data/source_acquisition_manifest_AS.json",
+    "date": "2026-11-27",
+    "batch": "AS-HETEROGENEITY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/as_heterogeneity/results.json"
   }
 ]

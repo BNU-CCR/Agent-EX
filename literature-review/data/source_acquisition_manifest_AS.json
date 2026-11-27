@@ -1,0 +1,28 @@
+{
+  "batch": "AS",
+  "checked_date": "2026-11-27",
+  "files": [
+    {
+      "record_id": "M039",
+      "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/wu26co/wu26co.pdf",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "bytes": 419667,
+      "pages": 24,
+      "sha256": "b2e0072ae00f12ac9a9be8c6058eb63790b6837753e05d029f67ec46caf53a25",
+      "actual_status": "formalPDF_focusedreadpp1–9/19–24;Table1visual"
+    },
+    {
+      "record_id": "M038",
+      "url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/anthis25a/anthis25a.pdf",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "bytes": 366104,
+      "pages": 30,
+      "sha256": "75135835b88ceb84aab6ec62cbcf56a06e8a77cea07650a334f67ec54c90dd31",
+      "actual_status": "acquired_not_read;no_card_or_content_upgrade"
+    }
+  ],
+  "execution": "none",
+  "binary_storage": "scratch_notcommitted;PDFsignature_and_parserconfirmeddespitegenericMIME"
+}

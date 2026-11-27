@@ -74,3 +74,5 @@ AO：M037经验参照来自既有人类研究，模型与人类风险引出程�
 AP：M037现有main与旧结果在轮数/字段及解析路径不闭合，表明需论文—commit—config—响应—解析—图表链；见trust_static_artifact_audit.md，不据当前分支归责历史实验。
 
 AQ跨研究综合将经验参考、程序/信息可比性、误差尺度、实现映射作为四道独立问题；7条有意选择材料非系统总体，M031仅作者v1。见empirical_calibration_crossstudy_synthesis.md。
+
+AS将异质性检查细分为主体/时间/重复层、参考来源和统计尺度；21研究9/21检查方差而GT子集9/14，GT含Literature，不统计统一人类匹配率。见heterogeneity_review_denominators.md。

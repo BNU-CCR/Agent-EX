@@ -1,0 +1,29 @@
+{
+  "batch_id": "AS-HETEROGENEITY",
+  "date": "2026-11-27",
+  "expected_master_sha256": "d9b6dbe69f6a012280a0b516e61c779d971bd1afdaf8ff3f4a82c09c0850b74c",
+  "updates": [
+    {
+      "record_id": "M039",
+      "search_id": "S-M2-AR-WU;S-M2-AR-HTTP306;S-M2-AS-WU-PDF;S-M2-AS-READ;S-M2-AS-TABLE",
+      "reading_status": "fulltext_checked",
+      "screening_status": "included",
+      "card_path": "reading-cards/M039.md",
+      "reason": "正式卷出版日期已核+正式PDF定向全文支持观点/综述纳入；非新模拟有效性实证。",
+      "supplement_status": "AppB–Htargetedread;Table1/2audited;no_code_execution",
+      "findings": "21项有意选研究；GT14含2Literature，方差9/21或GT子集9/14，7Low/2未标结果；表2Comp与无直接比较语义需分列；边界为启发式未验证阈值。",
+      "evidence_location": "FormalPDFpp1–9,19–24;Table1visual/Table2/AppD/F",
+      "method_type": "position_paper;review_of_validation_practices;heterogeneity_boundary",
+      "method_maturity": "review_or_critique",
+      "method_evidence_level": "conceptual_claim",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "输入/输出异质性、参考类型与分母、主张层次可迁移；无通用有效阈值/新模拟验证。",
+      "method_pending_fields": "review_search_exclusion_reproducibility;coding_agreement;21papers_independent_audit;variance_reference_scale;Table1_2semantic_tension;threshold_validation",
+      "method_evidence_location": "§3–6;Table1/2;AppD/F/G",
+      "method_coding_source": "reading-cards/M039.md;data/heterogeneity_review_audit_AS.json;data/source_acquisition_manifest_AS.json",
+      "notes": "Formaldateconfirmeddoesnotmeanfulltextread/inclusion;noDOIverified;positionnotempiricalbenchmark. | ASformalPDFfocusedread;21rowcountauditnotreplication;review/conceptualevidenceonly.",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

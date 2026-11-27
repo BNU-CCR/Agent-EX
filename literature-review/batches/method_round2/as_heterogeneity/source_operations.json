@@ -1,0 +1,38 @@
+[
+  {
+    "search_id": "S-M2-AS-WU-PDF",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GET formalwu26coPDF",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/wu26co/wu26co.pdf",
+    "status": "HTTP200_PDF24pages",
+    "notes": "No new originalhumanstudy/data retrieval or modelexecution;M038unread."
+  },
+  {
+    "search_id": "S-M2-AS-AN-PDF",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GET formalanthis25aPDF",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/anthis25a/anthis25a.pdf",
+    "status": "HTTP200_PDF30pages_acquired_notread",
+    "notes": "No new originalhumanstudy/data retrieval or modelexecution;M038unread."
+  },
+  {
+    "search_id": "S-M2-AS-READ",
+    "platform": "local_PDF_read",
+    "search_date": "2026-11-27",
+    "query_exact": "focusedM039pp1–9,19–24;sequentialextractcallscombined",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/wu26co/wu26co.pdf",
+    "status": "focusedfulltext_read_Table1visual",
+    "notes": "No new originalhumanstudy/data retrieval or modelexecution;M038unread."
+  },
+  {
+    "search_id": "S-M2-AS-TABLE",
+    "platform": "local_table_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "transcribe21rowsandcountdenominators/compareTable2andAppD",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/wu26co/wu26co.pdf",
+    "status": "internal_counts_not21independentreviews",
+    "notes": "No new originalhumanstudy/data retrieval or modelexecution;M038unread."
+  }
+]

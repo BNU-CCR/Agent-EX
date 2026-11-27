@@ -1,0 +1,229 @@
+{
+  "batch": "AS",
+  "date": "2026-11-27",
+  "record_id": "M039",
+  "source": "FormalPDFp7Table1;pp20–22Table2/AppD",
+  "scope": "transcription_and_internal_count_only;notindependentreview21papers",
+  "rows": [
+    {
+      "paper_label": "Lopez-Lira2025",
+      "heterogeneity_requirement": "High",
+      "reference_category": "None",
+      "mean_table1": "not_checked",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Chuang2024a",
+      "heterogeneity_requirement": "High",
+      "reference_category": "None",
+      "mean_table1": "not_checked",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Wang2025b",
+      "heterogeneity_requirement": "High",
+      "reference_category": "Literature",
+      "mean_table1": "Aligned",
+      "variance_table1": "checked_unspecified",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Liu2024c",
+      "heterogeneity_requirement": "High",
+      "reference_category": "Literature",
+      "mean_table1": "Aligned",
+      "variance_table1": "Low",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Hua2023",
+      "heterogeneity_requirement": "High",
+      "reference_category": "Observational",
+      "mean_table1": "Mixed",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Yang2024c",
+      "heterogeneity_requirement": "High",
+      "reference_category": "Obs_Exp",
+      "mean_table1": "Mixed",
+      "variance_table1": "Low",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Gao2023",
+      "heterogeneity_requirement": "High",
+      "reference_category": "Observational",
+      "mean_table1": "Aligned",
+      "variance_table1": "not_checked",
+      "claim_table1": "Quant",
+      "sensitivity_table1": "No"
+    },
+    {
+      "paper_label": "Li2024",
+      "heterogeneity_requirement": "High",
+      "reference_category": "Observational",
+      "mean_table1": "Aligned",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Tang2025a",
+      "heterogeneity_requirement": "High",
+      "reference_category": "Observational",
+      "mean_table1": "Aligned",
+      "variance_table1": "checked_unspecified",
+      "claim_table1": "Quant",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Huynh2025",
+      "heterogeneity_requirement": "Medium",
+      "reference_category": "None",
+      "mean_table1": "not_checked",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Zhang2023",
+      "heterogeneity_requirement": "Medium",
+      "reference_category": "None",
+      "mean_table1": "not_checked",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Zhou2023",
+      "heterogeneity_requirement": "Medium",
+      "reference_category": "Human_Experiment",
+      "mean_table1": "Deviated",
+      "variance_table1": "Low",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Chen2024",
+      "heterogeneity_requirement": "Medium",
+      "reference_category": "None",
+      "mean_table1": "not_checked",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Ren2024",
+      "heterogeneity_requirement": "Medium",
+      "reference_category": "None",
+      "mean_table1": "not_checked",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Piatti2024",
+      "heterogeneity_requirement": "Medium",
+      "reference_category": "None",
+      "mean_table1": "not_checked",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Xie2024",
+      "heterogeneity_requirement": "Medium",
+      "reference_category": "Human_Experiment",
+      "mean_table1": "Mixed",
+      "variance_table1": "Low",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Horton2023",
+      "heterogeneity_requirement": "Low",
+      "reference_category": "Human_Experiment",
+      "mean_table1": "Aligned",
+      "variance_table1": "Low",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Partial"
+    },
+    {
+      "paper_label": "Wu2024",
+      "heterogeneity_requirement": "Low",
+      "reference_category": "Human_Experiment",
+      "mean_table1": "Aligned",
+      "variance_table1": "Low",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Fontana2025",
+      "heterogeneity_requirement": "Low",
+      "reference_category": "Human_Experiment",
+      "mean_table1": "Deviated",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Akata2025",
+      "heterogeneity_requirement": "Low",
+      "reference_category": "Human_Experiment",
+      "mean_table1": "Mixed",
+      "variance_table1": "not_checked",
+      "claim_table1": "Qual",
+      "sensitivity_table1": "Yes"
+    },
+    {
+      "paper_label": "Mozikov2024",
+      "heterogeneity_requirement": "Low",
+      "reference_category": "Human_Experiment",
+      "mean_table1": "Mixed",
+      "variance_table1": "Low",
+      "claim_table1": "Quant",
+      "sensitivity_table1": "Yes"
+    }
+  ],
+  "counts": {
+    "total": 21,
+    "any_reference": 14,
+    "literature_reference": 2,
+    "variance_checked": 9,
+    "variance_low": 7,
+    "sensitivity": {
+      "Yes": 11,
+      "Partial": 9,
+      "No": 1
+    },
+    "claim": {
+      "Qual": 18,
+      "Quant": 3
+    },
+    "heterogeneity": {
+      "High": 9,
+      "Medium": 7,
+      "Low": 5
+    }
+  },
+  "denominators": {
+    "variance_all": "9/21",
+    "variance_reference_subset": "9/14"
+  },
+  "semantic_cautions": [
+    "GTincludes2Literature",
+    "Table1Wang/Tangbarecheck;Table2Comp.;mainWangnotdirectrealcomparison",
+    "variancebroadspread/diversitynotcommonscalar",
+    "noindependentcode_execution"
+  ]
+}
