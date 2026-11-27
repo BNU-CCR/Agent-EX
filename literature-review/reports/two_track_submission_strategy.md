@@ -81,3 +81,5 @@ AX：CSCW2027+为两期刊接收后申请展示；旧2026周期和工作坊不�
 BB：WWW2027明确LLM社会模拟/效度范围，仍要求Web科学挑战；两2025Companion题录不是主会长文连续先例，长文/短文当前均已截止。未来方法稿可条件比较，当前JASSS/CCR优先判断保持。见[WWW专题](www_method_ecology.md)。
 
 BD：ESSA/SSC有年度会议、LLM4ABM兴趣组及方法/经验验证专题，可作为方法交流与反馈的条件路线；展示、扩展摘要与拟入论文集全文不等价。正式章节可能晚于会议，须核自身出版身份；不据此改当前JASSS/CCR优先比较。见[共同体报告](essa_ssc_method_community.md)。
+
+BF：未来方法稿优先明确检错/误判减少的对象、基线和范围，再决定仿真方法或AI评价渠道；“LLM支持八阶段”本身不是已验证贡献。当前稿继续明确AI群体对象，JASSS/CCR比较保持；见[周期证据对照](modelling_cycle_evidence_crosswalk.md)。

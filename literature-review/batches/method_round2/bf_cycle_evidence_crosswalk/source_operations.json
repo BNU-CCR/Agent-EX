@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "S-M2-BF-CROSSWALK",
+    "platform": "local_evidence_synthesis",
+    "search_date": "2026-11-27",
+    "query_exact": "Crosswalk8modellingphases_with11existingreadings;separateLLMassistant/runtimeactor/nonLLMcomparators;sourcecommit_LFhashcheck",
+    "source_url": "reports/modelling_cycle_evidence_crosswalk.md",
+    "status": "local_synthesis_no_new_query_paper_or_experiment",
+    "notes": "Grouped local reading/synthesis;source version/date/coding retained;not22RLRoriginalstudies_rescreening or fieldwideabsence claim."
+  }
+]

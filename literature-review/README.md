@@ -46,6 +46,7 @@
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
+- [周期建议与实践证据](reports/modelling_cycle_evidence_crosswalk.md)：11卡对应八阶段，LLM助手/主体与非LLM参照分列。
 - [全建模周期角色](reports/modelling_cycle_roles.md)：22项RLR与未来用途分列，八阶段用途/风险/检查依据。
 - [ESSA/SSC方法共同体](reports/essa_ssc_method_community.md)：SIG/年度会议、展示与论文集、SSC2025与正式2026章节日期分列。
 - [政治样本模拟比较边界](reports/political_sample_bias_boundaries.md)：作者v1精读、输入预测力/分母/跨国混淆与正式版缺口。

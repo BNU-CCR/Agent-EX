@@ -1,0 +1,249 @@
+{
+  "batch": "BF",
+  "date": "2026-11-27",
+  "selection": "purposive11existingreadings_notRLR22recode_notmetaanalysis",
+  "authority": "project_crossstudy_synthesis_notauthorjointvalidation",
+  "new_records": 0,
+  "new_cards": 0,
+  "new_validation_units": 0,
+  "sources": [
+    {
+      "record_id": "M003",
+      "title": "Can large language models implement agent-based models? An ODD-based replication study",
+      "card": "reading-cards/M003.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "ec6a1f57cfb22b7fadcfbe25dc9f6a2731f3c34daba007d21fd9bf1be15a041a",
+      "actual_read_source": "https://arxiv.org/html/2602.10140v2",
+      "version_boundary": "formal journal work; read author-final arXiv v2 (2026-04-30); v1 2026-02-08 kept as version history, not separate work | AD:arXivrepository v1Feb8/v2Apr30 verified;author says typeset version differs only pagination/typography;not independentlycollated.",
+      "reading_status": "fulltext_checked",
+      "screening_status": "candidate",
+      "date_eligibility": "date_pending",
+      "maturity": "empirical_method_test",
+      "evidence_level": "controlled_comparison"
+    },
+    {
+      "record_id": "M011",
+      "title": "Using the ODD protocol and NetLogo to replicate agent-based models",
+      "card": "reading-cards/M011.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "e0c2fb4fb5f2804f937eda0658f2c9d4b458f8530288884bbdfdbe9eb1a44323",
+      "actual_read_source": "https://eprints.whiterose.ac.uk/id/eprint/220675/1/1-s2.0-S0304380024003557-main.pdf",
+      "version_boundary": "published version, institutional repository, CC BY",
+      "reading_status": "fulltext_checked",
+      "screening_status": "included",
+      "date_eligibility": "confirmed",
+      "maturity": "empirical_method_test",
+      "evidence_level": "controlled_comparison"
+    },
+    {
+      "record_id": "M013",
+      "title": "Harmonising Theory and Empirics: The THEMP Approach for Developing, Testing and Exploring Social Simulation Models",
+      "card": "reading-cards/M013.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "4e01703e4182b2b451efb12233819c44483b853229737daccc6620fbea6166ff",
+      "actual_read_source": "https://www.jasss.org/29/4/6.html",
+      "version_boundary": "",
+      "reading_status": "fulltext_checked",
+      "screening_status": "included",
+      "date_eligibility": "confirmed",
+      "maturity": "conceptual_framework",
+      "evidence_level": "worked_example"
+    },
+    {
+      "record_id": "M015",
+      "title": "A CRISP-DM-based methodology for assessing agent-based simulation models using process mining",
+      "card": "reading-cards/M015.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "42faf1980d3127c3f18ea31202d97f65c0d564272245509330e045a3c7e4cada",
+      "actual_read_source": "https://arxiv.org/html/2404.01114v1",
+      "version_boundary": "arXiv2404.01114v1 author preprint explicitly related DOI; institutional journal record links preprint; one work; formalPDF comparison pending",
+      "reading_status": "fulltext_checked",
+      "screening_status": "candidate",
+      "date_eligibility": "confirmed",
+      "maturity": "conceptual_framework",
+      "evidence_level": "worked_example"
+    },
+    {
+      "record_id": "M028",
+      "title": "A Primer for Evaluating Large Language Models in Social-Science Research",
+      "card": "reading-cards/M028.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "f5cd9f845165ed22a1cdbf15ef21c3e16a558eabdb95e4afe2b15eaa824a9600",
+      "actual_read_source": "https://goytoom.github.io/assets/files/primer.pdf",
+      "version_boundary": "25p personal-sitehosted publisher-layout PDF;DOI/title crosschecked;not byteidentity certified",
+      "reading_status": "fulltext_checked",
+      "screening_status": "included",
+      "date_eligibility": "confirmed",
+      "maturity": "review_or_critique",
+      "evidence_level": "conceptual_claim"
+    },
+    {
+      "record_id": "M029",
+      "title": "MOZAIC: A mathematical approach to formalizing behavioral theories – applied to an agent-based model of mobility",
+      "card": "reading-cards/M029.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "65bd022bed661d1941669d8d193665ace5a82f96150c1ed2676cd9ebe9605427",
+      "actual_read_source": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/pdf",
+      "version_boundary": "",
+      "reading_status": "fulltext_checked",
+      "screening_status": "included",
+      "date_eligibility": "confirmed",
+      "maturity": "conceptual_framework",
+      "evidence_level": "worked_example"
+    },
+    {
+      "record_id": "M030",
+      "title": "EFECT enables reliable and reproducible stochastic simulations across disciplines",
+      "card": "reading-cards/M030.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "5166e9e6994238f4ddbacc7982e9400c62b94f07d91c7c34d1c2de72a2d08d0b",
+      "actual_read_source": "https://www.nature.com/articles/s44260-026-00094-y.pdf?error=cookies_not_supported",
+      "version_boundary": "Y:23pformalearlyreference;Z:11pVoR;arXiv2406.16820v2(2025-08-15)relatedpredecessor,not fullycollated;do notdoublecount",
+      "reading_status": "fulltext_checked",
+      "screening_status": "included",
+      "date_eligibility": "confirmed",
+      "maturity": "empirical_method_test",
+      "evidence_level": "controlled_comparison"
+    },
+    {
+      "record_id": "M031",
+      "title": "Aligning LLM agents with human learning and adjustment behavior: A dual agent approach",
+      "card": "reading-cards/M031.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "6b6fa900d2404aa45bd1e15e5320f84dd56f299872c87f40c383ec36a1c3250c",
+      "actual_read_source": "https://arxiv.org/pdf/2511.00993v1",
+      "version_boundary": "arXiv2511.00993v1 submitted2025-11-02; manuscript cover2025-10-31; formal abstract adds ML baselines, full comparison pending",
+      "reading_status": "fulltext_checked",
+      "screening_status": "candidate",
+      "date_eligibility": "date_pending",
+      "maturity": "empirical_method_test",
+      "evidence_level": "empirical_validation"
+    },
+    {
+      "record_id": "M036",
+      "title": "SOTOPIA: Interactive Evaluation for Social Intelligence in Language Agents",
+      "card": "reading-cards/M036.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "e4f494eb890606b7728c87c6854d5426c35702de0ffad8886e66246dc67a9da2",
+      "actual_read_source": "https://proceedings.iclr.cc/paper_files/paper/2024/file/b3075b88e583a0e98d8b24338a613060-Paper-Conference.pdf",
+      "version_boundary": "Formalproceedingsversionread;earlierforum/preprintnotcollated",
+      "reading_status": "fulltext_checked",
+      "screening_status": "candidate",
+      "date_eligibility": "date_pending",
+      "maturity": "empirical_method_test",
+      "evidence_level": "empirical_validation"
+    },
+    {
+      "record_id": "M043",
+      "title": "Representation Bias in Political Sample Simulations with Large Language Models",
+      "card": "reading-cards/M043.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "b875e0f7cebdf103a6169514fb8ea1c8a3d4bf92cf00eb22e61df3d70646281c",
+      "actual_read_source": "https://arxiv.org/pdf/2407.11409v1",
+      "version_boundary": "arXiv2407.11409v1_5pagesfullread;formalCompanion4ppnotacquired;authorQi linksarXiv/coauthorlinksACM;versiondifference/subtrackpending",
+      "reading_status": "fulltext_checked",
+      "screening_status": "candidate",
+      "date_eligibility": "confirmed",
+      "maturity": "empirical_method_test",
+      "evidence_level": "empirical_validation"
+    },
+    {
+      "record_id": "M044",
+      "title": "Large Language Models for Agent-Based Modelling: Current and Possible Uses Across the Modelling Cycle",
+      "card": "reading-cards/M044.md",
+      "source_commit": "ea0a3ad",
+      "card_lf_sha256": "29aa44d45dc1396922618f9533b121b2abd75eb307fd2091834efc939f23e2d8",
+      "actual_read_source": "https://arxiv.org/pdf/2507.05723v1",
+      "version_boundary": "authorv1arXiv2507.05723_18pagesfocusedfullread;formal19ppchapterpreviewonly;PDFendpointreturnsHTML;noformaltextcomparison",
+      "reading_status": "fulltext_checked",
+      "screening_status": "candidate",
+      "date_eligibility": "confirmed",
+      "maturity": "review_or_critique",
+      "evidence_level": "conceptual_claim"
+    }
+  ],
+  "phase_rows": [
+    {
+      "phase": "problem_formulation",
+      "record_ids": [
+        "M044"
+      ],
+      "reported_evidence": "proposal_only_in_selected_sample",
+      "unsupported_inference": "noLLMproblem_formulation_effect_trial",
+      "independent_new_test": false
+    },
+    {
+      "phase": "system_analysis",
+      "record_ids": [
+        "M013",
+        "M029"
+      ],
+      "reported_evidence": "traditionalABMframework_worked_examples",
+      "unsupported_inference": "notLLMmech_extraction_validation",
+      "independent_new_test": false
+    },
+    {
+      "phase": "conceptualization",
+      "record_ids": [
+        "M029",
+        "M013"
+      ],
+      "reported_evidence": "formalization_examples",
+      "unsupported_inference": "notunique_correct_theory_implementation",
+      "independent_new_test": false
+    },
+    {
+      "phase": "implementation",
+      "record_ids": [
+        "M003",
+        "M011"
+      ],
+      "reported_evidence": "LLMcodegeneration_test_and_nonLLMhuman_reconstruction",
+      "unsupported_inference": "notmatched_humanLLM_randomized_effect",
+      "independent_new_test": false
+    },
+    {
+      "phase": "verification",
+      "record_ids": [
+        "M003",
+        "M030"
+      ],
+      "reported_evidence": "code_output_comparison_and_nonLLMdistribution_tool",
+      "unsupported_inference": "notall_logic_or_jointprocess_equivalence",
+      "independent_new_test": false
+    },
+    {
+      "phase": "validation",
+      "record_ids": [
+        "M031",
+        "M036",
+        "M043"
+      ],
+      "reported_evidence": "boundedhumanreference_or_humanrating",
+      "unsupported_inference": "notindependent_validation_assistant_accuracy",
+      "independent_new_test": false
+    },
+    {
+      "phase": "interpretation_communication",
+      "record_ids": [
+        "M015",
+        "M044"
+      ],
+      "reported_evidence": "nonLLMprocess_workedexample_and_LLMproposal",
+      "unsupported_inference": "notLLMnarrative_error_reduction",
+      "independent_new_test": false
+    },
+    {
+      "phase": "documentation",
+      "record_ids": [
+        "M011",
+        "M028",
+        "M044"
+      ],
+      "reported_evidence": "humanreplication_experience_guidelines_and_LLMproposal",
+      "unsupported_inference": "notLLMdocumentation_causal_effect",
+      "independent_new_test": false
+    }
+  ],
+  "absence_boundary": "No effect evidence means none in selected readings/scope, not field-wide absence"
+}
