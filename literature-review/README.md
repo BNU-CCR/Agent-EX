@@ -46,6 +46,7 @@
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：34载体（25刊/8会议入口/1仓库），定向样本，未声称完整数据库覆盖。
 - [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：9张工作表，书目仅34项正式纳入；前沿/候选见主表。
+- [ODD版本与入口补查](reports/odd_version_access_followup.md)：预印/正式/公告日期与未获取正文分列。
 - [现有证据分类修复](reports/categorical_completion_existing_evidence.md)：9空值补齐、3卡重整，余5空值保留。
 - [保留与门控核验](reports/methods_validation.json)：57旧ID、18份首轮文件hash、231原日志前缀保留，旧字段40项实质变化均记账；原导出不覆盖。
 

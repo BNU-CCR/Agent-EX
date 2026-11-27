@@ -1,0 +1,164 @@
+[
+  {
+    "search_id": "S-M2-AD-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1016/j.ecolmodel.2026.111624\" \"Available online\"",
+    "source_url": "",
+    "status": "searched_date_unresolved",
+    "notes": "No exact publisher-first-online evidence"
+  },
+  {
+    "search_id": "S-M2-AD-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Twenty years of the ODD protocol\" \"2025\" \"2026\"",
+    "source_url": "",
+    "status": "searched_primary_leads",
+    "notes": "Authorbooknews and institutions; Scilit conflicts not adopted"
+  },
+  {
+    "search_id": "S-M2-AD-AUTHORHOME",
+    "platform": "author_website",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.railsback-grimm-abm-book.com/",
+    "status": "timeout",
+    "notes": "No fulltext/date obtained"
+  },
+  {
+    "search_id": "S-M2-AD-M003PUB",
+    "platform": "official_publisher",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+    "status": "HTTP403",
+    "notes": "Exact first-online remains pending"
+  },
+  {
+    "search_id": "S-M2-AD-ARCHIVE",
+    "platform": "author_website_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GET",
+    "source_url": "https://www.railsback-grimm-abm-book.com/2026/11/",
+    "status": "HTTP465_HTML",
+    "notes": "4260bytes stored temporarily; no article PDF, no acquisition success"
+  },
+  {
+    "search_id": "S-M2-AD-Q3",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:railsback-grimm-abm-book.com \"New publication: Twenty Years\"",
+    "source_url": "",
+    "status": "author_notice_located",
+    "notes": "2026-11-04 newsdate not first publication"
+  },
+  {
+    "search_id": "S-M2-AD-Q4",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Can large language models implement agent-based models\" \"April\" 2026",
+    "source_url": "",
+    "status": "version_leads_only",
+    "notes": "Zenodo metadata not paper first-online proof"
+  },
+  {
+    "search_id": "S-M2-AD-Q5",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Twenty years of the ODD protocol\" filetype:pdf",
+    "source_url": "",
+    "status": "repository_leads_only",
+    "notes": "SD snippet abstract, ESS preprint date, DiVA fulltext label unbound; not acquired fulltext"
+  },
+  {
+    "search_id": "S-M2-AD-DIVA",
+    "platform": "institutional_repository",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.diva-portal.org/smash/latest.jsf?fs=false&language=en%3Fref%3Ddriverlayer.com%2Fweb&p=1363",
+    "status": "cached_listing_returned",
+    "notes": "Mixed result list; no target-bound PDF URL acquired"
+  },
+  {
+    "search_id": "S-M2-AD-ESSDOI",
+    "platform": "official_preprint_repository",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://doi.org/10.22541/essoar.15005893/v1",
+    "status": "redirect_inaccessible",
+    "notes": "Search citation says09July2026, full page/PDF not read"
+  },
+  {
+    "search_id": "S-M2-AD-NOTICE",
+    "platform": "author_website",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.railsback-grimm-abm-book.com/2026/11/04/new-publication-twenty-years-of-the-odd-protocol/",
+    "status": "author_publication_notice_checked",
+    "notes": "2026-11-04; links journal; no PDF/first-online date"
+  },
+  {
+    "search_id": "S-M2-AD-DIVA-FIND",
+    "platform": "institutional_repository",
+    "search_date": "2026-11-27",
+    "query_exact": "find Twenty years",
+    "source_url": "https://www.diva-portal.org/smash/latest.jsf?fs=false&language=en%3Fref%3Ddriverlayer.com%2Fweb&p=1363",
+    "status": "access_protection_no_match",
+    "notes": "Fresh response Oh noes; cached mixed listing not confirmed target PDF"
+  },
+  {
+    "search_id": "S-M2-AD-ESSPDF",
+    "platform": "official_preprint_repository",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://essopenarchive.org/doi/pdf/10.22541/essoar.15005893/v1",
+    "status": "inaccessible",
+    "notes": "Not PDF acquisition"
+  },
+  {
+    "search_id": "S-M2-AD-Q6",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Twenty years of the ODD protocol\" site:diva-portal.org/smash/record.jsf",
+    "source_url": "",
+    "status": "listing_leads_no_record",
+    "notes": "No stable target PDF"
+  },
+  {
+    "search_id": "S-M2-AD-Q7",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Twenty years of the ODD protocol\" site:literatur.thuenen.de",
+    "source_url": "",
+    "status": "no_verified_target",
+    "notes": "Home-page adjacent PDF links not assigned to target"
+  },
+  {
+    "search_id": "S-M2-AD-Q8",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Can large language models implement agent-based models\" \"Available online\" -site:arxivdaily.com",
+    "source_url": "",
+    "status": "date_unresolved",
+    "notes": "No exact publisher date adopted"
+  },
+  {
+    "search_id": "S-M2-AD-ARXIV",
+    "platform": "official_preprint_repository",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://arxiv.org/abs/2602.10140",
+    "status": "version_history_and_author_statement_checked",
+    "notes": "v1Feb8/v2Apr30 2026; author says only pagination/typographical differences; no independent formal collation"
+  },
+  {
+    "search_id": "S-M2-AD-UMU",
+    "platform": "institutional_repository",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://umu.diva-portal.org/smash/latest.jsf?fs=false&language=en&p=10",
+    "status": "access_denied_Anubis",
+    "notes": "No download attempt around protection; no target PDF"
+  }
+]

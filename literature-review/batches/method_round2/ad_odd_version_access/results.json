@@ -1,0 +1,25 @@
+{
+  "batch_id": "AD-ODD-version-access",
+  "date": "2026-11-27",
+  "expected_master_sha256": "b5bcf303a32eca3a33a3d6ad37223cfa22231a0c57f65b30226943d5ae8b660b",
+  "updates": [
+    {
+      "record_id": "M003",
+      "preprint_date": "2026-02-08",
+      "metadata_evidence_url": "https://arxiv.org/abs/2602.10140",
+      "search_id": "S-M2-ODD-M003;S-M2-AD-ARXIV;S-M2-AD-M003PUB",
+      "search_date": "2026-11-27",
+      "related_versions": "formal journal work; read author-final arXiv v2 (2026-04-30); v1 2026-02-08 kept as version history, not separate work | AD:arXivrepository v1Feb8/v2Apr30 verified;author says typeset version differs only pagination/typography;not independentlycollated.",
+      "notes": "Statistically indistinguishable output under two parameter settings is not proof of equivalence across parameter space or implementation details.; Hosted/local model comparisons confound model capacity and deployment; not evidence of deployment causal effects.; precise first-online date pending; July2026 issue is not first-online proof | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:publisher403;exactfirstonlineunresolved;author versionequivalence statement not independentproof."
+    },
+    {
+      "record_id": "M012",
+      "preprint_date": "2026-07-09",
+      "search_id": "S-M2-ODD-M012;S-M2-AD-Q5;S-M2-AD-NOTICE;S-M2-AD-UMU",
+      "search_date": "2026-11-27",
+      "related_versions": "formal journal article ahead of print; publisher marks open access/Creative Commons | EssOAR10.22541/essoar.15005893/v1 discovered;redirectunavailable;notread | AD:ESS officialrepository searchcitation09July2026;preprinttextnotacquired.",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade."
+    }
+  ],
+  "new_records": []
+}
