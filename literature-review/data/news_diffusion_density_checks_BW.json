@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-27",
+  "version": "arXiv2410.13909v1",
+  "source_pdf_sha256": "aa59a600c9d378670c13f021e4b77881526c7bf33dcf73cee3aef32134dfa969",
+  "source_pages": [
+    3,
+    4
+  ],
+  "visual_checked": true,
+  "identity": "d=mean_degree/(N-1), for the undirected graph definitions printed p3",
+  "rows": [
+    {
+      "network": "random",
+      "N": 300,
+      "table_mean_degree": 12.072,
+      "table_density": 0.08,
+      "implied_undirected_density": 0.04037458193979933,
+      "reported_to_implied_ratio": 1.9814446653412858
+    },
+    {
+      "network": "scale_free",
+      "N": 288,
+      "table_mean_degree": 11.75,
+      "table_density": 0.08,
+      "implied_undirected_density": 0.040940766550522645,
+      "reported_to_implied_ratio": 1.9540425531914896
+    },
+    {
+      "network": "high_brokerage",
+      "N": 300,
+      "table_mean_degree": 11.876,
+      "table_density": 0.08,
+      "implied_undirected_density": 0.0397190635451505,
+      "reported_to_implied_ratio": 2.0141461771640286
+    }
+  ],
+  "boundary": "Printed author-v1 arithmetic only; no graph/code rerun or formal-version accusation"
+}

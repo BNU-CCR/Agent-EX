@@ -1,0 +1,38 @@
+[
+  {
+    "search_id": "BW-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "read submission history",
+    "source_url": "https://arxiv.org/abs/2410.13909",
+    "status": "version_metadata_read",
+    "notes": "v1onlylisted2024-10-16"
+  },
+  {
+    "search_id": "BW-02",
+    "platform": "web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "HTML link10",
+    "source_url": "https://arxiv.org/html/2410.13909v1",
+    "status": "author_html_available",
+    "notes": "RepositoryversionnotformalCCRtext"
+  },
+  {
+    "search_id": "BW-03",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET versioned authorPDF",
+    "source_url": "https://arxiv.org/pdf/2410.13909v1",
+    "status": "200_PDF8pages",
+    "notes": "1212145bytes;SHA256aa59a600c9d378670c13f021e4b77881526c7bf33dcf73cee3aef32134dfa969"
+  },
+  {
+    "search_id": "BW-04",
+    "platform": "local_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "readPDF§1to6;visualp3p4;3undirectedgraphidentities",
+    "source_url": "reading-cards/EN04.md",
+    "status": "version_limited_fulltext_and_arithmetic_checked",
+    "notes": "Noexperimentexecution;noindependentquery;Higgsnotpresentinv1"
+  }
+]

@@ -6128,5 +6128,105 @@
     "batch": "BT-three-seed-content-review",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bt_three_seed_content_review/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_contribution_type",
+    "old": "environment_design;agent_architecture;application;validation_and_external_validity",
+    "new": "environment_design;agent_architecture;interaction_protocol;application",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_transferability",
+    "old": "pending：摘要明确心理特征条件下的转发决策、跨拓扑与Higgs经验网络对照；具体构件与外部比较层级待全文。",
+    "new": "Versionlimited:persona/forwarding/network/intervention comparison,conditional_on_successful_source_start;notrealhumanvalidation;reportstate/graph/seedandfailuredenominators",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_relevance_rationale",
+    "old": "信息传播与网络结构比较构成Agent-EX的直接对照；摘要中的经验规律吻合只作待核标签，不能据此给成熟度或验证证据评级。",
+    "new": "Direct network-diffusion comparator; authorv1 synthetic comparisons do not establish formalabstract Higgs empirical-validation claims",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability",
+    "new": "formal_body_Higgs_rulebaseline;seed_count/pairedunits;startup_exclusion_denominators;graph_density_definition_code;model_snapshot/parse/retries;formal_author_version_comparison",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_evidence_location",
+    "old": "Abstract",
+    "new": "authorv1§3–6;Table2p4;Fig2–8;data/news_diffusion_density_checks_BW.json",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#EN04;batches/english/results.json#EN04",
+    "new": "reading-cards/EN04.md;reports/news_diffusion_author_version_BW.md;arXiv2410.13909v1_PDF",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BW-EN04-version-limited-author-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bw_en04_author_reading/results.json"
   }
 ]

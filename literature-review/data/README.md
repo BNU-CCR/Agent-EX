@@ -58,3 +58,5 @@ W已规范化52字段/24新增记录，原值/理由见categorical_alias_migrati
 跨日维护：导出摘要的检索截止日取search_log中实际coverage_end最大值；核验checked为实际Asia/Shanghai日期。二者不混同，不批量修改历史日志。
 
 BR新增 `nine_question_evidence_BR.json`：九问题综合的来源映射，固定BQ960e0ca中的源卡/报告canonical-LF SHA256；未读全文条目仅标元数据待核，不作已读支持。`delivery_requirements.csv`九项改为已有统一回答/范围受限，BP机器审计仍是原时点快照。
+
+BW新增 `news_diffusion_density_checks_BW.json`（EN04作者v1图统计算术，不是代码/正式版错误认证）和`card_structure_snapshot_BW.json`（63卡中43有11编号，仅格式计数）；EN04内容读本为作者v1，正式发表身份/日期与正式正文获取分开。

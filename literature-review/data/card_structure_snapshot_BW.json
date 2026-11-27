@@ -1,0 +1,261 @@
+{
+  "batch": "BW",
+  "date": "2026-11-27",
+  "cards": 63,
+  "numbered11": 43,
+  "format_only_not_quality_rate": true,
+  "rows": [
+    {
+      "path": "reading-cards/CN006.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/CN007.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/EN01.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/EN04.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/EN08.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/EN11.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M001.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M002.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M003.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M004.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M005.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M006.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M007.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M008.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M010.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M011.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M013.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M014.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M015.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M016.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M017.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M020.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M021.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M022.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M023.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M024.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M025.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M026.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/M027.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M028.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M029.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M030.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M031.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M032.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M033.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M034.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M035.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M036.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M037.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M038.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M039.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M040.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M041.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M042.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M043.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M044.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M045.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/M049.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R001.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R002.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R003.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R004.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R006.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R007.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R008.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/R009.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R010.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R013.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R014.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/R015.md",
+      "numbered_sections": 11
+    },
+    {
+      "path": "reading-cards/R016.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/R017.md",
+      "numbered_sections": 0
+    },
+    {
+      "path": "reading-cards/R021.md",
+      "numbered_sections": 11
+    }
+  ]
+}

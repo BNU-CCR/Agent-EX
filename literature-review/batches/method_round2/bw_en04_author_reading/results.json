@@ -1,0 +1,31 @@
+{
+  "batch_id": "BW-EN04-version-limited-author-fulltext",
+  "date": "2026-11-27",
+  "expected_master_sha256": "25efc1f94748e42d9b176911f89da7ec3852657a1d17b5dba5265c9712c1b02a",
+  "updates": [
+    {
+      "record_id": "EN04",
+      "preprint_date": "2024-10-16",
+      "related_versions": "预印本arXiv:2410.13909，题名含news而正式题名为fake news；同研究版本合并，不能两个独立研究计数。 Crossref直接核查无published-online字段；published-print为卷期日期，created只是DOI登记时间，不能作正式首发。具体见crossref_metadata_checks.json。 | BW:actualread_arXiv2410.13909v1_2024-10-16_8pp;formalbody_notobtained;Higgs_and_rulebaseline_fromformalabstract_notv1evidence",
+      "research_question": "How do persona-conditioned forwarding decisions, network topology and interventions change simulated misinformation reach and forwarding?",
+      "mechanisms": "BigFive_high_low_persona;GPT-Turbo-3.5-1106_temperature0;Mesa;undirected_random_scale-free_highbrokerage;highestdegree_source;share_once;10percent_reach_intervention",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://arxiv.org/pdf/2410.13909v1",
+      "findings": "Authorv1§4:conditional_on_source_forwarding;topology/persona/intervention_output_differences;no_direct_empirical_trajectory_validation;formalabstract_Higgs_unread",
+      "evidence_location": "Abstract | BV:OJS_Published_and_abstract;AUP_abstract_loading_only;reports/ccr_direct_comparator_access_BV.md | BW:authorv1§1–6;Table1p3/Table2p4;Fig2–8;visualp3p4;density_identity_checks",
+      "card_path": "reading-cards/EN04.md",
+      "notes": "预印本arXiv:2410.13909，题名含news而正式题名为fake news；同研究版本合并，不能两个独立研究计数。 Crossref直接核查无published-online字段；published-print为卷期日期，created只是DOI登记时间，不能作正式首发。具体见crossref_metadata_checks.json。 | BW:authorv1only_read8pp;formalPDFstillunavailable;density≈0.04fromN/degree_vsprinted0.08;conditionalstartupselection;independentseedNunknown;noformalversionfaultclaim",
+      "method_contribution_type": "environment_design;agent_architecture;interaction_protocol;application",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "controlled_comparison",
+      "method_transferability": "Versionlimited:persona/forwarding/network/intervention comparison,conditional_on_successful_source_start;notrealhumanvalidation;reportstate/graph/seedandfailuredenominators",
+      "method_relevance_rationale": "Direct network-diffusion comparator; authorv1 synthetic comparisons do not establish formalabstract Higgs empirical-validation claims",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "formal_body_Higgs_rulebaseline;seed_count/pairedunits;startup_exclusion_denominators;graph_density_definition_code;model_snapshot/parse/retries;formal_author_version_comparison",
+      "method_evidence_location": "authorv1§3–6;Table2p4;Fig2–8;data/news_diffusion_density_checks_BW.json",
+      "method_coding_source": "reading-cards/EN04.md;reports/news_diffusion_author_version_BW.md;arXiv2410.13909v1_PDF",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}
