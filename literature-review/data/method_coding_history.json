@@ -6228,5 +6228,25 @@
     "batch": "BW-EN04-version-limited-author-fulltext",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "EN03",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#EN03;batches/english/results.json#EN03",
+    "new": "data/literature_master.csv#EN03;batches/english/results.json#EN03;data/en03_repository_inventory_BX.json(repository_readme_only)",
+    "date": "2026-11-27",
+    "batch": "BX-selection-denominator-synthesis-and-EN03-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bx_selection_denominators/results.json"
+  },
+  {
+    "record_id": "EN03",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BX-selection-denominator-synthesis-and-EN03-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bx_selection_denominators/results.json"
   }
 ]

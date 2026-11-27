@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "BX-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Influence in Motion\" \"Ming Huang\" arxiv",
+    "source_url": "",
+    "status": "results_returned_not_exhaustive",
+    "notes": "Noauthor_manuscriptobtained;repo_andoneunverifiedmethodlead;nozerohitclaim"
+  },
+  {
+    "search_id": "BX-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Tracing Persuasive Dynamics\" github",
+    "source_url": "",
+    "status": "results_returned_not_exhaustive",
+    "notes": "Noauthor_manuscriptobtained;repo_andoneunverifiedmethodlead;nozerohitclaim"
+  },
+  {
+    "search_id": "BX-03",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read repository metadata",
+    "source_url": "https://github.com/Bellahhm/Tracing-Persuasive-Dynamics-via-LLM-based-Multi-Agent-Networks",
+    "status": "primary_repository_metadata_read",
+    "notes": "Readmeblob86b76de;commit6b47517;root7files;noZIP/codeexecution;noformalpaper"
+  },
+  {
+    "search_id": "BX-04",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read README file",
+    "source_url": "https://github.com/Bellahhm/Tracing-Persuasive-Dynamics-via-LLM-based-Multi-Agent-Networks/blob/main/README.md",
+    "status": "primary_repository_metadata_read",
+    "notes": "Readmeblob86b76de;commit6b47517;root7files;noZIP/codeexecution;noformalpaper"
+  },
+  {
+    "search_id": "BX-05",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read root contents",
+    "source_url": "https://api.github.com/repos/Bellahhm/Tracing-Persuasive-Dynamics-via-LLM-based-Multi-Agent-Networks/contents/",
+    "status": "primary_repository_metadata_read",
+    "notes": "Readmeblob86b76de;commit6b47517;root7files;noZIP/codeexecution;noformalpaper"
+  },
+  {
+    "search_id": "BX-06",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read main commit",
+    "source_url": "https://api.github.com/repos/Bellahhm/Tracing-Persuasive-Dynamics-via-LLM-based-Multi-Agent-Networks/commits/main",
+    "status": "primary_repository_metadata_read",
+    "notes": "Readmeblob86b76de;commit6b47517;root7files;noZIP/codeexecution;noformalpaper"
+  },
+  {
+    "search_id": "BX-07",
+    "platform": "local_synthesis",
+    "search_date": "2026-11-27",
+    "query_exact": "4card_denominator_version_reporting_crosswalk",
+    "source_url": "reports/selection_denominators_and_consistency_BX.md",
+    "status": "bounded_existing_evidence_synthesis",
+    "notes": "EN04/M007/M015/M049;fixeddecac84LFhash;no_newcard/validationunit"
+  }
+]

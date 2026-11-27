@@ -1,0 +1,13 @@
+{
+  "batch_id": "BX-selection-denominator-synthesis-and-EN03-inventory",
+  "date": "2026-11-27",
+  "expected_master_sha256": "d93cc1af1c5d19d6d40404c4e2e46fe6fc803823f695d63a0879c20cd508f74f",
+  "updates": [
+    {
+      "record_id": "EN03",
+      "method_coding_source": "data/literature_master.csv#EN03;batches/english/results.json#EN03;data/en03_repository_inventory_BX.json(repository_readme_only)",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

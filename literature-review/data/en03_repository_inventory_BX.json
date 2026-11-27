@@ -1,0 +1,56 @@
+{
+  "checked_date": "2026-11-27",
+  "repo": "Bellahhm/Tracing-Persuasive-Dynamics-via-LLM-based-Multi-Agent-Networks",
+  "default_branch": "main",
+  "observed_commit": "6b47517d7df218af4cda59ad875dcdabe8ed7197",
+  "commit_date": "2026-02-15T10:08:32Z",
+  "readme_blob": "86b76de7ed6d6cb853fd733c353985361c7b9296",
+  "root_files": [
+    {
+      "name": "README.md",
+      "type": "file",
+      "blob_sha": "86b76de7ed6d6cb853fd733c353985361c7b9296",
+      "size": 883
+    },
+    {
+      "name": "cumulative_persuasion_rate.xlsx",
+      "type": "file",
+      "blob_sha": "6b780db211aec75c2174c77d45045f54c563a0ef",
+      "size": 44255
+    },
+    {
+      "name": "network_structure.xlsx",
+      "type": "file",
+      "blob_sha": "9696a95ce1fb47e7cbcf24f11548c497b655d942",
+      "size": 985453
+    },
+    {
+      "name": "persuasion VS closeness.py",
+      "type": "file",
+      "blob_sha": "3ee98dad9aa15f45dbd6890f0a784714f02f7dcd",
+      "size": 6339
+    },
+    {
+      "name": "persuasive score.py",
+      "type": "file",
+      "blob_sha": "4cf618008683ca4c1a5a8ae1cf619d9ec406440f",
+      "size": 4765
+    },
+    {
+      "name": "simulation code.py",
+      "type": "file",
+      "blob_sha": "b1d283cc6d13e924d25722f6462d7f4cc91b1f52",
+      "size": 59101
+    },
+    {
+      "name": "simulation data.zip",
+      "type": "file",
+      "blob_sha": "ca6ecae051b485e767e3860953fa2dd81585a1ba",
+      "size": 8193545
+    }
+  ],
+  "boundary": "README read; root inventory only; ZIP/code/data not downloaded or executed; no manuscript obtained; repository/paper run mapping not independently proved",
+  "readme_sha256": "f03b204321e842243db1d7e8728ec99b56aa32a6775bb579916fa1781f5d0ccd",
+  "readme_bytes": 883,
+  "readme_summary": "Author README describes a demonstration of one contested-topic simulation in a directed Watts–Strogatz network; paper/run correspondence not independently verified"
+}

@@ -1,0 +1,44 @@
+{
+  "batch": "BX",
+  "date": "2026-11-27",
+  "source_snapshot_commit": "decac84",
+  "units": [
+    {
+      "record_id": "EN04",
+      "path": "reading-cards/EN04.md",
+      "snapshot_commit": "decac84",
+      "git_lf_sha256": "1e2bd679acd86a13f926da1d86debc32e318111291295cf9d3b633de8623d174",
+      "actual_read_version": "arXiv2410.13909v1,formalbodypending",
+      "location": "§4.3.2/Table2p4",
+      "selection_kind": "source_forwarding_selection"
+    },
+    {
+      "record_id": "M007",
+      "path": "reading-cards/M007.md",
+      "snapshot_commit": "decac84",
+      "git_lf_sha256": "8449e230aa362d41ea04560aface638ef7b05dfa28c6f2a024dc17b2fd16fff8",
+      "actual_read_version": "EACLformalPDF",
+      "location": "data_selection/Table3",
+      "selection_kind": "active_user_target_and_test_selection"
+    },
+    {
+      "record_id": "M015",
+      "path": "reading-cards/M015.md",
+      "snapshot_commit": "decac84",
+      "git_lf_sha256": "42faf1980d3127c3f18ea31202d97f65c0d564272245509330e045a3c7e4cada",
+      "actual_read_version": "arXiv2404.01114v1,formalbodypending",
+      "location": "§4.3",
+      "selection_kind": "case/event_filtering"
+    },
+    {
+      "record_id": "M049",
+      "path": "reading-cards/M049.md",
+      "snapshot_commit": "decac84",
+      "git_lf_sha256": "95a28887be0dca75b548a144eba0eb03cf384b02ffdd4eb73e7371995e0313a5",
+      "actual_read_version": "formalpublisherPDFparsedtext",
+      "location": "Table1/methods/dataavailability",
+      "selection_kind": "requested_returned_judgment_denominators"
+    }
+  ],
+  "boundary": "Selected existing cards, not new primary reading/systematic sample or experiment"
+}

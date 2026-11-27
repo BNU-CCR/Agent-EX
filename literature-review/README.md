@@ -37,6 +37,7 @@
 
 截至2026-11-27，保留首轮57条及15卡，新增49项工作、补读5条原记录，现106条、63张全文卡；42项正式纳入、56候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
+- [选择分母与一致性综合](reports/selection_denominators_and_consistency_BX.md)：四研究的条件目标、报告算术和版本边界；EN03仓库目录与新线索分列。
 - [EN04作者版本精读](reports/news_diffusion_author_version_BW.md)：成功启动筛选、网络密度算术、干预分指标及正式摘要范围；正式正文仍未得。
 - [CCR直接对照获取](reports/ccr_direct_comparator_access_BV.md)：EN03/EN04官方身份、PDF跳转/403与摘要证据边界。
 - [优先刊现行政策](reports/priority_journal_policies_BU.md)：JASSS收费/减免与披露强度，CCR现行模板、复现检查、公告类型及2023PDF差异。
