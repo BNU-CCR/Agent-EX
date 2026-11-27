@@ -1,0 +1,29 @@
+{
+  "batch_id": "AT-PROMISING-POSITION",
+  "date": "2026-11-27",
+  "expected_master_sha256": "4e9ae298d9def253b1549d0be106bbc3d7202c5cf1c5a0362144a4dc22adbe9d",
+  "updates": [
+    {
+      "record_id": "M038",
+      "search_id": "S-M2-AR-ANTHIS;S-M2-AR-HTTP267;S-M2-AS-AN-PDF;S-M2-AT-READ;S-M2-AT-COMPARE",
+      "reading_status": "fulltext_checked",
+      "screening_status": "included",
+      "card_path": "reading-cards/M038.md",
+      "reason": "正式卷日期+正式PDF定向精读通过，观点/综述纳入不升级经验验证。",
+      "supplement_status": "selectedAppA/B/C_andA1/A2scope_read;no53sourceindependentreview",
+      "findings": "五挑战与近端pilot/探索立场；53混合预印/正式比较研究，承认无传统数据库完整检索；范围偏孤立人类回答。85%相对test–retest、91%variation/r.91措辞需原研究核，不作统一准确率。",
+      "evidence_location": "FormalPDFpp1–9,27,29–30;A1/A2scope/selectedrows;p9visual",
+      "method_type": "position_paper;methodological_challenges;review_agenda",
+      "method_maturity": "review_or_critique",
+      "method_evidence_level": "conceptual_claim",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "五挑战/模拟用途/人类基线与改进预期分层；非已验证完整工作流或全部多主体过程效度。",
+      "method_pending_fields": "53originals_independentreview;search_completeness;effect_scale;Hewitt_metric_wording;benchmark_version_generalization;controlled_intervention_effectiveness",
+      "method_evidence_location": "§2–6;Table1/A1/A2;AppA2.3/A2.4/C",
+      "method_coding_source": "reading-cards/M038.md;data/source_acquisition_manifest_AS.json;reports/position_scope_and_disagreement.md",
+      "notes": "Formaldateconfirmeddoesnotmeanfulltextread/inclusion;noDOIverified;positionnotempiricalbenchmark. | ATformalPDFreadusingASacquisition;limitedtableheaders/selectedrowsnot53paperrecoding;conceptualnotnewempiricalvalidation.",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

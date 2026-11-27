@@ -4248,5 +4248,85 @@
     "batch": "AS-HETEROGENEITY",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/as_heterogeneity/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_type",
+    "old": "position_and_methodological_critique",
+    "new": "position_paper;methodological_challenges;review_agenda",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "review_or_critique",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_transferability",
+    "old": "pending_fulltext;conceptualboundarycandidate",
+    "new": "五挑战/模拟用途/人类基线与改进预期分层；非已验证完整工作流或全部多主体过程效度。",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_pending_fields",
+    "old": "fulltext;review_sample_denominator;empirical_support;alternative_views;version_relations",
+    "new": "53originals_independentreview;search_completeness;effect_scale;Hewitt_metric_wording;benchmark_version_generalization;controlled_intervention_effectiveness",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_evidence_location",
+    "old": "OfficialAbstract",
+    "new": "§2–6;Table1/A1/A2;AppA2.3/A2.4/C",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M038",
+    "field": "method_coding_source",
+    "old": "reports/icml_position_ecology_and_dates.md",
+    "new": "reading-cards/M038.md;data/source_acquisition_manifest_AS.json;reports/position_scope_and_disagreement.md",
+    "date": "2026-11-27",
+    "batch": "AT-PROMISING-POSITION",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/at_promising_position/results.json"
   }
 ]

@@ -1,0 +1,20 @@
+[
+  {
+    "search_id": "S-M2-AT-READ",
+    "platform": "local_PDF_read",
+    "search_date": "2026-11-27",
+    "query_exact": "reuseASacquiredM038formalPDF;focusedpp1–9,27,29–30;A1/A2scope/selectedrows;p9visual",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/anthis25a/anthis25a.pdf",
+    "status": "formal_fulltext_focused_read_no_redownload",
+    "notes": "Not53originalstudiesindependentlyread;earlierAShashreused."
+  },
+  {
+    "search_id": "S-M2-AT-COMPARE",
+    "platform": "local_crossstudy_synthesis",
+    "search_date": "2026-11-27",
+    "query_exact": "compareM038/M039scope,corpora,challenges,claims,alternativeviewsandmetricwording",
+    "source_url": "",
+    "status": "bounded_comparison_notmeta_analysis",
+    "notes": "53vs21notcomparabledenominators;no newmodel/dataexecution."
+  }
+]
