@@ -1,3 +1,5 @@
+> BZ现行补记：[实际条件汇总与缓存跟进](persuasiontrace_artifact_followup_BZ.md)已取得另一精确路径的条件摘要，旧404仅归原文件名；50/32映射仍待核，未执行模型。以下BY统计为当时快照。
+
 # PersuasionTrace：有了人类过程数据，验证仍需分层
 
 2026-11-27，BY。将BX-L01线索核为M050：Moore等，2026-06-03，[arXiv2606.05330v1](https://arxiv.org/abs/2606.05330v1)。实际PDF40页，主文§1–9与AppB.2–B.13、judge提示定向读；未核正式出版身份，按frontier预印本保留。详见[阅读卡](../reading-cards/M050.md)、[PDF清单](../batches/method_round2/by_persuasiontrace/acquisition_manifest.json)和[静态制品清单](../data/persuasiontrace_repository_manifest_BY.json)。本批没有作者模型调用、实验运行或新招募。

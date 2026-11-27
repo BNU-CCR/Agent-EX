@@ -6368,5 +6368,25 @@
     "batch": "BY-persuasiontrace-human-reference-method-reading",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_coding_source",
+    "old": "reading-cards/M050.md;reports/persuasiontrace_dynamic_validity_BY.md;data/persuasiontrace_repository_manifest_BY.json",
+    "new": "reading-cards/M050.md;reports/persuasiontrace_dynamic_validity_BY.md;data/persuasiontrace_repository_manifest_BY.json;reports/persuasiontrace_artifact_followup_BZ.md",
+    "date": "2026-11-27",
+    "batch": "BZ-persuasiontrace-static-artifact-followup",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bz_persuasiontrace_artifact_followup/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_pending_fields",
+    "old": "formalpublication;judge50/32roundmapping;251/252replays;independent calibration/test split;rawdata/runcommit;metric/judgevalidity;crosspopulation/trajectorygeneralisation",
+    "new": "formalpublication;judge50/32roundmapping;251/252replays;independent calibration/test split;rawdata/runcommit;metric/judgevalidity;crosspopulation/trajectorygeneralisation;source_roundUUID/cache_command_mapping",
+    "date": "2026-11-27",
+    "batch": "BZ-persuasiontrace-static-artifact-followup",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bz_persuasiontrace_artifact_followup/results.json"
   }
 ]

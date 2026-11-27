@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "BZ-01",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "fixedfile read analysis/simulator_common.py",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/analysis/simulator_common.py",
+    "status": "static_source_read",
+    "notes": "Pinnedblob;readscopedmanifest;notmodelrerun"
+  },
+  {
+    "search_id": "BZ-02",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "fixedfile read analysis/data/simulator_counterfactual_replay_social_bn_conditional_core_avg_error_loo_bins_summary.csv",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/analysis/data/simulator_counterfactual_replay_social_bn_conditional_core_avg_error_loo_bins_summary.csv",
+    "status": "static_source_read",
+    "notes": "Pinnedblob;readscopedmanifest;notmodelrerun"
+  },
+  {
+    "search_id": "BZ-03",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "fixedfile read analysis/data/simulator_counterfactual_replay_social_bn_full_exact_summary.csv",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/analysis/data/simulator_counterfactual_replay_social_bn_full_exact_summary.csv",
+    "status": "static_source_read",
+    "notes": "Pinnedblob;readscopedmanifest;notmodelrerun"
+  },
+  {
+    "search_id": "BZ-04",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "fixedfile read analysis/data/rl_human_match_sim_compare_simulator_llm_judge_round_scores.jsonl firstlineonly",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/analysis/data/rl_human_match_sim_compare_simulator_llm_judge_round_scores.jsonl",
+    "status": "static_source_read",
+    "notes": "Noexecution;sourcecommitnotprovenpaper-run;firstJSONLschemaonly"
+  },
+  {
+    "search_id": "BZ-05",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "fixedfile read scripts/paper/regenerate_results_assets.sh",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/scripts/paper/regenerate_results_assets.sh",
+    "status": "static_source_read",
+    "notes": "Pinnedblob;readscopedmanifest;notmodelrerun"
+  },
+  {
+    "search_id": "BZ-06",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "conditional4meanrounding/sourceunits/cacheandselector_static_crosscheck",
+    "source_url": "reports/persuasiontrace_artifact_followup_BZ.md",
+    "status": "bounded_static_followup_checked",
+    "notes": "ActualconditionalCSVfound;old404limitedtospecificname;nohumantranscriptdownload"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "checked_date": "2026-11-27",
+  "repository": "jlcmoore/persuasiontrace",
+  "commit": "d05007fbe21f385583bd3e74667c7cd9da474b4f",
+  "files": [
+    {
+      "path": "analysis/simulator_common.py",
+      "blob_sha": "58355f3260f7c10f08b266dc7bbbe05b4c783ad6",
+      "size": 7027,
+      "read_scope": "249line helper read"
+    },
+    {
+      "path": "analysis/data/simulator_counterfactual_replay_social_bn_conditional_core_avg_error_loo_bins_summary.csv",
+      "blob_sha": "e5cc8017fe3cf047911082e8fd827c73c614b368",
+      "size": 598,
+      "read_scope": "aggregateCSV read"
+    },
+    {
+      "path": "analysis/data/simulator_counterfactual_replay_social_bn_full_exact_summary.csv",
+      "blob_sha": "6a0f348a3923f9227c2cea397e4c0b84a2123d63",
+      "size": 465,
+      "read_scope": "aggregateCSV read"
+    },
+    {
+      "path": "analysis/data/rl_human_match_sim_compare_simulator_llm_judge_round_scores.jsonl",
+      "blob_sha": "9a0cf81dc5a6c8dcdf4fcdc22d4fb30224bc1d84",
+      "size": 156186,
+      "read_scope": "first row schema only; not full raw scores read"
+    },
+    {
+      "path": "scripts/paper/regenerate_results_assets.sh",
+      "blob_sha": "1c5b58fba24fd98873344a64c63114fc7ddee95d",
+      "size": 26527,
+      "read_scope": "targeted judge cache/refresh lines489–525"
+    }
+  ],
+  "not_executed": true,
+  "source_round_mapping_unresolved": true,
+  "judge_first_row_keys": [
+    "corpus",
+    "round_index",
+    "proposition",
+    "n_turns",
+    "reason",
+    "confidence",
+    "target_human_likeness",
+    "raw_response"
+  ],
+  "boundary": "No raw human dialogues downloaded; no source-round UUID mapping; current snapshot not proven paper run"
+}

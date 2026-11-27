@@ -1,0 +1,14 @@
+{
+  "batch_id": "BZ-persuasiontrace-static-artifact-followup",
+  "date": "2026-11-27",
+  "expected_master_sha256": "ff8fb56cc1a97cc5a4eecd2dc4ca74b3c8791ef771e8034a7e79f02906c7e30d",
+  "updates": [
+    {
+      "record_id": "M050",
+      "method_coding_source": "reading-cards/M050.md;reports/persuasiontrace_dynamic_validity_BY.md;data/persuasiontrace_repository_manifest_BY.json;reports/persuasiontrace_artifact_followup_BZ.md",
+      "method_pending_fields": "formalpublication;judge50/32roundmapping;251/252replays;independent calibration/test split;rawdata/runcommit;metric/judgevalidity;crosspopulation/trajectorygeneralisation;source_roundUUID/cache_command_mapping",
+      "notes": "Preprint only;255humancompletedrounds;84replaysources/76conditionalLOO/252replays distinct;judge50vsHSTANDARD32mappingpending;BNpriorsfromLLMs;currentrepoJun5notprovenpapercommit;noauthorcode/modelcalls | BZ:actualconditional_summary76/16_roundingmatches;exact84trajectoryMAE_vsfinalmetricsseparate;samplerwithoutreplacement;cachefirstandrefreshfailfallback;50/32stillunresolved"
+    }
+  ],
+  "new_records": []
+}
