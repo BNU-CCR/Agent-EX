@@ -77,3 +77,5 @@ AU：ICML已有实际经验方法先例，但合法生成/人类分布/过程机
 AV：CHI需HCI理论/用户研究方法/系统设计的实质贡献；合成研究数据先例不自动支持网络意见稿。2027透明性按方法解释，材料无法共享可说明；当前JASSS/CCR优先比较保持。
 
 AX：CSCW2027+为两期刊接收后申请展示；旧2026周期和工作坊不当新稿截期或正式经验先例。当前JASSS/CCR优先比较保持，未来方法稿须实质社会计算贡献。见[cscw_journal_route_and_workshop_versions.md](cscw_journal_route_and_workshop_versions.md)。
+
+BB：WWW2027明确LLM社会模拟/效度范围，仍要求Web科学挑战；两2025Companion题录不是主会长文连续先例，长文/短文当前均已截止。未来方法稿可条件比较，当前JASSS/CCR优先判断保持。见[WWW专题](www_method_ecology.md)。

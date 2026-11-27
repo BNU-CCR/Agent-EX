@@ -1,0 +1,236 @@
+[
+  {
+    "search_id": "S-M2-BB-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org \"OASIS\" \"Open Agent\" simulation",
+    "source_url": "",
+    "status": "no_WWW_formal_identity",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"The Web Conference\" \"social simulation\" \"2025\"",
+    "source_url": "",
+    "status": "bounded_leads",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"WWW 2027\" research tracks call papers",
+    "source_url": "",
+    "status": "thirdparty_deadline_conflicts_not_primaryproof",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-04",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "master duplicate title check OASIS/AgentSociety/news diffusion",
+    "source_url": "data/literature_master.csv",
+    "status": "new_Qi_work_not_in_master",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-05",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"social simulation\" \"WWW\" \"2025\" paper",
+    "source_url": "",
+    "status": "bounded_leads",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-06",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"OASIS\" \"Open Agent Social\" published",
+    "source_url": "",
+    "status": "arxiv_not_WWW_proof",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-07",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:www2027.thewebconf.org \"Research\"",
+    "source_url": "",
+    "status": "official_home_lead",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-08",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2027home",
+    "source_url": "https://www2027.thewebconf.org/",
+    "status": "available",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-09",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followResearchCFP",
+    "source_url": "https://www2027.thewebconf.org/research-track-papers/",
+    "status": "scope_and_requirements",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-10",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followImportantDates",
+    "source_url": "https://www2027.thewebconf.org/important-dates/",
+    "status": "long_short_workshop_separate",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-11",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Representation bias in political sample simulations\" DOI",
+    "source_url": "",
+    "status": "formalCompanionlead",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-12",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Unveiling the Potential of LLMs in Simulated Society\" DOI",
+    "source_url": "",
+    "status": "secondCompanionlead",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-13",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find10pages",
+    "source_url": "https://www2027.thewebconf.org/research-track-papers/",
+    "status": "no_exact_match_read_actual8_and12_rule",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-14",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findSocial",
+    "source_url": "https://www2027.thewebconf.org/research-track-papers/",
+    "status": "explicitLLMsocialsimulationandvalidity",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-15",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findcode",
+    "source_url": "https://www2027.thewebconf.org/research-track-papers/",
+    "status": "encouragement_not_mandatory_fullrelease",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-16",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findNovember",
+    "source_url": "https://www2027.thewebconf.org/important-dates/",
+    "status": "short_deadline_not_long_extension",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-17",
+    "platform": "registry_api",
+    "search_date": "2026-11-27",
+    "query_exact": "GETACMdepositedQiDOI",
+    "source_url": "https://api.crossref.org/works/10.1145/3701716.3715591",
+    "status": "HTTP200_metadata_noabstract",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-18",
+    "platform": "registry_api",
+    "search_date": "2026-11-27",
+    "query_exact": "GETACMdepositedZhuDOI",
+    "source_url": "https://api.crossref.org/works/10.1145/3701716.3719232",
+    "status": "HTTP200_metadata_noabstract",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-19",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "trial2025acceptedpapersURL",
+    "source_url": "https://www2025.thewebconf.org/accepted-papers.html",
+    "status": "inaccessible_no_full_inventory",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-20",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openQiDOI",
+    "source_url": "https://doi.org/10.1145/3701716.3715591",
+    "status": "inaccessible",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-21",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openZhuDOI",
+    "source_url": "https://doi.org/10.1145/3701716.3719232",
+    "status": "inaccessible",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-22",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Unveiling the Potential of LLMs in Simulated Society\" abstract",
+    "source_url": "",
+    "status": "no_primary_abstract_acquired",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-23",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org/doi/10.1145/3701716.3715591 \"Abstract\"",
+    "source_url": "",
+    "status": "no_formal_abstract_proof",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-24",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:www2025.thewebconf.org \"Representation Bias\"",
+    "source_url": "",
+    "status": "no_subtrack_verification",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-25",
+    "platform": "author_preprint_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openQiabstract",
+    "source_url": "https://arxiv.org/abs/2407.11409",
+    "status": "preprint_abstract_read_not_formal_fulltext",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  },
+  {
+    "search_id": "S-M2-BB-26",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openCFPatline310",
+    "source_url": "https://www2027.thewebconf.org/research-track-papers/",
+    "status": "navigation_to_requirements_no_new_paper",
+    "notes": "Public directed source operations including failures;not exhaustive2022pluscoverage. Companion papers not maintrack;preprint abstract not formal version reading."
+  }
+]

@@ -1,0 +1,295 @@
+{
+  "batch": "BB",
+  "date": "2026-11-27",
+  "date_rule": "published-online explicit2025-05-23;print/publishedMay8 and createdMay23 separately retained;not conference dates",
+  "records": [
+    {
+      "doi": "10.1145/3701716.3715591",
+      "url": "https://api.crossref.org/works/10.1145/3701716.3715591",
+      "status": 200,
+      "bytes": 10319,
+      "sha256": "7d101568fd9d78bf496fb0a4b30663b907eae7a0c0cb34b6f94a5a79b59969cc",
+      "retained_fields": {
+        "title": [
+          "Representation Bias in Political Sample Simulations with Large Language Models"
+        ],
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0002-3616-5398",
+            "authenticated-orcid": false,
+            "given": "Weihong",
+            "family": "Qi",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Indiana University, Bloomington, IN, USA"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-3876-0094",
+            "authenticated-orcid": false,
+            "given": "Hanjia",
+            "family": "Lyu",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "University of Rochester, Rochester, NY, USA"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-4516-9729",
+            "authenticated-orcid": false,
+            "given": "Jiebo",
+            "family": "Luo",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "University of Rochester, Rochester, NY, USA"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "publisher": "ACM",
+        "container-title": [
+          "Companion Proceedings of the ACM on Web Conference 2025"
+        ],
+        "page": "1264-1267",
+        "published-online": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              23
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              8
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              8
+            ]
+          ]
+        },
+        "created": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              23
+            ]
+          ],
+          "date-time": "2025-05-23T16:20:01Z",
+          "timestamp": 1748017201000
+        },
+        "type": "proceedings-article",
+        "abstract": null
+      },
+      "subtrack": "pending_within_Companion",
+      "fulltext": "not_acquired"
+    },
+    {
+      "doi": "10.1145/3701716.3719232",
+      "url": "https://api.crossref.org/works/10.1145/3701716.3719232",
+      "status": 200,
+      "bytes": 12992,
+      "sha256": "bbe680f29e83764b386e6a884b890927940b4c7b3051710839d32f2eae173be5",
+      "retained_fields": {
+        "title": [
+          "Unveiling the Potential of LLMs in Simulated Society: A Knowledge-Driven LLM Agent Framework for User Modeling"
+        ],
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0009-0006-8133-4273",
+            "authenticated-orcid": false,
+            "given": "Shengmao",
+            "family": "Zhu",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Institute of Computing Technology, Chinese Academy of Sciences, Beijing, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-0147-2590",
+            "authenticated-orcid": false,
+            "given": "Bingbing",
+            "family": "Xu",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Institute of Computing Technology, Chinese Academy of Sciences, Beijing, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-8856-668X",
+            "authenticated-orcid": false,
+            "given": "Yige",
+            "family": "Yuan",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Institute of Computing Technology, Chinese Academy of Sciences, Beijing, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0009-0006-1349-2368",
+            "authenticated-orcid": false,
+            "given": "Bin",
+            "family": "Xie",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Institute of Computing Technology, Chinese Academy of Sciences, Beijing, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0009-0007-1300-9556",
+            "authenticated-orcid": false,
+            "given": "Yunfan",
+            "family": "Li",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Institute of Computing Technology, Chinese Academy of Sciences, Beijing, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-2425-1499",
+            "authenticated-orcid": false,
+            "given": "Huawei",
+            "family": "Shen",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Institute of Computing Technology, Chinese Academy of Sciences, Beijing, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          }
+        ],
+        "publisher": "ACM",
+        "container-title": [
+          "Companion Proceedings of the ACM on Web Conference 2025"
+        ],
+        "page": "2998-3002",
+        "published-online": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              23
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              8
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              8
+            ]
+          ]
+        },
+        "created": {
+          "date-parts": [
+            [
+              2025,
+              5,
+              23
+            ]
+          ],
+          "date-time": "2025-05-23T16:09:41Z",
+          "timestamp": 1748016581000
+        },
+        "type": "proceedings-article",
+        "abstract": null
+      },
+      "subtrack": "pending_within_Companion",
+      "fulltext": "not_acquired"
+    }
+  ],
+  "second_work": "metadata_lead_only_no_master_record_no_abstract",
+  "scope_url": "https://www2027.thewebconf.org/research-track-papers/",
+  "dates_url": "https://www2027.thewebconf.org/important-dates/",
+  "coverage": "not_complete_or_continuous_maintrack_proof"
+}

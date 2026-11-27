@@ -4768,5 +4768,125 @@
     "batch": "BA-MetaAgents-exact-formal-date",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ba_metaagents_date/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_type",
+    "old": "",
+    "new": "political_sample_simulation_bias_evaluation_provisional",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "validation_and_external_validity;measurement",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pendingformal_fulltext;representationbias_comparisoncandidate",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "作者预印摘要明确研究政治样本模拟偏差；正式版方法/证据尚未读。",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formal_fulltext;versioncomparison;Companion_subtrack;empirical_reference;units_and_confounds;artifacts",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "arXivabstract;ACMregisteredmetadata",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/www_method_ecology.md",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BB-WWW-method-ecology-and-Companion-metadata",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bb_www_ecology/results.json"
   }
 ]
