@@ -1,0 +1,24 @@
+[
+  {
+    "record_id": "M031",
+    "version": "arXiv_v1_author_manuscript",
+    "source_url": "https://arxiv.org/pdf/2511.00993v1",
+    "sha256": "d6e55aafc829c9fc08cf2d468703a707be3c4f3fddc462251fef59c6076db792",
+    "bytes": 3556229,
+    "checked": "2026-11-27",
+    "storage": "temporary payload; repository manifest only",
+    "formal_fulltext": false,
+    "pages": 32,
+    "read_scope": "focused §§3.2–5.2/conclusion; Table7p26 rendered/viewed; not code/SI audit"
+  },
+  {
+    "record_id": "M031",
+    "version": "publisher_metadata_only",
+    "source_url": "https://api.elsevier.com/content/article/PII:S0968090X26003062?httpAccept=text/xml",
+    "sha256": "c715cd5c68710fa7eb61fe82a2179297bb36460157306dcc2b56ea3cd66cc519",
+    "bytes": 2065,
+    "checked": "2026-11-27",
+    "storage": "temporary payload; repository manifest only",
+    "formal_fulltext": false
+  }
+]

@@ -2668,5 +2668,125 @@
     "batch": "Z-EFECT-statistical-reproducibility",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_type",
+    "old": "",
+    "new": "llm_persona_calibration",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "model_calibration;memory_and_persona;validation_and_external_validity",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_transferability",
+    "old": "",
+    "new": "可迁移评价设计的分层与监督边界审计；经验结果限单组时间切分，正式版/更新边界待核。",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接提供数据驱动persona校准与动态评价先例，效度严格限所测设计。",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "first_formal_online_date;formal_vs_author_version;ML_baselines;test_period_update_freeze;code_model_seed;cross_cohort_transfer",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "authorv1Algorithm2/§4/§5.2;reviewscopeinference separate",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M031.md",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "AA-dual-agent-calibration",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
   }
 ]

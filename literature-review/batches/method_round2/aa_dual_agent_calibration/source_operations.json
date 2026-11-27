@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "S-M2-AA-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"S0968090X26003062\" \"Available online\"",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0968090X26003062",
+    "status": "searched_no_exact_first_online",
+    "notes": "Formal metadata/search snippets not exact first-online evidence"
+  },
+  {
+    "search_id": "S-M2-AA-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Aligning LLM agents with human learning and adjustment behavior\" arxiv pdf",
+    "source_url": "https://arxiv.org/abs/2511.00993",
+    "status": "author_version_located",
+    "notes": "SSRN search snippet also seen, not opened or used as earliest date"
+  },
+  {
+    "search_id": "S-M2-AA-XML",
+    "platform": "public_publisher_API",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.elsevier.com/content/article/PII:S0968090X26003062?httpAccept=text/xml",
+    "source_url": "https://api.elsevier.com/content/article/PII:S0968090X26003062?httpAccept=text/xml",
+    "status": "HTTP200_metadata_only",
+    "notes": "2065bytes XML; coverDate is not first-online; no body"
+  },
+  {
+    "search_id": "S-M2-AA-PDF",
+    "platform": "author_PDF_download_and_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "https://arxiv.org/pdf/2511.00993v1",
+    "source_url": "https://arxiv.org/pdf/2511.00993v1",
+    "status": "HTTP200_verified_author_v1_focused_read",
+    "notes": "3556229bytes/32pages; Table7p26 rendered/viewed; no formal fulltext equivalence"
+  },
+  {
+    "search_id": "S-M2-AA-ABS",
+    "platform": "official_preprint_repository",
+    "search_date": "2026-11-27",
+    "query_exact": "https://arxiv.org/abs/2511.00993",
+    "source_url": "https://arxiv.org/abs/2511.00993",
+    "status": "version_date_checked",
+    "notes": "v1 submitted2025-11-02, manuscript coverOct31 distinct"
+  },
+  {
+    "search_id": "S-M2-AA-SD",
+    "platform": "official_publisher_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "Available online",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0968090X26003062",
+    "status": "HTTP403",
+    "notes": "No first-online or formal fulltext success"
+  },
+  {
+    "search_id": "S-M2-AA-FULL",
+    "platform": "public_publisher_API",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.elsevier.com/content/article/PII:S0968090X26003062?httpAccept=text/xml&view=FULL",
+    "source_url": "https://api.elsevier.com/content/article/PII:S0968090X26003062?httpAccept=text/xml&view=FULL",
+    "status": "HTTP401_AUTHENTICATION_ERROR",
+    "notes": "Invalid API Key; no fulltext obtained, no credentials attempted"
+  }
+]

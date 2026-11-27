@@ -1,30 +1,30 @@
 {
   "checked": "2026-11-27",
   "checked_timezone": "Asia/Shanghai",
-  "records": 87,
+  "records": 88,
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 40,
-  "search_rows": 571,
+  "search_rows": 578,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 34,
-    "candidate": 45,
+    "candidate": 46,
     "frontier": 6,
     "excluded": 2
   },
   "method_tiers": {
     "direct_comparator": 15,
-    "method_validation": 25,
+    "method_validation": 26,
     "core_method": 30,
     "peripheral": 11,
     "application": 6
   },
-  "fulltext_cards": 46,
-  "date_pending": 21,
+  "fulltext_cards": 47,
+  "date_pending": 22,
   "checks": "passed",
   "limitations": "No experiment rerun; workbook visual verification separate; not database coverage certification",
-  "validation_matrix_units": 54,
+  "validation_matrix_units": 58,
   "venue_types": {
     "journal": 23,
     "conference": 8,
