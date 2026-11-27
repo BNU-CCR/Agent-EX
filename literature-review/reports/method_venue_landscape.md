@@ -45,3 +45,5 @@ AE补TCSS一正式平台论文与历史生成式社会智能CFP，见[tcss_metho
 AG新增ACL/EMNLP入口，三正式Main/Findings题录/摘要与2026CFP/ARR清单有界核查；不是全刊/全年完整清单。41入口13未对账，详见[专题](acl_emnlp_method_ecology.md)。
 
 AL补TACL既有R010先例与政策版本核查，实时门户失败/官方可读文档分列；41入口12未对账，详见[TACL专题](tacl_policy_and_fit.md)。
+
+AM新增ICLR正式2024方法先例与2027指南；39载体（27刊/11会议/1仓库）/26条件刊。2027轮已截止；单例不称连续专轨。

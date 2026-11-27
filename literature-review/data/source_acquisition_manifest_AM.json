@@ -1,0 +1,22 @@
+{
+  "batch": "AM",
+  "checked_date": "2026-11-27",
+  "record_id": "M036",
+  "source_url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/b3075b88e583a0e98d8b24338a613060-Paper-Conference.pdf",
+  "http_status": 200,
+  "content_type": "application/pdf",
+  "bytes": 8846212,
+  "pages": 45,
+  "sha256": "3aa871e60bc1514fd5ed7e8ceeb08060a2ee56c8ad62acf67ea109e7bd1ac84e",
+  "local_acquisition": "scratch/AM_sotopia.pdf;binary_not_committed",
+  "reading_scope": "pp1,3–8,18–19,23–24,27–30; p6visual",
+  "version": "formalproceedingsICLR2024",
+  "date_status": "first_formal_online_pending",
+  "failed_or_unread": [
+    {
+      "url": "https://proceedings.iclr.cc/paper_files/paper/3823-/bibtex",
+      "status": "webtoolunsupportedcontenttype;notread"
+    }
+  ],
+  "execution": "none"
+}

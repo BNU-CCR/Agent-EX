@@ -1,0 +1,128 @@
+[
+  {
+    "search_id": "S-M2-AM-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:openreview.net \"SOTOPIA: Interactive Evaluation\" ICLR 2024",
+    "source_url": "",
+    "status": "search_completed",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:iclr.cc/Conferences/2026/AuthorGuide reproducibility code",
+    "source_url": "",
+    "status": "search_completed_not_full2026guide",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-Q3",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"SOTOPIA: Interactive Evaluation for Social Intelligence\" \"forum?id\"",
+    "source_url": "",
+    "status": "search_completed",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-Q4",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.iclr.cc/paper_files/paper/2024 \"SOTOPIA\"",
+    "source_url": "",
+    "status": "search_completed",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-GUIDE",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open ICLR2027 author guidelines",
+    "source_url": "https://iclr.cc/Conferences/2027/AuthorGuidelines",
+    "status": "official_read",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-CFP",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open ICLR2027 call for papers",
+    "source_url": "https://iclr.cc/Conferences/2027/CallForPapers",
+    "status": "official_read_closed_deadlines",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-FORMAL",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open formal SOTOPIA proceedings abstract",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/b3075b88e583a0e98d8b24338a613060-Abstract-Conference.html",
+    "status": "formal_identity_checked",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-REPRO",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Reproducibility in2027guide",
+    "source_url": "https://iclr.cc/Conferences/2027/AuthorGuidelines",
+    "status": "recommended_statement_checked",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-DATES",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Submission in2027CFP",
+    "source_url": "https://iclr.cc/Conferences/2027/CallForPapers",
+    "status": "closed_deadlines_checked",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-PDF",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GET formal SOTOPIA PDF",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/b3075b88e583a0e98d8b24338a613060-Paper-Conference.pdf",
+    "status": "HTTP200_PDF_45pages",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-BIB",
+    "platform": "official_web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "click official Bibtex",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/3823-/bibtex",
+    "status": "tool_unsupported_application_x_bibtex_not_read",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-LENGTH",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find 10 pages in2027guide",
+    "source_url": "https://iclr.cc/Conferences/2027/AuthorGuidelines",
+    "status": "length_checked",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-AI",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find AI use statement in2027guide",
+    "source_url": "https://iclr.cc/Conferences/2027/AuthorGuidelines",
+    "status": "required_heading_checked_notseparatepolicy",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  },
+  {
+    "search_id": "S-M2-AM-READ",
+    "platform": "local_PDF_read",
+    "search_date": "2026-11-27",
+    "query_exact": "focusedread pp1,3–8,18–19,23–24,27–30;renderp6",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/b3075b88e583a0e98d8b24338a613060-Paper-Conference.pdf",
+    "status": "fulltext_focused_read_table_visual",
+    "notes": "Actual source/local operations; no database export or experiment execution; date gate retained."
+  }
+]

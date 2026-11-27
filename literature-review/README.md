@@ -35,16 +35,17 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-27，保留首轮57条及15卡，新增35项工作、补读5条原记录，现92条、51张全文卡；35项正式纳入、49候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-27，保留首轮57条及15卡，新增36项工作、补读5条原记录，现93条、52张全文卡；35项正式纳入、50候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
-- [验证证据矩阵](reports/method_validation_matrix.md)：81个证据单元，回答、轨迹、经验效度分列。
+- [验证证据矩阵](reports/method_validation_matrix.md)：85个证据单元，回答、轨迹、经验效度分列。
 - [双主体校准的评价边界](reports/dual_agent_calibration_boundaries.md)：作者v1与正式版、条件预测与闭环证据分列。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
+- [SOTOPIA与ICLR评价入口](reports/sotopia_evaluation_and_iclr_ecology.md)：多维judge、真人参与和难例选择边界，2027指南与已截止日分列。
 - [TACL政策与适配](reports/tacl_policy_and_fit.md)：旧模板/新附录政策、条件资料义务及既有测量先例。
 - [EcoLANG公式与制品核查](reports/ecolang_formula_artifact_followup.md)：公开代码惩罚方向、论文表达差异及环境缺口。
 - [群体粒度与验证](reports/group_granularity_validation.md)：人口/主体、模板先验、宏观拟合及内部表值冲突。
@@ -52,7 +53,7 @@
 - [信息边界比较](reports/information_boundary_comparison.md)：全知生成、条件预测、评价者信息与迁移分层。
 - [ACL/EMNLP方法生态](reports/acl_emnlp_method_ecology.md)：Main/Findings、责任清单及候选方法论文分列。
 - [TCSS方法生态](reports/tcss_method_ecology.md)：正式平台先例、历史CFP与费用冲突。
-- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：38载体（27刊/10会议入口/1仓库），定向样本，未声称完整数据库覆盖。
+- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：39载体（27刊/11会议入口/1仓库），定向样本，未声称完整数据库覆盖。
 - [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：9张工作表，书目仅35项正式纳入；前沿/候选见主表。
 - [ODD版本与入口补查](reports/odd_version_access_followup.md)：预印/正式/公告日期与未获取正文分列。
 - [现有证据分类修复](reports/categorical_completion_existing_evidence.md)：9空值补齐、3卡重整，余5空值保留。

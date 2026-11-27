@@ -32,3 +32,5 @@ AE将TCSS从not_yet_reconciled更新为部分对账：官方范围/格式、费�
 AG补ACL/EMNLP部分对账，三正式Main/Findings题录及官方CFP/ARR指导；13入口未对账。正式全文/精确日期与完整语料仍待核，不把摘要候选当全文纳入。
 
 AL将TACL改部分对账，复用R010与官方政策文档；12命名入口未对账，不是完整语料认证。 见[TACL政策专题](tacl_policy_and_fit.md)。
+
+AM将ICLR改部分对账：M036正式会议全文、2027官方指南/CFP；41入口余11未对账。不是全目录或当前开放机会。
