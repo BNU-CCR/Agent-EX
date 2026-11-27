@@ -6518,5 +6518,45 @@
     "batch": "CC-architecture-ablation-and-process-selection-cards",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_coding_source",
+    "old": "reading-cards/M020.md",
+    "new": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation",
+    "date": "2026-11-27",
+    "batch": "CD-control-and-empirical-initialization-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cd_control_empirical_cards/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CD-control-and-empirical-initialization-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cd_control_empirical_cards/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_source",
+    "old": "reading-cards/M021.md",
+    "new": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation",
+    "date": "2026-11-27",
+    "batch": "CD-control-and-empirical-initialization-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cd_control_empirical_cards/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CD-control-and-empirical-initialization-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cd_control_empirical_cards/results.json"
   }
 ]

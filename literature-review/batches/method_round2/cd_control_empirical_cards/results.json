@@ -1,0 +1,18 @@
+{
+  "batch_id": "CD-control-and-empirical-initialization-cards",
+  "date": "2026-11-27",
+  "expected_master_sha256": "ae9ae25bdab327ad9624dff25669952b801a0f45bbba526d19be00099c0e78e2",
+  "updates": [
+    {
+      "record_id": "M020",
+      "method_coding_source": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "M021",
+      "method_coding_source": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

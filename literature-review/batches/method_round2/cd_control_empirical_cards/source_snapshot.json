@@ -1,0 +1,22 @@
+[
+  {
+    "path": "reading-cards/M020.md",
+    "commit": "9434f3f",
+    "git_lf_sha256": "b42bf0d82e9cdf135693cfb9310e50a4d172b0134cf5e23deb8b580e8887dd50"
+  },
+  {
+    "path": "reading-cards/M021.md",
+    "commit": "9434f3f",
+    "git_lf_sha256": "d66f0277b667781f113c559efaa4d4eaa5ee87e44db16705be54643f4567b85b"
+  },
+  {
+    "path": "reports/calibration_and_artifact_audit.md",
+    "commit": "9434f3f",
+    "git_lf_sha256": "dd7a037d0de230e531179d1d54e0cd570e48c13dbfe33739e568c81545e78aff"
+  },
+  {
+    "path": "batches/method_round2/k_calibration_audit/qtmd_source_manifest.json",
+    "commit": "9434f3f",
+    "git_lf_sha256": "abf8043ba967a2f19e60fe524a9ac815001c38e3e8565bfdc905c5b1aa82ec3c"
+  }
+]

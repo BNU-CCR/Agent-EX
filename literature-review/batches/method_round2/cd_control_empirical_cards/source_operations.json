@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "CD-01",
+    "platform": "local_evidence_reconciliation",
+    "search_date": "2026-11-27",
+    "query_exact": "Review existing J/K primary-reading and pinned artifact records for M020/M021; complete eleven substantive items",
+    "source_url": "reports/calibration_and_artifact_audit.md",
+    "status": "existing_evidence_reviewed_no_new_acquisition",
+    "notes": "Source snapshot9434f3f;not a new search, fulltext download or code execution"
+  }
+]
