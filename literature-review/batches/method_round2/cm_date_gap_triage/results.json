@@ -1,0 +1,20 @@
+{
+  "batch_id": "CM-Findings-release-evidence-and-date-gap-triage",
+  "date": "2026-11-27",
+  "expected_master_sha256": "20bf0fd2a8f04c905501ccb008a99b1ea2287493d6637d9a6f77797014f436b0",
+  "updates": [
+    {
+      "record_id": "M034",
+      "method_coding_source": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit",
+      "method_last_checked": "2026-11-27",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AJformalPDFfocusedread;authorpredictivetimestampnotindependentlyverified,notretrospectiveaccusation. TableVIinternalGTonly,notexternalpoliticalfactverification;noexperiment/codeexecution. | CM:official2025conferencehomepage_newschecked_noexplicitproceedingsreleasefound;Anthologymonthretained;Crossrefpublished/print/issued2025only,onlineabsent;created/depositednotpublication;datepending/candidateunchanged"
+    },
+    {
+      "record_id": "M035",
+      "method_coding_source": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit",
+      "method_last_checked": "2026-11-27",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AIofficialPDFfocusedread;tweet/total/runtimecostdistinct;arithmeticfromroundedtable. Empiricalscope two datasets,notvalidatedgeneralworkflow;fitnesssignunresolved notcodeerrorclaim. | AKfixed00878bc4/11filesblobverified:fitness -w2*token,notrewardinglongtext inpublicpath. Maycommitlinks preprint;formalrunmappingunverified. Partialenvarchivesnotrebuilt. | CM:official2025conferencehomepage_newschecked_noexplicitproceedingsreleasefound;Anthologymonthretained;Crossrefpublished/print/issued2025only,onlineabsent;created/depositednotpublication;datepending/candidateunchanged"
+    }
+  ],
+  "new_records": []
+}

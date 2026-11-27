@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-27",
+  "batch": "CM",
+  "records": 27,
+  "by_bottleneck": {
+    "fulltext_and_date_evidence": 16,
+    "date_or_formal_version_boundary": 9,
+    "formal_publication_unconfirmed_preprint_separate": 2
+  },
+  "boundary": "Triage from current master/evidence; planned followups are not new searches or resolved publication dates",
+  "queue_sha256": "751816e70e24f7d0de449db398d6b261995d47b34eaaaddbe7d516e9f84eeaac"
+}

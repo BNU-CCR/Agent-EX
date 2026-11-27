@@ -1,0 +1,108 @@
+[
+  {
+    "record_id": "M034",
+    "fields": {
+      "DOI": "10.18653/v1/2025.findings-acl.468",
+      "title": [
+        "GA-S3: Comprehensive Social Network Simulation with Group Agents"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            4
+          ]
+        ],
+        "date-time": "2025-08-04T09:54:03Z",
+        "timestamp": 1754301243000
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            4
+          ]
+        ],
+        "date-time": "2025-08-04T10:01:59Z",
+        "timestamp": 1754301719000
+      }
+    }
+  },
+  {
+    "record_id": "M035",
+    "fields": {
+      "DOI": "10.18653/v1/2025.findings-emnlp.284",
+      "title": [
+        "EcoLANG: Efficient and Effective Agent Communication Language Induction for Social Simulation"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "issued": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            8
+          ]
+        ],
+        "date-time": "2025-11-08T12:29:45Z",
+        "timestamp": 1762604985000
+      },
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            8
+          ]
+        ],
+        "date-time": "2025-11-08T12:37:06Z",
+        "timestamp": 1762605426000
+      }
+    }
+  }
+]

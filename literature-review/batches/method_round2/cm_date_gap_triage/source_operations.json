@@ -1,0 +1,101 @@
+[
+  {
+    "search_id": "CM-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open official conference news",
+    "source_url": "https://2025.aclweb.org/",
+    "status": "readable_no_explicit_release_found",
+    "notes": ""
+  },
+  {
+    "search_id": "CM-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open official conference news",
+    "source_url": "https://2025.emnlp.org/",
+    "status": "readable_no_explicit_release_found",
+    "notes": ""
+  },
+  {
+    "search_id": "CM-03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:2025.aclweb.org proceedings available July 2025 findings",
+    "source_url": "",
+    "status": "no_primary_exact_release_found",
+    "notes": "Acceptedpaperlistnotpublicationdate"
+  },
+  {
+    "search_id": "CM-04",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:2025.emnlp.org proceedings available November 2025 Findings",
+    "source_url": "",
+    "status": "no_primary_exact_release_found",
+    "notes": "Acceptedpaperlistnotpublicationdate"
+  },
+  {
+    "search_id": "CM-05",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or registry",
+    "source_url": "https://2025.aclweb.org/",
+    "status": "200",
+    "notes": "18460bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CM-06",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or registry",
+    "source_url": "https://2025.emnlp.org/",
+    "status": "200",
+    "notes": "12389bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CM-07",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or registry",
+    "source_url": "https://aclanthology.org/2025.findings-acl.468/",
+    "status": "200",
+    "notes": "44791bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CM-08",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or registry",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "status": "200",
+    "notes": "45597bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CM-09",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or registry",
+    "source_url": "https://api.crossref.org/works/10.18653/v1/2025.findings-acl.468",
+    "status": "200",
+    "notes": "2389bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CM-10",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or registry",
+    "source_url": "https://api.crossref.org/works/10.18653/v1/2025.findings-emnlp.284",
+    "status": "200",
+    "notes": "2425bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CM-11",
+    "platform": "local_gap_triage",
+    "search_date": "2026-11-27",
+    "query_exact": "Review27datepending records;separate acquisition,version,andrelease evidence",
+    "source_url": "reports/findings_dates_and_triage_CM.md",
+    "status": "reviewed_queue_not_executed_future_queries",
+    "notes": ""
+  }
+]

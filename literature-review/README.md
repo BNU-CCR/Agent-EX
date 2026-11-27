@@ -45,6 +45,8 @@
 
 - [正式版本与EMNLP发布](reports/formal_version_release_CL.md)：M033日期闭合纳入；M027未得正式版，不升级。
 
+- [Findings日期与缺口分流](reports/findings_dates_and_triage_CM.md)：保留两项未决，27项队列按实际获取/版本瓶颈排序。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

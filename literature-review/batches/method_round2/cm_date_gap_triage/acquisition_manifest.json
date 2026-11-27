@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ACL25-home",
+    "url": "https://2025.aclweb.org/",
+    "status": 200,
+    "bytes": 18460,
+    "sha256": "ed9f6887d73f3dffe0a8915a0b82fcc5c4f57a5e02303cf7ac5cc29cec83ba68",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ACL25-home_CM.response"
+  },
+  {
+    "id": "EMNLP25-home",
+    "url": "https://2025.emnlp.org/",
+    "status": 200,
+    "bytes": 12389,
+    "sha256": "de1b03f6ee075ecc2b1e2ca820fc01d47d71b6f0bb1f2497e13024c859a04be8",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EMNLP25-home_CM.response"
+  },
+  {
+    "id": "M034-item",
+    "url": "https://aclanthology.org/2025.findings-acl.468/",
+    "status": 200,
+    "bytes": 44791,
+    "sha256": "46337f8f5581ea2fec163633d8e7ecbfb05b829c653564ded1e3df365800b795",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M034-item_CM.response"
+  },
+  {
+    "id": "M035-item",
+    "url": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "status": 200,
+    "bytes": 45597,
+    "sha256": "9351421d666d68bf5d7c96a782ca4d1a4ff8ec97dff5df16bf44d7f7b2f06d8f",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M035-item_CM.response"
+  },
+  {
+    "id": "M034-registry",
+    "url": "https://api.crossref.org/works/10.18653/v1/2025.findings-acl.468",
+    "status": 200,
+    "bytes": 2389,
+    "sha256": "6b05006cde6e521f9f1d817dd23256052901a3319ef0801cfd600e31a19ed8dc",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M034-registry_CM.response"
+  },
+  {
+    "id": "M035-registry",
+    "url": "https://api.crossref.org/works/10.18653/v1/2025.findings-emnlp.284",
+    "status": 200,
+    "bytes": 2425,
+    "sha256": "69af8ab0830a93c721ce133f4458c165124b98645034494ebdd71cea8644b9d3",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M035-registry_CM.response"
+  }
+]

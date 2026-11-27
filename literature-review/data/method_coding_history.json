@@ -6938,5 +6938,25 @@
     "batch": "CL-formal-version-and-EMNLP-release-evidence",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cl_formal_version_release/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_coding_source",
+    "old": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv",
+    "new": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit",
+    "date": "2026-11-27",
+    "batch": "CM-Findings-release-evidence-and-date-gap-triage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cm_date_gap_triage/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_coding_source",
+    "old": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json",
+    "new": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit",
+    "date": "2026-11-27",
+    "batch": "CM-Findings-release-evidence-and-date-gap-triage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cm_date_gap_triage/results.json"
   }
 ]
