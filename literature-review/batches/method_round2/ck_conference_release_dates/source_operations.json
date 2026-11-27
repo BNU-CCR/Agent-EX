@@ -1,0 +1,137 @@
+[
+  {
+    "search_id": "CK-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open officialproceedings metadata",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21/",
+    "status": "readable",
+    "notes": ""
+  },
+  {
+    "search_id": "CK-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open officialproceedings metadata",
+    "source_url": "https://aclanthology.org/2024.sigdial-1/",
+    "status": "readable",
+    "notes": ""
+  },
+  {
+    "search_id": "CK-03",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open officialproceedings metadata",
+    "source_url": "https://ifaamas.org/Proceedings/aamas2026/",
+    "status": "readable",
+    "notes": ""
+  },
+  {
+    "search_id": "CK-04",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"AAMAS 2026\" \"publication date\" proceedings",
+    "source_url": "",
+    "status": "discovery_results_not_exhaustive",
+    "notes": ""
+  },
+  {
+    "search_id": "CK-05",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"2024.sigdial-1\" \"published\" September",
+    "source_url": "",
+    "status": "discovery_results_not_exhaustive",
+    "notes": ""
+  },
+  {
+    "search_id": "CK-06",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open official release announcement",
+    "source_url": "https://2024.sigdial.org/",
+    "status": "readable_release15Sep2024",
+    "notes": ""
+  },
+  {
+    "search_id": "CK-07",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open DOI resolution",
+    "source_url": "https://doi.org/10.65109/VAVC8140",
+    "status": "not_accessible",
+    "notes": ""
+  },
+  {
+    "search_id": "CK-08",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.65109/VAVC8140\" \"Published\"",
+    "source_url": "",
+    "status": "no_primary_exact_release_evidence",
+    "notes": "IrrelevantthirdpartyAIaggregatornotused"
+  },
+  {
+    "search_id": "CK-09",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"AAMAS\" \"2026\" \"proceedings\" \"published\" \"May\" site:aamas2026.org",
+    "source_url": "",
+    "status": "no_primary_exact_release_evidence",
+    "notes": "IrrelevantthirdpartyAIaggregatornotused"
+  },
+  {
+    "search_id": "CK-10",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or DOIregistry",
+    "source_url": "https://2024.sigdial.org/",
+    "status": "200",
+    "notes": "92013bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CK-11",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or DOIregistry",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21/",
+    "status": "200",
+    "notes": "43231bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CK-12",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or DOIregistry",
+    "source_url": "https://ifaamas.org/Proceedings/aamas2026/",
+    "status": "200",
+    "notes": "4116bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CK-13",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or DOIregistry",
+    "source_url": "https://api.datacite.org/dois/10.65109/vavc8140",
+    "status": "404",
+    "notes": "87bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CK-14",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official page or DOIregistry",
+    "source_url": "https://api.crossref.org/works/10.65109/VAVC8140",
+    "status": "200",
+    "notes": "1933bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CK-15",
+    "platform": "local_date_evidence_review",
+    "search_date": "2026-11-27",
+    "query_exact": "Match organizer release to volume/item; apply task3.2; distinguish registry deposit",
+    "source_url": "reports/conference_release_dates_CK.md",
+    "status": "one_date_gate_resolved_one_retained",
+    "notes": ""
+  }
+]

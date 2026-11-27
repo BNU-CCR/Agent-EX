@@ -1,0 +1,25 @@
+{
+  "batch_id": "CK-conference-proceedings-release-date-evidence",
+  "date": "2026-11-27",
+  "expected_master_sha256": "c53e815f3ba335ddb3289832f297aab9bc604a78e2096a497ec42549fbb530a5",
+  "updates": [
+    {
+      "record_id": "M024",
+      "online_first_date": "2024-09-15",
+      "date_basis": "OfficialSIGDIAL2024organizer announcement explicitly proceedings published at ACLAnthology on15September2024;matched officialvolume/item/DOI. Formalproceedingsrelease date per task3.2;not conference18–20Sep,deposit,fetch orPDFcreationdate",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "metadata_evidence_url": "https://aclanthology.org/2024.sigdial-1.21/;https://2024.sigdial.org/",
+      "method_coding_source": "reading-cards/M024.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF;reports/conference_release_dates_CK.md;official_release_announcement",
+      "method_last_checked": "2026-11-27",
+      "notes": "FocusedformalPDFmethods/evaluation/limitationsreading;notcompleteappendix/codeaudit;no rerun. September18–20conference dates notclaimed firstonline;candidate retained. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CK:officialproceedingsrelease15Sep2024confirmed;supersedes priorcandidate/date_pending;formalPDFalreadyread;methodmaturity/evidenceunchanged"
+    },
+    {
+      "record_id": "M020",
+      "method_coding_source": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_release_dates_CK.md;registry_date_fields_audit",
+      "method_last_checked": "2026-11-27",
+      "notes": "FormalPDF read; static7file audit pinned93256122ecaa76943b0702cc6c6317765398b397 (Oct1 after Mayconference), not established paper runartifact. Judgeandoneagent both llama3:latest; runner default nonrepetition lexical; evidence first10charsmatch; noexecution. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CK:Crossrefcreated/deposited24May2026notpublicationdates;published/online/printfieldsabsent;DataCite404;officialIFAAMASindexyearonly;candidate/date_pendingretained"
+    }
+  ],
+  "new_records": []
+}

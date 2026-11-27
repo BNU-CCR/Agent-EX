@@ -1,0 +1,42 @@
+[
+  {
+    "id": "SIGDIAL-announcement",
+    "url": "https://2024.sigdial.org/",
+    "status": 200,
+    "bytes": 92013,
+    "sha256": "d16c4f0ce48c89e29954b2fe42aefc39a389a5175a6ce3be966213a0937d7f95",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\SIGDIAL-announcement_CK.response"
+  },
+  {
+    "id": "SIGDIAL-item",
+    "url": "https://aclanthology.org/2024.sigdial-1.21/",
+    "status": 200,
+    "bytes": 43231,
+    "sha256": "e678f9cb7c2bcdf2b2813e23ee17ac4f1b677a72d61a61c14aa06f015005febb",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\SIGDIAL-item_CK.response"
+  },
+  {
+    "id": "AAMAS-index",
+    "url": "https://ifaamas.org/Proceedings/aamas2026/",
+    "status": 200,
+    "bytes": 4116,
+    "sha256": "c4958c60225a06a3681becf8425fcb8c2a5ade57ed706f99b3000b40e44eeb92",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\AAMAS-index_CK.response"
+  },
+  {
+    "id": "M020-datacite",
+    "url": "https://api.datacite.org/dois/10.65109/vavc8140",
+    "status": 404,
+    "bytes": 87,
+    "sha256": "30b443bb0e590a597609b71b83a2424d39b6f050b18d234c6543cdd1f8791b6b",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M020-datacite_CK.response"
+  },
+  {
+    "id": "M020-crossref",
+    "url": "https://api.crossref.org/works/10.65109/VAVC8140",
+    "status": 200,
+    "bytes": 1933,
+    "sha256": "182d067f905e7f3ac615bd4b2301e000cf39a55065aa94a93249094b9f8446f2",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M020-crossref_CK.response"
+  }
+]

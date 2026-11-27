@@ -1,0 +1,9 @@
+{
+  "path": "reading-cards/M024.md",
+  "source_commit": "3b9fbde",
+  "backup_path": "batches/method_round2/ck_conference_release_dates/M024_before.md",
+  "before_raw_sha256": "ef1193a2e75fed1327090e815aaae84fe9866bcd4f33f93568cd8c806c7b897f",
+  "before_git_lf_sha256": "cf67d053c11e531cc9397168dc40185c85ef7791e4a26fcd0a909c406cb6c270",
+  "after_git_lf_sha256": "7b29d7d131352f9f1a5ca2c691f30ccb6d41868dfcefd6ef0e713e3101e5f7cb",
+  "reason": "Date/status paragraph only;primary reading content unchanged"
+}

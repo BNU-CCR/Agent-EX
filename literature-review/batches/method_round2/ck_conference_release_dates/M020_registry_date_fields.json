@@ -1,0 +1,32 @@
+{
+  "DOI": "10.65109/vavc8140",
+  "title": [
+    "Influencing LLM Multi-Agent Dialogue via Policy-Parameterized Prompts"
+  ],
+  "publisher": "International Foundation for Autonomous Agents and Multiagent Systems",
+  "published": null,
+  "published-online": null,
+  "published-print": null,
+  "created": {
+    "date-parts": [
+      [
+        2026,
+        5,
+        24
+      ]
+    ],
+    "date-time": "2026-05-24T12:04:57Z",
+    "timestamp": 1779624297000
+  },
+  "deposited": {
+    "date-parts": [
+      [
+        2026,
+        5,
+        24
+      ]
+    ],
+    "date-time": "2026-05-24T12:06:35Z",
+    "timestamp": 1779624395000
+  }
+}

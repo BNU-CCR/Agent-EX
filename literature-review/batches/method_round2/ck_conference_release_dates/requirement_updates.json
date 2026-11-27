@@ -1,0 +1,154 @@
+[
+  {
+    "requirement_id": "R2-3.1",
+    "before": {
+      "requirement_id": "R2-3.1",
+      "requirement": "方法范式主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1251分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "R2-3.1",
+      "requirement": "方法范式主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    }
+  },
+  {
+    "requirement_id": "R2-3.2",
+    "before": {
+      "requirement_id": "R2-3.2",
+      "requirement": "主体架构主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1251分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "R2-3.2",
+      "requirement": "主体架构主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    }
+  },
+  {
+    "requirement_id": "R2-3.3",
+    "before": {
+      "requirement_id": "R2-3.3",
+      "requirement": "校准验证主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1251分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "R2-3.3",
+      "requirement": "校准验证主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    }
+  },
+  {
+    "requirement_id": "R2-3.4",
+    "before": {
+      "requirement_id": "R2-3.4",
+      "requirement": "报告复现主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1251分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "R2-3.4",
+      "requirement": "报告复现主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    }
+  },
+  {
+    "requirement_id": "R2-3.5",
+    "before": {
+      "requirement_id": "R2-3.5",
+      "requirement": "理论转译主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1251分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "R2-3.5",
+      "requirement": "理论转译主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    }
+  },
+  {
+    "requirement_id": "R2-3.6",
+    "before": {
+      "requirement_id": "R2-3.6",
+      "requirement": "跨学科应用主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1251分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "R2-3.6",
+      "requirement": "跨学科应用主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    }
+  },
+  {
+    "requirement_id": "R2-8-export",
+    "before": {
+      "requirement_id": "R2-8-export",
+      "requirement": "schema字典/Excel/Bib同步",
+      "evidence_path": "data/README.md;exports/literature_and_journals_methods.xlsx;exports/references_methods.bib",
+      "assessment": "current_schema_counts_exports_verified",
+      "remaining_gap": "9表/42Bib与非空词表核验，3空分类（均M012）、卡内容、全库覆盖不由导出通过证明",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "R2-8-export",
+      "requirement": "schema字典/Excel/Bib同步",
+      "evidence_path": "data/README.md;exports/literature_and_journals_methods.xlsx;exports/references_methods.bib",
+      "assessment": "current_schema_counts_exports_verified",
+      "remaining_gap": "9表/43Bib与非空词表核验，3空分类（均M012）、卡内容、全库覆盖不由导出通过证明",
+      "checked": "2026-11-27"
+    }
+  },
+  {
+    "requirement_id": "1.8",
+    "before": {
+      "requirement_id": "1.8",
+      "requirement": "两轮筛选/版本/阅读状态",
+      "evidence_path": "data/literature_master.csv",
+      "assessment": "partial_version_date_reading_evidence",
+      "remaining_gap": "42纳入门通过；29日期未决、作者/正式版本及独立双筛未齐，不强升",
+      "checked": "2026-11-27"
+    },
+    "after": {
+      "requirement_id": "1.8",
+      "requirement": "两轮筛选/版本/阅读状态",
+      "evidence_path": "data/literature_master.csv",
+      "assessment": "partial_version_date_reading_evidence",
+      "remaining_gap": "43纳入门通过；28日期未决、作者/正式版本及独立双筛未齐，不强升",
+      "checked": "2026-11-27"
+    }
+  }
+]

@@ -6888,5 +6888,25 @@
     "batch": "CJ-abstract-purpose-and-primary-access",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cj_purpose_access/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_coding_source",
+    "old": "reading-cards/M024.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF",
+    "new": "reading-cards/M024.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF;reports/conference_release_dates_CK.md;official_release_announcement",
+    "date": "2026-11-27",
+    "batch": "CK-conference-proceedings-release-date-evidence",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ck_conference_release_dates/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_coding_source",
+    "old": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation",
+    "new": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_release_dates_CK.md;registry_date_fields_audit",
+    "date": "2026-11-27",
+    "batch": "CK-conference-proceedings-release-date-evidence",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ck_conference_release_dates/results.json"
   }
 ]
