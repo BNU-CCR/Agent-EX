@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-27",
+  "cards": 64,
+  "numbered11": 44,
+  "not11": 20,
+  "mutable": 14,
+  "protected": 6,
+  "boundary": "Format indicator only, not content acceptance rate",
+  "queue": [
+    {
+      "path": "reading-cards/CN006.md",
+      "numbered_sections": 0,
+      "protected": true,
+      "action": "companion_supplement_only"
+    },
+    {
+      "path": "reading-cards/CN007.md",
+      "numbered_sections": 0,
+      "protected": true,
+      "action": "companion_supplement_only"
+    },
+    {
+      "path": "reading-cards/EN01.md",
+      "numbered_sections": 0,
+      "protected": true,
+      "action": "companion_supplement_only"
+    },
+    {
+      "path": "reading-cards/EN08.md",
+      "numbered_sections": 0,
+      "protected": true,
+      "action": "companion_supplement_only"
+    },
+    {
+      "path": "reading-cards/EN11.md",
+      "numbered_sections": 0,
+      "protected": true,
+      "action": "companion_supplement_only"
+    },
+    {
+      "path": "reading-cards/M014.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M015.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M016.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M017.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M020.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M021.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M022.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M023.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M024.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M025.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/M026.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/R008.md",
+      "numbered_sections": 0,
+      "protected": true,
+      "action": "companion_supplement_only"
+    },
+    {
+      "path": "reading-cards/R014.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/R016.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    },
+    {
+      "path": "reading-cards/R017.md",
+      "numbered_sections": 0,
+      "protected": false,
+      "action": "content_review_then_revise"
+    }
+  ]
+}

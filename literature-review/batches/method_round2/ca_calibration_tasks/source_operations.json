@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "CA-01",
+    "platform": "local_synthesis",
+    "search_date": "2026-11-27",
+    "query_exact": "M006_M031_M050_calibration_information_evaluation_transfer_tasks",
+    "source_url": "reports/calibration_validation_tasks_CA.md",
+    "status": "bounded_existing_reading_synthesis",
+    "notes": "Fixed8ced902LFhash;noexternalquery/newpaper/card/unit;20cardqueue14mutable6protected"
+  }
+]

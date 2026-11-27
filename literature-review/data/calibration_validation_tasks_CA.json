@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-27",
+  "source_snapshot_commit": "8ced902",
+  "source_files": [
+    {
+      "path": "reading-cards/M006.md",
+      "snapshot_commit": "8ced902",
+      "git_lf_sha256": "8dafd9945eda64f7d1c257459b02f5daefae59f92a1a02a8243d1d9479216c54"
+    },
+    {
+      "path": "reading-cards/M031.md",
+      "snapshot_commit": "8ced902",
+      "git_lf_sha256": "6b6fa900d2404aa45bd1e15e5320f84dd56f299872c87f40c383ec36a1c3250c"
+    },
+    {
+      "path": "reading-cards/M050.md",
+      "snapshot_commit": "8ced902",
+      "git_lf_sha256": "ed9bf7f1665ef0a1f9a1bfcd1b8147fb38d33f0b806d63f8239a7ab62c3692ad"
+    },
+    {
+      "path": "reports/persuasiontrace_artifact_followup_BZ.md",
+      "snapshot_commit": "8ced902",
+      "git_lf_sha256": "394351e53a914d3b9a5d93a2dbde03d43117d1021b45b5bc4f1242d13cd4117a"
+    },
+    {
+      "path": "reports/dual_agent_calibration_boundaries.md",
+      "snapshot_commit": "8ced902",
+      "git_lf_sha256": "5b07b208d7662b36f23658493cdbc29c6b9c579550e47963ddeebed9a75db3c9"
+    }
+  ],
+  "tasks": [
+    {
+      "record_id": "M006",
+      "actual_version": "formal_main_text",
+      "calibration": "10empirical30daywindows",
+      "evaluation": "30empiricalwindows_and30simulationruns",
+      "target": "selected_single_community_platform_patterns",
+      "overlap_status": "not_independently_verified",
+      "not_established": "crosscommunity_or_mechanism_validity"
+    },
+    {
+      "record_id": "M031",
+      "actual_version": "author_arxivv1",
+      "calibration": "first80rounds_of_same15people;window_persona_selection",
+      "evaluation": "last80;truth_history_conditioned_system_comparison;closedloop_figure_separate",
+      "test_time_update_status": "unresolved",
+      "not_established": "controlled_task_advantage_transfers_to_closedloop_or_newpeople"
+    },
+    {
+      "record_id": "M050",
+      "actual_version": "author_arxivv1_plus_observed_static_repo",
+      "calibration": "LM_graph/prior;prescribed_susceptibility;human_initialstate_matching",
+      "evaluation": "judge_and_singleproposition_conditional_replay;internal_policy_diagnostics",
+      "matched_exposure": "initialbelief_matching_not_fixed_identical_messages",
+      "not_established": "independent_crosspopulation/process_mechanism_equivalence"
+    }
+  ],
+  "boundary": "Selected existing readings; not new acquisition, experiment, meta-analysis or universal maturity score",
+  "existing_primary_recheck": {
+    "record_id": "M050",
+    "pdf_sha256": "8f4b1e32a5bf21c884d1659123e6b31fbd572ba585c54bebf652410a667aabfa",
+    "page": 21,
+    "location": "Fig9 side-by-side human/simulated dialogue",
+    "boundary": "Initial-state matched illustration has different dialogue texts; not proof that every replay differs"
+  }
+}

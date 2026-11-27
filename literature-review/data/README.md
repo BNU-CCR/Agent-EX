@@ -62,3 +62,5 @@ BR新增 `nine_question_evidence_BR.json`：九问题综合的来源映射，固
 BW新增 `news_diffusion_density_checks_BW.json`（EN04作者v1图统计算术，不是代码/正式版错误认证）和`card_structure_snapshot_BW.json`（63卡中43有11编号，仅格式计数）；EN04内容读本为作者v1，正式发表身份/日期与正式正文获取分开。
 
 BY新增M050及`persuasiontrace_repository_manifest_BY.json`（5blob与观察commit；不认证论文运行版本）、`persuasiontrace_judge_summary_BY.csv`（来源汇总，换行规范化）、`persuasiontrace_numeric_checks_BY.json`（队列/SE/正态区间算术，非原始数据或模型复跑）。
+
+CA新增`calibration_validation_tasks_CA.json`（8ced902源卡/报告LFhash与任务范围，M050既有PDF p21复核）及`card_content_queue_CA.json`（20卡14可修订/6保护，形式入口不是内容不合格率）。

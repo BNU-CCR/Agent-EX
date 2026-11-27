@@ -37,6 +37,7 @@
 
 截至2026-11-27，保留首轮57条及15卡，新增50项工作、补读6条原记录，现107条、64张全文卡；42项正式纳入、56候选、7前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
+- [校准与验证任务对照](reports/calibration_validation_tasks_CA.md)：M006/M031/M050的资料、可见信息、评价单位和外推；剩余卡队列逐文件区分保护范围。
 - [动态验证制品跟进](reports/persuasiontrace_artifact_followup_BZ.md)：条件汇总/轨迹指标、50对32映射及cache-first边界。
 - [动态信念方法验证](reports/persuasiontrace_dynamic_validity_BY.md)：M050预印本的人类参照/LLM评分/条件回放、语料分母与固定制品边界。
 - [选择分母与一致性综合](reports/selection_denominators_and_consistency_BX.md)：四研究的条件目标、报告算术和版本边界；EN03仓库目录与新线索分列。
