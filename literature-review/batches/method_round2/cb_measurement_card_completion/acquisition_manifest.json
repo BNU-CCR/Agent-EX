@@ -1,0 +1,22 @@
+[
+  {
+    "record_id": "M026",
+    "url": "https://www.nature.com/articles/s41598-024-84109-5",
+    "final_url": "https://www.nature.com/articles/s41598-024-84109-5",
+    "status": 200,
+    "bytes": 301614,
+    "sha256": "341daba9b31121da1289bd681c0916899f96b3394cf7314a55772c81761857bc",
+    "content_type": "text/html; charset=utf-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M026_CB.txt"
+  },
+  {
+    "record_id": "R014",
+    "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+    "final_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+    "status": 200,
+    "bytes": 228173,
+    "sha256": "d076a165975a61a559b10a6f7d9db494be1c64c5dfedd60e6a234c46d1631879",
+    "content_type": "text/html;charset=UTF-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\R014_CB.txt"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "record_id": "M026",
+    "source_path": "reading-cards/M026.md",
+    "source_snapshot_commit": "4c31b38",
+    "backup_path": "batches/method_round2/cb_measurement_card_completion/cards_before/M026.md",
+    "raw_sha256": "eb73faebc151143a33286d5213b25347295b3123b0ad1d33b351c8dd95d6be88",
+    "git_lf_sha256": "5c8ced101560a60dedc72aef0c984b6ee99d855d6fabf3e11dbf056c15faccb0",
+    "protected": false,
+    "current_git_lf_sha256": "38d277c4542a6c844b5754c5c482716ea9840b9d51952353eab4be1555b27446",
+    "numbered_sections": 11
+  },
+  {
+    "record_id": "R014",
+    "source_path": "reading-cards/R014.md",
+    "source_snapshot_commit": "4c31b38",
+    "backup_path": "batches/method_round2/cb_measurement_card_completion/cards_before/R014.md",
+    "raw_sha256": "69ff31b85316dba9aca6dce3b082ce733bbe3e1679d42c9ec69bdba9fb18e92d",
+    "git_lf_sha256": "a297bb3c606ed6bd6903d7699c54fc30e644727894e2fad4ace1922f1ceb5e81",
+    "protected": false,
+    "current_git_lf_sha256": "33dfe57a383a7e66cd051ec66efedc6ea340aa0334d18df5ec40910981f14a37",
+    "numbered_sections": 11
+  }
+]

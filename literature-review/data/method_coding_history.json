@@ -6388,5 +6388,75 @@
     "batch": "BZ-persuasiontrace-static-artifact-followup",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bz_persuasiontrace_artifact_followup/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_coding_source",
+    "old": "reading-cards/M026.md",
+    "new": "reading-cards/M026.md;reports/measurement_card_completion_CB.md;formalHTML_recheck_CB",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "M026",
+    "field": "method_evidence_location",
+    "old": "Simulations1/2;Discussion",
+    "new": "Simulation1/2;Tables1–3/Fig1;Methods;criteriaNs",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_coding_source",
+    "old": "reading-cards/R014.md",
+    "new": "reading-cards/R014.md;reports/measurement_card_completion_CB.md;formalHTML_recheck_CB",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_evidence_location",
+    "old": "Opinion agents;Fig2;Discussion",
+    "new": "Experimentalsetup/Opinionagents/Fig2/Table3/Limitations",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "method_pending_fields",
+    "old": "supplement_and_code;independent_human_dynamic_validation",
+    "new": "supplement/code/runmapping;successful_run/refusal_denominators;feedback_trajectory_effect_not_established;human_dynamic_validity_not_established",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
   }
 ]

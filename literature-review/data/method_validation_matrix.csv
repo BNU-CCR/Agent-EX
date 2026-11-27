@@ -37,10 +37,10 @@ VC35,R017,合成重复与真人独立单位分开,多次合成回答与原真人
 VC36,M025,区分同目标搜索与独立验证,同一Lazega网络指导逐步假设和参数搜索,目标指导后的适配被当独立留出验证,网络宏观拟合,中央95%模拟区间适配；逐步细化搜索,formal_traditional_ABM_empirical_fit,未知网络/独立纵向预测,报告拟合资料、搜索预算及独立检验资料,§3.3;§3.6–3.7;AppendixA,source_read_not_reexecuted,2026-11-26
 VC37,M025,终止条件与验证指标分开,运行至经验目标密度并比较宏观指标,被停止规则约束的统计被当独立涌现,模型选择与停止条件,作者按目标密度停止，展示最佳拟合选择,formal_empirical_fit_with_selection,目标密度自由预测或机制唯一,冻结停止规则并标注直接/间接受约束的指标,§3.6;§4,source_read_not_reexecuted,2026-11-26
 VC38,M025,横截面结构与动态机制分开,替代生成路径拟合同一横截面,多指标结构吻合被当真实动态机制确认,机制解释的范围,作者明确仅横截面，纵向仍需扩展,formal_fit_not_longitudinal_validation,动态机制已独立验证,过程/纵向/干预效标与终点分别验证,§4,source_read_not_reexecuted,2026-11-26
-VC39,R014,互动式vs单次读出,同立场对话基准,单次量表漏检,对话偏差,存在操作假设,AI基准,真人社会规律,先说明基准假设,Setup;Fig2,source_read_not_reexecuted,2026-11-26
-VC40,R014,分类标签回写提示,读出与生成耦合,误差可能反馈,状态更新,主文流程明确,流程证据,无误差反馈已被排除,区别被动测量与状态控制,Opinion agents,source_read_not_reexecuted,2026-11-26
-VC41,M026,给定人格分数生成回答,真人量表性质,过度纯净结构,构件效度,因子结构比较,分数条件化,独立人格推断,标明输入/目标重叠,Simulation1;Discussion,source_read_not_reexecuted,2026-11-26
-VC42,M026,告知年龄/国籍,固定50岁英国样本,外推混淆,稳健性,提示条件比较,固定人群,跨年龄国籍普适性,分清信息操纵与人口异质性,Simulation2;Methods,source_read_not_reexecuted,2026-11-26
+VC39,R014,互动式vs单次读出,同立场对话基准,单次量表漏检,对话偏差,单次10查平均偏离vs每对话最大偏离后平均50；统计量/观察机会改变,AI基准,同统计量下纯互动因果或真人社会规律,先说明基准假设,Setup;Fig2,formal_HTML_rechecked_CB_not_reexecuted,2026-11-27
+VC40,R014,分类标签回写提示,读出与生成耦合,误差可能反馈,状态更新,分类写回system；另一分类器只重评选择性已生成对话,流程证据,换读出并反馈重跑整条轨迹仍不变,区别被动测量与状态控制,Opinion agents,formal_HTML_rechecked_CB_not_reexecuted,2026-11-27
+VC41,M026,给定人格分数生成回答,真人量表性质,过度纯净结构,构件效度,alpha.97–.99/收敛.90–.94；因子过纯与外部关联分开,分数条件化,独立人格推断/前瞻实际行为预测,标明输入/目标重叠,Simulation1;Discussion,formal_HTML_rechecked_CB_not_reexecuted,2026-11-27
+VC42,M026,告知年龄/国籍,固定50岁英国样本,外推混淆,稳健性,400英国50岁样本，400提示均分四组；改变是否告知,固定人群,跨年龄/国籍效度或400人各测四条件,分清信息操纵与人口异质性,Simulation2;Methods,formal_HTML_rechecked_CB_not_reexecuted,2026-11-27
 VC43,M027,独立受访者与互动主体分开,作者v2条件化推断批评,混淆依赖来源,推断单位,方法建议,概念论证,新统计定理/效果验证,不把社会互动的刻意依赖当抽样错误,§3–6,conceptual_guidance_not_reexecuted,2026-11-26
 VC44,M027,分组与方差校准,真人基线,均值掩盖错配,人群推断,作者建议,引用研究综合,本文新实验或通用真人预测,AI重复数不能替代经验校准,§5pp12–18,conceptual_guidance_not_reexecuted,2026-11-26
 VC45,M028,输出真值检查,人工/任务效标,测量误差与条件相关,测量效度,报告建议,方法primer,本项目分类器已通过,报告分层误差和选择依据,Table3;pp10–11,conceptual_guidance_not_reexecuted,2026-11-26
@@ -154,3 +154,5 @@ VC152,M050,语料映射与重复,HSTANDARD32与Sjudge50/CSV50,汇总存在等于
 VC153,M050,重复测量/队列差异,quota跨窗口/自报信念,跨队列差异当随机处理因果,测量介入与外推,作者承认反复提问/主观命题/相关修辞限制,指定人类对话任务,自然长期关系/客观正确信念/修辞因果,读出可能介入系统;报告边界,§5limitations/AppB.2,author_v1_and_fixed_static_artifacts_read_not_reexecuted,2026-11-27
 VC154,M050,条件与轨迹指标对应,76/16条件汇总与84exact切片,把n76/252或final/serialMAE互换,指标/聚合分母,四条件均值舍入对应；另有exact84轨迹MAE0.298740,固定CSV静态读,原始误差/CI重算或泛化有效,明确指标/子集/重复层次,fixedconditional_LOOsummary/exactsummary,fixed_static_artifact_read_not_executed,2026-11-27
 VC155,M050,缓存与选择命令,judgehelper/sampler/paperscript,程序完成或图更新等于新评分成功,制品执行来源,默认cachefirst；refresh失败可用旧CSV；无放回下采样不扩32到50,固定commit选定源码,实际输入50映射或已成功重评,调用/缓存/绘图成功分别核,simulator_common;judge351–371;pipeline489–525,fixed_static_artifact_read_not_executed,2026-11-27
+VC156,R014,分类器校验与一致性,1000消息人工/其中200再标/100对话换分类器,两个0.84指标与单位混同,读出组件,消息macroF1.84与对话一致84%为不同分母,标注与选择性对话组件检查,真人动态效度或两分类器同错已排除,消息/对话/调用/人工重复分列,Opinionagents;Sensitivity/Table3,formal_HTML_rechecked_CB_not_reexecuted,2026-11-27
+VC157,M026,外部效标与可用分母,健康/心理/工作/生活自报量表,效标相关当独立实际行为预测且统一N400,构件外部关联,可用N400/396/344/397；生成的是人格条目,两样本心理测量构件,前瞻实际行为/长期多人过程,输入/量表/效标与缺失分母分开,Simulation2criterion;Methods,formal_HTML_rechecked_CB_not_reexecuted,2026-11-27

@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "CB-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open formal primary HTML",
+    "source_url": "https://www.nature.com/articles/s41598-024-84109-5",
+    "status": "cookie_redirect_failed",
+    "notes": "Web/staticstatusseparated;notzeroresults"
+  },
+  {
+    "search_id": "CB-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open formal primary HTML",
+    "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+    "status": "formal_HTML_available",
+    "notes": "Web/staticstatusseparated;notzeroresults"
+  },
+  {
+    "search_id": "CB-03",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET formal primary HTML",
+    "source_url": "https://www.nature.com/articles/s41598-024-84109-5",
+    "status": "200_formalHTML_read",
+    "notes": "301614bytes;SHA256341daba9b31121da1289bd681c0916899f96b3394cf7314a55772c81761857bc;mainmethods/results/discussion_notSI"
+  },
+  {
+    "search_id": "CB-04",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET formal primary HTML",
+    "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+    "status": "200_formalHTML_read",
+    "notes": "228173bytes;SHA256d076a165975a61a559b10a6f7d9db494be1c64c5dfedd60e6a234c46d1631879;mainmethods/results/discussion_notSI"
+  },
+  {
+    "search_id": "CB-05",
+    "platform": "local_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "two_formal_measurement_cards_11items_and_component_boundaries",
+    "source_url": "reports/measurement_card_completion_CB.md",
+    "status": "formal_content_recheck_and_card_completion",
+    "notes": "No_status_upgrade;refineVC39to42_plus2units;nonprotectedbackups"
+  }
+]

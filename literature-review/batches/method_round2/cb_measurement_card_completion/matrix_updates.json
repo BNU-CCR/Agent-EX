@@ -1,0 +1,134 @@
+[
+  {
+    "comparison_id": "VC39",
+    "old": {
+      "comparison_id": "VC39",
+      "record_id": "R014",
+      "method_control": "互动式vs单次读出",
+      "comparison_or_reference": "同立场对话基准",
+      "observable_error": "单次量表漏检",
+      "evaluation_target": "对话偏差",
+      "reported_evidence": "存在操作假设",
+      "scope_of_evidence": "AI基准",
+      "not_established": "真人社会规律",
+      "transfer_to_agent_ex": "先说明基准假设",
+      "source_location": "Setup;Fig2",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "new": {
+      "comparison_id": "VC39",
+      "record_id": "R014",
+      "method_control": "互动式vs单次读出",
+      "comparison_or_reference": "同立场对话基准",
+      "observable_error": "单次量表漏检",
+      "evaluation_target": "对话偏差",
+      "reported_evidence": "单次10查平均偏离vs每对话最大偏离后平均50；统计量/观察机会改变",
+      "scope_of_evidence": "AI基准",
+      "not_established": "同统计量下纯互动因果或真人社会规律",
+      "transfer_to_agent_ex": "先说明基准假设",
+      "source_location": "Setup;Fig2",
+      "evidence_status": "formal_HTML_rechecked_CB_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC40",
+    "old": {
+      "comparison_id": "VC40",
+      "record_id": "R014",
+      "method_control": "分类标签回写提示",
+      "comparison_or_reference": "读出与生成耦合",
+      "observable_error": "误差可能反馈",
+      "evaluation_target": "状态更新",
+      "reported_evidence": "主文流程明确",
+      "scope_of_evidence": "流程证据",
+      "not_established": "无误差反馈已被排除",
+      "transfer_to_agent_ex": "区别被动测量与状态控制",
+      "source_location": "Opinion agents",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "new": {
+      "comparison_id": "VC40",
+      "record_id": "R014",
+      "method_control": "分类标签回写提示",
+      "comparison_or_reference": "读出与生成耦合",
+      "observable_error": "误差可能反馈",
+      "evaluation_target": "状态更新",
+      "reported_evidence": "分类写回system；另一分类器只重评选择性已生成对话",
+      "scope_of_evidence": "流程证据",
+      "not_established": "换读出并反馈重跑整条轨迹仍不变",
+      "transfer_to_agent_ex": "区别被动测量与状态控制",
+      "source_location": "Opinion agents",
+      "evidence_status": "formal_HTML_rechecked_CB_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC41",
+    "old": {
+      "comparison_id": "VC41",
+      "record_id": "M026",
+      "method_control": "给定人格分数生成回答",
+      "comparison_or_reference": "真人量表性质",
+      "observable_error": "过度纯净结构",
+      "evaluation_target": "构件效度",
+      "reported_evidence": "因子结构比较",
+      "scope_of_evidence": "分数条件化",
+      "not_established": "独立人格推断",
+      "transfer_to_agent_ex": "标明输入/目标重叠",
+      "source_location": "Simulation1;Discussion",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "new": {
+      "comparison_id": "VC41",
+      "record_id": "M026",
+      "method_control": "给定人格分数生成回答",
+      "comparison_or_reference": "真人量表性质",
+      "observable_error": "过度纯净结构",
+      "evaluation_target": "构件效度",
+      "reported_evidence": "alpha.97–.99/收敛.90–.94；因子过纯与外部关联分开",
+      "scope_of_evidence": "分数条件化",
+      "not_established": "独立人格推断/前瞻实际行为预测",
+      "transfer_to_agent_ex": "标明输入/目标重叠",
+      "source_location": "Simulation1;Discussion",
+      "evidence_status": "formal_HTML_rechecked_CB_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC42",
+    "old": {
+      "comparison_id": "VC42",
+      "record_id": "M026",
+      "method_control": "告知年龄/国籍",
+      "comparison_or_reference": "固定50岁英国样本",
+      "observable_error": "外推混淆",
+      "evaluation_target": "稳健性",
+      "reported_evidence": "提示条件比较",
+      "scope_of_evidence": "固定人群",
+      "not_established": "跨年龄国籍普适性",
+      "transfer_to_agent_ex": "分清信息操纵与人口异质性",
+      "source_location": "Simulation2;Methods",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "new": {
+      "comparison_id": "VC42",
+      "record_id": "M026",
+      "method_control": "告知年龄/国籍",
+      "comparison_or_reference": "固定50岁英国样本",
+      "observable_error": "外推混淆",
+      "evaluation_target": "稳健性",
+      "reported_evidence": "400英国50岁样本，400提示均分四组；改变是否告知",
+      "scope_of_evidence": "固定人群",
+      "not_established": "跨年龄/国籍效度或400人各测四条件",
+      "transfer_to_agent_ex": "分清信息操纵与人口异质性",
+      "source_location": "Simulation2;Methods",
+      "evidence_status": "formal_HTML_rechecked_CB_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  }
+]

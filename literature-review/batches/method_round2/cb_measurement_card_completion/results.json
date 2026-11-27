@@ -1,0 +1,31 @@
+{
+  "batch_id": "CB-two-measurement-card-formal-content-completion",
+  "date": "2026-11-27",
+  "expected_master_sha256": "a4a894567ea31467f403340ad1f39cd6fb53a811a0fd6105e6c6296687c170e1",
+  "updates": [
+    {
+      "record_id": "M026",
+      "method_coding_source": "reading-cards/M026.md;reports/measurement_card_completion_CB.md;formalHTML_recheck_CB",
+      "method_last_checked": "2026-11-27",
+      "evidence_location": "Results Simulations1/2;Materials and Methods;Discussion | CB:formalHTMLmethods/results/discussion/dataavailability;responsehash",
+      "method_evidence_location": "Simulation1/2;Tables1–3/Fig1;Methods;criteriaNs",
+      "notes": "Focused formalHTML, notSI/codererun;single-agent psychometric component, notnetwork simulation. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CB:formalHTMLtargetedrecheck;oldcardbackup;11items;noSI/code/run;noevidence/statusupgrade",
+      "research_question": "Given human BigFive scores, which reliability, construct and external-criterion relations do GPT4 questionnaire emulations preserve?",
+      "mechanisms": "BigFive score conditioned roleplay;questionnaire readout;factor_structure;criterion_selfreport_correlations;age_country_disclosure",
+      "findings": "Simulation1n400;Simulation2n400_British_age50_divided4promptconditions;alpha.97to.99vs.79to.89;convergence.90to.94;criterion_N400/396/344/397;not_prospective_behavior_prediction"
+    },
+    {
+      "record_id": "R014",
+      "method_coding_source": "reading-cards/R014.md;reports/measurement_card_completion_CB.md;formalHTML_recheck_CB",
+      "method_last_checked": "2026-11-27",
+      "evidence_location": "Experimental setup:Opinion agents;Results;Discussion | CB:formalHTMLmethods/results/discussion/dataavailability;responsehash",
+      "method_evidence_location": "Experimentalsetup/Opinionagents/Fig2/Table3/Limitations",
+      "notes": " | CB:formalHTMLtargetedrecheck;oldcardbackup;11items;noSI/code/run;noevidence/statusupgrade",
+      "research_question": "Under a stated no-drift baseline, how do aligned AI conversations and stance readout/feedback reveal deviations missed by direct probing?",
+      "mechanisms": "same_stance_chat;list_memory;presence_then5class;10vote_readout;stance_prompt_feedback;terminal_internal_probe",
+      "findings": "10trial_mean_directprobe_vs_50conversation_maxdeviations;1000humanlabel_messages_macroF1.84;200crossauthor_subset;100selectedconversation_classifier_agreement84percent;not_human_dynamics_validation",
+      "method_pending_fields": "supplement/code/runmapping;successful_run/refusal_denominators;feedback_trajectory_effect_not_established;human_dynamic_validity_not_established"
+    }
+  ],
+  "new_records": []
+}

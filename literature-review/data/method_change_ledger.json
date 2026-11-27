@@ -548,5 +548,55 @@
     "batch": "BW-EN04-version-limited-author-fulltext",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bw_en04_author_reading/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "evidence_location",
+    "old": "Experimental setup:Opinion agents;Results;Discussion",
+    "new": "Experimental setup:Opinion agents;Results;Discussion | CB:formalHTMLmethods/results/discussion/dataavailability;responsehash",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "notes",
+    "old": "",
+    "new": " | CB:formalHTMLtargetedrecheck;oldcardbackup;11items;noSI/code/run;noevidence/statusupgrade",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "research_question",
+    "old": "待全文核查；拟对话问题：同观点双人echo chamber也漂移，问卷偏向不充分代表对话偏向。",
+    "new": "Under a stated no-drift baseline, how do aligned AI conversations and stance readout/feedback reveal deviations missed by direct probing?",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "mechanisms",
+    "old": "待分主题补充",
+    "new": "same_stance_chat;list_memory;presence_then5class;10vote_readout;stance_prompt_feedback;terminal_internal_probe",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R014",
+    "field": "findings",
+    "old": "",
+    "new": "10trial_mean_directprobe_vs_50conversation_maxdeviations;1000humanlabel_messages_macroF1.84;200crossauthor_subset;100selectedconversation_classifier_agreement84percent;not_human_dynamics_validation",
+    "date": "2026-11-27",
+    "batch": "CB-two-measurement-card-formal-content-completion",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cb_measurement_card_completion/results.json"
   }
 ]

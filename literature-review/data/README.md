@@ -64,3 +64,5 @@ BW新增 `news_diffusion_density_checks_BW.json`（EN04作者v1图统计算术�
 BY新增M050及`persuasiontrace_repository_manifest_BY.json`（5blob与观察commit；不认证论文运行版本）、`persuasiontrace_judge_summary_BY.csv`（来源汇总，换行规范化）、`persuasiontrace_numeric_checks_BY.json`（队列/SE/正态区间算术，非原始数据或模型复跑）。
 
 CA新增`calibration_validation_tasks_CA.json`（8ced902源卡/报告LFhash与任务范围，M050既有PDF p21复核）及`card_content_queue_CA.json`（20卡14可修订/6保护，形式入口不是内容不合格率）。
+
+CB新增`card_content_queue_current.json`为当前形式复核入口（46/64具十一编号，18队列=12可修订/6保护）；CA同名带批次文件保留为历史。两卡前后备份/获取响应/VC39–42变更见CB目录；不把格式计数当内容验收。
