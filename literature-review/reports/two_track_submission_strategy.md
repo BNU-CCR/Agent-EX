@@ -1,3 +1,5 @@
+> BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
+
 # 双轨投稿策略：以已有证据为条件
 
 2026-11-27更新。依据方法全文、[发表地图](method_venue_landscape.md)、官方范围与首轮[项目资料审计](project_material_audit.md)。以下是适配判断，不是录用概率或已经准备完毕的投稿承诺。本任务不改论文、实验或冻结协议。

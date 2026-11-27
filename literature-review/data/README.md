@@ -56,3 +56,5 @@ V批审计：旧分类字段存在字典外别名，详见delivery_requirement_a
 W已规范化52字段/24新增记录，原值/理由见categorical_alias_migration_W.json；四旧分类字段的规范词表见categorical_schema.json，verify_methods_delivery现在检查所有非空值并报告空白。V段落为修复前历史快照，不表示当前仍有字典外值。词表检查不是科学语义或覆盖验收。
 
 跨日维护：导出摘要的检索截止日取search_log中实际coverage_end最大值；核验checked为实际Asia/Shanghai日期。二者不混同，不批量修改历史日志。
+
+BR新增 `nine_question_evidence_BR.json`：九问题综合的来源映射，固定BQ960e0ca中的源卡/报告canonical-LF SHA256；未读全文条目仅标元数据待核，不作已读支持。`delivery_requirements.csv`九项改为已有统一回答/范围受限，BP机器审计仍是原时点快照。

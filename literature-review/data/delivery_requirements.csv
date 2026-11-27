@@ -1,4 +1,4 @@
-requirement_id,requirement,evidence_path,assessment,remaining_gap,checked
+﻿requirement_id,requirement,evidence_path,assessment,remaining_gap,checked
 R2-1,北极星/持续接续,GOAL.md;progress.md,implemented_current_protocol,完整目标未验收；持续接续不等于会话外后台运行,2026-11-27
 R2-2.1,保留首轮57ID/15卡/原导出/日志,data/round1_preservation_manifest.json;reports/methods_validation.json,verified_by_bounded_preservation_checks,57ID/18文件hash/231日志前缀与43原字段变更账通过；非全部研究内容认证,2026-11-27
 R2-2.2,扩展字段/规则/57条重分类,protocol/method_coding_rules.md;reports/method_reclassification.md,implemented_roundA_vocab_verified_semantics_partial,非空词表0漂移；5空字段，原57分类语义与所有卡内容尚未全量二次复核,2026-11-27
@@ -46,15 +46,15 @@ R2-9-B,已批准批次B,progress.md,executed_foundation_not_whole_goal_complete,
 R2-9-C,已批准批次C,progress.md,executed_foundation_not_whole_goal_complete,不重建第一轮、不重跑A；按当前验收缺口推进,2026-11-27
 R2-9-D,已批准批次D,progress.md,executed_foundation_not_whole_goal_complete,不重建第一轮、不重跑A；按当前验收缺口推进,2026-11-27
 R2-9-E,已批准批次E,progress.md,executed_foundation_not_whole_goal_complete,不重建第一轮、不重跑A；按当前验收缺口推进,2026-11-27
-R2-10.Q1,最终问题1,reports/method_landscape.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q2,最终问题2,reports/method_landscape.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q3,最终问题3,reports/method_validation_matrix.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q4,最终问题4,reports/method_venue_landscape.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q5,最终问题5,reports/method_landscape.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q6,最终问题6,reports/agent_ex_method_positioning.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q7,最终问题7,reports/two_track_submission_strategy.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q8,最终问题8,reports/two_track_submission_strategy.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
-R2-10.Q9,最终问题9,reports/coverage_and_gaps.md,substantive_answer_available_current_consolidation_pending,九问题分散在方法/定位/生态/双轨及专题；需统一现行版本和对应证据，不以新论文数量代替,2026-11-27
+R2-10.Q1,最终问题1,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q2,最终问题2,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q3,最终问题3,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q4,最终问题4,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q5,最终问题5,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q6,最终问题6,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q7,最终问题7,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q8,最终问题8,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
+R2-10.Q9,最终问题9,reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json,consolidated_current_answer_with_versioned_evidence_scope_limited,BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收,2026-11-27
 R2-11,证据/版本/2022下限/不冒充标准,protocol/search_strategy.md;data/literature_master.csv;reading-cards/,identity_date_vocab_preservation_gates_verified_semantics_partial,作者/正式版分列、未来实验不充成果；全文/日期/卡内容与范围仍有明确未决,2026-11-27
 R2-12,实际工作/落盘/推送/接续,progress.md;Git branch,executed_through_BO_BP_audit_in_progress,BO4e01f56已推送；BP核验/提交后回填，不称目标完成,2026-11-27
 1.5.1,英文SSCI Communication完整目录,data/journals_master.csv,historical_and_public_evidence_partial,首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量,2026-11-27

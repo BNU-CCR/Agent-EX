@@ -1,3 +1,5 @@
+> BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
+
 # 2022年以来LLM社会模拟方法地图
 
 截止2026-11-27，106条工作记录中core_method38、method_validation35；正式纳入且全文支持的核心13、验证21。其余应用7、直接对照15、外围11保持分层。42正式纳入、56候选、6前沿、2排除；62张卡含版本/日期未决，不能等同正式纳入数。[编码规则](../protocol/method_coding_rules.md)与主表给出逐项依据。

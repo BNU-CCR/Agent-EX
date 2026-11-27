@@ -1,3 +1,5 @@
+> BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
+
 # Agent-EX的方法位置与可辩护贡献
 
 2026-11-27更新；依据首轮[资料审计](project_material_audit.md)、本轮[方法地图](method_landscape.md)及阅读卡。资料审计所述历史六格结果与本次用户给定AGENTS规范并置，不能用较低层报告修改当前批准边界。本轮不重新核原始数据、不确认后来Git外分析、不修改实验。

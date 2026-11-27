@@ -37,6 +37,7 @@
 
 截至2026-11-27，保留首轮57条及15卡，新增49项工作、补读5条原记录，现106条、62张全文卡；42项正式纳入、56候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
+- [九问题现行方法综合](reports/methods_review_current_synthesis.md)：统一回答范式、构件、成熟度、共同体、ABM连续性、项目定位、双轨投稿与缺口；保留版本证据索引。
 - [核心卡证据修复](reports/core_card_evidence_repair_BQ.md)：五卡十一项内容、原卡备份、3研究问题/2机制字段及具体未核项。
 - [当前66项交付审计](reports/delivery_requirement_audit_BP.md)：证据、简卡复核、政策/覆盖缺口和收尾顺序；49关联载体补完整引用。
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。

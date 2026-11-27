@@ -1,0 +1,1037 @@
+{
+  "batch": "BR",
+  "date": "2026-11-27",
+  "snapshot_commit": "960e0ca",
+  "purpose": "Existing evidence synthesis; no new primary-source reading, search or experiment",
+  "questions": [
+    {
+      "question": 1,
+      "records": [
+        {
+          "record_id": "R006",
+          "title": "Natural-Language Multi-Agent Simulations of Argumentative Opinion Dynamics",
+          "doi": "10.18564/jasss.4725",
+          "official_url": "https://www.jasss.org/25/1/2.html",
+          "online_first_date": "2022-01-31",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/R006.md",
+          "card_available": true,
+          "path": "reading-cards/R006.md",
+          "snapshot_git_lf_sha256": "c43b4479b42551d673fdfc5499dd70d11e53e3c5eec4873552092b2cf216af17"
+        },
+        {
+          "record_id": "R008",
+          "title": "Generative agent-based modeling: an introduction and tutorial",
+          "doi": "10.1002/sdr.1761",
+          "official_url": "https://onlinelibrary.wiley.com/doi/full/10.1002/sdr.1761",
+          "online_first_date": "2024-01-10",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/R008.md",
+          "card_available": true,
+          "path": "reading-cards/R008.md",
+          "snapshot_git_lf_sha256": "7a7e90a49b0db05d0a75bd01f48e8660fe5f939ac69f79be622a37ad0293802c"
+        },
+        {
+          "record_id": "R016",
+          "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+          "doi": "10.1145/3586183.3606763",
+          "official_url": "https://doi.org/10.1145/3586183.3606763",
+          "online_first_date": "2023-10-29",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/R016.md",
+          "card_available": true,
+          "path": "reading-cards/R016.md",
+          "snapshot_git_lf_sha256": "9fbcc21deff80e5ef8d0b2f62dd6005be3ad5e2ba43386bd189ea6f169f300ef"
+        },
+        {
+          "record_id": "M001",
+          "title": "Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method",
+          "doi": "10.3390/ai7080279",
+          "official_url": "https://www.mdpi.com/2673-2688/7/8/279",
+          "online_first_date": "2026-07-24",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M001.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M001.md",
+          "snapshot_git_lf_sha256": "08cbd47dd4d61d787ecaaeec89972bcfa5c7ab7832a3279bd25df5e8a1eb71fa"
+        },
+        {
+          "record_id": "M008",
+          "title": "EASE Configuration Facilitates A Reproducible Science of LLM Social Simulations",
+          "doi": "10.48550/arXiv.2605.30258",
+          "official_url": "https://arxiv.org/abs/2605.30258",
+          "online_first_date": "",
+          "screening_status": "frontier",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M008.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M008.md",
+          "snapshot_git_lf_sha256": "9ae07db5239be56be1e9d329ef5b3f4e4fd2ed2e348bf88846dcf889306ca064"
+        },
+        {
+          "record_id": "M006",
+          "title": "Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum",
+          "doi": "10.1140/epjds/s13688-026-00674-x",
+          "official_url": "https://link.springer.com/article/10.1140/epjds/s13688-026-00674-x",
+          "online_first_date": "2026-06-11",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M006.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M006.md",
+          "snapshot_git_lf_sha256": "8dafd9945eda64f7d1c257459b02f5daefae59f92a1a02a8243d1d9479216c54"
+        },
+        {
+          "record_id": "M007",
+          "title": "Don’t Trust Generative Agents to Mimic Communication on Social Networks Unless You Benchmarked their Empirical Realism",
+          "doi": "10.18653/v1/2026.eacl-long.51",
+          "official_url": "https://aclanthology.org/2026.eacl-long.51/",
+          "online_first_date": "2026-03",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M007.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M007.md",
+          "snapshot_git_lf_sha256": "8449e230aa362d41ea04560aface638ef7b05dfa28c6f2a024dc17b2fd16fff8"
+        },
+        {
+          "record_id": "M026",
+          "title": "Evaluating the ability of large language models to emulate personality",
+          "doi": "10.1038/s41598-024-84109-5",
+          "official_url": "https://www.nature.com/articles/s41598-024-84109-5",
+          "online_first_date": "2025-01-02",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M026.md",
+          "card_available": true,
+          "path": "reading-cards/M026.md",
+          "snapshot_git_lf_sha256": "5c8ced101560a60dedc72aef0c984b6ee99d855d6fabf3e11dbf056c15faccb0"
+        },
+        {
+          "record_id": "M040",
+          "title": "Using Large Language Models to Simulate Multiple Humans and Replicate Human Subject Studies",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v202/aher23a.html",
+          "online_first_date": "2023-07-03",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M040.md;data/source_acquisition_manifest_AU.json",
+          "card_available": true,
+          "path": "reading-cards/M040.md",
+          "snapshot_git_lf_sha256": "7c54319222d134b7da31618af8a930d97e138fc1cb328804c524ee325ecc6772"
+        },
+        {
+          "record_id": "M041",
+          "title": "Evaluating Large Language Models in Generating Synthetic HCI Research Data: a Case Study",
+          "doi": "10.1145/3544548.3580688",
+          "official_url": "https://doi.org/10.1145/3544548.3580688",
+          "online_first_date": "2023-04-19",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M041.md;reports/chi_data_selection_and_validity.md",
+          "card_available": true,
+          "path": "reading-cards/M041.md",
+          "snapshot_git_lf_sha256": "62e9804bfcf8d93c7133f85d05b80bfab436e7d4ed7f09595454344139bc14d2"
+        },
+        {
+          "record_id": "M042",
+          "title": "MetaAgents: Large Language Model Based Agents for Decision-making on Teaming",
+          "doi": "10.1145/3711032",
+          "official_url": "https://doi.org/10.1145/3711032",
+          "online_first_date": "2025-05-02",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M042.md;reports/metaagents_teaming_evidence.md",
+          "card_available": true,
+          "path": "reading-cards/M042.md",
+          "snapshot_git_lf_sha256": "5971c4b0db8c281e65c9d6118c66ea24a1b19c8fa2660b95926aa43cf24fd68c"
+        },
+        {
+          "record_id": "M049",
+          "title": "The (in)efficacy of AI personas in deception detection experiments",
+          "doi": "10.1093/joc/jqaf034",
+          "official_url": "https://academic.oup.com/joc/article/75/6/459/8248850",
+          "online_first_date": "2025-09-07",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M049.md;reports/persona_formal_version_comparison.md;data/persona_formal_comparison_BN.json",
+          "card_available": true,
+          "path": "reading-cards/M049.md",
+          "snapshot_git_lf_sha256": "95a28887be0dca75b548a144eba0eb03cf384b02ffdd4eb73e7371995e0313a5"
+        },
+        {
+          "record_id": "M003",
+          "title": "Can large language models implement agent-based models? An ODD-based replication study",
+          "doi": "10.1016/j.ecolmodel.2026.111624",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+          "online_first_date": "2026-07",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location",
+          "card_available": true,
+          "path": "reading-cards/M003.md",
+          "snapshot_git_lf_sha256": "ec6a1f57cfb22b7fadcfbe25dc9f6a2731f3c34daba007d21fd9bf1be15a041a"
+        },
+        {
+          "record_id": "M044",
+          "title": "Large Language Models for Agent-Based Modelling: Current and Possible Uses Across the Modelling Cycle",
+          "doi": "10.1007/978-3-032-31712-4_43",
+          "official_url": "https://doi.org/10.1007/978-3-032-31712-4_43",
+          "online_first_date": "2026-07-30",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M044.md;reports/modelling_cycle_roles.md",
+          "card_available": true,
+          "path": "reading-cards/M044.md",
+          "snapshot_git_lf_sha256": "29aa44d45dc1396922618f9533b121b2abd75eb307fd2091834efc939f23e2d8"
+        },
+        {
+          "record_id": "M045",
+          "title": "Large Language Model-Assisted Workflows for Replicating Agent-Based Models",
+          "doi": "",
+          "official_url": "https://computationalsocialscience.org/css2026program/",
+          "online_first_date": "",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md;reports/replication_workflow_static_audit.md",
+          "card_available": true,
+          "path": "reading-cards/M045.md",
+          "snapshot_git_lf_sha256": "0be63609001173fc3850a7b2fb445f743ab1339b00d48d997b7f03c240e901b9"
+        },
+        {
+          "record_id": "M013",
+          "title": "Harmonising Theory and Empirics: The THEMP Approach for Developing, Testing and Exploring Social Simulation Models",
+          "doi": "10.18564/jasss.6211",
+          "official_url": "https://www.jasss.org/29/4/6.html",
+          "online_first_date": "2026-10-31",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M013.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M013.md",
+          "snapshot_git_lf_sha256": "cdd734c0f8b555a5d555f7d8da51952a9a70d42b485b26025ebfc962381feb0e"
+        },
+        {
+          "record_id": "M029",
+          "title": "MOZAIC: A mathematical approach to formalizing behavioral theories – applied to an agent-based model of mobility",
+          "doi": "10.3389/frsps.2026.1772740",
+          "official_url": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full",
+          "online_first_date": "2026-08-12",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M029.md",
+          "card_available": true,
+          "path": "reading-cards/M029.md",
+          "snapshot_git_lf_sha256": "65bd022bed661d1941669d8d193665ace5a82f96150c1ed2676cd9ebe9605427"
+        },
+        {
+          "record_id": "M030",
+          "title": "EFECT enables reliable and reproducible stochastic simulations across disciplines",
+          "doi": "10.1038/s44260-026-00094-y",
+          "official_url": "https://www.nature.com/articles/s44260-026-00094-y",
+          "online_first_date": "2026-08-05",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M030.md",
+          "card_available": true,
+          "path": "reading-cards/M030.md",
+          "snapshot_git_lf_sha256": "5166e9e6994238f4ddbacc7982e9400c62b94f07d91c7c34d1c2de72a2d08d0b"
+        },
+        {
+          "record_id": "M031",
+          "title": "Aligning LLM agents with human learning and adjustment behavior: A dual agent approach",
+          "doi": "10.1016/j.trc.2026.105818",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S0968090X26003062",
+          "online_first_date": "",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M031.md",
+          "card_available": true,
+          "path": "reading-cards/M031.md",
+          "snapshot_git_lf_sha256": "6b6fa900d2404aa45bd1e15e5320f84dd56f299872c87f40c383ec36a1c3250c"
+        },
+        {
+          "record_id": "R014",
+          "title": "Unmasking conversational bias in AI multiagent systems",
+          "doi": "10.1371/journal.pone.0355458",
+          "official_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+          "online_first_date": "2026-08-18",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/R014.md",
+          "card_available": true,
+          "path": "reading-cards/R014.md",
+          "snapshot_git_lf_sha256": "a297bb3c606ed6bd6903d7699c54fc30e644727894e2fad4ace1922f1ceb5e81"
+        },
+        {
+          "record_id": "M004",
+          "title": "From the fluency fallacy to the micro-to-macro validity gap: opportunities and pitfalls of LLMs in social simulation",
+          "doi": "10.3389/frai.2026.1988865",
+          "official_url": "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2026.1988865/full",
+          "online_first_date": "2026-11-17",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "batches/method_round2/b_paradigm/",
+          "card_available": true,
+          "path": "reading-cards/M004.md",
+          "snapshot_git_lf_sha256": "81e75ef043c6efde67decfe7198e352cc221fc5c8fec13674d6153c65731b9dc"
+        },
+        {
+          "record_id": "M014",
+          "title": "Position: Time to Close The Validation Gap in LLM Social Simulations",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v306/puelma-touzel26a.html",
+          "online_first_date": "2026-09-29",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M014.md",
+          "card_available": true,
+          "path": "reading-cards/M014.md",
+          "snapshot_git_lf_sha256": "248d71fa7f6d2cf9525caa2697e96be742a3e8755770ded837e68d696002fdf2"
+        },
+        {
+          "record_id": "M028",
+          "title": "A Primer for Evaluating Large Language Models in Social-Science Research",
+          "doi": "10.1177/25152459251325174",
+          "official_url": "https://journals.sagepub.com/doi/full/10.1177/25152459251325174",
+          "online_first_date": "2025-04-16",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M028.md",
+          "card_available": true,
+          "path": "reading-cards/M028.md",
+          "snapshot_git_lf_sha256": "f5cd9f845165ed22a1cdbf15ef21c3e16a558eabdb95e4afe2b15eaa824a9600"
+        },
+        {
+          "record_id": "M038",
+          "title": "Position: LLM Social Simulations Are a Promising Research Method",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v267/anthis25a.html",
+          "online_first_date": "2025-10-06",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M038.md;data/source_acquisition_manifest_AS.json;reports/position_scope_and_disagreement.md",
+          "card_available": true,
+          "path": "reading-cards/M038.md",
+          "snapshot_git_lf_sha256": "e7de5c19f7d4077d87ca2410a835a673ac8803ef837626b26a1116c4528c019d"
+        },
+        {
+          "record_id": "M039",
+          "title": "Position: LLM-Based Social Simulations Require a Boundary",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v306/wu26co.html",
+          "online_first_date": "2026-09-29",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M039.md;data/heterogeneity_review_audit_AS.json;data/source_acquisition_manifest_AS.json",
+          "card_available": true,
+          "path": "reading-cards/M039.md",
+          "snapshot_git_lf_sha256": "a2a5bb71d587ac5f21569168041e5fdceeec0ce35f83154873ea0f1298cda112"
+        },
+        {
+          "record_id": "R021",
+          "title": "ODD+LLM: Specifying LLM-Agent Behavior for Reproducible Social Simulation",
+          "doi": "",
+          "official_url": "https://arxiv.org/abs/2611.08932",
+          "online_first_date": "",
+          "screening_status": "frontier",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "batches/method_round2/b_validation/R021.md;https://arxiv.org/html/2611.08932v1",
+          "card_available": true,
+          "path": "reading-cards/R021.md",
+          "snapshot_git_lf_sha256": "e222711a5879e44156b4b5ec23d218fefe666abd9d0e3802a1956dad69a306ba"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/method_landscape.md",
+          "snapshot_git_lf_sha256": "5dc110ef1844d473d0d6e48040dcf88d0a025ce7413cc64a7dce30db5873d404"
+        }
+      ]
+    },
+    {
+      "question": 2,
+      "records": [
+        {
+          "record_id": "M001",
+          "title": "Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method",
+          "doi": "10.3390/ai7080279",
+          "official_url": "https://www.mdpi.com/2673-2688/7/8/279",
+          "online_first_date": "2026-07-24",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M001.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M001.md",
+          "snapshot_git_lf_sha256": "08cbd47dd4d61d787ecaaeec89972bcfa5c7ab7832a3279bd25df5e8a1eb71fa"
+        },
+        {
+          "record_id": "M008",
+          "title": "EASE Configuration Facilitates A Reproducible Science of LLM Social Simulations",
+          "doi": "10.48550/arXiv.2605.30258",
+          "official_url": "https://arxiv.org/abs/2605.30258",
+          "online_first_date": "",
+          "screening_status": "frontier",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M008.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M008.md",
+          "snapshot_git_lf_sha256": "9ae07db5239be56be1e9d329ef5b3f4e4fd2ed2e348bf88846dcf889306ca064"
+        },
+        {
+          "record_id": "M033",
+          "title": "Is this the real life? Is this just fantasy? The Misleading Success of Simulating Social Interactions With LLMs",
+          "doi": "10.18653/v1/2024.emnlp-main.1208",
+          "official_url": "https://aclanthology.org/2024.emnlp-main.1208/",
+          "online_first_date": "2024-11",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M033.md",
+          "card_available": true,
+          "path": "reading-cards/M033.md",
+          "snapshot_git_lf_sha256": "108a0e878e5eb9a97f69ad21657c89b27132d601856863a6b1e9dc4e9fadcc9c"
+        },
+        {
+          "record_id": "R014",
+          "title": "Unmasking conversational bias in AI multiagent systems",
+          "doi": "10.1371/journal.pone.0355458",
+          "official_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+          "online_first_date": "2026-08-18",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/R014.md",
+          "card_available": true,
+          "path": "reading-cards/R014.md",
+          "snapshot_git_lf_sha256": "a297bb3c606ed6bd6903d7699c54fc30e644727894e2fad4ace1922f1ceb5e81"
+        },
+        {
+          "record_id": "M030",
+          "title": "EFECT enables reliable and reproducible stochastic simulations across disciplines",
+          "doi": "10.1038/s44260-026-00094-y",
+          "official_url": "https://www.nature.com/articles/s44260-026-00094-y",
+          "online_first_date": "2026-08-05",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M030.md",
+          "card_available": true,
+          "path": "reading-cards/M030.md",
+          "snapshot_git_lf_sha256": "5166e9e6994238f4ddbacc7982e9400c62b94f07d91c7c34d1c2de72a2d08d0b"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/method_landscape.md",
+          "snapshot_git_lf_sha256": "5dc110ef1844d473d0d6e48040dcf88d0a025ce7413cc64a7dce30db5873d404"
+        },
+        {
+          "path": "reports/agent_ex_method_positioning.md",
+          "snapshot_git_lf_sha256": "2396751a1df4cfcc33105a3bc7d8568207f651e65a3dd206774eb00265468f95"
+        }
+      ]
+    },
+    {
+      "question": 3,
+      "records": [
+        {
+          "record_id": "M013",
+          "title": "Harmonising Theory and Empirics: The THEMP Approach for Developing, Testing and Exploring Social Simulation Models",
+          "doi": "10.18564/jasss.6211",
+          "official_url": "https://www.jasss.org/29/4/6.html",
+          "online_first_date": "2026-10-31",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M013.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M013.md",
+          "snapshot_git_lf_sha256": "cdd734c0f8b555a5d555f7d8da51952a9a70d42b485b26025ebfc962381feb0e"
+        },
+        {
+          "record_id": "M038",
+          "title": "Position: LLM Social Simulations Are a Promising Research Method",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v267/anthis25a.html",
+          "online_first_date": "2025-10-06",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M038.md;data/source_acquisition_manifest_AS.json;reports/position_scope_and_disagreement.md",
+          "card_available": true,
+          "path": "reading-cards/M038.md",
+          "snapshot_git_lf_sha256": "e7de5c19f7d4077d87ca2410a835a673ac8803ef837626b26a1116c4528c019d"
+        },
+        {
+          "record_id": "M039",
+          "title": "Position: LLM-Based Social Simulations Require a Boundary",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v306/wu26co.html",
+          "online_first_date": "2026-09-29",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M039.md;data/heterogeneity_review_audit_AS.json;data/source_acquisition_manifest_AS.json",
+          "card_available": true,
+          "path": "reading-cards/M039.md",
+          "snapshot_git_lf_sha256": "a2a5bb71d587ac5f21569168041e5fdceeec0ce35f83154873ea0f1298cda112"
+        },
+        {
+          "record_id": "M001",
+          "title": "Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method",
+          "doi": "10.3390/ai7080279",
+          "official_url": "https://www.mdpi.com/2673-2688/7/8/279",
+          "online_first_date": "2026-07-24",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M001.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M001.md",
+          "snapshot_git_lf_sha256": "08cbd47dd4d61d787ecaaeec89972bcfa5c7ab7832a3279bd25df5e8a1eb71fa"
+        },
+        {
+          "record_id": "M008",
+          "title": "EASE Configuration Facilitates A Reproducible Science of LLM Social Simulations",
+          "doi": "10.48550/arXiv.2605.30258",
+          "official_url": "https://arxiv.org/abs/2605.30258",
+          "online_first_date": "",
+          "screening_status": "frontier",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M008.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M008.md",
+          "snapshot_git_lf_sha256": "9ae07db5239be56be1e9d329ef5b3f4e4fd2ed2e348bf88846dcf889306ca064"
+        },
+        {
+          "record_id": "M026",
+          "title": "Evaluating the ability of large language models to emulate personality",
+          "doi": "10.1038/s41598-024-84109-5",
+          "official_url": "https://www.nature.com/articles/s41598-024-84109-5",
+          "online_first_date": "2025-01-02",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M026.md",
+          "card_available": true,
+          "path": "reading-cards/M026.md",
+          "snapshot_git_lf_sha256": "5c8ced101560a60dedc72aef0c984b6ee99d855d6fabf3e11dbf056c15faccb0"
+        },
+        {
+          "record_id": "M007",
+          "title": "Don’t Trust Generative Agents to Mimic Communication on Social Networks Unless You Benchmarked their Empirical Realism",
+          "doi": "10.18653/v1/2026.eacl-long.51",
+          "official_url": "https://aclanthology.org/2026.eacl-long.51/",
+          "online_first_date": "2026-03",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M007.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M007.md",
+          "snapshot_git_lf_sha256": "8449e230aa362d41ea04560aface638ef7b05dfa28c6f2a024dc17b2fd16fff8"
+        },
+        {
+          "record_id": "M006",
+          "title": "Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum",
+          "doi": "10.1140/epjds/s13688-026-00674-x",
+          "official_url": "https://link.springer.com/article/10.1140/epjds/s13688-026-00674-x",
+          "online_first_date": "2026-06-11",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M006.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M006.md",
+          "snapshot_git_lf_sha256": "8dafd9945eda64f7d1c257459b02f5daefae59f92a1a02a8243d1d9479216c54"
+        },
+        {
+          "record_id": "M040",
+          "title": "Using Large Language Models to Simulate Multiple Humans and Replicate Human Subject Studies",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v202/aher23a.html",
+          "online_first_date": "2023-07-03",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M040.md;data/source_acquisition_manifest_AU.json",
+          "card_available": true,
+          "path": "reading-cards/M040.md",
+          "snapshot_git_lf_sha256": "7c54319222d134b7da31618af8a930d97e138fc1cb328804c524ee325ecc6772"
+        },
+        {
+          "record_id": "M049",
+          "title": "The (in)efficacy of AI personas in deception detection experiments",
+          "doi": "10.1093/joc/jqaf034",
+          "official_url": "https://academic.oup.com/joc/article/75/6/459/8248850",
+          "online_first_date": "2025-09-07",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M049.md;reports/persona_formal_version_comparison.md;data/persona_formal_comparison_BN.json",
+          "card_available": true,
+          "path": "reading-cards/M049.md",
+          "snapshot_git_lf_sha256": "95a28887be0dca75b548a144eba0eb03cf384b02ffdd4eb73e7371995e0313a5"
+        },
+        {
+          "record_id": "M030",
+          "title": "EFECT enables reliable and reproducible stochastic simulations across disciplines",
+          "doi": "10.1038/s44260-026-00094-y",
+          "official_url": "https://www.nature.com/articles/s44260-026-00094-y",
+          "online_first_date": "2026-08-05",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M030.md",
+          "card_available": true,
+          "path": "reading-cards/M030.md",
+          "snapshot_git_lf_sha256": "5166e9e6994238f4ddbacc7982e9400c62b94f07d91c7c34d1c2de72a2d08d0b"
+        },
+        {
+          "record_id": "M003",
+          "title": "Can large language models implement agent-based models? An ODD-based replication study",
+          "doi": "10.1016/j.ecolmodel.2026.111624",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+          "online_first_date": "2026-07",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location",
+          "card_available": true,
+          "path": "reading-cards/M003.md",
+          "snapshot_git_lf_sha256": "ec6a1f57cfb22b7fadcfbe25dc9f6a2731f3c34daba007d21fd9bf1be15a041a"
+        },
+        {
+          "record_id": "M045",
+          "title": "Large Language Model-Assisted Workflows for Replicating Agent-Based Models",
+          "doi": "",
+          "official_url": "https://computationalsocialscience.org/css2026program/",
+          "online_first_date": "",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md;reports/replication_workflow_static_audit.md",
+          "card_available": true,
+          "path": "reading-cards/M045.md",
+          "snapshot_git_lf_sha256": "0be63609001173fc3850a7b2fb445f743ab1339b00d48d997b7f03c240e901b9"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/reference_authority_and_method_routes.md",
+          "snapshot_git_lf_sha256": "f522d6930e54a9b9e8c4fda7c254728b1fc5eb25a71a9ed812f6ba5301f8a89c"
+        },
+        {
+          "path": "reports/method_validation_matrix.md",
+          "snapshot_git_lf_sha256": "1addc599022a3e86086237f22d1cc2f98cb9acc71699a840bd8b5838d55a3202"
+        }
+      ]
+    },
+    {
+      "question": 4,
+      "records": [
+        {
+          "record_id": "M006",
+          "title": "Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum",
+          "doi": "10.1140/epjds/s13688-026-00674-x",
+          "official_url": "https://link.springer.com/article/10.1140/epjds/s13688-026-00674-x",
+          "online_first_date": "2026-06-11",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M006.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M006.md",
+          "snapshot_git_lf_sha256": "8dafd9945eda64f7d1c257459b02f5daefae59f92a1a02a8243d1d9479216c54"
+        },
+        {
+          "record_id": "M007",
+          "title": "Don’t Trust Generative Agents to Mimic Communication on Social Networks Unless You Benchmarked their Empirical Realism",
+          "doi": "10.18653/v1/2026.eacl-long.51",
+          "official_url": "https://aclanthology.org/2026.eacl-long.51/",
+          "online_first_date": "2026-03",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M007.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M007.md",
+          "snapshot_git_lf_sha256": "8449e230aa362d41ea04560aface638ef7b05dfa28c6f2a024dc17b2fd16fff8"
+        },
+        {
+          "record_id": "M033",
+          "title": "Is this the real life? Is this just fantasy? The Misleading Success of Simulating Social Interactions With LLMs",
+          "doi": "10.18653/v1/2024.emnlp-main.1208",
+          "official_url": "https://aclanthology.org/2024.emnlp-main.1208/",
+          "online_first_date": "2024-11",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M033.md",
+          "card_available": true,
+          "path": "reading-cards/M033.md",
+          "snapshot_git_lf_sha256": "108a0e878e5eb9a97f69ad21657c89b27132d601856863a6b1e9dc4e9fadcc9c"
+        },
+        {
+          "record_id": "M040",
+          "title": "Using Large Language Models to Simulate Multiple Humans and Replicate Human Subject Studies",
+          "doi": "",
+          "official_url": "https://proceedings.mlr.press/v202/aher23a.html",
+          "online_first_date": "2023-07-03",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M040.md;data/source_acquisition_manifest_AU.json",
+          "card_available": true,
+          "path": "reading-cards/M040.md",
+          "snapshot_git_lf_sha256": "7c54319222d134b7da31618af8a930d97e138fc1cb328804c524ee325ecc6772"
+        },
+        {
+          "record_id": "M041",
+          "title": "Evaluating Large Language Models in Generating Synthetic HCI Research Data: a Case Study",
+          "doi": "10.1145/3544548.3580688",
+          "official_url": "https://doi.org/10.1145/3544548.3580688",
+          "online_first_date": "2023-04-19",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M041.md;reports/chi_data_selection_and_validity.md",
+          "card_available": true,
+          "path": "reading-cards/M041.md",
+          "snapshot_git_lf_sha256": "62e9804bfcf8d93c7133f85d05b80bfab436e7d4ed7f09595454344139bc14d2"
+        },
+        {
+          "record_id": "M042",
+          "title": "MetaAgents: Large Language Model Based Agents for Decision-making on Teaming",
+          "doi": "10.1145/3711032",
+          "official_url": "https://doi.org/10.1145/3711032",
+          "online_first_date": "2025-05-02",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M042.md;reports/metaagents_teaming_evidence.md",
+          "card_available": true,
+          "path": "reading-cards/M042.md",
+          "snapshot_git_lf_sha256": "5971c4b0db8c281e65c9d6118c66ea24a1b19c8fa2660b95926aa43cf24fd68c"
+        },
+        {
+          "record_id": "M049",
+          "title": "The (in)efficacy of AI personas in deception detection experiments",
+          "doi": "10.1093/joc/jqaf034",
+          "official_url": "https://academic.oup.com/joc/article/75/6/459/8248850",
+          "online_first_date": "2025-09-07",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M049.md;reports/persona_formal_version_comparison.md;data/persona_formal_comparison_BN.json",
+          "card_available": true,
+          "path": "reading-cards/M049.md",
+          "snapshot_git_lf_sha256": "95a28887be0dca75b548a144eba0eb03cf384b02ffdd4eb73e7371995e0313a5"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/method_venue_landscape.md",
+          "snapshot_git_lf_sha256": "774f038a6b8abe6ddd1b73dbdec3a1ae794d0e528715bf763d348ab81d1f9653"
+        }
+      ]
+    },
+    {
+      "question": 5,
+      "records": [
+        {
+          "record_id": "M013",
+          "title": "Harmonising Theory and Empirics: The THEMP Approach for Developing, Testing and Exploring Social Simulation Models",
+          "doi": "10.18564/jasss.6211",
+          "official_url": "https://www.jasss.org/29/4/6.html",
+          "online_first_date": "2026-10-31",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M013.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M013.md",
+          "snapshot_git_lf_sha256": "cdd734c0f8b555a5d555f7d8da51952a9a70d42b485b26025ebfc962381feb0e"
+        },
+        {
+          "record_id": "M029",
+          "title": "MOZAIC: A mathematical approach to formalizing behavioral theories – applied to an agent-based model of mobility",
+          "doi": "10.3389/frsps.2026.1772740",
+          "official_url": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full",
+          "online_first_date": "2026-08-12",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M029.md",
+          "card_available": true,
+          "path": "reading-cards/M029.md",
+          "snapshot_git_lf_sha256": "65bd022bed661d1941669d8d193665ace5a82f96150c1ed2676cd9ebe9605427"
+        },
+        {
+          "record_id": "M003",
+          "title": "Can large language models implement agent-based models? An ODD-based replication study",
+          "doi": "10.1016/j.ecolmodel.2026.111624",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+          "online_first_date": "2026-07",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location",
+          "card_available": true,
+          "path": "reading-cards/M003.md",
+          "snapshot_git_lf_sha256": "ec6a1f57cfb22b7fadcfbe25dc9f6a2731f3c34daba007d21fd9bf1be15a041a"
+        },
+        {
+          "record_id": "M045",
+          "title": "Large Language Model-Assisted Workflows for Replicating Agent-Based Models",
+          "doi": "",
+          "official_url": "https://computationalsocialscience.org/css2026program/",
+          "online_first_date": "",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md;reports/replication_workflow_static_audit.md",
+          "card_available": true,
+          "path": "reading-cards/M045.md",
+          "snapshot_git_lf_sha256": "0be63609001173fc3850a7b2fb445f743ab1339b00d48d997b7f03c240e901b9"
+        },
+        {
+          "record_id": "M030",
+          "title": "EFECT enables reliable and reproducible stochastic simulations across disciplines",
+          "doi": "10.1038/s44260-026-00094-y",
+          "official_url": "https://www.nature.com/articles/s44260-026-00094-y",
+          "online_first_date": "2026-08-05",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M030.md",
+          "card_available": true,
+          "path": "reading-cards/M030.md",
+          "snapshot_git_lf_sha256": "5166e9e6994238f4ddbacc7982e9400c62b94f07d91c7c34d1c2de72a2d08d0b"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/modelling_cycle_evidence_crosswalk.md",
+          "snapshot_git_lf_sha256": "0e9ac8e3e1f4bcd23e2c79c1a0381fccfea362c214dd99dd29d21e0adc31919f"
+        }
+      ]
+    },
+    {
+      "question": 6,
+      "records": [
+        {
+          "record_id": "M001",
+          "title": "Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method",
+          "doi": "10.3390/ai7080279",
+          "official_url": "https://www.mdpi.com/2673-2688/7/8/279",
+          "online_first_date": "2026-07-24",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M001.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M001.md",
+          "snapshot_git_lf_sha256": "08cbd47dd4d61d787ecaaeec89972bcfa5c7ab7832a3279bd25df5e8a1eb71fa"
+        },
+        {
+          "record_id": "M006",
+          "title": "Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum",
+          "doi": "10.1140/epjds/s13688-026-00674-x",
+          "official_url": "https://link.springer.com/article/10.1140/epjds/s13688-026-00674-x",
+          "online_first_date": "2026-06-11",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M006.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M006.md",
+          "snapshot_git_lf_sha256": "8dafd9945eda64f7d1c257459b02f5daefae59f92a1a02a8243d1d9479216c54"
+        },
+        {
+          "record_id": "R014",
+          "title": "Unmasking conversational bias in AI multiagent systems",
+          "doi": "10.1371/journal.pone.0355458",
+          "official_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+          "online_first_date": "2026-08-18",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/R014.md",
+          "card_available": true,
+          "path": "reading-cards/R014.md",
+          "snapshot_git_lf_sha256": "a297bb3c606ed6bd6903d7699c54fc30e644727894e2fad4ace1922f1ceb5e81"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/agent_ex_method_positioning.md",
+          "snapshot_git_lf_sha256": "2396751a1df4cfcc33105a3bc7d8568207f651e65a3dd206774eb00265468f95"
+        }
+      ]
+    },
+    {
+      "question": 7,
+      "records": [
+        {
+          "record_id": "M006",
+          "title": "Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum",
+          "doi": "10.1140/epjds/s13688-026-00674-x",
+          "official_url": "https://link.springer.com/article/10.1140/epjds/s13688-026-00674-x",
+          "online_first_date": "2026-06-11",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M006.md;reports/core_card_evidence_repair_BQ.md",
+          "card_available": true,
+          "path": "reading-cards/M006.md",
+          "snapshot_git_lf_sha256": "8dafd9945eda64f7d1c257459b02f5daefae59f92a1a02a8243d1d9479216c54"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/two_track_submission_strategy.md",
+          "snapshot_git_lf_sha256": "db5027d97484fe38bef643ee14c3f57083e95039f912146e48b1fac0a58ed7d6"
+        },
+        {
+          "path": "reports/method_venue_landscape.md",
+          "snapshot_git_lf_sha256": "774f038a6b8abe6ddd1b73dbdec3a1ae794d0e528715bf763d348ab81d1f9653"
+        }
+      ]
+    },
+    {
+      "question": 8,
+      "records": [
+        {
+          "record_id": "M003",
+          "title": "Can large language models implement agent-based models? An ODD-based replication study",
+          "doi": "10.1016/j.ecolmodel.2026.111624",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+          "online_first_date": "2026-07",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location",
+          "card_available": true,
+          "path": "reading-cards/M003.md",
+          "snapshot_git_lf_sha256": "ec6a1f57cfb22b7fadcfbe25dc9f6a2731f3c34daba007d21fd9bf1be15a041a"
+        },
+        {
+          "record_id": "M031",
+          "title": "Aligning LLM agents with human learning and adjustment behavior: A dual agent approach",
+          "doi": "10.1016/j.trc.2026.105818",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S0968090X26003062",
+          "online_first_date": "",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M031.md",
+          "card_available": true,
+          "path": "reading-cards/M031.md",
+          "snapshot_git_lf_sha256": "6b6fa900d2404aa45bd1e15e5320f84dd56f299872c87f40c383ec36a1c3250c"
+        },
+        {
+          "record_id": "M045",
+          "title": "Large Language Model-Assisted Workflows for Replicating Agent-Based Models",
+          "doi": "",
+          "official_url": "https://computationalsocialscience.org/css2026program/",
+          "online_first_date": "",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md;reports/replication_workflow_static_audit.md",
+          "card_available": true,
+          "path": "reading-cards/M045.md",
+          "snapshot_git_lf_sha256": "0be63609001173fc3850a7b2fb445f743ab1339b00d48d997b7f03c240e901b9"
+        },
+        {
+          "record_id": "R014",
+          "title": "Unmasking conversational bias in AI multiagent systems",
+          "doi": "10.1371/journal.pone.0355458",
+          "official_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458",
+          "online_first_date": "2026-08-18",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/R014.md",
+          "card_available": true,
+          "path": "reading-cards/R014.md",
+          "snapshot_git_lf_sha256": "a297bb3c606ed6bd6903d7699c54fc30e644727894e2fad4ace1922f1ceb5e81"
+        },
+        {
+          "record_id": "M049",
+          "title": "The (in)efficacy of AI personas in deception detection experiments",
+          "doi": "10.1093/joc/jqaf034",
+          "official_url": "https://academic.oup.com/joc/article/75/6/459/8248850",
+          "online_first_date": "2025-09-07",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M049.md;reports/persona_formal_version_comparison.md;data/persona_formal_comparison_BN.json",
+          "card_available": true,
+          "path": "reading-cards/M049.md",
+          "snapshot_git_lf_sha256": "95a28887be0dca75b548a144eba0eb03cf384b02ffdd4eb73e7371995e0313a5"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/reference_authority_and_method_routes.md",
+          "snapshot_git_lf_sha256": "f522d6930e54a9b9e8c4fda7c254728b1fc5eb25a71a9ed812f6ba5301f8a89c"
+        },
+        {
+          "path": "reports/two_track_submission_strategy.md",
+          "snapshot_git_lf_sha256": "db5027d97484fe38bef643ee14c3f57083e95039f912146e48b1fac0a58ed7d6"
+        }
+      ]
+    },
+    {
+      "question": 9,
+      "records": [
+        {
+          "record_id": "M003",
+          "title": "Can large language models implement agent-based models? An ODD-based replication study",
+          "doi": "10.1016/j.ecolmodel.2026.111624",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+          "online_first_date": "2026-07",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location",
+          "card_available": true,
+          "path": "reading-cards/M003.md",
+          "snapshot_git_lf_sha256": "ec6a1f57cfb22b7fadcfbe25dc9f6a2731f3c34daba007d21fd9bf1be15a041a"
+        },
+        {
+          "record_id": "M012",
+          "title": "Twenty years of the ODD protocol: development, usage, extensions, and lessons learned about modelling standards development",
+          "doi": "10.1016/j.envsoft.2026.107203",
+          "official_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+          "online_first_date": "2026-10-16",
+          "screening_status": "candidate",
+          "reading_status": "abstract_checked",
+          "method_coding_source": "abstract_and_primary_institutional_metadata",
+          "card_available": false,
+          "path": "data/literature_master.csv",
+          "boundary": "Unresolved metadata/access queue; not evidence from a read full text"
+        },
+        {
+          "record_id": "M015",
+          "title": "A CRISP-DM-based methodology for assessing agent-based simulation models using process mining",
+          "doi": "10.1080/17477778.2025.2508245",
+          "official_url": "https://www.tandfonline.com/doi/full/10.1080/17477778.2025.2508245",
+          "online_first_date": "2025-06-06",
+          "screening_status": "candidate",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M015.md",
+          "card_available": true,
+          "path": "reading-cards/M015.md",
+          "snapshot_git_lf_sha256": "42faf1980d3127c3f18ea31202d97f65c0d564272245509330e045a3c7e4cada"
+        },
+        {
+          "record_id": "M048",
+          "title": "Newer, Larger, Better? A Critique of the Unreflective LLM Adoption in Communication Research",
+          "doi": "10.1080/10584609.2026.2618486",
+          "official_url": "https://www.tandfonline.com/doi/abs/10.1080/10584609.2026.2618486",
+          "online_first_date": "2026-02-20",
+          "screening_status": "candidate",
+          "reading_status": "abstract_read",
+          "method_coding_source": "reports/communication_method_venue_boundaries.md",
+          "card_available": false,
+          "path": "data/literature_master.csv",
+          "boundary": "Unresolved metadata/access queue; not evidence from a read full text"
+        },
+        {
+          "record_id": "M049",
+          "title": "The (in)efficacy of AI personas in deception detection experiments",
+          "doi": "10.1093/joc/jqaf034",
+          "official_url": "https://academic.oup.com/joc/article/75/6/459/8248850",
+          "online_first_date": "2025-09-07",
+          "screening_status": "included",
+          "reading_status": "fulltext_checked",
+          "method_coding_source": "reading-cards/M049.md;reports/persona_formal_version_comparison.md;data/persona_formal_comparison_BN.json",
+          "card_available": true,
+          "path": "reading-cards/M049.md",
+          "snapshot_git_lf_sha256": "95a28887be0dca75b548a144eba0eb03cf384b02ffdd4eb73e7371995e0313a5"
+        }
+      ],
+      "synthesis_sources": [
+        {
+          "path": "reports/delivery_requirement_audit_BP.md",
+          "snapshot_git_lf_sha256": "621eadc56ebd977e35856f1901042d30eb2b531d3638134721f03cb6bbc282c1"
+        },
+        {
+          "path": "reports/core_card_evidence_repair_BQ.md",
+          "snapshot_git_lf_sha256": "5991dc5a24bd57eefa158009f3dcc1a815492c1058f865f8474c5cd2c82a730b"
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+> BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
+
 # 方法研究发表生态：定向证据版
 
 检索与核验截至2026-11-27。已建立[52载体地图](../data/method_venue_map.csv)及[30刊双轨表](../data/journal_submission_candidates.csv)：33期刊、18会议入口、1预印本仓库。它们是论文驱动的样本地图；不是完成各刊2022起全量检索、索引认证或接受率比较。
