@@ -28,3 +28,5 @@
 V批确认41命名入口仍16项未对账；其余为局部证据。额外JSC/AMPPS不替代它们。见[交付审计](delivery_requirement_audit.md)。
 
 AE将TCSS从not_yet_reconciled更新为部分对账：官方范围/格式、费用冲突、历史CFP与M032正式全文。未对账入口余15，部分对账不是2022+全刊覆盖完成。
+
+AG补ACL/EMNLP部分对账，三正式Main/Findings题录及官方CFP/ARR指导；13入口未对账。正式全文/精确日期与完整语料仍待核，不把摘要候选当全文纳入。

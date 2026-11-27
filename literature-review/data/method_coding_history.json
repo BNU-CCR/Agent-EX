@@ -2938,5 +2938,365 @@
     "batch": "AF-Crowd-artifact",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/af_crowd_artifact/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_type",
+    "old": "",
+    "new": "information_asymmetry_evaluation",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "validation_and_external_validity;interaction_protocol",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接方法先例，相关性由摘要暂定，成熟度和证据不由会议名/主张推定。",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "first_formal_online_day;fulltext_design;calibration_validation_information_boundary;reproducibility_artifacts",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstract only",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://aclanthology.org/2024.emnlp-main.1208/",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_type",
+    "old": "",
+    "new": "group_agent_social_simulation",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "agent_architecture;emergence_analysis;measurement",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接方法先例，相关性由摘要暂定，成熟度和证据不由会议名/主张推定。",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "first_formal_online_day;fulltext_design;calibration_validation_information_boundary;reproducibility_artifacts",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstract only",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://aclanthology.org/2025.findings-acl.468/",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_type",
+    "old": "",
+    "new": "agent_communication_language_induction",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "interaction_protocol;agent_architecture;measurement",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接方法先例，相关性由摘要暂定，成熟度和证据不由会议名/主张推定。",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "first_formal_online_day;fulltext_design;calibration_validation_information_boundary;reproducibility_artifacts",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstract only",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "AG-ACL-EMNLP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ag_acl_emnlp/results.json"
   }
 ]

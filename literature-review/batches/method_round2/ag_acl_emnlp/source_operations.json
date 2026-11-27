@@ -1,0 +1,173 @@
+[
+  {
+    "search_id": "S-M2-AG-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:aclanthology.org \"2025\" \"social simulation\" \"benchmark\"",
+    "source_url": "",
+    "status": "targeted_public_search",
+    "notes": "Not complete proceedings export; first guessed ACL domain query superseded by actual2026.aclweb.org"
+  },
+  {
+    "search_id": "S-M2-AG-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:aclanthology.org \"2024\" \"2025\" \"simulation\" \"EMNLP\" \"human\"",
+    "source_url": "",
+    "status": "targeted_public_search",
+    "notes": "Not complete proceedings export; first guessed ACL domain query superseded by actual2026.aclweb.org"
+  },
+  {
+    "search_id": "S-M2-AG-Q3",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:acl2026.org \"reproducibility\" \"responsible\" checklist",
+    "source_url": "",
+    "status": "targeted_public_search",
+    "notes": "Not complete proceedings export; first guessed ACL domain query superseded by actual2026.aclweb.org"
+  },
+  {
+    "search_id": "S-M2-AG-Q4",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:2026.emnlp.org \"call for\" papers reproducibility",
+    "source_url": "",
+    "status": "targeted_public_search",
+    "notes": "Not complete proceedings export; first guessed ACL domain query superseded by actual2026.aclweb.org"
+  },
+  {
+    "search_id": "S-M2-AG-Q5",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:aclanthology.org/2024.emnlp \"omniscient\" \"asymmetry\"",
+    "source_url": "",
+    "status": "targeted_public_search",
+    "notes": "Not complete proceedings export; first guessed ACL domain query superseded by actual2026.aclweb.org"
+  },
+  {
+    "search_id": "S-M2-AG-Q6",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:2026.aclweb.org \"call for papers\" checklist",
+    "source_url": "",
+    "status": "targeted_public_search",
+    "notes": "Not complete proceedings export; first guessed ACL domain query superseded by actual2026.aclweb.org"
+  },
+  {
+    "search_id": "S-M2-AG-Q7",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:2026.emnlp.org/calls/main_conference_papers \"checklist\"",
+    "source_url": "",
+    "status": "targeted_public_search",
+    "notes": "Not complete proceedings export; first guessed ACL domain query superseded by actual2026.aclweb.org"
+  },
+  {
+    "search_id": "S-M2-AG-GA",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "metadata_and_abstract_checked: https://aclanthology.org/2025.findings-acl.468/",
+    "source_url": "https://aclanthology.org/2025.findings-acl.468/",
+    "status": "metadata_and_abstract_checked",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-ECO",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "metadata_and_abstract_checked: https://aclanthology.org/2025.findings-emnlp.284/",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "status": "metadata_and_abstract_checked",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-ACL",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "official2026CFP_checked: https://2026.aclweb.org/calls/main_conference_papers/",
+    "source_url": "https://2026.aclweb.org/calls/main_conference_papers/",
+    "status": "official2026CFP_checked",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-EMNLP",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "official2026CFP_checked: https://2026.emnlp.org/calls/main_conference_papers/",
+    "source_url": "https://2026.emnlp.org/calls/main_conference_papers/",
+    "status": "official2026CFP_checked",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-ASYM",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "metadata_and_abstract_checked: https://aclanthology.org/2024.emnlp-main.1208/",
+    "source_url": "https://aclanthology.org/2024.emnlp-main.1208/",
+    "status": "metadata_and_abstract_checked",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-GA-DOI",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find_DOI_metadata: https://aclanthology.org/2025.findings-acl.468/",
+    "source_url": "https://aclanthology.org/2025.findings-acl.468/",
+    "status": "find_DOI_metadata",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-ECO-DOI",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find_DOI_metadata: https://aclanthology.org/2025.findings-emnlp.284/",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "status": "find_DOI_metadata",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-ACL-CHECK",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find_checklist_link: https://2026.aclweb.org/calls/main_conference_papers/",
+    "source_url": "https://2026.aclweb.org/calls/main_conference_papers/",
+    "status": "find_checklist_link",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-EMNLP-ARR",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find_ARR_rules: https://2026.emnlp.org/calls/main_conference_papers/",
+    "source_url": "https://2026.emnlp.org/calls/main_conference_papers/",
+    "status": "find_ARR_rules",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-ASYM-DOI",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find_DOI_metadata: https://aclanthology.org/2024.emnlp-main.1208/",
+    "source_url": "https://aclanthology.org/2024.emnlp-main.1208/",
+    "status": "find_DOI_metadata",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-RESP",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "official_checklist_guidance_checked: https://aclrollingreview.org/responsibleNLPresearch/",
+    "source_url": "https://aclrollingreview.org/responsibleNLPresearch/",
+    "status": "official_checklist_guidance_checked",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  },
+  {
+    "search_id": "S-M2-AG-SUPP",
+    "platform": "official_conference_or_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "linked_optional_materials_policy_landing: https://aclrollingreview.org/cfp",
+    "source_url": "https://aclrollingreview.org/cfp",
+    "status": "linked_optional_materials_policy_landing",
+    "notes": "No full PDF acquisition or method-evidence upgrade; dates month/year only for three papers;2026CFPs historical not live opportunity"
+  }
+]

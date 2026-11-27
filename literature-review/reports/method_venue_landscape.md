@@ -1,6 +1,6 @@
 # 方法研究发表生态：定向证据版
 
-检索与核验截至2026-11-27。已建立[35载体地图](../data/method_venue_map.csv)及[25刊双轨表](../data/journal_submission_candidates.csv)：26期刊、8会议入口、1预印本仓库。它们是论文驱动的样本地图；不是完成各刊2022起全量检索、索引认证或接受率比较。
+检索与核验截至2026-11-27。已建立[37载体地图](../data/method_venue_map.csv)及[25刊双轨表](../data/journal_submission_candidates.csv)：26期刊、10会议入口、1预印本仓库。它们是论文驱动的样本地图；不是完成各刊2022起全量检索、索引认证或接受率比较。
 
 ## 已出现的共同体与贡献类型
 
@@ -41,3 +41,5 @@ U补[JSC/AMPPS官方范围](evaluation_venue_updates.md)：JSC为交叉计算社
 批次AB新增两刊官方核查见[社会心理与复杂性渠道](social_psychology_complexity_venues.md)。M029/M030各一先例，不能认定持续专门共同体；两者不与Frontiers in Artificial Intelligence混同。41入口未对账16项不因额外新刊自动减少。
 
 AE补TCSS一正式平台论文与历史生成式社会智能CFP，见[tcss_method_ecology.md](tcss_method_ecology.md)。41入口15未对账；历史CFP不作开放机会，费用冲突未抹平。
+
+AG新增ACL/EMNLP入口，三正式Main/Findings题录/摘要与2026CFP/ARR清单有界核查；不是全刊/全年完整清单。41入口13未对账，详见[专题](acl_emnlp_method_ecology.md)。
