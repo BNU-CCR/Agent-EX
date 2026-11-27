@@ -37,3 +37,7 @@ T新增方法评价/报告规范阅读证据，见[sampling_and_reporting_bounda
 U渠道判断：JSC可条件比较受控AI社会过程贡献；AMPPS对当前单应用稿适配较低，后续方法稿须跨心理学读者价值与适当验证。两刊已核费用不改变证据门槛，亦非录用概率建议。
 
 Z方法稿可进一步检验不同观测投影/复现判据漏检何种过程差异；只是待证研究需求，见stochastic_reproducibility_scope.md。npj Complexity范围/投稿适配本批未核，当前JASSS/CCR优先比较保持。
+
+## AB补充：心理学与复杂系统路线
+
+2026-11-27核两刊官方范围/类型/费用，见[专题核查](social_psychology_complexity_venues.md)。Frontiers in Social Psychology须有社会心理学理论或经验贡献；npj Complexity须服务复杂系统问题或可迁移仿真方法。分别有M029形式化与M030统计复现先例，不推出当前LLM稿已适配。当前JASSS/CCR优先比较不变，后续方法研究仍需错误识别和迁移证据。

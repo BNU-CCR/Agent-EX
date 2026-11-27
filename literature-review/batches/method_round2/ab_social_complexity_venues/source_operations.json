@@ -1,0 +1,173 @@
+[
+  {
+    "search_id": "S-M2-AB-N-SCOPE-FAIL",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.nature.com/npjcomplex/aims",
+    "source_url": "https://www.nature.com/npjcomplex/aims",
+    "status": "cookie_identity_redirect_inaccessible",
+    "notes": "No scope obtained from this attempt"
+  },
+  {
+    "search_id": "S-M2-AB-F-SCOPE",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.frontiersin.org/journals/social-psychology/about",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/about",
+    "status": "official_scope_checked",
+    "notes": "Social psychology relevance gate; publisher selflists ESCI/Scopus, not independent verification"
+  },
+  {
+    "search_id": "S-M2-AB-N-SCOPE",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.nature.com/npjcomplex/aims?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/npjcomplex/aims?error=cookies_not_supported",
+    "status": "official_scope_checked",
+    "notes": "ABM/networks/emergence/information dynamics included"
+  },
+  {
+    "search_id": "S-M2-AB-N-GUIDE-WRONG",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.nature.com/npjcomplex/submission-guidelines?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/npjcomplex/submission-guidelines?error=cookies_not_supported",
+    "status": "HTTP404",
+    "notes": "Guessed path invalid; correct linked path later checked"
+  },
+  {
+    "search_id": "S-M2-AB-F-SECTION",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_scope: https://www.frontiersin.org/journals/social-psychology/sections/computational-social-psychology",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/sections/computational-social-psychology",
+    "status": "section_landing_returned",
+    "notes": "Section exists; detailed section scope not fully inspected"
+  },
+  {
+    "search_id": "S-M2-AB-F-TYPES",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_scope: https://www.frontiersin.org/journals/social-psychology/for-authors/article-types",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/for-authors/article-types",
+    "status": "official_article_types_returned",
+    "notes": "Methods detail checked in subsequent find"
+  },
+  {
+    "search_id": "S-M2-AB-F-FEES",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_scope: https://www.frontiersin.org/journals/social-psychology/for-authors/publishing-fees",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/for-authors/publishing-fees",
+    "status": "official_fee_page_returned",
+    "notes": "Fee detail checked in subsequent find"
+  },
+  {
+    "search_id": "S-M2-AB-N-TYPES-FAIL",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_scope: https://www.nature.com/npjcomplex/content-types",
+    "source_url": "https://www.nature.com/npjcomplex/content-types",
+    "status": "cookie_identity_redirect_inaccessible",
+    "notes": "Not successful types retrieval"
+  },
+  {
+    "search_id": "S-M2-AB-N-APC-FAIL",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_scope: https://www.nature.com/npjcomplex/apc",
+    "source_url": "https://www.nature.com/npjcomplex/apc",
+    "status": "cookie_identity_redirect_inaccessible",
+    "notes": "No fee verified here"
+  },
+  {
+    "search_id": "S-M2-AB-N-AUTHORS-FAIL",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_scope: https://www.nature.com/npjcomplex/for-authors-and-referees",
+    "source_url": "https://www.nature.com/npjcomplex/for-authors-and-referees",
+    "status": "cookie_identity_redirect_inaccessible",
+    "notes": "No guide verified here"
+  },
+  {
+    "search_id": "S-M2-AB-F-SECTION-TIMEOUT",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find:Scope: https://www.frontiersin.org/journals/social-psychology/sections/computational-social-psychology",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/sections/computational-social-psychology",
+    "status": "timeout",
+    "notes": "Not complete section scope"
+  },
+  {
+    "search_id": "S-M2-AB-F-METHODS",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find:Methods: https://www.frontiersin.org/journals/social-psychology/for-authors/article-types",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/for-authors/article-types",
+    "status": "methods_type_checked",
+    "notes": "12000words/A-type; validation and replicable results; targeted sections only"
+  },
+  {
+    "search_id": "S-M2-AB-F-APC",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find:CHF: https://www.frontiersin.org/journals/social-psychology/for-authors/publishing-fees",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/for-authors/publishing-fees",
+    "status": "fee_checked",
+    "notes": "A2195/B1750/C0CHF; not universal waiver or acceptance estimate"
+  },
+  {
+    "search_id": "S-M2-AB-N-TYPES",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.nature.com/npjcomplex/content-types?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/npjcomplex/content-types?error=cookies_not_supported",
+    "status": "official_article_format_checked",
+    "notes": "No strict overall length; abstract150; data mandatory/code where applicable"
+  },
+  {
+    "search_id": "S-M2-AB-N-APC",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.nature.com/npjcomplex/apc?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/npjcomplex/apc?error=cookies_not_supported",
+    "status": "fee_checked",
+    "notes": "GBP1990/USD2790/EUR2290 plus applicabletax; acceptance-date price"
+  },
+  {
+    "search_id": "S-M2-AB-N-AUTHORS",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.nature.com/npjcomplex/for-authors-and-referees?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/npjcomplex/for-authors-and-referees?error=cookies_not_supported",
+    "status": "authors_landing_checked",
+    "notes": "Correct submission guidelines link located"
+  },
+  {
+    "search_id": "S-M2-AB-N-GUIDE-FAIL",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "click_from_authors: https://www.nature.com/npjcomplex/for-authors-and-referees/submission-guidelines",
+    "source_url": "https://www.nature.com/npjcomplex/for-authors-and-referees/submission-guidelines",
+    "status": "cookie_identity_redirect_inaccessible",
+    "notes": "Correct path established; content not obtained here"
+  },
+  {
+    "search_id": "S-M2-AB-N-GUIDE",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open: https://www.nature.com/npjcomplex/for-authors-and-referees/submission-guidelines?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/npjcomplex/for-authors-and-referees/submission-guidelines?error=cookies_not_supported",
+    "status": "targeted_guide_checked",
+    "notes": "LLM Methods disclosure/reporting summary/data sections; not complete compliance audit"
+  },
+  {
+    "search_id": "S-M2-AB-N-CODE",
+    "platform": "official_publisher_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find:Computer code: https://www.nature.com/npjcomplex/for-authors-and-referees/submission-guidelines?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/npjcomplex/for-authors-and-referees/submission-guidelines?error=cookies_not_supported",
+    "status": "code_policy_checked",
+    "notes": "Review access upon request; public release best practice; central custom code statement mandatory"
+  }
+]
