@@ -1,0 +1,24 @@
+[
+  {
+    "record_id": "M024",
+    "path": "reading-cards/M024.md",
+    "source_commit": "b476a9f",
+    "backup_path": "batches/method_round2/cf_component_network_cards/cards_before/M024.md",
+    "before_raw_sha256": "0353539b51082524ae8133f86fa1081bb3b2165b3196cc8de998c6f47acc61c3",
+    "before_git_lf_sha256": "360bbd025ed32333430afeb78ea3a141a8240fc9c5fd370ac72f648d6aa49f7a",
+    "current_git_lf_sha256": "cf67d053c11e531cc9397168dc40185c85ef7791e4a26fcd0a909c406cb6c270",
+    "protected": false,
+    "numbered_sections": 11
+  },
+  {
+    "record_id": "M025",
+    "path": "reading-cards/M025.md",
+    "source_commit": "b476a9f",
+    "backup_path": "batches/method_round2/cf_component_network_cards/cards_before/M025.md",
+    "before_raw_sha256": "8a398a89c31912ba25dc67ee557b460a28d19adfabb502797a5b6c16eed6816e",
+    "before_git_lf_sha256": "0e37b08267c96f103bddcffa2bb651f42bd2c5a0edb9ed17d1ef59b61d8801fe",
+    "current_git_lf_sha256": "98eafd0b7a841b0dee4c848632df5b238677e00249bfc781211f10e611dbbc39",
+    "protected": false,
+    "numbered_sections": 11
+  }
+]

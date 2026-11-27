@@ -1,0 +1,18 @@
+{
+  "batch_id": "CF-component-validation-and-network-fit-cards",
+  "date": "2026-11-27",
+  "expected_master_sha256": "7c4d51a456c89d1b9f6299e113bfdc728a471e7f9981414a7c10ffd807ecdf2d",
+  "updates": [
+    {
+      "record_id": "M024",
+      "method_coding_source": "reading-cards/M024.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "M025",
+      "method_coding_source": "reading-cards/M025.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

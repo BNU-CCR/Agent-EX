@@ -1,0 +1,15 @@
+{
+  "source": "M024 Table2 PDFp4",
+  "GPT4baseline": 45.41,
+  "values": {
+    "random_label": 40.69,
+    "random_event": 47.36,
+    "profile_event": 38.94
+  },
+  "differences": {
+    "random_label": -4.72,
+    "random_event": 1.95,
+    "profile_event": -6.47
+  },
+  "boundary": "Differences in reported table units;no statistical significance recomputation"
+}

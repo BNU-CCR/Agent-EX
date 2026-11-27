@@ -1,0 +1,22 @@
+[
+  {
+    "record_id": "M024",
+    "url": "https://aclanthology.org/2024.sigdial-1.21.pdf",
+    "status": 200,
+    "bytes": 2856779,
+    "sha256": "fb4606e5c9c58e960b50a9ffcb5c16f42936a7c53a2208c17f5726c23eabfd50",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M024_CF.pdf",
+    "content_type": "application/pdf",
+    "pages": 20
+  },
+  {
+    "record_id": "M025",
+    "url": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "status": 200,
+    "bytes": 1963367,
+    "sha256": "2c56879e0666b743d8d61cab65803043b4d09a91870cce239de4fdf0b68d70fb",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M025_CF.pdf",
+    "content_type": "application/pdf",
+    "pages": 10
+  }
+]

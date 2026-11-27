@@ -1,0 +1,200 @@
+[
+  {
+    "comparison_id": "VC29",
+    "before": {
+      "comparison_id": "VC29",
+      "record_id": "M024",
+      "method_control": "核策略评价的信息边界与定义",
+      "comparison_or_reference": "人工策略标注 vs生成策略向量余弦",
+      "observable_error": "原始对话生成persona被当纯留出预测；cosine被当正确率",
+      "evaluation_target": "条件策略匹配",
+      "reported_evidence": "§4.1原对话生成profiles；§4.2定义cosine",
+      "scope_of_evidence": "formal_component_human_annotation_comparison",
+      "not_established": "未知真人行为预测或信息无泄漏",
+      "transfer_to_agent_ex": "记录初始化资料及指标定义，另做遮蔽/独立资料评价",
+      "source_location": "§4.1–4.2",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "after": {
+      "comparison_id": "VC29",
+      "record_id": "M024",
+      "method_control": "核策略评价的信息边界与定义",
+      "comparison_or_reference": "人工策略标注 vs生成策略向量余弦",
+      "observable_error": "原始对话生成persona被当纯留出预测；cosine被当正确率",
+      "evaluation_target": "条件策略匹配",
+      "reported_evidence": "§4.1originaldialogues_to_profiles;§4.2cosine/2547perrepresentation",
+      "scope_of_evidence": "formal_component_human_annotation_comparison",
+      "not_established": "未知真人行为预测或信息无泄漏",
+      "transfer_to_agent_ex": "记录初始化资料及指标定义，另做遮蔽/独立资料评价",
+      "source_location": "§4.1–4.2;PDFpp4–5",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC30",
+    "before": {
+      "comparison_id": "VC30",
+      "record_id": "M024",
+      "method_control": "分开真人评价与真实互动",
+      "comparison_or_reference": "43标注者评价模型self-chat对话",
+      "observable_error": "自然度/像人评分被当群体效度",
+      "evaluation_target": "生成对话感知质量",
+      "reported_evidence": "§5及AppendixD真人偏好评价",
+      "scope_of_evidence": "formal_human_judgment_of_generated_dialogue",
+      "not_established": "现实互动轨迹或完整社会效度",
+      "transfer_to_agent_ex": "按真人是行为来源还是评价者分别报告",
+      "source_location": "§5.2;AppendixD",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "after": {
+      "comparison_id": "VC30",
+      "record_id": "M024",
+      "method_control": "分开真人评价与真实互动",
+      "comparison_or_reference": "43标注者评价模型self-chat对话",
+      "observable_error": "自然度/像人评分被当群体效度",
+      "evaluation_target": "生成对话感知质量",
+      "reported_evidence": "43MTurkannotators;100selfchatconversations_permodel;verificationanswer_postfilter",
+      "scope_of_evidence": "formal_human_judgment_of_generated_dialogue",
+      "not_established": "现实互动轨迹或完整社会效度",
+      "transfer_to_agent_ex": "按真人是行为来源还是评价者分别报告",
+      "source_location": "§5.2;AppendixD;PDFpp7/18",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC31",
+    "before": {
+      "comparison_id": "VC31",
+      "record_id": "M024",
+      "method_control": "群体决策变化与外部效标分开",
+      "comparison_or_reference": "模拟有/无情绪的决策比较",
+      "observable_error": "模拟变化比例被当现实情绪因果效应",
+      "evaluation_target": "模拟内组件影响",
+      "reported_evidence": "五议题/六成员设置的决策变化",
+      "scope_of_evidence": "formal_controlled_simulation_comparison",
+      "not_established": "现实人群效应或长期意见演化",
+      "transfer_to_agent_ex": "操纵检验与真实目标效标另列；不回填情绪/微调路线",
+      "source_location": "§6;Table10",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "after": {
+      "comparison_id": "VC31",
+      "record_id": "M024",
+      "method_control": "群体决策变化与外部效标分开",
+      "comparison_or_reference": "模拟有/无情绪的决策比较",
+      "observable_error": "模拟变化比例被当现实情绪因果效应",
+      "evaluation_target": "模拟内组件影响",
+      "reported_evidence": "5topics/6members;leaderconsensus/managerturnchoice;Table10Pos50.98/Neg66.57/All55.66",
+      "scope_of_evidence": "formal_controlled_simulation_comparison",
+      "not_established": "现实人群效应或长期意见演化",
+      "transfer_to_agent_ex": "操纵检验与真实目标效标另列；不回填情绪/微调路线",
+      "source_location": "§6;Table10;PDFpp7–9/20",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC32",
+    "before": {
+      "comparison_id": "VC32",
+      "record_id": "M024",
+      "method_control": "保留模型乘表示的阴性条件",
+      "comparison_or_reference": "各组合 vs无情绪基线",
+      "observable_error": "平均改善被泛化为每模型/每表示都改善",
+      "evaluation_target": "组件效果异质性",
+      "reported_evidence": "Table2部分组合低于各自基线",
+      "scope_of_evidence": "formal_condition_level_results_not_reexecuted",
+      "not_established": "情绪组件普遍改善拟真",
+      "transfer_to_agent_ex": "逐条件保留反向/无效结果，避免按期望选组件",
+      "source_location": "Table2",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "after": {
+      "comparison_id": "VC32",
+      "record_id": "M024",
+      "method_control": "保留模型乘表示的阴性条件",
+      "comparison_or_reference": "各组合 vs无情绪基线",
+      "observable_error": "平均改善被泛化为每模型/每表示都改善",
+      "evaluation_target": "组件效果异质性",
+      "reported_evidence": "GPT4baseline45.41;randomlabel40.69;randomevent47.36;profileevent38.94",
+      "scope_of_evidence": "formal_condition_level_results_not_reexecuted",
+      "not_established": "情绪组件普遍改善拟真",
+      "transfer_to_agent_ex": "逐条件保留反向/无效结果，避免按期望选组件",
+      "source_location": "Table2;PDFp4",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC36",
+    "before": {
+      "comparison_id": "VC36",
+      "record_id": "M025",
+      "method_control": "区分同目标搜索与独立验证",
+      "comparison_or_reference": "同一Lazega网络指导逐步假设和参数搜索",
+      "observable_error": "目标指导后的适配被当独立留出验证",
+      "evaluation_target": "网络宏观拟合",
+      "reported_evidence": "中央95%模拟区间适配；逐步细化搜索",
+      "scope_of_evidence": "formal_traditional_ABM_empirical_fit",
+      "not_established": "未知网络/独立纵向预测",
+      "transfer_to_agent_ex": "报告拟合资料、搜索预算及独立检验资料",
+      "source_location": "§3.3;§3.6–3.7;AppendixA",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "after": {
+      "comparison_id": "VC36",
+      "record_id": "M025",
+      "method_control": "区分同目标搜索与独立验证",
+      "comparison_or_reference": "同一Lazega网络指导逐步假设和参数搜索",
+      "observable_error": "目标指导后的适配被当独立留出验证",
+      "evaluation_target": "网络宏观拟合",
+      "reported_evidence": "Central95%simulationinterval;AppendixAiterativebestfitsearch;500networks_inreportedcomparisons_nottotalbudget",
+      "scope_of_evidence": "formal_traditional_ABM_empirical_fit",
+      "not_established": "未知网络/独立纵向预测",
+      "transfer_to_agent_ex": "报告拟合资料、搜索预算及独立检验资料",
+      "source_location": "§3.3/3.7.2;AppendixA;PDFpp3/6/9",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  },
+  {
+    "comparison_id": "VC37",
+    "before": {
+      "comparison_id": "VC37",
+      "record_id": "M025",
+      "method_control": "终止条件与验证指标分开",
+      "comparison_or_reference": "运行至经验目标密度并比较宏观指标",
+      "observable_error": "被停止规则约束的统计被当独立涌现",
+      "evaluation_target": "模型选择与停止条件",
+      "reported_evidence": "作者按目标密度停止，展示最佳拟合选择",
+      "scope_of_evidence": "formal_empirical_fit_with_selection",
+      "not_established": "目标密度自由预测或机制唯一",
+      "transfer_to_agent_ex": "冻结停止规则并标注直接/间接受约束的指标",
+      "source_location": "§3.6;§4",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-26"
+    },
+    "after": {
+      "comparison_id": "VC37",
+      "record_id": "M025",
+      "method_control": "终止条件与验证指标分开",
+      "comparison_or_reference": "运行至经验目标密度并比较宏观指标",
+      "observable_error": "被停止规则约束的统计被当独立涌现",
+      "evaluation_target": "模型选择与停止条件",
+      "reported_evidence": "§3.6Algorithm2runs_toempiricaldensity;baseline§3.3fixedTseparate",
+      "scope_of_evidence": "formal_empirical_fit_with_selection",
+      "not_established": "目标密度自由预测或机制唯一",
+      "transfer_to_agent_ex": "冻结停止规则并标注直接/间接受约束的指标",
+      "source_location": "§3.3/3.6;PDFpp3–5",
+      "evidence_status": "source_read_not_reexecuted",
+      "checked_date": "2026-11-27"
+    }
+  }
+]

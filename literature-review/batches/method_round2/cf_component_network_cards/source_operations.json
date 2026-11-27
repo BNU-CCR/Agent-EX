@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "CF-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Targeted primary-source recheck for component and network fit evidence",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21/",
+    "status": "read_not_reexecuted",
+    "notes": "Officialmetadata monthonly"
+  },
+  {
+    "search_id": "CF-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Targeted primary-source recheck for component and network fit evidence",
+    "source_url": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "status": "read_not_reexecuted",
+    "notes": "AuthorhostedpublisherlayoutPDF10pages"
+  },
+  {
+    "search_id": "CF-03",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "Targeted primary-source recheck for component and network fit evidence",
+    "source_url": "https://aclanthology.org/2024.sigdial-1.21.pdf",
+    "status": "read_not_reexecuted",
+    "notes": "200PDF20pages hashinmanifest"
+  },
+  {
+    "search_id": "CF-04",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "Targeted primary-source recheck for component and network fit evidence",
+    "source_url": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "status": "read_not_reexecuted",
+    "notes": "200PDF10pages hashinmanifest"
+  },
+  {
+    "search_id": "CF-05",
+    "platform": "local_primary_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "Targeted primary-source recheck for component and network fit evidence",
+    "source_url": "reports/component_network_cards_CF.md",
+    "status": "read_not_reexecuted",
+    "notes": "TargetedPDFtext and two pageimages;noexecution"
+  }
+]

@@ -6598,5 +6598,45 @@
     "batch": "CE-intervention-and-empirical-heterogeneity-cards",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ce_intervention_heterogeneity_cards/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_coding_source",
+    "old": "reading-cards/M024.md",
+    "new": "reading-cards/M024.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF",
+    "date": "2026-11-27",
+    "batch": "CF-component-validation-and-network-fit-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cf_component_network_cards/results.json"
+  },
+  {
+    "record_id": "M024",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CF-component-validation-and-network-fit-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cf_component_network_cards/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_coding_source",
+    "old": "reading-cards/M025.md",
+    "new": "reading-cards/M025.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF",
+    "date": "2026-11-27",
+    "batch": "CF-component-validation-and-network-fit-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cf_component_network_cards/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CF-component-validation-and-network-fit-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cf_component_network_cards/results.json"
   }
 ]
