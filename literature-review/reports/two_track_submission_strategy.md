@@ -91,3 +91,5 @@ BH补充：M045提供LLM助手复现案例，尚无同任务流程对照/成本�
 BJ：ESWA列条件邻接候选，Information Sciences仅范围/传统决策先例；当前意见演化稿若无清楚技术方法增量，适配偏弱。独立方法稿需同任务比较、有效性或算法收益。两刊指南403、MJL/费用未核，非新增优先推荐。IPM跨范式综述M047待全文/日期，下一批核其方法共同体定位。见[来源报告](information_systems_method_venues.md)。
 
 BK核IPM官方四类稿件并加入条件候选；当前稿需信息过程问题，独立方法稿需计算/信息科学可迁移方法贡献。两摘要先例不等于完整共同体清单，指南/费用/独立索引仍待核，见[范围和获取边界](ipm_scope_and_access_boundaries.md)。
+
+BL：Political Communication/Journal of Communication为条件传播路线，需政治传播或跨专门领域理论问题。单篇方法评论/persona验证不证明一般Generative ABM平台适配；后续方法稿仍比较社会模拟/计算方法渠道。JOC8000词含参考表图、声明强制与开放鼓励分开，完整依据见[两刊报告](communication_method_venue_boundaries.md)。

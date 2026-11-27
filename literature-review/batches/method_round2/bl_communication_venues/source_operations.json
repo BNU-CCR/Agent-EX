@@ -1,0 +1,218 @@
+[
+  {
+    "search_id": "BL-01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.tandfonline.com \"Political Communication\" \"large language models\" simulation",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "publisherindexedresults;noPDFread"
+  },
+  {
+    "search_id": "BL-02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.academic.oup.com/joc \"large language models\" simulation",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "publisherindexedresults;noPDFread"
+  },
+  {
+    "search_id": "BL-03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.tandfonline.com/journals/upcp20/about-this-journal aims scope",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "publisherindexedresults;noPDFread"
+  },
+  {
+    "search_id": "BL-04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.academic.oup.com/joc/pages/About",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "publisherindexedresults;noPDFread"
+  },
+  {
+    "search_id": "BL-05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Journal of Communication\" \"large language models\" 2024 2025 2026",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "last3domainfiltersacademic.oup.com/academic.oup.com/tandfonline.com"
+  },
+  {
+    "search_id": "BL-06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Journal of Communication\" \"generative artificial intelligence\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "last3domainfiltersacademic.oup.com/academic.oup.com/tandfonline.com"
+  },
+  {
+    "search_id": "BL-07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Political Communication\" \"synthetic\" \"language models\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "last3domainfiltersacademic.oup.com/academic.oup.com/tandfonline.com"
+  },
+  {
+    "search_id": "BL-08",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PCscope",
+    "source_url": "https://www.tandfonline.com/journals/upcp20/about-this-journal",
+    "status": "403",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-09",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "JOCabout",
+    "source_url": "https://academic.oup.com/joc/pages/About",
+    "status": "web_HTML_read",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-10",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "JOCguide",
+    "source_url": "https://academic.oup.com/joc/pages/General_Instructions",
+    "status": "web_guide_read",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-11",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PCarticle",
+    "source_url": "https://www.tandfonline.com/doi/abs/10.1080/10584609.2026.2618486",
+    "status": "403",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-12",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "PChome",
+    "source_url": "https://www.tandfonline.com/journals/upcp20",
+    "status": "403_indexedscoperead",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-13",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "JOCarticle",
+    "source_url": "https://academic.oup.com/joc/article/75/6/459/8248850",
+    "status": "500_redirectCDN_unavailable",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-14",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "JOCabout_find_theoretical",
+    "source_url": "https://academic.oup.com/joc/pages/About",
+    "status": "no_match",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-15",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "JOCguide_find8000",
+    "source_url": "https://academic.oup.com/joc/pages/General_Instructions",
+    "status": "read",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-16",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "JOCguide_findAIUse",
+    "source_url": "https://academic.oup.com/joc/pages/General_Instructions",
+    "status": "read",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-17",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "JOCguide_findWhereEthically",
+    "source_url": "https://academic.oup.com/joc/pages/General_Instructions",
+    "status": "read",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-18",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "Crossref_10.1080/10584609.2026.2618486",
+    "source_url": "https://api.crossref.org/works/10.1080/10584609.2026.2618486",
+    "status": "HTTP200_publishedonline_explicit",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-19",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "Crossref_10.1093/joc/jqaf034",
+    "source_url": "https://api.crossref.org/works/10.1093/joc/jqaf034",
+    "status": "HTTP200_publishedonline_explicit",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-20",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "master_deduplication",
+    "source_url": "data/literature_master.csv",
+    "status": "checked_no_existing_twojournal_records",
+    "notes": "boundedcheck_notwholevenueinventory"
+  },
+  {
+    "search_id": "BL-21",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "static_PCpdf",
+    "source_url": "https://www.tandfonline.com/doi/pdf/10.1080/10584609.2026.2618486",
+    "status": "HTTP403_notPDF",
+    "notes": "hash/bytesdata/communication_venue_audit_BL.json;webguidereadretained"
+  },
+  {
+    "search_id": "BL-22",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "static_JOCpdf",
+    "source_url": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+    "status": "HTTP403_notPDF",
+    "notes": "hash/bytesdata/communication_venue_audit_BL.json;webguidereadretained"
+  },
+  {
+    "search_id": "BL-23",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "static_PCguide",
+    "source_url": "https://www.tandfonline.com/action/authorSubmission?show=instructions&journalCode=upcp20",
+    "status": "HTTP403_notPDF",
+    "notes": "hash/bytesdata/communication_venue_audit_BL.json;webguidereadretained"
+  },
+  {
+    "search_id": "BL-24",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "static_JOCguide",
+    "source_url": "https://academic.oup.com/joc/pages/General_Instructions",
+    "status": "HTTP403_notPDF",
+    "notes": "hash/bytesdata/communication_venue_audit_BL.json;webguidereadretained"
+  }
+]

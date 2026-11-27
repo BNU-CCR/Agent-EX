@@ -35,7 +35,7 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-27，保留首轮57条及15卡，新增47项工作、补读5条原记录，现104条、61张全文卡；41项正式纳入、55候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-27，保留首轮57条及15卡，新增49项工作、补读5条原记录，现106条、61张全文卡；41项正式纳入、57候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
@@ -47,6 +47,7 @@
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
 - [计算社会科学学会与会议](reports/css_societies_and_publication_routes.md)：CSSSA/ISCSS身份、存档路线及工作流复现摘要线索。
+- [传播期刊方法边界](reports/communication_method_venue_boundaries.md)：方法批评与persona验证摘要、正式在线日及JOC分强度政策。
 - [IPM范围与获取边界](reports/ipm_scope_and_access_boundaries.md)：官方四类稿件、登记日与首发区分、作者站与NTU访问结果。
 - [信息与智能系统方法渠道](reports/information_systems_method_venues.md)：两刊官方范围、邻接共识优化与IPM跨范式综述候选，指南/首发日待核。
 - [复现工作流固定制品](reports/replication_workflow_static_audit.md)：12文件身份、基线独立重算与48表格数值对应，未运行模型。

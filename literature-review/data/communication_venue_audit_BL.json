@@ -1,0 +1,366 @@
+{
+  "checked_date": "2026-11-27",
+  "crossref": [
+    {
+      "url": "https://api.crossref.org/works/10.1080/10584609.2026.2618486",
+      "status": 200,
+      "bytes": 12039,
+      "sha256": "a4f3b40b571cf22ac0171dea2bb0bfb11a72327e5702f26702b9c1d7fb096768",
+      "metadata": {
+        "DOI": "10.1080/10584609.2026.2618486",
+        "title": [
+          "Newer, Larger, Better? A Critique of the Unreflective LLM Adoption in Communication Research"
+        ],
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0001-9548-3225",
+            "authenticated-orcid": false,
+            "given": "Paul",
+            "family": "Balluff",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "GESIS - Leibniz Institute for the Social Sciences",
+                "place": [
+                  "Cologne, Germany"
+                ]
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-7884-1059",
+            "authenticated-orcid": false,
+            "given": "Justin Chun-ting",
+            "family": "Ho",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "National Yang Ming Chiao Tung University, Hsinchu, Taiwan"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-9177-1772",
+            "authenticated-orcid": false,
+            "given": "Johannes B.",
+            "family": "Gruber",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "GESIS - Leibniz Institute for the Social Sciences",
+                "place": [
+                  "Cologne, Germany"
+                ]
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-7797-9646",
+            "authenticated-orcid": false,
+            "given": "Sean",
+            "family": "Palicki",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Technical University of Munich, Munich, Germany"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-7834-9710",
+            "authenticated-orcid": false,
+            "given": "Alexis",
+            "family": "Palmer",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Dartmouth College, Hanover, USA"
+              },
+              {
+                "name": "Tulane University, New Orleans, USA"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-3629-2039",
+            "authenticated-orcid": false,
+            "given": "Luca",
+            "family": "Rossi",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "IT University of Copenhagen, Copenhagen, Denmark"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-1874-0958",
+            "authenticated-orcid": false,
+            "given": "Irina",
+            "family": "Shklovski",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "University of Copenhagen"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-6232-7530",
+            "authenticated-orcid": false,
+            "given": "Chung-hong",
+            "family": "Chan",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "GESIS - Leibniz Institute for the Social Sciences",
+                "place": [
+                  "Cologne, Germany"
+                ]
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "type": "journal-article",
+        "container-title": [
+          "Political Communication"
+        ],
+        "published-online": {
+          "date-parts": [
+            [
+              2026,
+              2,
+              20
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2026,
+              5,
+              4
+            ]
+          ]
+        },
+        "created": {
+          "date-parts": [
+            [
+              2026,
+              2,
+              20
+            ]
+          ],
+          "date-time": "2026-02-20T09:52:52Z",
+          "timestamp": 1771581172000
+        },
+        "volume": "43",
+        "issue": "3",
+        "page": "572-581",
+        "link": [
+          {
+            "URL": "https://www.tandfonline.com/doi/pdf/10.1080/10584609.2026.2618486",
+            "content-type": "unspecified",
+            "content-version": "vor",
+            "intended-application": "similarity-checking"
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://api.crossref.org/works/10.1093/joc/jqaf034",
+      "status": 200,
+      "bytes": 23559,
+      "sha256": "605f20c646ceb37f995c57f56a3f2aa031baff92cd53bb1eda39d7e24ce36bdc",
+      "metadata": {
+        "DOI": "10.1093/joc/jqaf034",
+        "title": [
+          "The (in)efficacy of AI personas in deception detection experiments"
+        ],
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0002-7159-7014",
+            "authenticated-orcid": false,
+            "given": "David M",
+            "family": "Markowitz",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Department of Communication, Michigan State University , East Lansing,",
+                "place": [
+                  "United States"
+                ]
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Timothy R",
+            "family": "Levine",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Department of Communication, University of Oklahoma , Norman,",
+                "place": [
+                  "United States"
+                ]
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "type": "journal-article",
+        "container-title": [
+          "Journal of Communication"
+        ],
+        "published-online": {
+          "date-parts": [
+            [
+              2025,
+              9,
+              7
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2025,
+              12,
+              1
+            ]
+          ]
+        },
+        "created": {
+          "date-parts": [
+            [
+              2025,
+              7,
+              14
+            ]
+          ],
+          "date-time": "2025-07-14T14:08:35Z",
+          "timestamp": 1752502115000
+        },
+        "volume": "75",
+        "issue": "6",
+        "page": "459-469",
+        "link": [
+          {
+            "URL": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+            "content-type": "application/pdf",
+            "content-version": "vor",
+            "intended-application": "syndication"
+          },
+          {
+            "URL": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+            "content-type": "unspecified",
+            "content-version": "vor",
+            "intended-application": "similarity-checking"
+          }
+        ]
+      }
+    }
+  ],
+  "access": [
+    {
+      "key": "PCpdf",
+      "url": "https://www.tandfonline.com/doi/pdf/10.1080/10584609.2026.2618486",
+      "final_url": "https://www.tandfonline.com/doi/pdf/10.1080/10584609.2026.2618486",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 5617,
+      "sha256": "a83f0b632df23590f8bae20c71ee967b2caf5eddafaef49134ec6fa25bfc78f1",
+      "pdf": false
+    },
+    {
+      "key": "JOCpdf",
+      "url": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+      "final_url": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 5707,
+      "sha256": "459fc801945d0c5bef4caddec5bd27cad16c38c29ddd8b32c62d7ee25a90c9d7",
+      "pdf": false
+    },
+    {
+      "key": "PCguide",
+      "url": "https://www.tandfonline.com/action/authorSubmission?show=instructions&journalCode=upcp20",
+      "final_url": "https://www.tandfonline.com/action/authorSubmission?show=instructions&journalCode=upcp20",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 5737,
+      "sha256": "5494b23f79cc5e62889cf67eff2369f8867077b69d6b1d216b1940c2bbb610e3",
+      "pdf": false
+    },
+    {
+      "key": "JOCguide",
+      "url": "https://academic.oup.com/joc/pages/General_Instructions",
+      "final_url": "https://academic.oup.com/joc/pages/General_Instructions",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 5529,
+      "sha256": "355db959937783badacb093c7ba51af88f0d322dc0e693da6c4c1f2c135e0cbb",
+      "pdf": false
+    }
+  ],
+  "boundary": "publisherindexedabstracts_only;JOCguidewebread_static403;PCscopeindexed_direct403;noPDFsuccess"
+}

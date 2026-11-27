@@ -5598,5 +5598,245 @@
     "batch": "BK-IPM-official-scope-version-and-access-boundaries",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bk_ipm_scope_access/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_type",
+    "old": "",
+    "new": "opinion_methodcritique",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "reproducibility_and_reporting;validation_and_external_validity",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "方法批评摘要先例，尚未读全文；不当新验证试验。",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;method_maturity;method_evidence_level;method_transferability;task_and_denominator",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "publisherindexedAbstract;Crossrefmetadata",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/communication_method_venue_boundaries.md",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M048",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_type",
+    "old": "",
+    "new": "AIpersona_deceptiondetection_validation",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "memory_and_persona;measurement;validation_and_external_validity",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "合成参与者persona/真假判断效度，摘要候选不推成长程群体效度。",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;method_maturity;method_evidence_level;method_transferability;task_and_denominator",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "publisherindexedAbstract;Crossrefmetadata",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/communication_method_venue_boundaries.md",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BL-communication-journal-method-precedents-and-guidelines",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bl_communication_venues/results.json"
   }
 ]
