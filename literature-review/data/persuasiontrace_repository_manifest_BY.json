@@ -1,0 +1,40 @@
+{
+  "checked_date": "2026-11-27",
+  "repository": "jlcmoore/persuasiontrace",
+  "observed_commit": "d05007fbe21f385583bd3e74667c7cd9da474b4f",
+  "commit_date": "2026-06-05T18:31:10Z",
+  "tree_sha": "dc674b36c47aae38188e33af16e12eaf8b2e307d",
+  "files": [
+    {
+      "path": "README.md",
+      "blob_sha": "3f148c196aa6b07eefd348972825b020d35fe868",
+      "tree_size": 4988
+    },
+    {
+      "path": "README_Analysis.md",
+      "blob_sha": "3527aba979d0e0fea9df3afb9b8d07bf47f82101",
+      "tree_size": 6299
+    },
+    {
+      "path": "README_SIMULATION.md",
+      "blob_sha": "414a3f789771f8e4512e08b776d41f5559d13fef",
+      "tree_size": 6678
+    },
+    {
+      "path": "analysis/data/rl_human_match_sim_compare_simulator_llm_judge_summary.csv",
+      "blob_sha": "945a86bf2e5f0c2e1ad412135d757018cc77124a",
+      "tree_size": 648
+    },
+    {
+      "path": "analysis/simulator_llm_judge.py",
+      "blob_sha": "aba4e0a1a666a3838c35cf835398e6d8d7d6db11",
+      "tree_size": 29129
+    }
+  ],
+  "repository_read_scope": "Three guides; one aggregate score CSV; judge script targeted selection/summary lines, not complete repository or execution",
+  "missing_artifact": {
+    "path": "analysis/data/simulator_counterfactual_replay_social_bn_summary.csv",
+    "status": "connector404_at_pinned_commit"
+  },
+  "paper_commit_mapping": "Observed commit is two days after arXivv1; not independently proven actual paper-run commit"
+}

@@ -60,3 +60,5 @@ W已规范化52字段/24新增记录，原值/理由见categorical_alias_migrati
 BR新增 `nine_question_evidence_BR.json`：九问题综合的来源映射，固定BQ960e0ca中的源卡/报告canonical-LF SHA256；未读全文条目仅标元数据待核，不作已读支持。`delivery_requirements.csv`九项改为已有统一回答/范围受限，BP机器审计仍是原时点快照。
 
 BW新增 `news_diffusion_density_checks_BW.json`（EN04作者v1图统计算术，不是代码/正式版错误认证）和`card_structure_snapshot_BW.json`（63卡中43有11编号，仅格式计数）；EN04内容读本为作者v1，正式发表身份/日期与正式正文获取分开。
+
+BY新增M050及`persuasiontrace_repository_manifest_BY.json`（5blob与观察commit；不认证论文运行版本）、`persuasiontrace_judge_summary_BY.csv`（来源汇总，换行规范化）、`persuasiontrace_numeric_checks_BY.json`（队列/SE/正态区间算术，非原始数据或模型复跑）。

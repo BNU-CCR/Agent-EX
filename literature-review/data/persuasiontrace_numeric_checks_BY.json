@@ -1,0 +1,52 @@
+{
+  "human_cohorts": {
+    "control": 9,
+    "standard": 32,
+    "personal": 106,
+    "audio": 24,
+    "relatedbelief": 84
+  },
+  "human_total": 255,
+  "persuasion_panel_total": 171,
+  "replay_source_humans": 84,
+  "replays_per_source": 3,
+  "replays_per_simulator": 252,
+  "conditional_human_LOO": 76,
+  "conditional_bins": 16,
+  "judge_summary_checks": [
+    {
+      "corpus": "full_simulated_target",
+      "n_scored": 50,
+      "mean": 81.32,
+      "se_recomputed": 1.1244340798819643,
+      "normal95_lo": 79.11610920343135,
+      "normal95_hi": 83.52389079656864
+    },
+    {
+      "corpus": "human_reference",
+      "n_scored": 50,
+      "mean": 79.98,
+      "se_recomputed": 1.3122469279826872,
+      "normal95_lo": 77.40799602115393,
+      "normal95_hi": 82.55200397884607
+    },
+    {
+      "corpus": "structure_target",
+      "n_scored": 50,
+      "mean": 64.24,
+      "se_recomputed": 2.6050044145835916,
+      "normal95_lo": 59.134191347416156,
+      "normal95_hi": 69.34580865258383
+    },
+    {
+      "corpus": "vanilla_llm_target",
+      "n_scored": 50,
+      "mean": 64.7,
+      "se_recomputed": 2.8196808330022036,
+      "normal95_lo": 59.17342556731568,
+      "normal95_hi": 70.22657443268432
+    }
+  ],
+  "judge_human_mapping_pending": "Paper namesHSTANDARD32 but judgesummary50; no source-round mapping verified",
+  "boundary": "Summary arithmetic only; no rawdata or model rerun; p>.05 not equivalence"
+}

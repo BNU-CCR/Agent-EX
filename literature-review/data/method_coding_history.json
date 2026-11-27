@@ -6248,5 +6248,125 @@
     "batch": "BX-selection-denominator-synthesis-and-EN03-inventory",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bx_selection_denominators/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_type",
+    "old": "",
+    "new": "hybrid_Bayesian_state_LLM_atomization_verbalization;human_target_validation",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "agent_architecture;measurement;validation_and_external_validity;reproducibility_and_reporting",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_transferability",
+    "old": "",
+    "new": "Turn-level state and heterogeneous evaluation panels transferable;humanreference limited to selected dialogue cohorts/single-propositionreplay;judge/internal diagnostics not external validation",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "Primary comparison evaluates simulator fidelity, not merely persuasion application;external human reference exists but scope limited",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formalpublication;judge50/32roundmapping;251/252replays;independent calibration/test split;rawdata/runcommit;metric/judgevalidity;crosspopulation/trajectorygeneralisation",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "§4.2/AppB.8/Table1/2;Fig5–8/11–15;fixedjudgeCSV",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M050.md;reports/persuasiontrace_dynamic_validity_BY.md;data/persuasiontrace_repository_manifest_BY.json",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
+  },
+  {
+    "record_id": "M050",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BY-persuasiontrace-human-reference-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/by_persuasiontrace/results.json"
   }
 ]

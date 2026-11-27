@@ -3,10 +3,10 @@
     "lead_id": "BX-L01",
     "title_from_search": "A Model of Multi-turn Human Persuadability Using Probabilistic Belief Tracing",
     "discovered_primary_url": "https://arxiv.org/abs/2606.05330",
-    "discovery_status": "search_result_only_primary_not_opened",
-    "screening_status": "not_screened_not_master_record",
+    "discovery_status": "BY_primary_version_and_fulltext_checked",
+    "screening_status": "promoted_to_M050_frontier_BY",
     "reason_to_check": "multi-turn belief process fidelity and empirical calibration; high methods priority",
-    "next": "BY confirm primary metadata/version and inspect human benchmark/evaluation scope; do not treat search summary scores as verified",
+    "next": "See reading-cards/M050.md and current progress; formal publication not established",
     "discovery_batch_queries": [
       "\"Influence in Motion\" \"Ming Huang\" arxiv",
       "\"Tracing Persuasive Dynamics\" github"

@@ -35,8 +35,9 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-27，保留首轮57条及15卡，新增49项工作、补读5条原记录，现106条、63张全文卡；42项正式纳入、56候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-27，保留首轮57条及15卡，新增50项工作、补读6条原记录，现107条、64张全文卡；42项正式纳入、56候选、7前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
+- [动态信念方法验证](reports/persuasiontrace_dynamic_validity_BY.md)：M050预印本的人类参照/LLM评分/条件回放、语料分母与固定制品边界。
 - [选择分母与一致性综合](reports/selection_denominators_and_consistency_BX.md)：四研究的条件目标、报告算术和版本边界；EN03仓库目录与新线索分列。
 - [EN04作者版本精读](reports/news_diffusion_author_version_BW.md)：成功启动筛选、网络密度算术、干预分指标及正式摘要范围；正式正文仍未得。
 - [CCR直接对照获取](reports/ccr_direct_comparator_access_BV.md)：EN03/EN04官方身份、PDF跳转/403与摘要证据边界。
@@ -49,7 +50,7 @@
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
-- [验证证据矩阵](reports/method_validation_matrix.md)：147个证据单元，回答、轨迹、经验效度分列。
+- [验证证据矩阵](reports/method_validation_matrix.md)：153个证据单元，回答、轨迹、经验效度分列。
 - [双主体校准的评价边界](reports/dual_agent_calibration_boundaries.md)：作者v1与正式版、条件预测与闭环证据分列。
 - [评价对象与主张综合](reports/evaluation_targets_and_claims.md)：10项既有精读，AI能力/合成资料/人类过程分列，附机器对照与失败判据。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。

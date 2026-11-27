@@ -1,0 +1,128 @@
+[
+  {
+    "search_id": "BY-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "arXiv submission history v1",
+    "source_url": "https://arxiv.org/abs/2606.05330",
+    "status": "version_metadata_read",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-02",
+    "platform": "web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "HTML link10",
+    "source_url": "https://arxiv.org/html/2606.05330v1",
+    "status": "author_html_available",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-03",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "versionedPDF GET",
+    "source_url": "https://arxiv.org/pdf/2606.05330v1",
+    "status": "200_pdf40pages",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-04",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"A Model of Multi-turn Human Persuadability Using Probabilistic Belief Tracing\"",
+    "source_url": "",
+    "status": "results_returned_formalvenue_not_established",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-05",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read repository_metadata",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace",
+    "status": "read_static",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-06",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read readme",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/main/README.md",
+    "status": "read_static",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-07",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read analysisguide",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/main/README_Analysis.md",
+    "status": "read_static",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-08",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read simulationguide",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/main/README_SIMULATION.md",
+    "status": "read_static",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-09",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read commit",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/commit/d05007fbe21f385583bd3e74667c7cd9da474b4f",
+    "status": "read_static",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-10",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read aggregatejudgeCSV",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/analysis/data/rl_human_match_sim_compare_simulator_llm_judge_summary.csv",
+    "status": "read_static",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-11",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read replaysummary404",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/analysis/data/simulator_counterfactual_replay_social_bn_summary.csv",
+    "status": "not_found404",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-12",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "read judgescript_targeted",
+    "source_url": "https://github.com/jlcmoore/persuasiontrace/blob/d05007fbe21f385583bd3e74667c7cd9da474b4f/analysis/simulator_llm_judge.py",
+    "status": "read_static",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-13",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "match5blobs_to_commit_tree",
+    "source_url": "https://api.github.com/repos/jlcmoore/persuasiontrace/git/trees/dc674b36c47aae38188e33af16e12eaf8b2e307d?recursive=1",
+    "status": "tree426_nottruncated",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  },
+  {
+    "search_id": "BY-14",
+    "platform": "local_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "main§1–9/AppB.2to13/judgeprompt;visualp7p22p24;cohortandSEchecks",
+    "source_url": "reports/persuasiontrace_dynamic_validity_BY.md",
+    "status": "paper_read_numeric_summary_checked",
+    "notes": "Versioned authorpreprint/observedrepo;noexperimentexecution;notallprimarynetworkqueries"
+  }
+]
