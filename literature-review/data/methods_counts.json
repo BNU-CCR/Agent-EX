@@ -1,14 +1,14 @@
 {
-  "records": 101,
+  "records": 102,
   "status": {
     "included": 41,
-    "candidate": 52,
+    "candidate": 53,
     "frontier": 6,
     "excluded": 2
   },
   "method_tiers": {
     "direct_comparator": 15,
-    "method_validation": 33,
+    "method_validation": 34,
     "core_method": 36,
     "peripheral": 11,
     "application": 6

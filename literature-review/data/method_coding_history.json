@@ -5178,5 +5178,125 @@
     "batch": "BE-modelling-cycle-authorv1-method-reading",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_type",
+    "old": "",
+    "new": "ThreecaseLLMassistedcross-platformABMreimplementation",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "reproducibility_and_reporting;validation_and_external_validity;theory_to_model_translation",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_transferability",
+    "old": "",
+    "new": "Twoassistedworkflowpatternswiththreeworkedcases;efficiencyandcross-taskgeneralisationnotestablished",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "worked_example",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "作者稿报告跨平台复现及不同验证对象；无同任务助手效果对照，不升级成熟验证工作流。",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formalpublication/date;papercommit;LLMconfigs;SDaggregationdefinition;independentworkfloweffect",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "authorPDF§2/§3/§4;pp3-15",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BH-LLM-assisted-replication-workflow-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bh_replication_workflows/results.json"
   }
 ]

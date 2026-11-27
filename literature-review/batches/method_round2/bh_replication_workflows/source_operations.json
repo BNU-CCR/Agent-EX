@@ -1,0 +1,101 @@
+[
+  {
+    "search_id": "BH-01",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "author_blog_discovery",
+    "source_url": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0",
+    "status": "author_blog_read",
+    "notes": "2026-10-26post;directauthorPDFandrepositorylinks"
+  },
+  {
+    "search_id": "BH-02",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "dropbox_preview",
+    "source_url": "https://www.dropbox.com/scl/fi/1x0ghs8b6s8sj9gnugwyf/CSSSA2026_Replication.pdf?rlkey=yk1aetuq8f65r5es0kt0xxhm6&st=gtozsa20&dl=0",
+    "status": "HTML_preview_not_fulltext",
+    "notes": "webpreview0lines;notPDF"
+  },
+  {
+    "search_id": "BH-03",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "repository_live_readme",
+    "source_url": "https://github.com/wang-boyu/csssa2026-abm-replication",
+    "status": "public_README_read",
+    "notes": "under_review;two_workflows;noexecution"
+  },
+  {
+    "search_id": "BH-04",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "blog_raw_link_extraction",
+    "source_url": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0",
+    "status": "public_HTML_links_extracted",
+    "notes": "authorprovidedDropboxqueryretained"
+  },
+  {
+    "search_id": "BH-05",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "author_PDF_download",
+    "source_url": "https://www.dropbox.com/scl/fi/1x0ghs8b6s8sj9gnugwyf/CSSSA2026_Replication.pdf?rlkey=yk1aetuq8f65r5es0kt0xxhm6&st=gtozsa20&dl=1",
+    "status": "PDF_acquired_HTTP_headers_not_retained",
+    "notes": "17pages;1685932bytes;hashmanifest;notformalversion"
+  },
+  {
+    "search_id": "BH-06",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF_maintext_and_tables",
+    "source_url": "reading-cards/M045.md",
+    "status": "local_fulltext_read",
+    "notes": "pp1-15;refs15-17identityonly;Table1rendered"
+  },
+  {
+    "search_id": "BH-07",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "blog_recheck",
+    "source_url": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0",
+    "status": "web_fetch_failed",
+    "notes": "500redirectGoogle_sorry;earlierreadandPDFpreserved"
+  },
+  {
+    "search_id": "BH-08",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "repository_recheck",
+    "source_url": "https://github.com/wang-boyu/csssa2026-abm-replication",
+    "status": "public_README_read",
+    "notes": "webcurrentREADMEunderreview;notfixedreleaseproof"
+  },
+  {
+    "search_id": "BH-09",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "pin_commit",
+    "source_url": "https://api.github.com/repos/wang-boyu/csssa2026-abm-replication/commits/main",
+    "status": "HTTP200_commit_identity",
+    "notes": "1e9be1490bcbd5fa23632aeff9cbf872bd18957f;committer2026-10-04T21:13:04Z"
+  },
+  {
+    "search_id": "BH-10",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "fixed_README",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/README.md",
+    "status": "HTTP200_static_README",
+    "notes": "4085bytes;SHA25628c2aff81f6e06a517a7eadee9b2ac89d696230c8c03511451cb09f8e0033fbf"
+  },
+  {
+    "search_id": "BH-11",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "Table1_visual",
+    "source_url": "reading-cards/M045.md",
+    "status": "local_render_visual_check",
+    "notes": "PDFp11captionSD/100vs30;12rows;nooriginalpaperverification"
+  }
+]

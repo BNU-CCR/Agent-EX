@@ -1,0 +1,24 @@
+{
+  "checked_date": "2026-11-27",
+  "title": "Large Language Model-Assisted Workflows for Replicating Agent-Based Models",
+  "author_url": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0",
+  "actual_version": "undated_author_manuscript_linked_by2026-10-26blog;notverifiedformalchapter",
+  "pdf": {
+    "url": "https://www.dropbox.com/scl/fi/1x0ghs8b6s8sj9gnugwyf/CSSSA2026_Replication.pdf?rlkey=yk1aetuq8f65r5es0kt0xxhm6&st=gtozsa20&dl=1",
+    "bytes": 1685932,
+    "pages": 17,
+    "sha256": "89a521b3aa24f274b3bea0f02ae7d9281e43450f4e8d0a9fcb08b85b52ca1914",
+    "http_status": "not_retained",
+    "read_scope": "mainpp1-15;references15-17identityonly;Table1p11visual"
+  },
+  "repository": {
+    "url": "https://github.com/wang-boyu/csssa2026-abm-replication",
+    "commit": "1e9be1490bcbd5fa23632aeff9cbf872bd18957f",
+    "committer_date": "2026-10-04T21:13:04Z",
+    "readme_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/README.md",
+    "readme_http_status": 200,
+    "readme_bytes": 4085,
+    "readme_sha256": "28c2aff81f6e06a517a7eadee9b2ac89d696230c8c03511451cb09f8e0033fbf",
+    "scope": "READMEonly;code/resultsnotread;notexecuted;notprovenpapercommit"
+  }
+}

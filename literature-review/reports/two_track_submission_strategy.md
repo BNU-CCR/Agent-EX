@@ -85,3 +85,5 @@ BD：ESSA/SSC有年度会议、LLM4ABM兴趣组及方法/经验验证专题，�
 BF：未来方法稿优先明确检错/误判减少的对象、基线和范围，再决定仿真方法或AI评价渠道；“LLM支持八阶段”本身不是已验证贡献。当前稿继续明确AI群体对象，JASSS/CCR比较保持；见[周期证据对照](modelling_cycle_evidence_crosswalk.md)。
 
 BG：CSSSA全文论文集资格与IC2S2非存档交流分列，不将会议展示当期刊替代。官方日程发现LLM辅助三模型复现摘要，须全文/版本/比较条件核查再影响方法证据判断；见[组织与路线](css_societies_and_publication_routes.md)。
+
+BH补充：M045提供LLM助手复现案例，尚无同任务流程对照/成本测量。后续方法稿需检验可观察实现偏离与独立重实现收益，避免仅凭角色/skills分工声称效率提升；当前社会主体稿的外部效度另需验证。见[工作流报告](llm_assisted_replication_workflows.md)。

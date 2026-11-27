@@ -124,3 +124,8 @@ VC122,M044,综述范围与分母,Scopus40取22且排除观点/未实现,22当全
 VC123,M044,实践与潜在用途,RQ1综述与RQ2小组讨论,全周期机会当效果已验证,工作流建议证据,八阶段提议来自作者讨论,概念/反思框架,整套方法有效率/效率增益,区分已报告实践与提案,v1pp6–13§4/5.2/6,author_preprint_review_conceptual_evidence_not_new_experiment,2026-11-27
 VC124,M044,校验与外部效度,代码/日志对设计与经验参照,LLM自评/模拟专家当独立验证,verification/validation,作者建议独立资料/规则日志/专家核,建议而非新验证试验,通用judge或真实专家替代效度,模型内主体和研究者助手分列,v1pp11–12,author_preprint_review_conceptual_evidence_not_new_experiment,2026-11-27
 VC125,M044,文档与实际执行,ODD/RAT草稿对代码/版本,完整报告等于可复现/已执行,披露和实现可追溯,作者提醒模板与真实系统不一致,v1文档/实现风险讨论,清单独立效果/复现成功,以run/config/commit证据校文案,v1pp9–13,author_preprint_review_conceptual_evidence_not_new_experiment,2026-11-27
+VC126,M045,工作流比较,人工中介一模型/skills两模型,案例与来源混淆,助手流程效果,三案例报告成功重实现,工作流程可行性案例,两流程优劣或LLM净效应,同任务来源资源条件比较,§2pp3-5/§4pp13-15,author_manuscript_case_evidence_not_independent_replication,2026-11-27
+VC127,M045,结构和调度,Ya-TASERPS源实现/ODD,实现时序偏离,跨平台机制与分布,729组合每组合10次；方向与分布对应,被测组合与来源,精确数值/轨迹同一或外部社会效度,冻结规则与事件顺序核对,§3.1pp6-8,author_manuscript_case_evidence_not_independent_replication,2026-11-27
+VC128,M045,视觉与统计范围,Sakoda八情境各五次,代表图冒充统计验证,空间模式对应,40次视觉检查；明确无统计比较,粗粒度模式,统计通过率/完整轨迹,按主张选择验证粒度,§3.2p7/图3p9,author_manuscript_case_evidence_not_independent_replication,2026-11-27
+VC129,M045,Slumulation汇总,原文100次/两实现各30次,SD/SE及聚合单位混淆,均值/离散程度/情境对应,表1SD差异；作者归因重复次数未证明,表1-3描述比较；定义待核,数值等价/真实政策效果/错误定论,分列SD与SE并核原始run,§3.3pp9-14/表1p11,author_manuscript_case_evidence_not_independent_replication,2026-11-27
+VC130,M045,成本效果与可复现,未测助手资源/固定README,有代码等于已复现或效率增益,工作流成本和制品身份,作者承认未记人工时间调用成本,缺失测量及README静态核,加速/降本/第三方复现成功,记录成本/版本/运行对应,§4p15;fixedREADME,author_manuscript_case_evidence_not_independent_replication,2026-11-27
