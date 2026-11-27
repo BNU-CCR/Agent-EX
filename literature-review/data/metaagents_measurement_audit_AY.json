@@ -1,0 +1,52 @@
+{
+  "record_id": "M042",
+  "Fig4": {
+    "overall": [
+      64,
+      48,
+      12,
+      2
+    ],
+    "metric1_1": [
+      100,
+      100,
+      44,
+      56
+    ],
+    "metric2_1": [
+      72,
+      50,
+      55,
+      3.6
+    ],
+    "metric2_2": [
+      96,
+      96,
+      68,
+      50
+    ],
+    "metric2_3": [
+      64,
+      76,
+      23,
+      21
+    ],
+    "unit": "percent",
+    "scenarios": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "iterations_each": 50,
+    "source": "p12Fig4visual"
+  },
+  "groundtruth": "authored personas plus adopted standard workflows, not observed human outcomes",
+  "pending": [
+    "2.3conditional denominator vs aggregate explanations",
+    "S4one recruiting agent sentence vs sameagentsasS3 inAppE.4",
+    "workflow mislabeled2.1 insection5.4 vs2.2 definition",
+    "confusionmatrix true-negative prose vs expected definition"
+  ],
+  "limits": "Do not multiply component rates, infer raw counts from all percentages, or treat scenario differences as isolated population-size causal effect. Norawdata/rerun."
+}

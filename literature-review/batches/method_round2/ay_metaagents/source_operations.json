@@ -1,0 +1,218 @@
+[
+  {
+    "search_id": "S-M2-AY-Q01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org \"Proc. ACM Hum.-Comput. Interact.\" \"simulat\" \"large language models\" \"2025\"",
+    "source_url": "",
+    "status": "empty_restrictive_queries",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org \"CSCW\" \"generative agents\" \"simulation\"",
+    "source_url": "",
+    "status": "empty_restrictive_queries",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org \"tochi\" \"simulated users\" \"language models\"",
+    "source_url": "",
+    "status": "empty_restrictive_queries",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q04",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "CSCW \"LLM\" \"social simulation\" paper",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q05",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"PACM HCI\" \"synthetic participants\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q06",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"CSCW\" \"simulating users\" large language models",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q07",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1145/3711032\" \"Published\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q08",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:zjanice.github.io MetaAgents",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q09",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org/doi/10.1145/3711032 \"May\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q10",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:zjanice.github.io \"MetaAgents\" \"CSCW\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q11",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"MetaAgents: Large Language Model\" \"2 May 2025\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q12",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"MetaAgents\" \"Published: 02 May 2025\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q13",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org/doi/abs/10.1145/3711032",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q14",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org/doi \"MetaAgents: Large Language Model Based Agents\" \"Publication History\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q15",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org \"3711032\" \"02 May\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-Q16",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:zjanice.github.io \"3711032\"",
+    "source_url": "",
+    "status": "bounded_leads_not_complete_coverage",
+    "notes": "No exact target publication history verified; indirect cited-by date is a lead only. No independent pre2022 paper search/read."
+  },
+  {
+    "search_id": "S-M2-AY-DOI",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open target DOI",
+    "source_url": "https://doi.org/10.1145/3711032",
+    "status": "inaccessible",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  },
+  {
+    "search_id": "S-M2-AY-WEBPDF",
+    "platform": "author_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open author publisher-layout PDF",
+    "source_url": "https://zjanice.github.io/assets/papers/CSCW25_MetaAgents.pdf",
+    "status": "27pages_identity_abstract_read",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  },
+  {
+    "search_id": "S-M2-AY-DUP",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "check master duplicate title/DOI",
+    "source_url": "data/literature_master.csv",
+    "status": "not_in_master",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  },
+  {
+    "search_id": "S-M2-AY-PDF",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET author PDF",
+    "source_url": "https://zjanice.github.io/assets/papers/CSCW25_MetaAgents.pdf",
+    "status": "HTTP200_1468219bytes_27pages",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  },
+  {
+    "search_id": "S-M2-AY-KEYS",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "locate model/metrics/validation sections",
+    "source_url": "https://zjanice.github.io/assets/papers/CSCW25_MetaAgents.pdf",
+    "status": "reading_navigation",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  },
+  {
+    "search_id": "S-M2-AY-READ1",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "focused pp5–15",
+    "source_url": "https://zjanice.github.io/assets/papers/CSCW25_MetaAgents.pdf",
+    "status": "read_method_results",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  },
+  {
+    "search_id": "S-M2-AY-READ2",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "focused pp16–18/23–27 and renderFig4",
+    "source_url": "https://zjanice.github.io/assets/papers/CSCW25_MetaAgents.pdf",
+    "status": "discussion_appendix_read",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  },
+  {
+    "search_id": "S-M2-AY-CHECK",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "Fig4 visual; reread metric definitions and code-link scan",
+    "source_url": "https://zjanice.github.io/assets/papers/CSCW25_MetaAgents.pdf",
+    "status": "rates_and_denominator_tensions_recorded_not_rerun",
+    "notes": "Download polled same process, polls not separate source operations; focused reading not all references/artifacts."
+  }
+]

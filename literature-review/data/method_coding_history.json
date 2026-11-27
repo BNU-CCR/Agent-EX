@@ -4638,5 +4638,125 @@
     "batch": "AW-CHI-fulltext",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/aw_chi_fulltext/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_type",
+    "old": "",
+    "new": "constructed_jobfair_teaming_scenario_comparison",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "agent_architecture;environment_design;interaction_protocol;memory_and_persona;measurement",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_transferability",
+    "old": "",
+    "new": "Reusableconstructedtask/prompt/metricdesign;humanrecruitmentvaliditynotestablished;runtimeartifactsmissing",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "controlled_comparison",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "社会情境多主体方法和AI能力评价直接相关；不是经验人类校准。",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "exact_formal_date;publisherbyteidentity;modelrevision;run_artifacts;conditional_denominators;S4_recruiters;human_external_validity",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "pp5–18,23–27;sections3–6;Fig4;AppB–E",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M042.md;reports/metaagents_teaming_evidence.md",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
+  },
+  {
+    "record_id": "M042",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "AY-MetaAgents-formal-method-precedent",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ay_metaagents/results.json"
   }
 ]
