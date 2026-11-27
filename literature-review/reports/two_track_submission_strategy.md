@@ -47,3 +47,5 @@ AE补充：TCSS有正式平台M032与历史生成式CFP，可作社会系统/方
 AF补充：将解析/重试/失败与动作、观察轮与决策事件、图属性与状态提交边界作为方法评价对象；现成框架源码可见不足以证明论文或Agent-EX已经可复制。需run与版本/环境映射及错误影响实测，见Crowd静态核查；本轮未执行这些新实验。
 
 AG补ACL/EMNLP方法路线见[专题](acl_emnlp_method_ecology.md)：须明确NLP/评价价值，Main与Findings分列；2026征稿已过，当前不据此调整JASSS/CCR优先比较。
+
+AH补信息边界评价：当前稿仍限定AI群体过程；后续方法稿可检验信息/评价可见性错配对方法排名的影响，尚需新证据，未更改实验协议。 见[information_boundary_comparison.md](information_boundary_comparison.md)。

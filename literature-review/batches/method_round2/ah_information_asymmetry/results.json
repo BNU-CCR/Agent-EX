@@ -1,0 +1,30 @@
+{
+  "batch_id": "AH-information-asymmetry",
+  "date": "2026-11-27",
+  "expected_master_sha256": "79a3c5e76d2c36fefc1021275419c457497423e1d62da0065d36520a8f2d1a84",
+  "updates": [
+    {
+      "record_id": "M033",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M033.md",
+      "research_question": "全知脚本模拟的目标完成/自然度能否迁移到私有信息的主体互动？",
+      "reason": "正式全文定向读支持信息边界方法评价；精确首次在线日未核，保留candidate。",
+      "method_type": "information_asymmetry_controlled_evaluation;simulation_reporting_card",
+      "method_contribution_type": "validation_and_external_validity;interaction_protocol;reproducibility_and_reporting",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "controlled_comparison",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "分列主体/评价者信息、生成组织和目标/自然度/迁移；不能把SCRIPTvsAGENTS总差异全当信息净效应或真人效度。",
+      "findings": "目标评分、真人自然度与合成训练迁移分列；MINDREADERS控制表明任务差异；simulationcard为建议非已验证标准。",
+      "evidence_location": "FormalPDF§3–6pp3–9;AppA/E–Hpp15,21–23",
+      "supplement_status": "selected_appendices_read;code_and_fullprompts_not_audited;no_execution",
+      "method_evidence_location": "§3–6;Fig2–7;AppA/E–H;reviewscopeinferences separate",
+      "method_coding_source": "reading-cards/M033.md",
+      "method_pending_fields": "first_formal_online_day;fullprompt_code_data_runprovenance;filtering_effects;paired_dependency_uncertainty;judge_bias;human_external_transfer",
+      "search_id": "S-M2-AG-ASYM;S-M2-AG-ASYM-DOI;S-M2-AH-PDF;S-M2-AH-READ;S-M2-AH-META",
+      "date_basis": "OfficialAnthology month/year and proceedings identity; exact first-online day not independentlyverified; not using conference firstday;AHCrossrefpublished2024/onlineabsent;created2024-11-27notpublicationdate",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AHformalPDFfocusedread;humanratersnaturalnessnotempiricalinteraction;noexperimentrerun;methodstatusupgrade not finalinclusion."
+    }
+  ],
+  "new_records": []
+}

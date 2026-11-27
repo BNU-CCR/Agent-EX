@@ -3298,5 +3298,95 @@
     "batch": "AG-ACL-EMNLP",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ag_acl_emnlp/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_type",
+    "old": "information_asymmetry_evaluation",
+    "new": "information_asymmetry_controlled_evaluation;simulation_reporting_card",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_contribution_type",
+    "old": "validation_and_external_validity;interaction_protocol",
+    "new": "validation_and_external_validity;interaction_protocol;reproducibility_and_reporting",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "分列主体/评价者信息、生成组织和目标/自然度/迁移；不能把SCRIPTvsAGENTS总差异全当信息净效应或真人效度。",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_evidence_location",
+    "old": "Officialabstract only",
+    "new": "§3–6;Fig2–7;AppA/E–H;reviewscopeinferences separate",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_coding_source",
+    "old": "https://aclanthology.org/2024.emnlp-main.1208/",
+    "new": "reading-cards/M033.md",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;fulltext_design;calibration_validation_information_boundary;reproducibility_artifacts",
+    "new": "first_formal_online_day;fullprompt_code_data_runprovenance;filtering_effects;paired_dependency_uncertainty;judge_bias;human_external_transfer",
+    "date": "2026-11-27",
+    "batch": "AH-information-asymmetry",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ah_information_asymmetry/results.json"
   }
 ]

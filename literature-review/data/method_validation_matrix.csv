@@ -64,3 +64,7 @@ VC62,M032,解析失败与实质动作分开,示例no/yes子串和异常默认,�
 VC63,M032,epoch0与决策轮分开,DiffusionNetwork/BaseDiffusion,epochs当LLM调用轮次,时间与分母,epoch0初态/跳过钩子；50epochs最多49before调用,所读代码路径静态上界,论文实际5000调用记录被推翻,按成功事件/调用/观测边界分别计数,AFDiffusionNetwork78–151;BaseDiffusion121–178,static_code_read_not_executed,2026-11-27
 VC64,M032,论文版本与当前示例分开,Jul15commit/Jun4publication;loadllm2,仓库可达即论文已可复现,制品身份,固定8blob，但运行项目/YAML/环境关联未证,源文件身份可核,论文运行使用该commit/config,固定run→commit→配置/模型/依赖链,AFmanifest;gen_agents.pyprojectload;setup.py5–20,static_provenance_gap_not_execution_failure,2026-11-27
 VC65,M032,数值status与图属性提交分开,BaseDiffusion循环与CustomSim路径,一律称同步或原子,状态可见性,status末尾替换，图属性循环内改；另一类随机agent,所读控制流,所有自定义钩子无部分状态可见/可恢复,说明状态投影与提交边界，需独立实现验证,AFBaseDiffusion144–167;CustomSimNetworkrun,static_code_read_not_executed,2026-11-27
+VC66,M033,主体信息与生成方式分开,SCRIPT/AGENTS/MINDREADERS,总模式差异全归信息,因果解释范围,MINDREADERS任务依赖；SCRIPT还改视角/组织,所测合成场景控制比较,信息单因素纯净效应/全部真人迁移,同时报告信息和生成/时序,§3pp3–5,source_read_not_reexecuted,2026-11-27
+VC67,M033,真人自然度与真实行为分开,GPT4目标评分/9真人偏好,有人评估当人群轨迹验证,效标与分母,评审可见背景目标；每对30标注非30人,生成对话自然度与自动目标代理,真人实际互动/网络动态效度,主体/评价者可见信息分别披露,§3.2/3.4;AppE/Fp21,source_read_not_reexecuted,2026-11-27
+VC68,M033,风格迁移与目标能力分开,SCRIPT训练后AGENTS评估,自然度或成交高当技能提升,合成任务训练迁移,合作目标弱改善；自然度未显著差异不证明等效,作者结果与统计范围判断,真人谈判能力或全任务迁移,指标/任务/训练分布单列,§4pp5–7;AppEp21,source_read_and_reviewer_scope_inference,2026-11-27
+VC69,M033,报告卡与已验证标准分开,SimulationCard/AppA,建议条目当强制或效果验证,报告规范成熟度,提出信息不对称/用途/指标/限制字段,报告提议,清单提升复现成功率或会议强制采纳,借鉴披露维度但不覆盖冻结协议,§5.2p8;AppA/Fig7p15,reporting_proposal_not_effect_validation,2026-11-27

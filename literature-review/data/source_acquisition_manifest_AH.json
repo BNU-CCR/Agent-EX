@@ -1,0 +1,22 @@
+[
+  {
+    "record_id": "M033",
+    "version": "official_EMNLP_proceedings_PDF",
+    "source_url": "https://aclanthology.org/2024.emnlp-main.1208.pdf",
+    "sha256": "4231279b743e542bb4f2d3d85a1cd843bd05df6f8f796a3b9fd573c52ca152f6",
+    "bytes": 1757002,
+    "checked": "2026-11-27",
+    "storage": "temporary payload; repository manifest only",
+    "pages": 23,
+    "read_scope": "§3–6keysections/AppA,E–H;notfullcodeorappendixaudit"
+  },
+  {
+    "record_id": "M033",
+    "version": "publisher_deposited_metadata",
+    "source_url": "https://api.crossref.org/works/10.18653/v1/2024.emnlp-main.1208",
+    "sha256": "5903351299b7e7b32700d7cfc3bed456340538241ff3f87712a5fe249f90a7ba",
+    "bytes": 2226,
+    "checked": "2026-11-27",
+    "storage": "temporary payload; repository manifest only"
+  }
+]

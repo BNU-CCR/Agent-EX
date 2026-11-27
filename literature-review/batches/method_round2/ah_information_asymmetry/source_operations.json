@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "S-M2-AH-PDF",
+    "platform": "official_publisher_PDF",
+    "search_date": "2026-11-27",
+    "query_exact": "https://aclanthology.org/2024.emnlp-main.1208.pdf",
+    "source_url": "https://aclanthology.org/2024.emnlp-main.1208.pdf",
+    "status": "HTTP200_PDF_verified",
+    "notes": "1757002bytes/23pages; officialproceedingsPDF; no code execution"
+  },
+  {
+    "search_id": "S-M2-AH-READ",
+    "platform": "local_acquired_PDF_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "AH_asymmetry.pdf pp3–9,15,21–23;§3–6/AppA,E–H",
+    "source_url": "https://aclanthology.org/2024.emnlp-main.1208.pdf",
+    "status": "focused_fulltext_and_simulationcard_read",
+    "notes": "Fig7p15 rendered/viewed; criticalmainmethod/results/limits; no full prompt/code/appendix audit"
+  },
+  {
+    "search_id": "S-M2-AH-META",
+    "platform": "publisher_deposited_Crossref_metadata",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.crossref.org/works/10.18653/v1/2024.emnlp-main.1208",
+    "source_url": "https://api.crossref.org/works/10.18653/v1/2024.emnlp-main.1208",
+    "status": "HTTP200_exact_online_day_missing",
+    "notes": "publishedyear2024/online null; createdNov27notpublicationdate; conferenceNov12–16notusedasfirstonline"
+  }
+]
