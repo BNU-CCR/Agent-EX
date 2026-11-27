@@ -1,0 +1,35 @@
+{
+  "batch_id": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+  "date": "2026-11-27",
+  "expected_master_sha256": "09a9195ccee008804f86edd3f5931ed1f6856bc1c98bd75d2e197008a2356721",
+  "updates": [
+    {
+      "record_id": "M049",
+      "related_versions": "OSFpa4t6author36ppsnapshot_fullread;formal11ppwebpreviewonly;57.49/57.5versus57.7notmerged",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://osf.io/pa4t6/download",
+      "supplement_status": "author3tablesread;data/platformcallsnotacquired;formalbodycomparisonpending",
+      "reason": "Formalfirstonlineconfirmed;actualauthor36ppread;formaltextcomparisonpending_candidatepreserved",
+      "findings": "Author12studies19063AIjudgments;rate-limitunbalancedreturns;nominal7truth1lie;personaandhistoricalhumanpatternbounds;Study6tableweightedaggregateinconsistencypendingformal",
+      "evidence_location": "authorpp1-25/34-36;formalabstractpreview;Crossrefdate",
+      "card_path": "reading-cards/M049.md",
+      "notes": "OSFPDF200361432bytes36ppSHA25672092bf29fd529b4fcb8e912c97c0ca92f4f1863b036d2633f754260bd412d83;formalabstract57.7vsdraft57.49;Study6authoronlyinconsistency;noexecution",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "Taskandbase-rate-specifichumanpatterncomparison;needreturneddenominators/independentpopulationchecks;notlongitudinalABMvalidity",
+      "method_relevance_rationale": "作者稿以真人材料、历史人类模式与任务变化评估合成判断者；保留返回样本、基率、版本和分组汇总限制。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "formal_fulltextcomparison;Study6rawcounts;returnedtruthfraction/missingness;model_snapshot/platformconfigs;data/supplement;independenthuman_controls",
+      "method_evidence_location": "authorpp9-25;Table1p34;Table2-3pp35-36",
+      "method_coding_source": "reading-cards/M049.md;reports/persona_validation_denominators.md",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "M048",
+      "supplement_status": "KUinstitutionalpage200fulltextlink;linkedfile403HTMLnotPDF",
+      "notes": "BMcopenhageninstitutionpage47341bytes200;fulltextfile4035985bytesJS_cookiechallenge;notPDFsuccess;readingstatusabstractunchanged",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

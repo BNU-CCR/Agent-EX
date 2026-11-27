@@ -1,0 +1,128 @@
+[
+  {
+    "search_id": "BM-01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"The (in)efficacy of AI personas\" pdf",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": ""
+  },
+  {
+    "search_id": "BM-02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Markowitz\" \"jqaf034\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": ""
+  },
+  {
+    "search_id": "BM-03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Newer, Larger, Better?\" \"Balluff\" pdf",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": ""
+  },
+  {
+    "search_id": "BM-04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"2618486\" repository",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": ""
+  },
+  {
+    "search_id": "BM-05",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "OA_location_discovery",
+    "source_url": "https://api.openalex.org/works/https://doi.org/10.1093/joc/jqaf034",
+    "status": "HTTP200",
+    "notes": "discoveryonly_primaryversionscheckedseparately"
+  },
+  {
+    "search_id": "BM-06",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "OA_location_discovery",
+    "source_url": "https://api.openalex.org/works/https://doi.org/10.1080/10584609.2026.2618486",
+    "status": "HTTP200",
+    "notes": "discoveryonly_primaryversionscheckedseparately"
+  },
+  {
+    "search_id": "BM-07",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "KU_web",
+    "source_url": "https://researchprofiles.ku.dk/da/publications/3e917a65-13aa-4e51-be23-5e6315a70695",
+    "status": "not_accessible",
+    "notes": ""
+  },
+  {
+    "search_id": "BM-08",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "OSF_web",
+    "source_url": "https://osf.io/pa4t6/",
+    "status": "403",
+    "notes": ""
+  },
+  {
+    "search_id": "BM-09",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "public_indexed_formal_PDF",
+    "source_url": "https://watermark02.silverchair.com/jqaf034.pdf",
+    "status": "webPDF_parsed_title_abstractpreview",
+    "notes": "publicsearchsignedpublisherlink;noformalbodyfullread;notrewritingBL403"
+  },
+  {
+    "search_id": "BM-10",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "KU",
+    "source_url": "https://researchprofiles.ku.dk/da/publications/3e917a65-13aa-4e51-be23-5e6315a70695",
+    "status": "HTTP200_notPDF",
+    "notes": "bytes/hashdata/persona_validation_audit_BM.json;KUHTMLnotPDF"
+  },
+  {
+    "search_id": "BM-11",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "OSF",
+    "source_url": "https://osf.io/pa4t6/download",
+    "status": "HTTP200_PDF",
+    "notes": "bytes/hashdata/persona_validation_audit_BM.json;KUHTMLnotPDF"
+  },
+  {
+    "search_id": "BM-12",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "M048_KU_PDF",
+    "source_url": "https://researchprofiles.ku.dk/files/559176349/Newer_Larger_Better_A_Critique_of_the_Unreflective_LLM_Adoption_in_Communication_Research.pdf",
+    "status": "HTTP403_notPDF",
+    "notes": "bytes/hashdata/persona_validation_audit_BM.json;KUHTMLnotPDF"
+  },
+  {
+    "search_id": "BM-13",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "author_fulltext_read_and_table_arithmetic",
+    "source_url": "reading-cards/M049.md",
+    "status": "local_fulltext_checked",
+    "notes": "main1-25/table34-36;19063judgments;study6weighted49.49165not48.14"
+  },
+  {
+    "search_id": "BM-14",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "Table1_visual",
+    "source_url": "reading-cards/M049.md",
+    "status": "local_render_visual_checked",
+    "notes": "p34;nonmatchinggroupaggregateverifiedvisually"
+  }
+]

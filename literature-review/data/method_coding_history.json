@@ -5838,5 +5838,85 @@
     "batch": "BL-communication-journal-method-precedents-and-guidelines",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bl_communication_venues/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Taskandbase-rate-specifichumanpatterncomparison;needreturneddenominators/independentpopulationchecks;notlongitudinalABMvalidity",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_relevance_rationale",
+    "old": "合成参与者persona/真假判断效度，摘要候选不推成长程群体效度。",
+    "new": "作者稿以真人材料、历史人类模式与任务变化评估合成判断者；保留返回样本、基率、版本和分组汇总限制。",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_pending_fields",
+    "old": "fulltext;method_maturity;method_evidence_level;method_transferability;task_and_denominator",
+    "new": "formal_fulltextcomparison;Study6rawcounts;returnedtruthfraction/missingness;model_snapshot/platformconfigs;data/supplement;independenthuman_controls",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_evidence_location",
+    "old": "publisherindexedAbstract;Crossrefmetadata",
+    "new": "authorpp9-25;Table1p34;Table2-3pp35-36",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
+  },
+  {
+    "record_id": "M049",
+    "field": "method_coding_source",
+    "old": "reports/communication_method_venue_boundaries.md",
+    "new": "reading-cards/M049.md;reports/persona_validation_denominators.md",
+    "date": "2026-11-27",
+    "batch": "BM-persona-author-fulltext-denominators-and-version-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bm_persona_author_reading/results.json"
   }
 ]

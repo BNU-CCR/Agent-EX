@@ -1,0 +1,441 @@
+{
+  "checked_date": "2026-11-27",
+  "record_id": "M049",
+  "actual_read_version": "OSFauthor_manuscript_snapshot_notverifiedversionnumber",
+  "acquisitions": [
+    {
+      "key": "KU",
+      "url": "https://researchprofiles.ku.dk/da/publications/3e917a65-13aa-4e51-be23-5e6315a70695",
+      "final_url": "https://researchprofiles.ku.dk/da/publications/newer-larger-better-a-critique-of-the-unreflective-llm-adoption-i/",
+      "status": 200,
+      "bytes": 47341,
+      "sha256": "01f53c6f01c9df6e42d3c1f851cb2f9457b7030e2d635739b4683830a10dc68a",
+      "pdf": false,
+      "links": [
+        {
+          "text": "Full text",
+          "url": "/files/559176349/Newer_Larger_Better_A_Critique_of_the_Unreflective_LLM_Adoption_in_Communication_Research.pdf"
+        }
+      ],
+      "text_excerpt": "Newer, Larger, Better? A Critique of the Unreflective LLM Adoption in Communication Research\n      -  Københavns Universitets Forskningsportal Spring til hovednavigation Spring til søgning Spring til hovedindhold Københavns Universitets Forskningsportal Hjælp og OSS !!Link opens in a new tab Dansk English !!Search content at Københavns Universitets Forskningsportal Forside Profiler Publikation Forskningsenheder Presse/medier Aktiviteter Priser Forskningsdatasæt Newer, Larger, Better? A Critique "
+    },
+    {
+      "key": "OSF",
+      "url": "https://osf.io/pa4t6/download",
+      "final_url": "https://idvyorynw6xy.compat.objectstorage.us-ashburn-1.oraclecloud.com/cos-prod-osf-1-files-ash/72092bf29fd529b4fcb8e912c97c0ca92f4f1863b036d2633f754260bd412d83?response-content-disposition=attachment%3B+filename%3D%22Manuscript_Viewpoints_Detection_PsyArXiv.pdf%22%3B+filename%2A%3DUTF-8%27%27Manuscript_Viewpoints_Detection_PsyArXiv.pdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261127%2Fus-ashburn-1%2Fs3%2Faws4_request&X-Amz-Date=20261127T092545Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=4616190be26742aafaee521464c1bf3aba5e03f180b5a185ad229302ab2c6e3d",
+      "status": 200,
+      "bytes": 361432,
+      "sha256": "72092bf29fd529b4fcb8e912c97c0ca92f4f1863b036d2633f754260bd412d83",
+      "pdf": true,
+      "pages": 36
+    },
+    {
+      "key": "M048_KU_PDF",
+      "url": "https://researchprofiles.ku.dk/files/559176349/Newer_Larger_Better_A_Critique_of_the_Unreflective_LLM_Adoption_in_Communication_Research.pdf",
+      "status": 403,
+      "bytes": 5985,
+      "sha256": "73ddd68babc6130e1c29c961cef641a79fd0c6e710beba45009748f34481a109",
+      "pages": null,
+      "pdf": false,
+      "meaning": "HTTP403HTML_JS_cookie_challenge_notPDF"
+    }
+  ],
+  "discovery_sources": [
+    {
+      "url": "https://api.openalex.org/works/https://doi.org/10.1093/joc/jqaf034",
+      "status": 200,
+      "bytes": 18642,
+      "sha256": "8b109d160fd9a0629aebbc715a12efc66599bd6727e368b1fefe13c91f9d866f",
+      "metadata": {
+        "doi": "https://doi.org/10.1093/joc/jqaf034",
+        "open_access": {
+          "is_oa": true,
+          "oa_status": "hybrid",
+          "oa_url": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+          "any_repository_has_fulltext": true
+        },
+        "best_oa_location": {
+          "id": "doi:10.1093/joc/jqaf034",
+          "doi": "https://doi.org/10.1093/joc/jqaf034",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.1093/joc/jqaf034",
+          "pdf_url": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+          "source": {
+            "id": "https://openalex.org/S107737141",
+            "display_name": "Journal of Communication",
+            "issn_l": "0021-9916",
+            "issn": [
+              "0021-9916",
+              "1460-2466"
+            ],
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": true,
+            "listed_in": [
+              "abdc-a",
+              "anvur-class-a",
+              "anvur-scientific",
+              "cwts-core",
+              "erih-plus",
+              "fnege-4",
+              "jufo-3",
+              "norway-2",
+              "poland-200",
+              "russia-white-list-1",
+              "vabb-shw"
+            ],
+            "host_organization": "https://openalex.org/P4310311648",
+            "host_organization_name": "Oxford University Press",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310311648",
+              "https://openalex.org/P4310311647"
+            ],
+            "host_organization_lineage_names": [
+              "Oxford University Press",
+              "University of Oxford"
+            ],
+            "type": "journal"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Journal of Communication",
+          "raw_type": "journal-article"
+        },
+        "locations": [
+          {
+            "id": "doi:10.1093/joc/jqaf034",
+            "doi": "https://doi.org/10.1093/joc/jqaf034",
+            "is_oa": true,
+            "landing_page_url": "https://doi.org/10.1093/joc/jqaf034",
+            "pdf_url": "https://academic.oup.com/joc/advance-article-pdf/doi/10.1093/joc/jqaf034/64218166/jqaf034.pdf",
+            "source": {
+              "id": "https://openalex.org/S107737141",
+              "display_name": "Journal of Communication",
+              "issn_l": "0021-9916",
+              "issn": [
+                "0021-9916",
+                "1460-2466"
+              ],
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": true,
+              "listed_in": [
+                "abdc-a",
+                "anvur-class-a",
+                "anvur-scientific",
+                "cwts-core",
+                "erih-plus",
+                "fnege-4",
+                "jufo-3",
+                "norway-2",
+                "poland-200",
+                "russia-white-list-1",
+                "vabb-shw"
+              ],
+              "host_organization": "https://openalex.org/P4310311648",
+              "host_organization_name": "Oxford University Press",
+              "host_organization_lineage": [
+                "https://openalex.org/P4310311648",
+                "https://openalex.org/P4310311647"
+              ],
+              "host_organization_lineage_names": [
+                "Oxford University Press",
+                "University of Oxford"
+              ],
+              "type": "journal"
+            },
+            "license": "cc-by",
+            "license_id": "https://openalex.org/licenses/cc-by",
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "Journal of Communication",
+            "raw_type": "journal-article"
+          },
+          {
+            "id": "doi:10.31234/osf.io/pa4t6",
+            "doi": "https://doi.org/10.31234/osf.io/pa4t6",
+            "is_oa": true,
+            "landing_page_url": "https://doi.org/10.31234/osf.io/pa4t6",
+            "pdf_url": "https://osf.io/pa4t6/download",
+            "source": {
+              "id": "https://openalex.org/S4306401687",
+              "display_name": "PsyArXiv (OSF Preprints)",
+              "issn_l": null,
+              "issn": null,
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": false,
+              "listed_in": [],
+              "host_organization": "https://openalex.org/I2799848540",
+              "host_organization_name": "Center for Open Science",
+              "host_organization_lineage": [
+                "https://openalex.org/I2799848540"
+              ],
+              "host_organization_lineage_names": [],
+              "type": "repository"
+            },
+            "license": "cc-by",
+            "license_id": "https://openalex.org/licenses/cc-by",
+            "version": "submittedVersion",
+            "is_accepted": false,
+            "is_published": false,
+            "raw_source_name": null,
+            "raw_type": "posted-content"
+          },
+          {
+            "id": "pmh:oai:share.osf.io:584f5fbb-317d-4243-9d3f-1a98e9aeee73",
+            "doi": null,
+            "is_oa": true,
+            "landing_page_url": "https://osf.io/pa4t6",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S4306401687",
+              "display_name": "PsyArXiv (OSF Preprints)",
+              "issn_l": null,
+              "issn": null,
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": false,
+              "listed_in": [],
+              "host_organization": "https://openalex.org/I2799848540",
+              "host_organization_name": "Center for Open Science",
+              "host_organization_lineage": [
+                "https://openalex.org/I2799848540"
+              ],
+              "host_organization_lineage_names": [],
+              "type": "repository"
+            },
+            "license": "cc-by",
+            "license_id": "https://openalex.org/licenses/cc-by",
+            "version": "submittedVersion",
+            "is_accepted": false,
+            "is_published": false,
+            "raw_source_name": null,
+            "raw_type": "Preprint"
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://api.openalex.org/works/https://doi.org/10.1080/10584609.2026.2618486",
+      "status": 200,
+      "bytes": 24656,
+      "sha256": "7349f4f0f7ce8661022dca071afe9603e793d528610f76fa351921c8cb806dcc",
+      "metadata": {
+        "doi": "https://doi.org/10.1080/10584609.2026.2618486",
+        "open_access": {
+          "is_oa": true,
+          "oa_status": "hybrid",
+          "oa_url": "https://www.tandfonline.com/doi/pdf/10.1080/10584609.2026.2618486?needAccess=true",
+          "any_repository_has_fulltext": true
+        },
+        "best_oa_location": {
+          "id": "doi:10.1080/10584609.2026.2618486",
+          "doi": "https://doi.org/10.1080/10584609.2026.2618486",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.1080/10584609.2026.2618486",
+          "pdf_url": "https://www.tandfonline.com/doi/pdf/10.1080/10584609.2026.2618486?needAccess=true",
+          "source": {
+            "id": "https://openalex.org/S27211427",
+            "display_name": "Political Communication",
+            "issn_l": "1058-4609",
+            "issn": [
+              "1058-4609",
+              "1091-7675"
+            ],
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": true,
+            "listed_in": [
+              "abdc-a",
+              "anvur-class-a",
+              "anvur-scientific",
+              "cwts-core",
+              "erih-plus",
+              "jufo-3",
+              "norway-2",
+              "poland-140",
+              "russia-white-list-1",
+              "vabb-shw"
+            ],
+            "host_organization": "https://openalex.org/P4310320547",
+            "host_organization_name": "Taylor & Francis",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310320547",
+              "https://openalex.org/P4310320449"
+            ],
+            "host_organization_lineage_names": [
+              "Taylor & Francis",
+              "Informa"
+            ],
+            "type": "journal"
+          },
+          "license": "cc-by-nc-nd",
+          "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Political Communication",
+          "raw_type": "journal-article"
+        },
+        "locations": [
+          {
+            "id": "doi:10.1080/10584609.2026.2618486",
+            "doi": "https://doi.org/10.1080/10584609.2026.2618486",
+            "is_oa": true,
+            "landing_page_url": "https://doi.org/10.1080/10584609.2026.2618486",
+            "pdf_url": "https://www.tandfonline.com/doi/pdf/10.1080/10584609.2026.2618486?needAccess=true",
+            "source": {
+              "id": "https://openalex.org/S27211427",
+              "display_name": "Political Communication",
+              "issn_l": "1058-4609",
+              "issn": [
+                "1058-4609",
+                "1091-7675"
+              ],
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": true,
+              "listed_in": [
+                "abdc-a",
+                "anvur-class-a",
+                "anvur-scientific",
+                "cwts-core",
+                "erih-plus",
+                "jufo-3",
+                "norway-2",
+                "poland-140",
+                "russia-white-list-1",
+                "vabb-shw"
+              ],
+              "host_organization": "https://openalex.org/P4310320547",
+              "host_organization_name": "Taylor & Francis",
+              "host_organization_lineage": [
+                "https://openalex.org/P4310320547",
+                "https://openalex.org/P4310320449"
+              ],
+              "host_organization_lineage_names": [
+                "Taylor & Francis",
+                "Informa"
+              ],
+              "type": "journal"
+            },
+            "license": "cc-by-nc-nd",
+            "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "Political Communication",
+            "raw_type": "journal-article"
+          },
+          {
+            "id": "pmh:oai:pure.atira.dk:openaire/3e917a65-13aa-4e51-be23-5e6315a70695",
+            "doi": null,
+            "is_oa": true,
+            "landing_page_url": "https://researchprofiles.ku.dk/da/publications/3e917a65-13aa-4e51-be23-5e6315a70695",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S4306401983",
+              "display_name": "Research at the University of Copenhagen (University of Copenhagen)",
+              "issn_l": null,
+              "issn": null,
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": false,
+              "listed_in": [],
+              "host_organization": "https://openalex.org/I124055696",
+              "host_organization_name": "University of Copenhagen",
+              "host_organization_lineage": [
+                "https://openalex.org/I124055696"
+              ],
+              "host_organization_lineage_names": [],
+              "type": "repository"
+            },
+            "license": "cc-by-nc-nd",
+            "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "Balluff, P, Ho, J C T, Gruber, J B, Palicki, S, Palmer, A, Rossi, L, Shklovski, I & Chan, C H 2026, 'Newer, Larger, Better? A Critique of the Unreflective LLM Adoption in Communication Research', Political Communication, vol. 43, no. 3, pp. 572–581. https://doi.org/10.1080/10584609.2026.2618486",
+            "raw_type": "info:eu-repo/semantics/publishedVersion"
+          },
+          {
+            "id": "pmh:oai:pure.atira.dk:openaire/0f4ec58a-7c62-4234-a8e7-a96578c6d0b4",
+            "doi": null,
+            "is_oa": true,
+            "landing_page_url": "https://pure.itu.dk/portal/da/publications/0f4ec58a-7c62-4234-a8e7-a96578c6d0b4",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S4377196680",
+              "display_name": "IT University Of Copenhagen (IT University of Copenhagen)",
+              "issn_l": null,
+              "issn": null,
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": false,
+              "listed_in": [],
+              "host_organization": "https://openalex.org/I83467386",
+              "host_organization_name": "IT University of Copenhagen",
+              "host_organization_lineage": [
+                "https://openalex.org/I83467386"
+              ],
+              "host_organization_lineage_names": [],
+              "type": "repository"
+            },
+            "license": "cc-by-nd",
+            "license_id": "https://openalex.org/licenses/cc-by-nd",
+            "version": "submittedVersion",
+            "is_accepted": false,
+            "is_published": false,
+            "raw_source_name": "Balluff, P, Ho, J C, Gruber, J B, Palicki, S, Palmer, A, Rossi, L, Shklovski, I & Chan, C 2026, 'Newer, Larger, Better? A Critique of the Unreflective LLM Adoption in Communication Research', Political Communication, vol. 43, no. 3, pp. 572-581. https://doi.org/10.1080/10584609.2026.2618486",
+            "raw_type": "info:eu-repo/semantics/article"
+          }
+        ]
+      }
+    }
+  ],
+  "read_scope": "authorpp1-25and34-36;refs26-33identityonly;formalPDFwebtitle_abstractpreview_notfullread",
+  "study_overall_N": [
+    3990,
+    2263,
+    1127,
+    2792,
+    3988,
+    673,
+    412,
+    2013,
+    971,
+    477,
+    226,
+    131
+  ],
+  "sum_judgments": 19063,
+  "N_unit": "AIjudgments_notrealhumans_independentseeds_or_modelreplications",
+  "study6": {
+    "reported_overall_N": 673,
+    "reported_overall_accuracy_percent": 48.14,
+    "FBI_N": 370,
+    "FBI_accuracy_percent": 49.19,
+    "novice_N": 303,
+    "novice_accuracy_percent": 49.86,
+    "weighted_subgroups_percent": 49.49164933135215,
+    "meaning": "author_table_internal_inconsistency_notcorrected;formal_andrawdata_pending"
+  },
+  "study4": {
+    "author_table_percent": 57.49,
+    "author_abstract_rounded": 57.5,
+    "formal_abstract_percent": 57.7,
+    "meaning": "versionsdistinct;notmerged"
+  },
+  "nominal_base_rate": {
+    "truth": 7,
+    "lie": 1,
+    "always_truth_accuracy_percent": 87.5,
+    "meaning": "nominaldesignnotverifiedreturnedtruthfraction"
+  },
+  "limitations": "Nooriginaldata/platformcalls/authorcodeexecution;partialformalpreviewnotfullformalread;M048KUfile403HTMLnotPDF"
+}
