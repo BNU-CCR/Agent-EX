@@ -68,3 +68,5 @@ AJ补群体主体：人口权重/主体粒度、显式互动、模板先验与�
 AK用固定源码澄清M035效率惩罚方向，说明公式、源码与实际run应分列；不得由印刷表达直接推定代码行为。 见[制品跟进](ecolang_formula_artifact_followup.md)。
 
 AM：SOTOPIA支持构造任务下的互动能力评价，真人评分与真人参与分开；多维相关不等于自然社会过程校准。见sotopia_evaluation_and_iclr_ecology.md。
+
+AO：M037经验参照来自既有人类研究，模型与人类风险引出程序不同；同方向、模式符合和内部认知机制应分开，见trust_behavior_validation_boundaries.md。

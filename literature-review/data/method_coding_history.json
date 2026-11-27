@@ -3808,5 +3808,75 @@
     "batch": "AN-NEURIPS",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/an_neurips/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AO-TRUST-READING",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ao_trust_reading/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "AO-TRUST-READING",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ao_trust_reading/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AO-TRUST-READING",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ao_trust_reading/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_transferability",
+    "old": "pending_fulltext;potentialbehavioralvalidationreference",
+    "new": "方向/幅度/分布/模式/机制及引出程序分层；有历史参照，非已验证自然网络过程。",
+    "date": "2026-11-27",
+    "batch": "AO-TRUST-READING",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ao_trust_reading/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_pending_fields",
+    "old": "fulltext;first_formal_online_day;human_reference;sample_and_dependence;prompt_calibration;bias_robustness;version_artifacts",
+    "new": "first_formal_online_day;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;model_snapshot_seeds;full_artifact_run_mapping;external_transfer",
+    "date": "2026-11-27",
+    "batch": "AO-TRUST-READING",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ao_trust_reading/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_evidence_location",
+    "old": "officialabstract",
+    "new": "§2–5;AppC/D/E/G1/H;checklist4–8/14–15",
+    "date": "2026-11-27",
+    "batch": "AO-TRUST-READING",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ao_trust_reading/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_coding_source",
+    "old": "reports/neurips_evaluation_ecology.md",
+    "new": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json",
+    "date": "2026-11-27",
+    "batch": "AO-TRUST-READING",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ao_trust_reading/results.json"
   }
 ]

@@ -35,16 +35,17 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-27，保留首轮57条及15卡，新增37项工作、补读5条原记录，现94条、52张全文卡；35项正式纳入、51候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-27，保留首轮57条及15卡，新增37项工作、补读5条原记录，现94条、53张全文卡；35项正式纳入、51候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
-- [验证证据矩阵](reports/method_validation_matrix.md)：85个证据单元，回答、轨迹、经验效度分列。
+- [验证证据矩阵](reports/method_validation_matrix.md)：90个证据单元，回答、轨迹、经验效度分列。
 - [双主体校准的评价边界](reports/dual_agent_calibration_boundaries.md)：作者v1与正式版、条件预测与闭环证据分列。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
+- [信任行为验证边界](reports/trust_behavior_validation_boundaries.md)：历史参照、引出程序、方向/幅度、BDI与对象标签分层。
 - [NeurIPS评价路线](reports/neurips_evaluation_ecology.md)：正式信任行为题录、E&D贡献类型和有条件代码要求，未读候选不建卡。
 - [SOTOPIA与ICLR评价入口](reports/sotopia_evaluation_and_iclr_ecology.md)：多维judge、真人参与和难例选择边界，2027指南与已截止日分列。
 - [TACL政策与适配](reports/tacl_policy_and_fit.md)：旧模板/新附录政策、条件资料义务及既有测量先例。

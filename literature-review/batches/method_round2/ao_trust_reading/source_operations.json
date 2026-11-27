@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "S-M2-AO-PDF",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GET formalTrustBehaviorPDF",
+    "source_url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/1cb57fcf7ff3f6d37eebae5becc9ea6d-Paper-Conference.pdf",
+    "status": "HTTP200_PDF56pages",
+    "notes": "No independentpre2022search, no code/modelexecution; published historical reference attribution only."
+  },
+  {
+    "search_id": "S-M2-AO-READ",
+    "platform": "local_PDF_read",
+    "search_date": "2026-11-27",
+    "query_exact": "Focusedreadpp1–10,18–21,23,26–29,51–54,56; sequential extraction calls merged",
+    "source_url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/1cb57fcf7ff3f6d37eebae5becc9ea6d-Paper-Conference.pdf",
+    "status": "fulltext_focused_read_notallappendices",
+    "notes": "No independentpre2022search, no code/modelexecution; published historical reference attribution only."
+  },
+  {
+    "search_id": "S-M2-AO-VISUAL",
+    "platform": "local_visual",
+    "search_date": "2026-11-27",
+    "query_exact": "Renderandinspectp20AppC/D",
+    "source_url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/1cb57fcf7ff3f6d37eebae5becc9ea6d-Paper-Conference.pdf",
+    "status": "elicitationdifference_visual_checked",
+    "notes": "No independentpre2022search, no code/modelexecution; published historical reference attribution only."
+  }
+]

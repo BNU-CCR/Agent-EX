@@ -1,0 +1,16 @@
+{
+  "batch": "AO",
+  "checked_date": "2026-11-27",
+  "record_id": "M037",
+  "source_url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/1cb57fcf7ff3f6d37eebae5becc9ea6d-Paper-Conference.pdf",
+  "http_status": 200,
+  "content_type": "application/pdf",
+  "bytes": 5121261,
+  "pages": 56,
+  "sha256": "a729dec371ccdf5705d89915d720271d1bdd35a1cf3998c7db65db8891c51140",
+  "reading_scope": "pp1–10,18–21,23,26–29,51–54,56;p20visual",
+  "version": "formalNeurIPS2024Main",
+  "date_status": "first_formal_online_pending",
+  "local_acquisition": "scratch/AO_trust.pdf;binary_not_committed",
+  "execution": "none"
+}

@@ -84,3 +84,8 @@ VC82,M036,自动judge与人评按维度/角色来源分层,同一episode/主体/
 VC83,M036,真人评分过程/分母与量尺披露,主文200 vs附录222;五档κ,统一分母或原11点完全一致,证据口径,AppE1 180模型对+42涉真人；E3 43/235合格；κ.503,文内口径差异未闭合,独立复核或统一200/222解释,保存分母/筛选/量尺变换,p6;pp23–24AppE,published_empirical_evidence_bounded_not_rerun,2026-11-27
 VC84,M036,真人亲自参与与真人评价分开,20human-human/40human-GPT4 on20hardtasks,难例角色扮演当总体自然人群校准,主体能力参考,Table3目标4.85/5.95/6.15，作者t检验显著,模型选出的20难例，非全部任务,现实人口、网络动态和独立重复统计,标明选择机制与证据层,p8§7/Table3,published_empirical_evidence_bounded_not_rerun,2026-11-27
 VC85,M036,伙伴模型与主体信息/轮替规定,不同伙伴模型/固定dyadicroundrobin,能力分脱离互动对象；环境一般性当实测规模,互动协议条件性,伙伴弱可降低配对分；450任务共享40人物/90场景,双主体短时构造任务,多方异步长期动态或450独立seeds,冻结/交叉伙伴与信息条件，区分任务和run,pp3–7;AppB/C,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC86,M037,引出程序比较,人类P*报告 vsLLM十组p逐点选择,曲线相似当相同程序复现,操作化可比性,AppD明确模型理解限制后的替代程序,简化风险/信任任务,程序等价/独立历史数据复核,显式记录任务改写及比较边界,p20AppD,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC87,M037,行为方向与效应幅度分层,Trust/Dictator及两Lottery,同方向显著当效应等价,经验对齐范围,人类6.0/3.6 vsGPT4 6.9/6.3；Lottery54/29 vs72/21,既有研究参照/四舍五入表值,预注册等价/总体分布拟合/统计独立性,报告幅度/分布与方向，不单写alignment,pp6–7;AppE,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC88,M037,BDI输出与内部机制分开,模型生成解释对应金额,叙事一致当认知同源/因果识别,理论到行为与解释,作者以BDI解释高低发送行为,文本解释与决策联合生成,排除事后合理化/独立人类认知验证,解释证据与机制检验分列,pp4–7;H,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC89,M037,动态模式与逐轨迹校准分开,16组/模型；人类图重画,模式符合率当轨迹准确率/网络效度,动态评价口径,GPT4三模式87.5/87.5/100%；G1既有图重画,七轮博弈/作者阈值模式,数字化误差/留出预测/长期网络过程,保留目标模式阈值和原始参照来源,pp7–8;G1p23,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC90,M037,对象标签与实际混合互动分开,H3真人/LLM对象提示,模型偏好当真人AI合作效益,人类证据层/操纵范围,H3文字指定对方真人或LLM；清单人类实验NA,模型文字条件响应,真人参与互动/合作收益实测,标签操纵与真实参与分列,"pp9,29,56",published_empirical_evidence_bounded_not_rerun,2026-11-27

@@ -1,0 +1,27 @@
+{
+  "batch_id": "AO-TRUST-READING",
+  "date": "2026-11-27",
+  "expected_master_sha256": "82f83b7376de5773f251b21f7cec1e4d1e00930df883e7406fb76dcab6f9142c",
+  "updates": [
+    {
+      "record_id": "M037",
+      "search_id": "S-M2-AN-Q4;S-M2-AN-FORMAL;S-M2-AO-PDF;S-M2-AO-READ;S-M2-AO-VISUAL",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M037.md",
+      "supplement_status": "selected_appendices_and_checklist_read;code_not_audited",
+      "reason": "Formal focusedfulltext supports bounded historicalbehaviorreference;firstonlinepending candidate retained.",
+      "findings": "人类概率阈值vs模型逐概率引出不同；历史人类图重画；方向相似非效应等价，BDI解释非独立认知机制；人类/LLM对象为提示操纵。",
+      "evidence_location": "PDFpp1–10,18–21,23,26–29,51–54,56;p20visual",
+      "notes": "ANabstracthistoryretained;AOformalPDFfocusedread;no newhumanrecruitment;no code/modelrun;dategateunchanged.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "方向/幅度/分布/模式/机制及引出程序分层；有历史参照，非已验证自然网络过程。",
+      "method_pending_fields": "first_formal_online_day;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;model_snapshot_seeds;full_artifact_run_mapping;external_transfer",
+      "method_evidence_location": "§2–5;AppC/D/E/G1/H;checklist4–8/14–15",
+      "method_coding_source": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

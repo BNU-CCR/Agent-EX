@@ -5,7 +5,7 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 40,
-  "search_rows": 749,
+  "search_rows": 752,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 35,
@@ -20,11 +20,11 @@
     "peripheral": 11,
     "application": 6
   },
-  "fulltext_cards": 52,
+  "fulltext_cards": 53,
   "date_pending": 27,
   "checks": "passed",
   "limitations": "No experiment rerun; workbook visual verification separate; not database coverage certification",
-  "validation_matrix_units": 85,
+  "validation_matrix_units": 90,
   "venue_types": {
     "journal": 27,
     "conference": 12,
