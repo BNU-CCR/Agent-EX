@@ -1,0 +1,92 @@
+[
+  {
+    "search_id": "S-M2-AU-Q",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.mlr.press \"Using Large Language Models to Simulate Multiple Humans\"",
+    "source_url": "",
+    "status": "formal_discovery",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-FORMAL",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openformalPMLRaher23a",
+    "source_url": "https://proceedings.mlr.press/v202/aher23a.html",
+    "status": "formalmetadata_checked",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-VOLUME",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openPMLR202",
+    "source_url": "https://proceedings.mlr.press/v202/",
+    "status": "formalpublicationdayvisible",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-PDF",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GETformalPDF",
+    "source_url": "https://proceedings.mlr.press/v202/aher23a/aher23a.pdf",
+    "status": "HTTP200_PDF35pages_after_live_wait",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-VOLHTTP",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GETvolumeHTML/extractPublished",
+    "source_url": "https://proceedings.mlr.press/v202/",
+    "status": "HTTP200_publicationday_hash",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-READ",
+    "platform": "local_PDF_read",
+    "search_date": "2026-11-27",
+    "query_exact": "focusedpp1–9,13–14,21–22;sequentialextractcallsmerged;p5visual",
+    "source_url": "https://proceedings.mlr.press/v202/aher23a/aher23a.pdf",
+    "status": "focusedfulltext_read",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-LOCAL",
+    "platform": "local_master_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "duplicateAher/title/master/readremainingvenuegaps",
+    "source_url": "",
+    "status": "no_duplicate_notnegativevenueclaim",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-CHI-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org CHI 2024 \"simulations\" \"language models\"",
+    "source_url": "",
+    "status": "CHI_trialsearch_notcomplete",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-CHI-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:chi2027.acm.org papers reproducibility",
+    "source_url": "",
+    "status": "CHI_officialguidance_leads_notfullread",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  },
+  {
+    "search_id": "S-M2-AU-CHI-LOCAL",
+    "platform": "local_master_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "CHI/humanfactors/Hamalainenauthorlookup",
+    "source_url": "",
+    "status": "noexactmatches_incurrentfields_notzeroCHIpublication",
+    "notes": "CHItrialleadsbelongtoAVresume,loggedhereonce;no source/modelcodeexecution;PDFpollssameprocessnotnewdownloads."
+  }
+]

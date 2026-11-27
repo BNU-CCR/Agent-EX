@@ -101,3 +101,8 @@ VC99,M038,模拟研究对象分开,M038孤立被试/不要求agency vsM039集体
 VC100,M038,挑战提及与失败检验分开,A1ChallengesDescribed主观省略极简提及,提及某挑战等于统一指标失败,文献编码含义,A1/A2表注；AppC无常规WoS/Scopus识别,作者综述/评论,53项系统数据库穷尽或统一评分,不跨不同表schema合并比例,M038A1/A2/AppC,review_and_conceptual_evidence_not_new_empirical_validation,2026-11-27
 VC101,M038,相对基线/相关与准确率分开,85%relative test–retest;正文variation/App r.91,统一85/91%人类准确率,引用指标口径,作者自己提基线不清；Hewitt统计措辞待原文,本论文转述非原研究核验,解释方差/个体准确或原研究统计错误,核单位/分母/调整和原来源,M038p1/p8/AppA2.3/A2.4,review_and_conceptual_evidence_not_new_empirical_validation,2026-11-27
 VC102,M038,近端用途与技术议程分开,pilot/探索 vs完整研究；steering/训练等建议,前景或工具箱等于验证完成,方法成熟度/应用边界,Fig1/§5/§6谨慎用途与未来方向,观点/概念论证,统一可用性/五挑战已解决,用受控检验而非清单宣称方法增量,M038Table1/§4–6/Fig1,review_and_conceptual_evidence_not_new_empirical_validation,2026-11-27
+VC103,M040,格式合法与人类保真分开,允许续写概率质量Z/合法生成比例,合法率当人类准确率,指标对象,Table1是validgeneration；后续另比人类趋势,所测提示/任务,合法即经验有效,分别记录schema/行为/参考误差,p5§2/Table1,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC104,M040,姓名设计与独立人群分开,1000名/10000配对/11报价共用角色,名称/记录数当独立seed或人口代表,重复与参考,五姓氏类别/称谓人为平衡，配对共享身份,合成条件设计,人口抽样/独立真人/宏观网络机制,层级重复与主体属性分开,pp5–6/AppA/B,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC105,M040,生成与程序分类控制分开,Milgramregex首句/模型2choice>.5/四prods,自由文本当无约束涌现,互动/测量边界,环境与辅助分类决定终止/推进,所读程序说明非代码执行,分类误差/人类程序完全等价,冻结并审计辅助模型/阈值/状态,"pp8,21–22AppF",published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC106,M040,模型任务覆盖与新颖性分开,LM1–5前三任务；LM6–8仅最后；三类变体,GPT4通过全部/变体证明无训练记忆,评价范围,作者明确模型时序和训练数据疑虑,所测版本/变体,一般样本外新真人能力或泄漏已排除,报告模型×任务面板及新颖性依据,"pp2,5–6,9",published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC107,M040,事实正确与人类失真分开,WisdomCrowds中位数1/IQR0,事实越准就越人类；跨模型当alignment因果,人类分布效度,更准确模型可呈hyperaccuracydistortion,所选四实验/知识题,训练因素因果效应/所有模型都失真,保留反向案例及分布指标,p9Fig8/§7–8,published_empirical_evidence_bounded_not_rerun,2026-11-27

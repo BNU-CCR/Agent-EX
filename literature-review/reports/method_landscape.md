@@ -78,3 +78,5 @@ AQ跨研究综合将经验参考、程序/信息可比性、误差尺度、实�
 AS将异质性检查细分为主体/时间/重复层、参考来源和统计尺度；21研究9/21检查方差而GT子集9/14，GT含Literature，不统计统一人类匹配率。见heterogeneity_review_denominators.md。
 
 AT：M038与M039共享有条件方法论立场，主要差异是单被试生成数据与集体过程、用途时间和改进预期；53vs21语料不可合并验证比例。见position_scope_and_disagreement.md。
+
+AU正式TE方法提示格式有效与事实能力不等于人类保真，辅助分类器也决定序列过程；新模型仅测最后任务，经验与Position先例分开。见turing_experiment_fidelity.md。

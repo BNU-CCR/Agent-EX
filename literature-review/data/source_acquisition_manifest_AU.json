@@ -1,0 +1,25 @@
+{
+  "batch": "AU",
+  "checked_date": "2026-11-27",
+  "record_id": "M040",
+  "official_url": "https://proceedings.mlr.press/v202/aher23a.html",
+  "formal_publication": "2023-07-03",
+  "date_source": "https://proceedings.mlr.press/v202/",
+  "pdf": {
+    "url": "https://proceedings.mlr.press/v202/aher23a/aher23a.pdf",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 3860576,
+    "pages": 35,
+    "sha256": "34ac40e9e779cb564038ab5e8e8393c975a2f942cc94b901d25f261739499a7e",
+    "scope": "pp1–9,13–14,21–22;p5visual"
+  },
+  "volume_html": {
+    "url": "https://proceedings.mlr.press/v202/",
+    "http_status": 200,
+    "bytes": 1670480,
+    "sha256": "fceaba96362eda584dccc6ca38ee5fa68e399efcbdc827f6f9db71af6667e2b0"
+  },
+  "code_access": "paperlinklocated_notfetchedorversionpinned",
+  "execution": "none"
+}

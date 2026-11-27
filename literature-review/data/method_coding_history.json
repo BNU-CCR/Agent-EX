@@ -4328,5 +4328,125 @@
     "batch": "AT-PROMISING-POSITION",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/at_promising_position/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_type",
+    "old": "",
+    "new": "Turing_Experiments;records_and_choice_probability_validation",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;validation_and_external_validity;measurement;interaction_protocol",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_transferability",
+    "old": "",
+    "new": "条件记录/失真测试、合法率与效度分层可迁移，人口代表性/因果机制/运行身份待核。",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接提出并执行人类实验模拟评价，限四类历史参照和所测模型范围。",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fixed_code_run_mapping;prompt_validation_blinding;human_sample_representativeness;classifier_errors;model_snapshot_seeds;independent_rebuild;novel_human_validation",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "§2–8;Tables1/2;AppA/B/F",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M040.md;data/source_acquisition_manifest_AU.json",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
+  },
+  {
+    "record_id": "M040",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "AU-TURING-EXPERIMENTS",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/au_turing_experiments/results.json"
   }
 ]
