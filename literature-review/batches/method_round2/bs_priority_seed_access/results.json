@@ -1,0 +1,16 @@
+{
+  "batch_id": "BS-priority-seed-public-access",
+  "date": "2026-11-27",
+  "expected_master_sha256": "159bbb58dc1887713201b3934e5c2028d6cdde0ab10d7ce94256d96f1005e3f0",
+  "updates": [
+    {
+      "record_id": "M003",
+      "notes": "Statistically indistinguishable output under two parameter settings is not proof of equivalence across parameter space or implementation details.; Hosted/local model comparisons confound model capacity and deployment; not evidence of deployment causal effects.; precise first-online date pending; July2026 issue is not first-online proof | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:publisher403;exactfirstonlineunresolved;author versionequivalence statement not independentproof. | BS:publisherweb403/static403HTML832981bytes;institutionalJulyissueonly;exactfirstonlineunresolved."
+    },
+    {
+      "record_id": "M012",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed."
+    }
+  ],
+  "new_records": []
+}

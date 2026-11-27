@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "BS-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1016/j.ecolmodel.2026.111624\"",
+    "status": "results_returned_not_exhaustive",
+    "source_url": "",
+    "notes": "Exact query; total result count not supplied; snippets are discovery, not full-text reading"
+  },
+  {
+    "search_id": "BS-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Twenty years of the ODD protocol\" pdf",
+    "status": "results_returned_not_exhaustive",
+    "source_url": "",
+    "notes": "Exact query; total result count not supplied; snippets are discovery, not full-text reading"
+  },
+  {
+    "search_id": "BS-03",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open exact primary URL",
+    "status": "institution_metadata_read",
+    "source_url": "https://research.tudelft.nl/en/publications/twenty-years-of-the-odd-protocol-development-usage-extensions-and/",
+    "notes": "Delft final-version13pages/CCBY listing; no first-online day"
+  },
+  {
+    "search_id": "BS-04",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open exact primary URL",
+    "status": "403_access_failed",
+    "source_url": "https://www.sciencedirect.com/science/article/abs/pii/S0304380026001523",
+    "notes": "No full-text acquisition; no inferred zero hits"
+  },
+  {
+    "search_id": "BS-05",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open exact primary URL",
+    "status": "403_access_failed",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+    "notes": "No full-text acquisition; no inferred zero hits"
+  },
+  {
+    "search_id": "BS-06",
+    "platform": "web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "follow institution document link9",
+    "status": "403_access_failed",
+    "source_url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "notes": "No full-text acquisition; no inferred zero hits"
+  },
+  {
+    "search_id": "BS-07",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET exact primary URL",
+    "status": "403_html_not_pdf",
+    "source_url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "notes": "HTTP403;5717bytes;SHA2562802dd6851864d431befa7a02a44cc136bee6dc31498718915cf44d97864362c;noPDFheader"
+  },
+  {
+    "search_id": "BS-08",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET exact primary URL",
+    "status": "403_html_not_pdf",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+    "notes": "HTTP403;832981bytes;SHA256a66a548dfe4f54a2c288b0b71baad8ac87268bc9fd5bdf1810f0bfe6d440d1db;noPDFheader"
+  }
+]

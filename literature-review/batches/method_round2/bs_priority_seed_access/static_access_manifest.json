@@ -1,0 +1,24 @@
+[
+  {
+    "tag": "M012_Delft_pdf",
+    "url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "final_url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "status": 403,
+    "bytes": 5717,
+    "content_type": "text/html; charset=UTF-8",
+    "sha256": "2802dd6851864d431befa7a02a44cc136bee6dc31498718915cf44d97864362c",
+    "pdf_header": false,
+    "scratch_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M012_Delft_pdf.bin"
+  },
+  {
+    "tag": "M003_publisher",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+    "final_url": "https://www.sciencedirect.com/science/article/pii/S0304380026001523",
+    "status": 403,
+    "bytes": 832981,
+    "content_type": "text/html; charset=UTF-8",
+    "sha256": "a66a548dfe4f54a2c288b0b71baad8ac87268bc9fd5bdf1810f0bfe6d440d1db",
+    "pdf_header": false,
+    "scratch_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M003_publisher.bin"
+  }
+]
