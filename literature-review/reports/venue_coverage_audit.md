@@ -26,3 +26,5 @@
 批次S见[SSR范围与检索边界](ssr_scope_and_search_boundary.md)：官方范围已补，目录/指南403，未确认先例，不是零发表。
 
 V批确认41命名入口仍16项未对账；其余为局部证据。额外JSC/AMPPS不替代它们。见[交付审计](delivery_requirement_audit.md)。
+
+AE将TCSS从not_yet_reconciled更新为部分对账：官方范围/格式、费用冲突、历史CFP与M032正式全文。未对账入口余15，部分对账不是2022+全刊覆盖完成。

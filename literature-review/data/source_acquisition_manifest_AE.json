@@ -1,0 +1,28 @@
+[
+  {
+    "version": "author_hosted_publisher_issue_layout",
+    "source_url": "https://www.cs.bilkent.edu.tr/~oulusoy/IEEE_TCSS-2025-published",
+    "sha256": "0b524a1cdbb67e236b0783a817afe81ba3ee10a2f81acfb6cf7b9372caee0b91",
+    "bytes": 2342468,
+    "checked": "2026-11-27",
+    "storage": "temporary payload;repo manifest only",
+    "pages": 15
+  },
+  {
+    "version": "official_historical_CFP",
+    "source_url": "https://www.ieeesmc.org/wp-content/uploads/2025/06/GENERA1.pdf",
+    "sha256": "9ff6ce50d194483a366061f1480f6633200d42dfc17f38da9d40b77ea137f48f",
+    "bytes": 198535,
+    "checked": "2026-11-27",
+    "storage": "temporary payload;repo manifest only",
+    "pages": 2
+  },
+  {
+    "version": "publisher_deposited_metadata",
+    "source_url": "https://api.crossref.org/works/10.1109/TCSS.2025.3565377",
+    "sha256": "749884cd564b2a6f537801d831a2ec3b2ff88776cfee9dfcfcf4ade3f58bcaea",
+    "bytes": 8284,
+    "checked": "2026-11-27",
+    "storage": "temporary payload;repo manifest only"
+  }
+]

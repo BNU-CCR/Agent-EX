@@ -1,0 +1,200 @@
+[
+  {
+    "search_id": "S-M2-AE-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.ieeesmc.org \"Transactions on Computational Social Systems\" scope authors",
+    "source_url": "",
+    "status": "targeted_search_completed",
+    "notes": "Public discovery, no whole-journal export; 3710148 title not primary-confirmed, no new record from that lead"
+  },
+  {
+    "search_id": "S-M2-AE-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"IEEE Transactions on Computational Social Systems\" \"large language\" \"simulation\" 2024 2025 2026",
+    "source_url": "",
+    "status": "targeted_search_completed",
+    "notes": "Public discovery, no whole-journal export; 3710148 title not primary-confirmed, no new record from that lead"
+  },
+  {
+    "search_id": "S-M2-AE-Q3",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1109/TCSS.2026.3710148\"",
+    "source_url": "",
+    "status": "targeted_search_completed",
+    "notes": "Public discovery, no whole-journal export; 3710148 title not primary-confirmed, no new record from that lead"
+  },
+  {
+    "search_id": "S-M2-AE-Q4",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"IEEE Transactions on Computational Social Systems\" \"generative agents\" simulation",
+    "source_url": "",
+    "status": "targeted_search_completed",
+    "notes": "Public discovery, no whole-journal export; 3710148 title not primary-confirmed, no new record from that lead"
+  },
+  {
+    "search_id": "S-M2-AE-Q5",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"IEEE Transactions on Computational Social Systems\" \"large language models\" \"agent-based\"",
+    "source_url": "",
+    "status": "targeted_search_completed",
+    "notes": "Public discovery, no whole-journal export; 3710148 title not primary-confirmed, no new record from that lead"
+  },
+  {
+    "search_id": "S-M2-AE-Q6",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Crowd: A Social Network Simulation Framework\" \"ieeexplore\"",
+    "source_url": "",
+    "status": "targeted_search_completed",
+    "notes": "Public discovery, no whole-journal export; 3710148 title not primary-confirmed, no new record from that lead"
+  },
+  {
+    "search_id": "S-M2-AE-Q7",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:open.ieee.org \"2026\" \"hybrid\" \"2,800\"",
+    "source_url": "",
+    "status": "targeted_search_completed",
+    "notes": "Public discovery, no whole-journal export; 3710148 title not primary-confirmed, no new record from that lead"
+  },
+  {
+    "search_id": "S-M2-AE-SCOPE",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.ieeesmc.org/publications/transactions-on-computational-social-systems/",
+    "status": "official_scope_checked",
+    "notes": "Man/man-machine/machine systems and computational social simulation"
+  },
+  {
+    "search_id": "S-M2-AE-GUIDE",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.ieeesmc.org/publications/transactions-on-computational-social-systems/information-for-authors/",
+    "status": "targeted_author_guide_checked",
+    "notes": "Formatting/charges; not whole compliance audit"
+  },
+  {
+    "search_id": "S-M2-AE-PAGES",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find pages",
+    "source_url": "https://www.ieeesmc.org/publications/transactions-on-computational-social-systems/information-for-authors/",
+    "status": "format_checked",
+    "notes": "Regular~10pages/correspondence5; 100–250word abstract; current page may retain legacy details"
+  },
+  {
+    "search_id": "S-M2-AE-CHARGES",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find Charges",
+    "source_url": "https://www.ieeesmc.org/publications/transactions-on-computational-social-systems/information-for-authors/",
+    "status": "fee_conflict_identified",
+    "notes": "Guide2150USD vs IEEE2026central2800; no silent currentfee claim"
+  },
+  {
+    "search_id": "S-M2-AE-WEBPDF",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.cs.bilkent.edu.tr/~oulusoy/IEEE_TCSS-2025-published",
+    "status": "formal_layout_PDF_15p_readable",
+    "notes": "Authorfacultyhost, not IEEEserver; copyright retained, PDF not committed"
+  },
+  {
+    "search_id": "S-M2-AE-CFP",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://www.ieeesmc.org/wp-content/uploads/2025/06/GENERA1.pdf",
+    "status": "official_CFP_2p",
+    "notes": "Historical submission deadlineDec31,2025"
+  },
+  {
+    "search_id": "S-M2-AE-DATE",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find Date of publication",
+    "source_url": "https://www.cs.bilkent.edu.tr/~oulusoy/IEEE_TCSS-2025-published",
+    "status": "first_formal_date_checked",
+    "notes": "PDFfirstpageJun4,2025; currentversionDec3 distinct"
+  },
+  {
+    "search_id": "S-M2-AE-DEADLINE",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find Deadline",
+    "source_url": "https://www.ieeesmc.org/wp-content/uploads/2025/06/GENERA1.pdf",
+    "status": "historical_deadline_checked",
+    "notes": "Not current open submission opportunity"
+  },
+  {
+    "search_id": "S-M2-AE-UNVERIFIED-ID",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://ieeexplore.ieee.org/document/11016054",
+    "status": "robot_check_no_article_identity",
+    "notes": "Unverified numeric ID attempt; not source for Crowd, corrected after Crossref"
+  },
+  {
+    "search_id": "S-M2-AE-FEES",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://open.ieee.org/for-authors/article-processing-charges/",
+    "status": "2026_and_2027_central_APC_checked",
+    "notes": "Hybrid2800USD2026/2995USD2027;submissiondatebasis;tax/additionalcharges"
+  },
+  {
+    "search_id": "S-M2-AE-IEEE",
+    "platform": "official_or_author_primary_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open",
+    "source_url": "https://ieeexplore.ieee.org/document/11023536",
+    "status": "robot_check",
+    "notes": "ID from CrossrefVoRlink; articlebody not obtained here"
+  },
+  {
+    "search_id": "S-M2-AE-DOWNLOAD",
+    "platform": "primary_HTTP_PDF",
+    "search_date": "2026-11-27",
+    "query_exact": "https://www.cs.bilkent.edu.tr/~oulusoy/IEEE_TCSS-2025-published",
+    "source_url": "https://www.cs.bilkent.edu.tr/~oulusoy/IEEE_TCSS-2025-published",
+    "status": "HTTP200_PDF_verified",
+    "notes": "2342468bytes; PDFheader/pages/hash preserved; not code execution"
+  },
+  {
+    "search_id": "S-M2-AE-CFP-DOWNLOAD",
+    "platform": "primary_HTTP_PDF",
+    "search_date": "2026-11-27",
+    "query_exact": "https://www.ieeesmc.org/wp-content/uploads/2025/06/GENERA1.pdf",
+    "source_url": "https://www.ieeesmc.org/wp-content/uploads/2025/06/GENERA1.pdf",
+    "status": "HTTP200_PDF_verified",
+    "notes": "198535bytes; PDFheader/pages/hash preserved; not code execution"
+  },
+  {
+    "search_id": "S-M2-AE-CROSSREF",
+    "platform": "publisher_deposited_metadata",
+    "search_date": "2026-11-27",
+    "query_exact": "GET https://api.crossref.org/works/10.1109/TCSS.2025.3565377",
+    "source_url": "https://api.crossref.org/works/10.1109/TCSS.2025.3565377",
+    "status": "HTTP200_title_DOI_issue_confirmed",
+    "notes": "online-date absent; created not used as formal date; arnumber11023536"
+  },
+  {
+    "search_id": "S-M2-AE-READ",
+    "platform": "local_acquired_PDF_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "AE_crowd.pdf pp1,4–9,11–13; Fig5p8 rendered/viewed",
+    "source_url": "https://www.cs.bilkent.edu.tr/~oulusoy/IEEE_TCSS-2025-published",
+    "status": "focused_formal_layout_read",
+    "notes": "Two extraction calls plus focused reread; no fullpaper/code/SI audit; earlier multi-page output truncated, pp7–9 explicitly reread"
+  }
+]

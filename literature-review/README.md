@@ -35,17 +35,18 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-27，保留首轮57条及15卡，新增31项工作、补读5条原记录，现88条、47张全文卡；34项正式纳入、46候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-27，保留首轮57条及15卡，新增32项工作、补读5条原记录，现89条、48张全文卡；35项正式纳入、46候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
-- [验证证据矩阵](reports/method_validation_matrix.md)：58个证据单元，回答、轨迹、经验效度分列。
+- [验证证据矩阵](reports/method_validation_matrix.md)：61个证据单元，回答、轨迹、经验效度分列。
 - [双主体校准的评价边界](reports/dual_agent_calibration_boundaries.md)：作者v1与正式版、条件预测与闭环证据分列。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
-- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：34载体（25刊/8会议入口/1仓库），定向样本，未声称完整数据库覆盖。
-- [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：9张工作表，书目仅34项正式纳入；前沿/候选见主表。
+- [TCSS方法生态](reports/tcss_method_ecology.md)：正式平台先例、历史CFP与费用冲突。
+- [发表生态](reports/method_venue_landscape.md)、[双轨投稿策略](reports/two_track_submission_strategy.md)：35载体（26刊/8会议入口/1仓库），定向样本，未声称完整数据库覆盖。
+- [第二轮工作簿](exports/literature_and_journals_methods.xlsx)、[方法书目](exports/references_methods.bib)：9张工作表，书目仅35项正式纳入；前沿/候选见主表。
 - [ODD版本与入口补查](reports/odd_version_access_followup.md)：预印/正式/公告日期与未获取正文分列。
 - [现有证据分类修复](reports/categorical_completion_existing_evidence.md)：9空值补齐、3卡重整，余5空值保留。
 - [保留与门控核验](reports/methods_validation.json)：57旧ID、18份首轮文件hash、231原日志前缀保留，旧字段40项实质变化均记账；原导出不覆盖。

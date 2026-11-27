@@ -2788,5 +2788,125 @@
     "batch": "AA-dual-agent-calibration",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/aa_dual_agent_calibration/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_type",
+    "old": "",
+    "new": "network_ABM_framework;generative_agent_integration",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "agent_architecture;environment_design;interaction_protocol;reproducibility_and_reporting",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_transferability",
+    "old": "",
+    "new": "可借鉴网络/配置/执行钩子及技术对照；LLM经验效度、代码状态一致性与故障恢复需另证。",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "controlled_comparison",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "网络ABM平台直接方法先例，LLM只是可选行为生成组件。",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fixed_code_snapshot;LLM_revision_seed_parsing_retry;update_commit_semantics;independent_behavioral_validation;uncertainty;earlyaccesscomparison",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "§III/§V-A/§VI-B;Fig5;TablesII–IV",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M032.md",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "AE-TCSS-Crowd",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ae_tcss_crowd/results.json"
   }
 ]

@@ -41,3 +41,5 @@ Z方法稿可进一步检验不同观测投影/复现判据漏检何种过程差
 ## AB补充：心理学与复杂系统路线
 
 2026-11-27核两刊官方范围/类型/费用，见[专题核查](social_psychology_complexity_venues.md)。Frontiers in Social Psychology须有社会心理学理论或经验贡献；npj Complexity须服务复杂系统问题或可迁移仿真方法。分别有M029形式化与M030统计复现先例，不推出当前LLM稿已适配。当前JASSS/CCR优先比较不变，后续方法研究仍需错误识别和迁移证据。
+
+AE补充：TCSS有正式平台M032与历史生成式CFP，可作社会系统/方法条件路线；当前稿仍优先JASSS/CCR，后续方法稿须可迁移校验比较。历史征稿已截止，费用/代码政策缺口见[专题](tcss_method_ecology.md)。
