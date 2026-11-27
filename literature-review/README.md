@@ -37,6 +37,7 @@
 
 截至2026-11-27，保留首轮57条及15卡，新增49项工作、补读5条原记录，现106条、62张全文卡；42项正式纳入、56候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
+- [CCR直接对照获取](reports/ccr_direct_comparator_access_BV.md)：EN03/EN04官方身份、PDF跳转/403与摘要证据边界。
 - [优先刊现行政策](reports/priority_journal_policies_BU.md)：JASSS收费/减免与披露强度，CCR现行模板、复现检查、公告类型及2023PDF差异。
 - [三项种子内容复核](reports/seed_content_review_BT.md)：架构框架、方法批评与人类效应复现分列，保留原版备份与未决责任。
 - [指定种子获取核查](reports/priority_seed_access_BS.md)：M012正式托管入口与403文件证据，M003正式日期/版本缺口保持。

@@ -1,0 +1,16 @@
+{
+  "batch_id": "BV-CCR-direct-comparator-formal-access",
+  "date": "2026-11-27",
+  "expected_master_sha256": "a87dbd19eeed43052d39e2fb8c8345ed14ba477836bb5ddca4d7088ee9ebb27e",
+  "updates": [
+    {
+      "record_id": "EN03",
+      "evidence_location": "Abstract | BV:OJS_Published_and_abstract;AUP_abstract_loading_only;reports/ccr_direct_comparator_access_BV.md"
+    },
+    {
+      "record_id": "EN04",
+      "evidence_location": "Abstract | BV:OJS_Published_and_abstract;AUP_abstract_loading_only;reports/ccr_direct_comparator_access_BV.md"
+    }
+  ],
+  "new_records": []
+}

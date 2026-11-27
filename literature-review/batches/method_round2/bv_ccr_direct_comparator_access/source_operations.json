@@ -1,0 +1,110 @@
+[
+  {
+    "search_id": "BV-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "read official OJS article metadata and abstract",
+    "source_url": "https://journal.computationalcommunication.org/article/view/9217",
+    "status": "published_date_abstract_read",
+    "notes": "EN03;Published2026-04-21;noformalbody"
+  },
+  {
+    "search_id": "BV-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "read official OJS article metadata and abstract",
+    "source_url": "https://journal.computationalcommunication.org/article/view/9203",
+    "status": "published_date_abstract_read",
+    "notes": "EN04;Published2026-04-21;noformalbody"
+  },
+  {
+    "search_id": "BV-03",
+    "platform": "web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "official pdf link17",
+    "source_url": "https://journal.computationalcommunication.org/article/view/9217/7993",
+    "status": "redirect_fetch_failed",
+    "notes": "EN03;web500redirectDOI;notPDF"
+  },
+  {
+    "search_id": "BV-04",
+    "platform": "web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "official pdf link17",
+    "source_url": "https://journal.computationalcommunication.org/article/view/9203/7994",
+    "status": "redirect_fetch_failed",
+    "notes": "EN04;web500redirectDOI;notPDF"
+  },
+  {
+    "search_id": "BV-05",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official OJS pdf link with redirects",
+    "source_url": "https://journal.computationalcommunication.org/article/view/9217/7993",
+    "status": "redirect_AUP403_HTML",
+    "notes": "EN03;5606bytes;SHA25668f6d1597033f9d08f718671acb62c627a4c6a58e6e5a99853ffb5fd189985cc;noPDFheader"
+  },
+  {
+    "search_id": "BV-06",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official OJS pdf link with redirects",
+    "source_url": "https://journal.computationalcommunication.org/article/view/9203/7994",
+    "status": "redirect_AUP403_HTML",
+    "notes": "EN04;5600bytes;SHA256002c4d4057d6adfa73a6879d69ff4fee7754995d9ad3f5f8ce8b4c51eb234514;noPDFheader"
+  },
+  {
+    "search_id": "BV-07",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Influence in Motion\" Huang Zhang pdf",
+    "source_url": "",
+    "status": "results_returned_not_exhaustive",
+    "notes": "PrimaryAUPdiscovery;unrelated/secondaryresultsnotused;totalunknown"
+  },
+  {
+    "search_id": "BV-08",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.5117/CCR2026.2.8.LI\" pdf",
+    "source_url": "",
+    "status": "results_returned_not_exhaustive",
+    "notes": "PrimaryAUPdiscovery;unrelated/secondaryresultsnotused;totalunknown"
+  },
+  {
+    "search_id": "BV-09",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open exact AUP formal DOI page",
+    "source_url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.9.HUAN",
+    "status": "abstract_metadata_only_fulltext_loading",
+    "notes": "EN03;OAmetadata_not_body;issue/platformdates_not_replaceearlierOJSdate"
+  },
+  {
+    "search_id": "BV-10",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open exact AUP formal DOI page",
+    "source_url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.8.LI",
+    "status": "abstract_metadata_only_fulltext_loading",
+    "notes": "EN04;OAmetadata_not_body;issue/platformdates_not_replaceearlierOJSdate"
+  },
+  {
+    "search_id": "BV-11",
+    "platform": "web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF / Full-Text links and loading placeholder in parsed AUP page",
+    "source_url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.9.HUAN",
+    "status": "page_content_inspection_no_fulltext",
+    "notes": "No extra fulltext acquisition;tooloperation counted not independent network query"
+  },
+  {
+    "search_id": "BV-12",
+    "platform": "web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "PDF / Full-Text links and loading placeholder in parsed AUP page",
+    "source_url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.8.LI",
+    "status": "page_content_inspection_no_fulltext",
+    "notes": "No extra fulltext acquisition;tooloperation counted not independent network query"
+  }
+]

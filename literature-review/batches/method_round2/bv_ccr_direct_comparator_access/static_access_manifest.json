@@ -1,0 +1,44 @@
+[
+  {
+    "record_id": "EN03",
+    "url": "https://journal.computationalcommunication.org/article/view/9217/7993",
+    "final_url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.9.HUAN",
+    "status": 403,
+    "bytes": 5606,
+    "sha256": "68f6d1597033f9d08f718671acb62c627a4c6a58e6e5a99853ffb5fd189985cc",
+    "content_type": "text/html; charset=UTF-8",
+    "pdf_header": false,
+    "scratch_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EN03_BV_response.bin",
+    "redirect_chain": [
+      [
+        302,
+        "https://journal.computationalcommunication.org/article/view/9217/7993"
+      ],
+      [
+        302,
+        "https://doi.org/10.5117/CCR2026.2.9.HUAN"
+      ]
+    ]
+  },
+  {
+    "record_id": "EN04",
+    "url": "https://journal.computationalcommunication.org/article/view/9203/7994",
+    "final_url": "https://www.aup-online.com/content/journals/10.5117/CCR2026.2.8.LI",
+    "status": 403,
+    "bytes": 5600,
+    "sha256": "002c4d4057d6adfa73a6879d69ff4fee7754995d9ad3f5f8ce8b4c51eb234514",
+    "content_type": "text/html; charset=UTF-8",
+    "pdf_header": false,
+    "scratch_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EN04_BV_response.bin",
+    "redirect_chain": [
+      [
+        302,
+        "https://journal.computationalcommunication.org/article/view/9203/7994"
+      ],
+      [
+        302,
+        "https://doi.org/10.5117/CCR2026.2.8.LI"
+      ]
+    ]
+  }
+]

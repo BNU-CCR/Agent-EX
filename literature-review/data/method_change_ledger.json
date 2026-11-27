@@ -428,5 +428,25 @@
     "batch": "BK-IPM-official-scope-version-and-access-boundaries",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bk_ipm_scope_access/results.json"
+  },
+  {
+    "record_id": "EN03",
+    "field": "evidence_location",
+    "old": "Abstract",
+    "new": "Abstract | BV:OJS_Published_and_abstract;AUP_abstract_loading_only;reports/ccr_direct_comparator_access_BV.md",
+    "date": "2026-11-27",
+    "batch": "BV-CCR-direct-comparator-formal-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bv_ccr_direct_comparator_access/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "evidence_location",
+    "old": "Abstract",
+    "new": "Abstract | BV:OJS_Published_and_abstract;AUP_abstract_loading_only;reports/ccr_direct_comparator_access_BV.md",
+    "date": "2026-11-27",
+    "batch": "BV-CCR-direct-comparator-formal-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bv_ccr_direct_comparator_access/results.json"
   }
 ]
