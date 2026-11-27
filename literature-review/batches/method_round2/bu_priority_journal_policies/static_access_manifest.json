@@ -1,0 +1,42 @@
+[
+  {
+    "tag": "JASSS_submit",
+    "url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "final_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": 200,
+    "bytes": 29079,
+    "sha256": "6e1b293c9fe5db10aa743abd4d18b13d7364f222fc7292eb9d83cd701f9564a6",
+    "content_type": "text/html; charset=UTF-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_submit_BU.txt"
+  },
+  {
+    "tag": "JASSS_about",
+    "url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "final_url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "status": 200,
+    "bytes": 5488,
+    "sha256": "edd6cd6e541b5a38e8de24cc9c50469a5aec56f68a60aaf1c63a8ed314d58892",
+    "content_type": "text/html; charset=UTF-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_about_BU.txt"
+  },
+  {
+    "tag": "CCR_submit",
+    "url": "https://journal.computationalcommunication.org/about/submissions",
+    "final_url": "https://journal.computationalcommunication.org/about/submissions",
+    "status": 200,
+    "bytes": 24178,
+    "sha256": "a3b935e5e7b8d17cc60d0ca15950cc91041dbc2b0194506d6ad3502cfd6c8de0",
+    "content_type": "text/html; charset=utf-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\CCR_submit_BU.txt"
+  },
+  {
+    "tag": "CCR_openaccess",
+    "url": "https://journal.computationalcommunication.org/openaccess",
+    "final_url": "https://journal.computationalcommunication.org/openaccess",
+    "status": 200,
+    "bytes": 10318,
+    "sha256": "c546b41d9e9070115112a41bddb12db77674ebbe77e9012253b819d6049a8921",
+    "content_type": "text/html; charset=utf-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\CCR_openaccess_BU.txt"
+  }
+]

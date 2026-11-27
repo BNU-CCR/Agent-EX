@@ -1,3 +1,5 @@
+> BU现行政策：[两刊核查](priority_journal_policies_BU.md)。JASSS官方APC€800另适用VAT、可申请减免；CCR无APC。CCR现行OJS的接收后模板、复现检查、2000词公告与CCBY4取代2023PDF相应旧值。历史费用待核语句不作当前这两刊的状态，独立索引仍待核。
+
 > BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
 
 # 方法研究发表生态：定向证据版

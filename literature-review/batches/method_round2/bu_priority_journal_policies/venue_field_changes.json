@@ -1,0 +1,212 @@
+[
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "article_types_and_length",
+    "old": "5000–8000 words; abstract≤300; keywords≤6; ODD recommended",
+    "new": "2026-11-27 official submit: original research/critical review normally5000–8000words+hypertext;abstract≤300;keywords≤6;ODD recommended not required"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "code_data_requirements",
+    "old": "code/documentation strongly encouraged; sufficient reproducibility detail; CoMSES recommended",
+    "new": "About requires sufficient replication information; submit strongly encourages code/documentation and recommends CoMSES; paper self-contained; include model link in manuscript for reviewer access; ODD optional"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "oa_fees",
+    "old": "fees_pending",
+    "new": "Official submit APC EUR800 excluding applicable VAT; invoice EUR unless requested beforehand; up to100% waiver for corresponding primary low-income-country affiliation or graduate students without funds; request after acceptance; eligibility not assumed"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "verified_date",
+    "old": "2026-11-26",
+    "new": "2026-11-27"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "verification_status",
+    "old": "scope_and_samples_checked",
+    "new": "scope_samples_and_current_policy_checked_partial_index_pending"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "evidence_note",
+    "old": "Curated public evidence; sample counts are not total journal output; MJL independently unverified",
+    "new": "BU official static submit/about200; web tool inaccessible does not negate static reading. Fee from submit EUR800 exVAT; DOAJ/name-alike results not adopted. See reports/priority_journal_policies_BU.md"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "pending_items",
+    "old": "Complete whole-journal search; current indexing independently; type-specific submission requirements where marked pending",
+    "new": "Complete whole-journal search; current MJL independently; current portal-specific anonymity wording differs across official pages; individual waiver eligibility and future fee refresh pending"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "author_guidelines_url",
+    "old": "https://www.aup-online.com/upload/IfA/CCR_IfA_2023.pdf",
+    "new": "https://journal.computationalcommunication.org/about/submissions"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "article_types_and_length",
+    "old": "2023 official PDF: article≤9000 incl references/tables; abstract≤200; current submission portal recheck",
+    "new": "Current portal2026-11-27:researcharticle≤9000 incl bibliography/tables;researchnote≤4000;tool/dataannouncement≤2000 editorial not blinded review;abstract≤200;initialAPA7 Word/LibreOffice allowed;afteracceptance LaTeX/Quarto source+PDF;RR LOI before collection plus pilot disclosure,Stage1≤6000"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "code_data_requirements",
+    "old": "tool/data descriptions require public access on publication; anonymize initial links",
+    "new": "Current postacceptance checklist:algorithm/model;data/environment+splits+exclusions;allcode/dependencies/models;README exact result commands;runtime or energy/infrastructure. Expect all data/code if possible; persistent repository+license, Github alone not recommended; restricted/processed alternatives explained. Research anonymised; announcements exception"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "oa_fees",
+    "old": "OA; current_fee_pending",
+    "new": "Current official openaccess2026-11-27:no subscription fee/noAPC;authors retain copyright;CCBY4.0. Does not estimate storage/compute costs"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "verified_date",
+    "old": "2026-11-26",
+    "new": "2026-11-27"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "verification_status",
+    "old": "scope_and_samples_checked",
+    "new": "scope_samples_and_current_policy_checked_partial_index_pending"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "evidence_note",
+    "old": "Curated public evidence; sample counts are not total journal output; MJL independently unverified",
+    "new": "BU current OJS submissions/openaccess read web+static200; supersedes2023PDF for current article types/template/English/license. OldPDF record retained in batch; GenAI specialissue marked closed; no live call inferred"
+  },
+  {
+    "file": "method_venue_map.csv",
+    "venue_id": "CCR",
+    "field": "pending_items",
+    "old": "Complete whole-journal search; current indexing independently; type-specific submission requirements where marked pending",
+    "new": "Complete whole-journal search; current indexing independently; EN03/EN04 formal texts/version; verify target section and future policy changes before actual submission"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "article_types_and_length",
+    "old": "5000–8000 words; abstract≤300; keywords≤6; ODD recommended",
+    "new": "2026-11-27 official submit: original research/critical review normally5000–8000words+hypertext;abstract≤300;keywords≤6;ODD recommended not required"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "code_data_requirements",
+    "old": "code/documentation strongly encouraged; sufficient reproducibility detail; CoMSES recommended",
+    "new": "About requires sufficient replication information; submit strongly encourages code/documentation and recommends CoMSES; paper self-contained; include model link in manuscript for reviewer access; ODD optional"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "oa_fees",
+    "old": "fees_pending",
+    "new": "Official submit APC EUR800 excluding applicable VAT; invoice EUR unless requested beforehand; up to100% waiver for corresponding primary low-income-country affiliation or graduate students without funds; request after acceptance; eligibility not assumed"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "verified_date",
+    "old": "2026-11-26",
+    "new": "2026-11-27"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "verification_status",
+    "old": "scope_and_samples_checked",
+    "new": "scope_samples_and_current_policy_checked_partial_index_pending"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "evidence_note",
+    "old": "Curated public evidence; sample counts are not total journal output; MJL independently unverified",
+    "new": "BU official static submit/about200; web tool inaccessible does not negate static reading. Fee from submit EUR800 exVAT; DOAJ/name-alike results not adopted. See reports/priority_journal_policies_BU.md"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "pending_items",
+    "old": "Complete whole-journal search; current indexing independently; type-specific submission requirements where marked pending",
+    "new": "Complete whole-journal search; current MJL independently; current portal-specific anonymity wording differs across official pages; individual waiver eligibility and future fee refresh pending"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "author_guidelines_url",
+    "old": "https://www.aup-online.com/upload/IfA/CCR_IfA_2023.pdf",
+    "new": "https://journal.computationalcommunication.org/about/submissions"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "article_types_and_length",
+    "old": "2023 official PDF: article≤9000 incl references/tables; abstract≤200; current submission portal recheck",
+    "new": "Current portal2026-11-27:researcharticle≤9000 incl bibliography/tables;researchnote≤4000;tool/dataannouncement≤2000 editorial not blinded review;abstract≤200;initialAPA7 Word/LibreOffice allowed;afteracceptance LaTeX/Quarto source+PDF;RR LOI before collection plus pilot disclosure,Stage1≤6000"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "code_data_requirements",
+    "old": "tool/data descriptions require public access on publication; anonymize initial links",
+    "new": "Current postacceptance checklist:algorithm/model;data/environment+splits+exclusions;allcode/dependencies/models;README exact result commands;runtime or energy/infrastructure. Expect all data/code if possible; persistent repository+license, Github alone not recommended; restricted/processed alternatives explained. Research anonymised; announcements exception"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "oa_fees",
+    "old": "OA; current_fee_pending",
+    "new": "Current official openaccess2026-11-27:no subscription fee/noAPC;authors retain copyright;CCBY4.0. Does not estimate storage/compute costs"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "verified_date",
+    "old": "2026-11-26",
+    "new": "2026-11-27"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "verification_status",
+    "old": "scope_and_samples_checked",
+    "new": "scope_samples_and_current_policy_checked_partial_index_pending"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "evidence_note",
+    "old": "Curated public evidence; sample counts are not total journal output; MJL independently unverified",
+    "new": "BU current OJS submissions/openaccess read web+static200; supersedes2023PDF for current article types/template/English/license. OldPDF record retained in batch; GenAI specialissue marked closed; no live call inferred"
+  },
+  {
+    "file": "journal_submission_candidates.csv",
+    "venue_id": "CCR",
+    "field": "pending_items",
+    "old": "Complete whole-journal search; current indexing independently; type-specific submission requirements where marked pending",
+    "new": "Complete whole-journal search; current indexing independently; EN03/EN04 formal texts/version; verify target section and future policy changes before actual submission"
+  }
+]

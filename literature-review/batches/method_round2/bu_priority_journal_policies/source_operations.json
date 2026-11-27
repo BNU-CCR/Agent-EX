@@ -1,0 +1,101 @@
+[
+  {
+    "search_id": "BU-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open official policy URL",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": "web_unavailable",
+    "notes": "Do not infer static failure from web failure; dated vs current policy separated"
+  },
+  {
+    "search_id": "BU-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open official policy URL",
+    "source_url": "https://www.aup-online.com/upload/IfA/CCR_IfA_2023.pdf",
+    "status": "official_2023_pdf_text_read",
+    "notes": "Do not infer static failure from web failure; dated vs current policy separated"
+  },
+  {
+    "search_id": "BU-03",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open official policy URL",
+    "source_url": "https://journal.computationalcommunication.org/about/submissions",
+    "status": "official_current_guidelines_read",
+    "notes": "Do not infer static failure from web failure; dated vs current policy separated"
+  },
+  {
+    "search_id": "BU-04",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open official policy URL",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "status": "web_unavailable",
+    "notes": "Do not infer static failure from web failure; dated vs current policy separated"
+  },
+  {
+    "search_id": "BU-05",
+    "platform": "web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "CCR submissions OpenAccess link11",
+    "source_url": "https://journal.computationalcommunication.org/openaccess",
+    "status": "official_fee_license_page_read",
+    "notes": "NoAPC;CCBY4"
+  },
+  {
+    "search_id": "BU-06",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.jasss.org JASSS submission fee article processing charges authors",
+    "source_url": "",
+    "status": "results_returned_with_false_namesakes",
+    "notes": "Namesake Academic/AdvancedSocialScience and JSASS excluded; DOAJ discovery not authority for current fee;no totalcount"
+  },
+  {
+    "search_id": "BU-07",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official policy HTML",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": "http200_html_read",
+    "notes": "29079bytes;SHA2566e1b293c9fe5db10aa743abd4d18b13d7364f222fc7292eb9d83cd701f9564a6;primarypolicysource"
+  },
+  {
+    "search_id": "BU-08",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official policy HTML",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "status": "http200_html_read",
+    "notes": "5488bytes;SHA256edd6cd6e541b5a38e8de24cc9c50469a5aec56f68a60aaf1c63a8ed314d58892;primarypolicysource"
+  },
+  {
+    "search_id": "BU-09",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official policy HTML",
+    "source_url": "https://journal.computationalcommunication.org/about/submissions",
+    "status": "http200_html_read",
+    "notes": "24178bytes;SHA256a3b935e5e7b8d17cc60d0ca15950cc91041dbc2b0194506d6ad3502cfd6c8de0;primarypolicysource"
+  },
+  {
+    "search_id": "BU-10",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "read CCR openaccess exact current lines20to25",
+    "source_url": "https://journal.computationalcommunication.org/openaccess",
+    "status": "current_noAPC_CCBY4_confirmed",
+    "notes": "Page says noAPC; not inferred from old2023PDF"
+  },
+  {
+    "search_id": "BU-11",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET CCR current openaccess HTML",
+    "source_url": "https://journal.computationalcommunication.org/openaccess",
+    "status": "http200_html_read",
+    "notes": "10318bytes;SHA256c546b41d9e9070115112a41bddb12db77674ebbe77e9012253b819d6049a8921"
+  }
+]
