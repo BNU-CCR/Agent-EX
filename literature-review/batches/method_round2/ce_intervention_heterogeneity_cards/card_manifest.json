@@ -1,0 +1,24 @@
+[
+  {
+    "record_id": "M022",
+    "path": "reading-cards/M022.md",
+    "source_commit": "4b40819",
+    "backup_path": "batches/method_round2/ce_intervention_heterogeneity_cards/cards_before/M022.md",
+    "before_raw_sha256": "3dffec27924342565480c20d1a690d53ff7db83c1508a59891d02216086e0d73",
+    "before_git_lf_sha256": "73a9302d57e3f3d9121b401c664a11e58037279775ca3202105cf8b023eff656",
+    "current_git_lf_sha256": "a9f0a1e21acf069d0abe8d76c24920660898d2bb4a2555ad78bbd020bc453362",
+    "protected": false,
+    "numbered_sections": 11
+  },
+  {
+    "record_id": "M023",
+    "path": "reading-cards/M023.md",
+    "source_commit": "4b40819",
+    "backup_path": "batches/method_round2/ce_intervention_heterogeneity_cards/cards_before/M023.md",
+    "before_raw_sha256": "ba23a77bae0a5ecfbb4174e53599968b43b2d8ac8c001d43a8bb45fb91cc4a25",
+    "before_git_lf_sha256": "47b492a5560b64b2a80449c12c82e65560b40a428cfa12ba887556bfe3fa95d5",
+    "current_git_lf_sha256": "cdf34b6791832f2311b34e727d4c5a1ed87ad139c05c9330548c879e5c2d8804",
+    "protected": false,
+    "numbered_sections": 11
+  }
+]

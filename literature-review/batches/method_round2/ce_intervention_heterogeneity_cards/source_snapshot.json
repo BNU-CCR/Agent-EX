@@ -1,0 +1,22 @@
+[
+  {
+    "path": "reading-cards/M022.md",
+    "commit": "4b40819",
+    "git_lf_sha256": "73a9302d57e3f3d9121b401c664a11e58037279775ca3202105cf8b023eff656"
+  },
+  {
+    "path": "reading-cards/M023.md",
+    "commit": "4b40819",
+    "git_lf_sha256": "47b492a5560b64b2a80449c12c82e65560b40a428cfa12ba887556bfe3fa95d5"
+  },
+  {
+    "path": "reports/community_boundary_updates.md",
+    "commit": "4b40819",
+    "git_lf_sha256": "b0fdfc5e56b229b9fc5c1efd5d3a1cd7570e4df23196f77495bcec62934caeec"
+  },
+  {
+    "path": "data/literature_master.csv",
+    "commit": "4b40819",
+    "git_lf_sha256": "d53b5b8e3f0d8a3aee6d583599b075e0a1e09852f2c0a555d0d9af5dc808e393"
+  }
+]

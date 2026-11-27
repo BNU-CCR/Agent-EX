@@ -1,10 +1,10 @@
 {
   "date": "2026-11-27",
-  "batch": "CD",
+  "batch": "CE",
   "cards": 64,
-  "numbered11": 50,
-  "not11": 14,
-  "mutable": 8,
+  "numbered11": 52,
+  "not11": 12,
+  "mutable": 6,
   "protected": 6,
   "boundary": "Format indicator only, not all content reviewed/accepted",
   "queue": [
@@ -52,18 +52,6 @@
     },
     {
       "path": "reading-cards/M017.md",
-      "numbered_sections": 0,
-      "protected": false,
-      "action": "content_review_then_revise"
-    },
-    {
-      "path": "reading-cards/M022.md",
-      "numbered_sections": 0,
-      "protected": false,
-      "action": "content_review_then_revise"
-    },
-    {
-      "path": "reading-cards/M023.md",
       "numbered_sections": 0,
       "protected": false,
       "action": "content_review_then_revise"

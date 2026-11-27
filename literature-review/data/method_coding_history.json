@@ -6558,5 +6558,45 @@
     "batch": "CD-control-and-empirical-initialization-cards",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cd_control_empirical_cards/results.json"
+  },
+  {
+    "record_id": "M022",
+    "field": "method_coding_source",
+    "old": "reading-cards/M022.md",
+    "new": "reading-cards/M022.md;reports/intervention_heterogeneity_cards_CE.md;existing_L_evidence_reconciliation",
+    "date": "2026-11-27",
+    "batch": "CE-intervention-and-empirical-heterogeneity-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ce_intervention_heterogeneity_cards/results.json"
+  },
+  {
+    "record_id": "M022",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CE-intervention-and-empirical-heterogeneity-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ce_intervention_heterogeneity_cards/results.json"
+  },
+  {
+    "record_id": "M023",
+    "field": "method_coding_source",
+    "old": "reading-cards/M023.md",
+    "new": "reading-cards/M023.md;reports/intervention_heterogeneity_cards_CE.md;existing_L_evidence_reconciliation",
+    "date": "2026-11-27",
+    "batch": "CE-intervention-and-empirical-heterogeneity-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ce_intervention_heterogeneity_cards/results.json"
+  },
+  {
+    "record_id": "M023",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CE-intervention-and-empirical-heterogeneity-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ce_intervention_heterogeneity_cards/results.json"
   }
 ]

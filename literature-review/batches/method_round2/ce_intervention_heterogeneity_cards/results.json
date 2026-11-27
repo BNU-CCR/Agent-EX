@@ -1,0 +1,18 @@
+{
+  "batch_id": "CE-intervention-and-empirical-heterogeneity-cards",
+  "date": "2026-11-27",
+  "expected_master_sha256": "ab853a6def3e680ab6357e9eeba29d9ae8ce09310e7f59140982f4458f63c00f",
+  "updates": [
+    {
+      "record_id": "M022",
+      "method_coding_source": "reading-cards/M022.md;reports/intervention_heterogeneity_cards_CE.md;existing_L_evidence_reconciliation",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "M023",
+      "method_coding_source": "reading-cards/M023.md;reports/intervention_heterogeneity_cards_CE.md;existing_L_evidence_reconciliation",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}
