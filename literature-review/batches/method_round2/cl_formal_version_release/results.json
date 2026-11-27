@@ -1,0 +1,25 @@
+{
+  "batch_id": "CL-formal-version-and-EMNLP-release-evidence",
+  "date": "2026-11-27",
+  "expected_master_sha256": "a01c4c4d3409d73d1431c125926ec6a7064f11a3a04ef46310e45fdc73c731fd",
+  "updates": [
+    {
+      "record_id": "M033",
+      "online_first_date": "2024-11-09",
+      "date_basis": "OfficialEMNLP2024Newsdated2024-11-09:Proceedingsarenowavailable;linktoACLeventwithMainvolumeandmatchedformalitem. FormalproceedingsreleaseperTask3.2,notconference12–16NovorCrossrefcreated27Nov",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "metadata_evidence_url": "https://aclanthology.org/2024.emnlp-main.1208/;https://2024.emnlp.org/",
+      "method_coding_source": "reading-cards/M033.md;reports/formal_version_release_CL.md;officialEMNLPproceedingsannouncement",
+      "method_last_checked": "2026-11-27",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AHformalPDFfocusedread;humanratersnaturalnessnotempiricalinteraction;noexperimentrerun;methodstatusupgrade not finalinclusion. | CL:officialrelease9Nov2024dateconfirmed;supersedes candidate/datepending only;AHfocusedreading andmethodgradesunchanged"
+    },
+    {
+      "record_id": "M027",
+      "method_coding_source": "reading-cards/M027.md;reports/formal_version_release_CL.md;formalPDFnotacquired",
+      "method_last_checked": "2026-11-27",
+      "notes": "Formalmetadata notformalPDF;citationsofempiricalpapers are not newexperiments;formalversioncomparison pending. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CL:SciOpenwebmetadata/abstractnotPDF;static403311bytes;Crossref429empty nonJSON;formal8pagePDFnotacquired/compared;authorv2scope/candidateunchanged"
+    }
+  ],
+  "new_records": []
+}

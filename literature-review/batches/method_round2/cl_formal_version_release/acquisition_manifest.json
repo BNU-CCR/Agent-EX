@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M027-page",
+    "url": "https://www.sciopen.com/article/10.23919/JSC.2025.0022",
+    "status": 403,
+    "bytes": 311,
+    "sha256": "a424c27f7b2b727f9a44cfd74e9b741462c81f384b07b73361a4ed73d15bfdb5",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M027-page_CL.response"
+  },
+  {
+    "id": "EMNLP-announcement",
+    "url": "https://2024.emnlp.org/",
+    "status": 200,
+    "bytes": 14965,
+    "sha256": "68ce2a6e9dc6d75563d8034ae9e9e9c2cc2e90db6224778055b4ca739cffe306",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EMNLP-announcement_CL.response"
+  },
+  {
+    "id": "M033-item",
+    "url": "https://aclanthology.org/2024.emnlp-main.1208/",
+    "status": 200,
+    "bytes": 43082,
+    "sha256": "42fc4038fba9b087a464a53227ea0a581f1dab48cd09fa86766185ce10639e07",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M033-item_CL.response"
+  },
+  {
+    "id": "M027-crossref",
+    "url": "https://api.crossref.org/works/10.23919/JSC.2025.0022",
+    "status": 429,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M027-crossref_CL.response"
+  }
+]

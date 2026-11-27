@@ -6908,5 +6908,35 @@
     "batch": "CK-conference-proceedings-release-date-evidence",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ck_conference_release_dates/results.json"
+  },
+  {
+    "record_id": "M033",
+    "field": "method_coding_source",
+    "old": "reading-cards/M033.md",
+    "new": "reading-cards/M033.md;reports/formal_version_release_CL.md;officialEMNLPproceedingsannouncement",
+    "date": "2026-11-27",
+    "batch": "CL-formal-version-and-EMNLP-release-evidence",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cl_formal_version_release/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_coding_source",
+    "old": "reading-cards/M027.md",
+    "new": "reading-cards/M027.md;reports/formal_version_release_CL.md;formalPDFnotacquired",
+    "date": "2026-11-27",
+    "batch": "CL-formal-version-and-EMNLP-release-evidence",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cl_formal_version_release/results.json"
+  },
+  {
+    "record_id": "M027",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CL-formal-version-and-EMNLP-release-evidence",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cl_formal_version_release/results.json"
   }
 ]

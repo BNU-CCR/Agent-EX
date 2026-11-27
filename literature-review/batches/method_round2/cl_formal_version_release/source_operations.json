@@ -1,0 +1,101 @@
+[
+  {
+    "search_id": "CL-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open official journal article",
+    "source_url": "https://www.sciopen.com/article/10.23919/JSC.2025.0022",
+    "status": "metadata_abstract_notPDF",
+    "notes": ""
+  },
+  {
+    "search_id": "CL-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open official conference news",
+    "source_url": "https://2024.emnlp.org/",
+    "status": "releaseannouncement9Nov2024",
+    "notes": ""
+  },
+  {
+    "search_id": "CL-03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:2024.emnlp.org proceedings released published anthology November 2024",
+    "source_url": "",
+    "status": "discovery_only",
+    "notes": ""
+  },
+  {
+    "search_id": "CL-04",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.23919/JSC.2025.0022\" pdf",
+    "source_url": "",
+    "status": "discovery_only",
+    "notes": ""
+  },
+  {
+    "search_id": "CL-05",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET primary article/page",
+    "source_url": "https://www.sciopen.com/article/10.23919/JSC.2025.0022",
+    "status": "403",
+    "notes": "311bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CL-06",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET primary article/page",
+    "source_url": "https://2024.emnlp.org/",
+    "status": "200",
+    "notes": "14965bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CL-07",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET primary article/page",
+    "source_url": "https://aclanthology.org/2024.emnlp-main.1208/",
+    "status": "200",
+    "notes": "43082bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CL-08",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open official article query route",
+    "source_url": "https://www.sciopen.com/article/10.23919/JSC.2025.0022?issn=2688-5255",
+    "status": "metadata_abstract_notPDF",
+    "notes": "AIchatpanelnotused"
+  },
+  {
+    "search_id": "CL-09",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Match event and mainvolume",
+    "source_url": "https://aclanthology.org/events/emnlp-2024/",
+    "status": "officialvolumemapping_readable",
+    "notes": ""
+  },
+  {
+    "search_id": "CL-10",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET DOIregistry for formalfilelinks",
+    "source_url": "https://api.crossref.org/works/10.23919/JSC.2025.0022",
+    "status": "429",
+    "notes": "0bytes;nonJSON;decodefailed,noformalPDFlinkacquired"
+  },
+  {
+    "search_id": "CL-11",
+    "platform": "local_date_version_review",
+    "search_date": "2026-11-27",
+    "query_exact": "Match release/volume/item;preserveM027authorversionboundary",
+    "source_url": "reports/formal_version_release_CL.md",
+    "status": "one_date_resolved_one_version_gap_retained",
+    "notes": ""
+  }
+]

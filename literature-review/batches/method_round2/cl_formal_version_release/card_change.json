@@ -1,0 +1,8 @@
+{
+  "path": "reading-cards/M033.md",
+  "source_commit": "998a9b1",
+  "backup_path": "batches/method_round2/cl_formal_version_release/M033_before.md",
+  "before_raw_sha256": "9e0c19e604876a27dec5a0bfabf123d04979a558aca1837330add3dd86ad8058",
+  "after_git_lf_sha256": "38c269a8fe98b7e2c7b1c4a83b86fe97160b903498b46410faeb5061ce973663",
+  "reason": "Update only date/status and resolved gap;no expansion of primary reading"
+}

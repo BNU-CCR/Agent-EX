@@ -2,12 +2,12 @@ requirement_id,requirement,evidence_path,assessment,remaining_gap,checked
 R2-1,北极星/持续接续,GOAL.md;progress.md,implemented_current_protocol,完整目标未验收；持续接续不等于会话外后台运行,2026-11-27
 R2-2.1,保留首轮57ID/15卡/原导出/日志,data/round1_preservation_manifest.json;reports/methods_validation.json,verified_by_bounded_preservation_checks,57ID/18文件hash/231日志前缀与63原字段变更账通过；非全部研究内容认证,2026-11-27
 R2-2.2,扩展字段/规则/57条重分类,protocol/method_coding_rules.md;reports/method_reclassification.md,implemented_roundA_vocab_verified_semantics_partial,非空词表0漂移；3空字段（均M012，M018/M019仅摘要用途补齐），原57分类语义与所有卡内容尚未全量二次复核,2026-11-27
-R2-3.1,方法范式主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
-R2-3.2,主体架构主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
-R2-3.3,校准验证主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
-R2-3.4,报告复现主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
-R2-3.5,理论转译主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
-R2-3.6,跨学科应用主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1266分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
+R2-3.1,方法范式主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1277分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
+R2-3.2,主体架构主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1277分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
+R2-3.3,校准验证主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1277分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
+R2-3.4,报告复现主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1277分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
+R2-3.5,理论转译主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1277分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
+R2-3.6,跨学科应用主题组检索,data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md,partial_public_evidence,1277分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证,2026-11-27
 R2-4.1,模拟/ABM刊实际先例/范围/指南,data/venue_coverage_audit.csv;data/method_venue_map.csv,partial_bounded_venue_evidence,41入口0未对账/12部分不等于全目录；部分范围/指南/正式文献与持续性待核,2026-11-27
 R2-4.2,跨学科社会刊实际先例/范围/指南,data/venue_coverage_audit.csv;data/method_venue_map.csv,partial_bounded_venue_evidence,41入口0未对账/12部分不等于全目录；部分范围/指南/正式文献与持续性待核,2026-11-27
 R2-4.3,AI信息刊实际先例/范围/指南,data/venue_coverage_audit.csv;data/method_venue_map.csv,partial_bounded_venue_evidence,41入口0未对账/12部分不等于全目录；部分范围/指南/正式文献与持续性待核,2026-11-27
@@ -40,7 +40,7 @@ R2-8-reports/two_track_submission_strategy.md,命名交付文件内容/存在,re
 R2-8-progress.md,命名交付文件内容/存在,progress.md,exists_bounded_content_review_not_full_acceptance,文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收,2026-11-27
 R2-8-README.md,命名交付文件内容/存在,README.md,exists_bounded_content_review_not_full_acceptance,文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收,2026-11-27
 R2-8-cards,核心新卡沿用ID与11项结构,reading-cards/;data/delivery_requirement_audit.json;reports/protected_card_content_audit_CI.md;data/card_structure_current.json,eleven_item_structure64of64_content_evidence_partial,64卡均可识别1–11：58二级标题/6行内；此前6保护卡格式误判已纠正。不是64内容验收，参数/附录/制品/版本等逐卡缺口仍在。,2026-11-27
-R2-8-export,schema字典/Excel/Bib同步,data/README.md;exports/literature_and_journals_methods.xlsx;exports/references_methods.bib,current_schema_counts_exports_verified,9表/43Bib与非空词表核验，3空分类（均M012）、卡内容、全库覆盖不由导出通过证明,2026-11-27
+R2-8-export,schema字典/Excel/Bib同步,data/README.md;exports/literature_and_journals_methods.xlsx;exports/references_methods.bib,current_schema_counts_exports_verified,9表/44Bib与非空词表核验，3空分类（均M012）、卡内容、全库覆盖不由导出通过证明,2026-11-27
 R2-9-A,已批准批次A,progress.md,executed_foundation_not_whole_goal_complete,不重建第一轮、不重跑A；按当前验收缺口推进,2026-11-27
 R2-9-B,已批准批次B,progress.md,executed_foundation_not_whole_goal_complete,不重建第一轮、不重跑A；按当前验收缺口推进,2026-11-27
 R2-9-C,已批准批次C,progress.md,executed_foundation_not_whole_goal_complete,不重建第一轮、不重跑A；按当前验收缺口推进,2026-11-27
@@ -61,7 +61,7 @@ R2-12,实际工作/落盘/推送/接续,progress.md;Git branch,executed_through_
 1.5.1-CN,中文CSSCI来源版/扩展区分,data/journals_master.csv;reports/coverage_and_gaps.md,historical_and_public_evidence_partial,首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量,2026-11-27
 1.6,真实查询/日志/三路径,data/search_log.csv;protocol/search_strategy.md,historical_and_public_evidence_partial,首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量,2026-11-27
 1.7,试检索与校准后继续,reports/pilot_report.md;progress.md,historical_and_public_evidence_partial,首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量,2026-11-27
-1.8,两轮筛选/版本/阅读状态,data/literature_master.csv,partial_version_date_reading_evidence,43纳入门通过；28日期未决、作者/正式版本及独立双筛未齐，不强升,2026-11-27
+1.8,两轮筛选/版本/阅读状态,data/literature_master.csv,partial_version_date_reading_evidence,44纳入门通过；27日期未决、作者/正式版本及独立双筛未齐，不强升,2026-11-27
 1.9.2,11项完整阅读卡,reading-cards/;reports/protected_card_content_audit_CI.md;data/card_structure_current.json,eleven_item_structure64of64_content_evidence_partial,64卡均可识别1–11：58二级标题/6行内；此前6保护卡格式误判已纠正。不是64内容验收，参数/附录/制品/版本等逐卡缺口仍在。,2026-11-27
 1.10,三类第一轮期刊表/档案/会议,data/journals_master.csv;data/core_source_journals.csv;data/submission_candidates.csv;journal-profiles/,historical_and_public_evidence_partial,首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量,2026-11-27
 1.11,组织与最终交付,README.md;reports/coverage_and_gaps.md,historical_and_public_evidence_partial,首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量,2026-11-27
