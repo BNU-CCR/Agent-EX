@@ -1,0 +1,200 @@
+[
+  {
+    "search_id": "S-M2-AN-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.neurips.cc \"social simulation\" \"2024\"",
+    "source_url": "",
+    "status": "search_completed_no_exhaustiveness",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:neurips.cc/Conferences/2026 \"Paper Checklist\" reproducibility",
+    "source_url": "",
+    "status": "official_policy_discovery",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-LOCAL",
+    "platform": "local_review",
+    "search_date": "2026-11-27",
+    "query_exact": "master/map/coverage NeurIPS duplicateandstatuscheck",
+    "source_url": "",
+    "status": "M008remainsfrontier_no_formalupgrade",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-Q3",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.neurips.cc \"HiSim\"",
+    "source_url": "",
+    "status": "search_completed_no_negativeclaim",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-Q4",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.neurips.cc \"social\" \"simulation\" \"language models\"",
+    "source_url": "",
+    "status": "formal_leads_found",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-Q5",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:neurips.cc/Conferences/2026 \"Evaluations\" \"May\"",
+    "source_url": "",
+    "status": "official_policy_and_dateleads",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-ED",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2026EDreviewguide",
+    "source_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsReviewerGuidelines",
+    "status": "official_read",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-GUIDE",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2026mainhandbook",
+    "source_url": "https://neurips.cc/Conferences/2026/MainTrackHandbook",
+    "status": "official_read",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-CHECK",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openpublicchecklist",
+    "source_url": "https://neurips.cc/public/guides/PaperChecklist",
+    "status": "official_read",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-FORMAL",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openTrustBehaviorformalabstract",
+    "source_url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/1cb57fcf7ff3f6d37eebae5becc9ea6d-Abstract-Conference.html",
+    "status": "formal_identity_DOI_and_abstract_checked_notfulltext",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-CFPFAIL1",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2026EDCFP",
+    "source_url": "https://neurips.cc/Conferences/2026/CallForEvaluationsDatasets",
+    "status": "tool_fetch_timeout_noHTTPstatus",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-AUDIT",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Replication studies",
+    "source_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsReviewerGuidelines",
+    "status": "contributiontypechecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-CODE",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find code",
+    "source_url": "https://neurips.cc/Conferences/2026/MainTrackHandbook",
+    "status": "requirementschecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-PATH",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find reasonable avenue",
+    "source_url": "https://neurips.cc/public/guides/PaperChecklist",
+    "status": "general_reproducibility_pathchecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-CFPFAIL2",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "retry2026EDCFP",
+    "source_url": "https://neurips.cc/Conferences/2026/CallForEvaluationsDatasets",
+    "status": "tool_fetch_timeout_noHTTPstatus",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-CFP",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2026mainCFP",
+    "source_url": "https://neurips.cc/Conferences/2026/CallForPapers",
+    "status": "official_read",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-LENGTH",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find 9-page",
+    "source_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsReviewerGuidelines",
+    "status": "length_and_appendixchecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-REQUIRED",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find desk rejected",
+    "source_url": "https://neurips.cc/public/guides/PaperChecklist",
+    "status": "checklistrequirementchecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-AI",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Author Use of Agents",
+    "source_url": "https://neurips.cc/Conferences/2026/MainTrackHandbook",
+    "status": "methodLLMdisclosurechecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-DATES",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find May 6",
+    "source_url": "https://neurips.cc/Conferences/2026/CallForPapers",
+    "status": "closed2026deadlineschecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-SCOPE",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find interdisciplinary",
+    "source_url": "https://neurips.cc/Conferences/2026/CallForPapers",
+    "status": "scopechecked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  },
+  {
+    "search_id": "S-M2-AN-ARTIFACT",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find justification",
+    "source_url": "https://neurips.cc/Conferences/2026/EvaluationsDatasetsReviewerGuidelines",
+    "status": "mandatory_executable_artifactcode_vs_analyticaljustification_checked",
+    "notes": "Actual operation, not independentquery/paper count; track/year/abstract/fulltext distinguished."
+  }
+]
