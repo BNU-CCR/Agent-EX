@@ -1,0 +1,38 @@
+[
+  {
+    "search_id": "S-M2-Z-META",
+    "platform": "official_publisher",
+    "search_date": "2026-11-27",
+    "query_exact": "https://www.nature.com/articles/s44260-026-00094-y?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/articles/s44260-026-00094-y?error=cookies_not_supported",
+    "status": "current_version_date_checked",
+    "notes": "FreshHTMLshowsVoR23Nov2026/3:33;firstAug5;oldcachealsoobserved"
+  },
+  {
+    "search_id": "S-M2-Z-VOR",
+    "platform": "official_PDF_download_and_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "https://www.nature.com/articles/s44260-026-00094-y.pdf?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/articles/s44260-026-00094-y.pdf?error=cookies_not_supported",
+    "status": "HTTP200_verified_VoR_focused_read",
+    "notes": "1856573bytes/11pages;Results/Discussion/Methods;Eqpage9rendered;noSI/code"
+  },
+  {
+    "search_id": "S-M2-Z-WEBPDF",
+    "platform": "web_tool_PDF_click",
+    "search_date": "2026-11-27",
+    "query_exact": "NaturePDFlink10",
+    "source_url": "https://www.nature.com/articles/s44260-026-00094-y.pdf",
+    "status": "redirect_returned_early_cached_HTML_notPDF",
+    "notes": "NotPDFsuccess;do notreplaceactual11pdownload evidence withtoolrewrite"
+  },
+  {
+    "search_id": "S-M2-Z-EARLY-READ",
+    "platform": "local_acquired_PDF_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "Y_efect.pdf;source_acquisition_manifest_Y.json",
+    "source_url": "https://www.nature.com/articles/s44260-026-00094-y_reference.pdf?error=cookies_not_supported",
+    "status": "critical_sections_compared",
+    "notes": "23pearlyreference:pp5–6,16–18;notnewnetworkdownload orfulltextdiff"
+  }
+]

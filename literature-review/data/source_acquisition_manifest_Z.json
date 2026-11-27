@@ -1,0 +1,20 @@
+[
+  {
+    "version": "early_accepted_23p",
+    "sha256": "974f5e743d2adb5dd8115e1d58cc16013036a35d7eec88ba2cedddeb2fafa3c7",
+    "bytes": 1209012,
+    "pages": 23,
+    "checked": "2026-11-27",
+    "storage": "scratchPDF;repo manifestonly",
+    "scope": "keymethod/resultsections,notfullbyte-equivalence"
+  },
+  {
+    "version": "VoR_2026-11-23_11p",
+    "sha256": "c2bc20fe97aa5b9a992c683925fdb727aa848e903ab6d0d7a2867c1c33a053d8",
+    "bytes": 1856573,
+    "pages": 11,
+    "checked": "2026-11-27",
+    "storage": "scratchPDF;repo manifestonly",
+    "scope": "keymethod/resultsections,notfullbyte-equivalence"
+  }
+]

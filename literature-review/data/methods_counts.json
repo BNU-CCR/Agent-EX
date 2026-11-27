@@ -1,25 +1,25 @@
 {
-  "records": 86,
+  "records": 87,
   "status": {
-    "included": 33,
+    "included": 34,
     "candidate": 45,
     "frontier": 6,
     "excluded": 2
   },
   "method_tiers": {
     "direct_comparator": 15,
-    "method_validation": 24,
+    "method_validation": 25,
     "core_method": 30,
     "peripheral": 11,
     "application": 6
   },
   "fulltext_methods": {
     "core_method": 11,
-    "method_validation": 14,
+    "method_validation": 15,
     "application": 1,
     "direct_comparator": 7,
     "peripheral": 0
   },
   "search_coverage_start": "2022-01-01",
-  "search_coverage_end": "2026-11-26"
+  "search_coverage_end": "2026-11-27"
 }

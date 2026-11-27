@@ -2548,5 +2548,125 @@
     "batch": "Y-theory-formalization-focused-reading",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/y_theory_formalization/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_type",
+    "old": "",
+    "new": "stochastic_simulation_reproducibility_test",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "reproducibility_and_reporting;measurement;validation_and_external_validity",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_transferability",
+    "old": "",
+    "new": "可借鉴Modeler/Curator和分布误差/报告；只到选定观测量，联合依赖/经验效度需另证，LLM成本下阈值需独立设计。",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "controlled_comparison",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "直接补随机模拟复现测试及其可迁移边界。",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "full_SI_and_code_audit;all40plus_cases;LLM_social_simulation_application;predecessor_version_comparison",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "VoRResults;Discussion;Methods;analyticreviewscope separate",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M030.md",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
+  },
+  {
+    "record_id": "M030",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "Z-EFECT-statistical-reproducibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/z_efect_reproducibility/results.json"
   }
 ]
