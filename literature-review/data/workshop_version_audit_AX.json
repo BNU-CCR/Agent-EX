@@ -1,0 +1,39 @@
+{
+  "checked_date": "2026-11-27",
+  "title": "Challenges and Opportunities of LLM-Based Synthetic Personae and Data in HCI",
+  "CSCW2024": {
+    "official_program": "https://cscw.acm.org/2024/index.php/cscw-companion-24/",
+    "official_workshop_listing": "https://cscw.acm.org/2024/index.php/submit-workshop/",
+    "doi": "10.1145/3678884.3681826",
+    "authors": [
+      "Mirjana Prpa",
+      "Giovanni Troiano",
+      "Bingsheng Yao",
+      "Toby Jia-Jun Li",
+      "Dakuo Wang",
+      "Hansu Gu"
+    ],
+    "program_http_status": 200,
+    "program_bytes": 624794,
+    "program_sha256": "151aeb0e9455a7b2da0a5d771200038f23d95029c2eb7bd4d69673adb14e267a",
+    "exact_formal_date": "pending",
+    "formal_pagination": "not_primary_verified",
+    "organizer_pdf": "https://llmsyntheticdata.weebly.com/uploads/1/4/8/0/148044374/cscw24_llm_workshop.pdf",
+    "organizer_pdf_pages": 6,
+    "organizer_pdf_version": "proposal with placeholder DOI/ISBN and incomplete reference;not finalpublishercopy"
+  },
+  "CHI_EA2024": {
+    "institution_metadata": "https://researchportal.northumbria.ac.uk/en/publications/challenges-and-opportunities-of-llm-based-synthetic-personae-and-/",
+    "doi": "10.1145/3613905.3636293",
+    "authors": [
+      "Mirjana Prpa",
+      "Giovanni Maria Troiano",
+      "Matthew Wood",
+      "Yvonne Coady"
+    ],
+    "institution_published": "2024-05-11",
+    "formal_pages": "1–5;Article461",
+    "institution_download_label": "Accepted author manuscript;not downloaded"
+  },
+  "limits": "Same title is not sufficient for deduplication or version substitution; neither workshop is counted as full empirical research precedent; no new master record/card/inclusion"
+}

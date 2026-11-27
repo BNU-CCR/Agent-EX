@@ -1,0 +1,254 @@
+[
+  {
+    "search_id": "S-M2-AX-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org CSCW \"social simulation\" \"language\"",
+    "source_url": "",
+    "status": "leads_only",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:cscw.acm.org/2026 papers data code",
+    "source_url": "",
+    "status": "official_policy_leads",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "CSCW \"large language models\" \"simulating\" \"participants\"",
+    "source_url": "",
+    "status": "leads_only",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-04",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"CSCW\" \"social simulation\" \"generative\"",
+    "source_url": "",
+    "status": "leads_only",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-05",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open rolling route",
+    "source_url": "https://cscw.acm.org/2026/rolling.html",
+    "status": "navigation_and_route",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-06",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open 2026 papers",
+    "source_url": "https://cscw.acm.org/2026/papers.html",
+    "status": "scope_and_policy",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-07",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Challenges and Opportunities of LLM-Based Synthetic Personae and Data in HCI\" DOI",
+    "source_url": "",
+    "status": "same_title_different_workshop_leads",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-08",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open rolling at line30",
+    "source_url": "https://cscw.acm.org/2026/rolling.html",
+    "status": "navigation_not_complete_policy_read",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-09",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open companion2024",
+    "source_url": "https://cscw.acm.org/2024/index.php/cscw-companion-24/",
+    "status": "official_program",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-10",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open workshops2024",
+    "source_url": "https://cscw.acm.org/2024/index.php/submit-workshop/",
+    "status": "official_workshop_listing",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-11",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open rolling at line35",
+    "source_url": "https://cscw.acm.org/2026/rolling.html",
+    "status": "navigation_not_complete_policy_read",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-12",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org/doi/10.1145/3678884.3681826 \"Published\"",
+    "source_url": "",
+    "status": "irrelevant_results_no_date_confirmation",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-13",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "reopen rolling actual body",
+    "source_url": "https://cscw.acm.org/2026/rolling.html",
+    "status": "two_journals_and_no_conference_deadline_verified",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-14",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "reopen companion",
+    "source_url": "https://cscw.acm.org/2024/index.php/cscw-companion-24/",
+    "status": "timeout_no_new_content",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-15",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find workshop title in companion",
+    "source_url": "https://cscw.acm.org/2024/index.php/cscw-companion-24/",
+    "status": "timeout",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-16",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "find scope in papers",
+    "source_url": "https://cscw.acm.org/2026/papers.html",
+    "status": "human_centered_scope_verified",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-17",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "follow track guidelines",
+    "source_url": "https://cscw.acm.org/2026/tracks.html",
+    "status": "page_available",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-18",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "read track body lines48+",
+    "source_url": "https://cscw.acm.org/2026/tracks.html",
+    "status": "five_contribution_tracks_read",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-19",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open DOI10.1145/3678884.3681826",
+    "source_url": "https://doi.org/10.1145/3678884.3681826",
+    "status": "inaccessible_not_date_verified",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-20",
+    "platform": "organizer_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open workshop home",
+    "source_url": "https://llmsyntheticdata.weebly.com/",
+    "status": "stale_CHI24_header_CSCW24_download_and_dates",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-21",
+    "platform": "organizer_web",
+    "search_date": "2026-11-27",
+    "query_exact": "follow workshop proposal PDF",
+    "source_url": "https://llmsyntheticdata.weebly.com/uploads/1/4/8/0/148044374/cscw24_llm_workshop.pdf",
+    "status": "organizer_proposal_not_final_publisher_version",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-22",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org \"3678884.3681826\"",
+    "source_url": "",
+    "status": "no_primary_exact_date",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-23",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:cscw.acm.org/2024 \"Prpa\" \"Challenges\"",
+    "source_url": "",
+    "status": "official_program_and_workshop_title",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-24",
+    "platform": "organizer_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open proposal PDF identity firstpage",
+    "source_url": "https://llmsyntheticdata.weebly.com/uploads/1/4/8/0/148044374/cscw24_llm_workshop.pdf",
+    "status": "6pages_placeholder_DOI_not_formal_paginated_copy",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-25",
+    "platform": "institution_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open CHI EA same-title metadata",
+    "source_url": "https://researchportal.northumbria.ac.uk/en/publications/challenges-and-opportunities-of-llm-based-synthetic-personae-and-/",
+    "status": "different_four_authors_DOI_formal5pages_published2024-05-11",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-26",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET official TOC and extract title/authors/DOI",
+    "source_url": "https://cscw.acm.org/2024/index.php/cscw-companion-24/",
+    "status": "HTTP200_624794bytes_sixauthors_DOI_confirmed",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-27",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "follow PACMHCI journal submission link",
+    "source_url": "https://dl.acm.org/journal/pacmhci/tracks/cscw",
+    "status": "HTTP403_detailed_rolling_rules_pending",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  },
+  {
+    "search_id": "S-M2-AX-28",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "follow TOCHI journal link",
+    "source_url": "https://dl.acm.org/journal/tochi",
+    "status": "HTTP403_detailed_journal_rules_pending",
+    "notes": "Actual source/search operations including retries/failures; not unique queries or papers. Workshop proposal is not empirical validation or final publisher PDF."
+  }
+]
