@@ -989,5 +989,6 @@
     "branch": "codex/social-identity-network-2x3",
     "head": "4e01f5625899e248400467147799611d54dd2f53",
     "boundary": "BeforeBPcommit;pushreceiptseparate"
-  }
+  },
+  "evidence_hash_boundary": "RawlocalfilebytescapturedatBPaudit_beforelaterdeliveryreceipt;notcurrentfileequalityorgit-LFhashclaim"
 }
