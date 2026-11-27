@@ -45,6 +45,7 @@
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
+- [跨研究经验校准综合](reports/empirical_calibration_crossstudy_synthesis.md)：7项已读研究的参考/程序/误差/实现边界及三条待检验方法路线。
 - [信任行为固定制品](reports/trust_static_artifact_audit.md)：13文件hash、角色/配对、常量解析分支及旧结果对应缺口。
 - [信任行为验证边界](reports/trust_behavior_validation_boundaries.md)：历史参照、引出程序、方向/幅度、BDI与对象标签分层。
 - [NeurIPS评价路线](reports/neurips_evaluation_ecology.md)：正式信任行为题录、E&D贡献类型和有条件代码要求，未读候选不建卡。
