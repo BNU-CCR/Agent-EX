@@ -1,0 +1,470 @@
+{
+  "checked_date": "2026-11-27",
+  "source_snapshot_commit": "d6fff43",
+  "reviewed": [
+    {
+      "record_id": "M001",
+      "original_path": "reading-cards/M001.md",
+      "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M001.md",
+      "sha256": "9d49faca2f875f196a233835d699eb34dc2b5202a4d0851a8d888679b9f78ed2",
+      "source_snapshot_commit": "d6fff43",
+      "protected": false,
+      "current_sha256": "4995d203bdea968778a67cac7d931a44c9ed642be7b75cc3ece57bf78eee4ea7",
+      "review_scope": "Eleventaskbookitemsfromexistingevidence_notnewprimaryfullread",
+      "numbered_sections": 11,
+      "remaining_content_gaps": [
+        "numericTables1to11",
+        "fullmodelconfigs",
+        "failuredenominators",
+        "supplementidentity"
+      ]
+    },
+    {
+      "record_id": "M006",
+      "original_path": "reading-cards/M006.md",
+      "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M006.md",
+      "sha256": "ae0378db0b2c74b4eb254af4ed52336782547206ce6e6796ca3a3c68fea49270",
+      "source_snapshot_commit": "d6fff43",
+      "protected": false,
+      "current_sha256": "759f6671b62278362b9fc8c0cbb9785eca329bb644bb2ce6b142cfc36e13e76f",
+      "review_scope": "Eleventaskbookitemsfromexistingevidence_notnewprimaryfullread",
+      "numbered_sections": 11,
+      "remaining_content_gaps": [
+        "window_dates_overlap",
+        "fullmetricformulas",
+        "snapshot_and_measurementerrors",
+        "runartifactmapping"
+      ]
+    },
+    {
+      "record_id": "M007",
+      "original_path": "reading-cards/M007.md",
+      "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M007.md",
+      "sha256": "4328f20ed40d00f804122ed745f94d9b9663119c6ef2a011874c23e4c0ced746",
+      "source_snapshot_commit": "d6fff43",
+      "protected": false,
+      "current_sha256": "899653ee65c1aa49215d0e4af9e48e5bb4fbae7c259672267775548725886280",
+      "review_scope": "Eleventaskbookitemsfromexistingevidence_notnewprimaryfullread",
+      "numbered_sections": 11,
+      "remaining_content_gaps": [
+        "pergroupN",
+        "train_selection_test_split",
+        "snapshot_and_metrics",
+        "multiround_validity_notestablished"
+      ]
+    },
+    {
+      "record_id": "M008",
+      "original_path": "reading-cards/M008.md",
+      "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M008.md",
+      "sha256": "fdc4e083da29f4ae210d93a02cb944dbe93366323bdd4bf23d5812f6f0c7d1b3",
+      "source_snapshot_commit": "d6fff43",
+      "protected": false,
+      "current_sha256": "e7f0c5f29e5c3c45747aa55a2a14d70d4550a3672e770d5d332e6deb9beffe43",
+      "review_scope": "Eleventaskbookitemsfromexistingevidence_notnewprimaryfullread",
+      "numbered_sections": 11,
+      "remaining_content_gaps": [
+        "formalpublication",
+        "fullappendixconfigs",
+        "numeric_tables_code",
+        "independent_framework_effect"
+      ]
+    },
+    {
+      "record_id": "M013",
+      "original_path": "reading-cards/M013.md",
+      "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M013.md",
+      "sha256": "4e01703e4182b2b451efb12233819c44483b853229737daccc6620fbea6166ff",
+      "source_snapshot_commit": "d6fff43",
+      "protected": false,
+      "current_sha256": "955c3cab58ea3439886f94adc82cbfac127b93d15974e0ffbc5191b0d146ce64",
+      "review_scope": "Eleventaskbookitemsfromexistingevidence_notnewprimaryfullread",
+      "numbered_sections": 11,
+      "remaining_content_gaps": [
+        "originalmodelartifacts",
+        "calibration_validation_datarelation",
+        "fullsensitivity",
+        "independent_framework_effect"
+      ]
+    }
+  ],
+  "filled_fields": [
+    {
+      "record_id": "M006",
+      "field": "research_question",
+      "old": "",
+      "new": "How well does an LLM-agent forum reproduce activity, network and content patterns of a small empirical community?",
+      "source": "reading-cards/M006.md",
+      "reason": "Existingfulltextreadingandcardevidence;notnewacquisition"
+    },
+    {
+      "record_id": "M006",
+      "field": "mechanisms",
+      "old": "",
+      "new": "Y_Social_environment/client_scheduling;role_persona;reaction/time_ranked_visibility;96round_expiry;thread_context_K3",
+      "source": "reading-cards/M006.md",
+      "reason": "Existingfulltextreadingandcardevidence;notnewacquisition"
+    },
+    {
+      "record_id": "M007",
+      "field": "research_question",
+      "old": "",
+      "new": "Can generative agents reproduce empirical posting, replying and reply probability in language/task-matched social-network data?",
+      "source": "reading-cards/M007.md",
+      "reason": "Existingfulltextreadingandcardevidence;notnewacquisition"
+    },
+    {
+      "record_id": "M007",
+      "field": "mechanisms",
+      "old": "",
+      "new": "TWON_behavior_b_vs_platform_r;prompt_and_LoRA_generation;BERT_reply_probability;activeuser_selection;language_task_matched_evaluation",
+      "source": "reading-cards/M007.md",
+      "reason": "Existingfulltextreadingandcardevidence;notnewacquisition"
+    },
+    {
+      "record_id": "M008",
+      "field": "research_question",
+      "old": "",
+      "new": "How do explicit environment, agent, engine and evaluation configurations change social-simulation conclusions and their reproducibility?",
+      "source": "reading-cards/M008.md",
+      "reason": "Existingfulltextreadingandcardevidence;notnewacquisition"
+    }
+  ],
+  "all_card_structure": [
+    {
+      "record_id": "R001",
+      "path": "reading-cards/R001.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R002",
+      "path": "reading-cards/R002.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R003",
+      "path": "reading-cards/R003.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R004",
+      "path": "reading-cards/R004.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R006",
+      "path": "reading-cards/R006.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R007",
+      "path": "reading-cards/R007.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R008",
+      "path": "reading-cards/R008.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "R009",
+      "path": "reading-cards/R009.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R010",
+      "path": "reading-cards/R010.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R013",
+      "path": "reading-cards/R013.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R014",
+      "path": "reading-cards/R014.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "R015",
+      "path": "reading-cards/R015.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "R016",
+      "path": "reading-cards/R016.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "R017",
+      "path": "reading-cards/R017.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "R021",
+      "path": "reading-cards/R021.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "EN01",
+      "path": "reading-cards/EN01.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "EN08",
+      "path": "reading-cards/EN08.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "EN11",
+      "path": "reading-cards/EN11.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "CN006",
+      "path": "reading-cards/CN006.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "CN007",
+      "path": "reading-cards/CN007.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M001",
+      "path": "reading-cards/M001.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M002",
+      "path": "reading-cards/M002.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M005",
+      "path": "reading-cards/M005.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M004",
+      "path": "reading-cards/M004.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M003",
+      "path": "reading-cards/M003.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M010",
+      "path": "reading-cards/M010.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M011",
+      "path": "reading-cards/M011.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M006",
+      "path": "reading-cards/M006.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M007",
+      "path": "reading-cards/M007.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M008",
+      "path": "reading-cards/M008.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M013",
+      "path": "reading-cards/M013.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M014",
+      "path": "reading-cards/M014.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M015",
+      "path": "reading-cards/M015.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M016",
+      "path": "reading-cards/M016.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M017",
+      "path": "reading-cards/M017.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M020",
+      "path": "reading-cards/M020.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M021",
+      "path": "reading-cards/M021.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M022",
+      "path": "reading-cards/M022.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M023",
+      "path": "reading-cards/M023.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M024",
+      "path": "reading-cards/M024.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M025",
+      "path": "reading-cards/M025.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M026",
+      "path": "reading-cards/M026.md",
+      "numbered_sections": 0
+    },
+    {
+      "record_id": "M027",
+      "path": "reading-cards/M027.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M028",
+      "path": "reading-cards/M028.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M029",
+      "path": "reading-cards/M029.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M030",
+      "path": "reading-cards/M030.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M031",
+      "path": "reading-cards/M031.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M032",
+      "path": "reading-cards/M032.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M033",
+      "path": "reading-cards/M033.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M034",
+      "path": "reading-cards/M034.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M035",
+      "path": "reading-cards/M035.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M036",
+      "path": "reading-cards/M036.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M037",
+      "path": "reading-cards/M037.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M038",
+      "path": "reading-cards/M038.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M039",
+      "path": "reading-cards/M039.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M040",
+      "path": "reading-cards/M040.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M041",
+      "path": "reading-cards/M041.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M042",
+      "path": "reading-cards/M042.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M043",
+      "path": "reading-cards/M043.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M044",
+      "path": "reading-cards/M044.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M045",
+      "path": "reading-cards/M045.md",
+      "numbered_sections": 11
+    },
+    {
+      "record_id": "M049",
+      "path": "reading-cards/M049.md",
+      "numbered_sections": 11
+    }
+  ],
+  "numbered11": 42,
+  "total_cards": 62,
+  "not11_queue": [
+    "R008",
+    "R014",
+    "R016",
+    "R017",
+    "EN01",
+    "EN08",
+    "EN11",
+    "CN006",
+    "CN007",
+    "M014",
+    "M015",
+    "M016",
+    "M017",
+    "M020",
+    "M021",
+    "M022",
+    "M023",
+    "M024",
+    "M025",
+    "M026"
+  ],
+  "boundary": "Onlyfivecardscontentreviewed;42of62numberedstructure_notqualityrate;unknownsretained;protected18filesuntouched"
+}

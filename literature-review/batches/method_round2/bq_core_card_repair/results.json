@@ -1,0 +1,48 @@
+{
+  "batch_id": "BQ-five-core-card-content-and-evidence-repair",
+  "date": "2026-11-27",
+  "expected_master_sha256": "e1e73e27ed0cc7bfcfaa2fb53070de6f879e763e8abfb41e70f36741f3be1b46",
+  "updates": [
+    {
+      "record_id": "M001",
+      "method_coding_source": "reading-cards/M001.md;reports/core_card_evidence_repair_BQ.md",
+      "method_last_checked": "2026-11-27",
+      "evidence_location": "existingformalHTML§3.2–3.5/§4.2–4.5/§5.4;Tables1–11notnumericallychecked",
+      "notes": "HTML主文已读；表仅标题，补充包未检验，未复跑。 | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | BQ:existingevidencereorganisedto11items;primaryreadingdate2026-11-26unchanged;noevidence/statusupgrade;oldcardbytebackup."
+    },
+    {
+      "record_id": "M006",
+      "method_coding_source": "reading-cards/M006.md;reports/core_card_evidence_repair_BQ.md",
+      "method_last_checked": "2026-11-27",
+      "research_question": "How well does an LLM-agent forum reproduce activity, network and content patterns of a small empirical community?",
+      "mechanisms": "Y_Social_environment/client_scheduling;role_persona;reaction/time_ranked_visibility;96round_expiry;thread_context_K3",
+      "evidence_location": "existingformalHTML§1–5;methods/windowdesign;Results/Discussion;VC10",
+      "notes": " | BQ:existingevidencereorganisedto11items;primaryreadingdate2026-11-26unchanged;noevidence/statusupgrade;oldcardbytebackup."
+    },
+    {
+      "record_id": "M007",
+      "method_coding_source": "reading-cards/M007.md;reports/core_card_evidence_repair_BQ.md",
+      "method_last_checked": "2026-11-27",
+      "research_question": "Can generative agents reproduce empirical posting, replying and reply probability in language/task-matched social-network data?",
+      "mechanisms": "TWON_behavior_b_vs_platform_r;prompt_and_LoRA_generation;BERT_reply_probability;activeuser_selection;language_task_matched_evaluation",
+      "evidence_location": "existingformal11ppPDFmethods/Table2–3/§7/limitations;VC11",
+      "notes": " | BQ:existingevidencereorganisedto11items;primaryreadingdate2026-11-26unchanged;noevidence/statusupgrade;oldcardbytebackup."
+    },
+    {
+      "record_id": "M008",
+      "method_coding_source": "reading-cards/M008.md;reports/core_card_evidence_repair_BQ.md",
+      "method_last_checked": "2026-11-27",
+      "research_question": "How do explicit environment, agent, engine and evaluation configurations change social-simulation conclusions and their reproducibility?",
+      "evidence_location": "authorv1§1–6;§4.1–4.3;AppendixC.2/C.3;VC06–09",
+      "notes": "PDFmain §§1–6 checked; targeted appendixC.2/C.3; HTML404; no code rerun; official dev NeurIPS cached listing inaccessible410 and does not establish publication | BQ:existingevidencereorganisedto11items;primaryreadingdate2026-11-26unchanged;noevidence/statusupgrade;oldcardbytebackup."
+    },
+    {
+      "record_id": "M013",
+      "method_coding_source": "reading-cards/M013.md;reports/core_card_evidence_repair_BQ.md",
+      "method_last_checked": "2026-11-27",
+      "evidence_location": "formalHTMLTHEMPApproach/ApplyingTHEMP/Table1/Figures5–8/Conclusion;VC03–05",
+      "notes": "Framework inspired by same illustrated model; underlying empirical/model papers not independently reread; no rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | BQ:existingevidencereorganisedto11items;primaryreadingdate2026-11-26unchanged;noevidence/statusupgrade;oldcardbytebackup."
+    }
+  ],
+  "new_records": []
+}

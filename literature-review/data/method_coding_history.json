@@ -5968,5 +5968,105 @@
     "batch": "BN-persona-formal-version-comparison-and-aggregation",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bn_persona_formal_comparison/results.json"
+  },
+  {
+    "record_id": "M001",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/b_mass/M001.md",
+    "new": "reading-cards/M001.md;reports/core_card_evidence_repair_BQ.md",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M001",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M006",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/c_crossdisciplinary/",
+    "new": "reading-cards/M006.md;reports/core_card_evidence_repair_BQ.md",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M006",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M007",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/c_crossdisciplinary/",
+    "new": "reading-cards/M007.md;reports/core_card_evidence_repair_BQ.md",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M007",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_coding_source",
+    "old": "reading-cards/M008.md",
+    "new": "reading-cards/M008.md;reports/core_card_evidence_repair_BQ.md",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M008",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_coding_source",
+    "old": "reading-cards/M013.md",
+    "new": "reading-cards/M013.md;reports/core_card_evidence_repair_BQ.md",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
+  },
+  {
+    "record_id": "M013",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BQ-five-core-card-content-and-evidence-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bq_core_card_repair/results.json"
   }
 ]

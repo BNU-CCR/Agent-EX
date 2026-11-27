@@ -1,0 +1,52 @@
+[
+  {
+    "record_id": "M001",
+    "original_path": "reading-cards/M001.md",
+    "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M001.md",
+    "sha256": "9d49faca2f875f196a233835d699eb34dc2b5202a4d0851a8d888679b9f78ed2",
+    "source_snapshot_commit": "d6fff43",
+    "protected": false,
+    "backup_git_lf_sha256": "532e69d67312f0bb8d4bb42129f84d39fd57d1d4aa8095e75f79b1f1ade81af9",
+    "raw_line_endings": "CRLF"
+  },
+  {
+    "record_id": "M006",
+    "original_path": "reading-cards/M006.md",
+    "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M006.md",
+    "sha256": "ae0378db0b2c74b4eb254af4ed52336782547206ce6e6796ca3a3c68fea49270",
+    "source_snapshot_commit": "d6fff43",
+    "protected": false,
+    "backup_git_lf_sha256": "ae0378db0b2c74b4eb254af4ed52336782547206ce6e6796ca3a3c68fea49270",
+    "raw_line_endings": "LF"
+  },
+  {
+    "record_id": "M007",
+    "original_path": "reading-cards/M007.md",
+    "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M007.md",
+    "sha256": "4328f20ed40d00f804122ed745f94d9b9663119c6ef2a011874c23e4c0ced746",
+    "source_snapshot_commit": "d6fff43",
+    "protected": false,
+    "backup_git_lf_sha256": "4328f20ed40d00f804122ed745f94d9b9663119c6ef2a011874c23e4c0ced746",
+    "raw_line_endings": "LF"
+  },
+  {
+    "record_id": "M008",
+    "original_path": "reading-cards/M008.md",
+    "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M008.md",
+    "sha256": "fdc4e083da29f4ae210d93a02cb944dbe93366323bdd4bf23d5812f6f0c7d1b3",
+    "source_snapshot_commit": "d6fff43",
+    "protected": false,
+    "backup_git_lf_sha256": "fdc4e083da29f4ae210d93a02cb944dbe93366323bdd4bf23d5812f6f0c7d1b3",
+    "raw_line_endings": "LF"
+  },
+  {
+    "record_id": "M013",
+    "original_path": "reading-cards/M013.md",
+    "backup_path": "batches/method_round2/bq_core_card_repair/cards_before/M013.md",
+    "sha256": "4e01703e4182b2b451efb12233819c44483b853229737daccc6620fbea6166ff",
+    "source_snapshot_commit": "d6fff43",
+    "protected": false,
+    "backup_git_lf_sha256": "4e01703e4182b2b451efb12233819c44483b853229737daccc6620fbea6166ff",
+    "raw_line_endings": "LF"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "BQ-01",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "five_existing_core_cards_11taskbook_items_metadata_and_VC03to11",
+    "source_url": "reports/core_card_evidence_repair_BQ.md",
+    "status": "local_evidence_reorganisation_checked",
+    "notes": "Noexternalquery/fulltextacquisition;5cardbackups;3researchquestions_and2mechanisms_filled;nostatus/maturityupgrade"
+  }
+]
