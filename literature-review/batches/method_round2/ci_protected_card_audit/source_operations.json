@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "CI-01",
+    "platform": "local_content_and_requirement_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "Review six protected eleven-item inline cards, correct structure-only queue and reconcile 66 delivery requirements",
+    "source_url": "reports/protected_card_content_audit_CI.md",
+    "status": "local_evidence_reviewed_no_primary_acquisition",
+    "notes": "No new paper/card/fulltext or experiment; all protected bytes verified"
+  }
+]

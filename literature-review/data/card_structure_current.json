@@ -1,0 +1,1226 @@
+{
+  "date": "2026-11-27",
+  "batch": "CI",
+  "cards": [
+    {
+      "path": "reading-cards/CN006.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
+      "path": "reading-cards/CN007.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
+      "path": "reading-cards/EN01.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
+      "path": "reading-cards/EN04.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/EN08.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
+      "path": "reading-cards/EN11.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
+      "path": "reading-cards/M001.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M002.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M003.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M004.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M005.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M006.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M007.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M008.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M010.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M011.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M013.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M014.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M015.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M016.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M017.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M020.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M021.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M022.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M023.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M024.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M025.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M026.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M027.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M028.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M029.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M030.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M031.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M032.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M033.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M034.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M035.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M036.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M037.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M038.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M039.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M040.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M041.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M042.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M043.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M044.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M045.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M049.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M050.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R001.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R002.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R003.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R004.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R006.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R007.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R008.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
+      "path": "reading-cards/R009.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R010.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R013.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R014.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R015.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R016.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R017.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R021.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    }
+  ],
+  "heading11": 58,
+  "inline11": 6,
+  "recognized11": 64,
+  "boundary": "Structure recognition only, not semantic acceptance or complete primary evidence audit"
+}

@@ -1,3 +1,5 @@
+> CI现行接续：六保护卡已确认原有行内十一项，原“需伴随卡”是格式识别误判，当前64卡结构可识别但语义/证据未全验收。见[CI验收接续](delivery_requirement_audit_CI.md)。本页保留BP历史快照。
+
 > BR接续：九问题现行回答及固定来源索引已形成，见[统一综合](methods_review_current_synthesis.md)。当前delivery_requirements.csv九项已更新；此页原BP审计和“综合待统一”为历史状态，非当前缺口。全文/日期/卡内容/数据库/投稿政策缺口仍保留。
 
 > BQ接续：指定五卡已按十一项补证据与未核内容，旧卡备份；当前42/62有十一编号、20在复核队列。此页其余37/25数值是BP快照，不作当前合格率。见[修复报告](core_card_evidence_repair_BQ.md)。

@@ -1,0 +1,592 @@
+{
+  "date": "2026-11-27",
+  "source_commit": "578d21a",
+  "requirements": 66,
+  "assessments": [
+    {
+      "requirement_id": "R2-1",
+      "requirement": "北极星/持续接续",
+      "evidence_path": "GOAL.md;progress.md",
+      "assessment": "implemented_current_protocol",
+      "remaining_gap": "完整目标未验收；持续接续不等于会话外后台运行",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-2.1",
+      "requirement": "保留首轮57ID/15卡/原导出/日志",
+      "evidence_path": "data/round1_preservation_manifest.json;reports/methods_validation.json",
+      "assessment": "verified_by_bounded_preservation_checks",
+      "remaining_gap": "57ID/18文件hash/231日志前缀与63原字段变更账通过；非全部研究内容认证",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-2.2",
+      "requirement": "扩展字段/规则/57条重分类",
+      "evidence_path": "protocol/method_coding_rules.md;reports/method_reclassification.md",
+      "assessment": "implemented_roundA_vocab_verified_semantics_partial",
+      "remaining_gap": "非空词表0漂移；5空字段，原57分类语义与所有卡内容尚未全量二次复核",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-3.1",
+      "requirement": "方法范式主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1228分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-3.2",
+      "requirement": "主体架构主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1228分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-3.3",
+      "requirement": "校准验证主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1228分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-3.4",
+      "requirement": "报告复现主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1228分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-3.5",
+      "requirement": "理论转译主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1228分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-3.6",
+      "requirement": "跨学科应用主题组检索",
+      "evidence_path": "data/search_log.csv;data/delivery_requirement_audit.json;reports/method_landscape.md",
+      "assessment": "partial_public_evidence",
+      "remaining_gap": "1228分组操作非独立数据库查询数；授权全量导出/筛选语料与各主题召回未认证",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-4.1",
+      "requirement": "模拟/ABM刊实际先例/范围/指南",
+      "evidence_path": "data/venue_coverage_audit.csv;data/method_venue_map.csv",
+      "assessment": "partial_bounded_venue_evidence",
+      "remaining_gap": "41入口0未对账/12部分不等于全目录；部分范围/指南/正式文献与持续性待核",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-4.2",
+      "requirement": "跨学科社会刊实际先例/范围/指南",
+      "evidence_path": "data/venue_coverage_audit.csv;data/method_venue_map.csv",
+      "assessment": "partial_bounded_venue_evidence",
+      "remaining_gap": "41入口0未对账/12部分不等于全目录；部分范围/指南/正式文献与持续性待核",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-4.3",
+      "requirement": "AI信息刊实际先例/范围/指南",
+      "evidence_path": "data/venue_coverage_audit.csv;data/method_venue_map.csv",
+      "assessment": "partial_bounded_venue_evidence",
+      "remaining_gap": "41入口0未对账/12部分不等于全目录；部分范围/指南/正式文献与持续性待核",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-4.4",
+      "requirement": "会议轨道实际先例/范围/指南",
+      "evidence_path": "data/venue_coverage_audit.csv;data/method_venue_map.csv",
+      "assessment": "partial_bounded_venue_evidence",
+      "remaining_gap": "41入口0未对账/12部分不等于全目录；部分范围/指南/正式文献与持续性待核",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-4.5",
+      "requirement": "三表分开/索引不反推",
+      "evidence_path": "data/method_venue_map.csv;data/journal_submission_candidates.csv;data/journals_master.csv",
+      "assessment": "three_table_structure_verified_index_partial",
+      "remaining_gap": "52载体与30条件期刊分开；独立MJL及CSSCI版本核验未齐",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-5-M001",
+      "requirement": "指定方法种子身份/全文/日期",
+      "evidence_path": "reading-cards/M001.md",
+      "assessment": "source_gates_pass_content_limits_retained",
+      "remaining_gap": "M001: fulltext_checked; confirmed; included;卡内容/版本边界仍按源卡；独立重跑或未来框架效果试验不是本轮必执行项",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-5-R015",
+      "requirement": "指定方法种子身份/全文/日期",
+      "evidence_path": "reading-cards/R015.md",
+      "assessment": "source_gates_pass_content_limits_retained",
+      "remaining_gap": "R015: fulltext_checked; confirmed; included;卡内容/版本边界仍按源卡；独立重跑或未来框架效果试验不是本轮必执行项",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-5-M002",
+      "requirement": "指定方法种子身份/全文/日期",
+      "evidence_path": "reading-cards/M002.md",
+      "assessment": "source_gates_pass_content_limits_retained",
+      "remaining_gap": "M002: fulltext_checked; confirmed; included;卡内容/版本边界仍按源卡；独立重跑或未来框架效果试验不是本轮必执行项",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-5-M003",
+      "requirement": "指定方法种子身份/全文/日期",
+      "evidence_path": "reading-cards/M003.md",
+      "assessment": "author_fullread_formal_gate_pending",
+      "remaining_gap": "M003: fulltext_checked; date_pending; candidate;卡内容/版本边界仍按源卡；独立重跑或未来框架效果试验不是本轮必执行项",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-5-R008",
+      "requirement": "指定方法种子身份/全文/日期",
+      "evidence_path": "reading-cards/R008.md",
+      "assessment": "source_gates_pass_content_limits_retained",
+      "remaining_gap": "R008: fulltext_checked; confirmed; included;卡内容/版本边界仍按源卡；独立重跑或未来框架效果试验不是本轮必执行项",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-5-benchmarks",
+      "requirement": "2022+评价/批评/综述",
+      "evidence_path": "reports/method_validation_matrix.md;reading-cards/",
+      "assessment": "partial_curated_evidence",
+      "remaining_gap": "157证据单元有负面结果/版本限制，非领域覆盖率或独立实验数",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-5-legacy",
+      "requirement": "Betz/Chuang/Cau/Brockers/Piao/Ashery保留",
+      "evidence_path": "data/literature_master.csv;reports/method_reclassification.md",
+      "assessment": "stable_IDs_preserved",
+      "remaining_gap": "逐项版本、日期及负面结果边界仍按主表",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-6.Q1",
+      "requirement": "规范实施",
+      "evidence_path": "reports/agent_ex_method_positioning.md;reports/claim_evidence_readiness.md",
+      "assessment": "literature_based_answer_with_project_evidence_limits",
+      "remaining_gap": "八项参照权威综合补充BO；不是项目运行/因果验证；未来实验只提需求不执行",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-6.Q2",
+      "requirement": "研究者选择",
+      "evidence_path": "reports/agent_ex_method_positioning.md;reports/claim_evidence_readiness.md",
+      "assessment": "literature_based_answer_with_project_evidence_limits",
+      "remaining_gap": "八项参照权威综合补充BO；不是项目运行/因果验证；未来实验只提需求不执行",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-6.Q3",
+      "requirement": "可迁移设计",
+      "evidence_path": "reports/agent_ex_method_positioning.md;reports/claim_evidence_readiness.md",
+      "assessment": "literature_based_answer_with_project_evidence_limits",
+      "remaining_gap": "八项参照权威综合补充BO；不是项目运行/因果验证；未来实验只提需求不执行",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-6.Q4",
+      "requirement": "应用/评估/创新",
+      "evidence_path": "reports/agent_ex_method_positioning.md;reports/claim_evidence_readiness.md",
+      "assessment": "literature_based_answer_with_project_evidence_limits",
+      "remaining_gap": "八项参照权威综合补充BO；不是项目运行/因果验证；未来实验只提需求不执行",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-6.Q5",
+      "requirement": "独立方法新增证据",
+      "evidence_path": "reports/agent_ex_method_positioning.md;reports/claim_evidence_readiness.md",
+      "assessment": "literature_based_answer_with_project_evidence_limits",
+      "remaining_gap": "八项参照权威综合补充BO；不是项目运行/因果验证；未来实验只提需求不执行",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-7.1",
+      "requirement": "当前应用稿双轨定位",
+      "evidence_path": "reports/two_track_submission_strategy.md;data/journal_submission_candidates.csv",
+      "assessment": "conditional_strategy_delivered_not_manuscript_readiness",
+      "remaining_gap": "当前JASSS/CCR优先比较；后续三路线有失败判据；论文实际达标/投稿不属于已完成声明",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-7.2",
+      "requirement": "后续方法稿双轨定位",
+      "evidence_path": "reports/two_track_submission_strategy.md;data/journal_submission_candidates.csv",
+      "assessment": "conditional_strategy_delivered_not_manuscript_readiness",
+      "remaining_gap": "当前JASSS/CCR优先比较；后续三路线有失败判据；论文实际达标/投稿不属于已完成声明",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-7.3",
+      "requirement": "逐刊完整投稿证据字段",
+      "evidence_path": "data/journal_submission_candidates.csv",
+      "assessment": "linked_precedent_metadata_expanded_policy_partial",
+      "remaining_gap": "49有主表关联载体补完整题名/日期/DOI/URL/类型及状态；3无主表关联保留边界；指南/索引/费用/持续性仍未齐；BU已核JASSS/CCR现行政策/一般费用，不再将两刊全部费用标未知；其他索引/资格/政策缺口仍在。",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-GOAL.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "GOAL.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-METHODS_FIRST_REORIENTATION.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "METHODS_FIRST_REORIENTATION.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-data/method_venue_map.csv",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "data/method_venue_map.csv",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-data/journal_submission_candidates.csv",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "data/journal_submission_candidates.csv",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-reports/method_reclassification.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "reports/method_reclassification.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-reports/method_landscape.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "reports/method_landscape.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-reports/agent_ex_method_positioning.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "reports/agent_ex_method_positioning.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-reports/method_venue_landscape.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "reports/method_venue_landscape.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-reports/two_track_submission_strategy.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "reports/two_track_submission_strategy.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-progress.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "progress.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-README.md",
+      "requirement": "命名交付文件内容/存在",
+      "evidence_path": "README.md",
+      "assessment": "exists_bounded_content_review_not_full_acceptance",
+      "remaining_gap": "文件存在及入口可核；正文更新/具体缺口见BP审计，非仅凭存在完成验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-cards",
+      "requirement": "核心新卡沿用ID与11项结构",
+      "evidence_path": "reading-cards/;data/delivery_requirement_audit.json;reports/protected_card_content_audit_CI.md;data/card_structure_current.json",
+      "assessment": "eleven_item_structure64of64_content_evidence_partial",
+      "remaining_gap": "64卡均可识别1–11：58二级标题/6行内；此前6保护卡格式误判已纠正。不是64内容验收，参数/附录/制品/版本等逐卡缺口仍在。",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-8-export",
+      "requirement": "schema字典/Excel/Bib同步",
+      "evidence_path": "data/README.md;exports/literature_and_journals_methods.xlsx;exports/references_methods.bib",
+      "assessment": "current_schema_counts_exports_verified",
+      "remaining_gap": "9表/42Bib与非空词表核验，5空分类、卡内容、全库覆盖不由导出通过证明",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-9-A",
+      "requirement": "已批准批次A",
+      "evidence_path": "progress.md",
+      "assessment": "executed_foundation_not_whole_goal_complete",
+      "remaining_gap": "不重建第一轮、不重跑A；按当前验收缺口推进",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-9-B",
+      "requirement": "已批准批次B",
+      "evidence_path": "progress.md",
+      "assessment": "executed_foundation_not_whole_goal_complete",
+      "remaining_gap": "不重建第一轮、不重跑A；按当前验收缺口推进",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-9-C",
+      "requirement": "已批准批次C",
+      "evidence_path": "progress.md",
+      "assessment": "executed_foundation_not_whole_goal_complete",
+      "remaining_gap": "不重建第一轮、不重跑A；按当前验收缺口推进",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-9-D",
+      "requirement": "已批准批次D",
+      "evidence_path": "progress.md",
+      "assessment": "executed_foundation_not_whole_goal_complete",
+      "remaining_gap": "不重建第一轮、不重跑A；按当前验收缺口推进",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-9-E",
+      "requirement": "已批准批次E",
+      "evidence_path": "progress.md",
+      "assessment": "executed_foundation_not_whole_goal_complete",
+      "remaining_gap": "不重建第一轮、不重跑A；按当前验收缺口推进",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q1",
+      "requirement": "最终问题1",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q2",
+      "requirement": "最终问题2",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q3",
+      "requirement": "最终问题3",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q4",
+      "requirement": "最终问题4",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q5",
+      "requirement": "最终问题5",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q6",
+      "requirement": "最终问题6",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q7",
+      "requirement": "最终问题7",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q8",
+      "requirement": "最终问题8",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-10.Q9",
+      "requirement": "最终问题9",
+      "evidence_path": "reports/methods_review_current_synthesis.md;data/nine_question_evidence_BR.json",
+      "assessment": "consolidated_current_answer_with_versioned_evidence_scope_limited",
+      "remaining_gap": "BR已统一九问题并固定来源快照；正式全文/日期、卡内容、完整数据库覆盖及重点投稿政策缺口仍按第9节保留，不据综合宣布整体验收",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-11",
+      "requirement": "证据/版本/2022下限/不冒充标准",
+      "evidence_path": "protocol/search_strategy.md;data/literature_master.csv;reading-cards/",
+      "assessment": "identity_date_vocab_preservation_gates_verified_semantics_partial",
+      "remaining_gap": "作者/正式版分列、未来实验不充成果；全文/日期/卡内容与范围仍有明确未决",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "R2-12",
+      "requirement": "实际工作/落盘/推送/接续",
+      "evidence_path": "progress.md;Git branch",
+      "assessment": "executed_through_CH_CI_audit_continuing",
+      "remaining_gap": "CH578d21a已推送；CI核验提交后记录，完整目标仍未验收。",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.5.1",
+      "requirement": "英文SSCI Communication完整目录",
+      "evidence_path": "data/journals_master.csv",
+      "assessment": "historical_and_public_evidence_partial",
+      "remaining_gap": "首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.5.1-CN",
+      "requirement": "中文CSSCI来源版/扩展区分",
+      "evidence_path": "data/journals_master.csv;reports/coverage_and_gaps.md",
+      "assessment": "historical_and_public_evidence_partial",
+      "remaining_gap": "首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.6",
+      "requirement": "真实查询/日志/三路径",
+      "evidence_path": "data/search_log.csv;protocol/search_strategy.md",
+      "assessment": "historical_and_public_evidence_partial",
+      "remaining_gap": "首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.7",
+      "requirement": "试检索与校准后继续",
+      "evidence_path": "reports/pilot_report.md;progress.md",
+      "assessment": "historical_and_public_evidence_partial",
+      "remaining_gap": "首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.8",
+      "requirement": "两轮筛选/版本/阅读状态",
+      "evidence_path": "data/literature_master.csv",
+      "assessment": "partial_version_date_reading_evidence",
+      "remaining_gap": "42纳入门通过；29日期未决、作者/正式版本及独立双筛未齐，不强升",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.9.2",
+      "requirement": "11项完整阅读卡",
+      "evidence_path": "reading-cards/;reports/protected_card_content_audit_CI.md;data/card_structure_current.json",
+      "assessment": "eleven_item_structure64of64_content_evidence_partial",
+      "remaining_gap": "64卡均可识别1–11：58二级标题/6行内；此前6保护卡格式误判已纠正。不是64内容验收，参数/附录/制品/版本等逐卡缺口仍在。",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.10",
+      "requirement": "三类第一轮期刊表/档案/会议",
+      "evidence_path": "data/journals_master.csv;data/core_source_journals.csv;data/submission_candidates.csv;journal-profiles/",
+      "assessment": "historical_and_public_evidence_partial",
+      "remaining_gap": "首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量",
+      "checked": "2026-11-27"
+    },
+    {
+      "requirement_id": "1.11",
+      "requirement": "组织与最终交付",
+      "evidence_path": "README.md;reports/coverage_and_gaps.md",
+      "assessment": "historical_and_public_evidence_partial",
+      "remaining_gap": "首轮原成果保留；授权检索/完整索引目录/双筛与覆盖缺口仍未认证，公开补查不冒充全量",
+      "checked": "2026-11-27"
+    }
+  ],
+  "counts": {
+    "records": 107,
+    "cards": 64,
+    "units": 157,
+    "included": 42,
+    "source_operations": 1228,
+    "date_pending": 29
+  },
+  "structure": {
+    "heading": 58,
+    "inline": 6,
+    "recognized": 64,
+    "meaning": "numbering only"
+  },
+  "git_branch": "codex/social-identity-network-2x3",
+  "evidence_hashes": {
+    "GOAL.md": "a546db96710e5a9a323f4a3b35bdcf271ea7220a3d2dd133c6d777dc747543ad",
+    "progress.md": "b93d80e0476b801e3b0e12c43394b67ab238343cffc2eb501d28606ed3d2255f",
+    "data/round1_preservation_manifest.json": "5a890538af1b3dafd398ba265569448c3533787410e24094eae1ca32b4db75a8",
+    "reports/methods_validation.json": "e4169b53fb0ee53a9f15d2b175cc602d4e67e267f9aee39041ba0f9810814bb2",
+    "protocol/method_coding_rules.md": "0d83a469f851b85baddf9de9750ee45f69751deb959b702178ed6a6819e76243",
+    "reports/method_reclassification.md": "0cbe74b1f5918c08a65fbae1a9026baad3859e828831c20d5973ef6df2c6e3a9",
+    "data/search_log.csv": "13c4f5c4852efc9257e947485a090c15da91882beb1a0c690cd944af19d61feb",
+    "data/delivery_requirement_audit.json": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "reports/method_landscape.md": "ef40a72510379b1879d7a3884b70412e6cfd2fc77992aa9ecffe33d1c97bbf8d",
+    "data/venue_coverage_audit.csv": "cb3bee80ffeab1ceef3fd03664f1fe7f8d9063ec93b42f8bba2fe0c31c146848",
+    "data/method_venue_map.csv": "641b45ffb87b30bc07d049dd3450896668aad42be9b92b7ff9d39bbcb6d5e1a8",
+    "data/journal_submission_candidates.csv": "281d0316527e7836b69c9eb7666a36fdcb1042d1adf039fa2d4a7a29b648ee82",
+    "data/journals_master.csv": "3b8a19cac64504f2b35cbe95f68a9f6b3b47878f3b3cfbadecce52c3aa455adf",
+    "reading-cards/M001.md": "4995d203bdea968778a67cac7d931a44c9ed642be7b75cc3ece57bf78eee4ea7",
+    "reading-cards/R015.md": "b07de9b81d326d004a2f5657a763c4430713391fb3d537db607e0ac844a45d55",
+    "reading-cards/M002.md": "025acd6455f33f961c6b2521fc3b7f4af876191c48540a40b0c64cfd74d4056b",
+    "reading-cards/M003.md": "b394ec0ca9effc7b49688900573ec0fc91a862971f3577862589c25b09ba9067",
+    "reading-cards/R008.md": "7a7e90a49b0db05d0a75bd01f48e8660fe5f939ac69f79be622a37ad0293802c",
+    "reports/method_validation_matrix.md": "a3cc12d3bd4aaef3d03048e810d1d5f9486191ee02310a101a0e2fa4afef4102",
+    "data/literature_master.csv": "2cb1c58bcd30a9cafded07f9430e4a5bea2618c7c1a236988bd7a8cdddec4954",
+    "reports/agent_ex_method_positioning.md": "0163ada875de6b56a68737e771f1a2087d9aaf53eab888d3972fb69a2f735cd7",
+    "reports/claim_evidence_readiness.md": "37901546abb6d08e77fcd5d59b094e6dfdc3ffb89e1e2adc9b3d3841f3d276ba",
+    "reports/two_track_submission_strategy.md": "16d8b8bcc5b188c74f872470cc3e214767a07d3ea8283381d6be40dea2f417ca",
+    "METHODS_FIRST_REORIENTATION.md": "f237c9a8257da24ee8e7308d9137dcd92eac312c19c30ea3885846ef9ae4e27c",
+    "reports/method_venue_landscape.md": "61c18119a958f590080cb62459afefdb85eff42ebf3c0e573109545c08f20e00",
+    "README.md": "67b6c81c4e46f73d0511846a3a905570792cab9b5dff1fdd6d6f259ee831e4a8",
+    "reports/protected_card_content_audit_CI.md": "6eec3b9bf55cab8c5c64688a04dbb30e625210f11ed79bb3756bd1a44509c0de",
+    "data/card_structure_current.json": "095c3f95aa19674f34aedd477076dc58bd2c176d683915463217d8250db70ac4",
+    "data/README.md": "52e0f8d25e1dfa64abcbb4adfd45a9bfcc13fc884257bbb2c4779eacdc0feec4",
+    "exports/literature_and_journals_methods.xlsx": "884ee79002cb0f17d0ba93248acc041b82fb80785bb2774c964337e9901df3e0",
+    "exports/references_methods.bib": "b2dfcda9eceb6cbf5f10ae88e13cd506a7096e02123a2a16347d18a30414ca64",
+    "reports/methods_review_current_synthesis.md": "5d0bc6f04b8ab3ac1a01445c8e0ff07d355e28147179b193364cf9aadc2da97d",
+    "data/nine_question_evidence_BR.json": "473a68164ab3f5eb49f136a7fca3f47d2d970853d24fb6363600d999f5a7ffc3",
+    "protocol/search_strategy.md": "172c64f4d146d707b27fe4166aa7fb318c5640b1c45c42793f1e48d26d3021e2",
+    "reports/coverage_and_gaps.md": "80a4fb4232f32cef1ebc740b5326f033b61c81794aea1ec323dd64bcbbda3ac0",
+    "reports/pilot_report.md": "3280a7ef649ea02392e2caf76db11a588c767bba964c168ebf87d4e1afa0405b",
+    "data/core_source_journals.csv": "a82f1cae05bdc338e202ce331a1d5961e277110b3241bcc36c894f7ab80a0900",
+    "data/submission_candidates.csv": "75ed64e689d46a45bd78c9685afff38802a7185e4ea8f6466c2bcd9a1d8f4658"
+  },
+  "evidence_paths_missing": [],
+  "boundary": "Requirement-state reconciliation and local evidence presence/hash checks; not semantic acceptance, database coverage or fulltext/replication certification"
+}

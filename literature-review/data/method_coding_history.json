@@ -6708,5 +6708,125 @@
     "batch": "CH-sensitivity-and-synthetic-survey-cards",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ch_sensitivity_survey_cards/results.json"
+  },
+  {
+    "record_id": "CN006",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#CN006;batches/chinese/records.json#CN006;reading-cards/CN006.md",
+    "new": "data/literature_master.csv#CN006;batches/chinese/records.json#CN006;reading-cards/CN006.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "CN006",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "CN007",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#CN007;batches/chinese/records.json#CN007;reading-cards/CN007.md",
+    "new": "data/literature_master.csv#CN007;batches/chinese/records.json#CN007;reading-cards/CN007.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "CN007",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "EN01",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#EN01;batches/english/results.json#EN01;reading-cards/EN01.md",
+    "new": "data/literature_master.csv#EN01;batches/english/results.json#EN01;reading-cards/EN01.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "EN01",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "EN08",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#EN08;batches/english/results.json#EN08;reading-cards/EN08.md",
+    "new": "data/literature_master.csv#EN08;batches/english/results.json#EN08;reading-cards/EN08.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "EN08",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "EN11",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#EN11;batches/english/results.json#EN11;reading-cards/EN11.md",
+    "new": "data/literature_master.csv#EN11;batches/english/results.json#EN11;reading-cards/EN11.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "EN11",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "R008",
+    "field": "method_coding_source",
+    "old": "reading-cards/R008.md",
+    "new": "reading-cards/R008.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "R008",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CI-protected-card-content-and-structure-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ci_protected_card_audit/results.json"
   }
 ]

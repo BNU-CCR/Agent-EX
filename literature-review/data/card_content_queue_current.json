@@ -1,48 +1,39 @@
 {
   "date": "2026-11-27",
-  "batch": "CH",
+  "batch": "CI",
   "cards": 64,
-  "numbered11": 58,
-  "not11": 6,
+  "numbered11": 64,
+  "heading_numbered11": 58,
+  "inline_numbered11": 6,
+  "not11": 0,
   "mutable": 0,
-  "protected": 6,
-  "boundary": "Format indicator only, not all content reviewed/accepted",
-  "queue": [
+  "protected": 0,
+  "queue": [],
+  "boundary": "Numbered11 now recognizes both exact heading1-11 and inlinebold1-11. No formatting gap; NOT content acceptance. Six protected evidence followups remain separately.",
+  "content_followups": [
     {
-      "path": "reading-cards/CN006.md",
-      "numbered_sections": 0,
-      "protected": true,
-      "action": "companion_supplement_only"
+      "record_id": "CN006",
+      "remaining_gap": "引文模型代码未核；概念框架无新增实验证据，不要求虚构样本或参数。"
     },
     {
-      "path": "reading-cards/CN007.md",
-      "numbered_sections": 0,
-      "protected": true,
-      "action": "companion_supplement_only"
+      "record_id": "CN007",
+      "remaining_gap": "日期标签歧义保留；原研究版本/代码与跨模型基准未逐项核，综述建议不当交付。"
     },
     {
-      "path": "reading-cards/EN01.md",
-      "numbered_sections": 0,
-      "protected": true,
-      "action": "companion_supplement_only"
+      "record_id": "EN01",
+      "remaining_gap": "完整参数/重复数、附录与首发平台日期差异未闭合；外生共同倾向不当身份机制。"
     },
     {
-      "path": "reading-cards/EN08.md",
-      "numbered_sections": 0,
-      "protected": true,
-      "action": "companion_supplement_only"
+      "record_id": "EN08",
+      "remaining_gap": "每参数重复数、代码及补充附录未核；39人访谈支撑规则来源，不是精确参数估计。"
     },
     {
-      "path": "reading-cards/EN11.md",
-      "numbered_sections": 0,
-      "protected": true,
-      "action": "companion_supplement_only"
+      "record_id": "EN11",
+      "remaining_gap": "完整参数/代码/敏感性未独立复核；三议题拟合不识别真实平台内部算法。"
     },
     {
-      "path": "reading-cards/R008.md",
-      "numbered_sections": 0,
-      "protected": true,
-      "action": "companion_supplement_only"
+      "record_id": "R008",
+      "remaining_gap": "精确模型snapshot、各子实验分母与执行制品未核；附录100run入口不当全部图统一N。"
     }
   ]
 }

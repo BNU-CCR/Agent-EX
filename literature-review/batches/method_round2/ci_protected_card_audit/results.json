@@ -1,0 +1,38 @@
+{
+  "batch_id": "CI-protected-card-content-and-structure-audit",
+  "date": "2026-11-27",
+  "expected_master_sha256": "9cee9dac3d7278b0d2b25c54ae0d0221ce149c490056bae7884506bb79e8cc43",
+  "updates": [
+    {
+      "record_id": "CN006",
+      "method_coding_source": "data/literature_master.csv#CN006;batches/chinese/records.json#CN006;reading-cards/CN006.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "CN007",
+      "method_coding_source": "data/literature_master.csv#CN007;batches/chinese/records.json#CN007;reading-cards/CN007.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "EN01",
+      "method_coding_source": "data/literature_master.csv#EN01;batches/english/results.json#EN01;reading-cards/EN01.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "EN08",
+      "method_coding_source": "data/literature_master.csv#EN08;batches/english/results.json#EN08;reading-cards/EN08.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "EN11",
+      "method_coding_source": "data/literature_master.csv#EN11;batches/english/results.json#EN11;reading-cards/EN11.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+      "method_last_checked": "2026-11-27"
+    },
+    {
+      "record_id": "R008",
+      "method_coding_source": "reading-cards/R008.md;reports/protected_card_content_audit_CI.md;existing_card_content_review_CI",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

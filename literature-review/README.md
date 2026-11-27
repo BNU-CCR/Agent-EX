@@ -36,6 +36,9 @@
 
 - [敏感性与合成调查卡补全](reports/sensitivity_survey_cards_CH.md)：配置/种子/人类分母、聚合与时间稳定性。
 
+- [保护卡与结构审计](reports/protected_card_content_audit_CI.md)：纠正6卡行内编号误判，保留实际参数/制品缺口。
+- [CI验收接续](reports/delivery_requirement_audit_CI.md)：66项要求按现有证据恢复，不以格式完成代替目标。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

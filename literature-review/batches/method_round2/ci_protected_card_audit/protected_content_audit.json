@@ -1,0 +1,170 @@
+[
+  {
+    "record_id": "CN006",
+    "path": "reading-cards/CN006.md",
+    "source_commit": "578d21a",
+    "raw_sha256": "b12b34d18ff8e7b349f3427312de1f4aa128f8dda1a1c3f12d607d65c451f3a0",
+    "git_lf_sha256": "b12b34d18ff8e7b349f3427312de1f4aa128f8dda1a1c3f12d607d65c451f3a0",
+    "structure": {
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    "content_review_scope": "Existing eleven items and explicit limits reviewed; no new primary acquisition or reference-by-reference verification",
+    "remaining_gap": "引文模型代码未核；概念框架无新增实验证据，不要求虚构样本或参数。",
+    "action": "retain original; pursue specific evidence gap; no duplicate companion required by formatting"
+  },
+  {
+    "record_id": "CN007",
+    "path": "reading-cards/CN007.md",
+    "source_commit": "578d21a",
+    "raw_sha256": "022077a1fb76075a64a29e366ef83fa199c4728872b5829b092bc159c450b6ca",
+    "git_lf_sha256": "022077a1fb76075a64a29e366ef83fa199c4728872b5829b092bc159c450b6ca",
+    "structure": {
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    "content_review_scope": "Existing eleven items and explicit limits reviewed; no new primary acquisition or reference-by-reference verification",
+    "remaining_gap": "日期标签歧义保留；原研究版本/代码与跨模型基准未逐项核，综述建议不当交付。",
+    "action": "retain original; pursue specific evidence gap; no duplicate companion required by formatting"
+  },
+  {
+    "record_id": "EN01",
+    "path": "reading-cards/EN01.md",
+    "source_commit": "578d21a",
+    "raw_sha256": "a2185daf4c1eec01b84632a9810413f3c42cb8ea1f56461f17390fa33907be0b",
+    "git_lf_sha256": "5f3a12a39738fcc6ac96cedfbea1368ae99f99c0818a806af0584968f5d27f54",
+    "structure": {
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    "content_review_scope": "Existing eleven items and explicit limits reviewed; no new primary acquisition or reference-by-reference verification",
+    "remaining_gap": "完整参数/重复数、附录与首发平台日期差异未闭合；外生共同倾向不当身份机制。",
+    "action": "retain original; pursue specific evidence gap; no duplicate companion required by formatting"
+  },
+  {
+    "record_id": "EN08",
+    "path": "reading-cards/EN08.md",
+    "source_commit": "578d21a",
+    "raw_sha256": "22f8d5f7c7e7c959949a0eef3df75be96d34a68d4b154e8261ee5187c649e019",
+    "git_lf_sha256": "fa21a77eb861f09897eddb0b932aff807590f950e77e9fb72deb2de82599dbea",
+    "structure": {
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    "content_review_scope": "Existing eleven items and explicit limits reviewed; no new primary acquisition or reference-by-reference verification",
+    "remaining_gap": "每参数重复数、代码及补充附录未核；39人访谈支撑规则来源，不是精确参数估计。",
+    "action": "retain original; pursue specific evidence gap; no duplicate companion required by formatting"
+  },
+  {
+    "record_id": "EN11",
+    "path": "reading-cards/EN11.md",
+    "source_commit": "578d21a",
+    "raw_sha256": "6de2223026bfa2a9154b0f03b03284d2ecba3cae19636ed6ab0a86a1b34bf424",
+    "git_lf_sha256": "e0b16af089c12487d6f7339472ca2d0eb9bebb1e0dbf0b4d3e7ca7a9cb2ec1da",
+    "structure": {
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    "content_review_scope": "Existing eleven items and explicit limits reviewed; no new primary acquisition or reference-by-reference verification",
+    "remaining_gap": "完整参数/代码/敏感性未独立复核；三议题拟合不识别真实平台内部算法。",
+    "action": "retain original; pursue specific evidence gap; no duplicate companion required by formatting"
+  },
+  {
+    "record_id": "R008",
+    "path": "reading-cards/R008.md",
+    "source_commit": "578d21a",
+    "raw_sha256": "7a7e90a49b0db05d0a75bd01f48e8660fe5f939ac69f79be622a37ad0293802c",
+    "git_lf_sha256": "7a7e90a49b0db05d0a75bd01f48e8660fe5f939ac69f79be622a37ad0293802c",
+    "structure": {
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    "content_review_scope": "Existing eleven items and explicit limits reviewed; no new primary acquisition or reference-by-reference verification",
+    "remaining_gap": "精确模型snapshot、各子实验分母与执行制品未核；附录100run入口不当全部图统一N。",
+    "action": "retain original; pursue specific evidence gap; no duplicate companion required by formatting"
+  }
+]
