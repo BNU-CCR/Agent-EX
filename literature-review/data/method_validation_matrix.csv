@@ -73,3 +73,8 @@ VC71,M035,经验投影与动态等价分开,PHEME/HiSim多指标,指标均值近
 VC72,M035,规则与全流程迁移分开,Qwen/Mistral使用Llama规则,跨模型无退步/词表通用,迁移范围,表4有部分指标退步，AgentTorch36原型另有代价,所测规则/数据/模型,整套词表或多场景人类效度,跨模型/主体粒度与指标单列,Table4p8/Table8p17,source_read_not_reexecuted,2026-11-27
 VC73,M035,公式方向与实现分开,Eq2/+0.6/高fitness选择,看似明确公式当已复现算法,可执行规格,归一化token正项与省token目标方向待核,打印描述的待核项,代码错误/实际优化方向已证明,固定实现后对照公式/目标,Eq2p4/AppA.2pp12–14,reporting_ambiguity_code_pending,2026-11-27
 VC74,M035,优化judge与下游标签验证分开,50对话κ/100实例一致性,混合为通用judge准确率,评价测量,κ0.48与stance.94/belief.78属不同任务,所测样本/指标,所有语言或条件标签可靠,报告样本/任务/标签与不确定性,AppA.2p13/AppB.6p17,source_read_not_reexecuted,2026-11-27
+VC75,M034,群体人口与显式主体分开,16group vs1000individual runtime,代表人口当微观N或独立重复,聚合与效率范围,作者限制缺显式网络连接/agent互动；不同粒度计时,群体流量估计/所测配置,微观网络机制或匹配工作量吞吐提升,人口权重/代表单位/显式互动分别报告,§3/§4/AppB.3;Limitationsp9,source_read_not_reexecuted,2026-11-27
+VC76,M034,提示先验与涌现分开,TableX/XI衰减/二峰/行动比例,预设形状再当机制验证,理论到生成的证据,提示明确规定若干目标形状,本文读本构造边界,双峰自然涌现/心理机制已识别,预设规则须独立对照且不结果选定,TablesX/XIpp20–21,source_read_and_reviewer_scope_inference,2026-11-27
+VC77,M034,同条件重复/指标名与复现分开,Z/t-test/DTW叙述,小统计量当等价或独立复建,测量与重复,五次以上同条件；A.1对应日距离公式,已读报告范围,完整独立复现/DTW实现已认证,固定实现与判据/重复单位，需原始结果,§4pp6–8;AppA.1p13,reporting_scope_implementation_pending,2026-11-27
+VC78,M034,作者事前声明与可核时间戳分开,July25/Aug15预测声明,论文自述当盲态证据,预测信息边界,两定向检索无原提交；不是不存在证明,作者声明/待核,已认证前瞻或已证明事后泄漏,冻结输入/检索时间与可验证原提交,AppCp16;AJqueries,provenance_pending_not_misconduct_finding,2026-11-27
+VC79,M034,表内行计数与印刷百分比分开,TableVI15行/自身GT,86.7直接作已核结果,报告内部一致性,Ours/ElectionSim12/15=80%;印刷86.7冲突,表内转录重算,哪方代表原始实验或实际GT已核,保留冲突与原值，不静默更正作者结果,TableVIp18;gas3auditCSV,published_table_internal_arithmetic_not_new_experiment,2026-11-27

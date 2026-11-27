@@ -1,0 +1,16 @@
+state,GT_as_printed,Ours_as_printed,ElectionSim_as_printed,Multi_step_as_printed,Ours_match,ElectionSim_match,Multi_step_match,source
+Arizona,T,H,T,T,0,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Colorado,H,H,H,H,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Florida,T,T,T,T,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Georgia,T,H,T,H,0,1,0,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Iowa,T,T,T,T,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Michigan,T,T,H,H,1,0,0,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Minnesota,H,T,H,H,0,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Nevada,T,T,H,H,1,0,0,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+New Hampshire,H,H,H,H,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+North Carolina,T,T,T,H,1,1,0,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Ohio,T,T,T,T,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Pennsylvania,T,T,H,H,1,0,0,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Texas,T,T,T,T,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Virginia,H,H,H,H,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck
+Wisconsin,T,T,T,T,1,1,1,M034TableVIp18;T=Trump-Vance/H=Harris-Walz;notexternalGTcheck

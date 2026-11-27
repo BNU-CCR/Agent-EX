@@ -62,3 +62,5 @@ AG新增信息不对称、群体主体与通信压缩三摘要候选，不因正
 AH补M033正式方法评价，信息可见性、生成组织、评价者信息与迁移对象须配对报告，不能将全部模式差异归单一信息因果。 见[information_boundary_comparison.md](information_boundary_comparison.md)。
 
 AI补通信效率方法：成本分母、经验投影与过程等价分层；公式方向仍待实现核查。 见[通信效率专题](communication_efficiency_validity.md)。
+
+AJ补群体主体：人口权重/主体粒度、显式互动、模板先验与经验拟合须分列；不以大代表人口或峰形近似认定微观机制有效。 见[群体粒度专题](group_granularity_validation.md)。

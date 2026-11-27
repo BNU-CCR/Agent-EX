@@ -3458,5 +3458,75 @@
     "batch": "AI-EcoLANG",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ai_ecolang/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AJ-group-agents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aj_group_agents/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "AJ-group-agents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aj_group_agents/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AJ-group-agents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aj_group_agents/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "可比较主体粒度/权重/效率与宏观拟合；无显式微观网络，模板规定形状，独立预测/机制效度另证。",
+    "date": "2026-11-27",
+    "batch": "AJ-group-agents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aj_group_agents/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_evidence_location",
+    "old": "Officialabstract only",
+    "new": "Tables1–5,IV,VI,X,XI;reviewinternaltablearithmetic separate",
+    "date": "2026-11-27",
+    "batch": "AJ-group-agents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aj_group_agents/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_coding_source",
+    "old": "https://aclanthology.org/2025.findings-acl.468/",
+    "new": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv",
+    "date": "2026-11-27",
+    "batch": "AJ-group-agents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aj_group_agents/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;fulltext_design;calibration_validation_information_boundary;reproducibility_artifacts",
+    "new": "first_formal_online_day;fixedcode_data_retrieval_cutoff;heldout_design;metric_DTW_implementation;raw_repeats;prior_prediction_timestamp;TableVI_discrepancy",
+    "date": "2026-11-27",
+    "batch": "AJ-group-agents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aj_group_agents/results.json"
   }
 ]

@@ -1,0 +1,27 @@
+{
+  "batch_id": "AJ-group-agents",
+  "date": "2026-11-27",
+  "expected_master_sha256": "59198c15af6fe4375708e3731629d346d0a2212e9fadf103da0c64f9c8dcac56",
+  "updates": [
+    {
+      "record_id": "M034",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M034.md",
+      "reason": "正式全文支持群体平台/宏观经验拟合方法编码；精确首发日未核保持candidate。",
+      "research_question": "层级group agent如何用人口/状态/记忆估计事件流量，聚合与评价边界是什么？",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "可比较主体粒度/权重/效率与宏观拟合；无显式微观网络，模板规定形状，独立预测/机制效度另证。",
+      "findings": "30事件7天流量宏观拟合；作者承认缺显式连接/主体互动；模板预设衰减/二峰；表VI按自身GT重算80%与86.7%冲突，选举事前提交待核。",
+      "evidence_location": "FormalPDF§3–5/Limitationspp3–9;AppA/B/C/Promptspp13–21",
+      "method_evidence_location": "Tables1–5,IV,VI,X,XI;reviewinternaltablearithmetic separate",
+      "supplement_status": "selected_appendices_and_prompts_read;code_run_provenance_not_audited",
+      "method_coding_source": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv",
+      "method_pending_fields": "first_formal_online_day;fixedcode_data_retrieval_cutoff;heldout_design;metric_DTW_implementation;raw_repeats;prior_prediction_timestamp;TableVI_discrepancy",
+      "search_id": "S-M2-AG-GA;S-M2-AG-GA-DOI;S-M2-AJ-PDF;S-M2-AJ-READ;S-M2-AJ-ARITH",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AJformalPDFfocusedread;authorpredictivetimestampnotindependentlyverified,notretrospectiveaccusation. TableVIinternalGTonly,notexternalpoliticalfactverification;noexperiment/codeexecution."
+    }
+  ],
+  "new_records": []
+}

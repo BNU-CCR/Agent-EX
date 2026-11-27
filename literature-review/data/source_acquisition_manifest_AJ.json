@@ -1,0 +1,13 @@
+[
+  {
+    "record_id": "M034",
+    "version": "official_FindingsACL_PDF",
+    "source_url": "https://aclanthology.org/2025.findings-acl.468.pdf",
+    "sha256": "abb7cd3035b533ff6b745acb34ececc22995d9467c12387c6f72082560183d10",
+    "bytes": 3038975,
+    "pages": 21,
+    "checked": "2026-11-27",
+    "read_scope": "focusedpp3–9,13–21;notfullcodeorallappendixnarrative",
+    "storage": "temporaryPDF;repomanifestonly"
+  }
+]
