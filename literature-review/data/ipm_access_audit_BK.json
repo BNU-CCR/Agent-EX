@@ -1,0 +1,241 @@
+{
+  "checked_date": "2026-11-27",
+  "sources": [
+    {
+      "key": "scope",
+      "url": "https://shop.elsevier.com/journals/information-processing-and-management/0306-4573",
+      "status": 200,
+      "bytes": 183009,
+      "sha256": "fb18da7be704de21a909e13b7a8765786215cc941c2d320dbc0bf47c2f8ed303",
+      "description": "Description This journal is ranked by The Chartered Association of Business Schools' Academic Journal Guide, Australian Business Deans Council, Chinese Academy of Sciences (CAS), China Computer Federation (CCF), BFI (Denmark), Computing Research & Education (CORE) Journal Ranking, The Publication Forum (Finland), Science Citation Index Expanded, Social Sciences Citation Index, Scopus, and SCImago Journal Rank (SJR). Information Processing and Management publishes cutting-edge original research at the intersection of computing and information science concerning theory, methods, or applications in a range of domains, including but not limited to advertising, business, health, information science, information technology marketing, and social computing. The journal aims to serve the interests of primary researchers but also practitioners in furthering knowledge at the intersection of computing and information science by providing an effective forum for the timely dissemination of advanced and topical issues. The journal is especially interested in original research articles, research survey articles, research method articles, and articles addressing critical applications of research. Specifically, the journal is interested in four types of manuscripts, which are: Research manuscripts addressing topics at the intersection of computer and information science. Methods manuscripts focusing on the application of novel methods at the intersection of computer and information science. Review manuscripts assessing, in a critical and in-depth manner, a broad trend at the intersection of computer and information science, providing integration of the prior research, and recommendations for further work in the area. Critical application manuscripts concerning system design research at the intersection of computer and information science. Product details ISSN: 0306-4573 Volume 1 Issue 8 5 Year impact factor: 8.3 Impact factor: 8.1 Find out more Read the Information Processing & Management Guide for Authors, Open Access policy, and latest articles on ScienceDirect Read about Elsevier's Accessibility Policy Useful links Book awards Book bestsellers Book imprints Book pre-order Book series ( opens in new tab/window ) Flexible eBook solutions Journal bestsellers New book releases Student corner ( opens in new tab/window ) Quick help eBook formats ( opens in new tab/window ) My account ( opens in new tab/window ) Returns & refunds ( opens in new tab/window ) Shipping & delivery ( opens in new tab/window ) Subscriptions & renewals ( opens in new tab/window ) Support & contact ( opens in new tab/window ) Tax exempt orders ( opens in new tab/window ) Withdrawal order Solutions ClinicalKey ( opens in new tab/window ) ClinicalKey AI ( opens in new tab/window ) Embase ( opens in new tab/window ) Evolve ( opens in new tab/window ) Mendeley ( opens in new tab/window ) Knovel ( opens in new tab/window ) Reaxys ( opens in new tab/window ) ScienceDirect ( opens in new tab/window ) About About Elsevier ( opens in new tab/window ) Careers ( opens in new tab/window ) Newsroom ( opens in new tab/window ) Your legal guarantee rights (EU) ( opens in new tab/window ) ( opens in new tab/window ) ( opens in new tab/window ) ( opens in new tab/window ) ( opens in new tab/window ) Copyright © 2026 Elsevier, its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies. Terms & conditions ( opens in new tab/window ) Privacy policy ( opens in new tab/window ) Accessibility statement ( opens in new tab/window ) Cookie Settings Support & contact ( opens in new tab/window )"
+    },
+    {
+      "key": "crossref",
+      "url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104689",
+      "status": 200,
+      "bytes": 16358,
+      "sha256": "d9f72966e7883e89d494d760a3f59120a72f20ef8569f32fb7291acfd4a60c53",
+      "metadata": {
+        "DOI": "10.1016/j.ipm.2026.104689",
+        "title": [
+          "RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents"
+        ],
+        "published-online": null,
+        "published-print": {
+          "date-parts": [
+            [
+              2026,
+              7
+            ]
+          ]
+        },
+        "created": {
+          "date-parts": [
+            [
+              2026,
+              2,
+              23
+            ]
+          ],
+          "date-time": "2026-02-23T10:54:49Z",
+          "timestamp": 1771844089000
+        },
+        "link": [
+          {
+            "URL": "https://api.elsevier.com/content/article/PII:S0306457326000804?httpAccept=text/xml",
+            "content-type": "text/xml",
+            "content-version": "vor",
+            "intended-application": "text-mining"
+          },
+          {
+            "URL": "https://api.elsevier.com/content/article/PII:S0306457326000804?httpAccept=text/plain",
+            "content-type": "text/plain",
+            "content-version": "vor",
+            "intended-application": "text-mining"
+          }
+        ]
+      }
+    },
+    {
+      "key": "OA_R005",
+      "url": "https://api.openalex.org/works/https://doi.org/10.1016/j.ipm.2026.104689",
+      "status": 200,
+      "bytes": 17347,
+      "sha256": "2f62676732de6177c6dd814da50cda9043a5d457f34871eddd80f132c9cf7007",
+      "metadata": {
+        "id": "https://openalex.org/W7131181893",
+        "doi": "https://doi.org/10.1016/j.ipm.2026.104689",
+        "publication_date": "2026-02-23",
+        "open_access": {
+          "is_oa": false,
+          "oa_status": "closed",
+          "oa_url": null,
+          "any_repository_has_fulltext": false
+        },
+        "best_oa_location": null,
+        "locations": [
+          {
+            "id": "doi:10.1016/j.ipm.2026.104689",
+            "doi": "https://doi.org/10.1016/j.ipm.2026.104689",
+            "is_oa": false,
+            "landing_page_url": "https://doi.org/10.1016/j.ipm.2026.104689",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S174847851",
+              "display_name": "Information Processing & Management",
+              "issn_l": "0020-0271",
+              "issn": [
+                "0020-0271",
+                "0306-4573",
+                "1873-5371",
+                "1878-4089"
+              ],
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": true,
+              "listed_in": [
+                "anvur-class-a",
+                "anvur-scientific",
+                "ccf-b",
+                "cwts-core",
+                "dongbi-b",
+                "fnege-3",
+                "jufo-3",
+                "norway-2",
+                "poland-140",
+                "russia-white-list-1",
+                "vabb-shw"
+              ],
+              "host_organization": "https://openalex.org/P4310320990",
+              "host_organization_name": "Elsevier BV",
+              "host_organization_lineage": [
+                "https://openalex.org/P4310320990"
+              ],
+              "host_organization_lineage_names": [
+                "Elsevier BV"
+              ],
+              "type": "journal"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "Information Processing &amp; Management",
+            "raw_type": "journal-article"
+          }
+        ]
+      }
+    },
+    {
+      "key": "OA_M047",
+      "url": "https://api.openalex.org/works/https://doi.org/10.1016/j.ipm.2026.105184",
+      "status": 200,
+      "bytes": 17344,
+      "sha256": "b1999db2920de01327306d70d583cc7d0c6d3d891a99d922ef88eb22f215882d",
+      "metadata": {
+        "id": "https://openalex.org/W7213561899",
+        "doi": "https://doi.org/10.1016/j.ipm.2026.105184",
+        "publication_date": "2026-09-18",
+        "open_access": {
+          "is_oa": false,
+          "oa_status": "closed",
+          "oa_url": null,
+          "any_repository_has_fulltext": false
+        },
+        "best_oa_location": null,
+        "locations": [
+          {
+            "id": "doi:10.1016/j.ipm.2026.105184",
+            "doi": "https://doi.org/10.1016/j.ipm.2026.105184",
+            "is_oa": false,
+            "landing_page_url": "https://doi.org/10.1016/j.ipm.2026.105184",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S174847851",
+              "display_name": "Information Processing & Management",
+              "issn_l": "0020-0271",
+              "issn": [
+                "0020-0271",
+                "0306-4573",
+                "1873-5371",
+                "1878-4089"
+              ],
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": true,
+              "listed_in": [
+                "anvur-class-a",
+                "anvur-scientific",
+                "ccf-b",
+                "cwts-core",
+                "dongbi-b",
+                "fnege-3",
+                "jufo-3",
+                "norway-2",
+                "poland-140",
+                "russia-white-list-1",
+                "vabb-shw"
+              ],
+              "host_organization": "https://openalex.org/P4310320990",
+              "host_organization_name": "Elsevier BV",
+              "host_organization_lineage": [
+                "https://openalex.org/P4310320990"
+              ],
+              "host_organization_lineage_names": [
+                "Elsevier BV"
+              ],
+              "type": "journal"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "Information Processing &amp; Management",
+            "raw_type": "journal-article"
+          },
+          {
+            "id": "pmh:oai:dr.ntu.edu.sg:10356/232982",
+            "doi": null,
+            "is_oa": false,
+            "landing_page_url": "https://hdl.handle.net/10356/232982",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S4306402609",
+              "display_name": "DR-NTU (Nanyang Technological University)",
+              "issn_l": null,
+              "issn": null,
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": false,
+              "listed_in": [],
+              "host_organization": "https://openalex.org/I172675005",
+              "host_organization_name": "Nanyang Technological University",
+              "host_organization_lineage": [
+                "https://openalex.org/I172675005"
+              ],
+              "host_organization_lineage_names": [],
+              "type": "repository"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "submittedVersion",
+            "is_accepted": false,
+            "is_published": false,
+            "raw_source_name": null,
+            "raw_type": "Journal Article"
+          }
+        ]
+      }
+    }
+  ],
+  "ntu": {
+    "url": "https://hdl.handle.net/10356/232982",
+    "final_url": "https://dr.ntu.edu.sg/handle/10356/232982",
+    "status": 429,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boundary": "OpenAlexdiscoveryonly_datesmatchCrossrefcreated_notfirstonline;noPDFacquired"
+}

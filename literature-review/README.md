@@ -47,6 +47,7 @@
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
 - [计算社会科学学会与会议](reports/css_societies_and_publication_routes.md)：CSSSA/ISCSS身份、存档路线及工作流复现摘要线索。
+- [IPM范围与获取边界](reports/ipm_scope_and_access_boundaries.md)：官方四类稿件、登记日与首发区分、作者站与NTU访问结果。
 - [信息与智能系统方法渠道](reports/information_systems_method_venues.md)：两刊官方范围、邻接共识优化与IPM跨范式综述候选，指南/首发日待核。
 - [复现工作流固定制品](reports/replication_workflow_static_audit.md)：12文件身份、基线独立重算与48表格数值对应，未运行模型。
 - [LLM辅助复现工作流](reports/llm_assisted_replication_workflows.md)：三案例、两流程的比较边界与成本/离散程度缺口。

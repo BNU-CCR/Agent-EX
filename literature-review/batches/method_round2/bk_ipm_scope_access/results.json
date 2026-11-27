@@ -1,0 +1,22 @@
+{
+  "batch_id": "BK-IPM-official-scope-version-and-access-boundaries",
+  "date": "2026-11-27",
+  "expected_master_sha256": "7771c0dc7f71a36996668d3402f1f9866dc5e04ea2ac715fbffbb2a0930029b2",
+  "updates": [
+    {
+      "record_id": "R005",
+      "notes": "BKofficialIPMscopechecked;directarticle403;OpenAlexdateequalsCrossrefcreated_notpublicationproof;noPDF;authorsiteDOIonly",
+      "method_coding_source": "reports/ipm_scope_and_access_boundaries.md;data/ipm_access_audit_BK.json",
+      "method_last_checked": "2026-11-27",
+      "metadata_evidence_url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104689;https://starkkkk.github.io/publications/",
+      "date_basis": "Crossrefpublishedprint2026-07;created2026-02-23;published-onlineabsent;OpenAlexsamecreateddate_notindependentproof"
+    },
+    {
+      "record_id": "M047",
+      "notes": "BKofficialIPMscopechecked;directarticle403;OpenAlexdateequalsCrossrefcreated_notpublicationproof;noPDF;NTUhandle232982_webunreachable_static429_0bytes",
+      "method_coding_source": "reports/ipm_scope_and_access_boundaries.md;data/ipm_access_audit_BK.json",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

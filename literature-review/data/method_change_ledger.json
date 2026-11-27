@@ -398,5 +398,35 @@
     "batch": "Q-general-journal-method-precedents",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/q_general_journals/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "notes",
+    "old": "",
+    "new": "BKofficialIPMscopechecked;directarticle403;OpenAlexdateequalsCrossrefcreated_notpublicationproof;noPDF;authorsiteDOIonly",
+    "date": "2026-11-27",
+    "batch": "BK-IPM-official-scope-version-and-access-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bk_ipm_scope_access/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "metadata_evidence_url",
+    "old": "",
+    "new": "https://api.crossref.org/works/10.1016/j.ipm.2026.104689;https://starkkkk.github.io/publications/",
+    "date": "2026-11-27",
+    "batch": "BK-IPM-official-scope-version-and-access-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bk_ipm_scope_access/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "date_basis",
+    "old": "Official issue year verified; earliest formal online date unverified",
+    "new": "Crossrefpublishedprint2026-07;created2026-02-23;published-onlineabsent;OpenAlexsamecreateddate_notindependentproof",
+    "date": "2026-11-27",
+    "batch": "BK-IPM-official-scope-version-and-access-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bk_ipm_scope_access/results.json"
   }
 ]

@@ -5568,5 +5568,35 @@
     "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv; batches/crossdisciplinary/records.json",
+    "new": "reports/ipm_scope_and_access_boundaries.md;data/ipm_access_audit_BK.json",
+    "date": "2026-11-27",
+    "batch": "BK-IPM-official-scope-version-and-access-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bk_ipm_scope_access/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BK-IPM-official-scope-version-and-access-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bk_ipm_scope_access/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_coding_source",
+    "old": "reports/information_systems_method_venues.md",
+    "new": "reports/ipm_scope_and_access_boundaries.md;data/ipm_access_audit_BK.json",
+    "date": "2026-11-27",
+    "batch": "BK-IPM-official-scope-version-and-access-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bk_ipm_scope_access/results.json"
   }
 ]

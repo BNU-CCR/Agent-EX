@@ -1,0 +1,182 @@
+[
+  {
+    "search_id": "BK-01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"RoleSimLLM\" pdf",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"From rules to reasoning\" \"Jie\" pdf",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"RoleSimLLM\" \"Available online\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"105184\" \"Available online\" \"2026\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"RoleSimLLM\" github arxiv",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"From rules to reasoning: A systematic review\" \"2026\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1016/j.ipm.2026.105184\" pdf",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-08",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1016/j.ipm.2026.104689\" \"February\"",
+    "source_url": "",
+    "status": "query_run_no_totals_retained",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-09",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "shop",
+    "source_url": "https://shop.elsevier.com/journals/information-processing-and-management/0306-4573",
+    "status": "official_HTML_read",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-10",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "R005",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0306457326000804",
+    "status": "403",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-11",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "M047",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0306457326005741",
+    "status": "403",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-12",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "scope",
+    "source_url": "https://www.sciencedirect.com/journal/information-processing-and-management/about/aims-and-scope",
+    "status": "403",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-13",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "guide",
+    "source_url": "https://www.sciencedirect.com/journal/information-processing-and-management/publish/guide-for-authors",
+    "status": "403",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-14",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "scope",
+    "source_url": "https://shop.elsevier.com/journals/information-processing-and-management/0306-4573",
+    "status": "200",
+    "notes": "bytes/hashdata/ipm_access_audit_BK.json;OpenAlexisdiscoveryonly"
+  },
+  {
+    "search_id": "BK-15",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "crossref",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104689",
+    "status": "200",
+    "notes": "bytes/hashdata/ipm_access_audit_BK.json;OpenAlexisdiscoveryonly"
+  },
+  {
+    "search_id": "BK-16",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "OA_R005",
+    "source_url": "https://api.openalex.org/works/https://doi.org/10.1016/j.ipm.2026.104689",
+    "status": "200",
+    "notes": "bytes/hashdata/ipm_access_audit_BK.json;OpenAlexisdiscoveryonly"
+  },
+  {
+    "search_id": "BK-17",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "OA_M047",
+    "source_url": "https://api.openalex.org/works/https://doi.org/10.1016/j.ipm.2026.105184",
+    "status": "200",
+    "notes": "bytes/hashdata/ipm_access_audit_BK.json;OpenAlexisdiscoveryonly"
+  },
+  {
+    "search_id": "BK-18",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "NTU_web",
+    "source_url": "https://hdl.handle.net/10356/232982",
+    "status": "not_accessible",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-19",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "author_publications",
+    "source_url": "https://starkkkk.github.io/publications/",
+    "status": "authorpage_read_noR005PDF",
+    "notes": "boundedcheck_notfullinventory"
+  },
+  {
+    "search_id": "BK-20",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "NTU_static",
+    "source_url": "https://hdl.handle.net/10356/232982",
+    "status": "HTTP429_0bytes",
+    "notes": "redirecthttps://dr.ntu.edu.sg/handle/10356/232982;noPDF"
+  }
+]
