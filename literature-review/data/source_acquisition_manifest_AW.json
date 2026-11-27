@@ -1,0 +1,24 @@
+{
+  "record_id": "M041",
+  "checked_date": "2026-11-27",
+  "attempts": [
+    {
+      "url": "https://research.aalto.fi/files/106452436/SCI_H_m_l_inen_etal_CHI_2023.pdf",
+      "status": 403,
+      "bytes": 5712,
+      "content_type": "text/html; charset=UTF-8",
+      "pdf": false
+    },
+    {
+      "url": "https://acris.aalto.fi/ws/portalfiles/portal/106452436/SCI_H_m_l_inen_etal_CHI_2023.pdf",
+      "status": 200,
+      "bytes": 4765374,
+      "content_type": "application/pdf",
+      "pdf": true,
+      "sha256": "0174325bbccd6cdd0675edaa8d1c3f39f1a4da6b645e499ff0b7c66091a5b966",
+      "pages": 20,
+      "version": "institutional PublisherPDF/VoR electronic reprint;1cover+19article/reference"
+    }
+  ],
+  "reading_scope": "focused pp1–2,4–18;not supplement/code; no rerun"
+}

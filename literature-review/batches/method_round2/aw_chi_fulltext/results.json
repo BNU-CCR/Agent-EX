@@ -1,0 +1,30 @@
+{
+  "batch_id": "AW-CHI-fulltext",
+  "date": "2026-11-27",
+  "expected_master_sha256": "d748e0069fa7075803d86cda0bf2f85691b763a38b94f6e2bb976075590632c2",
+  "updates": [
+    {
+      "record_id": "M041",
+      "related_versions": "Institutional PublisherPDF/VoR electronic reprint acquired;20PDFpages=cover+19article/reference;pagination may differ",
+      "screening_status": "included",
+      "reason": "Formal date confirmed; institutional VoR focused fulltext read with bounded empirical evaluation.",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://acris.aalto.fi/ws/portalfiles/portal/106452436/SCI_H_m_l_inen_etal_CHI_2023.pdf",
+      "supplement_status": "supplement_code_original_data_not_independently_acquired",
+      "findings": "155judges/3100reused-text judgments; generated texts more often judged human but filtering/length asymmetric. Exp2 author ratings64/79percent; Exp3 generated diversity differs and measurement model conditional.",
+      "evidence_location": "PDFpp1–2,4–18;sections3–6,7.1/7.5/8;Table2",
+      "relation_to_agent_ex": "Separate text indistinguishability, distribution coverage, semantic consistency and process validity; selection and evaluator define evidence scope.",
+      "card_path": "reading-cards/M041.md",
+      "notes": "Direct403 preserved; alternate institutional200 VoR. Single gaming-art context; not population/network validation; no code or model executed.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_relevance_rationale": "Human-text reference and discrimination study directly evaluate synthetic research data, bounded single context.",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "supplement_code;precise_revision;generation_rejection_logs;independent_coder_validation;cross_context_generalization",
+      "method_evidence_location": "PDFpp1–2,4–18;Table2;sections3–8",
+      "method_coding_source": "reading-cards/M041.md;reports/chi_data_selection_and_validity.md",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

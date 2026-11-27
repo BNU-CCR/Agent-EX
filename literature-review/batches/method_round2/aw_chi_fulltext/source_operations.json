@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "S-M2-AW-INST",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open institution final-version entry",
+    "source_url": "https://research.aalto.fi/en/publications/evaluating-large-language-models-in-generating-synthetic-hci-rese/",
+    "status": "metadata_read",
+    "notes": "Same download process polled; polls not separate acquisitions. One institutional cover plus19 article/reference pages. No experiment rerun."
+  },
+  {
+    "search_id": "S-M2-AW-CLICK",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "follow final PDF link",
+    "source_url": "https://research.aalto.fi/files/106452436/SCI_H_m_l_inen_etal_CHI_2023.pdf",
+    "status": "HTTP403_no_pdf",
+    "notes": "Same download process polled; polls not separate acquisitions. One institutional cover plus19 article/reference pages. No experiment rerun."
+  },
+  {
+    "search_id": "S-M2-AW-HTTP403",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET direct institutional PDF",
+    "source_url": "https://research.aalto.fi/files/106452436/SCI_H_m_l_inen_etal_CHI_2023.pdf",
+    "status": "HTTP403_5712bytes_html",
+    "notes": "Same download process polled; polls not separate acquisitions. One institutional cover plus19 article/reference pages. No experiment rerun."
+  },
+  {
+    "search_id": "S-M2-AW-PDF",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET alternate institutional portal PDF",
+    "source_url": "https://acris.aalto.fi/ws/portalfiles/portal/106452436/SCI_H_m_l_inen_etal_CHI_2023.pdf",
+    "status": "HTTP200_4765374bytes_20pages",
+    "notes": "Same download process polled; polls not separate acquisitions. One institutional cover plus19 article/reference pages. No experiment rerun."
+  },
+  {
+    "search_id": "S-M2-AW-READ",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "grouped focused extraction and render of PDF pp1–2,4–18",
+    "source_url": "https://acris.aalto.fi/ws/portalfiles/portal/106452436/SCI_H_m_l_inen_etal_CHI_2023.pdf",
+    "status": "focused_read_not_supplement_or_code",
+    "notes": "Same download process polled; polls not separate acquisitions. One institutional cover plus19 article/reference pages. No experiment rerun."
+  },
+  {
+    "search_id": "S-M2-AW-TABLE",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "recalculate Table2 classification counts; not refit SDT",
+    "source_url": "reading-cards/M041.md",
+    "status": "arithmetic_only",
+    "notes": "Same download process polled; polls not separate acquisitions. One institutional cover plus19 article/reference pages. No experiment rerun."
+  }
+]

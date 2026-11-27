@@ -4568,5 +4568,75 @@
     "batch": "AV-CHI",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/av_chi/results.json"
+  },
+  {
+    "record_id": "M041",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "AW-CHI-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aw_chi_fulltext/results.json"
+  },
+  {
+    "record_id": "M041",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "AW-CHI-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aw_chi_fulltext/results.json"
+  },
+  {
+    "record_id": "M041",
+    "field": "method_relevance_rationale",
+    "old": "方法评价直接相关但本批仅核题录/摘要。",
+    "new": "Human-text reference and discrimination study directly evaluate synthetic research data, bounded single context.",
+    "date": "2026-11-27",
+    "batch": "AW-CHI-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aw_chi_fulltext/results.json"
+  },
+  {
+    "record_id": "M041",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "AW-CHI-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aw_chi_fulltext/results.json"
+  },
+  {
+    "record_id": "M041",
+    "field": "method_pending_fields",
+    "old": "fulltext;human_sampling_blinding;generation_selection;diversity_metrics;artifacts_versions;generalization",
+    "new": "supplement_code;precise_revision;generation_rejection_logs;independent_coder_validation;cross_context_generalization",
+    "date": "2026-11-27",
+    "batch": "AW-CHI-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aw_chi_fulltext/results.json"
+  },
+  {
+    "record_id": "M041",
+    "field": "method_evidence_location",
+    "old": "Abstract;institutionmetadata",
+    "new": "PDFpp1–2,4–18;Table2;sections3–8",
+    "date": "2026-11-27",
+    "batch": "AW-CHI-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aw_chi_fulltext/results.json"
+  },
+  {
+    "record_id": "M041",
+    "field": "method_coding_source",
+    "old": "reports/chi_method_ecology.md",
+    "new": "reading-cards/M041.md;reports/chi_data_selection_and_validity.md",
+    "date": "2026-11-27",
+    "batch": "AW-CHI-fulltext",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/aw_chi_fulltext/results.json"
   }
 ]

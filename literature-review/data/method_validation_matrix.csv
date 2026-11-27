@@ -106,3 +106,8 @@ VC104,M040,姓名设计与独立人群分开,1000名/10000配对/11报价共用�
 VC105,M040,生成与程序分类控制分开,Milgramregex首句/模型2choice>.5/四prods,自由文本当无约束涌现,互动/测量边界,环境与辅助分类决定终止/推进,所读程序说明非代码执行,分类误差/人类程序完全等价,冻结并审计辅助模型/阈值/状态,"pp8,21–22AppF",published_empirical_evidence_bounded_not_rerun,2026-11-27
 VC106,M040,模型任务覆盖与新颖性分开,LM1–5前三任务；LM6–8仅最后；三类变体,GPT4通过全部/变体证明无训练记忆,评价范围,作者明确模型时序和训练数据疑虑,所测版本/变体,一般样本外新真人能力或泄漏已排除,报告模型×任务面板及新颖性依据,"pp2,5–6,9",published_empirical_evidence_bounded_not_rerun,2026-11-27
 VC107,M040,事实正确与人类失真分开,WisdomCrowds中位数1/IQR0,事实越准就越人类；跨模型当alignment因果,人类分布效度,更准确模型可呈hyperaccuracydistortion,所选四实验/知识题,训练因素因果效应/所有模型都失真,保留反向案例及分布指标,p9Fig8/§7–8,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC108,M041,筛选与参考对称性,未经同质量过滤的人类178与经截断/重生的合成,筛选后可信性泛化为原始生成有效率,目标资料分布,Exp1合成50保留且7丢弃;长度142vs81词,单游戏艺术语料,未经筛选成功率/人口代表性,保存生成失败与选择规则,§3–4,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC109,M041,辨别的重复单位,155人×20判断;100文本复用,3100当独立文本或准确研究资料,类别可辨别性,合成40.45%/人类54.45%识别;负dprime,半数先验与GPT3标签已知,真实体验/因果/网络过程效度,区分人类评价与经验外部效度,§4/Table2,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC110,M041,人工有效标签,三作者/两提示各100,64到79当通用因果改进,异常与有效编码,作者范围54–76和64–94;非全盲,主观标注单情境,跨人群提示效应,记录盲态/标注者差异,§5,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC111,M041,自动测量与多样性,GPT3fewshot编码/curie嵌入,共用评价器当同等无偏,主题/语义覆盖,151/178新模型Journey回答;17.3%游戏覆盖作者报告,指定嵌入/投影及模型温度组合,全面语义效度/训练因素因果,评价器本身也需验证,§6,published_empirical_evidence_bounded_not_rerun,2026-11-27
+VC112,M041,一致性与用途,intra/inter相似和5000置换,置换当独立实验或心理稳定,语义关联/研究工具价值,相邻回答一致;研究者实际效益未测,同一数据重采样/单任务,真实心理机制/工具效益,不把内部一致性当社会过程验证,"§6.3,7.5,8",published_empirical_evidence_bounded_not_rerun,2026-11-27

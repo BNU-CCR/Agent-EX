@@ -1,0 +1,14 @@
+{
+  "record_id": "M041",
+  "source": "PDFTable2;caption experiment2 while context Exp1",
+  "counts": {
+    "synthetic_judged_AI": 627,
+    "synthetic_judged_human": 923,
+    "human_judged_AI": 706,
+    "human_judged_human": 844
+  },
+  "synthetic_recognition": 0.4045161290322581,
+  "human_recognition": 0.5445161290322581,
+  "overall_correct": 0.47451612903225804,
+  "limits": "155 participants;100reused texts;3100 judgments not independent texts;arithmetic only, no SDT or CI refit"
+}
