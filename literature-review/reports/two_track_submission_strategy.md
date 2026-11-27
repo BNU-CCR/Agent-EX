@@ -87,3 +87,5 @@ BF：未来方法稿优先明确检错/误判减少的对象、基线和范围�
 BG：CSSSA全文论文集资格与IC2S2非存档交流分列，不将会议展示当期刊替代。官方日程发现LLM辅助三模型复现摘要，须全文/版本/比较条件核查再影响方法证据判断；见[组织与路线](css_societies_and_publication_routes.md)。
 
 BH补充：M045提供LLM助手复现案例，尚无同任务流程对照/成本测量。后续方法稿需检验可观察实现偏离与独立重实现收益，避免仅凭角色/skills分工声称效率提升；当前社会主体稿的外部效度另需验证。见[工作流报告](llm_assisted_replication_workflows.md)。
+
+BJ：ESWA列条件邻接候选，Information Sciences仅范围/传统决策先例；当前意见演化稿若无清楚技术方法增量，适配偏弱。独立方法稿需同任务比较、有效性或算法收益。两刊指南403、MJL/费用未核，非新增优先推荐。IPM跨范式综述M047待全文/日期，下一批核其方法共同体定位。见[来源报告](information_systems_method_venues.md)。

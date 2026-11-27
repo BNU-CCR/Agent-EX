@@ -5328,5 +5328,245 @@
     "batch": "BI-fixed-replication-artifacts-and-baseline-arithmetic",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bi_replication_artifacts/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_type",
+    "old": "",
+    "new": "LLM_KG_dynamictrust_consensus_decisionsystem",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "application",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "interaction_protocol;application",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "邻接智能决策应用；不将共识优化自动等同人类过程仿真。",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formal_firstonline;fulltext;method_maturity;method_evidence_level;method_transferability;validation_denominators",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "publisherindexedAbstract;Crossrefidentity",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/information_systems_method_venues.md",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M046",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_type",
+    "old": "",
+    "new": "cross_paradigm_review",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;theory_to_model_translation;validation_and_external_validity",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "跨范式综述摘要直接涉及方法比较，待核全文/语料分母。",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formal_firstonline;fulltext;method_maturity;method_evidence_level;method_transferability;validation_denominators",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "publisherindexedAbstract;Crossrefidentity",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/information_systems_method_venues.md",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
+  },
+  {
+    "record_id": "M047",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BJ-information-systems-venue-scope-and-bounded-precedents",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bj_information_systems_venues/results.json"
   }
 ]

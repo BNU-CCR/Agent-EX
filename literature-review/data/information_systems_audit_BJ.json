@@ -1,0 +1,179 @@
+{
+  "checked_date": "2026-11-27",
+  "query_count": 15,
+  "source_operations": 33,
+  "primary_static_sources": [
+    {
+      "key": "INS",
+      "url": "https://shop.elsevier.com/journals/information-sciences/0020-0255",
+      "status": 200,
+      "bytes": 187845,
+      "sha256": "d3d70199335095ed626df01833b100d040add46c124a4811e67f65cc7ecaba9f",
+      "description_excerpt": "Description Informatics and Computer Science Intelligent Systems Applications An International Journal Information Sciences will publish original, innovative and creative research results. A smaller number of timely tutorial and surveying contributions will be published from time to time. The journal is designed to serve researchers, developers, managers, strategic planners, graduate students and others interested in state-of-the art research activities in information , knowledge engineering and intelligent systems . Readers are assumed to have a common interest in information science , but with diverse backgrounds in fields such as engineering, mathematics, statistics, physics, computer science, cell biology, molecular biology, management science, cognitive science, neurobiology, behavioural sciences and biochemistry. The journal publishes high-quality, refereed articles. It emphasizes a balanced coverage of both theory and practice. It fully acknowledges and vividly promotes a breadth of the discipline of Informations Sciences. Topics include: Foundations of Information Science: Information Theory, Mathematical Linguistics, Automata Theory, Cognitive Science, Theories of Qualitative Behaviour, Artificial Intelligence, Computational Intelligence, Soft Computing, Semiotics, Computational Biology and Bio-informatics. Implementations and Information Technology: Intelligent Systems, Genetic Algorithms and Modelling, Fuzzy Logic and Approximate Reasoning, Artificial Neural Networks, Expert and Decision Support Systems, Learning and Evolutionary Computing, Expert and Decision Support Systems, Learning and Evolutionary Computing, Biometrics, Moleculoid Nanocomputing, Self-adaptation and Self-organisational Systems, Data Engineering, Data Fusion, Information and Knowledge, Adaptive ad Supervisory Control, Discrete Event Systems, Symbolic / Numeric and Statistical Techniques, Perceptions and Pattern Recognition, Design of Algorithms, Software Design, Computer Systems and Architecture Evaluations and Tools, Human-Computer Interface, Computer Communication Networks and Modelling and Computing with Words Applications: Manufacturing, Automation and Mobile Robots, Virtual Reality, Image Processing and Computer Vision Systems, Photonics Networks, Genomics and Bioinformatics, Brain Mapping, Language and Search Engine Design, User-friendly Man Machine Interface, Data Compression and Text Abstraction and Summarization, Virtual Reality, Finance and Economics Modelling and Optimisation Editors-in-Chief can be reached at the following: Professor Sabrina S. Senatore- [email "
+    },
+    {
+      "key": "ESWA",
+      "url": "https://shop.elsevier.com/journals/expert-systems-with-applications/0957-4174",
+      "status": 200,
+      "bytes": 186926,
+      "sha256": "4a346a4d4727ea0d2de642bb3765fc9527a5cf7ca5fbcbf19bb0b3ccc52dded2",
+      "description_excerpt": "Description Expert Systems With Applications is a refereed international journal whose focus is on exchanging information relating to expert and intelligent systems applied in industry , government , and universities worldwide. The thrust of the journal is to publish original papers dealing with the design, development, testing, implementation, and/or management of expert and intelligent systems, and also to provide practical guidelines in the development and management of these systems. The journal will publish papers in expert and intelligent systems technology and application in the areas of, but not limited to: finance, accounting, engineering, marketing, auditing, law, procurement and contracting, project management, risk assessment, information management, information retrieval, crisis management, stock trading, strategic management, network management, telecommunications, space education, intelligent front ends, intelligent database management systems, medicine, chemistry, human resources management, human capital, business, production management, archaeology, economics and energy. Papers in multi-agent systems, knowledge management, neural networks, knowledge discovery, data and text mining, multimedia mining, and genetic algorithms will also be published in the journal. The journal no longer considers papers that contain applications to military/defense systems. Papers detailing algorithms which repurpose existing concepts within the framework of metaphors inspired by various systems and processes, such as natural, technical, or social ones are discouraged as this can hinder effective algorithm comparisons and scientific advancement. Submissions from this field are required to convincingly demonstrate their contribution to the field in order to be considered for further evaluation. Authors are urged to present their methods with clarity, employing standard optimization terminology, and to provide compelling explanations for how their components are adapted to specific problem-solving contexts. The emphasis is on genuine innovation rather than the renaming of existing concepts. Natural metaphor articles - new nature-inspired proposals detailed in papers must provide formal, mathematically grounded explanations for how they differ from established methods and the use of metaphors as superficial embellishments is discouraged. Software Publication We invite you to convert your open source software into an additional journal publication in Software Impacts , a multi-disciplinary open access journal. Software Impacts provides a scholarly reference to "
+    },
+    {
+      "key": "INSmeta",
+      "url": "https://api.crossref.org/works/10.1016/j.ins.2025.122085",
+      "status": 200,
+      "bytes": 19188,
+      "sha256": "5a7b5a55a130f125e32a413fadac389deb24ab69b83511d0830f377274073e9d",
+      "metadata": {
+        "title": [
+          "A large-scale group consensus decision-making method based on historical data in dynamic social networks"
+        ],
+        "author": [
+          {
+            "given": "Juanjuan",
+            "family": "Peng",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0009-0005-0175-7560",
+            "authenticated-orcid": false,
+            "given": "Liming",
+            "family": "Pan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Shuwen",
+            "family": "Xue",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Qingqi",
+            "family": "Long",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "published-online": null,
+        "published-print": {
+          "date-parts": [
+            [
+              2025,
+              9
+            ]
+          ]
+        },
+        "created": {
+          "date-parts": [
+            [
+              2025,
+              3,
+              30
+            ]
+          ],
+          "date-time": "2025-03-30T01:17:08Z",
+          "timestamp": 1743297428000
+        },
+        "volume": "713",
+        "article-number": "122085"
+      }
+    }
+  ],
+  "crossref_selected_metadata": [
+    {
+      "DOI": "10.1016/j.eswa.2026.132901",
+      "title": [
+        "Large language model-driven group consensus decision-making model: The case of local debt risk"
+      ],
+      "container-title": [
+        "Expert Systems with Applications"
+      ],
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            11
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            22
+          ]
+        ],
+        "date-time": "2026-05-22T15:39:03Z",
+        "timestamp": 1779464343000
+      },
+      "volume": "329",
+      "issue": null,
+      "article-number": "132901"
+    },
+    {
+      "DOI": "10.1016/j.ipm.2026.105184",
+      "title": [
+        "From rules to reasoning: A systematic review of agent-based and LLM-empowered simulation of public collaboration"
+      ],
+      "container-title": [
+        "Information Processing &amp; Management"
+      ],
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2027,
+            2
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            18
+          ]
+        ],
+        "date-time": "2026-09-18T11:07:07Z",
+        "timestamp": 1789729627000
+      },
+      "volume": "64",
+      "issue": "2",
+      "article-number": "105184"
+    }
+  ],
+  "reused_record": "R005",
+  "not_master_adjacent_INS": "10.1016/j.ins.2025.122085",
+  "identity_correction": "LAIDSim title is IJCAI2024Demo DOI10.24963/ijcai.2024/1007, not Information Sciences",
+  "limitations": "Indexedabstractsnotfulltexts;shopscopenotcompleteguides;creatednotfirstonline;nofullinventoryorMJL/APCcertification"
+}

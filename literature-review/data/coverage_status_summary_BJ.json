@@ -1,0 +1,61 @@
+{
+  "checked_date": "2026-11-27",
+  "total_taskbook_rows": 41,
+  "not_yet_reconciled": [
+    "Political Communication",
+    "Journal of Communication"
+  ],
+  "partial": [
+    {
+      "venue": "Information Processing & Management",
+      "status": "partial_sample_metadata_scope_guide_pending",
+      "boundary": "15boundedpublicqueries_notwholevenueinventory;abstractsnotfulltext;firstonlinepending"
+    },
+    {
+      "venue": "Information Sciences",
+      "status": "partial_scope_and_adjacent_sample_directLLM_fulltext_pending",
+      "boundary": "15boundedpublicqueries_notwholevenueinventory;abstractsnotfulltext;firstonlinepending"
+    },
+    {
+      "venue": "Expert Systems with Applications",
+      "status": "partial_scope_and_LLMdecision_abstract_fulltext_pending",
+      "boundary": "15boundedpublicqueries_notwholevenueinventory;abstractsnotfulltext;firstonlinepending"
+    },
+    {
+      "venue": "NeurIPS",
+      "status": "partial_official_scope_and_precedent_checked",
+      "boundary": "oneformalworkfocusedfulltext;notfullinventory;EDfullCFPtimeout;firstonlinepending"
+    },
+    {
+      "venue": "ICLR",
+      "status": "partial_official_scope_and_precedent_checked",
+      "boundary": "oneformalcase;notcompleteinventory;firstonlinepending;2027callclosed"
+    },
+    {
+      "venue": "CHI",
+      "status": "partial_official_scope_and_precedent_checked",
+      "boundary": "M041institutionalVoRfocusedfulltext/datecheckedAW;notwholeconferenceinventory;ACM403"
+    },
+    {
+      "venue": "CSCW",
+      "status": "partial_formal_research_read_journal_details_inventory_pending",
+      "boundary": "FormalresearchM042fulltextandACMdepositedonline2025-05-02verified;currentjournalguide403/fullinventorypending"
+    },
+    {
+      "venue": "Web Conference (WWW)",
+      "status": "partial_formal_Companion_metadata_scope_fulltext_inventory_pending",
+      "boundary": "FormalCompanionmetadata/date;authorv1fullread_BC;formal4pages/subtrack/fullinventorypending"
+    },
+    {
+      "venue": "Social Simulation Conference / ESSA",
+      "status": "partial_community_scope_formalchapter_metadata_fulltext_inventory_pending",
+      "boundary": "Communityandformalchaptermetadata/date_directpublisher;authorv1fullreadBE;formaltext/fullinventorypending"
+    },
+    {
+      "venue": "Computational Social Science Society meetings",
+      "status": "partial_named_society_identity_scope_abstracts_publication_inventory_pending",
+      "boundary": "Taskbooklabelambiguous;CSSSAmapprimary_andIC2S2separate;two2026abstractleads_notformalpapers;notfullinventory"
+    }
+  ],
+  "boundary": "Allstatusesincludingcuratedsamplesarenotfullinventorycertification"
+}

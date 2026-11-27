@@ -40,3 +40,5 @@ AN将NeurIPS改部分对账，余10命名入口未对账；M037仅正式摘要�
 AR只补既有ICML入口与3观点案例/官方要求/正式卷日期，10未对账数不变；不把已有地图入口重复计数。
 
 AV将CHI改部分对账；41指定入口余9未对账。正式M041摘要/日期与2027指南已核，实时DOI403、全文/完整目录/独立索引仍待核。
+
+BJ当前对账：Information Sciences/ESWA官方shop范围与邻接先例、IPM题录线索更新为部分核查。41入口2未对账（Political Communication、Journal of Communication）、10部分，见[状态账](../data/coverage_status_summary_BJ.json)。地图49载体不等同任务书全部目录检索；[本批报告](information_systems_method_venues.md)保留403、摘要和首发日期边界。

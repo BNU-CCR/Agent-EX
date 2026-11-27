@@ -1,0 +1,299 @@
+[
+  {
+    "search_id": "BJ-01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.sciencedirect.com/science/article \"Information Sciences\" \"large language\" \"social simulation\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.sciencedirect.com/science/article \"Expert Systems with Applications\" \"large language\" \"agent-based\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-03",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.sciencedirect.com/journal/information-sciences/about/aims-and-scope",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-04",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.sciencedirect.com/journal/expert-systems-with-applications/about/aims-and-scope",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-05",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Information Sciences\" \"LLM\" \"simulation\" \"social\" 2025 2026",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-06",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Information Sciences\" \"large language models\" \"opinion dynamics\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-07",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Expert Systems with Applications\" \"generative\" \"social simulation\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-08",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Information Sciences\" \"large language model\" \"agent-based\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-09",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"An LLM-enhanced agent-based simulation tool for information propagation\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-10",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Information Sciences\" \"large language model\" \"consensus\" 2026",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-11",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Information Sciences\" \"social simulation\" 2024 2025 2026",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-12",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.sciencedirect.com/science/article \"Information Sciences\" \"large language models\" \"group decision\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-13",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.sciencedirect.com/science/article \"Information Sciences\" \"agent-based\" \"2024\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-14",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1016/j.eswa.2026.132901\" \"Available online\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-15",
+    "platform": "public_web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.sciencedirect.com/science/article \"Information Sciences\" \"LLM\" \"simulation\"",
+    "source_url": "",
+    "status": "query_run_bounded_not_database_inventory",
+    "notes": "publisherindexedabstracts/metadata;noresulttotalretained;irrelevantandlookalikedomainsnotused"
+  },
+  {
+    "search_id": "BJ-16",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "scopeINS",
+    "source_url": "https://www.sciencedirect.com/journal/information-sciences/about/aims-and-scope",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-17",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "scopeESWA",
+    "source_url": "https://www.sciencedirect.com/journal/expert-systems-with-applications/about/aims-and-scope",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-18",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "shopINS",
+    "source_url": "https://shop.elsevier.com/journals/information-sciences/0020-0255",
+    "status": "official_HTML_read",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-19",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "ESWA_article",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0957417426018130",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-20",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "shopESWA",
+    "source_url": "https://shop.elsevier.com/journals/expert-systems-with-applications/0957-4174",
+    "status": "official_HTML_read",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-21",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "ESWA_abs",
+    "source_url": "https://www.sciencedirect.com/science/article/abs/pii/S0957417426018130",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-22",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "shopINS_description_find",
+    "source_url": "https://shop.elsevier.com/journals/information-sciences/0020-0255",
+    "status": "official_description_read",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-23",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "shopESWA_description_find",
+    "source_url": "https://shop.elsevier.com/journals/expert-systems-with-applications/0957-4174",
+    "status": "official_description_read",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-24",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "crossref_ESWA",
+    "source_url": "https://api.crossref.org/works/10.1016/j.eswa.2026.132901",
+    "status": "HTTP200",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-25",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "crossref_IPM",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ipm.2026.105184",
+    "status": "HTTP200",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-26",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "INS_guide",
+    "source_url": "https://www.sciencedirect.com/journal/information-sciences/publish/guide-for-authors",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-27",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "ESWA_guide",
+    "source_url": "https://www.sciencedirect.com/journal/expert-systems-with-applications/publish/guide-for-authors",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-28",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "INS_article",
+    "source_url": "https://www.sciencedirect.com/science/article/abs/pii/S0020025525002178",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-29",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "IPM_article",
+    "source_url": "https://www.sciencedirect.com/science/article/abs/pii/S0306457326005741",
+    "status": "403",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-30",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "shopINS_static",
+    "source_url": "https://shop.elsevier.com/journals/information-sciences/0020-0255",
+    "status": "HTTP200",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-31",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "shopESWA_static",
+    "source_url": "https://shop.elsevier.com/journals/expert-systems-with-applications/0957-4174",
+    "status": "HTTP200",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-32",
+    "platform": "public_primary_source",
+    "search_date": "2026-11-27",
+    "query_exact": "crossref_INS",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ins.2025.122085",
+    "status": "HTTP200",
+    "notes": "failedopeningnotfullread;shopnotcompleteauthorguide;crossrefcreatednotpublishedonline"
+  },
+  {
+    "search_id": "BJ-33",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "deduplicate_R005_and_reconcile_coverage",
+    "source_url": "data/literature_master.csv",
+    "status": "checked",
+    "notes": "RoleSimLLMexistingR005;noduplicate;41requestedentries"
+  }
+]
