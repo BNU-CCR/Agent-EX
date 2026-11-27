@@ -1,0 +1,182 @@
+[
+  {
+    "search_id": "S-M2-BG-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Computational Social Science Society\" conference2026",
+    "source_url": "",
+    "status": "CSSSAidentitylead",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:computationalsocialscience.org2026LLMconference",
+    "source_url": "",
+    "status": "officialCSS2026",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"CSSSA\" \"2025\" \"large language models\"",
+    "source_url": "",
+    "status": "boundedcommunityleads",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-04",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openCSS2026",
+    "source_url": "https://computationalsocialscience.org/conferences/css-2026-santa-fe/",
+    "status": "officialpageavailable",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-05",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openCSS2026program",
+    "source_url": "https://computationalsocialscience.org/css2026program/",
+    "status": "timeout",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-06",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:ic2s2.org society computational social science",
+    "source_url": "",
+    "status": "ISCSSlead",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-07",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"International Society for Computational Social Science\" IC2S2",
+    "source_url": "",
+    "status": "distinctorganizationidentity",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-08",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "reopenCSS2026body",
+    "source_url": "https://computationalsocialscience.org/conferences/css-2026-santa-fe/",
+    "status": "timeout",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-09",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openISCSSabout",
+    "source_url": "https://iscss.org/about/about-iscss/",
+    "status": "annualIC2S2missionverified",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-10",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openIC2S22026",
+    "source_url": "https://2026.ic2s2.net/",
+    "status": "ISCSSannualconferenceverified",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-11",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "checkconference_map_for_existingCSSSA_IC2S2",
+    "source_url": "data/method_venue_map.csv",
+    "status": "not_existing_entries",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-12",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETCSS2026",
+    "source_url": "https://computationalsocialscience.org/conferences/css-2026-santa-fe/",
+    "status": "HTTP200_70323bytes",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-13",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETCSSprogram",
+    "source_url": "https://computationalsocialscience.org/css2026program/",
+    "status": "HTTP200_151216bytes_embeddedPROGRAM",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-14",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followIC2S2CFP",
+    "source_url": "https://2026.ic2s2.net/submit-abstract/",
+    "status": "nonarchival2pageabstracts",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-15",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followIC2S2topics",
+    "source_url": "https://2026.ic2s2.net/topics/",
+    "status": "calibration_LLM_reproducibilityscope",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-16",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "inspectPROGRAMscript_titles_and_abstracts",
+    "source_url": "https://computationalsocialscience.org/css2026program/",
+    "status": "two_method_abstract_leads_not_fullpaper",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-17",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openCSSauthorinstructions",
+    "source_url": "https://computationalsocialscience.org/instructions-for-authors/",
+    "status": "Effective2027_separate_from2026CFP",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-18",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Large Language Model-Assisted Workflows for Replicating Agent-Based Models\"",
+    "source_url": "",
+    "status": "authorblog_and_manuscriptleads_notread",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-19",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"PopForge\" \"SimForge\" \"Gulden\" paper",
+    "source_url": "",
+    "status": "officialprogramlead",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  },
+  {
+    "search_id": "S-M2-BG-20",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "parsePROGRAM_JSON_and_extractIDs2and73",
+    "source_url": "https://computationalsocialscience.org/css2026program/",
+    "status": "metadata_and_abstract_read_not_validation_verified",
+    "notes": "Distinctsocieties_and_archivalstatus;noformalnewpaperfullreading;publicagendaabstractsnotindependentvalidation;2027instructionsnot2026rules."
+  }
+]

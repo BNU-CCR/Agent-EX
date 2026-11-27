@@ -5,7 +5,7 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 40,
-  "search_rows": 966,
+  "search_rows": 986,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 41,
@@ -27,7 +27,7 @@
   "validation_matrix_units": 125,
   "venue_types": {
     "journal": 28,
-    "conference": 16,
+    "conference": 18,
     "repository": 1
   },
   "journal_candidates": 26,

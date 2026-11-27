@@ -1,0 +1,69 @@
+{
+  "checked_date": "2026-11-27",
+  "taskbook_label": "Computational Social Science Society meetings",
+  "mapping": "ambiguouslabel_preserved;CSSSAandISCSSare_distinct;do_not_assumeoneexclusiveinterpretation",
+  "organizations": [
+    {
+      "name": "Computational Social Science Society of the Americas",
+      "acronym": "CSSSA",
+      "conference": "Computational Social Science2026annualmeeting",
+      "official": "https://computationalsocialscience.org/conferences/css-2026-santa-fe/",
+      "program": "https://computationalsocialscience.org/css2026program/",
+      "fullpaper_route": "eligibleSpringerProceedingsinComplexity_notautomatic",
+      "extendedabstract_route": "notinproceedings",
+      "instructions": "https://computationalsocialscience.org/instructions-for-authors/",
+      "instructions_authority": "Effective2027not2026CFP"
+    },
+    {
+      "name": "International Society for Computational Social Science",
+      "acronym": "ISCSS",
+      "conference": "IC2S2",
+      "official": "https://iscss.org/about/about-iscss/",
+      "conference_url": "https://2026.ic2s2.net/",
+      "CFP": "https://2026.ic2s2.net/submit-abstract/",
+      "route": "2026nonarchival_extendedabstract2pages;notformalpaperpublication"
+    }
+  ],
+  "acquisition": [
+    {
+      "url": "https://computationalsocialscience.org/conferences/css-2026-santa-fe/",
+      "status": 200,
+      "bytes": 70323,
+      "sha256": "af9c6ac1fc12133f92c48a054df05a3dcd24fda8b01c4585282e78c4c1c05414"
+    },
+    {
+      "url": "https://computationalsocialscience.org/css2026program/",
+      "status": 200,
+      "bytes": 151216,
+      "sha256": "6946f25625e43439a755dab1f0036266099ff720f3a5003bc416c8d9d129127d",
+      "method": "parse_public_embeddedPROGRAM_JSON;webtimeoutseparate"
+    }
+  ],
+  "abstract_leads": [
+    {
+      "id": 73,
+      "title": "Large Language Model-Assisted Workflows for Replicating Agent-Based Models",
+      "authors": [
+        "Boyu Wang",
+        "Andrew Crooks"
+      ],
+      "source": "https://computationalsocialscience.org/css2026program/",
+      "claim_summary": "twoLLMassistedworkflows/threeABMreplications_reported;effectandfulltextunverified",
+      "followup_author_blog": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0",
+      "fulltext_read": false,
+      "formal_publication": "pending"
+    },
+    {
+      "id": 2,
+      "title": "From Policy Problem to Running Simulation with PopForge and SimForge",
+      "authors": [
+        "Tim Gulden"
+      ],
+      "source": "https://computationalsocialscience.org/css2026program/",
+      "claim_summary": "population_synthesis_and_modelgeneration_with_benchmarks_reported;detailsunverified",
+      "fulltext_read": false,
+      "formal_publication": "pending"
+    }
+  ],
+  "coverage": "named2026scope_andabstractleads_notcomplete2022plusinventory"
+}
