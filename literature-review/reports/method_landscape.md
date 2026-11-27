@@ -1,6 +1,6 @@
 # 2022年以来LLM社会模拟方法地图
 
-截止2026-11-26，86条工作记录中core_method30、method_validation24；只有正式纳入且全文支持的核心10、验证14。其余应用6、直接对照15、外围11保持分层。总量含首轮两条排除项与前沿候选，不能说86篇全部纳入或全部精读。[编码规则](../protocol/method_coding_rules.md)与主表给出逐项依据。
+截止2026-11-26，86条工作记录中core_method30、method_validation24；只有正式纳入且全文支持的核心11、验证14。其余应用6、直接对照15、外围11保持分层。总量含首轮两条排除项与前沿候选，不能说86篇全部纳入或全部精读。[编码规则](../protocol/method_coding_rules.md)与主表给出逐项依据。
 
 ## 范式与传统ABM的连续性
 
@@ -48,3 +48,5 @@ M016 Gao正式综述已补方法/评价定向精读，详见review_scope_compari
 U综合更新：方法发展不限于更复杂平台；校准目标、测量反馈、假设范围、独立重复与复现制品共同限定可主张的知识。当前47个证据单元是定向文献依据，不是领域总体成熟率。更多细节见[sampling_and_reporting_boundaries.md](sampling_and_reporting_boundaries.md)；此前段落“本批/下一批”是历史阅读接续，当前队列以progress为准。
 
 X新增M029理论形式化候选（只核摘要，成熟度/效度待全文）；不是增加一项已确认框架。
+
+Y补M029正式全文：数学构件是理论/代码之间的中间表达，方法自身效果/复杂动态验证仍未完成。见theory_formalization_boundaries.md。

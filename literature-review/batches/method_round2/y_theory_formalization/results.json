@@ -1,0 +1,27 @@
+{
+  "batch_id": "Y-theory-formalization-focused-reading",
+  "date": "2026-11-26",
+  "expected_master_sha256": "edeb94fc43e11967abfb2a0fa66149288ef8ae176dbbc1617536bb86afcfca10",
+  "updates": [
+    {
+      "record_id": "M029",
+      "screening_status": "included",
+      "reason": "正式日期及方法/示例/限制定向全文核实；理论形式化工作示例，不是经验验证工作流。",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/pdf",
+      "card_path": "reading-cards/M029.md",
+      "supplement_status": "not_checked;code_repository_not_audited",
+      "findings": "MBB明确附加假设；同一理论存在多种形式化。作者§4说明尚未评价/验证MBB，复杂动态/互动需后续工作。",
+      "evidence_location": "§§2–4;pp4–6,9,11–16;§4footnote8",
+      "method_maturity": "conceptual_framework",
+      "method_evidence_level": "worked_example",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "理论表达/附加假设的分层记录可借鉴；未证明构件跨模型有效或形式化提高经验预测。",
+      "method_pending_fields": "code_and_supplement;MBB_effectiveness_and_complex_dynamic_validation",
+      "method_evidence_location": "§2steps;§3.4multipleformalizations;§4limitations",
+      "method_coding_source": "reading-cards/M029.md",
+      "method_last_checked": "2026-11-26"
+    }
+  ],
+  "new_records": []
+}

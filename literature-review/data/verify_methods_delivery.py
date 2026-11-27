@@ -1,5 +1,6 @@
 """Verify current artifacts against the immutable round-one baseline and change ledger."""
 import collections,csv,hashlib,io,json,pathlib,subprocess
+from datetime import datetime,timezone,timedelta
 R=pathlib.Path(__file__).resolve().parents[1]
 def read(p):return list(csv.DictReader(p.open(encoding='utf-8-sig',newline='')))
 def oldcsv(p):
@@ -45,7 +46,7 @@ venues=read(R/'data/method_venue_map.csv');candidates=read(R/'data/journal_submi
 assert len({x['venue_id'] for x in venues})==len(venues)
 assert all(x['venue_type']=='journal' for x in candidates),'conference in journal submission table'
 assert all(i in by for x in venues for i in x['record_ids'].split(';') if i),'unknown venue record reference'
-result=dict(checked='2026-11-26',records=len(rs),original_ids_preserved=len(m['record_ids']),original_files_hashed=len(m['preserved_files']),legacy_changes=len(ledger),search_rows=len(log),original_search_prefix_preserved=231,status=dict(collections.Counter(r['screening_status'] for r in rs)),method_tiers=dict(collections.Counter(r['method_relevance_tier'] for r in rs)),fulltext_cards=sum(bool(r['card_path']) for r in rs),date_pending=sum(r['date_eligibility']=='date_pending' for r in rs),checks='passed',limitations='No experiment rerun; workbook visual verification separate; not database coverage certification')
+result=dict(checked=datetime.now(timezone(timedelta(hours=8))).date().isoformat(),checked_timezone='Asia/Shanghai',records=len(rs),original_ids_preserved=len(m['record_ids']),original_files_hashed=len(m['preserved_files']),legacy_changes=len(ledger),search_rows=len(log),original_search_prefix_preserved=231,status=dict(collections.Counter(r['screening_status'] for r in rs)),method_tiers=dict(collections.Counter(r['method_relevance_tier'] for r in rs)),fulltext_cards=sum(bool(r['card_path']) for r in rs),date_pending=sum(r['date_eligibility']=='date_pending' for r in rs),checks='passed',limitations='No experiment rerun; workbook visual verification separate; not database coverage certification')
 result.update(validation_matrix_units=len(matrix),venue_types=dict(collections.Counter(x['venue_type'] for x in venues)),journal_candidates=len(candidates))
 result.update(categorical_fields_checked=list(categorical),categorical_nonempty_outside_dictionary=0,categorical_blank_fields=categorical_blanks,categorical_boundary='Vocabulary only; blanks unresolved/not applicable, not semantically complete coding certification')
 (R/'reports/methods_validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8');print(json.dumps(result,ensure_ascii=False))

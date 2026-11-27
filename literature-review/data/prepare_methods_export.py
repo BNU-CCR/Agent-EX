@@ -9,6 +9,11 @@ for name in ['method_venue_map','journal_submission_candidates','method_validati
  if p.exists():tables[name]=read(p)
 heads=tables['literature_master'][0];records=[dict(zip(heads,r)) for r in tables['literature_master'][1:]]
 counts=dict(records=len(records),status=dict(collections.Counter(r['screening_status'] for r in records)),method_tiers=dict(collections.Counter(r['method_relevance_tier'] for r in records)),fulltext_methods={t:sum(r['screening_status']=='included' and r['method_relevance_tier']==t for r in records) for t in ['core_method','method_validation','application','direct_comparator','peripheral']})
+log_heads=tables['search_log'][0]
+log_rows=[dict(zip(log_heads,row)) for row in tables['search_log'][1:]]
+coverage_dates=[r['coverage_end'] for r in log_rows if re.fullmatch(r'\d{4}-\d{2}-\d{2}',r.get('coverage_end',''))]
+assert coverage_dates,'No dated search coverage evidence'
+counts.update(search_coverage_start='2022-01-01',search_coverage_end=max(coverage_dates))
 tables['counts']=counts
 (ROOT/'exports/methods_workbook_input.json').write_text(json.dumps(tables,ensure_ascii=False),encoding='utf8')
 (ROOT/'data/methods_counts.json').write_text(json.dumps(counts,ensure_ascii=False,indent=2),encoding='utf8')

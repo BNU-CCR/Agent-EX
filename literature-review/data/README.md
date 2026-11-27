@@ -54,3 +54,5 @@ method_validation_matrix.csv按证据单元而非论文计数，保留控制、�
 V批审计：旧分类字段存在字典外别名，详见delivery_requirement_audit.json；当前verify_methods_delivery仅校验方法扩展枚举，不能将通过外推为全部schema合规。W将追溯规范化并补验证。
 
 W已规范化52字段/24新增记录，原值/理由见categorical_alias_migration_W.json；四旧分类字段的规范词表见categorical_schema.json，verify_methods_delivery现在检查所有非空值并报告空白。V段落为修复前历史快照，不表示当前仍有字典外值。词表检查不是科学语义或覆盖验收。
+
+跨日维护：导出摘要的检索截止日取search_log中实际coverage_end最大值；核验checked为实际Asia/Shanghai日期。二者不混同，不批量修改历史日志。

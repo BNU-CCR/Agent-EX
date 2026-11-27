@@ -1,0 +1,81 @@
+[
+  {
+    "search_id": "S-M2-Y-Q01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"EFECT\" \"Reproducibility\" Sego 2024",
+    "status": "bounded_version_discovery",
+    "notes": "Found2026formalnpjComplexity;do notcountold/newtitlesasindependentstudies"
+  },
+  {
+    "search_id": "S-M2-Y-Q02",
+    "platform": "public_web_search",
+    "search_date": "2026-11-26",
+    "query_exact": "\"10.1016/j.trc.2026.105818\"",
+    "status": "official_search_text_metadata",
+    "notes": "Authors/October2026issue/abstract discovered;preciseonlinefirststillpending"
+  },
+  {
+    "search_id": "S-M2-Y-MOZAIC-PDF",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/pdf",
+    "source_url": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/pdf",
+    "status": "PDF200_focused_read",
+    "notes": "1492499bytes/18pages;§2–4focused;notcodererun"
+  },
+  {
+    "search_id": "S-M2-Y-EFECT-META",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/articles/s44260-026-00094-y?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/articles/s44260-026-00094-y?error=cookies_not_supported",
+    "status": "official_early_access_metadata_abstract",
+    "notes": "PublishedAug5,2026;earlyaccepted article notfinalVoR;mainnotyetfocusedread"
+  },
+  {
+    "search_id": "S-M2-Y-TRC-OPEN",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.sciencedirect.com/science/article/pii/S0968090X26003062",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0968090X26003062",
+    "status": "HTTP403",
+    "notes": "Searchtextreadnotmainfulltext"
+  },
+  {
+    "search_id": "S-M2-Y-EFECT-ARXIV",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://arxiv.org/abs/2406.16820",
+    "source_url": "https://arxiv.org/abs/2406.16820",
+    "status": "version_metadata_checked",
+    "notes": "v1Jun24,2024;v2Aug15,2025;formalrelationshipneedscomparison"
+  },
+  {
+    "search_id": "S-M2-Y-EFECT-WEBPDF",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/articles/s44260-026-00094-y_reference.pdf",
+    "source_url": "https://www.nature.com/articles/s44260-026-00094-y_reference.pdf",
+    "status": "redirect_inaccessible",
+    "notes": "toolPDFopenfailedcookieidentity;notallmethodsfailed"
+  },
+  {
+    "search_id": "S-M2-Y-EFECT-DOWNLOAD",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://www.nature.com/articles/s44260-026-00094-y_reference.pdf?error=cookies_not_supported",
+    "source_url": "https://www.nature.com/articles/s44260-026-00094-y_reference.pdf?error=cookies_not_supported",
+    "status": "PDF200_acquired_not_focused_read",
+    "notes": "1209012bytes/23pages;retainearlyacceptedversion;readnextZ"
+  },
+  {
+    "search_id": "S-M2-Y-TRC-CROSSREF",
+    "platform": "primary_source_access",
+    "search_date": "2026-11-26",
+    "query_exact": "https://api.crossref.org/works/10.1016/j.trc.2026.105818",
+    "source_url": "https://api.crossref.org/works/10.1016/j.trc.2026.105818",
+    "status": "HTTP200_metadata",
+    "notes": "publishedonline null;printOct2026;notusecreatedasfirstdate"
+  }
+]

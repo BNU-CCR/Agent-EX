@@ -2478,5 +2478,75 @@
     "batch": "X-method-theme-search",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/x_theme_search/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "conceptual_framework",
+    "date": "2026-11-26",
+    "batch": "Y-theory-formalization-focused-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/y_theory_formalization/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "worked_example",
+    "date": "2026-11-26",
+    "batch": "Y-theory-formalization-focused-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/y_theory_formalization/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-26",
+    "batch": "Y-theory-formalization-focused-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/y_theory_formalization/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_transferability",
+    "old": "pending;abstractclaims reusable mathematicalbuildingblocks,not independently verified",
+    "new": "理论表达/附加假设的分层记录可借鉴；未证明构件跨模型有效或形式化提高经验预测。",
+    "date": "2026-11-26",
+    "batch": "Y-theory-formalization-focused-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/y_theory_formalization/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_pending_fields",
+    "old": "focused_fulltext;framework_evaluation;limits;code_and_supplement",
+    "new": "code_and_supplement;MBB_effectiveness_and_complex_dynamic_validation",
+    "date": "2026-11-26",
+    "batch": "Y-theory-formalization-focused-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/y_theory_formalization/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_evidence_location",
+    "old": "Abstractonly;foursteps andfiveexampletheories",
+    "new": "§2steps;§3.4multipleformalizations;§4limitations",
+    "date": "2026-11-26",
+    "batch": "Y-theory-formalization-focused-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/y_theory_formalization/results.json"
+  },
+  {
+    "record_id": "M029",
+    "field": "method_coding_source",
+    "old": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full",
+    "new": "reading-cards/M029.md",
+    "date": "2026-11-26",
+    "batch": "Y-theory-formalization-focused-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/y_theory_formalization/results.json"
   }
 ]

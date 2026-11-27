@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/pdf",
+    "sha256": "aeeff227f2b46bf5a9a3ab3eded2e1a626f979d47f200cd44bd5d08f1b385b74",
+    "bytes": 1492499,
+    "pages": 18,
+    "checked": "2026-11-26",
+    "status": "focused_read",
+    "storage": "scratch_PDF;repository_manifest_only",
+    "version": "formal_publisher_PDF"
+  },
+  {
+    "url": "https://www.nature.com/articles/s44260-026-00094-y_reference.pdf?error=cookies_not_supported",
+    "sha256": "974f5e743d2adb5dd8115e1d58cc16013036a35d7eec88ba2cedddeb2fafa3c7",
+    "bytes": 1209012,
+    "pages": 23,
+    "checked": "2026-11-26",
+    "status": "acquired_not_yet_focused_read",
+    "storage": "scratch_PDF;repository_manifest_only",
+    "version": "formal_early_accepted_reference_PDF_notfinalVoR"
+  }
+]
