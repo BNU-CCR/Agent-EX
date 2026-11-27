@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "S-M2-BE-FORMAL",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETformalPDF",
+    "source_url": "https://link.springer.com/content/pdf/10.1007/978-3-032-31712-4_43.pdf",
+    "status": "HTTP200_369841bytes_subscriptionpreviewHTML_notPDF",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  },
+  {
+    "search_id": "S-M2-BE-V1",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETauthorv1PDF",
+    "source_url": "https://arxiv.org/pdf/2507.05723v1",
+    "status": "HTTP200_450124bytes_18pages",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  },
+  {
+    "search_id": "S-M2-BE-IDENTITY",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "inspectHTMLtitle/canonical/access_and_v1navigation",
+    "source_url": "https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43",
+    "status": "HTMLnotPDF_and_v1scope",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  },
+  {
+    "search_id": "S-M2-BE-WEBPAGE",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openformalchapterpage",
+    "source_url": "https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43",
+    "status": "FirstOnline2026-07-30_directlyconfirmed_previewonly",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  },
+  {
+    "search_id": "S-M2-BE-READ1",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "readv1pp2–8",
+    "source_url": "https://arxiv.org/pdf/2507.05723v1",
+    "status": "conceptualbackground_RLR_method_results_cycle",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  },
+  {
+    "search_id": "S-M2-BE-READ2",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "readv1pp9–14_and18",
+    "source_url": "https://arxiv.org/pdf/2507.05723v1",
+    "status": "cycle_roles_limits_Table1",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  },
+  {
+    "search_id": "S-M2-BE-QUERY",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "readp17query_andHTMLcitationmeta",
+    "source_url": "https://arxiv.org/pdf/2507.05723v1",
+    "status": "literalquery_structure_notexecuted_or_repaired",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  },
+  {
+    "search_id": "S-M2-BE-VISUAL",
+    "platform": "local_visual_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "inspectp17query_andp18Table1",
+    "source_url": "https://arxiv.org/pdf/2507.05723v1",
+    "status": "22references_and_querylayout_checked",
+    "notes": "Originaldownloadpolledsameprocess;pollsnotnewacquisitions;authorv1notformalchapter;noScopusquery/rerun/22originalstudyreview."
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "batch_id": "BE-modelling-cycle-authorv1-method-reading",
+  "date": "2026-11-27",
+  "expected_master_sha256": "d71d828b007b51e1d830e0e877a36260b3df225992c5270566e67a3f3918d21c",
+  "updates": [
+    {
+      "record_id": "M044",
+      "metadata_evidence_url": "https://api.crossref.org/works/10.1007/978-3-032-31712-4_43;https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43;https://essa.eu.org/sig/sig-llm4abm-large-language-models-for-agent-based-modelling/",
+      "related_versions": "authorv1arXiv2507.05723_18pagesfocusedfullread;formal19ppchapterpreviewonly;PDFendpointreturnsHTML;noformaltextcomparison",
+      "reason": "DirectpublisherFirstOnlineconfirmed;onlyauthorv1fullread;formalchapterpreviewnotfulltext;candidatepreserved.",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://arxiv.org/pdf/2507.05723v1",
+      "supplement_status": "v1query_and22titlelistread;formaltext_and_reviewrawcoding_notacquired",
+      "findings": "Authorv1ScopusRLR40to22;20implementationnotvalidationrate;future8phaseusesfromauthorgroupdiscussion;nointegratedworkfloweffecttest;queryandstagecodingnotreplicated.",
+      "evidence_location": "v1pp1–13;annexp17query/p18Table1;formalpageFirstOnline/preview",
+      "relation_to_agent_ex": "Separate runtimeLLMactors,modeller_assistance,andmeasurement/communication;cycleproposalsrequiretask-specificerror/validityevidence;notprotocolchange.",
+      "card_path": "reading-cards/M044.md",
+      "notes": "BEformalPDFHTTP200isHTMLsubscriptionpreview;v1PDFsuccess18pages. DirectFirstOnlineJuly30verified. RLRsingleScopusEnglish/implementedABMfilter;20/22implementationnotfieldsuccess;noqueryrerun.",
+      "method_contribution_type": "simulation_paradigm;agent_architecture;validation_and_external_validity;reproducibility_and_reporting;theory_to_model_translation",
+      "method_maturity": "review_or_critique",
+      "method_evidence_level": "conceptual_claim",
+      "method_transferability": "Eightcycleopportunity/riskframework;RLRdescriptivesbounded22;workflowimprovementnotempiricallytested",
+      "method_relevance_rationale": "作者v1明确区分已实现研究综述与未来全周期用途；作为方法综述/概念建议，不充新经验验证。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "formal_fulltext_versioncomparison;actualScopusquery/export;rowlevel_stagecoding;independentworkflow_effect_test",
+      "method_evidence_location": "v1§4/§5.1/§5.2/§6;pp6–13;annexp17–18",
+      "method_coding_source": "reading-cards/M044.md;reports/modelling_cycle_roles.md",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

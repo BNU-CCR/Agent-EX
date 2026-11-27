@@ -1,0 +1,213 @@
+{
+  "record_id": "M044",
+  "actual_version": "authorv1",
+  "review": {
+    "database": "Scopus_only",
+    "last_collected": "2025-03",
+    "language": "English_only",
+    "retrieved": 40,
+    "included": 22,
+    "implemented_ABM_required": true,
+    "reviews_positions_summaries_excluded": true,
+    "source": "v1p6§4"
+  },
+  "reported_counts": {
+    "years": {
+      "2023": 2,
+      "2024": 17,
+      "2025": 3
+    },
+    "venue_types": {
+      "journal": 5,
+      "conference": 17
+    },
+    "scopus_domains": {
+      "computer_science": 17,
+      "engineering": 3,
+      "mathematics": 1,
+      "social_science": 1
+    },
+    "implementation": 20,
+    "ethical_discussion": 2,
+    "denominator": 22,
+    "source": "v1pp6–7§5.1"
+  },
+  "coded_reference_rows": [
+    {
+      "row": 1,
+      "reference_number": 4,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 2,
+      "reference_number": 30,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 3,
+      "reference_number": 31,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 4,
+      "reference_number": 43,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 5,
+      "reference_number": 35,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 6,
+      "reference_number": 10,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 7,
+      "reference_number": 33,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 8,
+      "reference_number": 28,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 9,
+      "reference_number": 9,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 10,
+      "reference_number": 45,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 11,
+      "reference_number": 22,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 12,
+      "reference_number": 21,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 13,
+      "reference_number": 27,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 14,
+      "reference_number": 46,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 15,
+      "reference_number": 24,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 16,
+      "reference_number": 52,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 17,
+      "reference_number": 49,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 18,
+      "reference_number": 47,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 19,
+      "reference_number": 16,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 20,
+      "reference_number": 50,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 21,
+      "reference_number": 12,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    },
+    {
+      "row": 22,
+      "reference_number": 51,
+      "stage_code": "not_supplied_per_row_in_Table1"
+    }
+  ],
+  "future_uses_source": "author_group_discussions_roughly_monthly_sinceJune2024_not_effect_trial",
+  "cycle_comparison": [
+    {
+      "phase": "problem_formulation",
+      "project_check_basis": "source_and_stakeholder_trace",
+      "risk": "familiarity_bias_or_fabricated_support",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    },
+    {
+      "phase": "system_analysis",
+      "project_check_basis": "theory_empirical_alternative_mechanism_check",
+      "risk": "plausible_story_as_causal_structure",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    },
+    {
+      "phase": "conceptualization",
+      "project_check_basis": "construct_rule_assumption_mapping",
+      "risk": "generated_rules_not_theory_evidence",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    },
+    {
+      "phase": "implementation",
+      "project_check_basis": "specification_code_execution_check",
+      "risk": "code_or_runtimebehavior_mismatch",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    },
+    {
+      "phase": "verification",
+      "project_check_basis": "original_events_rules_and_independent_check",
+      "risk": "selfreview_or_narrative_as_executionproof",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    },
+    {
+      "phase": "validation",
+      "project_check_basis": "independent_reference_and_program_comparability",
+      "risk": "expert_emulation_as_realexpert_or_circular_validation",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    },
+    {
+      "phase": "interpretation_communication",
+      "project_check_basis": "statistics_events_uncertainty_match",
+      "risk": "narrative_overreach",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    },
+    {
+      "phase": "documentation",
+      "project_check_basis": "config_commit_run_actualbehavior_mapping",
+      "risk": "template_intent_not_executed_facts",
+      "authority": "authorv1role_summary_plus_project_evaluation_inference",
+      "implemented_this_batch": false
+    }
+  ],
+  "limits": [
+    "20implementation_not20provenLLMactors_orvalidationpasses",
+    "17computer_science_and17conference_intersection_unknown",
+    "2ethicaldiscussions_not_ethicscompliance_rate",
+    "queryprinted_parentheses_and_AND_scope_need_actualexport;notexecuted_or_repaired",
+    "noformalversioncomparison_or22originalpapers_rescreening"
+  ]
+}

@@ -5088,5 +5088,95 @@
     "batch": "BD-ESSA-SSC-community-and-formalchapter",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_contribution_type",
+    "old": "simulation_paradigm;reproducibility_and_reporting",
+    "new": "simulation_paradigm;agent_architecture;validation_and_external_validity;reproducibility_and_reporting;theory_to_model_translation",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "review_or_critique",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_transferability",
+    "old": "pending_fulltext_modellingcycle_scope_candidate",
+    "new": "Eightcycleopportunity/riskframework;RLRdescriptivesbounded22;workflowimprovementnotempiricallytested",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_relevance_rationale",
+    "old": "作者摘要与官方SIG明确全ABM周期方法反思，正式正文未读不赋成熟度。",
+    "new": "作者v1明确区分已实现研究综述与未来全周期用途；作为方法综述/概念建议，不充新经验验证。",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_pending_fields",
+    "old": "formal_fulltext;versioncomparison;review_selection;cycle_coverage;claims_vs_empiricaltests;artifacts",
+    "new": "formal_fulltext_versioncomparison;actualScopusquery/export;rowlevel_stagecoding;independentworkflow_effect_test",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_evidence_location",
+    "old": "authorabstract;officialSIG;registrantmetadata",
+    "new": "v1§4/§5.1/§5.2/§6;pp6–13;annexp17–18",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_coding_source",
+    "old": "reports/essa_ssc_method_community.md",
+    "new": "reading-cards/M044.md;reports/modelling_cycle_roles.md",
+    "date": "2026-11-27",
+    "batch": "BE-modelling-cycle-authorv1-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/be_modelling_cycle_v1/results.json"
   }
 ]

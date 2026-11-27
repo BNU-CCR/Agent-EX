@@ -1,0 +1,26 @@
+{
+  "record_id": "M044",
+  "checked": "2026-11-27",
+  "attempts": [
+    {
+      "url": "https://link.springer.com/content/pdf/10.1007/978-3-032-31712-4_43.pdf",
+      "status": 200,
+      "bytes": 369841,
+      "pdf": false,
+      "body_kind": "subscriptionpreviewHTML",
+      "canonical": "https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43",
+      "sha256": "dfa79e945065314a5b0ba94906c1a9dce249dfb4fee75950cef313438ca867a8"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2507.05723v1",
+      "status": 200,
+      "bytes": 450124,
+      "pdf": true,
+      "pages": 18,
+      "version": "authorv1_2025-07-08_notformal2026chapter",
+      "sha256": "b3aebeaa46f9c28e0a101760606fc7a675b2cbf7f747f90fa35c568fc71c0393"
+    }
+  ],
+  "scope": "v1pp1–13andannexp17–18;referenceslocatednotindependentlyrechecked;formalabstract/FirstOnlineonly",
+  "rerun": false
+}

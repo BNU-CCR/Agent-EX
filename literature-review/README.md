@@ -35,17 +35,18 @@
 
 ## 第二轮方法研究成果
 
-截至2026-11-27，保留首轮57条及15卡，新增44项工作、补读5条原记录，现101条、59张全文卡；41项正式纳入、52候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
+截至2026-11-27，保留首轮57条及15卡，新增44项工作、补读5条原记录，现101条、60张全文卡；41项正式纳入、52候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
-- [验证证据矩阵](reports/method_validation_matrix.md)：121个证据单元，回答、轨迹、经验效度分列。
+- [验证证据矩阵](reports/method_validation_matrix.md)：125个证据单元，回答、轨迹、经验效度分列。
 - [双主体校准的评价边界](reports/dual_agent_calibration_boundaries.md)：作者v1与正式版、条件预测与闭环证据分列。
 - [评价对象与主张综合](reports/evaluation_targets_and_claims.md)：10项既有精读，AI能力/合成资料/人类过程分列，附机器对照与失败判据。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
+- [全建模周期角色](reports/modelling_cycle_roles.md)：22项RLR与未来用途分列，八阶段用途/风险/检查依据。
 - [ESSA/SSC方法共同体](reports/essa_ssc_method_community.md)：SIG/年度会议、展示与论文集、SSC2025与正式2026章节日期分列。
 - [政治样本模拟比较边界](reports/political_sample_bias_boundaries.md)：作者v1精读、输入预测力/分母/跨国混淆与正式版缺口。
 - [WWW方法生态](reports/www_method_ecology.md)：明确模拟效度范围、Companion身份与长文/短文/工作坊期限。
