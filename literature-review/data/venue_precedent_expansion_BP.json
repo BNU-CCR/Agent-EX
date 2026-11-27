@@ -1,0 +1,466 @@
+{
+  "checked_date": "2026-11-27",
+  "master_sha256": "e1e73e27ed0cc7bfcfaa2fb53070de6f879e763e8abfb41e70f36741f3be1b46",
+  "changes": [
+    {
+      "venue_id": "JASSS",
+      "old": "THEMP (2026),10.18564/jasss.6211; Qualitative inquiry (2023),10.18564/jasss.5014 | R003: Synthetic Social Media Influence Experimentation Via an Agentic Reinforcement Learning Large Language Model Bot (2025-06-30), 10.18564/jasss.5726 [included]; R006: Natural-Language Multi-Agent Simulations of Argumentative Opinion Dynamics (2022-01-31), 10.18564/jasss.4725 [included] | M013 THEMP正式全文已读；框架工作示例非框架效果验证 | V existing-master evidence: R003: Synthetic Social Media Influence Experimentation Via an Agentic Reinforcement Learning Large Language Model Bot (2025-06-30;issue2025); DOI:10.18564/jasss.5726;URL:https://www.jasss.org/28/3/6.html;method:llm_rule_rl_hybrid;status:included;version:see reading status || R006: Natural-Language Multi-Agent Simulations of Argumentative Opinion Dynamics (2022-01-31;issue2022); DOI:10.18564/jasss.4725;URL:https://www.jasss.org/25/1/2.html;method:neural_language_abm_hybrid;status:included;version:arXiv:2104.06737 v1 2021 (background version only); formal 2022 included || M013: Harmonising Theory and Empirics: The THEMP Approach for Developing, Testing and Exploring Social Simulation Models (2026-10-31;issue2026); DOI:10.18564/jasss.6211;URL:https://www.jasss.org/29/4/6.html;method:theory_to_model_framework;traditional_abm_worked_example;status:included;version:see reading status",
+      "new": "R003: Synthetic Social Media Influence Experimentation Via an Agentic Reinforcement Learning Large Language Model Bot | 2025-06-30 | DOI 10.18564/jasss.5726 | https://www.jasss.org/28/3/6.html | llm_rule_rl_hybrid | formal publication metadata; screening=included; reading=fulltext_checked || R006: Natural-Language Multi-Agent Simulations of Argumentative Opinion Dynamics | 2022-01-31 | DOI 10.18564/jasss.4725 | https://www.jasss.org/25/1/2.html | neural_language_abm_hybrid | formal publication metadata; screening=included; reading=fulltext_checked || M013: Harmonising Theory and Empirics: The THEMP Approach for Developing, Testing and Exploring Social Simulation Models | 2026-10-31 | DOI 10.18564/jasss.6211 | https://www.jasss.org/29/4/6.html | theory_to_model_framework;traditional_abm_worked_example | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R003",
+        "R006",
+        "M013"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "CCR",
+      "old": "existing records span2023–2026; EN03 webpage/PDF conflict pending | EN02: Simulating Reputation Dynamics and Their Manipulation: An Agent Based Model Framework (2023-08-18), 10.5117/CCR2023.1.9.ENSS [candidate]; EN03: Influence in Motion: Tracing Persuasive Dynamics via Multi‐Agent Networks (2026-04-21), 10.5117/CCR2026.2.9.HUAN [candidate]; EN04: Large Language Model-driven Multi-Agent Simulation for Fake News Diffusion Under Different Network Structures (2026-04-21), 10.5117/CCR2026.2.8.LI [candidate]; EN05: Be Careful What You Prompt For: Generative AI in Computational Communication Research (2026-07-13), 10.5117/CCR2026.2.1.ZHOU [candidate]; EN07: What makes computational communication science (ir)reproducible? (2024-05-16), 10.5117/CCR2024.1.5.CHAN [candidate] | V existing-master evidence: EN02: Simulating Reputation Dynamics and Their Manipulation: An Agent Based Model Framework (2023-08-18;issue2023); DOI:10.5117/CCR2023.1.9.ENSS;URL:https://journal.computationalcommunication.org/article/view/4766;method:rule_based_abm;status:candidate;version:AUP卷期Jan2023，OJS具体Published 2023-08-18；仅摘要，未把PDF跳转当全文。 Crossref直接核查无published-online字段；published-print为卷期日期，created只是DOI登记时间，不能作正式首发。具体见crossref_metadata_checks.json。 || EN03: Influence in Motion: Tracing Persuasive Dynamics via Multi‐Agent Networks (2026-04-21;issue2026); DOI:10.5117/CCR2026.2.9.HUAN;URL:https://journal.computationalcommunication.org/article/view/9217;method:llm_multiagent_social_simulation;status:candidate;version:OJS正式Published2026-04-21；AUP Sep2026及2026-09-14不是更早首发。作者代码README称示例run，仅代码说明已读，不能等同全文验证。 Crossref直接核查无published-online字段；published-print为卷期日期，created只是DOI登记时间，不能作正式首发。具体见crossref_metadata_checks.json。 || EN04: Large Language Model-driven Multi-Agent Simulation for Fake News Diffusion Under Different Network Structures (2026-04-21;issue2026); DOI:10.5117/CCR2026.2.8.LI;URL:https://journal.computationalcommunication.org/article/view/9203;method:llm_multiagent_social_simulation;status:candidate;version:预印本arXiv:2410.13909，题名含news而正式题名为fake news；同研究版本合并，不能两个独立研究计数。 Crossref直接核查无published-online字段；published-print为卷期日期，created只是DOI登记时间，不能作正式首发。具体见crossref_metadata_checks.json。 || EN05: Be Careful What You Prompt For: Generative AI in Computational Communication Research (2026-07-13;issue2026); DOI:10.5117/CCR2026.2.1.ZHOU;URL:https://journal.computationalcommunication.org/article/view/10097;method:methodological_editorial;status:candidate;version:AUP official ?TRACK=RSS record gives Received/Accepted13May2026, Published online13Jul2026; OJS2026-08-11 is a later platform version. This corrects initial OJS-based date. || EN07: What makes computational communication science (ir)reproducible? (2024-05-16;issue2024); DOI:10.5117/CCR2024.1.5.CHAN;URL:https://journal.computationalcommunication.org/article/view/5926;method:reproducibility_audit;status:candidate;version:see reading status",
+      "new": "EN02: Simulating Reputation Dynamics and Their Manipulation: An Agent Based Model Framework | 2023-08-18 | DOI 10.5117/CCR2023.1.9.ENSS | https://journal.computationalcommunication.org/article/view/4766 | rule_based_abm | formal publication metadata; screening=candidate; reading=abstract_read || EN03: Influence in Motion: Tracing Persuasive Dynamics via Multi‐Agent Networks | 2026-04-21 | DOI 10.5117/CCR2026.2.9.HUAN | https://journal.computationalcommunication.org/article/view/9217 | llm_multiagent_social_simulation | formal publication metadata; screening=candidate; reading=abstract_read || EN04: Large Language Model-driven Multi-Agent Simulation for Fake News Diffusion Under Different Network Structures | 2026-04-21 | DOI 10.5117/CCR2026.2.8.LI | https://journal.computationalcommunication.org/article/view/9203 | llm_multiagent_social_simulation | formal publication metadata; screening=candidate; reading=abstract_read || EN05: Be Careful What You Prompt For: Generative AI in Computational Communication Research | 2026-07-13 | DOI 10.5117/CCR2026.2.1.ZHOU | https://journal.computationalcommunication.org/article/view/10097 | methodological_editorial | formal publication metadata; screening=candidate; reading=abstract_read || EN07: What makes computational communication science (ir)reproducible? | 2024-05-16 | DOI 10.5117/CCR2024.1.5.CHAN | https://journal.computationalcommunication.org/article/view/5926 | reproducibility_audit | formal publication metadata; screening=candidate; reading=abstract_read",
+      "record_ids": [
+        "EN02",
+        "EN03",
+        "EN04",
+        "EN05",
+        "EN07"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "EPJDS",
+      "old": "Operational validation (2026),10.1140/epjds/s13688-026-00674-x | M006: Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum (2026-06-11), 10.1140/epjds/s13688-026-00674-x [included] | V existing-master evidence: M006: Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum (2026-06-11;issue2026); DOI:10.1140/epjds/s13688-026-00674-x;URL:https://link.springer.com/article/10.1140/epjds/s13688-026-00674-x;method:llm_multiagent_social_simulation;status:included;version:see reading status",
+      "new": "M006: Towards operational validation of LLM-agent social simulations: a replicated study of a Reddit-like technology forum | 2026-06-11 | DOI 10.1140/epjds/s13688-026-00674-x | https://link.springer.com/article/10.1140/epjds/s13688-026-00674-x | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M006"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "JOS",
+      "old": "CRISP-DM/process mining (2025),10.1080/17477778.2025.2508245; Code sharing review (2023),10.1080/17477778.2023.2260772 | M015: formal journal identity/date confirmed;2024authorv1 fulltext read;formalPDF403;candidate pending version comparison | V existing-master evidence: M015: A CRISP-DM-based methodology for assessing agent-based simulation models using process mining (2025-06-06;issue2026); DOI:10.1080/17477778.2025.2508245;URL:https://www.tandfonline.com/doi/full/10.1080/17477778.2025.2508245;method:process_mining_workflow;traditional_abm_worked_example;status:candidate;version:arXiv2404.01114v1 author preprint explicitly related DOI; institutional journal record links preprint; one work; formalPDF comparison pending",
+      "new": "M015: A CRISP-DM-based methodology for assessing agent-based simulation models using process mining | 2025-06-06 | DOI 10.1080/17477778.2025.2508245 | https://www.tandfonline.com/doi/full/10.1080/17477778.2025.2508245 | process_mining_workflow;traditional_abm_worked_example | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M015"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "AI-MDPI",
+      "old": "MASS (2026),10.3390/ai7080279 | M001: Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method (2026-07-24), 10.3390/ai7080279 [included] | V existing-master evidence: M001: Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method (2026-07-24;issue2026); DOI:10.3390/ai7080279;URL:https://www.mdpi.com/2673-2688/7/8/279;method:llm_multiagent_social_simulation;status:included;version:2025 Open Conference AI Agents for Science precursor; preprints202606.1832 v1; not independent works",
+      "new": "M001: Multi-Agent Social Simulation: Protocolizing LLM-Driven Agent-Based Modeling as a Quantitative Research Method | 2026-07-24 | DOI 10.3390/ai7080279 | https://www.mdpi.com/2673-2688/7/8/279 | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M001"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "HSSCOMM",
+      "old": "Gao survey (2024),10.1057/s41599-024-03611-3; Haase (2026),10.1057/s41599-026-08832-2 | M002: Beyond static responses: multi-agent LLM systems as a new paradigm for social science research (2026-09-02), 10.1057/s41599-026-08832-2 [included] | M016 Gao2024正式方法/评价部分已读；四域综述，非新增经验验证 | V existing-master evidence: M002: Beyond static responses: multi-agent LLM systems as a new paradigm for social science research (2026-09-02;issue2026); DOI:10.1057/s41599-026-08832-2;URL:https://www.nature.com/articles/s41599-026-08832-2;method:conceptual_framework_review;status:included;version:arXiv:2506.01839 v1 2025-06-02; v3 2026-05-18; same work not separately counted || M016: Large language models empowered agent-based modeling and simulation: a survey and perspectives (2024-09-27;issue2024); DOI:10.1057/s41599-024-03611-3;URL:https://www.nature.com/articles/s41599-024-03611-3;method:crossdisciplinary_method_survey;status:included;version:see reading status",
+      "new": "M002: Beyond static responses: multi-agent LLM systems as a new paradigm for social science research | 2026-09-02 | DOI 10.1057/s41599-026-08832-2 | https://www.nature.com/articles/s41599-026-08832-2 | conceptual_framework_review | formal publication metadata; screening=included; reading=fulltext_checked || M016: Large language models empowered agent-based modeling and simulation: a survey and perspectives | 2024-09-27 | DOI 10.1057/s41599-024-03611-3 | https://www.nature.com/articles/s41599-024-03611-3 | crossdisciplinary_method_survey | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M002",
+        "M016"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "AIR",
+      "old": "Validation critique (2025/2026),10.1007/s10462-025-11412-6 | R015: Validation is the central challenge for generative social simulation: a critical review of LLMs in agent-based modeling (2025-11-18), 10.1007/s10462-025-11412-6 [included]",
+      "new": "R015: Validation is the central challenge for generative social simulation: a critical review of LLMs in agent-based modeling | 2025-11-18 | DOI 10.1007/s10462-025-11412-6 | https://link.springer.com/article/10.1007/s10462-025-11412-6 | review | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R015"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "ECOLMOD",
+      "old": "ODD+NetLogo (2024/2025); ODD LLM code replication (2026) | M003: Can large language models implement agent-based models? An ODD-based replication study (2026-07), 10.1016/j.ecolmodel.2026.111624 [candidate]; M011: Using the ODD protocol and NetLogo to replicate agent-based models (2024-12-06), 10.1016/j.ecolmodel.2024.110967 [included] | V existing-master evidence: M003: Can large language models implement agent-based models? An ODD-based replication study (2026-07;issue2026); DOI:10.1016/j.ecolmodel.2026.111624;URL:https://www.sciencedirect.com/science/article/pii/S0304380026001523;method:llm_assisted_abm_implementation;replication_benchmark;status:candidate;version:formal journal work; read author-final arXiv v2 (2026-04-30); v1 2026-02-08 kept as version history, not separate work || M011: Using the ODD protocol and NetLogo to replicate agent-based models (2024-12-06;issue2025); DOI:10.1016/j.ecolmodel.2024.110967;URL:https://www.sciencedirect.com/science/article/pii/S0304380024003557;method:manual_abm_replication;reporting_checklist;status:included;version:published version, institutional repository, CC BY",
+      "new": "M003: Can large language models implement agent-based models? An ODD-based replication study | first-online pending; volume 2026 | DOI 10.1016/j.ecolmodel.2026.111624 | https://www.sciencedirect.com/science/article/pii/S0304380026001523 | llm_assisted_abm_implementation;replication_benchmark | formal publication metadata; screening=candidate; reading=fulltext_checked || M011: Using the ODD protocol and NetLogo to replicate agent-based models | 2024-12-06 | DOI 10.1016/j.ecolmodel.2024.110967 | https://www.sciencedirect.com/science/article/pii/S0304380024003557 | manual_abm_replication;reporting_checklist | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M003",
+        "M011"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "EMS",
+      "old": "Hidden assumptions (2022),10.1016/j.envsoft.2022.105489; Theory roles (2023),10.1016/j.envsoft.2023.105802; ODD20 (online2026/issue2027 date_pending) | M012: Twenty years of the ODD protocol: development, usage, extensions, and lessons learned about modelling standards development (2026-10-16), 10.1016/j.envsoft.2026.107203 [candidate] | V existing-master evidence: M012: Twenty years of the ODD protocol: development, usage, extensions, and lessons learned about modelling standards development (2026-10-16;issue2027); DOI:10.1016/j.envsoft.2026.107203;URL:https://www.sciencedirect.com/science/article/pii/S1364815226003506;method:pending_fulltext;status:candidate;version:formal journal article ahead of print; publisher marks open access/Creative Commons | EssOAR10.22541/essoar.15005893/v1 discovered;redirectunavailable;notread",
+      "new": "M012: Twenty years of the ODD protocol: development, usage, extensions, and lessons learned about modelling standards development | first-online pending; volume 2027 | DOI 10.1016/j.envsoft.2026.107203 | https://www.sciencedirect.com/science/article/pii/S1364815226003506 | pending_fulltext | formal publication metadata; screening=candidate; reading=abstract_checked",
+      "record_ids": [
+        "M012"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "SDR",
+      "old": "GABM tutorial (2024),10.1002/sdr.1761 | R008: Generative agent-based modeling: an introduction and tutorial (2024-01-10), 10.1002/sdr.1761 [included] | V existing-master evidence: R008: Generative agent-based modeling: an introduction and tutorial (2024-01-10;issue2024); DOI:10.1002/sdr.1761;URL:https://onlinelibrary.wiley.com/doi/full/10.1002/sdr.1761;method:llm_multiagent_social_simulation;status:included;version:see reading status",
+      "new": "R008: Generative agent-based modeling: an introduction and tutorial | 2024-01-10 | DOI 10.1002/sdr.1761 | https://onlinelibrary.wiley.com/doi/full/10.1002/sdr.1761 | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R008"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "FRONT-AI",
+      "old": "Swarm applications (2025),10.3389/frai.2025.1593017 plus correction10.3389/frai.2025.1771737; Validity gap (2026),10.3389/frai.2026.1988865 | M004: From the fluency fallacy to the micro-to-macro validity gap: opportunities and pitfalls of LLMs in social simulation (2026-11-17), 10.3389/frai.2026.1988865 [included] | V existing-master evidence: M004: From the fluency fallacy to the micro-to-macro validity gap: opportunities and pitfalls of LLMs in social simulation (2026-11-17;issue2026); DOI:10.3389/frai.2026.1988865;URL:https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2026.1988865/full;method:review;status:included;version:arXiv2507.19364 v1 2025-07-25 title Integrating LLM in Agent-Based Social Simulation; v4 2026-10-09 renamed; use formal record only",
+      "new": "M004: From the fluency fallacy to the micro-to-macro validity gap: opportunities and pitfalls of LLMs in social simulation | 2026-11-17 | DOI 10.3389/frai.2026.1988865 | https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2026.1988865/full | review | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M004"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "SSCR",
+      "old": "Selective Exposure ABM (2025),10.1177/08944393251387282 | EN13: Selective Exposure to News, Homogeneous Political Discussion Networks, and Affective Political Polarization: An Agent-Based Modeling of Minimal versus Strong Communication Effects (2025-10-17), 10.1177/08944393251387282 [candidate] | V existing-master evidence: EN13: Selective Exposure to News, Homogeneous Political Discussion Networks, and Affective Political Polarization: An Agent-Based Modeling of Minimal versus Strong Communication Effects (2025-10-17;issue2026); DOI:10.1177/08944393251387282;URL:https://journals.sagepub.com/doi/abs/10.1177/08944393251387282;method:rule_based_abm;status:candidate;version:2025首发，2026年44(5):886–910；摘要已读，模型参数/完整全文待核查。",
+      "new": "EN13: Selective Exposure to News, Homogeneous Political Discussion Networks, and Affective Political Polarization: An Agent-Based Modeling of Minimal versus Strong Communication Effects | 2025-10-17 | DOI 10.1177/08944393251387282 | https://journals.sagepub.com/doi/abs/10.1177/08944393251387282 | rule_based_abm | formal publication metadata; screening=candidate; reading=abstract_read",
+      "record_ids": [
+        "EN13"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "EACL",
+      "old": " | M007: Don’t Trust Generative Agents to Mimic Communication on Social Networks Unless You Benchmarked their Empirical Realism (2026-03), 10.18653/v1/2026.eacl-long.51 [included] | V existing-master evidence: M007: Don’t Trust Generative Agents to Mimic Communication on Social Networks Unless You Benchmarked their Empirical Realism (2026-03;issue2026); DOI:10.18653/v1/2026.eacl-long.51;URL:https://aclanthology.org/2026.eacl-long.51/;method:llm_multiagent_social_simulation;status:included;version:see reading status",
+      "new": "M007: Don’t Trust Generative Agents to Mimic Communication on Social Networks Unless You Benchmarked their Empirical Realism | 2026-03 | DOI 10.18653/v1/2026.eacl-long.51 | https://aclanthology.org/2026.eacl-long.51/ | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M007"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "NAACL-F",
+      "old": " | R001: Simulating Opinion Dynamics with Networks of LLM-based Agents (2024-06), 10.18653/v1/2024.findings-naacl.211 [included] | V existing-master evidence: R001: Simulating Opinion Dynamics with Networks of LLM-based Agents (2024-06;issue2024); DOI:10.18653/v1/2024.findings-naacl.211;URL:https://aclanthology.org/2024.findings-naacl.211/;method:llm_multiagent_social_simulation;status:included;version:see reading status",
+      "new": "R001: Simulating Opinion Dynamics with Networks of LLM-based Agents | 2024-06 | DOI 10.18653/v1/2024.findings-naacl.211 | https://aclanthology.org/2024.findings-naacl.211/ | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R001"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "UIST",
+      "old": " | R016: Generative Agents: Interactive Simulacra of Human Behavior (2023-10-29), 10.1145/3586183.3606763 [candidate] | V existing-master evidence: R016: Generative Agents: Interactive Simulacra of Human Behavior (2023-10-29;issue2023); DOI:10.1145/3586183.3606763;URL:https://doi.org/10.1145/3586183.3606763;method:llm_multiagent_social_simulation;status:included;version:arXiv2304.03442 v2 2023-08-06; author manuscript carries same UIST DOI; VoR body not compared",
+      "new": "R016: Generative Agents: Interactive Simulacra of Human Behavior | 2023-10-29 | DOI 10.1145/3586183.3606763 | https://doi.org/10.1145/3586183.3606763 | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R016"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "COGSCI",
+      "old": " | M005: Validating Generative Agent-Based Models of Social Norm Enforcement: From Replication to Novel Predictions (2025-07-29), 10.48550/arXiv.2507.22049 [frontier] | V existing-master evidence: M005: Validating Generative Agent-Based Models of Social Norm Enforcement: From Replication to Novel Predictions (firstdatepending;issue); DOI:10.48550/arXiv.2507.22049;URL:https://arxiv.org/abs/2507.22049;method:llm_multiagent_social_simulation;status:frontier;version:Author lab explicitly labels same-title work CogSci25 and links arXiv;officialprogram poster association;UC item same-title. Formal proceedings first-date/pages/text stillunverified.",
+      "new": "M005: Validating Generative Agent-Based Models of Social Norm Enforcement: From Replication to Novel Predictions | first-online pending; volume  | DOI 10.48550/arXiv.2507.22049 | https://arxiv.org/abs/2507.22049 | llm_multiagent_social_simulation | author/preprint identity; screening=frontier; reading=fulltext_checked",
+      "record_ids": [
+        "M005"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "ARXIV",
+      "old": " | R021: ODD+LLM: Specifying LLM-Agent Behavior for Reproducible Social Simulation (2026-11-06), https://arxiv.org/abs/2611.08932 [frontier]; M005: Validating Generative Agent-Based Models of Social Norm Enforcement: From Replication to Novel Predictions (2025-07-29), 10.48550/arXiv.2507.22049 [frontier]; M008: EASE Configuration Facilitates A Reproducible Science of LLM Social Simulations (2026-05-28), 10.48550/arXiv.2605.30258 [frontier]; M009: PhysicsAgentABM: Physics-Guided Generative Agent-Based Modeling (2026-02-05), 10.48550/arXiv.2602.06030 [frontier] | V existing-master evidence: R021: ODD+LLM: Specifying LLM-Agent Behavior for Reproducible Social Simulation (firstdatepending;issue2026); DOI:noneverified;URL:https://arxiv.org/abs/2611.08932;method:review;reimplementation;status:frontier;version:see reading status || M005: Validating Generative Agent-Based Models of Social Norm Enforcement: From Replication to Novel Predictions (firstdatepending;issue); DOI:10.48550/arXiv.2507.22049;URL:https://arxiv.org/abs/2507.22049;method:llm_multiagent_social_simulation;status:frontier;version:Author lab explicitly labels same-title work CogSci25 and links arXiv;officialprogram poster association;UC item same-title. Formal proceedings first-date/pages/text stillunverified. || M008: EASE Configuration Facilitates A Reproducible Science of LLM Social Simulations (firstdatepending;issue2026); DOI:10.48550/arXiv.2605.30258;URL:https://arxiv.org/abs/2605.30258;method:llm_multiagent_social_simulation;status:frontier;version:see reading status || M009: PhysicsAgentABM: Physics-Guided Generative Agent-Based Modeling (firstdatepending;issue2026); DOI:10.48550/arXiv.2602.06030;URL:https://arxiv.org/abs/2602.06030;method:llm_multiagent_social_simulation;status:frontier;version:see reading status",
+      "new": "R021: ODD+LLM: Specifying LLM-Agent Behavior for Reproducible Social Simulation | first-online pending; volume 2026 | DOI pending | https://arxiv.org/abs/2611.08932 | review;reimplementation | author/preprint identity; screening=frontier; reading=fulltext_checked || M005: Validating Generative Agent-Based Models of Social Norm Enforcement: From Replication to Novel Predictions | first-online pending; volume  | DOI 10.48550/arXiv.2507.22049 | https://arxiv.org/abs/2507.22049 | llm_multiagent_social_simulation | author/preprint identity; screening=frontier; reading=fulltext_checked || M008: EASE Configuration Facilitates A Reproducible Science of LLM Social Simulations | first-online pending; volume 2026 | DOI 10.48550/arXiv.2605.30258 | https://arxiv.org/abs/2605.30258 | llm_multiagent_social_simulation | author/preprint identity; screening=frontier; reading=fulltext_checked || M009: PhysicsAgentABM: Physics-Guided Generative Agent-Based Modeling | first-online pending; volume 2026 | DOI 10.48550/arXiv.2602.06030 | https://arxiv.org/abs/2602.06030 | llm_multiagent_social_simulation | author/preprint identity; screening=frontier; reading=abstract_checked",
+      "record_ids": [
+        "R021",
+        "M005",
+        "M008",
+        "M009"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "ICML-POS",
+      "old": "M038ICML2025;M014/M039ICML2026;formalPMLRpublication2025-10-06/2026-09-29;M014/M038/M039formalPDFfocusedread;M040ICML2023formalempiricalTE_PMLR202published2023-07-03",
+      "new": "M014: Position: Time to Close The Validation Gap in LLM Social Simulations | 2026-09-29 | DOI pending | https://proceedings.mlr.press/v306/puelma-touzel26a.html | position_paper;formal_abstraction;validation_critique | formal publication metadata; screening=included; reading=fulltext_checked || M038: Position: LLM Social Simulations Are a Promising Research Method | 2025-10-06 | DOI pending | https://proceedings.mlr.press/v267/anthis25a.html | position_paper;methodological_challenges;review_agenda | formal publication metadata; screening=included; reading=fulltext_checked || M039: Position: LLM-Based Social Simulations Require a Boundary | 2026-09-29 | DOI pending | https://proceedings.mlr.press/v306/wu26co.html | position_paper;review_of_validation_practices;heterogeneity_boundary | formal publication metadata; screening=included; reading=fulltext_checked || M040: Using Large Language Models to Simulate Multiple Humans and Replicate Human Subject Studies | 2023-07-03 | DOI pending | https://proceedings.mlr.press/v202/aher23a.html | Turing_Experiments;records_and_choice_probability_validation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M014",
+        "M038",
+        "M039",
+        "M040"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "SIMULATION",
+      "old": "M019,2024-04-14,10.1177/00375497241239360; narrative-to-simulation-code;abstractonly | V existing-master evidence: M019: Modeler in a box: how can large language models aid in the simulation modeling process? (2024-04-14;issue2024); DOI:10.1177/00375497241239360;URL:https://journals.sagepub.com/doi/10.1177/00375497241239360;method:;status:candidate;version:see reading status",
+      "new": "M019: Modeler in a box: how can large language models aid in the simulation modeling process? | 2024-04-14 | DOI 10.1177/00375497241239360 | https://journals.sagepub.com/doi/10.1177/00375497241239360 |  | formal publication metadata; screening=candidate; reading=abstract_checked",
+      "record_ids": [
+        "M019"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "CMOT",
+      "old": "M017,2022-01-11,sensitivity protocol; M018,2023-07-24,organization ABM review (issue2024) | V existing-master evidence: M017: Sensitivity analysis of agent-based models: a new protocol (2022-01-11;issue2022); DOI:10.1007/s10588-021-09358-5;URL:https://link.springer.com/article/10.1007/s10588-021-09358-5;method:traditional_ABM_sensitivity_protocol;status:included;version:see reading status || M018: Applications of agent-based modeling and simulation in organization management: a quarter-century review through bibliometric mapping (1998–2022) (2023-07-24;issue2024); DOI:10.1007/s10588-023-09381-8;URL:https://link.springer.com/article/10.1007/s10588-023-09381-8;method:;status:candidate;version:see reading status",
+      "new": "M017: Sensitivity analysis of agent-based models: a new protocol | 2022-01-11 | DOI 10.1007/s10588-021-09358-5 | https://link.springer.com/article/10.1007/s10588-021-09358-5 | traditional_ABM_sensitivity_protocol | formal publication metadata; screening=included; reading=fulltext_checked || M018: Applications of agent-based modeling and simulation in organization management: a quarter-century review through bibliometric mapping (1998–2022) | 2023-07-24 | DOI 10.1007/s10588-023-09381-8 | https://link.springer.com/article/10.1007/s10588-023-09381-8 |  | formal publication metadata; screening=candidate; reading=abstract_checked",
+      "record_ids": [
+        "M017",
+        "M018"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "AAMAS",
+      "old": "M020,2026 Research Paper Track1518–1526,10.65109/VAVC8140; FODD995–1003 queued not coded | V existing-master evidence: M020: Influencing LLM Multi-Agent Dialogue via Policy-Parameterized Prompts (firstdatepending;issue2026); DOI:10.65109/VAVC8140;URL:https://ifaamas.org/Proceedings/aamas2026/pdfs/VAVC8140.pdf;method:prompt_policy_control;status:candidate;version:arXiv:2603.09890; formalPDF read, not substituted by preprint",
+      "new": "M020: Influencing LLM Multi-Agent Dialogue via Policy-Parameterized Prompts | first-online pending; volume 2026 | DOI 10.65109/VAVC8140 | https://ifaamas.org/Proceedings/aamas2026/pdfs/VAVC8140.pdf | prompt_policy_control | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M020"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "ICWSM",
+      "old": "M021 formal2026proceedings relation via institutionalrecord; exactdate/DOI/fulltextpending | V existing-master evidence: M021: Simulating Online Social Media Conversations on Controversial Topics Using AI Agents Calibrated on Real-World Data (firstdatepending;issue2026); DOI:noneverified;URL:https://re.public.polimi.it/handle/11311/1317866;method:empirically_initialized_LLM_social_simulation;status:candidate;version:arXiv:2509.18985 (author preprint); formal version relationship not text-compared",
+      "new": "M021: Simulating Online Social Media Conversations on Controversial Topics Using AI Agents Calibrated on Real-World Data | first-online pending; volume 2026 | DOI pending | https://re.public.polimi.it/handle/11311/1317866 | empirically_initialized_LLM_social_simulation | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M021"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "JEIC",
+      "old": "M023,2025-07-29,10.1007/s11403-025-00451-5;humanstrategyclassification totraditionalABM;notLLM | V existing-master evidence: M023: Classifying heterogeneous cooperation in social dilemmas: experimental evidence and simulation insights (2025-07-29;issue2025); DOI:10.1007/s11403-025-00451-5;URL:https://link.springer.com/article/10.1007/s11403-025-00451-5;method:traditional_ABM_empirical_behavior_classification;status:included;version:see reading status",
+      "new": "M023: Classifying heterogeneous cooperation in social dilemmas: experimental evidence and simulation insights | 2025-07-29 | DOI 10.1007/s11403-025-00451-5 | https://link.springer.com/article/10.1007/s11403-025-00451-5 | traditional_ABM_empirical_behavior_classification | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M023"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "SIGDIAL",
+      "old": "M024,2024-09,10.18653/v1/2024.sigdial-1.21;formal20p;precisefirstonlinedaypending | V existing-master evidence: M024: Self-Emotion Blended Dialogue Generation in Social Simulation Agents (2024-09;issue2024); DOI:10.18653/v1/2024.sigdial-1.21;URL:https://aclanthology.org/2024.sigdial-1.21/;method:LLM_self_emotion_component_evaluation;status:candidate;version:arXiv2408.01633 discovered;actualreading uses formalACL20pPDF228–247",
+      "new": "M024: Self-Emotion Blended Dialogue Generation in Social Simulation Agents | first-online pending; volume 2024 | DOI 10.18653/v1/2024.sigdial-1.21 | https://aclanthology.org/2024.sigdial-1.21/ | LLM_self_emotion_component_evaluation | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M024"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "PAN",
+      "old": "R017,2024-05-17,10.1017/pan.2024.5;formalmethods/resultsread;syntheticsurveyvaliditynotdynamicABM | V existing-master evidence: R017: Synthetic Replacements for Human Survey Data? The Perils of Large Language Models (2024-05-17;issue2024); DOI:10.1017/pan.2024.5;URL:https://doi.org/10.1017/pan.2024.5;method:independent_synthetic_respondents;status:included;version:see reading status",
+      "new": "R017: Synthetic Replacements for Human Survey Data? The Perils of Large Language Models | 2024-05-17 | DOI 10.1017/pan.2024.5 | https://doi.org/10.1017/pan.2024.5 | independent_synthetic_respondents | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R017"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "SOCNET",
+      "old": "M025,76(2024)150–159,10.1016/j.socnet.2023.09.001;firstdaypending;authorhostedpublisherlayoutPDFmethodsread | V existing-master evidence: M025: Status, cognitive overload, and incomplete information in advice-seeking networks: An agent-based model (firstdatepending;issue2024); DOI:10.1016/j.socnet.2023.09.001;URL:https://doi.org/10.1016/j.socnet.2023.09.001;method:traditional_rule_ABM;status:candidate;version:see reading status",
+      "new": "M025: Status, cognitive overload, and incomplete information in advice-seeking networks: An agent-based model | first-online pending; volume 2024 | DOI 10.1016/j.socnet.2023.09.001 | https://doi.org/10.1016/j.socnet.2023.09.001 | traditional_rule_ABM | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M025"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "PLOSONE",
+      "old": "R014;see linked master/cards;Q2026-11-26 | V existing-master evidence: R014: Unmasking conversational bias in AI multiagent systems (2026-08-18;issue2026); DOI:10.1371/journal.pone.0355458;URL:https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458;method:llm_multiagent_social_simulation;status:included;version:arXiv:2501.14844 v1 2025-01-24; formal PLOS ONE primary",
+      "new": "R014: Unmasking conversational bias in AI multiagent systems | 2026-08-18 | DOI 10.1371/journal.pone.0355458 | https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0355458 | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R014"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "SREP",
+      "old": "M026;see linked master/cards;Q2026-11-26 | V existing-master evidence: M026: Evaluating the ability of large language models to emulate personality (2025-01-02;issue2025); DOI:10.1038/s41598-024-84109-5;URL:https://www.nature.com/articles/s41598-024-84109-5;method:llm_persona_emulation;status:included;version:Institution search snippet saysDec2025; publisher exactdate takes precedence",
+      "new": "M026: Evaluating the ability of large language models to emulate personality | 2025-01-02 | DOI 10.1038/s41598-024-84109-5 | https://www.nature.com/articles/s41598-024-84109-5 | llm_persona_emulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M026"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "NCOMMS",
+      "old": "R004;R013;see linked master/cards;Q2026-11-26 | V existing-master evidence: R004: Disentangling interaction and bias effects in opinion dynamics of large language models (2026-09-22;issue2026); DOI:10.1038/s41467-026-77340-3;URL:https://www.nature.com/articles/s41467-026-77340-3;method:llm_multiagent_social_simulation;status:included;version:see reading status || R013: Emergence of polarization in networks of large language model agents (2026-10-08;issue2026); DOI:10.1038/s41467-026-78228-y;URL:https://www.nature.com/articles/s41467-026-78228-y;method:llm_multiagent_social_simulation;status:included;version:2026-10-08 Article in Press; Version of Record 2026-11-06; one work",
+      "new": "R004: Disentangling interaction and bias effects in opinion dynamics of large language models | 2026-09-22 | DOI 10.1038/s41467-026-77340-3 | https://www.nature.com/articles/s41467-026-77340-3 | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked || R013: Emergence of polarization in networks of large language model agents | 2026-10-08 | DOI 10.1038/s41467-026-78228-y | https://www.nature.com/articles/s41467-026-78228-y | llm_multiagent_social_simulation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R004",
+        "R013"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "JSC",
+      "old": "M027;formalidentity/datechecked;actualreadversion inmaster/card | V existing-master evidence: M027: Evaluating the Use of Large Language Models as Synthetic Social Agents in Social Science Research (2025-12-17;issue2025); DOI:10.23919/JSC.2025.0022;URL:https://www.sciopen.com/article/10.23919/JSC.2025.0022;method:methodological_critique;status:candidate;version:arXiv2509.26080v1 Sep30;v2 Oct28,2025;readv2(24p);formal6(4)334-341 notcollated",
+      "new": "M027: Evaluating the Use of Large Language Models as Synthetic Social Agents in Social Science Research | 2025-12-17 | DOI 10.23919/JSC.2025.0022 | https://www.sciopen.com/article/10.23919/JSC.2025.0022 | methodological_critique | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M027"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "AMPPS",
+      "old": "M028;formalidentity/datechecked;actualreadversion inmaster/card | V existing-master evidence: M028: A Primer for Evaluating Large Language Models in Social-Science Research (2025-04-16;issue2025); DOI:10.1177/25152459251325174;URL:https://journals.sagepub.com/doi/full/10.1177/25152459251325174;method:methodological_primer;status:included;version:25p personal-sitehosted publisher-layout PDF;DOI/title crosschecked;not byteidentity certified",
+      "new": "M028: A Primer for Evaluating Large Language Models in Social-Science Research | 2025-04-16 | DOI 10.1177/25152459251325174 | https://journals.sagepub.com/doi/full/10.1177/25152459251325174 | methodological_primer | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M028"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "FRONT-SOCP",
+      "old": "M029: Math up! Theoretically sound agent-based modeling with mathematical building blocks;2026-08-12;DOI10.3389/frsps.2026.1772740;https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full;conceptual framework/worked examples, not empirical method validation",
+      "new": "M029: MOZAIC: A mathematical approach to formalizing behavioral theories – applied to an agent-based model of mobility | 2026-08-12 | DOI 10.3389/frsps.2026.1772740 | https://www.frontiersin.org/journals/social-psychology/articles/10.3389/frsps.2026.1772740/full | theory_formalization_framework | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M029"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "NPJCOMPLEX",
+      "old": "M030: EFECT enables reliable and reproducible stochastic simulations across disciplines;first2026-08-05;VoR2026-11-23;DOI10.1038/s44260-026-00094-y;https://www.nature.com/articles/s44260-026-00094-y;statistical reproducibility, technical controlled comparison",
+      "new": "M030: EFECT enables reliable and reproducible stochastic simulations across disciplines | 2026-08-05 | DOI 10.1038/s44260-026-00094-y | https://www.nature.com/articles/s44260-026-00094-y | stochastic_simulation_reproducibility_test | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M030"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "TCSS",
+      "old": "M032 Crowd: A Social Network Simulation Framework;2025-06-04;DOI10.1109/TCSS.2025.3565377;https://www.cs.bilkent.edu.tr/~oulusoy/IEEE_TCSS-2025-published;platform/technical comparison, not human validation",
+      "new": "M032: Crowd: A Social Network Simulation Framework | 2025-06-04 | DOI 10.1109/TCSS.2025.3565377 | https://ieeexplore.ieee.org/document/11023536 | network_ABM_framework;generative_agent_integration | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M032"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "ACL",
+      "old": "FindingsACL2025 M034: GA-S3;10.18653/v1/2025.findings-acl.468;2025-07 monthonly;groupagent/benchmark;notmaintrack",
+      "new": "M034: GA-S3: Comprehensive Social Network Simulation with Group Agents | first-online pending; volume 2025 | DOI 10.18653/v1/2025.findings-acl.468 | https://aclanthology.org/2025.findings-acl.468/ | group_agent_social_simulation | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M034"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "EMNLP",
+      "old": "Main2024 M033: MisleadingSuccess;10.18653/v1/2024.emnlp-main.1208;2024-11. Findings2025 M035: EcoLANG;10.18653/v1/2025.findings-emnlp.284;2025-11. Bothabstractonly",
+      "new": "M033: Is this the real life? Is this just fantasy? The Misleading Success of Simulating Social Interactions With LLMs | first-online pending; volume 2024 | DOI 10.18653/v1/2024.emnlp-main.1208 | https://aclanthology.org/2024.emnlp-main.1208/ | information_asymmetry_controlled_evaluation;simulation_reporting_card | formal publication metadata; screening=candidate; reading=fulltext_checked || M035: EcoLANG: Efficient and Effective Agent Communication Language Induction for Social Simulation | first-online pending; volume 2025 | DOI 10.18653/v1/2025.findings-emnlp.284 | https://aclanthology.org/2025.findings-emnlp.284/ | agent_communication_language_induction | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M033",
+        "M035"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "TACL",
+      "old": "R010 Do LLMs Exhibit Human-like Response Biases? A Case Study in Survey Design;DOI10.1162/tacl_a_00685;https://aclanthology.org/2024.tacl-1.56/;2024-09-04depositedonlinevsSep7portal conflictretained;syntheticrespondentbias/measurement,notnetworksimulation",
+      "new": "R010: Do LLMs Exhibit Human-like Response Biases? A Case Study in Survey Design | 2024-09-04 | DOI 10.1162/tacl_a_00685 | https://transacl.org/index.php/tacl/article/view/6289 | independent_synthetic_respondents | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "R010"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "ICLR",
+      "old": "SOTOPIA;formalICLR2024;exactfirstonlinepending;https://proceedings.iclr.cc/paper_files/paper/2024/hash/b3075b88e583a0e98d8b24338a613060-Abstract-Conference.html",
+      "new": "M036: SOTOPIA: Interactive Evaluation for Social Intelligence in Language Agents | first-online pending; volume 2024 | DOI pending | https://proceedings.iclr.cc/paper_files/paper/2024/hash/b3075b88e583a0e98d8b24338a613060-Abstract-Conference.html | interactive_social_intelligence_benchmark | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M036"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "NEURIPS",
+      "old": "M037 formalMain2024 DOI10.52202/079017-0501;abstractonly;firstonlinepending",
+      "new": "M037: Can Large Language Model Agents Simulate Human Trust Behavior? | first-online pending; volume 2024 | DOI 10.52202/079017-0501 | https://proceedings.neurips.cc/paper_files/paper/2024/hash/1cb57fcf7ff3f6d37eebae5becc9ea6d-Abstract-Conference.html | trust_game_behavioral_validation | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M037"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "CHI",
+      "old": "M041CHI2023formalArticle433/DOI10.1145/3544548.3580688;published2023-04-19;VoRfocusedfulltext",
+      "new": "M041: Evaluating Large Language Models in Generating Synthetic HCI Research Data: a Case Study | 2023-04-19 | DOI 10.1145/3544548.3580688 | https://doi.org/10.1145/3544548.3580688 | synthetic_HCI_research_data_evaluation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M041"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "CSCW",
+      "old": "M042PACMHCI2025formalresearch;ACMdepositedpublished-online2025-05-02;authorhostedpublisherlayoutread;2024workshopseparate",
+      "new": "M042: MetaAgents: Large Language Model Based Agents for Decision-making on Teaming | 2025-05-02 | DOI 10.1145/3711032 | https://doi.org/10.1145/3711032 | constructed_jobfair_teaming_scenario_comparison | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M042"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "PACMHCI-CSCW",
+      "old": "M042PACMHCI2025formalresearch;ACMdepositedpublished-online2025-05-02;authorhostedpublisherlayoutread;2024workshopseparate",
+      "new": "M042: MetaAgents: Large Language Model Based Agents for Decision-making on Teaming | 2025-05-02 | DOI 10.1145/3711032 | https://doi.org/10.1145/3711032 | constructed_jobfair_teaming_scenario_comparison | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M042"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "WWW",
+      "old": "M043formal2025Companionmetadata/4pp;secondZhuDOI10.1145/3701716.3719232metadata_lead_only;not_mainlongpaper",
+      "new": "M043: Representation Bias in Political Sample Simulations with Large Language Models | 2025-05-23 | DOI 10.1145/3701716.3715591 | https://doi.org/10.1145/3701716.3715591 | political_sample_simulation_bias_evaluation_provisional | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M043"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "SSC-ESSA",
+      "old": "M044SSC2025presentation/Springerchapteronline2026-07-30metadata;2024abstractleadnotfullpaper",
+      "new": "M044: Large Language Models for Agent-Based Modelling: Current and Possible Uses Across the Modelling Cycle | 2026-07-30 | DOI 10.1007/978-3-032-31712-4_43 | https://doi.org/10.1007/978-3-032-31712-4_43 | modelling_cycle_review_and_critical_reflection_provisional | formal publication metadata; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M044"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "CSSSA",
+      "old": "2026officialprogramIDs73workflowreplicationand2PopForgeSimForge_abstractsonly_notmasterrecords",
+      "new": "M045: Large Language Model-Assisted Workflows for Replicating Agent-Based Models | first-online pending; volume 2026 | DOI pending | https://computationalsocialscience.org/css2026program/ | ThreecaseLLMassistedcross-platformABMreimplementation | author/preprint identity; screening=candidate; reading=fulltext_checked",
+      "record_ids": [
+        "M045"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "ESWA",
+      "old": "M0462026LLM_KG_consensus_abstractonly",
+      "new": "M046: Large language model-driven group consensus decision-making model: The case of local debt risk | first-online pending; volume 2026 | DOI 10.1016/j.eswa.2026.132901 | https://www.sciencedirect.com/science/article/abs/pii/S0957417426018130 | LLM_KG_dynamictrust_consensus_decisionsystem | formal publication metadata; screening=candidate; reading=abstract_read",
+      "record_ids": [
+        "M046"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "IPM",
+      "old": "R005role_distribution_simulation;M047crossparadigmreview;abstractonly_firstonlinepending",
+      "new": "R005: RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents | first-online pending; volume 2026 | DOI 10.1016/j.ipm.2026.104689 | https://www.sciencedirect.com/science/article/pii/S0306457326000804 | llm_role_distribution_hybrid | formal publication metadata; screening=candidate; reading=abstract_read || M047: From rules to reasoning: A systematic review of agent-based and LLM-empowered simulation of public collaboration | first-online pending; volume 2027 | DOI 10.1016/j.ipm.2026.105184 | https://www.sciencedirect.com/science/article/abs/pii/S0306457326005741 | cross_paradigm_review | formal publication metadata; screening=candidate; reading=abstract_read",
+      "record_ids": [
+        "R005",
+        "M047"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "PCOM",
+      "old": "M0482026methodcritiqueopinion",
+      "new": "M048: Newer, Larger, Better? A Critique of the Unreflective LLM Adoption in Communication Research | 2026-02-20 | DOI 10.1080/10584609.2026.2618486 | https://www.tandfonline.com/doi/abs/10.1080/10584609.2026.2618486 | opinion_methodcritique | formal publication metadata; screening=candidate; reading=abstract_read",
+      "record_ids": [
+        "M048"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    },
+    {
+      "venue_id": "JOC",
+      "old": "M0492025formal_personavalidation_body/Table1read;42ndincluded",
+      "new": "M049: The (in)efficacy of AI personas in deception detection experiments | 2025-09-07 | DOI 10.1093/joc/jqaf034 | https://academic.oup.com/joc/article/75/6/459/8248850 | AIpersona_deceptiondetection_validation | formal publication metadata; screening=included; reading=fulltext_checked",
+      "record_ids": [
+        "M049"
+      ],
+      "reason": "ExpandstableIDtoexactcurrentmastertitle/date/DOI/URL/method/versionstatus;notnewsourceorpublicationupgrade"
+    }
+  ],
+  "boundary": "Presentationjoinonly;candidate/preprintnotpromoted;unlinkedmanualprecedentspreserved"
+}

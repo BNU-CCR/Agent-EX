@@ -37,6 +37,7 @@
 
 截至2026-11-27，保留首轮57条及15卡，新增49项工作、补读5条原记录，现106条、62张全文卡；42项正式纳入、56候选、6前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
+- [当前66项交付审计](reports/delivery_requirement_audit_BP.md)：证据、简卡复核、政策/覆盖缺口和收尾顺序；49关联载体补完整引用。
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。

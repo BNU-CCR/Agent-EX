@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "BP-01",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "66requirement_reconciliation_52venues_currentcards_exports_and_mainreports",
+    "source_url": "reports/delivery_requirement_audit_BP.md",
+    "status": "bounded_audit_and_presentation_repair",
+    "notes": "Noexternalqueries/newpapers/experiments;expandexistingmastercitations;separatefutureexperimentsfromliteraturedeliverables"
+  }
+]
