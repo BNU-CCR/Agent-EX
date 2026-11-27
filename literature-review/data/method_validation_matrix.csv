@@ -116,3 +116,7 @@ VC114,M042,复合情境变化,四情境各50次,结果下降全归人数,任务�
 VC115,M042,指标条件与标注,名单匹配/团队标流程同义/角色分配,分项百分比直接相乘,测量过程有效性,2.3前序条件与附录解释需日志核,研究团队标准映射,盲态可靠性/独立编码效度,保留分母与评价器规则,§3.5/AppE,published_constructed_scenario_evidence_not_human_validation,2026-11-27
 VC116,M042,公开提示与运行复现,gpt3.5turbo16k/temp.5/AppC,模型别名+模板等于复现,实现/报告可追溯,角色记忆对话与决策模板公开,定向正文/附录未执行,snapshot/种子/重试/日志对应,材料可见和复现成功分列,§4/AppC,published_constructed_scenario_evidence_not_human_validation,2026-11-27
 VC117,M042,现实类比与外部效度,AI技能夸大/错配与社会类比,拟人解释当人类机制证据,推断对象和用途,历史/平行真人比较列未来工作,AI行为与探索设计用途,人类招聘机制/跨情境预测,假说生成不能跨层成现实因果,§6.1/6.3–6.5,published_constructed_scenario_evidence_not_human_validation,2026-11-27
+VC118,M043,输入信息与目标,党派/意识形态条件下实际调查回答,强条件预测当无信息人类模拟,个体回答匹配,v1提示含党派并以其解释高投票匹配,既有调查条件模拟,零信息代表性/目标泄漏已证明,明确主体可见信息与任务,v1p2Methods/Results,author_preprint_empirical_evidence_not_formal_version,2026-11-27
+VC119,M043,分母与测量,同一受访者真实/模拟答案相同率,匹配率当分布/动态有效率,组层回答误差,Agreement分母是组样本;各组N/选项/基线待核,重用同受访者/题项,独立重复/统一随机水平,分组N/类别分布/失败输出分列,v1p2equation/Fig1–3,author_preprint_empirical_evidence_not_formal_version,2026-11-27
+VC120,M043,跨国差异与原因,美德投票/美中不同意见题,国家比较当隔离语言/制度,描述差异与因果归因,国家/选项/制度/资料/问项共同改变,作者v1单模型比较,语言训练语料或制度因果效应,匹配信息/问项后识别来源,v1pp2–4,author_preprint_empirical_evidence_not_formal_version,2026-11-27
+VC121,M043,版本及证据范围,2024五页v1与2025四页正式题录,预印结果当正式版/四数据源完整验证,来源/版本有效性,CFPS列方法但图文结果映射未明;正式403,已读作者v1而非正式对照,两版无差异/全部数据均完整展示,记录版本/获取与状态门,v1pp1–4;BCmanifest,author_preprint_empirical_evidence_not_formal_version,2026-11-27

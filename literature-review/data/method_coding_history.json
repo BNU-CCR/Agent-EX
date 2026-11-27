@@ -4888,5 +4888,85 @@
     "batch": "BB-WWW-method-ecology-and-Companion-metadata",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bb_www_ecology/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_transferability",
+    "old": "pendingformal_fulltext;representationbias_comparisoncandidate",
+    "new": "boundedauthorv1individual_survey_match;causal_sources/formalversion/generalizationpending",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_relevance_rationale",
+    "old": "作者预印摘要明确研究政治样本模拟偏差；正式版方法/证据尚未读。",
+    "new": "作者v1有调查回答经验参照，但语言/制度等来源未隔离、正式版未核。",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_pending_fields",
+    "old": "formal_fulltext;versioncomparison;Companion_subtrack;empirical_reference;units_and_confounds;artifacts",
+    "new": "formal_fulltext;versioncomparison;Companion_subtrack;groupN/options/baselines;prompt_language;modelrevision/repeats;rawoutputs_artifacts",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_evidence_location",
+    "old": "arXivabstract;ACMregisteredmetadata",
+    "new": "authorv1pp1–4;Methods/Results;Fig1–3",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M043",
+    "field": "method_coding_source",
+    "old": "reports/www_method_ecology.md",
+    "new": "reading-cards/M043.md;reports/political_sample_bias_boundaries.md",
+    "date": "2026-11-27",
+    "batch": "BC-political-sample-authorv1-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bc_political_sample_v1/results.json"
   }
 ]

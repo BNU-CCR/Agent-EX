@@ -1,0 +1,69 @@
+{
+  "record_id": "M043",
+  "actual_version": "arXiv2407.11409v1",
+  "measure": "individual_exact_response_agreement_per_group",
+  "Fig2": {
+    "parties": [
+      "Democratic",
+      "Republican",
+      "CDU/CSU",
+      "SPD",
+      "FDP",
+      "GRUENE",
+      "DIE LINKE",
+      "AfD"
+    ],
+    "values": [
+      0.958,
+      0.8987,
+      0.8106,
+      0.8502,
+      0.5669,
+      0.703,
+      0.5915,
+      0.8537
+    ],
+    "source": "v1p3Fig2"
+  },
+  "Fig3": {
+    "US_topics": [
+      "Immigration",
+      "GunControl",
+      "Abortion",
+      "ClimateChange",
+      "SameSexCoupleService"
+    ],
+    "US_values": [
+      0.604,
+      0.5031,
+      0.3871,
+      0.56,
+      0.7346
+    ],
+    "China_topics": [
+      "PoliticalInstitution",
+      "IndividualFreedom",
+      "FreeMarket",
+      "Traditionalism",
+      "Nationalism"
+    ],
+    "China_values": [
+      0.3804,
+      0.3544,
+      0.333,
+      0.2688,
+      0.2355
+    ],
+    "source": "v1p4Fig3visual;notmatched_questions"
+  },
+  "limits": [
+    "groupN_notreported_in_v1",
+    "chancebaseline/options_unverified",
+    "ideology/party_given_as_inputs",
+    "country_language_electoral_regime_topics_confounded",
+    "CFPS_named_methods_but_results_mapping_unclear",
+    "noCIs/statisticaltests_verified",
+    "noformal4pageversioncomparison"
+  ],
+  "new_statistical_test": false
+}

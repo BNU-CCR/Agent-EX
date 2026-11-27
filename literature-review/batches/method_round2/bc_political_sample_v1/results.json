@@ -1,0 +1,30 @@
+{
+  "batch_id": "BC-political-sample-authorv1-reading",
+  "date": "2026-11-27",
+  "expected_master_sha256": "e3c7a5a965ce567a496f47d9fbbf96d28b33adbcb1019a5982edb18a1db4e20e",
+  "updates": [
+    {
+      "record_id": "M043",
+      "related_versions": "arXiv2407.11409v1_5pagesfullread;formalCompanion4ppnotacquired;authorQi linksarXiv/coauthorlinksACM;versiondifference/subtrackpending",
+      "reason": "Formaldateconfirmed_but_onlyauthor2024v1fulltextread;formal4pageversionnotchecked;candidatepreserved",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://arxiv.org/pdf/2407.11409v1",
+      "supplement_status": "formalPDF403;code_data_rawresponses_notacquired",
+      "findings": "Authorv1 compares perperson surveyansweragreement;strong ideology/party inputs;country/language/regime/tasks jointlyvary;groupN/options/baselines/repeats unclear;descriptivedifferencesnotisolatedcauses.",
+      "evidence_location": "authorv1pp1–4Methods/Results;Fig1–3;5references_scopeonly",
+      "relation_to_agent_ex": "Inputpredictiveness,individualagreement/distributionfidelity and countrycomparison/causalattribution must separate;notdynamicnetworkvalidation.",
+      "card_path": "reading-cards/M043.md",
+      "notes": "BCauthorv1HTTP200/5pages;formalACM403;notformal2025results. FourdatasetsnamedbutresultsCFPSmappingunclear;groupN/CI/baselines/translation/versionspending;no rerun.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "boundedauthorv1individual_survey_match;causal_sources/formalversion/generalizationpending",
+      "method_relevance_rationale": "作者v1有调查回答经验参照，但语言/制度等来源未隔离、正式版未核。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "formal_fulltext;versioncomparison;Companion_subtrack;groupN/options/baselines;prompt_language;modelrevision/repeats;rawoutputs_artifacts",
+      "method_evidence_location": "authorv1pp1–4;Methods/Results;Fig1–3",
+      "method_coding_source": "reading-cards/M043.md;reports/political_sample_bias_boundaries.md",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

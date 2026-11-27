@@ -1,0 +1,173 @@
+[
+  {
+    "search_id": "S-M2-BC-01",
+    "platform": "author_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openQipublications",
+    "source_url": "https://weihongq.github.io/publications/",
+    "status": "formalvenue_entry_links_preprint",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-02",
+    "platform": "preprint_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openarXividentity",
+    "source_url": "https://arxiv.org/abs/2407.11409",
+    "status": "single_v1_2024identity",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-03",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openformalACMPDF",
+    "source_url": "https://dl.acm.org/doi/pdf/10.1145/3701716.3715591",
+    "status": "HTTP403",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-04",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"3701716.3715591\" pdf",
+    "source_url": "",
+    "status": "metadata_leads_noformalPDF",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-05",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:www2025.thewebconf.org \"Representation Bias in Political\"",
+    "source_url": "",
+    "status": "no_subtrack_verified",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-06",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:brucelyu17.github.io \"Representation Bias\"",
+    "source_url": "",
+    "status": "coauthorpagelead",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-07",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETformalACMPDF",
+    "source_url": "https://dl.acm.org/doi/pdf/10.1145/3701716.3715591",
+    "status": "HTTP403_5546bytes_html",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-08",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETauthorv1PDF",
+    "source_url": "https://arxiv.org/pdf/2407.11409v1",
+    "status": "HTTP200_471891bytes_5pages",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-09",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Representation Bias in Political Sample Simulations\" \"poster\"",
+    "source_url": "",
+    "status": "no_primary_subtrack",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-10",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:www2025.thewebconf.org \"Qi\" \"Bias\"",
+    "source_url": "",
+    "status": "no_primary_subtrack",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-11",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:dl.acm.org/doi/proceedings/10.1145/3701716 \"Representation\"",
+    "source_url": "",
+    "status": "no_primary_subtrack",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-12",
+    "platform": "author_web",
+    "search_date": "2026-11-27",
+    "query_exact": "opencoauthorhomepage",
+    "source_url": "https://brucelyu17.github.io/",
+    "status": "formalcitationlinkavailable",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-13",
+    "platform": "local_fulltext",
+    "search_date": "2026-11-27",
+    "query_exact": "readv1pp1–5_and_extractfigures",
+    "source_url": "https://arxiv.org/pdf/2407.11409v1",
+    "status": "v1read_not_formal4pages",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-14",
+    "platform": "author_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findtitleoncoauthorpage",
+    "source_url": "https://brucelyu17.github.io/",
+    "status": "ACMPDFlink_not_authorcopy",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-15",
+    "platform": "local_render",
+    "search_date": "2026-11-27",
+    "query_exact": "renderPDFp4Fig3",
+    "source_url": "https://arxiv.org/pdf/2407.11409v1",
+    "status": "rendered",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-16",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followcoauthorACMPDFlink",
+    "source_url": "https://dl.acm.org/doi/pdf/10.1145/3701716.3715591",
+    "status": "HTTP403",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-17",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:www2025.thewebconf.org \"Representation\" \"Bias\" \"Companion\"",
+    "source_url": "",
+    "status": "no_subtrack_proof",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-18",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Representation Bias in Political Sample\" \"poster track\"",
+    "source_url": "",
+    "status": "no_subtrack_proof",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  },
+  {
+    "search_id": "S-M2-BC-19",
+    "platform": "local_visual_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "inspectFig3_and_transcribevalues",
+    "source_url": "https://arxiv.org/pdf/2407.11409v1",
+    "status": "descriptivevalues_not_reanalysis",
+    "notes": "Actual source operations including failures;author5pagev1 not formal4pageversion;not independent pre2022 searches or model rerun."
+  }
+]
