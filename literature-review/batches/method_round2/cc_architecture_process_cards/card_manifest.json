@@ -1,0 +1,24 @@
+[
+  {
+    "record_id": "R016",
+    "path": "reading-cards/R016.md",
+    "source_commit": "57ba834",
+    "backup_path": "batches/method_round2/cc_architecture_process_cards/cards_before/R016.md",
+    "before_raw_sha256": "0581d5af457d5938388865656353c16e52f8398b5d8261af2f702fe485a015a1",
+    "before_git_lf_sha256": "9fbcc21deff80e5ef8d0b2f62dd6005be3ad5e2ba43386bd189ea6f169f300ef",
+    "protected": false,
+    "current_git_lf_sha256": "348546c0b80049719be211b9eacd90d5a4291d2f23820628fa9bcbf226970aba",
+    "numbered_sections": 11
+  },
+  {
+    "record_id": "M015",
+    "path": "reading-cards/M015.md",
+    "source_commit": "57ba834",
+    "backup_path": "batches/method_round2/cc_architecture_process_cards/cards_before/M015.md",
+    "before_raw_sha256": "42faf1980d3127c3f18ea31202d97f65c0d564272245509330e045a3c7e4cada",
+    "before_git_lf_sha256": "42faf1980d3127c3f18ea31202d97f65c0d564272245509330e045a3c7e4cada",
+    "protected": false,
+    "current_git_lf_sha256": "9718c432f66b59e4b3608e9e8243f3e9233432df3876e6b46e93e1ae9cb451e9",
+    "numbered_sections": 11
+  }
+]

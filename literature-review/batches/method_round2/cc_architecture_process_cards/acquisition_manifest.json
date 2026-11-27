@@ -1,0 +1,22 @@
+[
+  {
+    "record_id": "R016",
+    "url": "https://arxiv.org/html/2304.03442v2",
+    "final_url": "https://arxiv.org/html/2304.03442v2",
+    "status": 200,
+    "bytes": 288750,
+    "sha256": "842d773e78dc32146d09950dd07963d2ef9d96c42b387cebc69baee47d4a83be",
+    "content_type": "text/html; charset=utf-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\R016_CC.txt"
+  },
+  {
+    "record_id": "M015",
+    "url": "https://arxiv.org/html/2404.01114v1",
+    "final_url": "https://arxiv.org/html/2404.01114v1",
+    "status": 200,
+    "bytes": 226163,
+    "sha256": "1e2f490a45d4f40c56f7ba8399f22f7a2c996069f7c2cabf511fd747540b44b0",
+    "content_type": "text/html; charset=utf-8",
+    "text_path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M015_CC.txt"
+  }
+]

@@ -66,3 +66,5 @@ BY新增M050及`persuasiontrace_repository_manifest_BY.json`（5blob与观察com
 CA新增`calibration_validation_tasks_CA.json`（8ced902源卡/报告LFhash与任务范围，M050既有PDF p21复核）及`card_content_queue_CA.json`（20卡14可修订/6保护，形式入口不是内容不合格率）。
 
 CB新增`card_content_queue_current.json`为当前形式复核入口（46/64具十一编号，18队列=12可修订/6保护）；CA同名带批次文件保留为历史。两卡前后备份/获取响应/VC39–42变更见CB目录；不把格式计数当内容验收。
+
+CC更新`card_content_queue_current.json`为48/64十一编号、16形式队列=10可修订/6保护。版本化HTML响应/旧卡备份/VC01、02、15、16细化及12/280、180/20024报告算术见CC批次目录，未新增实验。

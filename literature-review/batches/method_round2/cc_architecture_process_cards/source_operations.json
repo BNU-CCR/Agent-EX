@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "CC-01",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open versioned arXiv author HTML",
+    "source_url": "https://arxiv.org/html/2304.03442v2",
+    "status": "author_HTML_readable",
+    "notes": "Noformalpublisheracquisition;versionsseparate"
+  },
+  {
+    "search_id": "CC-02",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "open versioned arXiv author HTML",
+    "source_url": "https://arxiv.org/html/2404.01114v1",
+    "status": "author_HTML_readable",
+    "notes": "Noformalpublisheracquisition;versionsseparate"
+  },
+  {
+    "search_id": "CC-03",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET versioned author HTML",
+    "source_url": "https://arxiv.org/html/2304.03442v2",
+    "status": "200_authorHTML",
+    "notes": "288750bytes;SHA256842d773e78dc32146d09950dd07963d2ef9d96c42b387cebc69baee47d4a83be"
+  },
+  {
+    "search_id": "CC-04",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET versioned author HTML",
+    "source_url": "https://arxiv.org/html/2404.01114v1",
+    "status": "200_authorHTML",
+    "notes": "226163bytes;SHA2561e2f490a45d4f40c56f7ba8399f22f7a2c996069f7c2cabf511fd747540b44b0"
+  },
+  {
+    "search_id": "CC-05",
+    "platform": "local_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "R016v2_S6andM015v1_S4_content_recheck_and11itemcards",
+    "source_url": "reports/architecture_process_cards_CC.md",
+    "status": "versioned_content_recheck_and_existing_unit_refinement",
+    "notes": "Sharedhistoryvsrerun;case/eventtimeprojection;noformalversionupgrade_or_newexperiment"
+  }
+]

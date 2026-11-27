@@ -37,6 +37,7 @@
 
 截至2026-11-27，保留首轮57条及15卡，新增50项工作、补读6条原记录，现107条、64张全文卡；42项正式纳入、56候选、7前沿、2排除。全文卡数含前沿、日期与正式版本未决项，不能等同正式纳入数。
 
+- [架构与过程卡补全](reports/architecture_process_cards_CC.md)：R016共享历史回答消融，M015状态事件/筛选与时间投影，作者版本边界保留。
 - [测量卡正式内容补全](reports/measurement_card_completion_CB.md)：M026自报效标与R014分类反馈/统计机会，保留原卡和字段变更。
 - [校准与验证任务对照](reports/calibration_validation_tasks_CA.md)：M006/M031/M050的资料、可见信息、评价单位和外推；剩余卡队列逐文件区分保护范围。
 - [动态验证制品跟进](reports/persuasiontrace_artifact_followup_BZ.md)：条件汇总/轨迹指标、50对32映射及cache-first边界。

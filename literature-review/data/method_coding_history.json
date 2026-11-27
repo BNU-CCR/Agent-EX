@@ -6458,5 +6458,65 @@
     "batch": "CB-two-measurement-card-formal-content-completion",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_evidence_location",
+    "old": "§6.1–6.4;§7;§8.2",
+    "new": "authorv2§6.1–6.5/sharedhistory/TrueSkill;§7descriptive",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_coding_source",
+    "old": "reading-cards/R016.md",
+    "new": "reading-cards/R016.md;reports/architecture_process_cards_CC.md;authorversionHTML_recheck_CC",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_evidence_location",
+    "old": "v1§4.3–4.6;§5",
+    "new": "authorv1§4.2–4.6;Tables1–3;280/20024_to12/180",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_coding_source",
+    "old": "reading-cards/M015.md",
+    "new": "reading-cards/M015.md;reports/architecture_process_cards_CC.md;authorversionHTML_recheck_CC",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "M015",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
   }
 ]

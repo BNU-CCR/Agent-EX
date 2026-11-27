@@ -598,5 +598,35 @@
     "batch": "CB-two-measurement-card-formal-content-completion",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cb_measurement_card_completion/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "findings",
+    "old": "共享完整架构模拟历史的回答消融提升可信度；群体两游戏日仅描述演示，非人类轨迹验证。",
+    "new": "Authorv2:100within-subjectevaluators_rank5conditions;25rolewriter_baseline_with4replacements;sharedhistory_ablation_not_separatetrajectoryruns",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "evidence_location",
+    "old": "arXiv v2 §§4–8;§6.1–6.2;§7;AppendixB",
+    "new": "arXiv v2 §§4–8;§6.1–6.2;§7;AppendixB | CC:versionedauthorHTML_reead_§6.1–6.5",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "R016",
+    "field": "notes",
+    "old": "Read author HTML, not publisher VoR; DOI403, large PDF web limit, direct PDF SSL failure; no code rerun.",
+    "new": "Read author HTML, not publisher VoR; DOI403, large PDF web limit, direct PDF SSL failure; no code rerun. | CC:11itemcard_content_completed;primaryread_authorversion_notformalVoR;originalcardbackup;nostatus/evidenceupgrade",
+    "date": "2026-11-27",
+    "batch": "CC-architecture-ablation-and-process-selection-cards",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cc_architecture_process_cards/results.json"
   }
 ]
