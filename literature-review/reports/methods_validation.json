@@ -5,11 +5,11 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 40,
-  "search_rows": 883,
+  "search_rows": 888,
   "original_search_prefix_preserved": 231,
   "status": {
-    "included": 40,
-    "candidate": 51,
+    "included": 41,
+    "candidate": 50,
     "frontier": 6,
     "excluded": 2
   },
@@ -21,7 +21,7 @@
     "application": 6
   },
   "fulltext_cards": 58,
-  "date_pending": 27,
+  "date_pending": 26,
   "checks": "passed",
   "limitations": "No experiment rerun; workbook visual verification separate; not database coverage certification",
   "validation_matrix_units": 117,

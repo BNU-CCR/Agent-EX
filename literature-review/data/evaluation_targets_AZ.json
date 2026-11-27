@@ -27,7 +27,9 @@
       "supporting_batches": "K",
       "master_method_evidence_level": "controlled_comparison",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "CRLF",
+      "card_git_lf_sha256": "b42bf0d82e9cdf135693cfb9310e50a4d172b0134cf5e23deb8b580e8887dd50"
     },
     {
       "record_id": "M031",
@@ -47,7 +49,9 @@
       "supporting_batches": "AA",
       "master_method_evidence_level": "empirical_validation",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "CRLF",
+      "card_git_lf_sha256": "6b6fa900d2404aa45bd1e15e5320f84dd56f299872c87f40c383ec36a1c3250c"
     },
     {
       "record_id": "M033",
@@ -67,7 +71,9 @@
       "supporting_batches": "AH",
       "master_method_evidence_level": "controlled_comparison",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "CRLF",
+      "card_git_lf_sha256": "108a0e878e5eb9a97f69ad21657c89b27132d601856863a6b1e9dc4e9fadcc9c"
     },
     {
       "record_id": "M034",
@@ -87,7 +93,9 @@
       "supporting_batches": "AJ",
       "master_method_evidence_level": "empirical_validation",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "CRLF",
+      "card_git_lf_sha256": "9e2744940b22e07fc093bf56e6155a97fb608d775f946f6ab9c3ecd4147c77b1"
     },
     {
       "record_id": "M035",
@@ -107,7 +115,9 @@
       "supporting_batches": "AI;AK",
       "master_method_evidence_level": "empirical_validation",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "CRLF",
+      "card_git_lf_sha256": "c11eda3c545ca1edffb12bdd29e4245d65f2ee652735f3601997826b60c26ff9"
     },
     {
       "record_id": "M036",
@@ -127,7 +137,9 @@
       "supporting_batches": "AM",
       "master_method_evidence_level": "empirical_validation",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "LF",
+      "card_git_lf_sha256": "e4f494eb890606b7728c87c6854d5426c35702de0ffad8886e66246dc67a9da2"
     },
     {
       "record_id": "M037",
@@ -147,7 +159,9 @@
       "supporting_batches": "AO;AP",
       "master_method_evidence_level": "empirical_validation",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "CRLF",
+      "card_git_lf_sha256": "3a19fdc493be9901b005332513b079f782e97e1845bc3098f299c71b3573acbc"
     },
     {
       "record_id": "M040",
@@ -167,7 +181,9 @@
       "supporting_batches": "AU",
       "master_method_evidence_level": "empirical_validation",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "LF",
+      "card_git_lf_sha256": "7c54319222d134b7da31618af8a930d97e138fc1cb328804c524ee325ecc6772"
     },
     {
       "record_id": "M041",
@@ -187,7 +203,9 @@
       "supporting_batches": "AW",
       "master_method_evidence_level": "empirical_validation",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "LF",
+      "card_git_lf_sha256": "62e9804bfcf8d93c7133f85d05b80bfab436e7d4ed7f09595454344139bc14d2"
     },
     {
       "record_id": "M042",
@@ -207,7 +225,12 @@
       "supporting_batches": "AY",
       "master_method_evidence_level": "controlled_comparison",
       "master_method_maturity": "empirical_method_test",
-      "independent_execution_this_batch": false
+      "independent_execution_this_batch": false,
+      "card_sha256_original_checkout_line_endings": "LF",
+      "card_git_lf_sha256": "d4e64f1c56d883eda56e89be6df51b18529e63b65604c09888c1c72b162de2c4"
     }
-  ]
+  ],
+  "source_snapshot_commit": "edcf9ca",
+  "snapshot_boundary": "Statuses/card hashes are AZ-time evidence;use git show edcf9ca:path after later BA updates, not current-cardhash.",
+  "hash_boundary": "Original hash records checkout bytes;Git normalizes line endings. Added LF hashes plus original LF/CRLF identity allow historical verification without silently changing original evidence."
 }

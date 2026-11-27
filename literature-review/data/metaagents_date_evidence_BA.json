@@ -1,0 +1,163 @@
+{
+  "record_id": "M042",
+  "checked_date": "2026-11-27",
+  "url": "https://api.crossref.org/works/10.1145/3711032",
+  "http_status": 200,
+  "response_bytes": 20212,
+  "response_sha256": "fa9904706f5bf139802e6222cbe70b0b20915195b8bc39ca0b4a8aa3e805e90f",
+  "retained_fields": {
+    "DOI": "10.1145/3711032",
+    "title": [
+      "<scp>MetaAgents:</scp>\n                    Large Language Model Based Agents for Decision-Making on Teaming"
+    ],
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0009-0001-5678-3185",
+        "authenticated-orcid": false,
+        "given": "Yuan",
+        "family": "Li",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Cambridge, Cambridge, United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-1539-7939",
+        "authenticated-orcid": false,
+        "given": "Lichao",
+        "family": "Sun",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Lehigh University, Bethlehem, PA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-7412-4669",
+        "authenticated-orcid": false,
+        "given": "Yixuan",
+        "family": "Zhang",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "William &amp; Mary, Williamsburg, VA, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "publisher": "Association for Computing Machinery (ACM)",
+    "container-title": [
+      "Proceedings of the ACM on Human-Computer Interaction"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2025,
+          5,
+          2
+        ]
+      ]
+    },
+    "published-online": {
+      "date-parts": [
+        [
+          2025,
+          5,
+          2
+        ]
+      ]
+    },
+    "published-print": {
+      "date-parts": [
+        [
+          2025,
+          5,
+          2
+        ]
+      ]
+    },
+    "created": {
+      "date-parts": [
+        [
+          2025,
+          5,
+          3
+        ]
+      ],
+      "date-time": "2025-05-03T01:35:05Z",
+      "timestamp": 1746236105000
+    },
+    "deposited": {
+      "date-parts": [
+        [
+          2025,
+          8,
+          21
+        ]
+      ],
+      "date-time": "2025-08-21T00:52:34Z",
+      "timestamp": 1755737554000
+    },
+    "issued": {
+      "date-parts": [
+        [
+          2025,
+          5,
+          2
+        ]
+      ]
+    },
+    "link": [
+      {
+        "URL": "https://dl.acm.org/doi/10.1145/3711032",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://dl.acm.org/doi/pdf/10.1145/3711032",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "resource": {
+      "primary": {
+        "URL": "https://dl.acm.org/doi/10.1145/3711032"
+      }
+    },
+    "type": "journal-article"
+  },
+  "decision": "UseACMdepositedpublished-online2025-05-02;do_not_use_created_or_deposited;retainauthorcopyApril2025",
+  "authorcopy": "AY27pagepublisherlayout;noACMbytecomparison",
+  "ACM_page_status": "web403",
+  "ACM_pdf_attempt": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3711032",
+    "status": 403,
+    "bytes": 5501,
+    "content_type": "text/html; charset=UTF-8",
+    "pdf": false,
+    "sha256": "9293aeda0096d7c5594a1fc1f3b864433af685e324454a0315cea625a33082e5"
+  }
+}

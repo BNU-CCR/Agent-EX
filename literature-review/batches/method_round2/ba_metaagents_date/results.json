@@ -1,0 +1,21 @@
+{
+  "batch_id": "BA-MetaAgents-exact-formal-date",
+  "date": "2026-11-27",
+  "expected_master_sha256": "416a0186d5f3f5d5773d1a37edd313dcca01edcbb928617f24529905e67993b9",
+  "updates": [
+    {
+      "record_id": "M042",
+      "online_first_date": "2025-05-02",
+      "metadata_evidence_url": "https://zjanice.github.io/assets/papers/CSCW25_MetaAgents.pdf;https://zjanice.github.io/;https://api.crossref.org/works/10.1145/3711032",
+      "date_basis": "ACMdepositedCrossrefpublished-online2025-05-02;createdMay3/depositedAug21notpublication;authorcopyApril2025retained",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reason": "ACM deposited exactpublished-online confirmed;AY publisher-layout27page focused fulltext identity crosschecked;no fabricated ACMdownload/byteidentity.",
+      "related_versions": "AuthorhostedCCBYpublisherlayout27pp/DOIauthorsarticlenumbercorrespond;footerApril2025 vs registeredMay2 retained;notbytecomparedtoACM;arXivleadnotacquired",
+      "notes": "BAACMCrossrefonline2025-05-02confirmed;authorcopyAprilfooterretained;ACMpage/PDF403. S4recruiternumber/workflowmetriclabels/conditionaldenominatorsstillpending;no rerun.",
+      "method_pending_fields": "publisherbyteidentity;modelrevision;run_artifacts;conditional_denominators;S4_recruiters;human_external_validity",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

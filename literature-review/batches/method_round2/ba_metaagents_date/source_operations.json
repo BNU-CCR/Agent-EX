@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "S-M2-BA-CROSSREF",
+    "platform": "registry_api",
+    "search_date": "2026-11-27",
+    "query_exact": "GETACMdepositedDOIrecord",
+    "source_url": "https://api.crossref.org/works/10.1145/3711032",
+    "status": "HTTP200_exactpublished_online2025-05-02",
+    "notes": "ReuseAYauthorcopy;noPDFdownloadsuccessfromACM;formalidentityanddatesourcesseparate;notnewfullreading/experiment."
+  },
+  {
+    "search_id": "S-M2-BA-WEBACM",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open targetACM DOI",
+    "source_url": "https://dl.acm.org/doi/10.1145/3711032",
+    "status": "HTTP403",
+    "notes": "ReuseAYauthorcopy;noPDFdownloadsuccessfromACM;formalidentityanddatesourcesseparate;notnewfullreading/experiment."
+  },
+  {
+    "search_id": "S-M2-BA-WEBREGISTRY",
+    "platform": "registry_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openCrossrefrecordviaweb",
+    "source_url": "https://api.crossref.org/works/10.1145/3711032",
+    "status": "inaccessible_via_web_tool_staticHTTPsucceeded",
+    "notes": "ReuseAYauthorcopy;noPDFdownloadsuccessfromACM;formalidentityanddatesourcesseparate;notnewfullreading/experiment."
+  },
+  {
+    "search_id": "S-M2-BA-RULE",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "checkdatepolicy_and_existingM028publisherlayoutprecedent",
+    "source_url": "protocol/search_strategy.md",
+    "status": "published_online_allowed_not_created;copy_identity_not_byteequivalence",
+    "notes": "ReuseAYauthorcopy;noPDFdownloadsuccessfromACM;formalidentityanddatesourcesseparate;notnewfullreading/experiment."
+  },
+  {
+    "search_id": "S-M2-BA-PDF",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETACMformalPDF",
+    "source_url": "https://dl.acm.org/doi/pdf/10.1145/3711032",
+    "status": "HTTP403_5501bytes_html_noPDF",
+    "notes": "ReuseAYauthorcopy;noPDFdownloadsuccessfromACM;formalidentityanddatesourcesseparate;notnewfullreading/experiment."
+  }
+]
