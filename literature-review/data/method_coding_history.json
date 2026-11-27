@@ -2908,5 +2908,35 @@
     "batch": "AE-TCSS-Crowd",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ae_tcss_crowd/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_pending_fields",
+    "old": "fixed_code_snapshot;LLM_revision_seed_parsing_retry;update_commit_semantics;independent_behavioral_validation;uncertainty;earlyaccesscomparison",
+    "new": "paper_run_commit_and_loaded_project;dependency_lock;LLM_weight_revision;random_seeds;runtime_failure_rate;NDLib_compartment_semantics;independent_behavioral_validation;earlyaccesscomparison",
+    "date": "2026-11-27",
+    "batch": "AF-Crowd-artifact",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/af_crowd_artifact/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_evidence_location",
+    "old": "§III/§V-A/§VI-B;Fig5;TablesII–IV",
+    "new": "§III/§V-A/§VI-B;Fig5;TablesII–IV;AFpinnedartifactmanifest/crowd_static_audit_report",
+    "date": "2026-11-27",
+    "batch": "AF-Crowd-artifact",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/af_crowd_artifact/results.json"
+  },
+  {
+    "record_id": "M032",
+    "field": "method_coding_source",
+    "old": "reading-cards/M032.md",
+    "new": "reading-cards/M032.md;data/crowd_artifact_audit_AF.json",
+    "date": "2026-11-27",
+    "batch": "AF-Crowd-artifact",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/af_crowd_artifact/results.json"
   }
 ]

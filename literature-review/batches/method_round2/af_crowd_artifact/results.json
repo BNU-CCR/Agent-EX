@@ -1,0 +1,17 @@
+{
+  "batch_id": "AF-Crowd-artifact",
+  "date": "2026-11-27",
+  "expected_master_sha256": "e2dc0871f22678060fc2527108d693c158c64799a575c7a5671ffc10cfbd5652",
+  "updates": [
+    {
+      "record_id": "M032",
+      "supplement_status": "publicsnapshot6536588_8files_static_read;paper_run_association_unproven;noexecution",
+      "notes": "Faculty-hostedpublisherlayoutPDF;IEEEJSrobotpage;unverifiedID11016054notusedasevidence;correctID11023536fromCrossref. No experiment/code rerun. | AF:8filesblobverified at6536588(July15,2025);exampleparsefailure/default→goout;dependency/modelrevisionnotfrozen;scriptloadsllm2notdemonstrablyexampleYAML. Not a claim about actual paper executions.",
+      "method_pending_fields": "paper_run_commit_and_loaded_project;dependency_lock;LLM_weight_revision;random_seeds;runtime_failure_rate;NDLib_compartment_semantics;independent_behavioral_validation;earlyaccesscomparison",
+      "method_evidence_location": "§III/§V-A/§VI-B;Fig5;TablesII–IV;AFpinnedartifactmanifest/crowd_static_audit_report",
+      "method_coding_source": "reading-cards/M032.md;data/crowd_artifact_audit_AF.json",
+      "search_id": "S-M2-AE-WEBPDF;S-M2-AE-DOWNLOAD;S-M2-AE-DATE;S-M2-AE-CROSSREF;S-M2-AE-READ;S-M2-AF-BRANCH;S-M2-AF-LOCAL"
+    }
+  ],
+  "new_records": []
+}

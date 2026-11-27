@@ -1,0 +1,100 @@
+{
+  "repository": "bilkent-sna/crowd",
+  "ref": "6536588ccb056897f3b88b28dba82dcde6752e2b",
+  "commit_date": "2025-07-15T13:36:45Z",
+  "checked": "2026-11-27",
+  "files": [
+    {
+      "sha": "d6f05e9b4a770ad6470c78e951fe3d4ba92e0b12",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/README.md",
+      "local_name": "AF_README.md",
+      "path": "README.md",
+      "sha256": "17e3a1036b40ebd913b26f3d7b19bcb6e157a4c6731f27c72d81fdfdac468f52",
+      "bytes": 1979,
+      "read_scope": "installation/citation; not actual environment lock",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    },
+    {
+      "sha": "e41b4ad1fec215c073b5a86d083812f6f792a425",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/models/CustomSimNetwork.py",
+      "local_name": "AF_CustomSimNetwork.py",
+      "path": "crowd/crowd/models/CustomSimNetwork.py",
+      "sha256": "c63876b475f44596f4630b64d5ead132472a50691beed436ddab6d180ce93253",
+      "bytes": 17297,
+      "read_scope": "run/execute_methods hooks, random agent order; not all helpers reviewed",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    },
+    {
+      "sha": "f3fb0029abd3347594a63b2ea68ede41439a881a",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/models/DiffusionNetwork.py",
+      "local_name": "AF_DiffusionNetwork.py",
+      "path": "crowd/crowd/models/DiffusionNetwork.py",
+      "sha256": "6ce91860d39c9cae12d14b2eff284ae95e16a2ae943b76a1aeea3ccdfc4e82bc",
+      "bytes": 25673,
+      "read_scope": "constructor, run, categorical compartment mapping",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    },
+    {
+      "sha": "aaba66b2535c30c18c19479f315c041faccb7d38",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/docs/examples/generative_epidemic_agents/gen_agents.py",
+      "local_name": "AF_gen_agents.py",
+      "path": "crowd/docs/examples/generative_epidemic_agents/gen_agents.py",
+      "sha256": "caa648691534871aed8a937bb6caf19bba94e0abc75e2117b7fc1c5df1af7293",
+      "bytes": 14497,
+      "read_scope": "model loading, generation/parser, location mutation, load_project and run; whole example read",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    },
+    {
+      "sha": "530221c70a75fc509f1bc6d226cfdc187ab2afde",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/docs/examples/generative_epidemic_agents/gen_agents.yaml",
+      "local_name": "AF_gen_agents.yaml",
+      "path": "crowd/docs/examples/generative_epidemic_agents/gen_agents.yaml",
+      "sha256": "f9e624a2d94dee45e65f2333f828b716ae452fd44ee9f10f73bf4f435c0e001e",
+      "bytes": 1147,
+      "read_scope": "entire example configuration; not proven loaded by published run",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    },
+    {
+      "sha": "98942e2f37f5269231af2a96f21aad0641621111",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/project_management/project.py",
+      "local_name": "AF_project.py",
+      "path": "crowd/crowd/project_management/project.py",
+      "sha256": "6ac36fbabed3673a2c323f6559b52fa52ece71a2891f282359b87bae7935e631",
+      "bytes": 37206,
+      "read_scope": "lib_run_simulation298–321/run_simulation324–420; otherpaths not all reviewed",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    },
+    {
+      "sha": "7e4fd3810ab45f2b3ac75206631af635a541da2e",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/models/BaseDiffusion.py",
+      "local_name": "AF_BaseDiffusion.py",
+      "path": "crowd/crowd/models/BaseDiffusion.py",
+      "sha256": "d5e03430a06e062aeb62cfd032f801247ad0c7650e55c43cb3c5d72039500568",
+      "bytes": 7199,
+      "read_scope": "constructor and iteration121–178; status dict and graph updates",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    },
+    {
+      "sha": "950d8e95583ebd1b19de6bda3dccc633e85980e3",
+      "url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/setup.py",
+      "local_name": "AF_setup.py",
+      "path": "crowd/setup.py",
+      "sha256": "1ecdaeec9145a2d7b7dda41fd857be24e832efa1e4275289cf972fcf43f415a3",
+      "bytes": 742,
+      "read_scope": "entire dependency declarations",
+      "storage": "temporary source text; repo manifest only",
+      "git_blob_sha_verified": true
+    }
+  ],
+  "record_id": "M032",
+  "association_with_paper": "unproven; July15commit after June4firstpublication and before Decemberissue",
+  "execution": "none; no import/model call or environment installation",
+  "boundary": "8 source/config files, not whole repository or NDLib dependency audit"
+}

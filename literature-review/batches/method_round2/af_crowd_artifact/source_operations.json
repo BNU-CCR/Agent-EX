@@ -1,0 +1,128 @@
+[
+  {
+    "search_id": "S-M2-AF-REPO",
+    "platform": "github_connector_read",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/bilkent-sna/crowd",
+    "source_url": "https://api.github.com/repos/bilkent-sna/crowd",
+    "status": "repository_metadata_checked",
+    "notes": "Publicrepository/defaultmaster, linked by paper"
+  },
+  {
+    "search_id": "S-M2-AF-BRANCH",
+    "platform": "github_connector_read",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/bilkent-sna/crowd/branches/master",
+    "source_url": "https://api.github.com/repos/bilkent-sna/crowd/branches/master",
+    "status": "commit_pinned",
+    "notes": "6536588ccb056897f3b88b28dba82dcde6752e2b;2025-07-15T13:36:45Z"
+  },
+  {
+    "search_id": "S-M2-AF-TREE-FAIL",
+    "platform": "github_connector_read",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/bilkent-sna/crowd/git/trees/6536588ccb056897f3b88b28dba82dcde6752e2b?recursive=1",
+    "source_url": "https://api.github.com/repos/bilkent-sna/crowd/git/trees/6536588ccb056897f3b88b28dba82dcde6752e2b?recursive=1",
+    "status": "unusable_connector_response",
+    "notes": "No parsed structuredcontent; local store failed; no complete root-tree claim"
+  },
+  {
+    "search_id": "S-M2-AF-ROOT",
+    "platform": "github_connector_read",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/bilkent-sna/crowd/contents?ref=6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://api.github.com/repos/bilkent-sna/crowd/contents?ref=6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "status": "root_listing_checked",
+    "notes": "Includes crowd and crowdenv; scope narrowed, environment directory not audited"
+  },
+  {
+    "search_id": "S-M2-AF-SUBTREE",
+    "platform": "github_connector_read",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/bilkent-sna/crowd/git/trees/7795bc1217ea88c835c1f6c050267df9071c1fb0?recursive=1",
+    "source_url": "https://api.github.com/repos/bilkent-sna/crowd/git/trees/7795bc1217ea88c835c1f6c050267df9071c1fb0?recursive=1",
+    "status": "subtree_not_truncated",
+    "notes": "531 entries, not531sourcefiles; selected file audit only"
+  },
+  {
+    "search_id": "S-M2-AF-FILE1",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "README.md@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/README.md",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "installation/citation; not actual environment lock; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-FILE2",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "crowd/crowd/models/CustomSimNetwork.py@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/models/CustomSimNetwork.py",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "run/execute_methods hooks, random agent order; not all helpers reviewed; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-FILE3",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "crowd/crowd/models/DiffusionNetwork.py@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/models/DiffusionNetwork.py",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "constructor, run, categorical compartment mapping; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-FILE4",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "crowd/docs/examples/generative_epidemic_agents/gen_agents.py@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/docs/examples/generative_epidemic_agents/gen_agents.py",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "model loading, generation/parser, location mutation, load_project and run; whole example read; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-FILE5",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "crowd/docs/examples/generative_epidemic_agents/gen_agents.yaml@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/docs/examples/generative_epidemic_agents/gen_agents.yaml",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "entire example configuration; not proven loaded by published run; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-FILE6",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "crowd/crowd/project_management/project.py@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/project_management/project.py",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "lib_run_simulation298–321/run_simulation324–420; otherpaths not all reviewed; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-FILE7",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "crowd/crowd/models/BaseDiffusion.py@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/crowd/models/BaseDiffusion.py",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "constructor and iteration121–178; status dict and graph updates; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-FILE8",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "crowd/setup.py@6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "source_url": "https://github.com/bilkent-sna/crowd/blob/6536588ccb056897f3b88b28dba82dcde6752e2b/crowd/setup.py",
+    "status": "UTF8_file_and_git_blob_verified",
+    "notes": "entire dependency declarations; no execution"
+  },
+  {
+    "search_id": "S-M2-AF-LOCAL",
+    "platform": "local_static_source_review",
+    "search_date": "2026-11-27",
+    "query_exact": "8 pinned source/config files; line references and blob verification",
+    "source_url": "https://github.com/bilkent-sna/crowd/tree/6536588ccb056897f3b88b28dba82dcde6752e2b",
+    "status": "static_evidence_not_runtime_test",
+    "notes": "Broad first extraction truncated, critical ranges reread; no simulation/model/environment execution"
+  }
+]
