@@ -1,0 +1,755 @@
+{
+  "checked_date": "2026-11-27",
+  "commit": "1e9be1490bcbd5fa23632aeff9cbf872bd18957f",
+  "files": [
+    {
+      "path": "slumulation/runner.py",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/runner.py",
+      "status": 200,
+      "bytes": 10453,
+      "sha256": "4467ef59e30c6d0814e807390f1b777a1a3a6bd92544f8b2d418280cc14ce0de",
+      "git_blob": "161b4b3edb3fd96f9564fdef195abb078670469f"
+    },
+    {
+      "path": "slumulation/validation.py",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/validation.py",
+      "status": 200,
+      "bytes": 49140,
+      "sha256": "e4dc5e5e4cd6e7ca4e3469b595a708b646d8aa72917bb46dc9ca002b87bff7bd",
+      "git_blob": "14abdb048219cff7d5740b969199b15ff82f7b2c"
+    },
+    {
+      "path": "slumulation/summaries.py",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/summaries.py",
+      "status": 200,
+      "bytes": 19035,
+      "sha256": "f3125703bd9221d1bc65fae8a2eeea3a8d849806857a23e837a80e70483d4f93",
+      "git_blob": "b37120518154134bbc0ab3af1224b572146c8597"
+    },
+    {
+      "path": "results/slumulation/summaries/final_step.csv",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/summaries/final_step.csv",
+      "status": 200,
+      "bytes": 63152,
+      "sha256": "3d17f472f233f9703477f59406408a61dac818340dc59c7bd8d597da9f80c686",
+      "git_blob": "7b660becc012315cdc5c880be1aee0d4b1beb3f3"
+    },
+    {
+      "path": "skills/README.md",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/skills/README.md",
+      "status": 200,
+      "bytes": 307,
+      "sha256": "88694e953c7289c8ae85aa403bf5d73a41c9caeed897136bc2dee114a1ac9fa0",
+      "git_blob": "06d14a8ab294f62e0444a2f94ce02e0458a44afa"
+    },
+    {
+      "path": "skills/qa-assisted-implementation-loop/SKILL.md",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/skills/qa-assisted-implementation-loop/SKILL.md",
+      "status": 200,
+      "bytes": 3030,
+      "sha256": "6e909089c51518deb232b392dfdb1b902fb079bfb70d146d9326e33c7f097887",
+      "git_blob": "78ec0a1ef292e5e416831f95487408cab6b60141"
+    },
+    {
+      "path": "references/README.md",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/references/README.md",
+      "status": 200,
+      "bytes": 1556,
+      "sha256": "357c0a4c6a305b4b8b872ff2f7e3f500c2b3315d794af842352764974261d9e5",
+      "git_blob": "45e52babc1839dd0de7f31db0420f2323ed08bc3"
+    },
+    {
+      "path": "results/slumulation/mesa/baseline.csv",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/mesa/baseline.csv",
+      "status": 200,
+      "bytes": 418606,
+      "sha256": "0e804333c1c4473d5274133adc3c502ad0bf65f63d61f6f23479511a4bae3b4f",
+      "git_blob": "16254a1265052d6388d7a7f40332b7bf2648e694"
+    },
+    {
+      "path": "results/slumulation/netlogo/baseline.csv",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/netlogo/baseline.csv",
+      "status": 200,
+      "bytes": 494865,
+      "sha256": "82520de6ec5909cb15674c6a2c3d656f0d2c006b3ab9cd2e807b380c30790114",
+      "git_blob": "b26acb0e2670c3e1ec592d92912264ef0d3be845"
+    },
+    {
+      "path": "results/slumulation/mesa/baseline_seeds.json",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/mesa/baseline_seeds.json",
+      "status": 200,
+      "bytes": 34344,
+      "sha256": "022a17d67e3c27d61650527e11c3f299f8a9c9cfbe6c09f3b612dac60e3718e2",
+      "git_blob": "a5b31f71870464b5865e37ff4baf46bd7795cd7d"
+    },
+    {
+      "path": "results/slumulation/netlogo/baseline_setup.xml",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/netlogo/baseline_setup.xml",
+      "status": 200,
+      "bytes": 2205,
+      "sha256": "e5d793d81acdf1f41e5a893f591d04dc06382c53563ee989366cf7119b35405d",
+      "git_blob": "13e116cc0c4cb5af246179363fa510b0ee0aa755"
+    },
+    {
+      "path": "slumulation/constants.py",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/constants.py",
+      "status": 200,
+      "bytes": 22060,
+      "sha256": "45e1bd77db2f6685ba517ed0f86855b781991283db6070065d0c20a79701cc91",
+      "git_blob": "d52aaa3c5293b8b0fa910a7d781bf399061f0415"
+    }
+  ],
+  "summary_rows": 96,
+  "summary_experiment_rows": {
+    "Typical Run": 12,
+    "Population Growth Rate": 36,
+    "Politics and Development ON OFF": 48
+  },
+  "baseline": {
+    "netlogo": {
+      "rows": 1530,
+      "runs": 30,
+      "steps_per_run": 51,
+      "matched_metrics": [
+        {
+          "metric": "central-num-slums",
+          "n": 30,
+          "mean": 23.866666666666667,
+          "sample_sd": 5.5506031566217064,
+          "mean_standard_error": 1.0133968522136965,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "central-slum-density",
+          "n": 30,
+          "mean": 2.6674762888823103,
+          "sample_sd": 0.37498815229036825,
+          "mean_standard_error": 0.06846315660220574,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "centralslumareapercent",
+          "n": 30,
+          "mean": 8.278497358667627,
+          "sample_sd": 1.9223359818981547,
+          "mean_standard_error": 0.35096892679648733,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "centralslumpoppercent",
+          "n": 30,
+          "mean": 16.377657049587196,
+          "sample_sd": 4.123460071308511,
+          "mean_standard_error": 0.7528373653425107,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "num-slums",
+          "n": 30,
+          "mean": 130.5,
+          "sample_sd": 15.346009253222807,
+          "mean_standard_error": 2.80178514522438,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "peripheral-num-slums",
+          "n": 30,
+          "mean": 106.63333333333334,
+          "sample_sd": 13.689873764142638,
+          "mean_standard_error": 2.499417556673027,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "periphery-slum-density",
+          "n": 30,
+          "mean": 2.2425260142807266,
+          "sample_sd": 0.07772566831329233,
+          "mean_standard_error": 0.01419070061078491,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "peripheryslumareapercent",
+          "n": 30,
+          "mean": 11.252641159966107,
+          "sample_sd": 1.6393069037695431,
+          "mean_standard_error": 0.2992951232895098,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "peripheryslumpoppercent",
+          "n": 30,
+          "mean": 21.00369576523883,
+          "sample_sd": 3.0596759066608334,
+          "mean_standard_error": 0.5586178375777365,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "slum-density",
+          "n": 30,
+          "mean": 2.320281176356381,
+          "sample_sd": 0.10122790195160081,
+          "mean_standard_error": 0.01848160178260433,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "slumareapercent",
+          "n": 30,
+          "mean": 10.557072936783808,
+          "sample_sd": 1.394334900285663,
+          "mean_standard_error": 0.25456955920105806,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "slumpoppercent",
+          "n": 30,
+          "mean": 0.1985175495966863,
+          "sample_sd": 0.027758832493741854,
+          "mean_standard_error": 0.005068046242276599,
+          "unit_multiplier_for_paper": 100
+        }
+      ]
+    },
+    "mesa": {
+      "rows": 1530,
+      "runs": 30,
+      "steps_per_run": 51,
+      "matched_metrics": [
+        {
+          "metric": "central-num-slums",
+          "n": 30,
+          "mean": 24.133333333333333,
+          "sample_sd": 4.918181142162866,
+          "mean_standard_error": 0.897932917819708,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "central-slum-density",
+          "n": 30,
+          "mean": 2.7082437610852743,
+          "sample_sd": 0.35033575594937205,
+          "mean_standard_error": 0.06396226541136525,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "centralslumareapercent",
+          "n": 30,
+          "mean": 8.37710386148018,
+          "sample_sd": 1.709808642612269,
+          "mean_standard_error": 0.31216692085867614,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "centralslumpoppercent",
+          "n": 30,
+          "mean": 16.689424992352485,
+          "sample_sd": 3.883540604719028,
+          "mean_standard_error": 0.7090342640639552,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "num-slums",
+          "n": 30,
+          "mean": 125.66666666666667,
+          "sample_sd": 19.286109586656032,
+          "mean_standard_error": 3.5211457557093815,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "peripheral-num-slums",
+          "n": 30,
+          "mean": 101.53333333333333,
+          "sample_sd": 19.732230475550146,
+          "mean_standard_error": 3.6025959137832353,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "periphery-slum-density",
+          "n": 30,
+          "mean": 2.2046023524666274,
+          "sample_sd": 0.08249868702907039,
+          "mean_standard_error": 0.01506213061679357,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "peripheryslumareapercent",
+          "n": 30,
+          "mean": 10.653578073595583,
+          "sample_sd": 2.2223940928419736,
+          "mean_standard_error": 0.4057517921052598,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "peripheryslumpoppercent",
+          "n": 30,
+          "mean": 19.755497889112874,
+          "sample_sd": 4.10583494555834,
+          "mean_standard_error": 0.7496194723584327,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "slum-density",
+          "n": 30,
+          "mean": 2.307009076955506,
+          "sample_sd": 0.1023273754795371,
+          "mean_standard_error": 0.018682337266814494,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "slumareapercent",
+          "n": 30,
+          "mean": 10.116223552384255,
+          "sample_sd": 1.6894809176600318,
+          "mean_standard_error": 0.3084556030256425,
+          "unit_multiplier_for_paper": 1
+        },
+        {
+          "metric": "slumpoppercent",
+          "n": 30,
+          "mean": 0.18986265533028124,
+          "sample_sd": 0.03159732513574999,
+          "mean_standard_error": 0.005768855911225085,
+          "unit_multiplier_for_paper": 100
+        }
+      ]
+    }
+  },
+  "table1_numeric_checks": [
+    {
+      "platform": "netlogo",
+      "metric": "central-num-slums",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 23.9,
+      "paper_value": 23.9,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "central-num-slums",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 5.6,
+      "paper_value": 5.6,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "central-slum-density",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 2.67,
+      "paper_value": 2.67,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "central-slum-density",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 0.37,
+      "paper_value": 0.37,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "centralslumareapercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 8.3,
+      "paper_value": 8.3,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "centralslumareapercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 1.9,
+      "paper_value": 1.9,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "centralslumpoppercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 16.4,
+      "paper_value": 16.4,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "centralslumpoppercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 4.1,
+      "paper_value": 4.1,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "num-slums",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 130.5,
+      "paper_value": 130.5,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "num-slums",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 15.3,
+      "paper_value": 15.3,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "peripheral-num-slums",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 106.6,
+      "paper_value": 106.6,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "peripheral-num-slums",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 13.7,
+      "paper_value": 13.7,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "periphery-slum-density",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 2.24,
+      "paper_value": 2.24,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "periphery-slum-density",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 0.08,
+      "paper_value": 0.08,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "peripheryslumareapercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 11.3,
+      "paper_value": 11.3,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "peripheryslumareapercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 1.6,
+      "paper_value": 1.6,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "peripheryslumpoppercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 21.0,
+      "paper_value": 21.0,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "peripheryslumpoppercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 3.1,
+      "paper_value": 3.1,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "slum-density",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 2.32,
+      "paper_value": 2.32,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "slum-density",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 0.1,
+      "paper_value": 0.1,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "slumareapercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 10.6,
+      "paper_value": 10.6,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "slumareapercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 1.4,
+      "paper_value": 1.4,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "slumpoppercent",
+      "statistic": "mean",
+      "unit_multiplier": 100,
+      "rounded": 19.9,
+      "paper_value": 19.9,
+      "matches": true
+    },
+    {
+      "platform": "netlogo",
+      "metric": "slumpoppercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 100,
+      "rounded": 2.8,
+      "paper_value": 2.8,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "central-num-slums",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 24.1,
+      "paper_value": 24.1,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "central-num-slums",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 4.9,
+      "paper_value": 4.9,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "central-slum-density",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 2.71,
+      "paper_value": 2.71,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "central-slum-density",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 0.35,
+      "paper_value": 0.35,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "centralslumareapercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 8.4,
+      "paper_value": 8.4,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "centralslumareapercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 1.7,
+      "paper_value": 1.7,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "centralslumpoppercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 16.7,
+      "paper_value": 16.7,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "centralslumpoppercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 3.9,
+      "paper_value": 3.9,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "num-slums",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 125.7,
+      "paper_value": 125.7,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "num-slums",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 19.3,
+      "paper_value": 19.3,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "peripheral-num-slums",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 101.5,
+      "paper_value": 101.5,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "peripheral-num-slums",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 19.7,
+      "paper_value": 19.7,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "periphery-slum-density",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 2.2,
+      "paper_value": 2.2,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "periphery-slum-density",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 0.08,
+      "paper_value": 0.08,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "peripheryslumareapercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 10.7,
+      "paper_value": 10.7,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "peripheryslumareapercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 2.2,
+      "paper_value": 2.2,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "peripheryslumpoppercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 19.8,
+      "paper_value": 19.8,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "peripheryslumpoppercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 4.1,
+      "paper_value": 4.1,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "slum-density",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 2.31,
+      "paper_value": 2.31,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "slum-density",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 0.1,
+      "paper_value": 0.1,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "slumareapercent",
+      "statistic": "mean",
+      "unit_multiplier": 1,
+      "rounded": 10.1,
+      "paper_value": 10.1,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "slumareapercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 1,
+      "rounded": 1.7,
+      "paper_value": 1.7,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "slumpoppercent",
+      "statistic": "mean",
+      "unit_multiplier": 100,
+      "rounded": 19.0,
+      "paper_value": 19.0,
+      "matches": true
+    },
+    {
+      "platform": "mesa",
+      "metric": "slumpoppercent",
+      "statistic": "sample_sd",
+      "unit_multiplier": 100,
+      "rounded": 3.2,
+      "paper_value": 3.2,
+      "matches": true
+    }
+  ],
+  "matched_paper_numeric_values": 48,
+  "mesa_seed_entries": 30,
+  "mesa_unique_seeds": 30,
+  "netlogo_seed_provenance": "baseline_setup.xml setup only; baseline raw no retained random seed; not demonstrated replay",
+  "limitations": "Only supplied baseline CSV arithmetic and Table1 NetLogo/Mesa columns; no author code executed; old Paper column/statistical definition not verified; table2/3 raw runs and bootstrap not checked; not proven paper-generating commit"
+}

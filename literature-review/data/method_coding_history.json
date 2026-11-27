@@ -5298,5 +5298,35 @@
     "batch": "BH-LLM-assisted-replication-workflow-reading",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bh_replication_workflows/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_pending_fields",
+    "old": "formalpublication/date;papercommit;LLMconfigs;SDaggregationdefinition;independentworkfloweffect",
+    "new": "formalpublication/date;paper-generatingcommit;LLMconfigs/process;oldPaperSDdefinition;NetLogobaselinereplay;fullsensitivity;independentworkfloweffect",
+    "date": "2026-11-27",
+    "batch": "BI-fixed-replication-artifacts-and-baseline-arithmetic",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bi_replication_artifacts/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_evidence_location",
+    "old": "authorPDF§2/§3/§4;pp3-15",
+    "new": "authorPDF§2/3/4;fixedcommitvalidation.py1213-1252/constants.py389-404;baselineCSV/final_step;skillsmetadata",
+    "date": "2026-11-27",
+    "batch": "BI-fixed-replication-artifacts-and-baseline-arithmetic",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bi_replication_artifacts/results.json"
+  },
+  {
+    "record_id": "M045",
+    "field": "method_coding_source",
+    "old": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md",
+    "new": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md;reports/replication_workflow_static_audit.md",
+    "date": "2026-11-27",
+    "batch": "BI-fixed-replication-artifacts-and-baseline-arithmetic",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bi_replication_artifacts/results.json"
   }
 ]

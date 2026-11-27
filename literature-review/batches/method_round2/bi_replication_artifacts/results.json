@@ -1,0 +1,18 @@
+{
+  "batch_id": "BI-fixed-replication-artifacts-and-baseline-arithmetic",
+  "date": "2026-11-27",
+  "expected_master_sha256": "eb6782acef1a20de079612bf2ac05091ec4b45b76a4e297234569f213ba73192",
+  "updates": [
+    {
+      "record_id": "M045",
+      "supplement_status": "12fixedfiles_blob_SHA256_checked;baselineCSV_recalculated;48Table1valuesmatched;authorcode_notexecuted;papercommitnotproven",
+      "findings": "Threecaseworkflowevidence;baseline30runsperplatform/24metricdistributionsand48Table1valuesmatched;sampleSDnotSE;cityshareunitconversion;noassistantcosteffectmeasurement",
+      "notes": "BHauthor17ppread;BI12fixedfilesandbaselinearithmetic;oldPaper100runstatdefinitionpending;NetLogobaselineperrunseedsnotretained;historicalskillnotexecutionlog",
+      "method_pending_fields": "formalpublication/date;paper-generatingcommit;LLMconfigs/process;oldPaperSDdefinition;NetLogobaselinereplay;fullsensitivity;independentworkfloweffect",
+      "method_evidence_location": "authorPDF§2/3/4;fixedcommitvalidation.py1213-1252/constants.py389-404;baselineCSV/final_step;skillsmetadata",
+      "method_coding_source": "reading-cards/M045.md;reports/llm_assisted_replication_workflows.md;reports/replication_workflow_static_audit.md",
+      "method_last_checked": "2026-11-27"
+    }
+  ],
+  "new_records": []
+}

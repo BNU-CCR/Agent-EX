@@ -40,13 +40,14 @@
 - [方法字段与编码规则](protocol/method_coding_rules.md)、[57条重分类快照](reports/method_reclassification.md)：批次A历史结果，后续变化由主表和变更账维护。
 - [方法种子精读](reports/method_seed_reading.md)、[跨学科检索](reports/method_crossdisciplinary_search.md)：版本、日期与实际阅读状态分列。
 - [综述范围与验证比例比较](reports/review_scope_comparison.md)：Gao与R015语料、评价口径分开。
-- [验证证据矩阵](reports/method_validation_matrix.md)：130个证据单元，回答、轨迹、经验效度分列。
+- [验证证据矩阵](reports/method_validation_matrix.md)：134个证据单元，回答、轨迹、经验效度分列。
 - [双主体校准的评价边界](reports/dual_agent_calibration_boundaries.md)：作者v1与正式版、条件预测与闭环证据分列。
 - [评价对象与主张综合](reports/evaluation_targets_and_claims.md)：10项既有精读，AI能力/合成资料/人类过程分列，附机器对照与失败判据。
 - [方法发展地图](reports/method_landscape.md)、[Agent-EX方法定位](reports/agent_ex_method_positioning.md)。
 - [社会心理与复杂性渠道核查](reports/social_psychology_complexity_venues.md)：两刊范围、方法类型、资料要求及费用。
 - [Crowd固定代码静态核查](reports/crowd_static_artifact_audit.md)：8文件、失败动作与时间/状态边界，未复跑。
 - [计算社会科学学会与会议](reports/css_societies_and_publication_routes.md)：CSSSA/ISCSS身份、存档路线及工作流复现摘要线索。
+- [复现工作流固定制品](reports/replication_workflow_static_audit.md)：12文件身份、基线独立重算与48表格数值对应，未运行模型。
 - [LLM辅助复现工作流](reports/llm_assisted_replication_workflows.md)：三案例、两流程的比较边界与成本/离散程度缺口。
 - [周期建议与实践证据](reports/modelling_cycle_evidence_crosswalk.md)：11卡对应八阶段，LLM助手/主体与非LLM参照分列。
 - [全建模周期角色](reports/modelling_cycle_roles.md)：22项RLR与未来用途分列，八阶段用途/风险/检查依据。

@@ -1,0 +1,137 @@
+[
+  {
+    "search_id": "BI-01",
+    "platform": "public_GitHub_API",
+    "search_date": "2026-11-27",
+    "query_exact": "fixed_recursive_tree",
+    "source_url": "https://api.github.com/repos/wang-boyu/csssa2026-abm-replication/git/trees/1e9be1490bcbd5fa23632aeff9cbf872bd18957f?recursive=1",
+    "status": "HTTP200_194entries_nottruncated",
+    "notes": "treeonlynotallfilesread"
+  },
+  {
+    "search_id": "BI-02",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "slumulation/runner.py",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/runner.py",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "10453bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-03",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "slumulation/validation.py",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/validation.py",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "49140bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-04",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "slumulation/summaries.py",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/summaries.py",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "19035bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-05",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "results/slumulation/summaries/final_step.csv",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/summaries/final_step.csv",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "63152bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-06",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "skills/README.md",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/skills/README.md",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "307bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-07",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "skills/qa-assisted-implementation-loop/SKILL.md",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/skills/qa-assisted-implementation-loop/SKILL.md",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "3030bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-08",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "references/README.md",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/references/README.md",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "1556bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-09",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "results/slumulation/mesa/baseline.csv",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/mesa/baseline.csv",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "418606bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-10",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "results/slumulation/netlogo/baseline.csv",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/netlogo/baseline.csv",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "494865bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-11",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "results/slumulation/mesa/baseline_seeds.json",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/mesa/baseline_seeds.json",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "34344bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-12",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "results/slumulation/netlogo/baseline_setup.xml",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/results/slumulation/netlogo/baseline_setup.xml",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "2205bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-13",
+    "platform": "public_fixed_raw_GitHub",
+    "search_date": "2026-11-27",
+    "query_exact": "slumulation/constants.py",
+    "source_url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/slumulation/constants.py",
+    "status": "HTTP200_blob_and_SHA256_verified",
+    "notes": "22060bytes;read_statically;noauthorcodeexecution"
+  },
+  {
+    "search_id": "BI-14",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "targeted_source_and_skill_reading",
+    "source_url": "reports/replication_workflow_static_audit.md",
+    "status": "checked",
+    "notes": "sourceSD/units/seeds;historicalskillreadasdataonly"
+  },
+  {
+    "search_id": "BI-15",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "independent_baseline_recalculation",
+    "source_url": "data/audit_replication_baseline_BI.py",
+    "status": "checked",
+    "notes": "24metricdistributions/48Table1values;noauthorcodeimport"
+  }
+]

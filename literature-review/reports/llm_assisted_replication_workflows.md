@@ -23,3 +23,5 @@
 本库将其列method_validation、empirical_method_test、worked_example；candidate而非正式纳入。正式出版门与方法证据门分开：作者稿可以提供可核阅读证据，但不能冒充已发表章节。CSSSA已展示方法工作流案例，持续正式发表谱系及2027投稿要求仍待核。
 
 后续方法稿的可辩护增量应落在同任务/来源条件下的偏离检出、独立重实现、外部验证或成本效果，而非只提出角色分工或skills框架。当前Agent-EX应用稿的主体行为效度不能借这类助手流程复现结果直接获得。
+
+BI接续已核两新实现基线的样本SD及城市比例单位，48个表1数值对应；旧Paper列统计定义仍待核。见[固定制品报告](replication_workflow_static_audit.md)。当前已读范围以该接续为准，BH未核项为历史边界。
