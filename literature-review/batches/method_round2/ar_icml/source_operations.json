@@ -1,0 +1,227 @@
+[
+  {
+    "search_id": "S-M2-AR-Q1",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.mlr.press \"social simulation\" \"2025\"",
+    "source_url": "",
+    "status": "source_discovery_not_exhaustive",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-Q2",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:icml.cc/Conferences/2026 \"reproducibility\" code",
+    "source_url": "",
+    "status": "source_discovery_not_exhaustive",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-Q3",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.mlr.press \"social simulations\"",
+    "source_url": "",
+    "status": "source_discovery_not_exhaustive",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-Q4",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:proceedings.mlr.press \"human behavior\" \"agents\" \"2025\"",
+    "source_url": "",
+    "status": "source_discovery_not_exhaustive",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-POS26",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open 2026/CallForPositionPapers",
+    "source_url": "https://icml.cc/Conferences/2026/CallForPositionPapers",
+    "status": "official_policy_read_yearseparated",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-GUIDE26",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open 2026/AuthorInstructions",
+    "source_url": "https://icml.cc/Conferences/2026/AuthorInstructions",
+    "status": "official_policy_read_yearseparated",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-CFP27",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open 2027/CallForPapers",
+    "source_url": "https://icml.cc/Conferences/2027/CallForPapers",
+    "status": "official_policy_read_yearseparated",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-GUIDE27",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open 2027/AuthorInstructions",
+    "source_url": "https://icml.cc/Conferences/2027/AuthorInstructions",
+    "status": "official_policy_read_yearseparated",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-AI27",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open 2027/UseOfGenerativeAIByAuthors",
+    "source_url": "https://icml.cc/Conferences/2027/UseOfGenerativeAIByAuthors",
+    "status": "official_policy_read_yearseparated",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-POS27",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open 2027/CallForPositionPapers",
+    "source_url": "https://icml.cc/Conferences/2027/CallForPositionPapers",
+    "status": "official_policy_read_yearseparated",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-ANTHIS",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openformalabstract",
+    "source_url": "https://proceedings.mlr.press/v267/anthis25a.html",
+    "status": "formal_metadata_abstract_notfulltext",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-WU",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openformalabstract",
+    "source_url": "https://proceedings.mlr.press/v306/wu26co.html",
+    "status": "formal_metadata_abstract_notfulltext",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-F1",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find 8 pages(no match)",
+    "source_url": "https://icml.cc/Conferences/2026/CallForPositionPapers",
+    "status": "focusedpolicychecked_or_nomatch",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-F2",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find alternative",
+    "source_url": "https://icml.cc/Conferences/2026/CallForPositionPapers",
+    "status": "focusedpolicychecked_or_nomatch",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-F3",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find January",
+    "source_url": "https://icml.cc/Conferences/2027/CallForPapers",
+    "status": "focusedpolicychecked_or_nomatch",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-F4",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find code",
+    "source_url": "https://icml.cc/Conferences/2027/CallForPapers",
+    "status": "focusedpolicychecked_or_nomatch",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-F5",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find encouraged to submit code",
+    "source_url": "https://icml.cc/Conferences/2026/AuthorInstructions",
+    "status": "focusedpolicychecked_or_nomatch",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-V267",
+    "platform": "official_web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "openpublisherVolumeindex",
+    "source_url": "https://proceedings.mlr.press/v267/",
+    "status": "publisher_volume_publication_dayvisible",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-V306",
+    "platform": "official_web_click",
+    "search_date": "2026-11-27",
+    "query_exact": "openpublisherVolumeindex",
+    "source_url": "https://proceedings.mlr.press/v306/",
+    "status": "publisher_volume_publication_dayvisible",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-F-FAIL",
+    "platform": "official_web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "5findbatch:VolumePublishedx2/2027code/AlternativeViews/branch",
+    "source_url": "",
+    "status": "tool_InternalServerError_no_result",
+    "notes": "Failedcallgroupedonce;no readclaimsfromfailedfind."
+  },
+  {
+    "search_id": "S-M2-AR-HTTP267",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GETVolumeindexandextractpublicationstatement",
+    "source_url": "https://proceedings.mlr.press/v267/",
+    "status": "HTTP200_date_and_hash_checked",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-HTTP306",
+    "platform": "official_HTTP",
+    "search_date": "2026-11-27",
+    "query_exact": "GETVolumeindexandextractpublicationstatement",
+    "source_url": "https://proceedings.mlr.press/v306/",
+    "status": "HTTP200_date_and_hash_checked",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-LINESGUIDE",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openfocusedpolicytext",
+    "source_url": "https://icml.cc/Conferences/2027/AuthorInstructions",
+    "status": "detailschecked",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-LINESPOS",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openfocusedpolicytext",
+    "source_url": "https://icml.cc/Conferences/2027/CallForPositionPapers",
+    "status": "detailschecked",
+    "notes": ""
+  },
+  {
+    "search_id": "S-M2-AR-LOCAL",
+    "platform": "local_evidence_review",
+    "search_date": "2026-11-27",
+    "query_exact": "masterduplicates/M014card/currentdategate/volumeidentity",
+    "source_url": "",
+    "status": "oneexistingrecorddate_resolved_twoabstractcandidates",
+    "notes": ""
+  }
+]

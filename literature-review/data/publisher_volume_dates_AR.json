@@ -1,0 +1,28 @@
+{
+  "checked_date": "2026-11-27",
+  "date_rule": "formalconferenceproceedingspublication_notmeetingrange",
+  "volumes": [
+    {
+      "volume": "267",
+      "url": "https://proceedings.mlr.press/v267/",
+      "formal_publication": "2025-10-06",
+      "bytes": 3639879,
+      "sha256": "3c80af4ae74dce3111d0e2f4405feedf4b4e47cabee0e116832255ce92c147d2",
+      "record_ids": [
+        "M038"
+      ]
+    },
+    {
+      "volume": "306",
+      "url": "https://proceedings.mlr.press/v306/",
+      "formal_publication": "2026-09-29",
+      "bytes": 7156776,
+      "sha256": "b6bb3f3207225197ffe44514c58959f1a103a36d6c2e19e42d96d6e649f45a2e",
+      "record_ids": [
+        "M014",
+        "M039"
+      ]
+    }
+  ],
+  "boundary": "EarlierOpenReviewcamera_readydisplaynotexcluded;notglobalconferencefirstdateinference"
+}
