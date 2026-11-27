@@ -1,0 +1,28 @@
+{
+  "batch_id": "CJ-abstract-purpose-and-primary-access",
+  "date": "2026-11-27",
+  "expected_master_sha256": "2cb1c58bcd30a9cafded07f9430e4a5bea2618c7c1a236988bd7a8cdddec4954",
+  "updates": [
+    {
+      "record_id": "M018",
+      "simulation_purpose": "method_evaluation",
+      "method_coding_source": "https://link.springer.com/article/10.1007/s10588-023-09381-8;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only",
+      "method_last_checked": "2026-11-27",
+      "notes": "Publisher abstract only; 133 historical articles is author corpus, not our retrieved count. Fulltext subscription preview. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CJ:simulation_purpose_from_publisherabstract;review_or_modelauthoring_evaluation_not_realworldprediction;abstractreading/candidate/maturitygatesunchanged;no_fulltextcard"
+    },
+    {
+      "record_id": "M019",
+      "simulation_purpose": "method_evaluation",
+      "method_coding_source": "https://journals.sagepub.com/doi/10.1177/00375497241239360;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only",
+      "method_last_checked": "2026-11-27",
+      "notes": "Article fetch timeout; TOC title/authors/date/abstract inspected. Do not misassign adjacent article December21,2023 date. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CJ:simulation_purpose_from_publisherabstract;review_or_modelauthoring_evaluation_not_realworldprediction;abstractreading/candidate/maturitygatesunchanged;no_fulltextcard"
+    },
+    {
+      "record_id": "M012",
+      "method_coding_source": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed",
+      "method_last_checked": "2026-11-27",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed. | CJ:DelftPDF4035717bytesHTML;hashinCJmanifest;noPDF/fulltext/dateupgrade;threeclassificationblanksretained"
+    }
+  ],
+  "new_records": []
+}

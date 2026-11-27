@@ -39,6 +39,8 @@
 - [保护卡与结构审计](reports/protected_card_content_audit_CI.md)：纠正6卡行内编号误判，保留实际参数/制品缺口。
 - [CI验收接续](reports/delivery_requirement_audit_CI.md)：66项要求按现有证据恢复，不以格式完成代替目标。
 
+- [用途与获取补查](reports/purpose_and_access_CJ.md)：两项摘要用途编码、M012文件403及M019局部可读边界。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

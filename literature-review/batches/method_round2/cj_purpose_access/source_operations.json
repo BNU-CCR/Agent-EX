@@ -1,0 +1,209 @@
+[
+  {
+    "search_id": "CJ-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Modeler in a box\" Frydenlund pdf",
+    "source_url": "",
+    "status": "discovery_only_no_fulltext_acquired",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Applications of agent-based modeling\" \"Wu\" \"Ohya\" pdf",
+    "source_url": "",
+    "status": "discovery_only_no_fulltext_acquired",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Twenty years of the ODD protocol\" pdf Grimm",
+    "source_url": "",
+    "status": "discovery_only_no_fulltext_acquired",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-04",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open primary source",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "abstract_and_introduction_readable",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-05",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open primary source",
+    "source_url": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "status": "publisher_abstract_subscription_preview",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-06",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open primary source",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+    "status": "result_not_retained_fulltext_not_claimed",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-07",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open primary source",
+    "source_url": "https://www.ufz.de/index.php?de=40429",
+    "status": "institutional_ODD_page_readable",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-08",
+    "platform": "web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Available online",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+    "status": "nonretryable_error",
+    "notes": "Find is grouped operation, not independent query"
+  },
+  {
+    "search_id": "CJ-09",
+    "platform": "web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Introduction",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+    "status": "nonretryable_error",
+    "notes": "Find is grouped operation, not independent query"
+  },
+  {
+    "search_id": "CJ-10",
+    "platform": "web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find 2. Methods",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "timeout",
+    "notes": "Find is grouped operation, not independent query"
+  },
+  {
+    "search_id": "CJ-11",
+    "platform": "web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find 3. Results",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "timeout",
+    "notes": "Find is grouped operation, not independent query"
+  },
+  {
+    "search_id": "CJ-12",
+    "platform": "web_find",
+    "search_date": "2026-11-27",
+    "query_exact": "find Abstract",
+    "source_url": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "status": "abstract_readable",
+    "notes": "Find is grouped operation, not independent query"
+  },
+  {
+    "search_id": "CJ-13",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET primary page or file",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "403",
+    "notes": "5572bytes;PDFheader=False;hashinmanifest"
+  },
+  {
+    "search_id": "CJ-14",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET primary page or file",
+    "source_url": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "status": "200",
+    "notes": "408945bytes;PDFheader=False;hashinmanifest"
+  },
+  {
+    "search_id": "CJ-15",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET primary page or file",
+    "source_url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "status": "403",
+    "notes": "5717bytes;PDFheader=False;hashinmanifest"
+  },
+  {
+    "search_id": "CJ-16",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open M019 cached reference at line 125",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "timeout",
+    "notes": "No further body acquired"
+  },
+  {
+    "search_id": "CJ-17",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open M019 cached reference at line 250",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "timeout",
+    "notes": "No further body acquired"
+  },
+  {
+    "search_id": "CJ-18",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open M019 cached reference at line 400",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "timeout",
+    "notes": "No further body acquired"
+  },
+  {
+    "search_id": "CJ-19",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open publisher full route",
+    "source_url": "https://journals.sagepub.com/doi/full/10.1177/00375497241239360",
+    "status": "not_accessible",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-20",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open institutional publication record",
+    "source_url": "https://www.ufz.de/index.php?de=20939&pub_id=33063",
+    "status": "metadata_readable_no_new_fulltext",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-21",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1016/j.envsoft.2026.107203\" pdf repository",
+    "source_url": "",
+    "status": "no_confirmed_fulltext_alternative",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-22",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Modeler in a box\" pdf Frydenlund Padilla repository",
+    "source_url": "",
+    "status": "no_confirmed_fulltext_alternative",
+    "notes": ""
+  },
+  {
+    "search_id": "CJ-23",
+    "platform": "local_evidence_coding",
+    "search_date": "2026-11-27",
+    "query_exact": "Review publisher abstracts vs primary/simulation purpose; preserve failed acquisition and gates",
+    "source_url": "reports/purpose_and_access_CJ.md",
+    "status": "two_abstract_purpose_fields_coded",
+    "notes": ""
+  }
+]

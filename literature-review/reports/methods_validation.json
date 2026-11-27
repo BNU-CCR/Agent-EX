@@ -5,7 +5,7 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 63,
-  "search_rows": 1228,
+  "search_rows": 1251,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 42,
@@ -49,14 +49,6 @@
     },
     {
       "record_id": "M012",
-      "field": "simulation_purpose"
-    },
-    {
-      "record_id": "M018",
-      "field": "simulation_purpose"
-    },
-    {
-      "record_id": "M019",
       "field": "simulation_purpose"
     }
   ],

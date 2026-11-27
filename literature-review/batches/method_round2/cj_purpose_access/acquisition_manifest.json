@@ -1,0 +1,32 @@
+[
+  {
+    "record_id": "M019",
+    "url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": 403,
+    "bytes": 5572,
+    "sha256": "05c907e852180e6228474f2861e7b4744e10989ff876606674fbe96d3669d02f",
+    "content_type": "text/html; charset=UTF-8",
+    "pdf_header": false,
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M019_CJ.response"
+  },
+  {
+    "record_id": "M018",
+    "url": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "status": 200,
+    "bytes": 408945,
+    "sha256": "49d9c2879572da5507cd7225f4230c71ca5122214af7d82f098e401d685812eb",
+    "content_type": "text/html; charset=utf-8",
+    "pdf_header": false,
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M018_CJ.response"
+  },
+  {
+    "record_id": "M012-Delft",
+    "url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "status": 403,
+    "bytes": 5717,
+    "sha256": "a521f575c005eb0d87b1206957ac80ed16a3c041e8d0e13b0765f2a2dcfd2439",
+    "content_type": "text/html; charset=UTF-8",
+    "pdf_header": false,
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M012-Delft_CJ.response"
+  }
+]

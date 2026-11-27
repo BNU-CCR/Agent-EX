@@ -6828,5 +6828,65 @@
     "batch": "CI-protected-card-content-and-structure-audit",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ci_protected_card_audit/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_coding_source",
+    "old": "https://link.springer.com/article/10.1007/s10588-023-09381-8",
+    "new": "https://link.springer.com/article/10.1007/s10588-023-09381-8;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only",
+    "date": "2026-11-27",
+    "batch": "CJ-abstract-purpose-and-primary-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cj_purpose_access/results.json"
+  },
+  {
+    "record_id": "M018",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CJ-abstract-purpose-and-primary-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cj_purpose_access/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_coding_source",
+    "old": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "new": "https://journals.sagepub.com/doi/10.1177/00375497241239360;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only",
+    "date": "2026-11-27",
+    "batch": "CJ-abstract-purpose-and-primary-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cj_purpose_access/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CJ-abstract-purpose-and-primary-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cj_purpose_access/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_coding_source",
+    "old": "abstract_and_primary_institutional_metadata",
+    "new": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed",
+    "date": "2026-11-27",
+    "batch": "CJ-abstract-purpose-and-primary-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cj_purpose_access/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CJ-abstract-purpose-and-primary-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cj_purpose_access/results.json"
   }
 ]

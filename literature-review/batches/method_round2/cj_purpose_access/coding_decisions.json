@@ -1,0 +1,28 @@
+[
+  {
+    "record_id": "M018",
+    "field": "simulation_purpose",
+    "old": "",
+    "new": "method_evaluation",
+    "basis": "Publisher abstract explicitly reviews ABMS applications/characteristics/transparency by bibliometric mapping; this code is the review purpose, not an empirical simulation goal and not all reviewed studies theory_exploration",
+    "status": "abstract_provisional;no maturity upgrade"
+  },
+  {
+    "record_id": "M019",
+    "field": "simulation_purpose",
+    "old": "",
+    "new": "method_evaluation",
+    "basis": "Publisher abstract tests ChatGPT text-to-model code across DES/SD/ABM, not LLM agents acting inside a validated society",
+    "status": "abstract_provisional;only abstract/introduction readable, body followups time out"
+  },
+  {
+    "record_id": "M012",
+    "fields": [
+      "core_level",
+      "primary_purpose",
+      "simulation_purpose"
+    ],
+    "action": "retain_blank",
+    "basis": "Known standards-review identity does not resolve the current fulltext/date acquisition target; no new substantive reading sufficient for completing its coding review"
+  }
+]
