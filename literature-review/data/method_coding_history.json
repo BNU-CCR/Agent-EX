@@ -3528,5 +3528,45 @@
     "batch": "AJ-group-agents",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/aj_group_agents/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_transferability",
+    "old": "可迁移规则与成本分母/多层评价；不等于整套词表跨模型或动态过程等价，固定实现/fitness方向待核。",
+    "new": "可迁移成本/目标/代码版本分层；公开实现惩罚长输出已核，论文公式/运行关联未闭合，宏观指标接近非轨迹等价。",
+    "date": "2026-11-27",
+    "batch": "AK-EcoLANG-artifact",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ak_ecolang_artifact/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;fitness_formula_vs_code;full_induction_budget;OASIS_model_revision_seed;rawrun_uncertainty_equivalence;path_dependence",
+    "new": "first_formal_online_day;formal_formula_code_run_reconciliation;full_induction_budget;patched_dependency_env;model_revision_seed;rawrun_equivalence_path_dependence",
+    "date": "2026-11-27",
+    "batch": "AK-EcoLANG-artifact",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ak_ecolang_artifact/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_evidence_location",
+    "old": "§3–6/AppA/B;reviewtablearithmetic separate",
+    "new": "§3–6/AppA/B;reviewtablearithmetic separate;AKmyselect.py219–272,330–406;README/tree;maskprocessor",
+    "date": "2026-11-27",
+    "batch": "AK-EcoLANG-artifact",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ak_ecolang_artifact/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_coding_source",
+    "old": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv",
+    "new": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json",
+    "date": "2026-11-27",
+    "batch": "AK-EcoLANG-artifact",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ak_ecolang_artifact/results.json"
   }
 ]

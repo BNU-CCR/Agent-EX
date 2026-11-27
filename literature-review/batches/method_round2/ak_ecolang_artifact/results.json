@@ -1,0 +1,19 @@
+{
+  "batch_id": "AK-EcoLANG-artifact",
+  "date": "2026-11-27",
+  "expected_master_sha256": "d58a91f63335580e5e4933cdacd6103262793cfb4eb4fad2fb444cc39f045eed",
+  "updates": [
+    {
+      "record_id": "M035",
+      "supplement_status": "selected_appendices_and_11publicsourcefiles_static_read;checklist404;ZIP_env_not_rebuilt;no_execution",
+      "findings": "AI表值成本口径保留；AK公开代码使用负token惩罚且align/exp除5，与正式印刷正号表达不同；实际论文运行版本/完整预算未证，不称代码错误或复现成功。",
+      "method_transferability": "可迁移成本/目标/代码版本分层；公开实现惩罚长输出已核，论文公式/运行关联未闭合，宏观指标接近非轨迹等价。",
+      "method_pending_fields": "first_formal_online_day;formal_formula_code_run_reconciliation;full_induction_budget;patched_dependency_env;model_revision_seed;rawrun_equivalence_path_dependence",
+      "method_evidence_location": "§3–6/AppA/B;reviewtablearithmetic separate;AKmyselect.py219–272,330–406;README/tree;maskprocessor",
+      "method_coding_source": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json",
+      "search_id": "S-M2-AG-ECO;S-M2-AG-ECO-DOI;S-M2-AI-PDF;S-M2-AI-READ;S-M2-AI-COST;S-M2-AK-BRANCH;S-M2-AK-LOCAL",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AIofficialPDFfocusedread;tweet/total/runtimecostdistinct;arithmeticfromroundedtable. Empiricalscope two datasets,notvalidatedgeneralworkflow;fitnesssignunresolved notcodeerrorclaim. | AKfixed00878bc4/11filesblobverified:fitness -w2*token,notrewardinglongtext inpublicpath. Maycommitlinks preprint;formalrunmappingunverified. Partialenvarchivesnotrebuilt."
+    }
+  ],
+  "new_records": []
+}

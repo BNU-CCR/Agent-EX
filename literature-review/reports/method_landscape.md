@@ -64,3 +64,5 @@ AH补M033正式方法评价，信息可见性、生成组织、评价者信息�
 AI补通信效率方法：成本分母、经验投影与过程等价分层；公式方向仍待实现核查。 见[通信效率专题](communication_efficiency_validity.md)。
 
 AJ补群体主体：人口权重/主体粒度、显式互动、模板先验与经验拟合须分列；不以大代表人口或峰形近似认定微观机制有效。 见[群体粒度专题](group_granularity_validation.md)。
+
+AK用固定源码澄清M035效率惩罚方向，说明公式、源码与实际run应分列；不得由印刷表达直接推定代码行为。 见[制品跟进](ecolang_formula_artifact_followup.md)。

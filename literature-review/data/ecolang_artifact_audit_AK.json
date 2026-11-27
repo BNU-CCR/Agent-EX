@@ -1,0 +1,134 @@
+{
+  "repository": "xymou/EcoLANG",
+  "ref": "00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+  "commit_date": "2025-05-13T02:59:07Z",
+  "checked": "2026-11-27",
+  "files": [
+    {
+      "path": "README.md",
+      "local_name": "AK_0_README.md",
+      "sha": "f436b7ea807741566a0dec5f919bc02f382a531d",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/README.md",
+      "sha256": "ca372a330f46b1eabce81342ac4f561c532a100744c0baeac29acfd696ca1598",
+      "bytes": 7242,
+      "read_scope": "installation/data availability and linked preprint; not end-to-end environment rebuild",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "code/myselect.py",
+      "local_name": "AK_1_myselect.py",
+      "sha": "751b76a1db8d55eb6130938620d7539030951350",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/myselect.py",
+      "sha256": "ece8e02be8dffea7cdf9234450ca26487c8183a8d5e829ab7a237e8372c4074e",
+      "bytes": 13980,
+      "read_scope": "token score219–230;persona fitness235–272;selection330–406;judge interface not fully audited",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "code/run_evolution.py",
+      "local_name": "AK_2_run_evolution.py",
+      "sha": "5a6fb141c487dcd60b77cdb8553f06b01a691d30",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/run_evolution.py",
+      "sha256": "dab01d089f570a8fb1016d13edafc4955be72c916900a5122a5c7beb3ada7c8a",
+      "bytes": 11410,
+      "read_scope": "imports/weights/rule selection and CLI flow; no execution",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "code/scripts/evo_persona_pheme_vocab.sh",
+      "local_name": "AK_3_evo_persona_pheme_vocab.sh",
+      "sha": "bad4ac9a08863ff183222dd0d6af70f7438221a3",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/scripts/evo_persona_pheme_vocab.sh",
+      "sha256": "d8366580d0e07b80ff1e250600b0c34031cea9a8e760320e63319e05b2597fa4",
+      "bytes": 1121,
+      "read_scope": "whole script; weights/5iterations and template endpoints",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "configs/syn_persona_pheme_vocab.json",
+      "local_name": "AK_4_syn_persona_pheme_vocab.json",
+      "sha": "ceccd7776046caa6a9cc1ebf2479b74b36394479",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/configs/syn_persona_pheme_vocab.json",
+      "sha256": "03e7865e724ac412224788c74dd3d6d4275e1a8920ba6ccbad298f375c25e6d8",
+      "bytes": 370,
+      "read_scope": "whole config; model alias, sampling, local backend; not weights hash",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "pkg/vllm.txt",
+      "local_name": "AK_5_vllm.txt",
+      "sha": "821cf2eed9d30c86e3b36e70f3f69127f69956a5",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/pkg/vllm.txt",
+      "sha256": "d71222cf1e209fcea893bb2ac7815c784d9b46731ffdf31afca2a4055666735c",
+      "bytes": 82,
+      "read_scope": "whole external archive link; archive not retrieved",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "pkg/logits_processors/logits_processors/vocab.py",
+      "local_name": "AK_6_vocab.py",
+      "sha": "dc5bcd0005a9b1e325d23694cf13822c51a7a3f8",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/pkg/logits_processors/logits_processors/vocab.py",
+      "sha256": "268bdae04b47c2e0b034841aa38c31061206338c295c2d85fdb0d48e1d9a80d4",
+      "bytes": 827,
+      "read_scope": "whole logits masking implementation; no deployment execution",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "code/collect_simu_res.py",
+      "local_name": "AK_7_collect_simu_res.py",
+      "sha": "f8b17eb871cb67558850429f78bc2cb65f716681",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/collect_simu_res.py",
+      "sha256": "6f70a4858579568870aeb74dbd846aefb05410770e7bec6490a29cd7b4e61ed4",
+      "bytes": 7222,
+      "read_scope": "persona collection21–32; other parsers not comprehensively audited",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "code/chat_simulation.py",
+      "local_name": "AK_8_chat_simulation.py",
+      "sha": "a32aeb24ac8d2df95ee94a9fe63abe9da5a4f726",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/chat_simulation.py",
+      "sha256": "a6ef3b3ee34239ac98e792613cb103606dab87a8cce3cd4b3a15e4f7dc478fbc",
+      "bytes": 4159,
+      "read_scope": "whole selected file; usage accounting/AutoGen config; not dependency internals",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "code/scripts/local_server_vllm.sh",
+      "local_name": "AK_9_local_server_vllm.sh",
+      "sha": "d4c68fc1414707284d8392f0cba3c9b10e88f591",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/scripts/local_server_vllm.sh",
+      "sha256": "70e11d7c70b548f034b5609670d5f565dc5ab8a63c315f90bfeacdeaee76ec22",
+      "bytes": 322,
+      "read_scope": "whole serving command; local model path not exact revision",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    },
+    {
+      "path": "code/scripts/evo_persona_hisim_vocab.sh",
+      "local_name": "AK_10_evo_persona_hisim_vocab.sh",
+      "sha": "015ff2f65e06ede212a826acd8172884a189d67d",
+      "url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/scripts/evo_persona_hisim_vocab.sh",
+      "sha256": "36d03b5394c69cd34ef4ab88ace79f1fffe970f28ffb12e9067adce2f7201068",
+      "bytes": 1108,
+      "read_scope": "whole script; compare weights/iterations",
+      "git_blob_sha_verified": true,
+      "storage": "temporary source; repository manifest only"
+    }
+  ],
+  "record_id": "M035",
+  "paper_run_association": "unverified;May13publiccommitlinksMaypreprint;formalFindingsNovember2025",
+  "execution": "none; no model call/import/environment install; no pickle or ZIP execution",
+  "tree_scope": "500 entries nontruncated; listedtreehasnorequirementsfiles;all data/archives not read",
+  "full_pipeline_budget": "not reconstructed"
+}

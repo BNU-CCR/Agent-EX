@@ -53,3 +53,5 @@ AH补信息边界评价：当前稿仍限定AI群体过程；后续方法稿可�
 AI补效率方法稿判断：须报告总成本与行为/过程保持，不以输出token下降代替方法有效；尚未执行该方向实验。 见[通信效率专题](communication_efficiency_validity.md)。
 
 AJ补方法稿取向：效率—聚合—依赖保持可形成可检验问题，需与文本压缩/实现性能分开；尚未执行对应新研究。 见[群体粒度专题](group_granularity_validation.md)。
+
+AK补可复现性要求：固定源码能回答部分算法方向，但论文运行、修改依赖与数据访问仍须映射；当前未执行端到端重建。 见[制品跟进](ecolang_formula_artifact_followup.md)。

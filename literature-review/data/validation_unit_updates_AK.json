@@ -1,0 +1,37 @@
+[
+  {
+    "comparison_id": "VC73",
+    "before": {
+      "comparison_id": "VC73",
+      "record_id": "M035",
+      "method_control": "公式方向与实现分开",
+      "comparison_or_reference": "Eq2/+0.6/高fitness选择",
+      "observable_error": "看似明确公式当已复现算法",
+      "evaluation_target": "可执行规格",
+      "reported_evidence": "归一化token正项与省token目标方向待核",
+      "scope_of_evidence": "打印描述的待核项",
+      "not_established": "代码错误/实际优化方向已证明",
+      "transfer_to_agent_ex": "固定实现后对照公式/目标",
+      "source_location": "Eq2p4/AppA.2pp12–14",
+      "evidence_status": "reporting_ambiguity_code_pending",
+      "checked_date": "2026-11-27"
+    },
+    "after": {
+      "comparison_id": "VC73",
+      "record_id": "M035",
+      "method_control": "公式方向与实现分开",
+      "comparison_or_reference": "FormalEq2vspublic00878bc4myselect",
+      "observable_error": "把印刷正项推定为实现奖励长文本",
+      "evaluation_target": "可执行规格",
+      "reported_evidence": "公开代码负w2*token且align/exp除5，高分选择；与打印表达不同",
+      "scope_of_evidence": "固定源码方向已核，论文运行版本未证",
+      "not_established": "论文实际错误运行或复现成功",
+      "transfer_to_agent_ex": "规格/公式/源码/实际run链分别核对",
+      "source_location": "Eq2p4/AppA;AKmyselect219–272,371–396;scriptweights",
+      "evidence_status": "paper_code_expression_mismatch_static_not_run",
+      "checked_date": "2026-11-27"
+    },
+    "reason": "AIpendingquestionresolvedforpubliccodeonly;formalrunmappingremainsopen",
+    "batch": "AK"
+  }
+]

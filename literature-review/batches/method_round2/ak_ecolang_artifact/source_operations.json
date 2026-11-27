@@ -1,0 +1,137 @@
+[
+  {
+    "search_id": "S-M2-AK-REPO",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/xymou/EcoLANG",
+    "source_url": "https://api.github.com/repos/xymou/EcoLANG",
+    "status": "public_repository_metadata",
+    "notes": "defaultmain;lastpushMay13,2025"
+  },
+  {
+    "search_id": "S-M2-AK-BRANCH",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/xymou/EcoLANG/branches/main",
+    "source_url": "https://api.github.com/repos/xymou/EcoLANG/branches/main",
+    "status": "commit_pinned",
+    "notes": "00878bc4ef6a1dc2fe470ac33a9740e559003b83;2025-05-13T02:59:07Z"
+  },
+  {
+    "search_id": "S-M2-AK-TREE",
+    "platform": "github_connector",
+    "search_date": "2026-11-27",
+    "query_exact": "https://api.github.com/repos/xymou/EcoLANG/git/trees/00878bc4ef6a1dc2fe470ac33a9740e559003b83?recursive=1",
+    "source_url": "https://api.github.com/repos/xymou/EcoLANG/git/trees/00878bc4ef6a1dc2fe470ac33a9740e559003b83?recursive=1",
+    "status": "tree_not_truncated",
+    "notes": "500entries;selected11files;requirementsfilenamesnotpresent;notwholedatacodeaudit"
+  },
+  {
+    "search_id": "S-M2-AK-FILE1",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "README.md@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/README.md",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "installation/data availability and linked preprint; not end-to-end environment rebuild"
+  },
+  {
+    "search_id": "S-M2-AK-FILE2",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "code/myselect.py@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/myselect.py",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "token score219–230;persona fitness235–272;selection330–406;judge interface not fully audited"
+  },
+  {
+    "search_id": "S-M2-AK-FILE3",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "code/run_evolution.py@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/run_evolution.py",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "imports/weights/rule selection and CLI flow; no execution"
+  },
+  {
+    "search_id": "S-M2-AK-FILE4",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "code/scripts/evo_persona_pheme_vocab.sh@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/scripts/evo_persona_pheme_vocab.sh",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "whole script; weights/5iterations and template endpoints"
+  },
+  {
+    "search_id": "S-M2-AK-FILE5",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "configs/syn_persona_pheme_vocab.json@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/configs/syn_persona_pheme_vocab.json",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "whole config; model alias, sampling, local backend; not weights hash"
+  },
+  {
+    "search_id": "S-M2-AK-FILE6",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "pkg/vllm.txt@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/pkg/vllm.txt",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "whole external archive link; archive not retrieved"
+  },
+  {
+    "search_id": "S-M2-AK-FILE7",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "pkg/logits_processors/logits_processors/vocab.py@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/pkg/logits_processors/logits_processors/vocab.py",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "whole logits masking implementation; no deployment execution"
+  },
+  {
+    "search_id": "S-M2-AK-FILE8",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "code/collect_simu_res.py@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/collect_simu_res.py",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "persona collection21–32; other parsers not comprehensively audited"
+  },
+  {
+    "search_id": "S-M2-AK-FILE9",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "code/chat_simulation.py@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/chat_simulation.py",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "whole selected file; usage accounting/AutoGen config; not dependency internals"
+  },
+  {
+    "search_id": "S-M2-AK-FILE10",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "code/scripts/local_server_vllm.sh@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/scripts/local_server_vllm.sh",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "whole serving command; local model path not exact revision"
+  },
+  {
+    "search_id": "S-M2-AK-FILE11",
+    "platform": "github_connector_pinned_file",
+    "search_date": "2026-11-27",
+    "query_exact": "code/scripts/evo_persona_hisim_vocab.sh@00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "source_url": "https://github.com/xymou/EcoLANG/blob/00878bc4ef6a1dc2fe470ac33a9740e559003b83/code/scripts/evo_persona_hisim_vocab.sh",
+    "status": "UTF8_file_git_blob_verified",
+    "notes": "whole script; compare weights/iterations"
+  },
+  {
+    "search_id": "S-M2-AK-LOCAL",
+    "platform": "local_static_source_review",
+    "search_date": "2026-11-27",
+    "query_exact": "11pinnedfiles vsformalPDFEq2/AppA;noexecution",
+    "source_url": "https://github.com/xymou/EcoLANG/tree/00878bc4ef6a1dc2fe470ac33a9740e559003b83",
+    "status": "static_formula_direction_clarified",
+    "notes": "Criticalfitness/cal_token ranges explicitly reread;somebroadoutputs truncated;notruntimeorformalrunassociationproof"
+  }
+]
