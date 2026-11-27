@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "S-M2-AC-LOCAL",
+    "platform": "local_existing_evidence_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "M003/M010/M011 existing cards and categorical schema; no network query",
+    "source_url": "",
+    "status": "9_blanks_coded_3_cards_restructured",
+    "notes": "No new acquisition/experiment; versions/date/maturity/status unchanged; 5 other blanks retained"
+  }
+]

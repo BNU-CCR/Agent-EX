@@ -5,7 +5,7 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 40,
-  "search_rows": 597,
+  "search_rows": 598,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 34,
@@ -39,42 +39,6 @@
   ],
   "categorical_nonempty_outside_dictionary": 0,
   "categorical_blank_fields": [
-    {
-      "record_id": "M003",
-      "field": "core_level"
-    },
-    {
-      "record_id": "M003",
-      "field": "primary_purpose"
-    },
-    {
-      "record_id": "M003",
-      "field": "simulation_purpose"
-    },
-    {
-      "record_id": "M010",
-      "field": "core_level"
-    },
-    {
-      "record_id": "M010",
-      "field": "primary_purpose"
-    },
-    {
-      "record_id": "M010",
-      "field": "simulation_purpose"
-    },
-    {
-      "record_id": "M011",
-      "field": "core_level"
-    },
-    {
-      "record_id": "M011",
-      "field": "primary_purpose"
-    },
-    {
-      "record_id": "M011",
-      "field": "simulation_purpose"
-    },
     {
       "record_id": "M012",
       "field": "core_level"

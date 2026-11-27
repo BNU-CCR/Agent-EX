@@ -1,0 +1,794 @@
+{
+  "R001": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-06",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R002": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-08-15",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "prototype",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R003": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-06-30",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "prototype",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R004": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-09-22",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R005": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "R006": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2022-01-31",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R007": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2023-12-13",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "prototype",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R008": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-01-10",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "prototype",
+    "method_evidence_level": "worked_example",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R009": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-05-14",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R010": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-09-04",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R011": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-09-10",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "R012": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "R013": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-10-08",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R014": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-08-18",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R015": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-11-18",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "review_or_critique",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R016": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2023-10-29",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R017": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-05-17",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "R018": {
+    "screening_status": "frontier",
+    "date_eligibility": "preprint_eligible",
+    "online_first_date": "",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "R019": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2022",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "R020": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-11",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "R021": {
+    "screening_status": "frontier",
+    "date_eligibility": "preprint_eligible",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "prototype",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "EN01": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-03-21",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "prototype",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "EN02": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2023-08-18",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN03": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-04-21",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN04": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-04-21",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN05": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-07-13",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN06": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-03-13",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN07": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-05-16",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN08": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2023-08-07",
+    "method_relevance_tier": "application",
+    "method_maturity": "prototype",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "EN09": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-10-22",
+    "method_relevance_tier": "application",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN10": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-07-30",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN11": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-07-29",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "EN12": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2023-07-10",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN13": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-10-17",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN14": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2023-06-20",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN15": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "EN16": {
+    "screening_status": "excluded",
+    "date_eligibility": "ineligible",
+    "online_first_date": "2021-10",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "excluded_context"
+  },
+  "EN17": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-10-04",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN001": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-04-15",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN002": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "metadata_pending"
+  },
+  "CN003": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "metadata_pending"
+  },
+  "CN004": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "metadata_pending"
+  },
+  "CN005": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "metadata_pending"
+  },
+  "CN006": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-01-19",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "conceptual_framework",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "CN007": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-02-11",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "review_or_critique",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "CN008": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN009": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-09-23",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN010": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "metadata_pending"
+  },
+  "CN011": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-08-28",
+    "method_relevance_tier": "application",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN012": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "metadata_pending"
+  },
+  "CN013": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "metadata_pending"
+  },
+  "CN014": {
+    "screening_status": "excluded",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2022-07-05",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "excluded_context"
+  },
+  "CN015": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "application",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN016": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-10-15",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN017": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-03-04",
+    "method_relevance_tier": "application",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "CN018": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "peripheral",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "partial_provisional"
+  },
+  "CN019": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-03-02",
+    "method_relevance_tier": "direct_comparator",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "partial_provisional"
+  },
+  "M001": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-07-24",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M002": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-09-02",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "conceptual_framework",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M005": {
+    "screening_status": "frontier",
+    "date_eligibility": "preprint_eligible",
+    "online_first_date": "",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M004": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-11-17",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "review_or_critique",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M003": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "2026-07",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M010": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2022-03-30",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "conceptual_framework",
+    "method_evidence_level": "worked_example",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M011": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-12-06",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M012": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "2026-10-16",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "pending"
+  },
+  "M006": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-06-11",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M007": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-03",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M008": {
+    "screening_status": "frontier",
+    "date_eligibility": "preprint_eligible",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M009": {
+    "screening_status": "frontier",
+    "date_eligibility": "preprint_eligible",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "M013": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-10-31",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "conceptual_framework",
+    "method_evidence_level": "worked_example",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M014": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "review_or_critique",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M015": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-06-06",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "conceptual_framework",
+    "method_evidence_level": "worked_example",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M016": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-09-27",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "review_or_critique",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M017": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2022-01-11",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M018": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2023-07-24",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "M019": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2024-04-14",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "unclear",
+    "method_evidence_level": "unclear",
+    "method_coding_status": "abstract_provisional"
+  },
+  "M020": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M021": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M022": {
+    "screening_status": "frontier",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M023": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-07-29",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M024": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "2024-09",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M025": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "application",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M026": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-01-02",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M027": {
+    "screening_status": "candidate",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-12-17",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "review_or_critique",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M028": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2025-04-16",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "review_or_critique",
+    "method_evidence_level": "conceptual_claim",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M029": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-08-12",
+    "method_relevance_tier": "core_method",
+    "method_maturity": "conceptual_framework",
+    "method_evidence_level": "worked_example",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M030": {
+    "screening_status": "included",
+    "date_eligibility": "confirmed",
+    "online_first_date": "2026-08-05",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "controlled_comparison",
+    "method_coding_status": "fulltext_supported"
+  },
+  "M031": {
+    "screening_status": "candidate",
+    "date_eligibility": "date_pending",
+    "online_first_date": "",
+    "method_relevance_tier": "method_validation",
+    "method_maturity": "empirical_method_test",
+    "method_evidence_level": "empirical_validation",
+    "method_coding_status": "fulltext_supported"
+  }
+}

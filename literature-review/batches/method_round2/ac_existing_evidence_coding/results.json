@@ -1,0 +1,26 @@
+{
+  "batch_id": "AC-existing-evidence-coding",
+  "date": "2026-11-27",
+  "expected_master_sha256": "77aa28a526656624566dfed407ac39bcd7ef3d75e95d8cd052f2afda0c5e39dc",
+  "updates": [
+    {
+      "record_id": "M003",
+      "core_level": "method_validity",
+      "primary_purpose": "method_evaluation",
+      "simulation_purpose": "method_evaluation"
+    },
+    {
+      "record_id": "M010",
+      "core_level": "method_validity",
+      "primary_purpose": "method_evaluation",
+      "simulation_purpose": "method_evaluation"
+    },
+    {
+      "record_id": "M011",
+      "core_level": "method_validity",
+      "primary_purpose": "method_evaluation",
+      "simulation_purpose": "method_evaluation"
+    }
+  ],
+  "new_records": []
+}
