@@ -4968,5 +4968,125 @@
     "batch": "BC-political-sample-authorv1-reading",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/bc_political_sample_v1/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_type",
+    "old": "",
+    "new": "modelling_cycle_review_and_critical_reflection_provisional",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;reproducibility_and_reporting",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext_modellingcycle_scope_candidate",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "作者摘要与官方SIG明确全ABM周期方法反思，正式正文未读不赋成熟度。",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formal_fulltext;versioncomparison;review_selection;cycle_coverage;claims_vs_empiricaltests;artifacts",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "authorabstract;officialSIG;registrantmetadata",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/essa_ssc_method_community.md",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "BD-ESSA-SSC-community-and-formalchapter",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/bd_essa_ssc/results.json"
   }
 ]

@@ -1,0 +1,218 @@
+[
+  {
+    "search_id": "S-M2-BD-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site.essa.eu.org Social Simulation Conference2026 proceedings methods LLM",
+    "source_url": "",
+    "status": "official_leads",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "site:essa.eu.org \"Social Simulation Conference\" \"2026\"",
+    "source_url": "",
+    "status": "official_archive",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-03",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Social Simulation Conference\" \"2024\" \"large language models\"",
+    "source_url": "",
+    "status": "abstractbook_lead_notformalpaper",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-04",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openESSAarchive",
+    "source_url": "https://essa.eu.org/event-type/conference/",
+    "status": "annual_activity_read",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-05",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2026submissions",
+    "source_url": "https://dur.ac.uk/research/institutes-and-centres/research-methods/social-simulation-conference-2026/submissions/",
+    "status": "fourtypes_and_methodtracks",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-06",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2024abstractbook",
+    "source_url": "https://ssc2024.uek.krakow.pl/wp-content/uploads/2024/09/book_of_abstracts-1.pdf",
+    "status": "53page_webparse_identity_only",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-07",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "open2025program",
+    "source_url": "https://ssc2025.tbm.tudelft.nl/conference-program/",
+    "status": "timeout",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-08",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followLLM4ABMSIG",
+    "source_url": "https://essa.eu.org/sig/sig-llm4abm-large-language-models-for-agent-based-modelling/",
+    "status": "HTTP503",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-09",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findFullPapers",
+    "source_url": "https://dur.ac.uk/research/institutes-and-centres/research-methods/social-simulation-conference-2026/submissions/",
+    "status": "presentation_and_proceedings_distinguished",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-10",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findLLM",
+    "source_url": "https://dur.ac.uk/research/institutes-and-centres/research-methods/social-simulation-conference-2026/submissions/",
+    "status": "no_exact_match_but_visibleGenAItrack",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-11",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findproceedings",
+    "source_url": "https://dur.ac.uk/research/institutes-and-centres/research-methods/social-simulation-conference-2026/submissions/",
+    "status": "additionalreview_and_eligibility",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-12",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "findMindSnatchers",
+    "source_url": "https://ssc2024.uek.krakow.pl/wp-content/uploads/2024/09/book_of_abstracts-1.pdf",
+    "status": "HTTP503",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-13",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETSIG",
+    "source_url": "https://essa.eu.org/sig/sig-llm4abm-large-language-models-for-agent-based-modelling/",
+    "status": "HTTP403_146bytes",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-14",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GETabstractbook",
+    "source_url": "https://ssc2024.uek.krakow.pl/wp-content/uploads/2024/09/book_of_abstracts-1.pdf",
+    "status": "HTTP503_5887bytes_html_notpdf",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-15",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET2025program",
+    "source_url": "https://ssc2025.tbm.tudelft.nl/conference-program/",
+    "status": "SSLError_expiredcertificate_no_bypass",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-16",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "follow2026program",
+    "source_url": "https://dur.ac.uk/research/institutes-and-centres/research-methods/social-simulation-conference-2026/conference-programme/",
+    "status": "officialprogram_read",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-17",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "retryabstracttargetline1610",
+    "source_url": "https://ssc2024.uek.krakow.pl/wp-content/uploads/2024/09/book_of_abstracts-1.pdf",
+    "status": "HTTP503_noPDFread",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-18",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "reopenSIG",
+    "source_url": "https://essa.eu.org/sig/sig-llm4abm-large-language-models-for-agent-based-modelling/",
+    "status": "success_community_and_paperlink",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-19",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followpublicConfTool",
+    "source_url": "https://www.conftool.pro/ssc2026/sessions.php",
+    "status": "publicagenda_notfullpaperinventory",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-20",
+    "platform": "local_audit",
+    "search_date": "2026-11-27",
+    "query_exact": "masterduplicate2507.05723_and_modellingcycle",
+    "source_url": "data/literature_master.csv",
+    "status": "not_in_master",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-21",
+    "platform": "author_preprint_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followSIGpaper",
+    "source_url": "https://arxiv.org/abs/2507.05723",
+    "status": "abstract_versions_and_relatedDOI",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-22",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "openTuesdayagenda",
+    "source_url": "https://www.conftool.pro/ssc2026/index.php?form_date=2026-08-25&mode=table&page=browseSessions",
+    "status": "sessionlist_not_allresearchpapers",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-23",
+    "platform": "official_web",
+    "search_date": "2026-11-27",
+    "query_exact": "followformalchapterDOI",
+    "source_url": "https://doi.org/10.1007/978-3-032-31712-4_43",
+    "status": "redirect_inaccessible",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  },
+  {
+    "search_id": "S-M2-BD-24",
+    "platform": "registry_api",
+    "search_date": "2026-11-27",
+    "query_exact": "GETSpringerdepositedchaptermetadata",
+    "source_url": "https://api.crossref.org/works/10.1007/978-3-032-31712-4_43",
+    "status": "HTTP200_exactonline2026-07-30",
+    "notes": "Scope/agenda/abstract and formalchaptermetadata separated;noPDFsuccessfromHTML503;noSSLbypass;notwholeconferenceinventory."
+  }
+]

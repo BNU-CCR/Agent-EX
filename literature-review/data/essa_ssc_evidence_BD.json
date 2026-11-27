@@ -1,0 +1,250 @@
+{
+  "checked": "2026-11-27",
+  "community": {
+    "archive": "https://essa.eu.org/event-type/conference/",
+    "SIG": "https://essa.eu.org/sig/sig-llm4abm-large-language-models-for-agent-based-modelling/",
+    "SIGfounded": "summer2024_authorityofficialSIG",
+    "paper_presented_SSC2025": "https://arxiv.org/abs/2507.05723"
+  },
+  "chapter": {
+    "url": "https://api.crossref.org/works/10.1007/978-3-032-31712-4_43",
+    "status": 200,
+    "bytes": 22127,
+    "sha256": "16f0cc01acf55cd85a6c897272cac8edc45ba99b78f98bbe4e2fa4d324865bfc",
+    "retained_fields": {
+      "DOI": "10.1007/978-3-032-31712-4_43",
+      "title": [
+        "Large Language Models for Agent-Based Modelling: Current and Possible Uses Across the Modelling Cycle"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-4147-4558",
+          "authenticated-orcid": false,
+          "given": "Loïs",
+          "family": "Vanhée",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-1305-8581",
+          "authenticated-orcid": false,
+          "given": "Melania",
+          "family": "Borit",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-0603-5904",
+          "authenticated-orcid": false,
+          "given": "Peer-Olaf",
+          "family": "Siebers",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4514-2462",
+          "authenticated-orcid": false,
+          "given": "Roger",
+          "family": "Cremades",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6105-8738",
+          "authenticated-orcid": false,
+          "given": "Christopher",
+          "family": "Frantz",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6982-5658",
+          "authenticated-orcid": false,
+          "given": "Önder",
+          "family": "Gürcan",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-9495-1602",
+          "authenticated-orcid": false,
+          "given": "František",
+          "family": "Kalvas",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-7242-9605",
+          "authenticated-orcid": false,
+          "given": "Denisa Reshef",
+          "family": "Kera",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0447-4150",
+          "authenticated-orcid": false,
+          "given": "Vivek",
+          "family": "Nallur",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-5337-6736",
+          "authenticated-orcid": false,
+          "given": "Kavin",
+          "family": "Narasimhan",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Martin",
+          "family": "Neumann",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "Springer Proceedings in Complexity",
+        "Advances in Social Simulation"
+      ],
+      "publisher": "Springer Nature Switzerland",
+      "page": "601-619",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            30
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ],
+        "date-time": "2026-07-29T14:46:18Z",
+        "timestamp": 1785336378000
+      },
+      "type": "book-chapter",
+      "abstract": null,
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/978-3-032-31712-4_43",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ]
+    },
+    "fulltext": "not_acquired"
+  },
+  "failures": [
+    {
+      "url": "https://essa.eu.org/sig/sig-llm4abm-large-language-models-for-agent-based-modelling/",
+      "web503": true,
+      "static_status": 403,
+      "bytes": 146,
+      "sha256": "32f2fa940d4b4fe19aca1e53a24e5aac29c57b7c5ee78588325b87f1b649c864",
+      "later_web_success": true
+    },
+    {
+      "url": "https://ssc2024.uek.krakow.pl/wp-content/uploads/2024/09/book_of_abstracts-1.pdf",
+      "status": 503,
+      "bytes": 5887,
+      "pdf": false,
+      "sha256": "4e84bcfdb5db8938c68b66f29c6c516f3f9510ac8b6272e48a4fa7162965bd64",
+      "initial_web_parse": "53pages_identity_notfulltargetreading"
+    },
+    {
+      "url": "https://ssc2025.tbm.tudelft.nl/conference-program/",
+      "status": "timeout_web_and_expired_certificate_static",
+      "certificate_verification_disabled": false
+    }
+  ],
+  "publication_boundary": "conferencepresentation_not_formalchapterpublication;2026rulesnot2027call"
+}
