@@ -1,0 +1,56 @@
+[
+  {
+    "name": "publisher_pdf",
+    "url": "https://www.tandfonline.com/doi/pdf/10.1080/00031305.2026.2742878",
+    "final_url": "https://www.tandfonline.com/doi/pdf/10.1080/00031305.2026.2742878",
+    "status": 403,
+    "bytes": 5617,
+    "sha256": "f778788180c3e29e4d28614360b8a7adc36819a864041d913541deb16d1d4200",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_publisher_pdf.response",
+    "is_pdf": false
+  },
+  {
+    "name": "publisher_xml",
+    "url": "https://www.tandfonline.com/doi/full-xml/10.1080/00031305.2026.2742878",
+    "final_url": "https://www.tandfonline.com/doi/full-xml/10.1080/00031305.2026.2742878",
+    "status": 403,
+    "bytes": 5632,
+    "sha256": "4ce139db5aa00292f0315a9a07ae2ba8cc05935ac3d4fc6d061b21400e02cde3",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_publisher_xml.response",
+    "is_pdf": false
+  },
+  {
+    "name": "society_pdf",
+    "url": "https://amstat.tandfonline.com/doi/pdf/10.1080/00031305.2026.2742878",
+    "final_url": "https://amstat.tandfonline.com/doi/pdf/10.1080/00031305.2026.2742878",
+    "status": 403,
+    "bytes": 5620,
+    "sha256": "aa54147fc501c828bc53efba98e4409658432f899dc8f50ec50f5d0cb4097139",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_society_pdf.response",
+    "is_pdf": false
+  },
+  {
+    "name": "crossref",
+    "url": "https://api.crossref.org/works/10.1080/00031305.2026.2742878",
+    "status": 200,
+    "bytes": 10575,
+    "sha256": "bcd2b171937e14c35bb3df78210436036126a63ed5ac4abe2cdb9719d46b96d3",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_crossref.response"
+  },
+  {
+    "name": "author",
+    "url": "https://bernhardclemm.com/research.html",
+    "status": 200,
+    "bytes": 16874,
+    "sha256": "fae39a9db1ae4a557d7042f100f78205e29c65afb97eafcd9046a6233ec2d9e6",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_author.response"
+  },
+  {
+    "name": "osf_files",
+    "url": "https://api.osf.io/v2/nodes/6kp8j/files/osfstorage/?page[size]=100",
+    "status": 200,
+    "bytes": 20987,
+    "sha256": "b8508e738cfb87729993dbc825b4996d65aab03a818b9fe8d7b2fb8e2cf968bd",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_osf_files.response"
+  }
+]

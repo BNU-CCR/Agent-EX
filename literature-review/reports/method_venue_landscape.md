@@ -1,3 +1,5 @@
+> EX新增The American Statistician单篇M181已接收作者版，发表地图55入口（34刊/20会议/1仓库）；scope/政策未核、无新投稿推荐，仍30条件刊。见[版本与证据](repro_review_EX.md)。
+
 > EU补证：Ecological Modelling官方四类稿型与2026-10-05APC表已核（Hybrid OA USD3290未税）；指南403/篇幅/数据代码义务仍待核，领域与推荐等级不变。见[来源与边界](ecolmod_policy_EU.md)。
 
 > EQ现行入口（2026-11-28）：54载体=33期刊/20会议入口/1仓库，30条件期刊。41命名入口均登记，JASSS178发现集合摘要分流125主表17全文108摘要/43应用线索/10非研究；其余40无整刊目录完成认证。JASSS/CCR指南费用沿用BU/DW，DOAJ/Scopus官方快照已按ISSN确认，WoS子库仍待核。ACL2025开放编码、2026静态/动态AI评价与KDD研究助手各有不同先例，不互相替代或自动推荐；[九问题Q4/Q7](methods_review_current_synthesis.md)与[EQ审计](delivery_audit_EQ.md)为当前入口。下文旧批次数字按历史快照理解。

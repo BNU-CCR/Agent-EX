@@ -1,0 +1,83 @@
+[
+  {
+    "search_id": "EX-01",
+    "platform": "publisher_registry",
+    "search_date": "2026-11-28",
+    "query_exact": "DOI/title/author/journal publishedonlineNov10/2026;license;registryvorlabelnotversionproof",
+    "source_url": "https://api.crossref.org/works/10.1080/00031305.2026.2742878",
+    "status": "200",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-02",
+    "platform": "official_web",
+    "search_date": "2026-11-28",
+    "query_exact": "Publisher fulltext open403;body not fullyread",
+    "source_url": "https://www.tandfonline.com/doi/full/10.1080/00031305.2026.2742878",
+    "status": "403",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-03",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Two grouped exacttitle/DOIdiscovery;publisherindexedabstract/versionandselectedbody;OSFbound;notwholetext",
+    "source_url": "https://doi.org/10.1080/00031305.2026.2742878",
+    "status": "partial_indexed_primary",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-04",
+    "platform": "registered_files",
+    "search_date": "2026-11-28",
+    "query_exact": "RegisteredPDF/XMLstatic403HTML;notacquired",
+    "source_url": "https://www.tandfonline.com/doi/pdf/10.1080/00031305.2026.2742878",
+    "status": "403",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-05",
+    "platform": "society_pdf",
+    "search_date": "2026-11-28",
+    "query_exact": "Publisher-societymirrorPDFweb/static403;noPDF",
+    "source_url": "https://amstat.tandfonline.com/doi/pdf/10.1080/00031305.2026.2742878",
+    "status": "403",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-06",
+    "platform": "author_page",
+    "search_date": "2026-11-28",
+    "query_exact": "Authorresearch200 olderconditionallyacceptedstatement;no linkedpaper;notlateststatus",
+    "source_url": "https://bernhardclemm.com/research.html",
+    "status": "200",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-07",
+    "platform": "author_artifacts",
+    "search_date": "2026-11-28",
+    "query_exact": "PublisherDASboundOSF6kp8j officialAPI rootlist11entriesnotrecursive",
+    "source_url": "https://api.osf.io/v2/nodes/6kp8j/files/osfstorage/?page[size]=100",
+    "status": "200",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-08",
+    "platform": "artifact_static",
+    "search_date": "2026-11-28",
+    "query_exact": "Readme5286/mainR2209/suppRmd7965 bytes;3providerSHA256matches;staticreadonly",
+    "source_url": "https://osf.io/6kp8j/overview",
+    "status": "200_threefiles",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  },
+  {
+    "search_id": "EX-09",
+    "platform": "coding_ecology",
+    "search_date": "2026-11-28",
+    "query_exact": "M181partialprovisionalcandidate;acceptedauthorversionnotVoR;single statsjournalprecedent no recommendation",
+    "source_url": "reports/repro_review_EX.md",
+    "status": "bounded_coding",
+    "notes": "Grouped source operation;no codeexecution/fullbodyreadingclaim"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "batch": "EX",
+  "checks": "passed",
+  "base": "681881d",
+  "old237masterrows": "unchanged",
+  "new_record": "M181candidate/partialprovisional",
+  "all87cards_matrix252_bibs": "unchangednormalizedtext",
+  "new_venue": "AMSTAT singlepublisherAMoccurrence,notrecommendation",
+  "artifact_hashes": "3/3providerSHA256andsizematch",
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    253,
+    56,
+    1826,
+    12,
+    42
+  ],
+  "cover_B7": 68,
+  "maxcell": 29215,
+  "preview": "methods_preview.png generated current export;visuallyreviewed separately",
+  "limits": "No fulltext/card/newunit/rerun or VoRclaim"
+}

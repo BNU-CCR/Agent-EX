@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Readme.md",
+    "url": "https://osf.io/download/6a6a5bacf1191c239022f07c/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/863f22948d95b2fb133798941c458ea529d13808075dafbe112268c451a398d3?response-content-disposition=attachment%3B+filename%3D%22Readme.md%22%3B+filename%2A%3DUTF-8%27%27Readme.md&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T075621Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=186e7422d95f69b83ed083ad41cbbc5c8926622cc6141def9802d04a91d5ba77",
+    "status": 200,
+    "bytes": 5286,
+    "sha256": "863f22948d95b2fb133798941c458ea529d13808075dafbe112268c451a398d3",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "Readme.md",
+      "kind": "file",
+      "path": "/6a6a5bacf1191c239022f07c",
+      "size": 5286,
+      "provider": "osfstorage",
+      "materialized_path": "/Readme.md",
+      "last_touched": null,
+      "date_modified": "2026-07-29T19:59:40.142739",
+      "date_created": "2026-07-29T19:59:40.142739Z",
+      "extra": {
+        "hashes": {
+          "md5": "ba66cc1478c30bd491e18ab7a236f1bd",
+          "sha256": "863f22948d95b2fb133798941c458ea529d13808075dafbe112268c451a398d3"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_Readme.md",
+    "provider_sha256_match": true,
+    "read_scope": "Selected source static reading;never executed;not complete repository/version replication"
+  },
+  {
+    "name": "main.R",
+    "url": "https://osf.io/download/6a6a5bada5e3e927ea92c9e4/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/0e0cfb28296881f46c1c50be778e1e4caaa71769d73183c970d95b3339923a18?response-content-disposition=attachment%3B+filename%3D%22main.R%22%3B+filename%2A%3DUTF-8%27%27main.R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T075628Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=95df44ffadad249cafcc0b6d729b1d4f6c866564dc4e57c0d5d7fedab6556acd",
+    "status": 200,
+    "bytes": 2209,
+    "sha256": "0e0cfb28296881f46c1c50be778e1e4caaa71769d73183c970d95b3339923a18",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "main.R",
+      "kind": "file",
+      "path": "/6a6a5bada5e3e927ea92c9e4",
+      "size": 2209,
+      "provider": "osfstorage",
+      "materialized_path": "/main.R",
+      "last_touched": null,
+      "date_modified": "2026-07-29T19:59:41.189927",
+      "date_created": "2026-07-29T19:59:41.189927Z",
+      "extra": {
+        "hashes": {
+          "md5": "368d06d6f09b4c00f3af18a9418e96bd",
+          "sha256": "0e0cfb28296881f46c1c50be778e1e4caaa71769d73183c970d95b3339923a18"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_main.R",
+    "provider_sha256_match": true,
+    "read_scope": "Selected source static reading;never executed;not complete repository/version replication"
+  },
+  {
+    "name": "supplementary.Rmd",
+    "url": "https://osf.io/download/6a6a5badf1191c239022f07e/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/c857fa5f4df9060b90b8b1797b2a86f6581dd86c2b0de645a8c1d0448ce26405?response-content-disposition=attachment%3B+filename%3D%22supplementary.Rmd%22%3B+filename%2A%3DUTF-8%27%27supplementary.Rmd&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T075636Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=0b2c0068b0594bbb3ed0baa7be87885cafcfe10c96a54375b22dd7bcf2ba1089",
+    "status": 200,
+    "bytes": 7965,
+    "sha256": "c857fa5f4df9060b90b8b1797b2a86f6581dd86c2b0de645a8c1d0448ce26405",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "supplementary.Rmd",
+      "kind": "file",
+      "path": "/6a6a5badf1191c239022f07e",
+      "size": 7965,
+      "provider": "osfstorage",
+      "materialized_path": "/supplementary.Rmd",
+      "last_touched": null,
+      "date_modified": "2026-07-29T19:59:41.350768",
+      "date_created": "2026-07-29T19:59:41.350768Z",
+      "extra": {
+        "hashes": {
+          "md5": "23bca3ebaae815b4b6e16d4d343b4aa8",
+          "sha256": "c857fa5f4df9060b90b8b1797b2a86f6581dd86c2b0de645a8c1d0448ce26405"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EX_supplementary.Rmd",
+    "provider_sha256_match": true,
+    "read_scope": "Selected source static reading;never executed;not complete repository/version replication"
+  }
+]
