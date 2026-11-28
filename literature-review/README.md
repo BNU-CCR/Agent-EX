@@ -1,4 +1,11 @@
-# 本轮已完成：交付入口
+# 当前交付：社会模拟领域地图与方法专题库
+
+- **组会先读：[社会模拟领域文献地图](SOCIAL_SIMULATION_FIELD_MAP.md)**：发展、10个研究板块、近期代表研究、期刊与共同体；项目定位在末尾。
+- [12页／约20分钟组会讲述底稿](reports/social_simulation_group_meeting_outline.md)｜[概念地图SVG](exports/social_simulation_field_map.svg)。
+- [29项代表来源与阅读范围](data/social_simulation_field_sources.csv)｜[10主题矩阵](data/social_simulation_field_map.csv)｜[本次检索与覆盖缺口](reports/social_simulation_field_map_search_2026-11-28.md)。
+- 原方法专题库及历史交付保留如下。新领域图不是全领域计量排名，不用原库数量代表学界份额。
+
+## 已完成的方法专题交付
 
 - **先读：[方法论总报告与投稿建议](FINAL_REVIEW.md)**。
 - [必要缺口与后续维护](FINAL_GAPS.md)｜[交付完成对照](DELIVERY_COMPLETION.md)。

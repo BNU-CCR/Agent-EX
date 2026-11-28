@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1030" viewBox="0 0 1500 1030">
+<rect width="1500" height="1030" fill="#f5f7fb" />
+<style>text{font-family:Microsoft YaHei,Noto Sans CJK SC,sans-serif;fill:#17324d}.title{font-size:32px;font-weight:bold}.head{font-size:23px;font-weight:bold}.body{font-size:20px}.sub{font-size:15px;fill:#536a80}</style>
+<text x="55" y="58" class="title" font-size="32" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d" font-weight="bold">社会模拟领域地图</text>
+<text x="55" y="92" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">研究问题 → 可组合的建模路线 → 发表共同体｜选择性文献导览，2022—2026-11-28</text>
+<text x="55" y="145" class="head" font-size="23" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d" font-weight="bold">研究问题</text>
+<rect x="55" y="170" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="73" y="203" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">合作、规范与制度</text>
+<text x="73" y="229" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">F01 · F03 · M023</text>
+<rect x="55" y="267" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="73" y="300" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">结构、不平等与组织</text>
+<text x="73" y="326" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">M183 · F03</text>
+<rect x="55" y="364" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="73" y="397" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">经济、转型与社会生态</text>
+<text x="73" y="423" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">F06 · F01</text>
+<rect x="55" y="461" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="73" y="494" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">城市、活动与人口</text>
+<text x="73" y="520" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">F07 · M182</text>
+<rect x="55" y="558" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="73" y="591" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">传播、政治与风险</text>
+<text x="73" y="617" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">R006 · M006 · F09 · F10</text>
+<rect x="55" y="655" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="73" y="688" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">政策参与与生成式社会</text>
+<text x="73" y="714" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">F05 · F08 · R016</text>
+<text x="540" y="145" class="head" font-size="23" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d" font-weight="bold">建模路线（可以组合）</text>
+<rect x="540" y="170" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="558" y="203" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">规则与经验主体建模</text>
+<text x="558" y="229" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">行为、结构、环境、时间</text>
+<rect x="540" y="267" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="558" y="300" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">网络、博弈与意见动力学</text>
+<text x="558" y="326" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">关系、策略与状态变化</text>
+<rect x="540" y="364" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="558" y="397" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">系统动力学与微观模拟</text>
+<text x="558" y="423" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">反馈／分布；F10 · F11 · F12</text>
+<rect x="540" y="461" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="558" y="494" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">空间、活动与混合模型</text>
+<text x="558" y="520" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">跨系统过程与尺度接口</text>
+<rect x="540" y="558" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="558" y="591" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">参与式建模与模拟游戏</text>
+<text x="558" y="617" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">问题定义、知识与权力</text>
+<rect x="540" y="655" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="558" y="688" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">语言与生成式主体</text>
+<text x="558" y="714" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">记忆、计划、情境决策</text>
+<text x="1025" y="145" class="head" font-size="23" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d" font-weight="bold">发表与交流共同体</text>
+<rect x="1025" y="170" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="1043" y="203" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">社会模拟与方法</text>
+<text x="1043" y="229" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">JASSS · ESSA · CMOT</text>
+<rect x="1025" y="267" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="1043" y="300" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">异质互动与经济社会</text>
+<text x="1043" y="326" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">JEIC · ESHIA</text>
+<rect x="1025" y="364" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="1043" y="397" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">社会结构与实质问题</text>
+<text x="1043" y="423" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">Social Science Research</text>
+<rect x="1025" y="461" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="1043" y="494" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">环境、城市与复杂系统</text>
+<text x="1043" y="520" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">EMS · CEE · npj Complexity</text>
+<rect x="1025" y="558" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="1043" y="591" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">数据、传播与政策</text>
+<text x="1043" y="617" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">EPJDS · CCR · HRPS</text>
+<rect x="1025" y="655" width="430" height="81" rx="12" fill="white" stroke="#c4d4e4" />
+<text x="1043" y="688" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">系统与交互技术</text>
+<text x="1043" y="714" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">SDR · UIST等会议</text>
+<rect x="55" y="782" width="1400" height="105" rx="12" fill="#e4eef5" />
+<text x="78" y="816" class="head" font-size="23" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d" font-weight="bold">贯穿各路线的研究问题：理论如何入模？证据支持什么？结论能否迁移？</text>
+<text x="78" y="853" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">理论—经验往返 · 校准与可识别性 · 多目标经验评价 · 敏感性 · 公众参与 · 报告与复现</text>
+<text x="55" y="929" class="body" font-size="20" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#17324d">Agent-EX：主体互动／意见动力学 → 语言主体 → 身份、连续性与信息接触（组会末页定位）</text>
+<text x="55" y="967" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">每一栏为并行分类，不按行一一对应；框的大小不表示论文数量、成熟度或影响力。</text>
+<text x="55" y="994" class="sub" font-size="15" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#536a80">论文编号、正式来源、阅读层次和覆盖缺口见 SOCIAL_SIMULATION_FIELD_MAP.md 及来源CSV；未制作PPT。</text>
+</svg>

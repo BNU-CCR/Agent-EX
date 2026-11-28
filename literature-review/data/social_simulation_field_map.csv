@@ -1,0 +1,11 @@
+﻿theme_id,theme,research_question,model_routes,map_sources,venue_communities,evidence_boundary,coverage_assessment
+T01,合作、规范与集体行动,信任、沟通和制度如何形成共享与合作,规则ABM；实验分类；演化博弈,F01;F03;M023;F04,JASSS;JEIC,实验校准与风格化机制分开,中：有多项问题锚点
+T02,结构与不平等,流动、组织和资源过程如何积累成差距,经验ABM；空间与生命历程,M183;F03,Social Science Research;JASSS,作者工作论文与正式版本分开,有限：教育与制度先例
+T03,经济、市场与组织,异质主体和跨系统冲击怎样形成集体波动,宏观金融ABM；人工市场；耦合,F06;M023,JEIC;CMOT;Communications Earth & Environment,条件情景与现实因果分开,有限：气候金融及合作；组织待补
+T04,城市、活动与人口,个体活动如何形成城市流动,空间ABM；微观模拟；活动生成,F07;M182;M029;F11,npj Complexity;TIST;Frontiers in Social Psychology,活动分布不等于个体轨迹准确,有限：活动与人口投影锚点，人口报告非期刊
+T05,环境、资源与转型,社会、制度和生态怎样反馈,社会生态ABM；参与式；耦合,F01;F03;F06,JASSS;Environmental Modelling & Software;环境应用刊,跨模型接口和不确定性,中：资源与转型锚点
+T06,健康、风险与应急,接触、行为与政策怎样影响风险,接触网络ABM；健康微观模拟,F09;F10;F12;M053;F05,Epidemics;System Dynamics Review;Health Research Policy and Systems,行为风险、演练经验、反馈综述与参数推断分开,有限：已有实质入口，非全面应用生态
+T07,传播、政治与公共讨论,信息和关系怎样改变集体意见,网络ABM；意见动力学；语言主体,R006;M006;EN04,JASSS;EPJ Data Science;CCR,平台行为与真实人群外推分开,较强但来自项目定向库，不能代表领域份额
+T08,政策、参与与模拟游戏,谁定义情景，政策怎样传导,情景比较；参与式；生成式,F03;F05;F08,JASSS;Health Research Policy and Systems,参与综述与政策效果验证分开,有限：游戏专门应用待补
+T09,生成式主体与AI社会,语言、记忆和情境行动能支持何种研究,运行时LLM主体；混合认知架构,R006;R016;R008;R015;M006;M004,JASSS;SDR;EPJ Data Science;UIST;AI venues,可信角色、行为效度与群体过程分开,较强：原库核心；不据此评价全领域占比
+T10,理论、校准与复现,模型如何产生可比较可信知识,形式化；模拟推断；敏感性；报告规范,F02;F04;M017;M029;M053;M065;M012;F12,JASSS;CMOT;Environmental Modelling & Software,技术复现、经验效度与治理分开,较强：跨方法锚点
