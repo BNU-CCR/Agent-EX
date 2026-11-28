@@ -25938,5 +25938,125 @@
     "batch": "FU",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fu_modeler_scope/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_type",
+    "old": "",
+    "new": "LLM_assisted_natural_language_to_formal_reaction_network_DSL",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;measurement;reproducibility_and_reporting",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_transferability",
+    "old": "",
+    "new": "待正文核语法/可执行/真模型恢复与用户任务判据，避免把形式模型恢复直接等同社会机制或现实效度。",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "提供LLM辅助生成形式模拟模型的正式方法对照；是否可靠/泛化及评价优势仅摘要不足。",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formal_body_reading;ground_truth_recovery_criterion;synthetic_train_test_split/leakage;baseline_versions/prompts;userstudy_design;fixed_artifact_run_identity;AM_VoR_bodycollation;current_journal_scope/guide",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "PDFcover/page2abstract;authorabstract;Crossrefdates",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/formal_dsl_identity_FV.md;batches/method_round2/fv_formal_dsl/source_manifest.json",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FV",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fv_formal_dsl/results.json"
   }
 ]

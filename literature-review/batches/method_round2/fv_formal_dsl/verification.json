@@ -1,0 +1,31 @@
+{
+  "checked": "2026-11-28",
+  "old_master240_unchanged": true,
+  "new_record": "M184_candidate",
+  "old_venue61_unchanged": true,
+  "new_venue": "TOMACS",
+  "matrix_and_candidates_unchanged": true,
+  "source_hashes_verified": 3,
+  "publisher_date_stages_explicit": true,
+  "formal_Bib78_match": true,
+  "workbook_rows": [
+    28,
+    242,
+    63,
+    32,
+    268,
+    56,
+    1955,
+    16,
+    42,
+    36
+  ],
+  "requirement_ids_classes_unchanged": 66,
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "body_method_not_read": true,
+  "no_author_code_execution": true,
+  "goal_acceptance": false
+}

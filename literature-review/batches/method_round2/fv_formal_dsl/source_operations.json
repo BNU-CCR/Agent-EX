@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "FV-01",
+    "platform": "author_fulltext_provenance",
+    "search_date": "2026-11-28",
+    "query_exact": "Authorlandingpage200linksPDF/DOI/artifacts/git;PDF2001281993bytes28pages;notmethodsread",
+    "source_url": "https://justinnk.net/research/kreikemeyer2025using/",
+    "status": "legal_formal_pdf_acquired",
+    "notes": "Grouped source operation not query count;no author program/model execution"
+  },
+  {
+    "search_id": "FV-02",
+    "platform": "publisher_deposited_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "CrossrefDOI/title/authors/TOMACS35(4)/onlineSep12andprintOct31matched",
+    "source_url": "https://api.crossref.org/works/10.1145/3733719",
+    "status": "formal_identity_confirmed",
+    "notes": "Grouped source operation not query count;no author program/model execution"
+  },
+  {
+    "search_id": "FV-03",
+    "platform": "cover_abstract_visual",
+    "search_date": "2026-11-28",
+    "query_exact": "OnlineAMMay28/PublishedSep12/CCBY4.0/27bodypages+cover;abstract84.5onlyauthorclaim",
+    "source_url": "https://justinnk.net/research/kreikemeyer2025using/kreikemeyer2025using.pdf",
+    "status": "identity_dates_abstract_checked",
+    "notes": "Grouped source operation not query count;no author program/model execution"
+  },
+  {
+    "search_id": "FV-04",
+    "platform": "official_ecology_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "TwoACMtargetedqueriesreturnedunrelatedresults;noauthorguide/scopeverified",
+    "source_url": "https://dl.acm.org/journal/tomacs",
+    "status": "search_not_policy_evidence",
+    "notes": "Grouped source operation not query count;no author program/model execution"
+  },
+  {
+    "search_id": "FV-05",
+    "platform": "adjacent_method_screen",
+    "search_date": "2026-11-28",
+    "query_exact": "M184candidate+TOMACSmap;non_socialformalizationcomparator;no card/grade/submissionupgrade",
+    "source_url": "reports/formal_dsl_identity_FV.md",
+    "status": "scoped_screening",
+    "notes": "Grouped source operation not query count;no author program/model execution"
+  }
+]

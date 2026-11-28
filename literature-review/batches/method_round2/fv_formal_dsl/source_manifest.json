@@ -1,0 +1,195 @@
+{
+  "pdf": {
+    "url": "https://justinnk.net/research/kreikemeyer2025using/kreikemeyer2025using.pdf",
+    "status": 200,
+    "bytes": 1281993,
+    "sha256": "c66ba818fa0203d42bda4b2677aa821d09b9ed0937e59b99e9f862841763f901",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FV_author_paper.response",
+    "pages": 28
+  },
+  "metadata": {
+    "url": "https://api.crossref.org/works/10.1145/3733719",
+    "status": 200,
+    "bytes": 18992,
+    "sha256": "89777c8014536f53fbf62254e7f6f6a99380a53764d518ebf371b12333c54fa6",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FV_crossref.response",
+    "metadata": {
+      "title": [
+        "Using (Not-so) Large Language Models to Generate Simulation Models in a Formal DSL: A Study on Reaction Networks"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-4109-3608",
+          "authenticated-orcid": false,
+          "given": "Justin Noah",
+          "family": "Kreikemeyer",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Faculty of Computer Science and Electrical Engineering, Institute for Visual and Analytic Computing, University of Rostock",
+              "place": [
+                "Rostock, Germany"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0009-9208-4283",
+          "authenticated-orcid": false,
+          "given": "Miłosz",
+          "family": "Jankowski",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Faculty of Computer Science and Electrical Engineering, Institute for Visual and Analytic Computing, University of Rostock",
+              "place": [
+                "Rostock, Germany"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-7447-6667",
+          "authenticated-orcid": false,
+          "given": "Pia",
+          "family": "Wilsdorf",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Faculty of Computer Science and Electrical Engineering, Institute for Visual and Analytic Computing, University of Rostock",
+              "place": [
+                "Rostock, Germany"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-5256-4682",
+          "authenticated-orcid": false,
+          "given": "Adelinde M.",
+          "family": "Uhrmacher",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Faculty of Computer Science and Electrical Engineering, Institute for Visual and Analytic Computing, University of Rostock",
+              "place": [
+                "Rostock, Germany"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "ACM Transactions on Modeling and Computer Simulation"
+      ],
+      "type": "journal-article",
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            12
+          ]
+        ]
+      },
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            12
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            31
+          ]
+        ]
+      },
+      "volume": "35",
+      "issue": "4",
+      "article-number": null,
+      "page": "1-27",
+      "license": null,
+      "link": [
+        {
+          "URL": "https://dl.acm.org/doi/pdf/10.1145/3733719",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ]
+    }
+  },
+  "authorpage": {
+    "url": "https://justinnk.net/research/kreikemeyer2025using/",
+    "status": 200,
+    "bytes": 7757,
+    "sha256": "2fd6203c99f3a1a9eed19a1c3c15621293596c27d8196818819a015cd7494e4b",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FV_author_page.response",
+    "selected_links": [
+      {
+        "text": "pdf",
+        "url": "https://justinnk.net/research/kreikemeyer2025using/kreikemeyer2025using.pdf"
+      },
+      {
+        "text": "doi",
+        "url": "https://doi.org/10.1145/3733719"
+      },
+      {
+        "text": "bib",
+        "url": "https://justinnk.net/research/kreikemeyer2025using/kreikemeyer2025using.bib"
+      },
+      {
+        "text": "artifacts",
+        "url": "https://doi.org/10.5281/zenodo.15198397"
+      },
+      {
+        "text": "git",
+        "url": "https://github.com/justinnk/text-to-crn"
+      },
+      {
+        "text": "more",
+        "url": "https://justinnk.net/research/kreikemeyer2025using/"
+      }
+    ]
+  },
+  "actual_reading": "PDFcover+page2abstract/licenseonly;no methodbody/card",
+  "date_stages": {
+    "publisher_online_AM": "2025-05-28",
+    "publisher_VoR_and_Crossref_online": "2025-09-12",
+    "issue": "2025-10",
+    "chosen_field": "earliestpublisherOnlineAMlabel_notauthorpreprint",
+    "qualification": "bothpublisherstagesin2025;stagequalificationexplicit"
+  },
+  "pdf_license": "CCBY4.0",
+  "website_license": "CCBY-NCSA4.0_notPDFlicense"
+}

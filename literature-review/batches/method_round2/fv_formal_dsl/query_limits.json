@@ -1,0 +1,8 @@
+{
+  "queries": [
+    "site:dl.acm.org/doi/10.1145/3733719 \"May\" \"September\"",
+    "site:dl.acm.org/journal/tomacs \"scope\""
+  ],
+  "outcome": "unrelatedreturnedresults_notabsenceorpolicyproof",
+  "direct_journal_home": "notread_FV"
+}
