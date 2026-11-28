@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-28",
+  "base_commit": "bf1475f",
+  "old112_records_unchanged": true,
+  "old175_units_unchanged": true,
+  "old69_cards_unchanged": true,
+  "new_records": 2,
+  "new_cards": 2,
+  "new_units": 6,
+  "new_grouped_operations": 7,
+  "source_files_hash_checked": 4,
+  "card_structure_only": "71=65heading+6inline;not semantic acceptance",
+  "limitations": "No thirdparty execution; independent gold/rater design/model identities and external dialogue still pending",
+  "workbook_rows": [
+    115,
+    53,
+    31,
+    182,
+    1397,
+    42
+  ],
+  "workbook_sheets": 9,
+  "included_cached": 50,
+  "bib_entries": 50,
+  "summary_visual_checked": true
+}

@@ -1,0 +1,31 @@
+{
+  "M056": {
+    "documents": [
+      "Poverty",
+      "Tiger",
+      "Trout",
+      "Elites"
+    ],
+    "prompts": 9,
+    "repeats_per_reported_cell": 10,
+    "manual_audit_reported_percent": 10,
+    "metric": "cosine similarity; not accuracy",
+    "reference": "modal response plus selected manual audit; independent full gold not established",
+    "model_count": "text10 LLM;figure8 has12 labels inclGPT4o;commercial3vs4 unresolved"
+  },
+  "M057": {
+    "deep_cases": 1,
+    "displayed_EABSS_run": "single run as author describes",
+    "criteria": [
+      "usability",
+      "generality",
+      "pertinency",
+      "readability",
+      "conformity",
+      "believability",
+      "originality"
+    ],
+    "evaluation": "qualitative case assessment; independent rater design not established",
+    "dialogue_date_author_report": "2024-04-25;external appendix not read"
+  }
+}

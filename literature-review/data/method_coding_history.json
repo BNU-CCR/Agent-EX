@@ -7968,5 +7968,245 @@
     "batch": "CY-validation-support-methods-and-scope",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_type",
+    "old": "",
+    "new": "structured_feature_extraction;repeated_prompt_comparison",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;reproducibility_and_reporting;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_transferability",
+    "old": "",
+    "new": "JSON/提示分解/重复评价是可迁移方法构件；精确snapshot、解码配置、期望答案形成及模型淘汰记录仍需制品补核。公开链接不等于本轮取得或执行。本文软件参数、成本、上下文背景概括不作为当前产品事实。",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "controlled_comparison",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "研究LLM辅助概念建模/规格抽取的方法流程及评价边界。",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "independent_reference_gold;manual_audit_denominator_raters;exact_model_revision_count;executed_budget;downstream_fidelity",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Formal HTML §§2.25–2.37/3.2–3.12/4.2–4.8;Figures3,8",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M056.md;reports/modeller_assistance_DA.md",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_type",
+    "old": "",
+    "new": "EABSS_prompt_workflow;conceptual_model_design;qualitative_case_assessment",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;reproducibility_and_reporting;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_maturity",
+    "old": "",
+    "new": "prototype",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_transferability",
+    "old": "",
+    "new": "§7.8承认虚拟讨论仍是刻板观点、试点状态；§7.9明确尚未在真人共同创作现场测试。虚拟persona不能替代真实参与者的知识、同意和评价。",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "worked_example",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "研究LLM辅助概念建模/规格抽取的方法流程及评价边界。",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "appendix_log_and_script;exact_model_revision;manual_edits;independent_raters;human_control;downstream_fidelity",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Formal HTML §§3.9–3.17/5–7;Table1",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M057.md;reports/modeller_assistance_DA.md",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DA-two-LLM-modeller-assistance-papers",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
   }
 ]

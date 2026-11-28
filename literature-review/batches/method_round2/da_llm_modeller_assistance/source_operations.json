@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "DA-01",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire formal article M056",
+    "source_url": "https://www.jasss.org/28/3/9.html",
+    "status": "200_formal_html",
+    "notes": "Grouped operation; no total hit count or executed experiment claim; source hashes in acquisition_manifest"
+  },
+  {
+    "search_id": "DA-02",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire formal article M057",
+    "source_url": "https://www.jasss.org/28/3/2.html",
+    "status": "200_formal_html",
+    "notes": "Grouped operation; no total hit count or executed experiment claim; source hashes in acquisition_manifest"
+  },
+  {
+    "search_id": "DA-03",
+    "platform": "local_identity_dedup",
+    "search_date": "2026-11-28",
+    "query_exact": "Compare titles DOI and authors with existing112 records",
+    "source_url": "data/literature_master.csv",
+    "status": "no_duplicate_doi_or_title",
+    "notes": "Grouped operation; no total hit count or executed experiment claim; source hashes in acquisition_manifest"
+  },
+  {
+    "search_id": "DA-04",
+    "platform": "primary_fulltext_targeted_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read M056 methods/results/conclusions and reference construction",
+    "source_url": "https://www.jasss.org/28/3/9.html",
+    "status": "formal_HTML_sections2to4_read",
+    "notes": "Grouped operation; no total hit count or executed experiment claim; source hashes in acquisition_manifest"
+  },
+  {
+    "search_id": "DA-05",
+    "platform": "primary_fulltext_targeted_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read M057 methodology/case/evaluation and transcribe Table1",
+    "source_url": "https://www.jasss.org/28/3/2.html",
+    "status": "formal_HTML_sections3to7_read",
+    "notes": "Grouped operation; no total hit count or executed experiment claim; source hashes in acquisition_manifest"
+  },
+  {
+    "search_id": "DA-06",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire and inspect M056 benchmark design Figure3",
+    "source_url": "https://www.jasss.org/28/3/9/Figure3.png",
+    "status": "200_png_visual_checked",
+    "notes": "Grouped operation; no total hit count or executed experiment claim; source hashes in acquisition_manifest"
+  },
+  {
+    "search_id": "DA-07",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire and inspect M056 similarity/model labels Figure8",
+    "source_url": "https://www.jasss.org/28/3/9/Figure8.png",
+    "status": "200_png_visual_checked",
+    "notes": "Grouped operation; no total hit count or executed experiment claim; source hashes in acquisition_manifest"
+  }
+]

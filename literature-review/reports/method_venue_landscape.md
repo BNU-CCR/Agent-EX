@@ -1,3 +1,5 @@
+> DA补充（2026-11-28）：114条/71卡/181单元、50正式纳入。[两项辅助建模方法](modeller_assistance_DA.md)补足LLM作为建模者助手的用途；提取相似度、概念故事质量与实现/社会效度分开。原渠道优先级不变，未刷新政策。下文旧统计保留为历史快照。
+
 > BU现行政策：[两刊核查](priority_journal_policies_BU.md)。JASSS官方APC€800另适用VAT、可申请减免；CCR无APC。CCR现行OJS的接收后模板、复现检查、2000词公告与CCBY4取代2023PDF相应旧值。历史费用待核语句不作当前这两刊的状态，独立索引仍待核。
 
 > BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。

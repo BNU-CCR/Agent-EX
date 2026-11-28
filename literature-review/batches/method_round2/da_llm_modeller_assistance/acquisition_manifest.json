@@ -1,0 +1,32 @@
+[
+  {
+    "url": "https://www.jasss.org/28/3/9.html",
+    "status": 200,
+    "bytes": 132797,
+    "sha256": "845c86baabffaea2bed4ba332f5a678d97b4c19513a3d122d7d3c1d0455fcd5b",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_DA_28_3_9.html"
+  },
+  {
+    "url": "https://www.jasss.org/28/3/2.html",
+    "status": 200,
+    "bytes": 146577,
+    "sha256": "48795e873b66dcc0d16fa99e8b6ef04d5a66291f60fd538d4ded693f1a93310b",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_DA_28_3_2.html"
+  },
+  {
+    "url": "https://www.jasss.org/28/3/9/Figure3.png",
+    "status": 200,
+    "bytes": 129338,
+    "sha256": "f7cd8ac433c7be05d773c173773339cad5684420656dcd4b06ab0aeeda775ab0",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M056_DA_Figure3.png",
+    "figure": 3
+  },
+  {
+    "url": "https://www.jasss.org/28/3/9/Figure8.png",
+    "status": 200,
+    "bytes": 452025,
+    "sha256": "fa72e3972d2f7e9b48673845fe3fcc770bc8929e5e46d427e8116f9258a68eab",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M056_DA_Figure8.png",
+    "figure": 8
+  }
+]

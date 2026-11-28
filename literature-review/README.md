@@ -1,3 +1,5 @@
+> DA当前（2026-11-28）：114条/71卡/181证据单元，50正式纳入；[LLM辅助建模](reports/modeller_assistance_DA.md)区分特征提取与概念设计的评价参照。52载体/30条件刊；下一项DB核原始对话，完整目标仍在进行。
+
 # Agent-EX 文献梳理与投稿期刊定位
 
 本目录持续建设 Agent-EX 的社会模拟与 LLM-based Agent-Based Modeling 文献库，并服务当前论文投稿与后续方法研究布局。
