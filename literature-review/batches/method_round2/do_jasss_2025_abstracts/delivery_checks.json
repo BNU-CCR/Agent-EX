@@ -1,0 +1,29 @@
+{
+  "base": "e9e5ea9",
+  "old191_records_unchanged": true,
+  "old77_cards_unchanged": true,
+  "old203_units_unchanged": true,
+  "CU_unchanged": true,
+  "official_abstracts_read": 26,
+  "response_hashes": 26,
+  "new_candidates": 20,
+  "application_leads_not_final_excluded": 6,
+  "remaining_abstracts": 26,
+  "coverage_counts": {
+    "application_lead_retained_not_added": 36,
+    "existing_master_record": 19,
+    "added_abstract_candidate": 87,
+    "nonresearch_entry": 10,
+    "abstract_pending": 26
+  },
+  "workbook_rows": [
+    212,
+    53,
+    31,
+    204,
+    1594,
+    42
+  ],
+  "maximum_text_cell": 24969,
+  "limits": "Singleassistant abstractscreen;no newfulltext/efficacy/policy/globalrecall claim"
+}
