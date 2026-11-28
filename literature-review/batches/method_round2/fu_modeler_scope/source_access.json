@@ -1,0 +1,60 @@
+[
+  {
+    "tag": "publisher_abs",
+    "url": "https://journals.sagepub.com/doi/abs/10.1177/00375497241239360",
+    "status": 403,
+    "bytes": 5584,
+    "sha256": "1fcc8ee825a8685688fd066aebc3f149b4a9b10d3705270c6323bd044db2780c",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FU_publisher_abs.response",
+    "textchars": 58,
+    "links": [],
+    "title": "Just a moment..."
+  },
+  {
+    "tag": "author_publications",
+    "url": "https://fs.wp.odu.edu/efrydenl/research/publications/",
+    "status": 200,
+    "bytes": 76498,
+    "sha256": "c207178717dcbb8a111fc1455dfacc2ee7303bd3e84f7999159c8f657defdda0",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FU_author_publications.response",
+    "textchars": 21974,
+    "links": [
+      {
+        "text": "10.1177/00375497241239360",
+        "url": "https://doi.org/10.1177/00375497241239360"
+      }
+    ],
+    "title": "Publications | Erika Frydenlund"
+  },
+  {
+    "tag": "openalex",
+    "url": "https://api.openalex.org/works/https://doi.org/10.1177/00375497241239360",
+    "status": 200,
+    "bytes": 18187,
+    "sha256": "b71d90bb3b76d4815ea393909c989f939202ffe14fdac2f1e4f576e366aee073",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FU_openalex.response",
+    "oa_locations": [
+      {
+        "landing_page_url": "https://doi.org/10.1177/00375497241239360",
+        "pdf_url": "https://journals.sagepub.com/doi/pdf/10.1177/00375497241239360?download=true",
+        "is_oa": true,
+        "version": "publishedVersion"
+      }
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "bronze",
+      "oa_url": "https://journals.sagepub.com/doi/pdf/10.1177/00375497241239360?download=true",
+      "any_repository_has_fulltext": false
+    }
+  },
+  {
+    "tag": "dblp",
+    "url": "https://dblp.org/rec/journals/simulation/FrydenlundMPPS24.xml",
+    "status": 202,
+    "bytes": 2939,
+    "sha256": "eacda9d7ac47131a11a3d777418e45fba7312d17d077b9a8f151c33d0fa02839",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FU_dblp.response",
+    "response_kind": "HTMLAnubischallenge_notXMLrecord"
+  }
+]

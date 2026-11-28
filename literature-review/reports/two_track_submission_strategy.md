@@ -1,4 +1,4 @@
-> 当前入口（2026-11-28，FT）：78正式纳入/91卡/267证据单元，61载体/31条件项，13日期待核。[九问题综合](methods_review_current_synthesis.md)与[ODD标准证据](odd_standard_evidence_FQ.md)。旧批数量保留历史身份。
+> 当前入口（2026-11-28，FU）：78正式纳入/91卡/267证据单元，61载体/31条件项，13日期待核。[九问题综合](methods_review_current_synthesis.md)与[ODD标准证据](odd_standard_evidence_FQ.md)。旧批数量保留历史身份。
 
 FS：[Envsoft官方范围](envsoft_policy_fields_FS.md)核准方法需环境应用，许可/访问说明不等全部代码数据无条件公开。当前意见演化稿领域不匹配、后续方法稿有环境条件的原判断保持；完整指南的篇幅/存储/审稿字段仍未核。
 

@@ -1,3 +1,5 @@
+> FU后续范围修正：出版社搜索索引§6含DES可执行例，不能由下文历史摘要概括三范式均无可执行模型；仍无稳定全文/方法全读。见[M019片段边界](modeler_evidence_scope_FU.md)。
+
 # Modeler in a Box：日期与全文获取补核
 +
 +2026-11-28，DS。尝试出版社DOI页超时，标准full页与登记PDF均403且返回HTML；未取得全文，不新增卡/单元或升级成熟度。作者实验室摘要可读并保存响应hash。Sage合作平台的web可读层显示摘要/July日期，但静态GET200仅返回壳页面（可见文本62字），该壳的hash不作为摘要内容证据；[证据清单](../batches/method_round2/ds_modeler_access/acquisition_manifest.json)。

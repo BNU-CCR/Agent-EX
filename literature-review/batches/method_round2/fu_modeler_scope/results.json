@@ -1,0 +1,20 @@
+{
+  "batch_id": "FU",
+  "date": "2026-11-28",
+  "expected_master_sha256": "9cdfd13b8e0fb3630f49d2cbae92b68166deba13b4dc686f4c157dbd0931ee09",
+  "updates": [
+    {
+      "record_id": "M019",
+      "findings": "摘要总体评价消极，但出版社索引的§6片段称DES生成过可执行代码，且抽象过度/遗漏排队等动态；不再概括三范式均无可执行模型。完整方法、提示、版本与统计设计仍未取得。",
+      "supplement_status": "FUauthorpublications200DOIonly;rawpublisherabs403HTML;webindexedselectedbodyexcerptnotstablefulltext;OpenAlexbronzeonlypublisherPDF;DBLP202HTMLchallenge;noPDFacquired",
+      "evidence_location": "DSformaldate/abstract;FUsearchindexedpublishersec6analysisexcerpt;notwholebodyorregisteredPDF",
+      "related_versions": "Formaljournalidentity/dateconfirmed;authorlabandSagepartnerabstractonly;no fulltext/version comparison | FU:publishersearchindexedsec6excerptread;notstableformalbodyacquisition/collation",
+      "notes": "Article fetch timeout; TOC title/authors/date/abstract inspected. Do not misassign adjacent article December21,2023 date. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CJ:simulation_purpose_from_publisherabstract;review_or_modelauthoring_evaluation_not_realworldprediction;abstractreading/candidate/maturitygatesunchanged;no_fulltextcard | DS:CrossrefonlineApr14/printJulyconfirm;partnerFirstonlineJulylabelnotadopted;publisherfull/PDF403;authorlababstractonly;no grade upgrade | FU:PublisherindexedAnalysisDESexecutableexamplequalifiesblanketabstractreading;notfulltext/card/gradeupgrade;authorpage200DOIonly;rawabs403;OAindexonlysamepublisherPDF;DBLP202challenge;laterwebopen/findtimeoutsretained",
+      "method_pending_fields": "stable_fulltext;validation_design;historical_model_version/dates;prompt_interventions;paradigm_specific_execution_and_dynamic_fidelity;abstract_body_scope_comparison",
+      "method_coding_source": "https://journals.sagepub.com/doi/10.1177/00375497241239360;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only;reports/modeler_access_DS.md;batches/method_round2/ds_modeler_access/;reports/modeler_evidence_scope_FU.md;batches/method_round2/fu_modeler_scope/indexed_excerpt_scope.json",
+      "search_id": "S-M2-J-M019;DS-01;DS-02;DS-03;DS-04;DS-05;DS-06;DS-07;DS-08;FU-01;FU-02;FU-03;FU-04;FU-05;FU-06",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

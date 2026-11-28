@@ -1,0 +1,14 @@
+{
+  "source": "https://journals.sagepub.com/doi/abs/10.1177/00375497241239360",
+  "actual_path": "public web search indexed publisher text;first open528linesbutlaterfind/open timeout;rawGET403",
+  "section": "6.Analysis",
+  "short_quote": "This model was produced in executable code",
+  "interpretation": "DESexampleexecutability stated;oversimplificationandqueueomissionalso discussed;notproofall3paradigmsvalid",
+  "not_claimed": [
+    "stablefullHTML/PDF acquired",
+    "fullmethodsread",
+    "independentcodeexecution",
+    "allparadigmssuccess",
+    "currentLLMbenchmark"
+  ]
+}

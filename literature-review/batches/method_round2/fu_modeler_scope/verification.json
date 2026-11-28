@@ -1,0 +1,24 @@
+{
+  "checked": "2026-11-28",
+  "only_master_record_changed": "M019",
+  "candidate_reading_grade_card_date_unchanged": true,
+  "matrix_venue_candidate_tables_unchanged": true,
+  "source_response_hashes": 4,
+  "workbook_rows": [
+    28,
+    241,
+    62,
+    32,
+    268,
+    56,
+    1950,
+    16,
+    42,
+    36
+  ],
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "limitations": "Indexed section excerpt not stable fulltext;no author code executed;notgoalacceptance"
+}

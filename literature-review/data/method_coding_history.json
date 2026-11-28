@@ -25918,5 +25918,25 @@
     "batch": "FR",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fr_odd_bibliometric_scope/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_pending_fields",
+    "old": "fulltext;validation_design;historical_model_version_and_dates;prompt_interventions;execution_and_dynamic_fidelity",
+    "new": "stable_fulltext;validation_design;historical_model_version/dates;prompt_interventions;paradigm_specific_execution_and_dynamic_fidelity;abstract_body_scope_comparison",
+    "date": "2026-11-28",
+    "batch": "FU",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fu_modeler_scope/results.json"
+  },
+  {
+    "record_id": "M019",
+    "field": "method_coding_source",
+    "old": "https://journals.sagepub.com/doi/10.1177/00375497241239360;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only;reports/modeler_access_DS.md;batches/method_round2/ds_modeler_access/",
+    "new": "https://journals.sagepub.com/doi/10.1177/00375497241239360;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only;reports/modeler_access_DS.md;batches/method_round2/ds_modeler_access/;reports/modeler_evidence_scope_FU.md;batches/method_round2/fu_modeler_scope/indexed_excerpt_scope.json",
+    "date": "2026-11-28",
+    "batch": "FU",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fu_modeler_scope/results.json"
   }
 ]
