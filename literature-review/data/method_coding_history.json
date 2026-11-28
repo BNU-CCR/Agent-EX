@@ -9558,5 +9558,95 @@
     "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "conceptual_anatomy_framework;epistemic_transparency_taxonomy;flexible_model_description_checklist",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "conceptual_framework",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Audience/object/purpose mapping useful for reporting and comparison;flexible non-exclusive categories;benefits require independent evaluation",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_relevance_rationale",
+    "old": "摘要提出agency/structure/environment/actions-interactions/temporality五构件与透明性分类；规范价值与效果需全文分开。",
+    "new": "明确ABSS构件与透明性概念/用途，支持方法知识地图而非社会行为验证。",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;validation_reference_and_scope",
+    "new": "reader_task_effectiveness;classification_reliability;description_code_process_fidelity;allbackground_references_not_reassessed",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_evidence_location",
+    "old": "Official article abstract and metadata only",
+    "new": "FormalHTML§§3.1–3.16/4.1–4.22/5.1–5.14/6.1–6.4;Tables1–3",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M060",
+    "field": "method_coding_source",
+    "old": "reports/jasss_priority_abstracts_DD.md;batches/method_round2/dd_jasss_priority_abstracts/acquisition_and_abstracts.json",
+    "new": "reading-cards/M060.md;reports/conceptual_transparency_DG.md;batches/method_round2/dg_conceptual_transparency/",
+    "date": "2026-11-28",
+    "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dg_conceptual_transparency/results.json"
   }
 ]

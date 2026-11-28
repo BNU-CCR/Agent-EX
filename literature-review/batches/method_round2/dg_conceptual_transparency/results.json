@@ -1,0 +1,34 @@
+{
+  "batch_id": "DG-conceptual-anatomy-and-transparency-boundaries",
+  "date": "2026-11-28",
+  "expected_master_sha256": "232d4c26f9d980e3e05a696c4abc7cb04fea9413cf148783ae0dd4580a824b6e",
+  "updates": [
+    {
+      "record_id": "M060",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M060.md",
+      "research_question": "如何用概念剖析区分ABSS黑箱的对象、受众和用途，改善说明而不将可获得性当理解或验证？",
+      "method_type": "conceptual_anatomy_framework;epistemic_transparency_taxonomy;flexible_model_description_checklist",
+      "mechanisms": "agency/structure/environment/action/temporality distinction;audience-relative transparency",
+      "findings": "Five non-exclusive elements;four audience-related levels and three criteria;flexible guidance,not efficacy-tested reporting protocol",
+      "reason": "正式全文/日期门通过；概念框架与论证，未将潜在教学/描述收益当受控验证。",
+      "related_versions": "Formal publisher HTML targeted §3–6/Tables1–3 read;no PDF or author-version equivalence claim",
+      "supplement_status": "HTMLAppendixTable3read;no_code_or_experiment",
+      "evidence_location": "FormalHTML§§1.4/3–6;Tables1–3",
+      "relation_to_agent_ex": "分别解释主体能力、局部可见信息、制度/网络约束、具体事件和时间历史。日志可帮助定位过程，但模型解释、读者理解、代码审查和结果效度仍有独立证据要求。只完善文献和写作判断，不改冻结参数/协议。",
+      "method_maturity": "conceptual_framework",
+      "method_evidence_level": "conceptual_claim",
+      "method_transferability": "Audience/object/purpose mapping useful for reporting and comparison;flexible non-exclusive categories;benefits require independent evaluation",
+      "method_relevance_rationale": "明确ABSS构件与透明性概念/用途，支持方法知识地图而非社会行为验证。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "reader_task_effectiveness;classification_reliability;description_code_process_fidelity;allbackground_references_not_reassessed",
+      "method_evidence_location": "FormalHTML§§3.1–3.16/4.1–4.22/5.1–5.14/6.1–6.4;Tables1–3",
+      "method_coding_source": "reading-cards/M060.md;reports/conceptual_transparency_DG.md;batches/method_round2/dg_conceptual_transparency/",
+      "method_last_checked": "2026-11-28",
+      "notes": "摘要提出agency/structure/environment/actions-interactions/temporality五构件与透明性分类；规范价值与效果需全文分开。 本轮仅正式摘要初筛，不增加全文卡、验证单元或成熟度。 DG:formalconceptualpaperread;potentialusesnotmeasuredbenefits;fiveelementsnotstrictschema;transparencyrelativetoaudience/purpose",
+      "search_id": "DD-03;DD-11;DD-12;DG-01;DG-02;DG-03"
+    }
+  ],
+  "new_records": []
+}

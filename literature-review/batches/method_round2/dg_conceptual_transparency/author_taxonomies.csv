@@ -1,0 +1,23 @@
+table_id,category,author_term,evidence_type
+tab1,Levels of transparency,poietic,conceptual taxonomy;not observed efficacy rating
+tab1,Levels of transparency,observational,conceptual taxonomy;not observed efficacy rating
+tab1,Levels of transparency,analytical/critical,conceptual taxonomy;not observed efficacy rating
+tab1,Levels of transparency,participative,conceptual taxonomy;not observed efficacy rating
+tab1,Criteria of transparency,accessibility,conceptual taxonomy;not observed efficacy rating
+tab1,Criteria of transparency,comprehensibility,conceptual taxonomy;not observed efficacy rating
+tab1,Criteria of transparency,surveyability,conceptual taxonomy;not observed efficacy rating
+tab1,Objects of transparency,visualisations,conceptual taxonomy;not observed efficacy rating
+tab1,Objects of transparency,model description,conceptual taxonomy;not observed efficacy rating
+tab1,Objects of transparency,code,conceptual taxonomy;not observed efficacy rating
+tab1,Objects of transparency,processes,conceptual taxonomy;not observed efficacy rating
+tab1,Mediums of transparency,presentation of the model,conceptual taxonomy;not observed efficacy rating
+tab1,Mediums of transparency,research outputs,conceptual taxonomy;not observed efficacy rating
+tab1,Mediums of transparency,model descriptions,conceptual taxonomy;not observed efficacy rating
+tab1,Mediums of transparency,literature reviews,conceptual taxonomy;not observed efficacy rating
+tab2,Sources of transparency,algorithmic causality,conceptual taxonomy;not observed efficacy rating
+tab2,Sources of transparency,relatively simple building blocks,conceptual taxonomy;not observed efficacy rating
+tab2,Sources of transparency,more direct representations,conceptual taxonomy;not observed efficacy rating
+tab2,Sources of opacity,constructive nature,conceptual taxonomy;not observed efficacy rating
+tab2,Sources of opacity,dependency on computers,conceptual taxonomy;not observed efficacy rating
+tab2,Sources of opacity,integrative complexity,conceptual taxonomy;not observed efficacy rating
+tab2,Sources of opacity,variations in modelling elements,conceptual taxonomy;not observed efficacy rating

@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "DG-01",
+    "platform": "local_primary_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read M060§3–6/Appendix andselectedintro1.4",
+    "source_url": "https://www.jasss.org/26/1/4.html",
+    "status": "formal_targeted_read",
+    "notes": "DD officialHTMLreuse;conceptualsource,no new HTTP or efficacy experiment"
+  },
+  {
+    "search_id": "DG-02",
+    "platform": "local_author_taxonomy_transcription",
+    "search_date": "2026-11-28",
+    "query_exact": "Transcribe Tables1/2 and map fiveanatomy elements",
+    "source_url": "https://www.jasss.org/26/1/4.html#tab1",
+    "status": "22author_terms_not_effectiveness_scores",
+    "notes": "DD officialHTMLreuse;conceptualsource,no new HTTP or efficacy experiment"
+  },
+  {
+    "search_id": "DG-03",
+    "platform": "local_evidence_boundary_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Separate audiences/objects/criteria and potential uses",
+    "source_url": "reports/conceptual_transparency_DG.md",
+    "status": "conceptual_grade_not_empirical_upgrade",
+    "notes": "DD officialHTMLreuse;conceptualsource,no new HTTP or efficacy experiment"
+  }
+]

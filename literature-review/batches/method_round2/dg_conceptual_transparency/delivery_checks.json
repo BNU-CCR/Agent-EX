@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-28",
+  "base": "b60820c",
+  "old123_records_unchanged": true,
+  "old72_cards_unchanged": true,
+  "old185_units_unchanged": true,
+  "new_conceptual_units": 3,
+  "new_card": 1,
+  "structure": "73=67heading+6inline;not semantic acceptance",
+  "no_new_http_or_effect_test": true,
+  "author_taxonomy_terms": 22,
+  "source_hash_checked": true,
+  "workbook_sheets": 9,
+  "workbook_rows": [
+    125,
+    53,
+    31,
+    189,
+    1439,
+    42
+  ],
+  "cached_included": 52,
+  "bib_entries": 52,
+  "summary_visual_checked": true
+}
