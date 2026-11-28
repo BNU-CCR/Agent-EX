@@ -7158,5 +7158,485 @@
     "batch": "CT-model-result-correspondence",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ct_model_result_correspondence/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;agent_architecture;environment_design",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要提出LLM政策模拟框架、跨子系统模块、两政策案例及五场景rationality；仅作者摘要主张，未核评价者/数据独立性。",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Official article abstract and citation metadata only",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_inventory_CU.md;batches/method_round2/cu_jasss_inventory/acquisition_manifest.json",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "model_calibration;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要提出normalizing-flow/BayesFlow摊销贝叶斯参数估计与可识别性评估；两例为意见/传染病，不将generative AI自动当LLM。",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Official article abstract and citation metadata only",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_inventory_CU.md;batches/method_round2/cu_jasss_inventory/acquisition_manifest.json",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;model_calibration;reproducibility_and_reporting",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要提出NetLogo–MultiVeStA集成及重复数/warmup/稳态/校准检查；数值保证条件须读全文，不等于人类外部效度。",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Official article abstract and citation metadata only",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_inventory_CU.md;batches/method_round2/cu_jasss_inventory/acquisition_manifest.json",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M054",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要综述九种validation-supporting方法及各自局限；不把方法清单当统一强制标准或作者完成九项验证。",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Official article abstract and citation metadata only",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_inventory_CU.md;batches/method_round2/cu_jasss_inventory/acquisition_manifest.json",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "CU-JASSS-official-2022-2026-inventory",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cu_jasss_inventory/results.json"
   }
 ]

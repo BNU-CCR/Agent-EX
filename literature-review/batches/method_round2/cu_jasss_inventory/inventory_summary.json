@@ -1,0 +1,40 @@
+{
+  "issues_expected": 20,
+  "populated_issue_pages": 19,
+  "empty_issue_pages": 1,
+  "index_entries": 178,
+  "issue_entries": 172,
+  "index_only_entries": 6,
+  "entry_kinds": {
+    "article_unclassified": 168,
+    "book_review": 2,
+    "editorial_or_statement": 4,
+    "corrigendum": 4
+  },
+  "title_triage": {
+    "needs_abstract_screen_not_excluded": 149,
+    "existing_master": 3,
+    "priority_title_lead_abstract_pending": 12,
+    "nonresearch_entry_not_new_empirical_study": 10,
+    "abstract_candidate_added_CU": 4
+  },
+  "year_counts": {
+    "2022": 29,
+    "2023": 46,
+    "2024": 39,
+    "2025": 33,
+    "2026": 31
+  },
+  "original_master_matches": [
+    "R003",
+    "R006",
+    "M013"
+  ],
+  "new_abstract_candidates": [
+    "M052",
+    "M053",
+    "M054",
+    "M055"
+  ],
+  "scope": "Official posted directory through2026-11-28; title triage, only4newabstracts; notallabstract/fulltext/keywordrecall/databasecoverage"
+}

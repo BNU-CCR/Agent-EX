@@ -1,0 +1,274 @@
+[
+  {
+    "url": "https://www.jasss.org/",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\CU_home.html",
+    "bytes": 78,
+    "sha256": "f83d7708e560ba65467c443dbba0e3e96914d32a4ce79d86d7f002eca553f985",
+    "interpretation": "html_meta_refresh_not_journal_body"
+  },
+  {
+    "url": "https://jasss.soc.surrey.ac.uk/",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\CU_archive.html",
+    "bytes": 78,
+    "sha256": "f83d7708e560ba65467c443dbba0e3e96914d32a4ce79d86d7f002eca553f985",
+    "interpretation": "html_meta_refresh_not_journal_body"
+  },
+  {
+    "url": "https://jasss.soc.surrey.ac.uk/index_by_issue.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_index.html",
+    "bytes": 399793,
+    "sha256": "a0b4220634b955f458e068e663cd191707b84435f4f7eb11d2681af3ba19087e",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/25/1/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_25_1.html",
+    "bytes": 4174,
+    "sha256": "72cbe7459429948fede6920a3c5d2369d187da694bb0ce93a609dc4c58404408",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/25/2/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_25_2.html",
+    "bytes": 4093,
+    "sha256": "17d78383b6e2e212ad3083ed3776123210248001208d534268f31df5e6641a8f",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/25/3/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_25_3.html",
+    "bytes": 3749,
+    "sha256": "6a365cbacdc533c49cdf75d73aaaf5b7318f5f9ea94ddd868b2200008e91090b",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/25/4/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_25_4.html",
+    "bytes": 3807,
+    "sha256": "ee1a9c99653bdd42000599676ed235a3509ca2e43a7bffef83b1617a0dac8627",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/26/1/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_26_1.html",
+    "bytes": 4246,
+    "sha256": "70b479390a58592aa2f35bf595a75bed5e73938e109985ec3181a15124c50669",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/26/2/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_26_2.html",
+    "bytes": 5587,
+    "sha256": "9d24a7476dfd96203d34dc0c39571179ad58b033dbf80c254494589c53cec927",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/26/3/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_26_3.html",
+    "bytes": 5375,
+    "sha256": "692806dfd5dac269a30106145009b71284d3fd71876394c3b5891a30442df946",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/26/4/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_26_4.html",
+    "bytes": 4837,
+    "sha256": "97f54ac4ff7e9e6d23eacd9081ea35cce5873e756a1ec53d1e0f1f9429af2a00",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/27/1/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_27_1.html",
+    "bytes": 7249,
+    "sha256": "1a5b5a9d9328719df69695031d5e9411f22987433a6cd4997b41d24c7566198b",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/27/2/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_27_2.html",
+    "bytes": 4386,
+    "sha256": "617a072deed40f378ca3082ce00ae54b3a3086e82f61847d491021ccff72b5ae",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/27/3/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_27_3.html",
+    "bytes": 3406,
+    "sha256": "00a3de8667c1964227ecf6c0c33e78eb7905fcb5ec8fba0b9bbafb654a93853f",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/27/4/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_27_4.html",
+    "bytes": 3771,
+    "sha256": "580fb0cf0eb0f517034e501ccedeeb9a07a2ef340dd67a15f28a2c5ad73b720a",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/28/1/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_28_1.html",
+    "bytes": 3611,
+    "sha256": "2ffaea10e81da4f1a8e0278704131f93b44d0936c29dd3681bf494110d16fb0f",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/28/2/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_28_2.html",
+    "bytes": 40,
+    "sha256": "e7689eb8f3ce25c6646432512afec8a00d7f96a52b9c887600f4450140508afa",
+    "acquisition": "fetched_CU",
+    "interpretation": "200_empty_body_not_zero_articles"
+  },
+  {
+    "url": "https://www.jasss.org/28/3/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_28_3.html",
+    "bytes": 4400,
+    "sha256": "646993d491bc62e7707edc6f1b1a978f5eabf34edf1bb48160ebc73144bf09f3",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/28/4/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_28_4.html",
+    "bytes": 4972,
+    "sha256": "2be750462538eb8fa2c0c9a7a64a3a84a055eb50e7fe6c9bc8ac1bfaec3a20b4",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/29/1/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_29_1.html",
+    "bytes": 3991,
+    "sha256": "c07146f2dc54e23ea6a6735d2128d2a26d54345a6f84f636365a62454bea535b",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/29/2/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_29_2.html",
+    "bytes": 3797,
+    "sha256": "d8325229c68a95c39d9ed7a3b64ed84ce477a2eaebe7246e76e48bbcdf23d377",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/29/3/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_29_3.html",
+    "bytes": 3341,
+    "sha256": "ea3df324dfd806f6eb23490f5ff47fa080acb19b4b0968495cbb435be7da2cb6",
+    "acquisition": "fetched_CU",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://www.jasss.org/29/4/contents.html",
+    "status": 200,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_29_4.html",
+    "bytes": 4595,
+    "sha256": "9a73861379f5294c92dc78aaf961d7a33c4fbe8b4a427e33b17f1ffa8cbf52e1",
+    "acquisition": "prior_CU_call_reused",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "url": "https://jasss.soc.surrey.ac.uk/28/2/contents.html",
+    "status": 200,
+    "bytes": 40,
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_28_2_alternate.html",
+    "sha256": "e7689eb8f3ce25c6646432512afec8a00d7f96a52b9c887600f4450140508afa",
+    "interpretation": "200_empty_body_not_zero_articles"
+  },
+  {
+    "volume": "29",
+    "issue": "1",
+    "date": "31 January 2026",
+    "section": "Articles",
+    "title": "GPLab: A Generative Agent-Based Framework for Policy Simulation and Evaluation",
+    "authors": "Shuhan Zhang, Zifan Peng and Yinwang Ren",
+    "url": "https://www.jasss.org/29/1/6.html",
+    "issue_url": "https://www.jasss.org/29/1/contents.html",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_article_29_1_6.html",
+    "status": 200,
+    "bytes": 137238,
+    "sha256": "99769c1ce40c64e2a446d95014a839f6b7a3084a6d886cdb4cc32d7551739625",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "volume": "29",
+    "issue": "4",
+    "date": "31 October 2026",
+    "section": "Articles",
+    "title": "Assessing Parameter Identifiability in  Agent-Based Models with Bayesian  Amortized Inference",
+    "authors": "Francesco Renzini",
+    "url": "https://www.jasss.org/29/4/10.html",
+    "issue_url": "https://www.jasss.org/29/4/contents.html",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_article_29_4_10.html",
+    "status": 200,
+    "bytes": 253214,
+    "sha256": "04acd6730d7fad1b4b867e67a77a52423411a252cc8141252132899ec239acc4",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "volume": "29",
+    "issue": "4",
+    "date": "31 October 2026",
+    "section": "Articles",
+    "title": "Statistical Model Checking of NetLogo Models",
+    "authors": "Marco Pangallo, Daniele Giachini and Andrea Vandin",
+    "url": "https://www.jasss.org/29/4/5.html",
+    "issue_url": "https://www.jasss.org/29/4/contents.html",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_article_29_4_5.html",
+    "status": 200,
+    "bytes": 131244,
+    "sha256": "d3002f42a9edc57c2b104a7cda42da7cc6945895fcfb38f0b5f38f6cea2006ba",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  },
+  {
+    "volume": "27",
+    "issue": "1",
+    "date": "31 January 2024",
+    "section": "Special section on \"Modelling Values in Social, Technical, and Ecological Systems\"",
+    "title": "Methods That Support the Validation of Agent-Based Models: An Overview and Discussion",
+    "authors": "Andrew Collins, Matthew Koehler and Christopher Lynch",
+    "url": "https://www.jasss.org/27/1/11.html",
+    "issue_url": "https://www.jasss.org/27/1/contents.html",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\JASSS_CU_article_27_1_11.html",
+    "status": 200,
+    "bytes": 209874,
+    "sha256": "ce7e2f5d8dd53d3c60b0906dd212e8f65a2d8ab21c95420d259e91b8927a17ee",
+    "interpretation": "content_acquired_not_all_fulltext_read"
+  }
+]
