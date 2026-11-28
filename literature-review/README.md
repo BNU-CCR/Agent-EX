@@ -55,6 +55,8 @@
 
 - [重复稳定与优化预算](reports/repeat_budget_CQ.md)：EN11附录/Table4/Fig4定点核查。
 
+- [四类证据与双轨主张](reports/evidence_claim_routes_CR.md)：校准/收敛/可识别性/独立效度分别约束当前和后续论文。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

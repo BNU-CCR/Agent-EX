@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "CR-01",
+    "platform": "local_fixed_evidence_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Map calibration fit, numerical convergence, identifiability and independent validity to current/future claims",
+    "source_url": "reports/evidence_claim_routes_CR.md",
+    "status": "synthesis_saved_no_new_source_acquisition",
+    "notes": "Fixedca89ba0;notexperimentornewjournalpolicyverification"
+  }
+]

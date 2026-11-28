@@ -1,0 +1,37 @@
+[
+  {
+    "path": "reports/network_validation_comparison_CO.md",
+    "commit": "ca89ba0",
+    "git_lf_sha256": "e26567a4db4af3803510db2dfe6bb71189d7e319747c1cb4a3c99d93346be768"
+  },
+  {
+    "path": "reports/calibration_boundary_CP.md",
+    "commit": "ca89ba0",
+    "git_lf_sha256": "e0312297558cdfa3a571e0edee21990832a7f972a0fc7a10a1aa1901bb67e01b"
+  },
+  {
+    "path": "reports/repeat_budget_CQ.md",
+    "commit": "ca89ba0",
+    "git_lf_sha256": "042517fe5ba7d37d16fbae2e8f5c448308c0d30dd4f18fd13c0cdbcdd3012932"
+  },
+  {
+    "path": "reading-cards/M025.md",
+    "commit": "ca89ba0",
+    "git_lf_sha256": "98eafd0b7a841b0dee4c848632df5b238677e00249bfc781211f10e611dbbc39"
+  },
+  {
+    "path": "reading-cards/M051.md",
+    "commit": "ca89ba0",
+    "git_lf_sha256": "2ae9ec86cf1b121a057b1a4632b130a4b8a7b0a7b16afec2ce39a87b21151070"
+  },
+  {
+    "path": "reports/two_track_submission_strategy.md",
+    "commit": "ca89ba0",
+    "git_lf_sha256": "6e6a04faafe431a427da9fa2ed1f98908994bf014dd7db1800341b0d26a30394"
+  },
+  {
+    "path": "reports/agent_ex_method_positioning.md",
+    "commit": "ca89ba0",
+    "git_lf_sha256": "db7da91a4c5fc1c7da26505d3b3c4702c00392333eaf24311305f81bad8c10e0"
+  }
+]
