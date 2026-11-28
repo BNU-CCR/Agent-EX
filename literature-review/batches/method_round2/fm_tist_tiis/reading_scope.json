@@ -1,0 +1,34 @@
+{
+  "record_id": "M182",
+  "focused_sections": [
+    "2.1",
+    "3.1",
+    "3.4",
+    "4.1-4.3 selected",
+    "4.5-4.8"
+  ],
+  "visual_pages": [
+    5,
+    16,
+    23
+  ],
+  "visual_objects": [
+    "Table1/theory",
+    "Table3/fidelity",
+    "Table6/privacy"
+  ],
+  "not_checked": [
+    "allmath3.2/3.3",
+    "allplotvalues",
+    "allreferences",
+    "code/data",
+    "paper-generatingrun"
+  ],
+  "preliminary_version": "p4/ref77 says WWW2023 Learning to simulate daily activities via modeling dynamic human needs;notcollated/notseparaterecord",
+  "interpretation": "Generative neural behavior sequence simulation,notLLM or interactingABM;latentneeds/reference/privacy levels separate",
+  "author_table6_epsilon_means": {
+    "Mobile_operator": 1.429,
+    "Foursquare": 0.9735
+  },
+  "epsilon_scope": "Reported Gaussian-overlap peruser estimates,not certified global DP guarantee"
+}

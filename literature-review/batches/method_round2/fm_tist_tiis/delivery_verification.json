@@ -1,0 +1,41 @@
+{
+  "batch": "FM",
+  "date": "2026-11-28",
+  "records": 239,
+  "included": 76,
+  "cards": 89,
+  "units": 260,
+  "venues": 60,
+  "candidates": 31,
+  "date_pending": 14,
+  "source_operations": 1907,
+  "old238_master_rows_unchanged": true,
+  "old257_matrix_rows_unchanged": true,
+  "old58_venue_rows_unchanged": true,
+  "submission_candidates_unchanged": true,
+  "named_entries_mapped": 40,
+  "entries_without_dated_formal_linked_record": [
+    "Simulation Modelling Practice and Theory",
+    "Social Science Research",
+    "ACM Transactions on Interactive Intelligent Systems",
+    "Information Sciences",
+    "Expert Systems with Applications",
+    "Computational Social Science Society meetings"
+  ],
+  "formal_bib": 76,
+  "frontier_bib": 7,
+  "workbook_rows": [
+    28,
+    240,
+    61,
+    32,
+    261,
+    56,
+    1908,
+    16,
+    42,
+    34
+  ],
+  "source_pdf_identity_verified": true,
+  "scope": "Selected identity/method reading and structural checks;not code run or all-field acceptance"
+}

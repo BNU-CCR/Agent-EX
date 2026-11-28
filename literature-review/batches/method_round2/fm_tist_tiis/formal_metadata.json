@@ -1,0 +1,270 @@
+{
+  "3637493": {
+    "DOI": "10.1145/3637493",
+    "title": [
+      "Generating Daily Activities with Need Dynamics"
+    ],
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0003-1701-2588",
+        "authenticated-orcid": false,
+        "given": "Yuan",
+        "family": "Yuan",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Electronic Engineering, Tsinghua University, Beijing, China"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7985-6263",
+        "authenticated-orcid": false,
+        "given": "Jingtao",
+        "family": "Ding",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Electronic Engineering, Tsinghua University, Beijing, China"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-6382-0861",
+        "authenticated-orcid": false,
+        "given": "Huandong",
+        "family": "Wang",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Electronic Engineering, Tsinghua University, Beijing, China"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-0419-5514",
+        "authenticated-orcid": false,
+        "given": "Depeng",
+        "family": "Jin",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Electronic Engineering, Tsinghua University, Beijing, China"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "container-title": [
+      "ACM Transactions on Intelligent Systems and Technology"
+    ],
+    "type": "journal-article",
+    "published-online": {
+      "date-parts": [
+        [
+          2024,
+          2,
+          22
+        ]
+      ]
+    },
+    "published-print": {
+      "date-parts": [
+        [
+          2024,
+          4,
+          30
+        ]
+      ]
+    },
+    "link": [
+      {
+        "URL": "https://dl.acm.org/doi/10.1145/3637493",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://dl.acm.org/doi/pdf/10.1145/3637493",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  },
+  "3594552": {
+    "DOI": "10.1145/3594552",
+    "title": [
+      "Simulation-based Optimization of User Interfaces for Quality-assuring Machine Learning Model Predictions"
+    ],
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-9035-0463",
+        "authenticated-orcid": false,
+        "given": "Yu",
+        "family": "Zhang",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "University of Oxford, The United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-6506-9522",
+        "authenticated-orcid": false,
+        "given": "Martijn",
+        "family": "Tennekes",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Statistics Netherlands, The Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7845-9602",
+        "authenticated-orcid": false,
+        "given": "Tim",
+        "family": "De Jong",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Statistics Netherlands, The Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-9108-3539",
+        "authenticated-orcid": false,
+        "given": "Lyana",
+        "family": "Curier",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Open University of the Netherlands, The Netherlands"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-5310-8723",
+        "authenticated-orcid": false,
+        "given": "Bob",
+        "family": "Coecke",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Oxford, The United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-5320-5729",
+        "authenticated-orcid": false,
+        "given": "Min",
+        "family": "Chen",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "University of Oxford, The United Kingdom"
+          }
+        ],
+        "role": [
+          {
+            "role": "author",
+            "vocabulary": "crossref"
+          }
+        ]
+      }
+    ],
+    "container-title": [
+      "ACM Transactions on Interactive Intelligent Systems"
+    ],
+    "type": "journal-article",
+    "published-online": {
+      "date-parts": [
+        [
+          2024,
+          1,
+          9
+        ]
+      ]
+    },
+    "published-print": {
+      "date-parts": [
+        [
+          2024,
+          3,
+          31
+        ]
+      ]
+    },
+    "link": [
+      {
+        "URL": "https://dl.acm.org/doi/10.1145/3594552",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://dl.acm.org/doi/pdf/10.1145/3594552",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ]
+  }
+}

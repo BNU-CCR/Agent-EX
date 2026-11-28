@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "FM-01",
+    "platform": "public_queries",
+    "search_date": "2026-11-28",
+    "query_exact": "[\"\\\"ACM Transactions on Intelligent Systems and Technology\\\" \\\"social simulation\\\" \\\"2024\\\"\", \"\\\"ACM Transactions on Interactive Intelligent Systems\\\" \\\"large language\\\" \\\"simulation\\\"\", \"\\\"TIST\\\" \\\"generative\\\" \\\"agents\\\" \\\"social\\\"\", \"\\\"ACM Transactions on Intelligent Systems and Technology\\\" \\\"scope\\\" site:acm.org\", \"\\\"ACM Transactions on Interactive Intelligent Systems\\\" \\\"Author Guidelines\\\" site:acm.org\"]",
+    "source_url": "https://fi.ee.tsinghua.edu.cn/~dingjingtao/papers/SAND-TIST24.pdf",
+    "status": "discovered_formal_and_adjacent_leads",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  },
+  {
+    "search_id": "FM-02",
+    "platform": "publisher_deposited_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "TwoDOIsauthors/type/TISTFeb22/TiiSJan9online",
+    "source_url": "https://api.crossref.org/works/10.1145/3637493 | https://api.crossref.org/works/10.1145/3594552",
+    "status": "formal_metadata_confirmed",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  },
+  {
+    "search_id": "FM-03",
+    "platform": "legal_author_pdf",
+    "search_date": "2026-11-28",
+    "query_exact": "28pages3185251bytes/hash;formaltypeset;notpublisherdownload",
+    "source_url": "https://fi.ee.tsinghua.edu.cn/~dingjingtao/papers/SAND-TIST24.pdf",
+    "status": "acquired",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  },
+  {
+    "search_id": "FM-04",
+    "platform": "focused_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "Theory/annotation/training/fidelity/utility/synthetic/privacy/versionrelation selectedsections",
+    "source_url": "reading-cards/M182.md",
+    "status": "focused_fulltext_read",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  },
+  {
+    "search_id": "FM-05",
+    "platform": "visual_check",
+    "search_date": "2026-11-28",
+    "query_exact": "p5Table1/p16Table3/p23Table6andFig17axes/caption",
+    "source_url": "batches/method_round2/fm_tist_tiis/reading_scope.json",
+    "status": "visually_checked",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  },
+  {
+    "search_id": "FM-06",
+    "platform": "official_portal_access",
+    "search_date": "2026-11-28",
+    "query_exact": "Bothjournalhome/attemptedguidepaths403;legacydescriptionsnotcurrentguides",
+    "source_url": "https://dl.acm.org/journal/tist | https://dl.acm.org/journal/tiis",
+    "status": "blocked_content_notverified",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  },
+  {
+    "search_id": "FM-07",
+    "platform": "adjacent_screen",
+    "search_date": "2026-11-28",
+    "query_exact": "TiiS3594552UIoptimizationtask/metadataabstract;notcoreLLMsociety",
+    "source_url": "https://doi.org/10.1145/3594552",
+    "status": "adjacent_not_added_to_master",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  },
+  {
+    "search_id": "FM-08",
+    "platform": "method_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "3units/theory-preimposedvsidentified/fidelityutilitysynthetic/privacy;2venuemapleads",
+    "source_url": "reports/tist_tiis_method_evidence_FM.md",
+    "status": "scoped_integration_notexperiment",
+    "notes": "Groupedoperation notquerycount;no author code or model execution"
+  }
+]

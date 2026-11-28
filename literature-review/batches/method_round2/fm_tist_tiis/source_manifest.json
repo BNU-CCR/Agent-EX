@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-28",
+  "legal_author_pdf": {
+    "url": "https://fi.ee.tsinghua.edu.cn/~dingjingtao/papers/SAND-TIST24.pdf",
+    "status": 200,
+    "bytes": 3185251,
+    "pages": 28,
+    "sha256": "1f90f42396fcd9e0cb3205c0e9490d836e680adead3104c61c41df70dc7bed01"
+  },
+  "crossref": [
+    {
+      "url": "https://api.crossref.org/works/10.1145/3637493",
+      "status": 200,
+      "bytes": 24701,
+      "sha256": "b92aa4a66b606ae8dacd29e9c4e7adc144a268d55ef0fe3a85d390159a258404"
+    },
+    {
+      "url": "https://api.crossref.org/works/10.1145/3594552",
+      "status": 200,
+      "bytes": 35830,
+      "sha256": "341d91d3d36eeb285d18bede3be4c7f4f27a45318acea365fa6dbfa7a0af2fdd"
+    }
+  ],
+  "portal_access": [
+    {
+      "key": "tist_scope",
+      "url": "https://dl.acm.org/journal/tist",
+      "status": 403,
+      "bytes": 5447,
+      "sha256": "40710ad067a42734ad9b1d0c9e28604aeeefc63622b73600b963cc0a2cff8643",
+      "scope": "Attempted official portal;HTTP failure does not certify underlying guide content or exact route"
+    },
+    {
+      "key": "tiis_scope",
+      "url": "https://dl.acm.org/journal/tiis",
+      "status": 403,
+      "bytes": 5447,
+      "sha256": "5397fe204bc384f845ddcfc5093de1eea1fecbe8e8cb9606e207639a18b29519",
+      "scope": "Attempted official portal;HTTP failure does not certify underlying guide content or exact route"
+    },
+    {
+      "key": "tist_guide",
+      "url": "https://dl.acm.org/journal/tist/author-guidelines",
+      "status": 403,
+      "bytes": 5543,
+      "sha256": "635ae3f6e717e8f4f520c432683344424f7e401d9ab9db7bffad1cc4ed7c49fa",
+      "scope": "Attempted official portal;HTTP failure does not certify underlying guide content or exact route"
+    },
+    {
+      "key": "tiis_guide",
+      "url": "https://dl.acm.org/journal/tiis/author-guidelines",
+      "status": 403,
+      "bytes": 5543,
+      "sha256": "d78194eb750670825098b9cb0827ecac2e7517e9992ec0e372377a94ced4a288",
+      "scope": "Attempted official portal;HTTP failure does not certify underlying guide content or exact route"
+    }
+  ],
+  "scope": "TIST focused reading of 28page authorhostedformal-layoutPDF;TiiSmetadata/abstractscreening only;no author code/data/model execution"
+}

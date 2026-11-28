@@ -25468,5 +25468,125 @@
     "batch": "FJ",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_type",
+    "old": "",
+    "new": "nonLLM_neural_generative_behavior_sequence_simulation",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;model_calibration;validation_and_external_validity;measurement",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_transferability",
+    "old": "",
+    "new": "把理论标注/潜在状态、经验分布/下游用途、人工规律和隐私测试分开；不能由单一拟合分数判机制正确。",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "有实际经验数据比较及评价分层，可作生成式行为模拟的方法对照；不是LLM/GABM持续共同体或全面验证成功。",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "independent_repeats/seeds;explicit_person_time_train_test_split;fixed_code_data_run_mapping;real_latent_need_reference;privacy_estimate_proof_scope;formalpublisherPDFcollation;priorWWWversioncollation",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "sec3.1p5/4.1.2p13annotation;Table3p16;4.6pp18-20;4.7pp20-21;4.8pp21-23/Table6p23",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M182.md;reports/tist_tiis_method_evidence_FM.md;batches/method_round2/fm_tist_tiis/reading_scope.json",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M182",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FM",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fm_tist_tiis/results.json"
   }
 ]
