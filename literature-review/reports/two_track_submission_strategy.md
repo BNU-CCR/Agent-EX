@@ -1,3 +1,5 @@
+> DW索引补证（2026-11-28）：JASSS与CCR均在DOAJ官方10月28日快照、Scopus官方10月Active名单中；WoS具体子库未独立确认。索引不代替选题/证据适配，路线优先级不因本项自动上调。[原始匹配与限制](priority_journal_index_DW.md)。
+
 > DU现行入口：[九问题综合](methods_review_current_synthesis.md)已更新；本报告标题下有当前判读，旧批数量只作快照。
 
 > DF现行整合：[三研究推断与统计主张](uncertainty_claims_DF.md)及[九问题正文](methods_review_current_synthesis.md)已更新。124条/72卡/185单元、51纳入；区间宽度、覆盖、识别和外部效度分开，下列批次旧数量按历史理解。

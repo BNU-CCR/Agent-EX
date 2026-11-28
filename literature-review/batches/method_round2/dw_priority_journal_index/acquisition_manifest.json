@@ -1,0 +1,52 @@
+[
+  {
+    "kind": "DOAJ_official_public_CSV",
+    "url": "https://doaj.org/csv",
+    "status": 200,
+    "bytes": 26044241,
+    "sha256": "ad2ab675f5a9df9938c16645d1a0b5b8491c8dd20f3feb3e5a8815892e07eba3",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DW_DOAJ_public.csv",
+    "last_modified": "Wed, 28 Oct 2026 23:36:19 GMT",
+    "content_type": "binary/octet-stream"
+  },
+  {
+    "kind": "Elsevier_official_Source_title_list",
+    "url": "https://downloads.ctfassets.net/o78em1y1w4i4/7xtaTxNiNcWRTeZkV86eNy/a88a2798510dc7f7888e80dc03ec0779/ext_list_Oct_2026.xlsx",
+    "status": 200,
+    "bytes": 26707632,
+    "sha256": "1956c0d73b61459d634ae1a1a33fc118cba1e9ef60a1a715aebaa64c2a0dccce",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DW_Scopus_ext_list_Oct_2026.xlsx",
+    "last_modified": "Fri, 13 Nov 2026 09:48:13 GMT",
+    "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  },
+  {
+    "kind": "Scopus_content_primary_download_page",
+    "url": "https://www.elsevier.com/en-au/products/scopus/content",
+    "status": 200,
+    "bytes": 287879,
+    "sha256": "122e02f1144dabc0abfe34717ef3aa8eefe10eb97978ec5ebaa5bf40b022eea1",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DW_Scopus_content_primary_download_page.html",
+    "last_modified": null,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "kind": "DOAJ_public_csv_documentation",
+    "url": "https://doaj.org/docs/journal-csv",
+    "status": 200,
+    "bytes": 55636,
+    "sha256": "5839d98d0d19b00fdb937aa73df3bf0031a86b78d4dd16ff8500bd91517f8033",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DW_DOAJ_public_csv_documentation.html",
+    "last_modified": null,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "kind": "JASSS_current_submit_fee_recheck",
+    "url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": 200,
+    "bytes": 29079,
+    "sha256": "6e1b293c9fe5db10aa743abd4d18b13d7364f222fc7292eb9d83cd701f9564a6",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DW_JASSS_current_submit_fee_recheck.html",
+    "last_modified": "Mon, 12 Oct 2026 13:44:02 GMT",
+    "content_type": "text/html; charset=UTF-8"
+  }
+]

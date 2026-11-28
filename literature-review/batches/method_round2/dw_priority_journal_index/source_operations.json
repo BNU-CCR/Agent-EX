@@ -1,0 +1,83 @@
+[
+  {
+    "search_id": "DW-01",
+    "platform": "primary_index_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Public primary-domain searches for JASSS/CCR DOAJ/MJL/Scopus sources",
+    "source_url": "https://doaj.org/docs/journal-csv",
+    "status": "primary_sources_located",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-02",
+    "platform": "doaj_official_snapshot",
+    "search_date": "2026-11-28",
+    "query_exact": "Download official public CSV; exact normalized ISSN matching of both titles",
+    "source_url": "https://doaj.org/csv",
+    "status": "200_two_exact_matches",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-03",
+    "platform": "mjl_and_issn_access",
+    "search_date": "2026-11-28",
+    "query_exact": "MJL JS shell; ISSN1460-7425/2665-9085 Anubis access denied; no collection verdict",
+    "source_url": "https://mjl.clarivate.com/home",
+    "status": "blocked_collection_verification",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-04",
+    "platform": "browser_fallback",
+    "search_date": "2026-11-28",
+    "query_exact": "Attempt hidden in-app MJL tab; tool reports local browser unavailable; no tab created",
+    "source_url": "https://mjl.clarivate.com/home",
+    "status": "local_browser_unavailable",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-05",
+    "platform": "scopus_official_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Official Scopus support and content page; linked public title list rather than publisher claim",
+    "source_url": "https://www.elsevier.com/en-au/products/scopus/content",
+    "status": "official_download_link_located",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-06",
+    "platform": "scopus_official_snapshot",
+    "search_date": "2026-11-28",
+    "query_exact": "Download official Oct2026 workbook; exact ISSN two matches, Active; all sheets scanned",
+    "source_url": "https://downloads.ctfassets.net/o78em1y1w4i4/7xtaTxNiNcWRTeZkV86eNy/a88a2798510dc7f7888e80dc03ec0779/ext_list_Oct_2026.xlsx",
+    "status": "200_two_active_matches",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-07",
+    "platform": "primary_pages_archive",
+    "search_date": "2026-11-28",
+    "query_exact": "Save/hash Scopus content page and DOAJ CSV documentation; verify XLSX asset link",
+    "source_url": "https://www.elsevier.com/en-au/products/scopus/content",
+    "status": "200_static_pages",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-08",
+    "platform": "jasss_fee_conflict_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "Current official submit HTML confirms EUR800 ex applicable VAT versus DOAJ catalog EUR1000; no waiver eligibility inferred",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": "200_fee_conflict_preserved",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  },
+  {
+    "search_id": "DW-09",
+    "platform": "local_index_reconciliation",
+    "search_date": "2026-11-28",
+    "query_exact": "Reconcile snapshot IDs/status/coverage and update only two venue rows; no article or experiment upgrade",
+    "source_url": "literature-review/batches/method_round2/dw_priority_journal_index",
+    "status": "local_synthesis",
+    "notes": "Grouped auditable source operations; not query/call count. Snapshot evidence, no WoS conclusion or article-level coverage guarantee."
+  }
+]

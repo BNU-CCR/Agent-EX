@@ -1,0 +1,60 @@
+{
+  "facts": [
+    {
+      "venue_id": "JASSS",
+      "normalized_issn": "14607425",
+      "scopus_source_id": "15591",
+      "scopus_title": "JASSS",
+      "scopus_snapshot": "October 2026",
+      "scopus_sheet": "Scopus Sources Oct. 2026",
+      "scopus_excel_row": 23469,
+      "scopus_active": "Active",
+      "scopus_coverage": "2000-2026",
+      "scopus_discontinued_field": "",
+      "scopus_publisher": "University of Surrey",
+      "doaj_url": "https://doaj.org/toc/1d978b2cf142410284376f1f84219b6a",
+      "doaj_snapshot_http_last_modified": "2026-10-28T23:36:19Z",
+      "doaj_row_updated": "2026-06-18T12:38:33Z",
+      "wos_collection": "not independently verified",
+      "checked": "2026-11-28"
+    },
+    {
+      "venue_id": "CCR",
+      "normalized_issn": "26659085",
+      "scopus_source_id": "21101152530",
+      "scopus_title": "Computational Communication Research",
+      "scopus_snapshot": "October 2026",
+      "scopus_sheet": "Scopus Sources Oct. 2026",
+      "scopus_excel_row": 10051,
+      "scopus_active": "Active",
+      "scopus_coverage": "2019-2026",
+      "scopus_discontinued_field": "",
+      "scopus_publisher": "Amsterdam University Press",
+      "doaj_url": "https://doaj.org/toc/2c3f488908234bbe89cce5337afbc2a1",
+      "doaj_snapshot_http_last_modified": "2026-10-28T23:36:19Z",
+      "doaj_row_updated": "2025-01-27T16:50:52Z",
+      "wos_collection": "not independently verified",
+      "checked": "2026-11-28"
+    }
+  ],
+  "boundaries": [
+    "DOAJ and Scopus snapshots do not establish SSCI/SCIE/ESCI",
+    "Active source and coverage year do not establish every article indexed",
+    "JASSS publisher metadata differ between Scopus and DOAJ; no harmonization inferred",
+    "DOAJ fee differs from current JASSS official submit; publisher fee rechecked, catalog retained"
+  ],
+  "access_failures": [
+    {
+      "url": "https://mjl.clarivate.com/home",
+      "observed": "web tool JS shell; in-app browser unavailable"
+    },
+    {
+      "url": "https://portal.issn.org/resource/ISSN/1460-7425",
+      "observed": "web tool Anubis Access Denied"
+    },
+    {
+      "url": "https://portal.issn.org/resource/ISSN/2665-9085",
+      "observed": "web tool Anubis Access Denied"
+    }
+  ]
+}

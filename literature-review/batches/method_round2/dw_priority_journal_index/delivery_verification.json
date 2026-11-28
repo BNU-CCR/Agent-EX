@@ -1,0 +1,25 @@
+{
+  "batch": "DW",
+  "base": "5a23c60",
+  "checked": "2026-11-28",
+  "only_venue_rows_changed": [
+    "JASSS",
+    "CCR"
+  ],
+  "acquisition_hashes_verified": 5,
+  "master_matrix_CU_bibliographies_unchanged": true,
+  "scopus_exact_ISSN_active_matches": 2,
+  "doaj_exact_ISSN_matches": 2,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    214,
+    1657,
+    42
+  ],
+  "max_text_length": 29215,
+  "formal_bib_entries": 57,
+  "frontier_bib_entries": 8,
+  "limits": "Source snapshots; no WoS collection confirmation, article-level coverage guarantee, experiment or whole-policy refresh. Visual layout/counts unchanged from DT; no new rendering claim."
+}
