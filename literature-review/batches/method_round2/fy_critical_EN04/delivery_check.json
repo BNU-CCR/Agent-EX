@@ -1,0 +1,15 @@
+{
+  "checked": "2026-11-28",
+  "only_EN04_method_source_fields_and_check_date": [
+    "method_pending_fields",
+    "method_evidence_location",
+    "method_coding_source",
+    "method_last_checked"
+  ],
+  "records": 241,
+  "included": 79,
+  "no_new_card_unit_or_grade": true,
+  "export_completed": true,
+  "correction": "Initial check omitted last_checked date; corrected to four intended fields. Unpushed temporary exports moved outside repository.",
+  "scope": "Singlecriticalversioncheck;notnewfullaudit"
+}

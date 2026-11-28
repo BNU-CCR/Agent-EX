@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "FY-01",
+    "platform": "official_version_history",
+    "search_date": "2026-11-28",
+    "query_exact": "arXiv2410.13909officialhistoryonlyv1Oct16_2024;no newer authormanuscript displayed",
+    "source_url": "https://arxiv.org/abs/2410.13909",
+    "status": "version_history_confirmed",
+    "notes": "No new body reread/download"
+  },
+  {
+    "search_id": "FY-02",
+    "platform": "primary_institution_and_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Twoexacttitle/DOIqueries;Rutgersauthor->article200;formalabstractHiggsqualitativeplausibility;DOIonlynofile",
+    "source_url": "https://www.researchwithrutgers.org/en/publications/large-language-model-driven-multi-agent-simulation-for-fake-news-/",
+    "status": "formal_abstract_only_no_body",
+    "notes": "No new journal date inference or fulltext upgrade"
+  },
+  {
+    "search_id": "FY-03",
+    "platform": "critical_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Refine current novelty/empirical-anchor discussion;do not equate qualitativeplausibility and predictivevalidation",
+    "source_url": "reports/EN04_critical_version_FY.md",
+    "status": "core_comparison_updated",
+    "notes": "Time-limited;no general audit or expansion"
+  }
+]

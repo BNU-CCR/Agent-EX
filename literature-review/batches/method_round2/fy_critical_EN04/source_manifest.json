@@ -1,0 +1,48 @@
+{
+  "arxiv": {
+    "url": "https://arxiv.org/abs/2410.13909",
+    "status": 200,
+    "bytes": 41872,
+    "sha256": "a0e345c6fe94cf5310b77716379dcfd9dd9d28834a9f2678d894d2ccbc9800f3",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FY_EN04_arxiv.response"
+  },
+  "institution": [
+    {
+      "url": "https://www.researchwithrutgers.org/en/persons/yongfeng-zhang/",
+      "status": 200,
+      "bytes": 127199,
+      "sha256": "dd40d70642c1ce77bf8a3198536e61e8dcc47f701464416dc53cb1ef541fffe7",
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FY_EN04_rutgers_author.response",
+      "article_links": [
+        "https://www.researchwithrutgers.org/en/publications/large-language-model-driven-multi-agent-simulation-for-fake-news-/"
+      ]
+    },
+    {
+      "url": "https://www.researchwithrutgers.org/en/publications/large-language-model-driven-multi-agent-simulation-for-fake-news-/",
+      "status": 200,
+      "bytes": 51320,
+      "sha256": "cba96ae49d37c64cace6a234b0b6167ff7f6ce22940f978ee7803ce2e7cfe01b",
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FY_EN04_rutgers_article.response",
+      "fulltext_links": [
+        {
+          "text": "https://doi.org/10.5117/CCR2026.2.8.LI",
+          "url": "https://doi.org/10.5117/CCR2026.2.8.LI"
+        },
+        {
+          "text": "10.5117/CCR2026.2.8.LI",
+          "url": "https://doi.org/10.5117/CCR2026.2.8.LI"
+        },
+        {
+          "text": "https://doi.org/10.5117/CCR2026.2.8.LI",
+          "url": "https://doi.org/10.5117/CCR2026.2.8.LI"
+        },
+        {
+          "text": "https://doi.org/10.5117/CCR2026.2.8.LI",
+          "url": "https://doi.org/10.5117/CCR2026.2.8.LI"
+        }
+      ]
+    }
+  ],
+  "history": "onlyv1dated2024-10-16displayed2026-11-28",
+  "scope": "officialhistoryandformalabstract;noformalbodydownload;noindependentvalidation"
+}

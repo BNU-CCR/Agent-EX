@@ -26158,5 +26158,45 @@
     "batch": "FX",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fx_final_method_limits/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_coding_source",
+    "old": "reading-cards/EN04.md;reports/news_diffusion_author_version_BW.md;arXiv2410.13909v1_PDF",
+    "new": "reading-cards/EN04.md;reports/news_diffusion_author_version_BW.md;arXiv2410.13909v1_PDF;reports/EN04_critical_version_FY.md;batches/method_round2/fy_critical_EN04/source_manifest.json",
+    "date": "2026-11-28",
+    "batch": "FY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fy_critical_EN04/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_evidence_location",
+    "old": "authorv1§3–6;Table2p4;Fig2–8;data/news_diffusion_density_checks_BW.json",
+    "new": "authorv1§3–6;Table2p4;Fig2–8;data/news_diffusion_density_checks_BW.json;FYofficialarXivhistoryonlyv1;Rutgersformal2026abstract_Higgsqualitativeplausibility_notbody",
+    "date": "2026-11-28",
+    "batch": "FY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fy_critical_EN04/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_pending_fields",
+    "old": "formal_body_Higgs_rulebaseline;seed_count/pairedunits;startup_exclusion_denominators;graph_density_definition_code;model_snapshot/parse/retries;formal_author_version_comparison",
+    "new": "formal_body_Higgs_rulebaseline;seed_count/pairedunits;startup_exclusion_denominators;graph_density_definition_code;model_snapshot/parse/retries;formal_author_version_comparison;formalHiggs_quantitative_claim_and_holdout_unverified_not_absence",
+    "date": "2026-11-28",
+    "batch": "FY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fy_critical_EN04/results.json"
+  },
+  {
+    "record_id": "EN04",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fy_critical_EN04/results.json"
   }
 ]

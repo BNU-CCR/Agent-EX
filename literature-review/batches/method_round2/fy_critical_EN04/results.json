@@ -1,0 +1,15 @@
+{
+  "batch_id": "FY",
+  "date": "2026-11-28",
+  "expected_master_sha256": "bb00db8c72575d7989a2067c88709ddc6844eae94ad72c795d6192a47d937cdb",
+  "updates": [
+    {
+      "record_id": "EN04",
+      "method_coding_source": "reading-cards/EN04.md;reports/news_diffusion_author_version_BW.md;arXiv2410.13909v1_PDF;reports/EN04_critical_version_FY.md;batches/method_round2/fy_critical_EN04/source_manifest.json",
+      "method_evidence_location": "authorv1§3–6;Table2p4;Fig2–8;data/news_diffusion_density_checks_BW.json;FYofficialarXivhistoryonlyv1;Rutgersformal2026abstract_Higgsqualitativeplausibility_notbody",
+      "method_pending_fields": "formal_body_Higgs_rulebaseline;seed_count/pairedunits;startup_exclusion_denominators;graph_density_definition_code;model_snapshot/parse/retries;formal_author_version_comparison;formalHiggs_quantitative_claim_and_holdout_unverified_not_absence",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}
