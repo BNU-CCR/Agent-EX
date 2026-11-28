@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-27",
-  "batch": "CN",
+  "date": "2026-11-28",
+  "batch": "CV",
   "cards": [
     {
       "path": "reading-cards/CN006.md",
@@ -934,6 +934,44 @@
       "format": "heading"
     },
     {
+      "path": "reading-cards/M051.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M052.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
       "path": "reading-cards/R001.md",
       "heading_numbers": [
         1,
@@ -1217,29 +1255,10 @@
       "inline_numbers": [],
       "recognized11": true,
       "format": "heading"
-    },
-    {
-      "path": "reading-cards/M051.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
     }
   ],
-  "heading11": 59,
+  "heading11": 60,
   "inline11": 6,
-  "recognized11": 65,
+  "recognized11": 66,
   "boundary": "Structure recognition only, not semantic acceptance or complete primary evidence audit"
 }

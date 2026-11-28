@@ -187,3 +187,5 @@
 - [模型清单与结果对应](reports/model_result_correspondence_CT.md)：96评分全部匹配；Qwen3范围与2100轨迹文件形状边界。
 
 - [JASSS官方目录核查](reports/jasss_inventory_CU.md)：20期/178条身份对账、空目录页边界与四个新增摘要候选。
+
+- [GPLab评价证据分层](reports/gplab_evaluation_CV.md)：正式全文/新卡，初始化、LLMjudge、提示配置与SD边界。

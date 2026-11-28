@@ -1,0 +1,16 @@
+policy_id,policy,actions,subsystems,model,mean_score,sd_score,token_usage_K
+1,Housing Restrict,3,2,glm-4-9b-chat,8.2,0.1,3268
+1,Housing Restrict,3,2,llama3.1-8B-Instruct,7.9,0.2,3143
+1,Housing Restrict,3,2,Qwen3-8B,7.5,0.4,4502
+2,Medical Reform,3,2,glm-4-9b-chat,8.4,0.2,2647
+2,Medical Reform,3,2,llama3.1-8B-Instruct,7.8,0.3,2409
+2,Medical Reform,3,2,Qwen3-8B,7.8,0.2,4345
+3,Education Equity,3,2,glm-4-9b-chat,7.8,0.3,2768
+3,Education Equity,3,2,llama3.1-8B-Instruct,8.2,0.2,3011
+3,Education Equity,3,2,Qwen3-8B,8.2,0.3,5060
+4,Health Code,9,3,glm-4-9b-chat,7.4,0.4,3518
+4,Health Code,9,3,llama3.1-8B-Instruct,7.7,0.3,3480
+4,Health Code,9,3,Qwen3-8B,7.6,0.6,4577
+5,Tax Incentive,11,4,glm-4-9b-chat,8.2,0.5,5629
+5,Tax Incentive,11,4,llama3.1-8B-Instruct,8.1,0.2,5050
+5,Tax Incentive,11,4,Qwen3-8B,7.5,0.4,7338

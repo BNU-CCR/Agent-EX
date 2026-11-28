@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "CV-01",
+    "platform": "local_primary_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read GPLab official §§3–6/AppendicesB–F and Table2/4; distinguish initialisation, judge, uncertainty",
+    "source_url": "https://www.jasss.org/29/1/6.html",
+    "status": "formal_html_targeted_fulltext_read_reused_CU",
+    "notes": "source_reuse hash; no refetch; Table4 15cells"
+  },
+  {
+    "search_id": "CV-02",
+    "platform": "static_http_get_and_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read Algorithm1 image in AppendixE",
+    "source_url": "https://www.jasss.org/29/1/6/Algo1.png",
+    "status": "200_png_hash_verified_visually_read",
+    "notes": "Agent emotion/perception/retrieval/prompt/LLM/actionmemory sequence; not eventcommit semantics or codeexecution"
+  },
+  {
+    "search_id": "CV-03",
+    "platform": "local_table_transcription",
+    "search_date": "2026-11-28",
+    "query_exact": "Transcribe Table4 score mean/SD and token units",
+    "source_url": "batches/method_round2/cv_gplab_evaluation/table4_transcription.csv",
+    "status": "15_model_policy_cells_transcribed",
+    "notes": "Fivepromptconfigurationspercellreported;SDnotCI;not75authenticatedindependentruns;tokenaggregationpending"
+  }
+]

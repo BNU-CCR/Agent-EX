@@ -1,0 +1,30 @@
+{
+  "batch_id": "CV-GPLab-evaluation-boundaries",
+  "date": "2026-11-28",
+  "expected_master_sha256": "201506cb75d1532aea0911a1fcf1d105a95ec07bdaae2b9f241ecf9b2bf6104e",
+  "updates": [
+    {
+      "record_id": "M052",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M052.md",
+      "research_question": "LLM主体与模块化社会子系统能否支持跨政策模拟；内部一致与LLM逻辑评分支持什么主张？",
+      "method_type": "llm_generative_abm;modular_policy_simulation;llm_judge_evaluation",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "controlled_comparison",
+      "method_contribution_type": "simulation_paradigm;agent_architecture;environment_design;memory_and_persona;interaction_protocol;measurement;validation_and_external_validity",
+      "method_transferability": "modular agent/subsystem design and evaluation separation transferable;humanpolicyvaliditynotestablishedbyinternalconsistencyorLLMjudge",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "exactmodelrevision;simulationseed/temperature;judgeidentity_microconsistency;traitstabilitythreshold;tokenaggregation;code_run_correspondence",
+      "method_evidence_location": "Official §§3–6; Tables2–4; AppendicesB–F; Algorithm1 visual",
+      "method_coding_source": "reading-cards/M052.md;reports/gplab_evaluation_CV.md;batches/method_round2/cv_gplab_evaluation/source_reuse.json",
+      "method_last_checked": "2026-11-28",
+      "findings": "N500CGSSinitialisation separate from humanvalidation;DeepSeekR1policylogicjudge;fivepromptorderconfigurationspermodelpolicycell;SDnotCI",
+      "notes": "摘要提出LLM政策模拟框架、跨子系统模块、两政策案例及五场景rationality；仅作者摘要主张，未核评价者/数据独立性。 | Publication date is official; content/validation scope pending fulltext. No card or evidence unit added. | CV:formalHTMLtargetedread;internalcrossmodel/promptcomparisononly;notindependenthumanvalidation;noCodeexecution",
+      "search_id": "CU-28;CV-01;CV-02;CV-03",
+      "reason": "正式全文与日期门通过；LLM政策模拟架构/内部配置比较为方法核心，独立政策效度和制品运行对应仍未核。",
+      "supplement_status": "official_AppendicesB-F_read_Algorithm1_viewed_repository_not_checked"
+    }
+  ],
+  "new_records": []
+}

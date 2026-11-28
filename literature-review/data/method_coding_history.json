@@ -7638,5 +7638,95 @@
     "batch": "CU-JASSS-official-2022-2026-inventory",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cu_jasss_inventory/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "llm_generative_abm;modular_policy_simulation;llm_judge_evaluation",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_contribution_type",
+    "old": "simulation_paradigm;agent_architecture;environment_design",
+    "new": "simulation_paradigm;agent_architecture;environment_design;memory_and_persona;interaction_protocol;measurement;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "modular agent/subsystem design and evaluation separation transferable;humanpolicyvaliditynotestablishedbyinternalconsistencyorLLMjudge",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type",
+    "new": "exactmodelrevision;simulationseed/temperature;judgeidentity_microconsistency;traitstabilitythreshold;tokenaggregation;code_run_correspondence",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_evidence_location",
+    "old": "Official article abstract and citation metadata only",
+    "new": "Official §§3–6; Tables2–4; AppendicesB–F; Algorithm1 visual",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M052",
+    "field": "method_coding_source",
+    "old": "reports/jasss_inventory_CU.md;batches/method_round2/cu_jasss_inventory/acquisition_manifest.json",
+    "new": "reading-cards/M052.md;reports/gplab_evaluation_CV.md;batches/method_round2/cv_gplab_evaluation/source_reuse.json",
+    "date": "2026-11-28",
+    "batch": "CV-GPLab-evaluation-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cv_gplab_evaluation/results.json"
   }
 ]
