@@ -1,0 +1,22 @@
+{
+  "base": "da5409e",
+  "requirement_ids_preserved": 66,
+  "primary_record_matrix_venue_rows_unchanged": true,
+  "card_structure87": true,
+  "policy_lexical_cells": 210,
+  "coverage_entries": 41,
+  "literalpartial": 35,
+  "boundedabstractinventory": 1,
+  "other40notwholeinventorycertified": true,
+  "workbook_rows": [
+    238,
+    55,
+    31,
+    253,
+    1763,
+    12,
+    42
+  ],
+  "status": "passed",
+  "limits": "No full semantic re-review of87cards or new primaryweb/policy/modelrun;no overallcompletionclaim"
+}

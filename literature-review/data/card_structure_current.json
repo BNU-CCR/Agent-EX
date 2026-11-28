@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "batch": "DT",
+  "batch": "EQ",
   "cards": [
     {
       "path": "reading-cards/R001.md",
@@ -1485,7 +1485,159 @@
       "format": "heading"
     },
     {
+      "path": "reading-cards/M147.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
       "path": "reading-cards/M161.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M174.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M175.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M176.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M177.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M178.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M179.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M180.md",
       "heading_numbers": [
         1,
         2,
@@ -1504,8 +1656,8 @@
       "format": "heading"
     }
   ],
-  "heading11": 73,
+  "heading11": 81,
   "inline11": 6,
-  "recognized11": 79,
-  "boundary": "Structure recognition only, not semantic acceptance or complete primary evidence audit"
+  "recognized11": 87,
+  "boundary": "Numbering structure only;notsemanticacceptance orfullsourceaudit"
 }

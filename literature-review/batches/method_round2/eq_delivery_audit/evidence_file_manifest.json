@@ -1,0 +1,828 @@
+[
+  {
+    "requirement_id": "R2-2.1",
+    "path": "data/round1_preservation_manifest.json",
+    "bytes": 3689,
+    "sha256": "5a890538af1b3dafd398ba265569448c3533787410e24094eae1ca32b4db75a8",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-2.1",
+    "path": "reports/methods_validation.json",
+    "bytes": 1429,
+    "sha256": "48ae0a3227b5a8f7f738328e96924bf09eda59d8603100c77fdd7f2b3a26ed47",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-2.2",
+    "path": "protocol/method_coding_rules.md",
+    "bytes": 4663,
+    "sha256": "0d83a469f851b85baddf9de9750ee45f69751deb959b702178ed6a6819e76243",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-2.2",
+    "path": "reports/method_reclassification.md",
+    "bytes": 12655,
+    "sha256": "0cbe74b1f5918c08a65fbae1a9026baad3859e828831c20d5973ef6df2c6e3a9",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.1",
+    "path": "data/search_log.csv",
+    "bytes": 688233,
+    "sha256": "8ac18b132941cace305c177c34bf004d81636808dfa9b4f1a4601e0b5fbe79fd",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.1",
+    "path": "data/delivery_requirement_audit.json",
+    "bytes": 42624,
+    "sha256": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.1",
+    "path": "reports/method_landscape.md",
+    "bytes": 19932,
+    "sha256": "dbc783160d11bdd8505e92976e928ea3be47a3133830a797560a6e66311b7452",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.1",
+    "path": "data/topic_search_probes_DV.csv",
+    "bytes": 2842,
+    "sha256": "d446c9b4dc7a1fc01f5ac39ce3a7434f4cc315229d599868a2a78c7464009168",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.1",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.2",
+    "path": "data/search_log.csv",
+    "bytes": 688233,
+    "sha256": "8ac18b132941cace305c177c34bf004d81636808dfa9b4f1a4601e0b5fbe79fd",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.2",
+    "path": "data/delivery_requirement_audit.json",
+    "bytes": 42624,
+    "sha256": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.2",
+    "path": "reports/method_landscape.md",
+    "bytes": 19932,
+    "sha256": "dbc783160d11bdd8505e92976e928ea3be47a3133830a797560a6e66311b7452",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.2",
+    "path": "data/topic_search_probes_DV.csv",
+    "bytes": 2842,
+    "sha256": "d446c9b4dc7a1fc01f5ac39ce3a7434f4cc315229d599868a2a78c7464009168",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.2",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.3",
+    "path": "data/search_log.csv",
+    "bytes": 688233,
+    "sha256": "8ac18b132941cace305c177c34bf004d81636808dfa9b4f1a4601e0b5fbe79fd",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.3",
+    "path": "data/delivery_requirement_audit.json",
+    "bytes": 42624,
+    "sha256": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.3",
+    "path": "reports/method_landscape.md",
+    "bytes": 19932,
+    "sha256": "dbc783160d11bdd8505e92976e928ea3be47a3133830a797560a6e66311b7452",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.3",
+    "path": "data/topic_search_probes_DV.csv",
+    "bytes": 2842,
+    "sha256": "d446c9b4dc7a1fc01f5ac39ce3a7434f4cc315229d599868a2a78c7464009168",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.3",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.4",
+    "path": "data/search_log.csv",
+    "bytes": 688233,
+    "sha256": "8ac18b132941cace305c177c34bf004d81636808dfa9b4f1a4601e0b5fbe79fd",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.4",
+    "path": "data/delivery_requirement_audit.json",
+    "bytes": 42624,
+    "sha256": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.4",
+    "path": "reports/method_landscape.md",
+    "bytes": 19932,
+    "sha256": "dbc783160d11bdd8505e92976e928ea3be47a3133830a797560a6e66311b7452",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.4",
+    "path": "data/topic_search_probes_DV.csv",
+    "bytes": 2842,
+    "sha256": "d446c9b4dc7a1fc01f5ac39ce3a7434f4cc315229d599868a2a78c7464009168",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.4",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.5",
+    "path": "data/search_log.csv",
+    "bytes": 688233,
+    "sha256": "8ac18b132941cace305c177c34bf004d81636808dfa9b4f1a4601e0b5fbe79fd",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.5",
+    "path": "data/delivery_requirement_audit.json",
+    "bytes": 42624,
+    "sha256": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.5",
+    "path": "reports/method_landscape.md",
+    "bytes": 19932,
+    "sha256": "dbc783160d11bdd8505e92976e928ea3be47a3133830a797560a6e66311b7452",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.5",
+    "path": "data/topic_search_probes_DV.csv",
+    "bytes": 2842,
+    "sha256": "d446c9b4dc7a1fc01f5ac39ce3a7434f4cc315229d599868a2a78c7464009168",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.5",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.6",
+    "path": "data/search_log.csv",
+    "bytes": 688233,
+    "sha256": "8ac18b132941cace305c177c34bf004d81636808dfa9b4f1a4601e0b5fbe79fd",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.6",
+    "path": "data/delivery_requirement_audit.json",
+    "bytes": 42624,
+    "sha256": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.6",
+    "path": "reports/method_landscape.md",
+    "bytes": 19932,
+    "sha256": "dbc783160d11bdd8505e92976e928ea3be47a3133830a797560a6e66311b7452",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.6",
+    "path": "data/topic_search_probes_DV.csv",
+    "bytes": 2842,
+    "sha256": "d446c9b4dc7a1fc01f5ac39ce3a7434f4cc315229d599868a2a78c7464009168",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-3.6",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.1",
+    "path": "data/venue_coverage_audit.csv",
+    "bytes": 17991,
+    "sha256": "f59fb7f1b05e0dca400959699284b4022885db2683ee038e58183a048c99bc79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.1",
+    "path": "data/method_venue_map.csv",
+    "bytes": 131537,
+    "sha256": "138fda60806b396c6bd6f412337cfeccb79f5763b0086ff3166bbd5f88a443ed",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.2",
+    "path": "data/venue_coverage_audit.csv",
+    "bytes": 17991,
+    "sha256": "f59fb7f1b05e0dca400959699284b4022885db2683ee038e58183a048c99bc79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.2",
+    "path": "data/method_venue_map.csv",
+    "bytes": 131537,
+    "sha256": "138fda60806b396c6bd6f412337cfeccb79f5763b0086ff3166bbd5f88a443ed",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.3",
+    "path": "data/venue_coverage_audit.csv",
+    "bytes": 17991,
+    "sha256": "f59fb7f1b05e0dca400959699284b4022885db2683ee038e58183a048c99bc79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.3",
+    "path": "data/method_venue_map.csv",
+    "bytes": 131537,
+    "sha256": "138fda60806b396c6bd6f412337cfeccb79f5763b0086ff3166bbd5f88a443ed",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.4",
+    "path": "data/venue_coverage_audit.csv",
+    "bytes": 17991,
+    "sha256": "f59fb7f1b05e0dca400959699284b4022885db2683ee038e58183a048c99bc79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.4",
+    "path": "data/method_venue_map.csv",
+    "bytes": 131537,
+    "sha256": "138fda60806b396c6bd6f412337cfeccb79f5763b0086ff3166bbd5f88a443ed",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.5",
+    "path": "data/method_venue_map.csv",
+    "bytes": 131537,
+    "sha256": "138fda60806b396c6bd6f412337cfeccb79f5763b0086ff3166bbd5f88a443ed",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.5",
+    "path": "data/journal_submission_candidates.csv",
+    "bytes": 89765,
+    "sha256": "a29dec976f98a5f9adb9e1f50048b0feb0dbfc407b12df9214354b158bcbaa37",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-4.5",
+    "path": "data/journals_master.csv",
+    "bytes": 22253,
+    "sha256": "3b8a19cac64504f2b35cbe95f68a9f6b3b47878f3b3cfbadecce52c3aa455adf",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-M001",
+    "path": "reading-cards/M001.md",
+    "bytes": 3398,
+    "sha256": "4995d203bdea968778a67cac7d931a44c9ed642be7b75cc3ece57bf78eee4ea7",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-R015",
+    "path": "reading-cards/R015.md",
+    "bytes": 4109,
+    "sha256": "b07de9b81d326d004a2f5657a763c4430713391fb3d537db607e0ac844a45d55",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-M002",
+    "path": "reading-cards/M002.md",
+    "bytes": 3983,
+    "sha256": "025acd6455f33f961c6b2521fc3b7f4af876191c48540a40b0c64cfd74d4056b",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-M003",
+    "path": "reading-cards/M003.md",
+    "bytes": 3828,
+    "sha256": "791601d3703518f9a73c8e741016291727ebc273859b2294db5bf9e23dba97ff",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-R008",
+    "path": "reading-cards/R008.md",
+    "bytes": 1979,
+    "sha256": "7a7e90a49b0db05d0a75bd01f48e8660fe5f939ac69f79be622a37ad0293802c",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-benchmarks",
+    "path": "reports/method_validation_matrix.md",
+    "bytes": 8213,
+    "sha256": "a3cc12d3bd4aaef3d03048e810d1d5f9486191ee02310a101a0e2fa4afef4102",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-legacy",
+    "path": "data/literature_master.csv",
+    "bytes": 525061,
+    "sha256": "9750a95e099b7d992faf2e98c4ffac3e6dea7c1600de4e57012bf79fa3100a88",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-5-legacy",
+    "path": "reports/method_reclassification.md",
+    "bytes": 12655,
+    "sha256": "0cbe74b1f5918c08a65fbae1a9026baad3859e828831c20d5973ef6df2c6e3a9",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q1",
+    "path": "reports/agent_ex_method_positioning.md",
+    "bytes": 15862,
+    "sha256": "bdf9e27f8ce569904c08e52eb25ac6c3679ef2fa11593899bb983ee838402eda",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q1",
+    "path": "reports/claim_evidence_readiness.md",
+    "bytes": 2800,
+    "sha256": "37901546abb6d08e77fcd5d59b094e6dfdc3ffb89e1e2adc9b3d3841f3d276ba",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q2",
+    "path": "reports/agent_ex_method_positioning.md",
+    "bytes": 15862,
+    "sha256": "bdf9e27f8ce569904c08e52eb25ac6c3679ef2fa11593899bb983ee838402eda",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q2",
+    "path": "reports/claim_evidence_readiness.md",
+    "bytes": 2800,
+    "sha256": "37901546abb6d08e77fcd5d59b094e6dfdc3ffb89e1e2adc9b3d3841f3d276ba",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q3",
+    "path": "reports/agent_ex_method_positioning.md",
+    "bytes": 15862,
+    "sha256": "bdf9e27f8ce569904c08e52eb25ac6c3679ef2fa11593899bb983ee838402eda",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q3",
+    "path": "reports/claim_evidence_readiness.md",
+    "bytes": 2800,
+    "sha256": "37901546abb6d08e77fcd5d59b094e6dfdc3ffb89e1e2adc9b3d3841f3d276ba",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q4",
+    "path": "reports/agent_ex_method_positioning.md",
+    "bytes": 15862,
+    "sha256": "bdf9e27f8ce569904c08e52eb25ac6c3679ef2fa11593899bb983ee838402eda",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q4",
+    "path": "reports/claim_evidence_readiness.md",
+    "bytes": 2800,
+    "sha256": "37901546abb6d08e77fcd5d59b094e6dfdc3ffb89e1e2adc9b3d3841f3d276ba",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q5",
+    "path": "reports/agent_ex_method_positioning.md",
+    "bytes": 15862,
+    "sha256": "bdf9e27f8ce569904c08e52eb25ac6c3679ef2fa11593899bb983ee838402eda",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-6.Q5",
+    "path": "reports/claim_evidence_readiness.md",
+    "bytes": 2800,
+    "sha256": "37901546abb6d08e77fcd5d59b094e6dfdc3ffb89e1e2adc9b3d3841f3d276ba",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-7.1",
+    "path": "reports/two_track_submission_strategy.md",
+    "bytes": 23031,
+    "sha256": "87148a46702f4f3b8caeaefc5234f36bd7ec06e71b750c57839abba079463419",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-7.1",
+    "path": "data/journal_submission_candidates.csv",
+    "bytes": 89765,
+    "sha256": "a29dec976f98a5f9adb9e1f50048b0feb0dbfc407b12df9214354b158bcbaa37",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-7.2",
+    "path": "reports/two_track_submission_strategy.md",
+    "bytes": 23031,
+    "sha256": "87148a46702f4f3b8caeaefc5234f36bd7ec06e71b750c57839abba079463419",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-7.2",
+    "path": "data/journal_submission_candidates.csv",
+    "bytes": 89765,
+    "sha256": "a29dec976f98a5f9adb9e1f50048b0feb0dbfc407b12df9214354b158bcbaa37",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-7.3",
+    "path": "data/journal_submission_candidates.csv",
+    "bytes": 89765,
+    "sha256": "a29dec976f98a5f9adb9e1f50048b0feb0dbfc407b12df9214354b158bcbaa37",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-7.3",
+    "path": "data/venue_policy_field_audit_EQ.csv",
+    "bytes": 70264,
+    "sha256": "23d8556b47a16af2361c6f9b0e08dabaa237625031315e95cd38f33f9abf8313",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-METHODS_FIRST_REORIENTATION.md",
+    "path": "METHODS_FIRST_REORIENTATION.md",
+    "bytes": 27636,
+    "sha256": "f237c9a8257da24ee8e7308d9137dcd92eac312c19c30ea3885846ef9ae4e27c",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-data/method_venue_map.csv",
+    "path": "data/method_venue_map.csv",
+    "bytes": 131537,
+    "sha256": "138fda60806b396c6bd6f412337cfeccb79f5763b0086ff3166bbd5f88a443ed",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-data/journal_submission_candidates.csv",
+    "path": "data/journal_submission_candidates.csv",
+    "bytes": 89765,
+    "sha256": "a29dec976f98a5f9adb9e1f50048b0feb0dbfc407b12df9214354b158bcbaa37",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-reports/method_reclassification.md",
+    "path": "reports/method_reclassification.md",
+    "bytes": 12655,
+    "sha256": "0cbe74b1f5918c08a65fbae1a9026baad3859e828831c20d5973ef6df2c6e3a9",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-reports/method_landscape.md",
+    "path": "reports/method_landscape.md",
+    "bytes": 19932,
+    "sha256": "dbc783160d11bdd8505e92976e928ea3be47a3133830a797560a6e66311b7452",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-reports/agent_ex_method_positioning.md",
+    "path": "reports/agent_ex_method_positioning.md",
+    "bytes": 15862,
+    "sha256": "bdf9e27f8ce569904c08e52eb25ac6c3679ef2fa11593899bb983ee838402eda",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-reports/method_venue_landscape.md",
+    "path": "reports/method_venue_landscape.md",
+    "bytes": 10690,
+    "sha256": "86cc47883ebcfe89d957fd8d719faa22ccec0444f33b2d6963a1982bbdd7f6b0",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-reports/two_track_submission_strategy.md",
+    "path": "reports/two_track_submission_strategy.md",
+    "bytes": 23031,
+    "sha256": "87148a46702f4f3b8caeaefc5234f36bd7ec06e71b750c57839abba079463419",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-cards",
+    "path": "data/delivery_requirement_audit.json",
+    "bytes": 42624,
+    "sha256": "c03a93a9ed8d65a4baded1988bd6a0657dc4148d07e6416a70931e02c7a3be49",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-cards",
+    "path": "reports/protected_card_content_audit_CI.md",
+    "bytes": 2234,
+    "sha256": "6eec3b9bf55cab8c5c64688a04dbb30e625210f11ed79bb3756bd1a44509c0de",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-cards",
+    "path": "data/card_structure_current.json",
+    "bytes": 27262,
+    "sha256": "8acfac4ab7a8207a2b7154db4c4b2d89c47791412aa3ac594d30de70fd05fe46",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-export",
+    "path": "data/README.md",
+    "bytes": 10709,
+    "sha256": "18c4e9af00f61a7adc59fb7800b55b2495a1edf2228c8819d9d374205922f84c",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-export",
+    "path": "exports/literature_and_journals_methods.xlsx",
+    "bytes": 530436,
+    "sha256": "27f445c3ed5543d464cfe44df2ef35e07204d027b4a10431c20bea850955595f",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-export",
+    "path": "exports/references_methods.bib",
+    "bytes": 27503,
+    "sha256": "43d54cf36c648f2ce434c35396ca05ea797e3cbf57c22680bc3429a78f3a0fc7",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-export",
+    "path": "exports/references_methods_frontier.bib",
+    "bytes": 3987,
+    "sha256": "0fccc08747cf7daf2bd837feffa47766d6f4e80093bf9c7a9a77c04522b8cb0f",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-8-export",
+    "path": "exports/README_methods_bibliography.md",
+    "bytes": 563,
+    "sha256": "638f411fbcc54ff02197235c82216bc80e4af002956f20477ea348a0ca188f65",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q1",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q1",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q2",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q2",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q3",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q3",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q4",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q4",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q5",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q5",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q6",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q6",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q7",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q7",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q8",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q8",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q9",
+    "path": "reports/methods_review_current_synthesis.md",
+    "bytes": 38342,
+    "sha256": "782cb7d0fa36192bab8ac5e0f2e6751b1a1197969f0d9ca78d9cdbf4717e4329",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-10.Q9",
+    "path": "reports/delivery_audit_EQ.md",
+    "bytes": 4147,
+    "sha256": "52101bdf4c13557cb3376a8146ddce185e979c9a375c873038ba05b072855b79",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-11",
+    "path": "protocol/search_strategy.md",
+    "bytes": 4906,
+    "sha256": "172c64f4d146d707b27fe4166aa7fb318c5640b1c45c42793f1e48d26d3021e2",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "R2-11",
+    "path": "data/literature_master.csv",
+    "bytes": 525061,
+    "sha256": "9750a95e099b7d992faf2e98c4ffac3e6dea7c1600de4e57012bf79fa3100a88",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.5.1",
+    "path": "data/journals_master.csv",
+    "bytes": 22253,
+    "sha256": "3b8a19cac64504f2b35cbe95f68a9f6b3b47878f3b3cfbadecce52c3aa455adf",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.5.1-CN",
+    "path": "data/journals_master.csv",
+    "bytes": 22253,
+    "sha256": "3b8a19cac64504f2b35cbe95f68a9f6b3b47878f3b3cfbadecce52c3aa455adf",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.5.1-CN",
+    "path": "reports/coverage_and_gaps.md",
+    "bytes": 5834,
+    "sha256": "fe00524141732d22907bbfebdd83db5584eae28df947372b0fd05ff064bccecf",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.6",
+    "path": "data/search_log.csv",
+    "bytes": 688233,
+    "sha256": "8ac18b132941cace305c177c34bf004d81636808dfa9b4f1a4601e0b5fbe79fd",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.6",
+    "path": "protocol/search_strategy.md",
+    "bytes": 4906,
+    "sha256": "172c64f4d146d707b27fe4166aa7fb318c5640b1c45c42793f1e48d26d3021e2",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.7",
+    "path": "reports/pilot_report.md",
+    "bytes": 3080,
+    "sha256": "3280a7ef649ea02392e2caf76db11a588c767bba964c168ebf87d4e1afa0405b",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.8",
+    "path": "data/literature_master.csv",
+    "bytes": 525061,
+    "sha256": "9750a95e099b7d992faf2e98c4ffac3e6dea7c1600de4e57012bf79fa3100a88",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.9.2",
+    "path": "reports/protected_card_content_audit_CI.md",
+    "bytes": 2234,
+    "sha256": "6eec3b9bf55cab8c5c64688a04dbb30e625210f11ed79bb3756bd1a44509c0de",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.9.2",
+    "path": "data/card_structure_current.json",
+    "bytes": 27262,
+    "sha256": "8acfac4ab7a8207a2b7154db4c4b2d89c47791412aa3ac594d30de70fd05fe46",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.10",
+    "path": "data/journals_master.csv",
+    "bytes": 22253,
+    "sha256": "3b8a19cac64504f2b35cbe95f68a9f6b3b47878f3b3cfbadecce52c3aa455adf",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.10",
+    "path": "data/core_source_journals.csv",
+    "bytes": 6749,
+    "sha256": "a82f1cae05bdc338e202ce331a1d5961e277110b3241bcc36c894f7ab80a0900",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.10",
+    "path": "data/submission_candidates.csv",
+    "bytes": 11606,
+    "sha256": "75ed64e689d46a45bd78c9685afff38802a7185e4ea8f6466c2bcd9a1d8f4658",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  },
+  {
+    "requirement_id": "1.11",
+    "path": "reports/coverage_and_gaps.md",
+    "bytes": 5834,
+    "sha256": "fe00524141732d22907bbfebdd83db5584eae28df947372b0fd05ff064bccecf",
+    "capture": "EQafterrepairs_beforecommit;futurechangesversionedinGit"
+  }
+]

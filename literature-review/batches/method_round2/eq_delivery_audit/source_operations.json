@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "EQ-01",
+    "platform": "local_requirement_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "66stableIDs/taskbooks/sourcepaths/remaininggates",
+    "source_url": "literature-review/reports/delivery_audit_EQ.md",
+    "status": "local_current_evidence_review",
+    "notes": "Groupedlocaloperation;no newweb/model/policyrefresh;notacceptancepercentage"
+  },
+  {
+    "search_id": "EQ-02",
+    "platform": "local_requirement_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "87cards60included/210policyfields/41coverage/statusscopes/DW",
+    "source_url": "literature-review/reports/delivery_audit_EQ.md",
+    "status": "local_current_evidence_review",
+    "notes": "Groupedlocaloperation;no newweb/model/policyrefresh;notacceptancepercentage"
+  },
+  {
+    "search_id": "EQ-03",
+    "platform": "local_requirement_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Repairnamedcurrentreportheaders/dateprecisionreviewqueue",
+    "source_url": "literature-review/reports/delivery_audit_EQ.md",
+    "status": "local_current_evidence_review",
+    "notes": "Groupedlocaloperation;no newweb/model/policyrefresh;notacceptancepercentage"
+  }
+]
