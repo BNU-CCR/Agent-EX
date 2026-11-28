@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "FK-01",
+    "platform": "local_fixed_source_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "3existingfulltextcards+1indexedabstract fixedb8d8ece;crossmethodbaseline/LLMdependencies/publication;notnewread",
+    "source_url": "batches/method_round2/fk_chinese_synthesis/source_reuse.json",
+    "status": "synthesized_with_reading_scopes",
+    "notes": "One grouped local operation,not new internet search/fulltext/experiment"
+  }
+]

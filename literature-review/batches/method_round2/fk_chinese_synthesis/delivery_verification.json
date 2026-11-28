@@ -1,0 +1,29 @@
+{
+  "batch": "FK",
+  "date": "2026-11-28",
+  "master_matrix_venues_candidates_unchanged": true,
+  "source_cards_git_bytes_verified": 3,
+  "abstract_record_separate": true,
+  "comparison_rows": 4,
+  "records": 238,
+  "included": 75,
+  "cards": 88,
+  "units": 257,
+  "venues": 58,
+  "submission_candidates": 31,
+  "date_pending": 14,
+  "source_operations": 1896,
+  "workbook_rows": [
+    28,
+    239,
+    59,
+    32,
+    258,
+    56,
+    1897,
+    16,
+    42,
+    33
+  ],
+  "scope": "Bounded synthesis of existing reading records;not new reading or fullgoal verification"
+}

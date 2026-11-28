@@ -1,0 +1,29 @@
+[
+  {
+    "record_id": "CN003",
+    "base_commit": "b8d8eceeda32028f446c4b94a4ccfb3ac3bce2e6",
+    "path": "literature-review/reading-cards/CN003.md",
+    "sha256": "adea3c99dd4466826407915b1dc563c6a27e10ff5c026d4ce4e5341029f4deac",
+    "scope": "Existing reading card reused; not new fulltext read"
+  },
+  {
+    "record_id": "CN006",
+    "base_commit": "b8d8eceeda32028f446c4b94a4ccfb3ac3bce2e6",
+    "path": "literature-review/reading-cards/CN006.md",
+    "sha256": "b12b34d18ff8e7b349f3427312de1f4aa128f8dda1a1c3f12d607d65c451f3a0",
+    "scope": "Existing reading card reused; not new fulltext read"
+  },
+  {
+    "record_id": "CN007",
+    "base_commit": "b8d8eceeda32028f446c4b94a4ccfb3ac3bce2e6",
+    "path": "literature-review/reading-cards/CN007.md",
+    "sha256": "022077a1fb76075a64a29e366ef83fa199c4728872b5829b092bc159c450b6ca",
+    "scope": "Existing reading card reused; not new fulltext read"
+  },
+  {
+    "record_id": "CN012",
+    "base_commit": "b8d8eceeda32028f446c4b94a4ccfb3ac3bce2e6",
+    "path": "data/literature_master.csv#CN012",
+    "scope": "Publisher indexed abstract/identity only; body not read"
+  }
+]
