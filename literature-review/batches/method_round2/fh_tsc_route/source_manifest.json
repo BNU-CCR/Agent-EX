@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-28",
+  "sources": [
+    {
+      "key": "home",
+      "url": "https://tsc.acm.org",
+      "final_url": "https://tsc.acm.org/",
+      "status": 403,
+      "bytes": 45055,
+      "sha256": "4035ce9e9d59fbec80266988b010da2942e7d77fbf13cbb7ee7f59455a5baffb"
+    },
+    {
+      "key": "dlhome",
+      "url": "https://dl.acm.org/journal/tsc",
+      "final_url": "https://dl.acm.org/journal/tsc",
+      "status": 403,
+      "bytes": 5444,
+      "sha256": "b013e391f41b16cab508cbeef050f283f272267ae69ef569cc543c96e60b45d9"
+    },
+    {
+      "key": "guide",
+      "url": "https://dl.acm.org/journal/tsc/author-guidelines",
+      "final_url": "https://dl.acm.org/journal/tsc/author-guidelines",
+      "status": 403,
+      "bytes": 5540,
+      "sha256": "592c52bc5e91d838181f2a247c63ddf97f59669c5fb4a85df2458d605f7039c2"
+    },
+    {
+      "key": "chi2027",
+      "url": "https://chi2027.acm.org/authors/journals/",
+      "final_url": "https://chi2027.acm.org/authors/journals/",
+      "status": 200,
+      "bytes": 52628,
+      "sha256": "69a0431a970cb433ffbabd7932b0e30f18a416693df163621c06f9690c449089"
+    }
+  ],
+  "scope": "OfficialCHIpolicyread;TSCguidesblocked;nojournalguideorfeeclaimsverified"
+}

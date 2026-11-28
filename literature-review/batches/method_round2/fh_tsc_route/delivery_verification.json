@@ -1,0 +1,24 @@
+{
+  "batch": "FH",
+  "date": "2026-11-28",
+  "master_unchanged": true,
+  "matrix_unchanged": true,
+  "submission_candidates_unchanged": true,
+  "venue_changed": [
+    "TSC"
+  ],
+  "search_operations": 1880,
+  "workbook_rows": [
+    28,
+    239,
+    57,
+    31,
+    256,
+    56,
+    1881,
+    16,
+    42,
+    32
+  ],
+  "source_scope": "CHI2027officialpresentationpolicy;TSCscope/guideblocked;notresearchscopecompletion"
+}

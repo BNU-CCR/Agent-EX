@@ -1,0 +1,38 @@
+[
+  {
+    "search_id": "FH-01",
+    "platform": "public_query_probes",
+    "search_date": "2026-11-28",
+    "query_exact": "[\"site:dl.acm.org/journal/tsc \\\"Aims\\\" \\\"Scope\\\"\", \"site:dl.acm.org/journal/tsc \\\"Author Guidelines\\\"\", \"\\\"ACM Transactions on Social Computing\\\" \\\"scope\\\" [acm.org]\", \"\\\"Transactions on Social Computing\\\" \\\"Submission\\\" [acm.org]\", \"ACM TSC journal author guidelines social computing journal scope\", \"\\\"tsc.acm.org\\\" \\\"submission\\\"\", \"\\\"Transactions on Social Computing\\\" \\\"computational\\\" \\\"social phenomena\\\"\"]",
+    "source_url": "https://dl.acm.org/journal/tsc",
+    "status": "limited_discovery_notcurrentguide",
+    "notes": "Groupedoperation;notquerytotal or newpaper"
+  },
+  {
+    "search_id": "FH-02",
+    "platform": "official_journal_access",
+    "search_date": "2026-11-28",
+    "query_exact": "TSC oldhome/DLhome/guide all403 hashretained",
+    "source_url": "https://tsc.acm.org | https://dl.acm.org/journal/tsc/author-guidelines",
+    "status": "blocked",
+    "notes": "Groupedoperation;notquerytotal or newpaper"
+  },
+  {
+    "search_id": "FH-03",
+    "platform": "official_conference_policy",
+    "search_date": "2026-11-28",
+    "query_exact": "CHI2027Journals acceptancewindow/deadline/presentationnotrereview",
+    "source_url": "https://chi2027.acm.org/authors/journals/",
+    "status": "primary_policy_read",
+    "notes": "Groupedoperation;notquerytotal or newpaper"
+  },
+  {
+    "search_id": "FH-04",
+    "platform": "publication_ecology_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Acceptedjournalpaper presentation distinct from newarchivalpublication",
+    "source_url": "reports/tsc_publication_route_FH.md",
+    "status": "bounded_route_assessment",
+    "notes": "Groupedoperation;notquerytotal or newpaper"
+  }
+]
