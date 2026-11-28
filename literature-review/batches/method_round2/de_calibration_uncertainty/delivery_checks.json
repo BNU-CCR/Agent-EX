@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-28",
+  "base": "08bfa33",
+  "old123_records_unchanged": true,
+  "old71_cards_unchanged": true,
+  "old181_units_unchanged": true,
+  "new_cards": 1,
+  "new_units": 4,
+  "source_HTML_reused_DD": true,
+  "two_figure_hashes_checked": true,
+  "structure": "72=66heading+6inline;not semantic acceptance",
+  "limitations": "No originalcasepapers/new pre2022corpus;no execution or rawcoverage recomputation",
+  "table1_four_rows_numeric_match": true,
+  "table2_four_structures_match": true,
+  "workbook_sheets": 9,
+  "workbook_rows": [
+    125,
+    53,
+    31,
+    186,
+    1435,
+    42
+  ],
+  "cached_included": 51,
+  "bib_entries": 51,
+  "summary_visual_checked": true
+}

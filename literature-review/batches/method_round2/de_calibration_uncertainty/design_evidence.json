@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-28",
+  "Sugarscape": {
+    "initial_agents": 100,
+    "reference": "identical twin output66;parameters metabolism4,vision6",
+    "max_metabolism_range": [
+      1,
+      4
+    ],
+    "max_vision_range": [
+      1,
+      16
+    ],
+    "comparison_time": 30,
+    "HMwaves": 10,
+    "reported_variance_ensemble": 200,
+    "best_posterior_pair": [
+      4,
+      7
+    ],
+    "boundary": "Toy synthetic fit,not uniquely recovered truth or field data"
+  },
+  "birds": {
+    "locations": 25,
+    "simulation_years": 22,
+    "burnin_years": 2,
+    "parameters": 2,
+    "observables": 3,
+    "HM_LHS_points_per_wave": 50,
+    "variance_ensemble": 30,
+    "ABC_particles": 1000,
+    "synthetic_designs": 100,
+    "excluded_zero_denominator": 9,
+    "analysed_designs": 91,
+    "HM_truth_retained": 90,
+    "budget_report": {
+      "combined_case": 3185,
+      "historical_ABC_comparator": "over11000 different cited study",
+      "mean_extra_ABC_runs": 2047,
+      "reported_HM_range": [
+        80,
+        320
+      ],
+      "reported_net_saving": 1579,
+      "boundary": "Full accounting not independently reconciled;not token/walltime budget"
+    }
+  },
+  "RISC": {
+    "historical_data": "mandatoryannualsurvey2000–2012",
+    "outputs": "small/medium/largefarmcounts",
+    "binary_factors": 4,
+    "candidate_structures": 16,
+    "retained_structures": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "run_replicates_per_structure": 100,
+    "pairwise_comparisons_per_structure": 4950,
+    "HMwaves": 3,
+    "reported_HM_runs": 1600,
+    "threshold": "initialsumofuncertainty;thenincreaseby0.95;notuniversalprotocol",
+    "boundary": "Historicalcalibration/selectionwithin16structures;notheldoutpredictionoruniquecausality"
+  }
+}

@@ -1,0 +1,5 @@
+method,parameter,coverage_percent,mean_absolute_error,credible_interval_width,denominator,source
+ABC,scouting,92.31,0.132,0.447,91,formalHTMLTable1/§5.17
+ABC,survival,96.7,0.004,0.021,91,formalHTMLTable1/§5.17
+HM+ABC,scouting,90.11,0.13,0.434,91,formalHTMLTable1/§5.17
+HM+ABC,survival,93.41,0.003,0.015,91,formalHTMLTable1/§5.17

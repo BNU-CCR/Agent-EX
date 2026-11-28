@@ -9468,5 +9468,95 @@
     "batch": "DD-JASSS-ten-priority-abstracts",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dd_jasss_priority_abstracts/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "history_matching;approximate_bayesian_computation;synthetic_parameter_recovery;historical_structure_calibration",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Separate calibration support,posterior approximation/coverage,stochastic replicate variation and model discrepancy;retain rejected/undefined design denominators;no universal thresholds transferred",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_relevance_rationale",
+    "old": "摘要提出HistoryMatching+ABC校准流程，并称用三种复杂度模型展示；尚未核参照、误差定义或比较预算。",
+    "new": "校准算法比较、91组可计算合成恢复和经验候选结构拟合；效率/精度/覆盖权衡可直接补方法地图。",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;validation_reference_and_scope",
+    "new": "full_cost_accounting;threshold_metric_implementation;raw_interval_coverage;code_and_cache_run_identity;independent_holdout_validity",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_evidence_location",
+    "old": "Official article abstract and metadata only",
+    "new": "FormalHTML§§3.1–3.21/4.1–4.15/5.1–5.35/6–7;Tables1–3;Figures9/11",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
+  },
+  {
+    "record_id": "M058",
+    "field": "method_coding_source",
+    "old": "reports/jasss_priority_abstracts_DD.md;batches/method_round2/dd_jasss_priority_abstracts/acquisition_and_abstracts.json",
+    "new": "reading-cards/M058.md;reports/calibration_uncertainty_DE.md;batches/method_round2/de_calibration_uncertainty/",
+    "date": "2026-11-28",
+    "batch": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/de_calibration_uncertainty/results.json"
   }
 ]

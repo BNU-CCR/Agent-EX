@@ -1,8 +1,8 @@
 {
   "records": 124,
   "status": {
-    "included": 50,
-    "candidate": 64,
+    "included": 51,
+    "candidate": 63,
     "frontier": 8,
     "excluded": 2
   },
@@ -15,7 +15,7 @@
   },
   "fulltext_methods": {
     "core_method": 16,
-    "method_validation": 26,
+    "method_validation": 27,
     "application": 1,
     "direct_comparator": 7,
     "peripheral": 0

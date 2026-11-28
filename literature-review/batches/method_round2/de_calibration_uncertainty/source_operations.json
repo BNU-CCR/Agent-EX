@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DE-01",
+    "platform": "local_official_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read formalHTML§3–7 and related method lists reused fromDD",
+    "source_url": "https://www.jasss.org/25/2/1.html",
+    "status": "targeted_methods_results_discussion_read",
+    "notes": "SourceHTML reusedDD01;no new old-case literature,codeexecution or independentstatisticalretest"
+  },
+  {
+    "search_id": "DE-02",
+    "platform": "local_primary_table_transcription",
+    "search_date": "2026-11-28",
+    "query_exact": "Transcribe Table1 four recovery rows and Table2 four structures",
+    "source_url": "https://www.jasss.org/25/2/1.html#tab1",
+    "status": "tables_transcribed_not_raw_results_recomputed",
+    "notes": "SourceHTML reusedDD01;no new old-case literature,codeexecution or independentstatisticalretest"
+  },
+  {
+    "search_id": "DE-03",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire and inspect HM/ABC posterior Figure9",
+    "source_url": "https://www.jasss.org/25/2/1/Figure9.png",
+    "status": "200_png_visual_checked",
+    "notes": "SourceHTML reusedDD01;no new old-case literature,codeexecution or independentstatisticalretest"
+  },
+  {
+    "search_id": "DE-04",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire and inspect threshold-dependentRISC Figure11",
+    "source_url": "https://www.jasss.org/25/2/1/Figure11.png",
+    "status": "200_png_visual_checked",
+    "notes": "SourceHTML reusedDD01;no new old-case literature,codeexecution or independentstatisticalretest"
+  },
+  {
+    "search_id": "DE-05",
+    "platform": "local_evidence_scope_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Separate synthetic recovery and historical fit;check denominator and reported budget boundaries",
+    "source_url": "reports/calibration_uncertainty_DE.md",
+    "status": "no_simulator_or_ABC_execution",
+    "notes": "SourceHTML reusedDD01;no new old-case literature,codeexecution or independentstatisticalretest"
+  }
+]

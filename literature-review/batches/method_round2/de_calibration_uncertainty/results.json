@@ -1,0 +1,34 @@
+{
+  "batch_id": "DE-HM-ABC-calibration-uncertainty-and-coverage",
+  "date": "2026-11-28",
+  "expected_master_sha256": "227a0f8261980ddb093e1eb73c65b4205460262d49ed44c9bfd8d451c0e02e46",
+  "updates": [
+    {
+      "record_id": "M058",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M058.md",
+      "research_question": "HM先筛参数空间再用ABC能否减少计算，同时如何改变不确定性/真值覆盖及经验结构选择？",
+      "method_type": "history_matching;approximate_bayesian_computation;synthetic_parameter_recovery;historical_structure_calibration",
+      "mechanisms": "HM truncated support;uniform informed ABC prior;observation/ensemble/discrepancy decomposition",
+      "findings": "HM+ABC narrows intervals and reduces reported simulation runs;synthetic coverage declines in91 retained designs;RISC historical fit within16 structures,not unique causal identification",
+      "reason": "正式日期/全文门通过；受控校准比较与合成参数恢复，经验历史拟合分层，不以三案例升级独立社会效度。",
+      "related_versions": "Formal publisher HTML targeted methods/results/discussion read in DE;no PDF or author-version equivalence claim",
+      "supplement_status": "Figure9and11acquired_visual_checked;repository_link_only_not_acquired_or_run",
+      "evidence_location": "Formal HTML §§3–7,Tables1–3,Figures9/11",
+      "relation_to_agent_ex": "分开校准目标、参数恢复、区间覆盖和社会现象检验；记录先验截断、候选机制、不可计算设计及实际预算。保留多组能拟合的模型，并报告精度/覆盖权衡。只完善文献判断和后续路线，不更改当前冻结矩阵、阈值或独立重复单位。",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "controlled_comparison",
+      "method_transferability": "Separate calibration support,posterior approximation/coverage,stochastic replicate variation and model discrepancy;retain rejected/undefined design denominators;no universal thresholds transferred",
+      "method_relevance_rationale": "校准算法比较、91组可计算合成恢复和经验候选结构拟合；效率/精度/覆盖权衡可直接补方法地图。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "full_cost_accounting;threshold_metric_implementation;raw_interval_coverage;code_and_cache_run_identity;independent_holdout_validity",
+      "method_evidence_location": "FormalHTML§§3.1–3.21/4.1–4.15/5.1–5.35/6–7;Tables1–3;Figures9/11",
+      "method_coding_source": "reading-cards/M058.md;reports/calibration_uncertainty_DE.md;batches/method_round2/de_calibration_uncertainty/",
+      "method_last_checked": "2026-11-28",
+      "notes": "摘要提出HistoryMatching+ABC校准流程，并称用三种复杂度模型展示；尚未核参照、误差定义或比较预算。 本轮仅正式摘要初筛，不增加全文卡、验证单元或成熟度。 DE:formalmethods/resultsread;100syntheticdesigns9undefined;91coveragecases;smallerMAE/narrowerCIbutlowercoverage;RISCfitnotcausalproof",
+      "search_id": "DD-01;DD-11;DD-12;DE-01;DE-02;DE-03;DE-04;DE-05"
+    }
+  ],
+  "new_records": []
+}
