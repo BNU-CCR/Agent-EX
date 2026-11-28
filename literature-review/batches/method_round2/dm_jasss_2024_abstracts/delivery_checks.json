@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-28",
+  "base": "32bede4",
+  "old168_records_unchanged": true,
+  "all76_cards_unchanged": true,
+  "all199_units_unchanged": true,
+  "original_CU_unchanged": true,
+  "official_abstracts_read": 35,
+  "response_hashes": 35,
+  "new_candidates": 23,
+  "application_leads_not_final_excluded": 12,
+  "remaining_abstracts": 52,
+  "coverage_counts": {
+    "application_lead_retained_not_added": 30,
+    "existing_master_record": 19,
+    "added_abstract_candidate": 67,
+    "nonresearch_entry": 10,
+    "abstract_pending": 52
+  },
+  "workbook_rows": [
+    192,
+    53,
+    31,
+    200,
+    1560,
+    42
+  ],
+  "maximum_text_cell": 20303,
+  "limits": "Singleassistant abstract screening;no fulltext/efficacy/policy/globalrecall claim"
+}
