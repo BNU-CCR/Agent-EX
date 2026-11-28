@@ -1,0 +1,25 @@
+{
+  "base": "b986249",
+  "fixed_sources_verified": 9,
+  "master_matrix_venues_conference_cards_unchanged": true,
+  "comparison_rows": 3,
+  "Q3_rewritten": true,
+  "Q9_counts_next_corrected": true,
+  "two_track_current_and_method_contribution_rewritten": true,
+  "records": 236,
+  "cards": 85,
+  "units": 243,
+  "formal_included": 60,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    244,
+    1736,
+    11,
+    42
+  ],
+  "source_operations": 1735,
+  "status": "passed",
+  "limits": "Synthesis of existing sources;no new network/fulltext/policy/execution or evidence-grade upgrade"
+}

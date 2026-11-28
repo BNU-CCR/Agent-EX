@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "EL-01",
+    "platform": "fixed_source_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Ninefixedreadsourcefiles;threeestimand/split/calibrationcomparison;Q3/9andtwo-trackrewritten",
+    "source_url": "literature-review/batches/method_round2/el_static_estimand_synthesis/source_reuse.json",
+    "status": "local_synthesis_no_new_network",
+    "notes": "Onegroupedreuseoperation;no newstudy/card/unit/grade/policy/experiment"
+  }
+]

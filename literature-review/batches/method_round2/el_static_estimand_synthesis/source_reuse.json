@@ -1,0 +1,72 @@
+{
+  "checked": "2026-11-28",
+  "scope": "Fixed existing read sources only;no networkrefresh/newfulltext/codeexecution",
+  "sources": [
+    {
+      "path": "reading-cards/M174.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "0cbf20bd636287642aedce14eb224cf30f7230a028c03dfeab4843e58115155c",
+      "bytes": 6335
+    },
+    {
+      "path": "reading-cards/M176.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "8a3d7c37d829a5bc8b833d5f5eeba5c5435c341981ad7610a1c42ecc861ffca4",
+      "bytes": 5635
+    },
+    {
+      "path": "reading-cards/M178.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "bcab9755a5b96c9594358afabc5a9a85b37079c4b9c9315d19177f9e6ededbf9",
+      "bytes": 7478
+    },
+    {
+      "path": "reports/simbench_EB.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "05b8c5b82cc6a423a1421294593f13f2e56bbf4a949e9ab97b7c6b9b8c08cd8b",
+      "bytes": 3759
+    },
+    {
+      "path": "reports/simbench_code_EC.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "dd43d01fc131bac083d3dfe8513b74091a9a6b17a55e724560c169122cbf4565",
+      "bytes": 5493
+    },
+    {
+      "path": "reports/relimap_ED.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "f9b87f423c9ddd9763af2b54d2f7ef391fcdbf68f95690c5c6dde8f6c46acf70",
+      "bytes": 3139
+    },
+    {
+      "path": "reports/cultural_variance_EK.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "dfbe92c05a457b7d17bcb1859a197876a7ac1512b48812bec78ed24c362851ee",
+      "bytes": 2997
+    },
+    {
+      "path": "batches/method_round2/ek_cultural_variance/table2_point_metrics.csv",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "e817e6c83fc7421cf98b41484e54baaffa6e7a1170e216bcc35041f382456f45",
+      "bytes": 653
+    },
+    {
+      "path": "data/static_behavior_validation_EE.csv",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "303680d50e1ffc3aaab9c36efbd121783485ba2bd82a03c10b034f7725d4e860",
+      "bytes": 1941
+    }
+  ],
+  "prechange_reports": [
+    {
+      "path": "reports/methods_review_current_synthesis.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "09540ef58be4464dee535243e2e1249d216dc58b0e6ccfd8fd170cf710252ca5"
+    },
+    {
+      "path": "reports/two_track_submission_strategy.md",
+      "git_ref": "b986249",
+      "git_bytes_sha256": "b2ef8d14b0baa7267a66c6076548907c9f4474fc15b684b5605b0e92f083608e"
+    }
+  ]
+}
