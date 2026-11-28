@@ -1,0 +1,20 @@
+{
+  "base": "4313194",
+  "only_master_changed": "M019",
+  "old229_records_unchanged": true,
+  "cards78_unchanged": true,
+  "units208_unchanged": true,
+  "tracker_CU_unchanged": true,
+  "primary_response_hashes": 5,
+  "PDF_acquired": false,
+  "online_date_unchanged_confirmed": "2024-04-14",
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    209,
+    1637,
+    42
+  ],
+  "limits": "Date/access/abstract audit only;no fulltext or evidence grade upgrade"
+}

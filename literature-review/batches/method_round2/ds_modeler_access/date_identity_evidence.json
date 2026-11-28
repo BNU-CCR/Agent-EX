@@ -1,0 +1,37 @@
+{
+  "doi": "10.1177/00375497241239360",
+  "publisher_deposited_online": {
+    "date-parts": [
+      [
+        2024,
+        4,
+        14
+      ]
+    ]
+  },
+  "publisher_deposited_print": {
+    "date-parts": [
+      [
+        2024,
+        7
+      ]
+    ]
+  },
+  "created": {
+    "date-parts": [
+      [
+        2024,
+        4,
+        14
+      ]
+    ],
+    "date-time": "2024-04-14T23:39:35Z",
+    "timestamp": 1713137975000
+  },
+  "prior_online_date": "2024-04-14",
+  "partner_display": "First published online July,2024",
+  "decision": "Keep2024-04-14supportedbyexistingpublisherTOCandCrossrefonline;Julyprintseparate",
+  "fulltext": "not acquired;403HTML",
+  "claims": "author abstract summary only;threeparadigms/nocodeoutcome not independently tested",
+  "partner_display_source": "Web tool parsed publisher-partner page;staticGET200shell has no article text"
+}

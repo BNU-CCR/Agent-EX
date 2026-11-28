@@ -1,0 +1,23 @@
+{
+  "batch_id": "DS-modeler-in-box-identity-date-and-access",
+  "date": "2026-11-28",
+  "expected_master_sha256": "e4b2bd1e6e61853edb1a312970c8ff69a9cc35c06c4805f47c193b2cab7d5650",
+  "updates": [
+    {
+      "record_id": "M019",
+      "date_basis": "Publisher issue TOC: this article First published April14,2024;100(7):727–749;DSpublisherdepositedCrossrefpublished-online2024-04-14/published-print2024-07;partnerJulylabelretainednotused",
+      "metadata_evidence_url": "https://journals.sagepub.com/toc/sim/100/7;https://api.crossref.org/works/10.1177/00375497241239360",
+      "related_versions": "Formaljournalidentity/dateconfirmed;authorlabandSagepartnerabstractonly;no fulltext/version comparison",
+      "supplement_status": "PublisherfullandregisteredPDF403HTML;authorlab/partnerabstractaccessible;no PDF",
+      "findings": "作者公开摘要/实验室说明：学校交通叙事→DES/SD/ABM代码，称未获简洁或可执行模型；仅历史案例作者主张，方法/重复/模型版本待全文。",
+      "evidence_location": "PriorpublisherTOC;Crossrefpublished-online/published-print;Sagepartnerabstract;authorlabsummary",
+      "method_coding_source": "https://journals.sagepub.com/doi/10.1177/00375497241239360;reports/purpose_and_access_CJ.md;publisher_abstract_purpose_only;reports/modeler_access_DS.md;batches/method_round2/ds_modeler_access/",
+      "method_last_checked": "2026-11-28",
+      "method_pending_fields": "fulltext;validation_design;historical_model_version_and_dates;prompt_interventions;execution_and_dynamic_fidelity",
+      "notes": "Article fetch timeout; TOC title/authors/date/abstract inspected. Do not misassign adjacent article December21,2023 date. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CJ:simulation_purpose_from_publisherabstract;review_or_modelauthoring_evaluation_not_realworldprediction;abstractreading/candidate/maturitygatesunchanged;no_fulltextcard | DS:CrossrefonlineApr14/printJulyconfirm;partnerFirstonlineJulylabelnotadopted;publisherfull/PDF403;authorlababstractonly;no grade upgrade",
+      "search_id": "S-M2-J-M019;DS-01;DS-02;DS-03;DS-04;DS-05;DS-06;DS-07;DS-08",
+      "search_date": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

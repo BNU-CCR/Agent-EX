@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "DS-01",
+    "platform": "web_primary_open",
+    "search_date": "2026-11-28",
+    "query_exact": "PublisherDOIpage",
+    "source_url": "https://journals.sagepub.com/doi/10.1177/00375497241239360",
+    "status": "timeout_notfulltext",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  },
+  {
+    "search_id": "DS-02",
+    "platform": "web_discovery_queries",
+    "search_date": "2026-11-28",
+    "query_exact": "Fourqueries:titlePDF/titlefulltext/DOIPDF/titleODU;authorlabfound",
+    "source_url": "https://www.storymodelers.org/disruptive-methods-and-technologies",
+    "status": "discovery_not_secondary_evidence",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  },
+  {
+    "search_id": "DS-03",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "PublisherfullstandardURL",
+    "source_url": "https://journals.sagepub.com/doi/full/10.1177/00375497241239360",
+    "status": "403_HTML",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  },
+  {
+    "search_id": "DS-04",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Sagepartnerabstract",
+    "source_url": "https://sage.cnpereading.com/doi/10.1177/00375497241239360",
+    "status": "200_static_shell;web_layer_abstract_and_date_read",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  },
+  {
+    "search_id": "DS-05",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Authorlababstractsummary",
+    "source_url": "https://www.storymodelers.org/disruptive-methods-and-technologies",
+    "status": "200_summaryonly",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  },
+  {
+    "search_id": "DS-06",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "PublisherdepositedCrossrefmetadata",
+    "source_url": "https://api.crossref.org/works/10.1177/00375497241239360",
+    "status": "200_onlineApr14_printJuly",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  },
+  {
+    "search_id": "DS-07",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "FollowregisteredPDFlink",
+    "source_url": "https://journals.sagepub.com/doi/pdf/10.1177/00375497241239360",
+    "status": "403_HTML_notPDF",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  },
+  {
+    "search_id": "DS-08",
+    "platform": "local_primary_identity_compare",
+    "search_date": "2026-11-28",
+    "query_exact": "DOI/authors/onlineprintdisambiguation",
+    "source_url": "reports/modeler_access_DS.md",
+    "status": "candidate_abstract_maturityunchanged",
+    "notes": "Grouped operations not query count;primary author/publisher metadata only;no access evasion/fulltext or model execution"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "publisher_full",
+    "url": "https://journals.sagepub.com/doi/full/10.1177/00375497241239360",
+    "status": 403,
+    "bytes": 5609,
+    "sha256": "37feb1eb873203e7e6fd1e5374dd09b705b462ae5f00d212322ef73b62c923f0",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M019_DS_publisher_full.txt"
+  },
+  {
+    "kind": "sage_partner",
+    "url": "https://sage.cnpereading.com/doi/10.1177/00375497241239360",
+    "status": 200,
+    "bytes": 10648,
+    "sha256": "10be49cd9bfb6bd8504d6483d3dc3abd7ef47dafb6eab3c3f8e659bdc68749a8",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M019_DS_sage_partner.txt",
+    "content_scope": "Static200shell,parsedvisibletext62chars;article abstract/Julylabel read via web tool layer,not this stored shell"
+  },
+  {
+    "kind": "author_lab",
+    "url": "https://www.storymodelers.org/disruptive-methods-and-technologies",
+    "status": 200,
+    "bytes": 921375,
+    "sha256": "c1032b776276b7460fd534e2c4b82502d087b530d0e27bd30a770d70e2dc2a44",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M019_DS_author_lab.txt"
+  },
+  {
+    "kind": "crossref",
+    "url": "https://api.crossref.org/works/10.1177/00375497241239360",
+    "status": 200,
+    "bytes": 9865,
+    "sha256": "3a7c8ebadd2282648d741e31ff7028475c8943aabc8ad687c6f93d8fb5a83045",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M019_DS_crossref.txt"
+  },
+  {
+    "kind": "publisher_registered_pdf",
+    "url": "https://journals.sagepub.com/doi/pdf/10.1177/00375497241239360",
+    "status": 403,
+    "bytes": 5584,
+    "sha256": "a62666c32028e8748dee83e73bd13bffcbb814514692f4487ce7f5051c54ca9d",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M019_DS_publisher_pdf.response",
+    "pdf_signature": false
+  }
+]
