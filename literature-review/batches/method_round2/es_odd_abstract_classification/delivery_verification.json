@@ -1,0 +1,29 @@
+{
+  "batch": "ES",
+  "checks": "passed",
+  "base": "ad5ebd7",
+  "master_changed_ids": [
+    "M012"
+  ],
+  "categorical_blanks": 0,
+  "records": 237,
+  "included": 67,
+  "cards": 87,
+  "matrix": 252,
+  "source_operations": 1780,
+  "cards_matrix": "All87card texts and252matrix rows unchanged after CRLF/LF normalization;notbyteidentity claim",
+  "workbook_rows": [
+    28,
+    238,
+    55,
+    31,
+    253,
+    56,
+    1781,
+    12,
+    42
+  ],
+  "workbook_visual": "Prior ER layout reused;currentcell/rowchecks;no newvisualclaim",
+  "limits": "No new fulltext/date qualification/experiment",
+  "correction": "First additional verifier stopped on Windows CRLF/LF mismatch before workbook checks;initial commit accidentally included two export intermediates;this correction completes checks and removes intermediates from tracked outputs"
+}
