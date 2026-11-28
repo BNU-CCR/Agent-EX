@@ -1,0 +1,32 @@
+{
+  "reading_scope": "12ppmain1–9+AppA–C10–12;referencesnotrescreened",
+  "visual_pages": [
+    8,
+    11,
+    12
+  ],
+  "tasks": {
+    "info": 936,
+    "web": 86,
+    "design": 1170,
+    "execution": 390,
+    "interpretation": 507,
+    "outcome": 39,
+    "total": 3128
+  },
+  "arithmetic_verified": true,
+  "error_table_totals": {
+    "GPT4o": 193,
+    "GPT5": 38,
+    "mini": 78,
+    "o3": 35
+  },
+  "conflicts": [
+    "Table2web19_vs_section4observational20",
+    "Table2seven_topiclabels_vs_prosesix",
+    "ethics19papers_vs39",
+    "AppA1GPT4o211_vs_tableInput124_Total193"
+  ],
+  "scope": "Published table/source arithmetic only;no raw result replication",
+  "inclusion_rule": "Taskbook8.1–8.3,dateconfirmed,formalidentityandlawfulauthorcopyread;officialbyteequivalenceunclaimed"
+}

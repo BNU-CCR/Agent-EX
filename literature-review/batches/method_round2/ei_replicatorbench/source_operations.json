@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "EI-01",
+    "platform": "source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "EAauthorPDF791675bytes12pphashreuse",
+    "source_url": "https://www.cs.odu.edu/~jwu/downloads/pubs/soos-2026-kdd/soos-2026-kdd.pdf",
+    "status": "exact_bytes_reused",
+    "notes": "Grouped source operation,not queries/independent experiments;no thirdparty execution"
+  },
+  {
+    "search_id": "EI-02",
+    "platform": "official_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "Crossrefpublisherdates/page11693–11704currentresponse",
+    "source_url": "https://api.crossref.org/works/10.1145/3770855.3819003",
+    "status": "200_metadata",
+    "notes": "Grouped source operation,not queries/independent experiments;no thirdparty execution"
+  },
+  {
+    "search_id": "EI-03",
+    "platform": "official_PDF",
+    "search_date": "2026-11-28",
+    "query_exact": "ACMPDFrequest403HTML_notPDF",
+    "source_url": "https://dl.acm.org/doi/pdf/10.1145/3770855.3819003",
+    "status": "403_access_boundary",
+    "notes": "Grouped source operation,not queries/independent experiments;no thirdparty execution"
+  },
+  {
+    "search_id": "EI-04",
+    "platform": "fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "main1–9/AppA–C10–12;referencesnotrescreened",
+    "source_url": "literature-review/reports/replicatorbench_EI.md",
+    "status": "fulltext_scoped",
+    "notes": "Grouped source operation,not queries/independent experiments;no thirdparty execution"
+  },
+  {
+    "search_id": "EI-05",
+    "platform": "numeric_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "3128arithmetic/Table3/5/6/8;19vs20and211conflicts",
+    "source_url": "literature-review/reports/replicatorbench_EI.md",
+    "status": "local_source_checks",
+    "notes": "Grouped source operation,not queries/independent experiments;no thirdparty execution"
+  },
+  {
+    "search_id": "EI-06",
+    "platform": "visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "p8/11/12tablesfiguresjudgechecked",
+    "source_url": "literature-review/reports/replicatorbench_EI.md",
+    "status": "three_pages_inspected",
+    "notes": "Grouped source operation,not queries/independent experiments;no thirdparty execution"
+  },
+  {
+    "search_id": "EI-07",
+    "platform": "coding_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "M177includedexplicitauthorhostedcopy;fiveunits/KDD/synthesis",
+    "source_url": "literature-review/reports/replicatorbench_EI.md",
+    "status": "local_evidence_update",
+    "notes": "Grouped source operation,not queries/independent experiments;no thirdparty execution"
+  }
+]

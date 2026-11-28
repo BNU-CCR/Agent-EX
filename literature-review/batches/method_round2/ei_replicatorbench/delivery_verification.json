@@ -1,0 +1,25 @@
+{
+  "base": "25f37c7",
+  "changed_master_records": [
+    "M177"
+  ],
+  "previous_matrix_prefix_preserved": 232,
+  "cards": 84,
+  "heading_cards": 78,
+  "inline_cards": 6,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    238,
+    1721,
+    11,
+    42
+  ],
+  "included_B7": 60,
+  "max_cell_text": 29215,
+  "formal_bib_entries": 60,
+  "visual": "Current exported cover inspected",
+  "checks": "passed",
+  "limits": "No thirdparty program/model executed;raw study results not independently reproduced;official publisher PDF bytes unavailable"
+}

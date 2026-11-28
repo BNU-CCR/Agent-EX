@@ -1,0 +1,35 @@
+{
+  "batch_id": "EI-ReplicatorBench-workflow-reference-evaluation",
+  "date": "2026-11-28",
+  "expected_master_sha256": "bcdde4f2fa81f6a14ed0a4a59498c08f5870f18074d0ce63bcfdb331ef66df58",
+  "updates": [
+    {
+      "record_id": "M177",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M177.md",
+      "research_question": "Can research assistants execute new-sample replications faithfully and judge preregistered outcomes against human reports?",
+      "method_type": "replication_workflow_benchmark;human_reference_evaluation;LLM_judge_validation;native_translation_data_only_comparison",
+      "mechanisms": "staged_extraction_design_execution_interpretation;curated_new_sample;iterative_debugging;semantic_fidelity",
+      "reason": "正式日期/身份与作者托管ACM格式全文已核；新样本重复研究的人工参照/分阶段指标直接支持复现与方法评价，非人类过程验证。",
+      "date_basis": "Publisher-depositedCrossrefpublished-online2026-08-08/print08-09;12ppACMformattedauthorcopyread;officialPDF403notbytecompared",
+      "related_versions": "ODUauthorhosted12ppACMformattedcopy/titleauthorsDOIformalreferenceCCBYmatched;Crossrefpages11693–11704;publisherPDFbytesnotacquired",
+      "supplement_status": "AppendixA–Cread;Zenodo20506946/GitHublinked_notacquired",
+      "findings": "39curatednew-samplereplications/3128mixedfieldsURLscheckpoints;curatednewdataprovidednotfullyautonomousretrievalpipeline. GPT5execution95.14vsfinalACC76.92/F176.86differentmetrics;128humanjudgedcheckpointsalpha.591,GPT4o-humanr.659. Silentwrong-fileexample;19/20observationalanderrorcountconflictspending.",
+      "evidence_location": "AuthorhostedACMformatted12pp:main1–9;AppA–C10–12;Tables2–8/Figs3–6;Crossrefregistration",
+      "relation_to_agent_ex": "Separate environment success/implementation fidelity/statistical outputs/preregistered conclusions;humanjudgevalidation bounded;no change to frozen serial protocol",
+      "notes": "EI lawfulauthorhostedformalformattedfulltext;officialPDF403HTML;no byte-equivalence assertion or extra publisher-download gate. Referencesnotrescreened;no code/modelexecution;comparison denominators unresolved.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "Workflow and judge/reference audit transferable;not validation of social simulation dynamics or fully autonomous new-data collection",
+      "method_relevance_rationale": "Human preregistration/report grounded replication assistant benchmark with evaluator checks and fidelity failures;scope other not simulated human trajectories",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "fixed_artifact_schema_code;model_snapshot_seed_repeats_cost_budget_run_mapping;19vs20_observational;6vs7_domains;table5_211_vs124_193;comparison_subsets;judge_rawlabels_protocol;officialPDF_bytecomparison",
+      "method_evidence_location": "§3–7;Table2/3/5/6/7/8;AppA.2/B.1/C",
+      "method_coding_source": "reading-cards/M177.md;reports/replicatorbench_EI.md;batches/method_round2/ei_replicatorbench/reading_checks.json",
+      "method_last_checked": "2026-11-28",
+      "search_id": "EA-01;EA-05;EI-01;EI-02;EI-03"
+    }
+  ],
+  "new_records": []
+}

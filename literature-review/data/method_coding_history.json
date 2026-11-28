@@ -24148,5 +24148,95 @@
     "batch": "EG-LiveCultureBench-current-public-release-boundary",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/eg_liveculture_release/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "replication_workflow_benchmark;human_reference_evaluation;LLM_judge_validation;native_translation_data_only_comparison",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Workflow and judge/reference audit transferable;not validation of social simulation dynamics or fully autonomous new-data collection",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_relevance_rationale",
+    "old": "研究复现助手的三阶段能力评价，包含不可复现主张；需核新资料与重用资料、过程/结果判据。",
+    "new": "Human preregistration/report grounded replication assistant benchmark with evaluator checks and fidelity failures;scope other not simulated human trajectories",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_pending_fields",
+    "old": "fulltext;reference_independence;target_metrics;model_data_version;method_maturity;method_evidence_level",
+    "new": "fixed_artifact_schema_code;model_snapshot_seed_repeats_cost_budget_run_mapping;19vs20_observational;6vs7_domains;table5_211_vs124_193;comparison_subsets;judge_rawlabels_protocol;officialPDF_bytecomparison",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_evidence_location",
+    "old": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "new": "§3–7;Table2/3/5/6/7/8;AppA.2/B.1/C",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_coding_source",
+    "old": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "new": "reading-cards/M177.md;reports/replicatorbench_EI.md;batches/method_round2/ei_replicatorbench/reading_checks.json",
+    "date": "2026-11-28",
+    "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ei_replicatorbench/results.json"
   }
 ]
