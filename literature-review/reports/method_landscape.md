@@ -1,4 +1,4 @@
-> 当前入口（2026-11-28，FS）：78正式纳入/91卡/267证据单元，61载体/31条件项，13日期待核。[九问题综合](methods_review_current_synthesis.md)与[ODD标准证据](odd_standard_evidence_FQ.md)。旧批数量保留历史身份。
+> 当前入口（2026-11-28，FT）：78正式纳入/91卡/267证据单元，61载体/31条件项，13日期待核。[九问题综合](methods_review_current_synthesis.md)与[ODD标准证据](odd_standard_evidence_FQ.md)。旧批数量保留历史身份。
 
 > 历史入口：EQ：[九问题综合](methods_review_current_synthesis.md)已更新；本报告标题下有当前判读，旧批数量只作快照。
 

@@ -1,0 +1,42 @@
+[
+  {
+    "table": "method_venue_map.csv",
+    "venue_id": "JASSS",
+    "field": "precedents_2022_onward",
+    "record_id": "M147",
+    "old": "M147: A Microsimulation Model of Behaviour Change Calibrated to Reversal Learning Data | 2025-06-30 | DOI 10.18564/jasss.5637 | https://www.jasss.org/28/3/8.html | formalabstractonlycandidate;no fulltextgrade",
+    "new": "M147: A Microsimulation Model of Behaviour Change Calibrated to Reversal Learning Data | 2025-06-30 | DOI 10.18564/jasss.5637 | https://www.jasss.org/28/3/8.html | formal targeted HTML fulltext; screening=included; reading=fulltext_checked;guppy empirical calibration/limited synthetic recovery;notLLM/humanholdoutvalidation",
+    "evidence": "reading-cards/M147.md;reports/reversal_identifiability_DX.md",
+    "reason": "Earlier verified source evidence supersedes cached status;no new reading or date inference"
+  },
+  {
+    "table": "method_venue_map.csv",
+    "venue_id": "IPM",
+    "field": "precedents_2022_onward",
+    "record_id": "R005",
+    "old": "R005: RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents | first-online pending; volume 2026 | DOI 10.1016/j.ipm.2026.104689 | https://www.sciencedirect.com/science/article/pii/S0306457326000804 | llm_role_distribution_hybrid | formal publication metadata; screening=candidate; reading=abstract_read || M047: From rules to reasoning: A systematic review of agent-based and LLM-empowered simulation of public collaboration | first-online pending; volume 2027 | DOI 10.1016/j.ipm.2026.105184 | https://www.sciencedirect.com/science/article/abs/pii/S0306457326005741 | cross_paradigm_review | formal publication metadata; screening=candidate; reading=abstract_read",
+    "new": "R005: RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents | formalpublication2026-07 fallback;exactfirstonlinedayunknown;abstract-onlycandidate; volume2026 | DOI 10.1016/j.ipm.2026.104689 | https://www.sciencedirect.com/science/article/pii/S0306457326000804 | llm_role_distribution_hybrid | formal publication metadata; screening=candidate; reading=abstract_read || M047: From rules to reasoning: A systematic review of agent-based and LLM-empowered simulation of public collaboration | first-online pending; volume 2027 | DOI 10.1016/j.ipm.2026.105184 | https://www.sciencedirect.com/science/article/abs/pii/S0306457326005741 | cross_paradigm_review | formal publication metadata; screening=candidate; reading=abstract_read",
+    "evidence": "reports/formal_month_qualification_FB.md;data/literature_master.csv",
+    "reason": "Earlier verified source evidence supersedes cached status;no new reading or date inference"
+  },
+  {
+    "table": "journal_submission_candidates.csv",
+    "venue_id": "JASSS",
+    "field": "precedents_2022_onward",
+    "record_id": "M147",
+    "old": "M147: A Microsimulation Model of Behaviour Change Calibrated to Reversal Learning Data | 2025-06-30 | DOI 10.18564/jasss.5637 | https://www.jasss.org/28/3/8.html | formalabstractonlycandidate;no fulltextgrade",
+    "new": "M147: A Microsimulation Model of Behaviour Change Calibrated to Reversal Learning Data | 2025-06-30 | DOI 10.18564/jasss.5637 | https://www.jasss.org/28/3/8.html | formal targeted HTML fulltext; screening=included; reading=fulltext_checked;guppy empirical calibration/limited synthetic recovery;notLLM/humanholdoutvalidation",
+    "evidence": "reading-cards/M147.md;reports/reversal_identifiability_DX.md",
+    "reason": "Earlier verified source evidence supersedes cached status;no new reading or date inference"
+  },
+  {
+    "table": "journal_submission_candidates.csv",
+    "venue_id": "IPM",
+    "field": "precedents_2022_onward",
+    "record_id": "R005",
+    "old": "R005: RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents | first-online pending; volume 2026 | DOI 10.1016/j.ipm.2026.104689 | https://www.sciencedirect.com/science/article/pii/S0306457326000804 | llm_role_distribution_hybrid | formal publication metadata; screening=candidate; reading=abstract_read || M047: From rules to reasoning: A systematic review of agent-based and LLM-empowered simulation of public collaboration | first-online pending; volume 2027 | DOI 10.1016/j.ipm.2026.105184 | https://www.sciencedirect.com/science/article/abs/pii/S0306457326005741 | cross_paradigm_review | formal publication metadata; screening=candidate; reading=abstract_read",
+    "new": "R005: RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents | formalpublication2026-07 fallback;exactfirstonlinedayunknown;abstract-onlycandidate; volume2026 | DOI 10.1016/j.ipm.2026.104689 | https://www.sciencedirect.com/science/article/pii/S0306457326000804 | llm_role_distribution_hybrid | formal publication metadata; screening=candidate; reading=abstract_read || M047: From rules to reasoning: A systematic review of agent-based and LLM-empowered simulation of public collaboration | first-online pending; volume 2027 | DOI 10.1016/j.ipm.2026.105184 | https://www.sciencedirect.com/science/article/abs/pii/S0306457326005741 | cross_paradigm_review | formal publication metadata; screening=candidate; reading=abstract_read",
+    "evidence": "reports/formal_month_qualification_FB.md;data/literature_master.csv",
+    "reason": "Earlier verified source evidence supersedes cached status;no new reading or date inference"
+  }
+]

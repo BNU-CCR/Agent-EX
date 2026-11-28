@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "FT-01",
+    "platform": "local_evidence_reconciliation",
+    "search_date": "2026-11-28",
+    "query_exact": "31candidatesx9factualfields=279pairwiseequal;notprimaryverification",
+    "source_url": "batches/method_round2/ft_submission_facts/pairwise_fields_before.csv",
+    "status": "cross_table_fields_checked",
+    "notes": "Grouped local source operation;notquerycount or new primary policy verification"
+  },
+  {
+    "search_id": "FT-02",
+    "platform": "local_evidence_reconciliation",
+    "search_date": "2026-11-28",
+    "query_exact": "163venue_recordrelationsagainstcurrentmaster;M147fulltextincluded/R005formalmonthfallback",
+    "source_url": "data/submission_record_facts_FT.csv",
+    "status": "master_source_scope_compared",
+    "notes": "Grouped local source operation;notquerycount or new primary policy verification"
+  },
+  {
+    "search_id": "FT-03",
+    "platform": "local_evidence_reconciliation",
+    "search_date": "2026-11-28",
+    "query_exact": "Twohistoricalcacheerrors/fourcellsrepairedviaDXcardandFBdateevidence;no promotion/rankingchange",
+    "source_url": "reports/submission_fact_consistency_FT.md",
+    "status": "scoped_factual_correction",
+    "notes": "Grouped local source operation;notquerycount or new primary policy verification"
+  }
+]

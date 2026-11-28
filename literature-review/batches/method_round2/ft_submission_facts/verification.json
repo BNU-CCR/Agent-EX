@@ -1,0 +1,35 @@
+{
+  "checked": "2026-11-28",
+  "master_matrix_unchanged": true,
+  "map_candidate_changes": {
+    "JASSS": [
+      "precedents_2022_onward"
+    ],
+    "IPM": [
+      "precedents_2022_onward"
+    ]
+  },
+  "candidate_order_and_grades_preserved": true,
+  "shared_fields_equal": 279,
+  "venue_record_relations": 163,
+  "candidate_rows": 31,
+  "excel_cell_limit_checked": true,
+  "workbook_rows": [
+    28,
+    241,
+    62,
+    32,
+    268,
+    56,
+    1944,
+    16,
+    42,
+    36
+  ],
+  "requirement_ids_classes_unchanged": 66,
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "limits": "No new source policy certification/fulltext/experiment;notgoalacceptance"
+}
