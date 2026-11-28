@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "EC-01",
+    "platform": "github_repository_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "Publicauthorrepo/defaultmain metadata",
+    "source_url": "https://api.github.com/repos/pitehu/SimBench_release",
+    "status": "public_repo_confirmed",
+    "notes": "Groupedoperationsnotqueries/modelruns;fixedpublishedsource notpaper-executioncertification;noexecution."
+  },
+  {
+    "search_id": "EC-02",
+    "platform": "github_fixed_commit",
+    "search_date": "2026-11-28",
+    "query_exact": "Resolve main exactcommit/committer date",
+    "source_url": "https://api.github.com/repos/pitehu/SimBench_release/commits/main",
+    "status": "fixed_ec384dce",
+    "notes": "Groupedoperationsnotqueries/modelruns;fixedpublishedsource notpaper-executioncertification;noexecution."
+  },
+  {
+    "search_id": "EC-03",
+    "platform": "github_complete_tree",
+    "search_date": "2026-11-28",
+    "query_exact": "Recursive5filetree,truncatedfalse",
+    "source_url": "https://api.github.com/repos/pitehu/SimBench_release/git/trees/ec384dceff886e8c129eb610066ba62791aed3ea?recursive=1",
+    "status": "five_files",
+    "notes": "Groupedoperationsnotqueries/modelruns;fixedpublishedsource notpaper-executioncertification;noexecution."
+  },
+  {
+    "search_id": "EC-04",
+    "platform": "github_fixed_sources",
+    "search_date": "2026-11-28",
+    "query_exact": "Fetch5filesatfixedref/verifyGitblobSHA1andSHA256",
+    "source_url": "https://github.com/pitehu/SimBench_release/tree/ec384dceff886e8c129eb610066ba62791aed3ea",
+    "status": "five_blob_hashes_verified",
+    "notes": "Groupedoperationsnotqueries/modelruns;fixedpublishedsource notpaper-executioncertification;noexecution."
+  },
+  {
+    "search_id": "EC-05",
+    "platform": "static_source_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Readscore/generationpaths;ASTparseonly;noexec/import/pickle",
+    "source_url": "literature-review/data/simbench_code_crosswalk_EC.csv",
+    "status": "static_eight_findings",
+    "notes": "Groupedoperationsnotqueries/modelruns;fixedpublishedsource notpaper-executioncertification;noexecution."
+  },
+  {
+    "search_id": "EC-06",
+    "platform": "paper_code_crosswalk",
+    "search_date": "2026-11-28",
+    "query_exact": "CompareformalEq2,AppD/Ewithpublishedweighting/parser/retrypaths;runidentitypending",
+    "source_url": "literature-review/reports/simbench_code_EC.md",
+    "status": "scoped_crosswalk",
+    "notes": "Groupedoperationsnotqueries/modelruns;fixedpublishedsource notpaper-executioncertification;noexecution."
+  },
+  {
+    "search_id": "EC-07",
+    "platform": "local_evidence_update",
+    "search_date": "2026-11-28",
+    "query_exact": "UpdateexistingM174card/VC219/220;noadditionalunits/gradechanges",
+    "source_url": "literature-review/batches/method_round2/ec_simbench_code/results.json",
+    "status": "local_integration",
+    "notes": "Groupedoperationsnotqueries/modelruns;fixedpublishedsource notpaper-executioncertification;noexecution."
+  }
+]

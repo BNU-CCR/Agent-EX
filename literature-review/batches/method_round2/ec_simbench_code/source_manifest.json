@@ -1,0 +1,78 @@
+{
+  "repo": "pitehu/SimBench_release",
+  "commit": "ec384dceff886e8c129eb610066ba62791aed3ea",
+  "committer_date": "2025-10-20T20:22:11Z",
+  "tree_sha": "ec384dceff886e8c129eb610066ba62791aed3ea",
+  "tree_truncated": false,
+  "tree": [
+    {
+      "path": "LICENSE.md",
+      "type": "blob",
+      "sha": "79f0c882aa558e48b997c2458e754365a01484c9"
+    },
+    {
+      "path": "README.md",
+      "type": "blob",
+      "sha": "8582a85d70b03d019d16bc6b0fa44a7ea6e219a5"
+    },
+    {
+      "path": "calculate_simbench_score.py",
+      "type": "blob",
+      "sha": "042c44101eaff4a850aa15b8ad3330d45e9eb8b2"
+    },
+    {
+      "path": "generate_answers.py",
+      "type": "blob",
+      "sha": "ea5dc9b2f7af0540460324d7c3dc18ffb7a4185b"
+    },
+    {
+      "path": "requirement.txt",
+      "type": "blob",
+      "sha": "3de1183c35de1fa39151e6793720af1808e339d2"
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "url": "https://github.com/pitehu/SimBench_release/blob/ec384dceff886e8c129eb610066ba62791aed3ea/README.md",
+      "git_blob_sha1": "8582a85d70b03d019d16bc6b0fa44a7ea6e219a5",
+      "sha256": "6de66cf392a0dda5d8c9169ecd653b4c62f29d869575b67837d12b12448f2c34",
+      "bytes": 5392,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EC_SimBench_ec384dce\\README.md"
+    },
+    {
+      "path": "calculate_simbench_score.py",
+      "url": "https://github.com/pitehu/SimBench_release/blob/ec384dceff886e8c129eb610066ba62791aed3ea/calculate_simbench_score.py",
+      "git_blob_sha1": "042c44101eaff4a850aa15b8ad3330d45e9eb8b2",
+      "sha256": "54ce78ed72ec195db4d2534568e082ae18edf3c0e9d1ce383de899a3aac5822f",
+      "bytes": 5960,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EC_SimBench_ec384dce\\calculate_simbench_score.py"
+    },
+    {
+      "path": "generate_answers.py",
+      "url": "https://github.com/pitehu/SimBench_release/blob/ec384dceff886e8c129eb610066ba62791aed3ea/generate_answers.py",
+      "git_blob_sha1": "ea5dc9b2f7af0540460324d7c3dc18ffb7a4185b",
+      "sha256": "77e36b1fe4c2e26bbc838b1d66bd93ed3bf62d52ba8ebcca8ff8f3d538ba5bae",
+      "bytes": 17879,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EC_SimBench_ec384dce\\generate_answers.py"
+    },
+    {
+      "path": "requirement.txt",
+      "url": "https://github.com/pitehu/SimBench_release/blob/ec384dceff886e8c129eb610066ba62791aed3ea/requirement.txt",
+      "git_blob_sha1": "3de1183c35de1fa39151e6793720af1808e339d2",
+      "sha256": "5d6330cc3aff9f8c70759f9aa83345960eb757fa7c78e17a7ee62496dd0b2a95",
+      "bytes": 93,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EC_SimBench_ec384dce\\requirement.txt"
+    },
+    {
+      "path": "LICENSE.md",
+      "url": "https://github.com/pitehu/SimBench_release/blob/ec384dceff886e8c129eb610066ba62791aed3ea/LICENSE.md",
+      "git_blob_sha1": "79f0c882aa558e48b997c2458e754365a01484c9",
+      "sha256": "0572dcb48ff73c3cf628d92d1cea3c0a3d4ead2f8a1437848386ca5eeaa47243",
+      "bytes": 9054,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EC_SimBench_ec384dce\\LICENSE.md"
+    }
+  ],
+  "access": "GitHub connector exact ref",
+  "scope": "All5versionedfiles read statically;noexecution/import/install or pickleload;notpaper-run certification"
+}

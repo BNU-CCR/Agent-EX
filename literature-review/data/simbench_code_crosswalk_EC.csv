@@ -1,0 +1,9 @@
+finding_id,topic,file,lines,observed_static_path,paper_or_boundary,implication_limit
+ECF01,score_rows_and_baseline,calculate_simbench_score.py,86–137,all.pkl rows pooled;dataset_namebaseline;Modelmean/count,Noexplicit split/method balancing or dedup;paper input layout unknown,Weights/missing/duplicates may change included cases;not confirmed actualpaperbias
+ECF02,label_order,generate_answers.py,107–130,expected keys inclusion checked;values returned insertion order,Order not reindexed to expected_keys,Conditional JSONorder mismatch can mislabel probabilities;frequency unknown
+ECF03,probability_validity,generate_answers.py,125–130,"sum>0,not explicit exactkeys/nonnegative/finite checks",Extra key may create scoring length mismatch/NaN,Parsing success not labeled distribution validity
+ECF04,local_token_probability,generate_answers.py,88–101,sums tokenIDs for label and underscorelabel,Not conditional multi-token sequence probability;tokenizer not executed,Specific tokenization/modelimpact unknown
+ECF05,API_token_probability,generate_answers.py,179–210;277–283,wrapper softmax(logprob) then callerexp(value),Published conditional API token path mixes probability/logprob semantics,Not evidence defaultpaperresults used thisbranch
+ECF06,retry_temperature,generate_answers.py,138–235;286–300;328–360,initial.0001;parse5/API100;parsefailure switches1,Paper initial0 differs;separate nested retry ceilings,Actual attempts/failure effect unknown;no runtime claim
+ECF07,run_provenance,generate_answers.py,54–61;303–307;362–375,seeddefinednotcalled;8bitload;norevision;output lacks rawresponses/retrytrace,No paper-run manifest/results in5filetree,Public source not execution/replication proof
+ECF08,setup_documentation,README.md;requirement.txt,README installation/prerequisites;dependency list,placeholders;requirementsplural vsfilesingular;dependencies unpinned,No exact environment reconstructed,No execution/install attempted

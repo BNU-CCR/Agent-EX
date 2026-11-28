@@ -1,0 +1,16 @@
+{
+  "batch_id": "EC-SimBench-fixed-release-static-audit",
+  "date": "2026-11-28",
+  "expected_master_sha256": "4093f137c0b79bf5a7f2c647641754a9f802f7ea69ab0df50c5b4329d4ac2d68",
+  "updates": [
+    {
+      "record_id": "M174",
+      "supplement_status": "ECfixedGitHub5filesstaticallyread;HFdata/rawpaperoutputsnotacquired;noexecution",
+      "notes": "EB formalPDF52pp;targeted main/appendix reading,notallsourcearchives;Table4sums/Table745scoreschecked. Defaultcomparison confounds elicitation/backend withmodeltype;AppE every-modelclaim hasvisualLlama8Bcounterexample. First-online remainsEAofficialApr20. No code/data execution or currentmodelrankingclaim. | EC fixedreleaseec384dce5filesread;scorerpoolrowsbymodel;parserdoesnotreorderlabels;retrylayers5parse/100API;initial.0001vspaper0;noactualrunmappingorimpactclaim.",
+      "method_pending_fields": "paper_score_input_layout_splitweighting;code_to_paper_run_mapping;observed_JSON_key_order_and_valid_cases;model_snapshot_backend;retry_failure_denominators;paired_cluster_uncertainty;raw_source_data_sampling;interactive_process_validation",
+      "method_coding_source": "reading-cards/M174.md;reports/simbench_EB.md;batches/method_round2/eb_simbench/reading_checks.json;reports/simbench_code_EC.md;data/simbench_code_crosswalk_EC.csv",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

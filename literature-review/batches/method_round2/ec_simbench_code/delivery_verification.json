@@ -1,0 +1,24 @@
+{
+  "base": "5c46287",
+  "exact_source_blobs_verified": 5,
+  "tree_complete": true,
+  "crosswalk_findings": 8,
+  "only_record_changed": "M174",
+  "no_date_status_grade_change": true,
+  "only_units_updated": [
+    "VC219",
+    "VC220"
+  ],
+  "old_card_git_bytes_preserved": true,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    223,
+    1694,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "limits": "Static source inspection only;no third-party code import/exec/pickleload/modelcall;paper-run/actualimpact unverified;counts/layout reuse EB visual"
+}

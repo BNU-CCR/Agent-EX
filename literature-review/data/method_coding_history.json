@@ -23928,5 +23928,25 @@
     "batch": "EB-SimBench-formal-method-reading",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_pending_fields",
+    "old": "exact_score_split_weighting;fixed_code_to_paper_run_mapping;model_snapshot_backend;retry_failure_denominators;paired_cluster_uncertainty;raw_source_data_sampling;interactive_process_validation",
+    "new": "paper_score_input_layout_splitweighting;code_to_paper_run_mapping;observed_JSON_key_order_and_valid_cases;model_snapshot_backend;retry_failure_denominators;paired_cluster_uncertainty;raw_source_data_sampling;interactive_process_validation",
+    "date": "2026-11-28",
+    "batch": "EC-SimBench-fixed-release-static-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ec_simbench_code/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_coding_source",
+    "old": "reading-cards/M174.md;reports/simbench_EB.md;batches/method_round2/eb_simbench/reading_checks.json",
+    "new": "reading-cards/M174.md;reports/simbench_EB.md;batches/method_round2/eb_simbench/reading_checks.json;reports/simbench_code_EC.md;data/simbench_code_crosswalk_EC.csv",
+    "date": "2026-11-28",
+    "batch": "EC-SimBench-fixed-release-static-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ec_simbench_code/results.json"
   }
 ]
