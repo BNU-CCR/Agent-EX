@@ -1,0 +1,45 @@
+{
+  "repo": "thanhpv2102/LiveCultureBench",
+  "checked": "2026-11-28",
+  "commit": "836b121eff225860aafda7e7abfc1a0ac9ef9106",
+  "committer_date": "2026-04-17T12:12:46Z",
+  "tree_truncated": false,
+  "tree": [
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b785ab87cb323c542ae0f485d67566253d7e7211",
+      "size": 57,
+      "url": "https://api.github.com/repos/thanhpv2102/LiveCultureBench/git/blobs/b785ab87cb323c542ae0f485d67566253d7e7211"
+    }
+  ],
+  "readme": {
+    "url": "https://github.com/thanhpv2102/LiveCultureBench/blob/836b121eff225860aafda7e7abfc1a0ac9ef9106/README.md",
+    "bytes": 57,
+    "git_blob_sha1": "b785ab87cb323c542ae0f485d67566253d7e7211",
+    "sha256": "d5ca64c219709c2af2685065bbe6896c4649ab06a64a6a89e6c3750085dbbdb2",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EG_LiveCultureBench_README.md",
+    "content": "# LiveCultureBench\nTo be updated with data download link\n"
+  },
+  "branches": [
+    {
+      "name": "main",
+      "commit": {
+        "sha": "836b121eff225860aafda7e7abfc1a0ac9ef9106",
+        "url": "https://api.github.com/repos/thanhpv2102/LiveCultureBench/commits/836b121eff225860aafda7e7abfc1a0ac9ef9106"
+      },
+      "protected": false
+    }
+  ],
+  "releases": [],
+  "tags_query": {
+    "url": "https://api.github.com/repos/thanhpv2102/LiveCultureBench/tags?per_page=100",
+    "result": {
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    "boundary": "Connectorrejectnotnotags"
+  },
+  "scope": "Currentpublicmainfixedtreeandfirstpagebranches/releases;not all history/otherhosts/tags certification;no code/data acquired or executed"
+}

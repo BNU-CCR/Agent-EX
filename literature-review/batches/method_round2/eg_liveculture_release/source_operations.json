@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "EG-01",
+    "platform": "github_repository_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "Authorlinkedofficialrepo/defaultbranchmainmetadata",
+    "source_url": "https://api.github.com/repos/thanhpv2102/LiveCultureBench",
+    "status": "public_repo",
+    "notes": "Groupedoperations;currentfixedsnapshot/firstmetadatapageonly;noexecution/allhistoryclaim."
+  },
+  {
+    "search_id": "EG-02",
+    "platform": "github_fixed_commit",
+    "search_date": "2026-11-28",
+    "query_exact": "Resolve exactmaincommit/committerdate",
+    "source_url": "https://api.github.com/repos/thanhpv2102/LiveCultureBench/commits/main",
+    "status": "fixed836b121e",
+    "notes": "Groupedoperations;currentfixedsnapshot/firstmetadatapageonly;noexecution/allhistoryclaim."
+  },
+  {
+    "search_id": "EG-03",
+    "platform": "github_complete_tree",
+    "search_date": "2026-11-28",
+    "query_exact": "Fixedrefrecursivetree/truncatedfalse;oneREADME",
+    "source_url": "https://api.github.com/repos/thanhpv2102/LiveCultureBench/git/trees/836b121eff225860aafda7e7abfc1a0ac9ef9106?recursive=1",
+    "status": "one_file",
+    "notes": "Groupedoperations;currentfixedsnapshot/firstmetadatapageonly;noexecution/allhistoryclaim."
+  },
+  {
+    "search_id": "EG-04",
+    "platform": "github_fixed_readme",
+    "search_date": "2026-11-28",
+    "query_exact": "Read57byteREADME/GitblobSHA1andSHA256;linkpending",
+    "source_url": "https://github.com/thanhpv2102/LiveCultureBench/blob/836b121eff225860aafda7e7abfc1a0ac9ef9106/README.md",
+    "status": "placeholder_verified",
+    "notes": "Groupedoperations;currentfixedsnapshot/firstmetadatapageonly;noexecution/allhistoryclaim."
+  },
+  {
+    "search_id": "EG-05",
+    "platform": "github_release_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "Branchesmainonly/releasesempty;tagconnectorrejectednotnotags",
+    "source_url": "https://api.github.com/repos/thanhpv2102/LiveCultureBench/releases?per_page=100",
+    "status": "bounded_metadata_access",
+    "notes": "Groupedoperations;currentfixedsnapshot/firstmetadatapageonly;noexecution/allhistoryclaim."
+  },
+  {
+    "search_id": "EG-06",
+    "platform": "local_evidence_update",
+    "search_date": "2026-11-28",
+    "query_exact": "Recordcode/data/calibrationnotfoundincheckedsnapshot;no status/evidencegrade changes",
+    "source_url": "literature-review/reports/liveculture_release_EG.md",
+    "status": "local_boundary_update",
+    "notes": "Groupedoperations;currentfixedsnapshot/firstmetadatapageonly;noexecution/allhistoryclaim."
+  }
+]

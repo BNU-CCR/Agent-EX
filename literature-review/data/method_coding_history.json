@@ -24128,5 +24128,25 @@
     "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_pending_fields",
+    "old": "exact_formal_first_online;actualrunmanifest/modelrevision/cost/failure;human_annotation_protocol_agreement;CLMthreshold_loss_exchangeability_and_finalselection;population_source_transform_joint_fit;culture11vs7All;profile_metric_mapping;clock_weighting_scheduling;Park_norm_count",
+    "new": "exact_formal_first_online;actualrunmanifest/modelrevision/cost/failure;human_annotation_protocol_agreement;CLMthreshold_loss_exchangeability_and_finalselection;population_source_transform_joint_fit;culture11vs7All;profile_metric_mapping;clock_weighting_scheduling;Park_norm_count;author_code_data_calibration_release_and_paper_mapping",
+    "date": "2026-11-28",
+    "batch": "EG-LiveCultureBench-current-public-release-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eg_liveculture_release/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_coding_source",
+    "old": "reading-cards/M175.md;reports/liveculturebench_EF.md;batches/method_round2/ef_liveculturebench/reading_checks.json",
+    "new": "reading-cards/M175.md;reports/liveculturebench_EF.md;batches/method_round2/ef_liveculturebench/reading_checks.json;reports/liveculture_release_EG.md",
+    "date": "2026-11-28",
+    "batch": "EG-LiveCultureBench-current-public-release-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eg_liveculture_release/results.json"
   }
 ]

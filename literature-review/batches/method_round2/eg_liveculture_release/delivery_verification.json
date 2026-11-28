@@ -1,0 +1,26 @@
+{
+  "base": "4513b9a",
+  "only_record_changed": "M175",
+  "date_status_grades_unchanged": true,
+  "only_units_changed": [
+    "VC228",
+    "VC231"
+  ],
+  "fixed_tree_complete": true,
+  "readme_blob_sha256_verified": true,
+  "readme_bytes": 57,
+  "release_firstpage_empty": true,
+  "tags_connector_rejection_not_absence": true,
+  "prior_card_git_bytes_preserved": true,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    233,
+    1713,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "limits": "Currentpublicfixedmainandmetadata scope;notallhistory/otherhosting/tags;noimplementation/data acquired or executed;counts/layout reuseEFvisual"
+}
