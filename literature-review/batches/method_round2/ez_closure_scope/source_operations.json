@@ -1,0 +1,38 @@
+[
+  {
+    "search_id": "EZ-01",
+    "platform": "approved_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "Two approved taskbooks clauses3.2/5.1/6.2/8/10-12;reorientation4/5/7/9/10;no new gate",
+    "source_url": "CODEX_TASK_2022_ONWARD.md;METHODS_FIRST_REORIENTATION.md",
+    "status": "local_scope_evidence_checked",
+    "notes": "Local sourceoperation;not newquery/experiment/coveragecertificate"
+  },
+  {
+    "search_id": "EZ-02",
+    "platform": "current_evidence",
+    "search_date": "2026-11-28",
+    "query_exact": "66requirements/41namedcoverage/55venues/30conditionalpolicies/24datequeue scopeaudit",
+    "source_url": "data/delivery_closure_EZ.csv",
+    "status": "local_scope_evidence_checked",
+    "notes": "Local sourceoperation;not newquery/experiment/coveragecertificate"
+  },
+  {
+    "search_id": "EZ-03",
+    "platform": "source_derivation",
+    "search_date": "2026-11-28",
+    "query_exact": "Current49includedjournalrecords/29sources;19conferences separate;allworkIDsandDOIgroups",
+    "source_url": "data/core_source_journals_methods.csv;data/work_identity_current.json",
+    "status": "local_scope_evidence_checked",
+    "notes": "Local sourceoperation;not newquery/experiment/coveragecertificate"
+  },
+  {
+    "search_id": "EZ-04",
+    "platform": "synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Required evidence/declared access gaps/future research bounded;no grade upgrade",
+    "source_url": "reports/closure_scope_EZ.md",
+    "status": "local_scope_evidence_checked",
+    "notes": "Local sourceoperation;not newquery/experiment/coveragecertificate"
+  }
+]

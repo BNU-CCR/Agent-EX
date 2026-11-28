@@ -73,3 +73,8 @@ CM日期队列：date_gap_queue_current.csv带入27个date_pending原依据并�
 
 
 DV现行验收：delivery_requirements.csv保留66个要求ID并新增acceptance_scope/current_evidence_check/review_class/priority；delivery_requirement_audit_DV.json为现行详细审计。topic_search_probes_DV.csv是六组查询的追溯示例，非总检索量；venue_policy_field_audit_DV.csv的210字段只作缺口标记，非实质核验率。书目正式57项与frontier8项分文件，M022日期pending省略year，R018仅摘要。旧BP/CI审计保留历史，不再当现行计数。
+
+
+## EZ当前来源分布与身份单位
+
+core_source_journals_methods.csv由build_methods_sources.py从确认纳入的journal_article/review派生，会议排除；原core_source_journals.csv保持首轮保护。字段含来源/映射ID、included_count、各方法层计数、record_ids、work_id_groups、publication_years与贡献/理由/覆盖限制。work_identity_current.json分别报告发表记录与已编码work_id组，不证明实质或统计独立。prepare_methods_export.py同步当前来源表，方法工作簿增第10sheet；原工作簿不改。

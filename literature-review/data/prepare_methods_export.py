@@ -4,7 +4,7 @@ ROOT=pathlib.Path(__file__).resolve().parents[1]
 def read(p):
  with p.open(encoding='utf-8-sig',newline='') as f:return list(csv.reader(f))
 tables={p.stem:read(p) for p in [ROOT/'data/literature_master.csv',ROOT/'data/journals_master.csv',ROOT/'data/search_log.csv',ROOT/'data/conference_sources.csv']}
-for name in ['method_venue_map','journal_submission_candidates','method_validation_matrix','venue_coverage_audit']:
+for name in ['method_venue_map','journal_submission_candidates','method_validation_matrix','venue_coverage_audit','core_source_journals_methods']:
  p=ROOT/'data'/f'{name}.csv'
  if p.exists():tables[name]=read(p)
 heads=tables['literature_master'][0];records=[dict(zip(heads,r)) for r in tables['literature_master'][1:]]
@@ -14,6 +14,7 @@ log_rows=[dict(zip(log_heads,row)) for row in tables['search_log'][1:]]
 coverage_dates=[r['coverage_end'] for r in log_rows if re.fullmatch(r'\d{4}-\d{2}-\d{2}',r.get('coverage_end',''))]
 assert coverage_dates,'No dated search coverage evidence'
 counts.update(search_coverage_start='2022-01-01',search_coverage_end=max(coverage_dates))
+counts.update(coded_work_id_groups=len({r['work_id'] for r in records}),included_work_id_groups=len({r['work_id'] for r in records if r['screening_status']=='included'}))
 tables['counts']=counts
 (ROOT/'exports/methods_workbook_input.json').write_text(json.dumps(tables,ensure_ascii=False),encoding='utf8')
 (ROOT/'data/methods_counts.json').write_text(json.dumps(counts,ensure_ascii=False,indent=2),encoding='utf8')

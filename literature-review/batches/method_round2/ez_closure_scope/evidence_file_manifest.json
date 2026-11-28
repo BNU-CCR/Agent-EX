@@ -1,0 +1,37 @@
+[
+  {
+    "path": "CODEX_TASK_2022_ONWARD.md",
+    "sha256": "5b2bc301abb5ec1bffaece388eebf7ea1314fdf8e15160eebd0c107ee99ead3d",
+    "scope": "Current source for EZ scoped audit;not all content semantically reverified"
+  },
+  {
+    "path": "METHODS_FIRST_REORIENTATION.md",
+    "sha256": "f237c9a8257da24ee8e7308d9137dcd92eac312c19c30ea3885846ef9ae4e27c",
+    "scope": "Current source for EZ scoped audit;not all content semantically reverified"
+  },
+  {
+    "path": "data/literature_master.csv",
+    "sha256": "ccf8922242d64ed58453f979a86244b1af5f57130cc3ba80601ca37f6f5d2bae",
+    "scope": "Current source for EZ scoped audit;not all content semantically reverified"
+  },
+  {
+    "path": "data/venue_coverage_audit.csv",
+    "sha256": "f59fb7f1b05e0dca400959699284b4022885db2683ee038e58183a048c99bc79",
+    "scope": "Current source for EZ scoped audit;not all content semantically reverified"
+  },
+  {
+    "path": "data/method_venue_map.csv",
+    "sha256": "1a3d49650a5ad440e181aae6a53479065dde15196e6697b71278db74e1ff310f",
+    "scope": "Current source for EZ scoped audit;not all content semantically reverified"
+  },
+  {
+    "path": "data/journal_submission_candidates.csv",
+    "sha256": "c2ac9e1654460fd5bc9714fdf770a8872a0c74f349c538fc6c377ff4d91d70b0",
+    "scope": "Current source for EZ scoped audit;not all content semantically reverified"
+  },
+  {
+    "path": "reports/methods_review_current_synthesis.md",
+    "sha256": "5dd6909081a2d5f756c877039c614c5f800253819b369a9d802b819f43a33a3b",
+    "scope": "Current source for EZ scoped audit;not all content semantically reverified"
+  }
+]

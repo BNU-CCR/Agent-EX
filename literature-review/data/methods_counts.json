@@ -21,5 +21,7 @@
     "peripheral": 0
   },
   "search_coverage_start": "2022-01-01",
-  "search_coverage_end": "2026-11-28"
+  "search_coverage_end": "2026-11-28",
+  "coded_work_id_groups": 238,
+  "included_work_id_groups": 68
 }

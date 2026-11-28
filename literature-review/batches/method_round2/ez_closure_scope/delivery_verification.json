@@ -1,0 +1,30 @@
+{
+  "batch": "EZ",
+  "checks": "passed",
+  "base": "9d94b1e",
+  "master_cards_matrix_bibs_original_sources": "normalizedtextunchanged",
+  "requirements": "66stableIDs/classes preserved",
+  "current_sources": {
+    "rows": 29,
+    "recordIDunion": 49,
+    "reviews": 4,
+    "articles": 45,
+    "conference_excluded": 19
+  },
+  "codedworkgroups": 238,
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    253,
+    56,
+    1838,
+    12,
+    42,
+    30
+  ],
+  "workbook_source_count": 49,
+  "visual": "New source preview A1:F6 inspected;longjournalnameswrapped;no new fullworkbookvisibilityclaim",
+  "limitations": "No new fulltext/metadataqualification/policy verification;wholegoalnotcomplete"
+}
