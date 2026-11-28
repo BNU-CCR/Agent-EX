@@ -1,0 +1,104 @@
+{
+  "DOI": "10.1016/j.ssresearch.2023.102941",
+  "title": [
+    "How did it get this way? Disentangling the sources of teacher quality gaps through agent-based modeling"
+  ],
+  "author": [
+    {
+      "given": "Dan",
+      "family": "Goldhaber",
+      "sequence": "first",
+      "affiliation": [],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Matt",
+      "family": "Kasman",
+      "sequence": "additional",
+      "affiliation": [],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Vanessa",
+      "family": "Quince",
+      "sequence": "additional",
+      "affiliation": [],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-5479-4147",
+      "authenticated-orcid": false,
+      "given": "Roddy",
+      "family": "Theobald",
+      "sequence": "additional",
+      "affiliation": [],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Malcolm",
+      "family": "Wolff",
+      "sequence": "additional",
+      "affiliation": [],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    }
+  ],
+  "container-title": [
+    "Social Science Research"
+  ],
+  "ISSN": [
+    "0049-089X"
+  ],
+  "published-online": null,
+  "published-print": {
+    "date-parts": [
+      [
+        2023,
+        11
+      ]
+    ]
+  },
+  "resource": {
+    "primary": {
+      "URL": "https://linkinghub.elsevier.com/retrieve/pii/S0049089X23000960"
+    }
+  },
+  "link": [
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S0049089X23000960?httpAccept=text/xml",
+      "content-type": "text/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S0049089X23000960?httpAccept=text/plain",
+      "content-type": "text/plain",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    }
+  ]
+}

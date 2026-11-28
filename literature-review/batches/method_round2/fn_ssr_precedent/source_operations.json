@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "FN-01",
+    "platform": "crossref_ISSN_query",
+    "search_date": "2026-11-28",
+    "query_exact": "ISSN0049-089X;from2022-01-01/until2026-11-28;rows20;agent based10/simulation0/LLM429",
+    "source_url": "https://api.crossref.org/journals/0049-089X/works",
+    "status": "2success1ratelimited_notexhaustive",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  },
+  {
+    "search_id": "FN-02",
+    "platform": "publisher_identity_access",
+    "search_date": "2026-11-28",
+    "query_exact": "CRselectedrecord+ElsevierAPI2001863metadata/linker200redirectshell;formalNov2023",
+    "source_url": "https://api.elsevier.com/content/article/PII:S0049089X23000960?httpAccept=text/xml",
+    "status": "formalmetadata_only",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  },
+  {
+    "search_id": "FN-03",
+    "platform": "openalex_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "OneDOIlookupleadtoBrown/EdWP;notidentitysoleauthority",
+    "source_url": "https://api.openalex.org/works/https://doi.org/10.1016/j.ssresearch.2023.102941",
+    "status": "discovery200_primaryfollowed",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  },
+  {
+    "search_id": "FN-04",
+    "platform": "primary_author_repository",
+    "search_date": "2026-11-28",
+    "query_exact": "DOI10.26300/pgkj-sa84redirectEdWP;Mar2022label/abstract/fiveauthors",
+    "source_url": "https://edworkingpapers.com/ai22-552",
+    "status": "primaryabstract_read",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  },
+  {
+    "search_id": "FN-05",
+    "platform": "legal_author_PDF",
+    "search_date": "2026-11-28",
+    "query_exact": "33pages1224090bytes/hash;coverJan2022WP259-0122;notbodyread",
+    "source_url": "https://edworkingpapers.com/sites/default/files/CALDER%20WP%20259-0122.pdf",
+    "status": "acquired_identityonly",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  },
+  {
+    "search_id": "FN-06",
+    "platform": "pubmed_access",
+    "search_date": "2026-11-28",
+    "query_exact": "PMID37981397HTTP203cookiechallenge_notabstract",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/37981397/",
+    "status": "challenge_notacquired",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  },
+  {
+    "search_id": "FN-07",
+    "platform": "public_web_attempts",
+    "search_date": "2026-11-28",
+    "query_exact": "[\"\\\"How did it get this way?\\\" \\\"teacher quality\\\" \\\"modeling\\\"\", \"\\\"10.1016/j.ssresearch.2023.102941\\\" pdf\", \"\\\"Social Science Research\\\" \\\"large language model\\\"\", \"\\\"How did it get this way\\\" Goldhaber Kasman Quince Theobald Wolff\", \"\\\"How did it get this way\\\" teacher pdf\"]",
+    "source_url": "reports/ssr_formal_precedent_FN.md",
+    "status": "toolconnectionfailed_noresults_notzero",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  },
+  {
+    "search_id": "FN-08",
+    "platform": "qualification_and_map",
+    "search_date": "2026-11-28",
+    "query_exact": "M183candidate/dateconfirmedmonth;SSRtraditionalABMprecedent;notLLM/fit",
+    "source_url": "reports/ssr_formal_precedent_FN.md",
+    "status": "bounded_integration",
+    "notes": "Groupedoperation notquerycount;metadata/abstract/coveronly;no modelrun"
+  }
+]

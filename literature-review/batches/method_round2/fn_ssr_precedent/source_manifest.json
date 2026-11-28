@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-28",
+  "crossref_queries": [
+    {
+      "query": "agent based",
+      "endpoint": "https://api.crossref.org/journals/0049-089X/works",
+      "filter": "from-pub-date:2022-01-01,until-pub-date:2026-11-28",
+      "rows_requested": 20,
+      "status": 200,
+      "returned": 10,
+      "total_results": 10,
+      "sha256": "613d70c7b3a80eb90e9c231cda67a061bd55fa8d1380a0798b7c5cc40d4ff4be",
+      "bytes": 243099,
+      "boundary": "Crossref relevancequery not exactkeyword/noalljournalclaim"
+    },
+    {
+      "query": "simulation",
+      "endpoint": "https://api.crossref.org/journals/0049-089X/works",
+      "filter": "from-pub-date:2022-01-01,until-pub-date:2026-11-28",
+      "rows_requested": 20,
+      "status": 200,
+      "returned": 0,
+      "total_results": 0,
+      "sha256": "8263edaef360ff3bb34085e3ba778d71b221b241712c6e6f4aed5b18e220300e",
+      "bytes": 195,
+      "boundary": "Crossref relevancequery not exactkeyword/noalljournalclaim"
+    },
+    {
+      "query": "large language model",
+      "endpoint": "https://api.crossref.org/journals/0049-089X/works",
+      "filter": "from-pub-date:2022-01-01,until-pub-date:2026-11-28",
+      "rows_requested": 20,
+      "status": 429,
+      "error": "Too Many Requests;tracecapturedfromtool;responsebodynotsaved",
+      "boundary": "blocked notzero;no immediate retry"
+    }
+  ],
+  "publisher": [
+    {
+      "key": "elsevier_metadata",
+      "url": "https://api.elsevier.com/content/article/PII:S0049089X23000960?httpAccept=text/xml",
+      "final_url": "https://api.elsevier.com/content/article/PII:S0049089X23000960?httpAccept=text/xml",
+      "status": 200,
+      "bytes": 1863,
+      "sha256": "2b18505dc302f4e6a12d75a6e278f43cb80e3b483880da749213ef5e08c57823"
+    },
+    {
+      "key": "publisher_article",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0049089X23000960",
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0049089X23000960",
+      "status": 200,
+      "bytes": 2720,
+      "sha256": "e31d4e81990f35dac89f6448115bfa3d2a88dfbdbd83c76dadfe74681bd07dbb"
+    }
+  ],
+  "discovery_index": {
+    "url": "https://api.openalex.org/works/https://doi.org/10.1016/j.ssresearch.2023.102941",
+    "status": 200,
+    "bytes": 19974,
+    "sha256": "91bf3f5998ccffec0b6d7eddb075bb52c6881b676cb322a21baf4d8738395923"
+  },
+  "repository_and_pubmed": [
+    {
+      "key": "brown",
+      "url": "https://doi.org/10.26300/pgkj-sa84",
+      "final_url": "https://edworkingpapers.com/ai22-552",
+      "status": 200,
+      "bytes": 70356,
+      "sha256": "044005f02af53676b6a3b3c24537bfae9092a13086179aab4bd5a61663d2ca6d"
+    },
+    {
+      "key": "pubmed",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37981397/",
+      "final_url": "https://pubmed.ncbi.nlm.nih.gov/37981397/",
+      "status": 203,
+      "bytes": 5590,
+      "sha256": "de630c1fbcffdb03dce2d5f24a5ac1e259e4a55ebc63ab474e59b5ffb0d8ecbf"
+    }
+  ],
+  "author_pdf": {
+    "url": "https://edworkingpapers.com/sites/default/files/CALDER%20WP%20259-0122.pdf",
+    "status": 200,
+    "bytes": 1224090,
+    "pages": 33,
+    "sha256": "3e0ce8947dea8a6a9046b9d1f480b91a01068d77bff53119c79d38d923b3eee9",
+    "scope": "Acquired;firstpageidentityandabstractonly thisbatch,bodyreading next"
+  },
+  "scope": "Formalmetadata and authorWPabstract/coveronly;33pagesacquirednotbodyread;API200metadata/linker200redirectshell/PubMed203challenge"
+}

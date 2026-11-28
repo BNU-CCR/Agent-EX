@@ -25588,5 +25588,125 @@
     "batch": "FM",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fm_tist_tiis/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_type",
+    "old": "",
+    "new": "traditional_ABM_education_scenario_author_abstract_only",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "application",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "application",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_transferability",
+    "old": "",
+    "new": "待正文核初始化、资料角色、反事实和验证设计；摘要不支持具体方法优点或可迁移性结论。",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "用于指定刊的实际传统ABM应用发表核验；方法贡献及与LLM模拟的可迁移对照仍待全文。",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "authorWPbodyreading;formal_version_difference;calibration/reference/data_roles;counterfactualidentification;methodcontribution;code_data/runmapping;first_online_day_optional",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "primaryEdWorkingPapersabstract+PDFcover;publishermetadata;notbody",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/ssr_formal_precedent_FN.md;batches/method_round2/fn_ssr_precedent/source_manifest.json",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FN",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fn_ssr_precedent/results.json"
   }
 ]

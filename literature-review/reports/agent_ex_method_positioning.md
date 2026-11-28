@@ -1,4 +1,4 @@
-> 当前入口（2026-11-28，FM）：76正式纳入/89阅读卡/260证据单元，60载体/31条件投稿项，14日期待核。[九问题综合](methods_review_current_synthesis.md)与[原范围核对](delivery_scope_FL.md)为当前解释；下列带批次名的旧数量保留为历史快照。
+> 当前入口（2026-11-28，FN）：76正式纳入/89阅读卡/260证据单元，61载体/31条件投稿项，14日期待核。[九问题综合](methods_review_current_synthesis.md)与[原范围核对](delivery_scope_FL.md)为当前解释；下列带批次名的旧数量保留为历史快照。
 
 > 历史入口：DU：[九问题综合](methods_review_current_synthesis.md)已更新；本报告标题下有当前判读，旧批数量只作快照。
 
