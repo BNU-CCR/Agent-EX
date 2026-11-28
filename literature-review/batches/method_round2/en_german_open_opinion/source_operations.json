@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "EN-01",
+    "platform": "targeted_search",
+    "search_date": "2026-11-28",
+    "query_exact": "ExacttitleMa2025ACLofficialtargetfromM179",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "official_hit",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  },
+  {
+    "search_id": "EN-02",
+    "platform": "official_page",
+    "search_date": "2026-11-28",
+    "query_exact": "ACLtitleauthorsDOImonth/25pprange",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "200_page",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  },
+  {
+    "search_id": "EN-03",
+    "platform": "official_PDF",
+    "search_date": "2026-11-28",
+    "query_exact": "25ppPDFhashidentity",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "200_PDF",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  },
+  {
+    "search_id": "EN-04",
+    "platform": "official_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "Crossrefonlineabsent_creatednotused",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "200_date_pending",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  },
+  {
+    "search_id": "EN-05",
+    "platform": "scoped_fullread",
+    "search_date": "2026-11-28",
+    "query_exact": "main/selectedappendixcodingmetrics;notalllargeplots",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "scoped_fulltext",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  },
+  {
+    "search_id": "EN-06",
+    "platform": "table_scope_check",
+    "search_date": "2026-11-28",
+    "query_exact": "tenwaveprintedcorrelationnegative/LLMvsSurvey/APE",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "local_arithmetic_not_raw_reanalysis",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  },
+  {
+    "search_id": "EN-07",
+    "platform": "visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "p6/14/16",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "three_pages",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  },
+  {
+    "search_id": "EN-08",
+    "platform": "dedup_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "236recordDOItitlededup/M180new1card5units",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "local_update",
+    "notes": "Grouped sourceoperation;oneworknotfieldinventory;noexecution"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "base": "15f2753",
+  "existing_master_rows_unchanged": 236,
+  "new_record": "M180",
+  "previous_matrix_prefix_preserved": 247,
+  "cards": 87,
+  "heading_cards": 81,
+  "inline_cards": 6,
+  "workbook_rows": [
+    238,
+    55,
+    31,
+    253,
+    1751,
+    12,
+    42
+  ],
+  "formal_bib_entries": 60,
+  "date_pending": 32,
+  "source_operations": 1750,
+  "status": "passed",
+  "visual": "Current237record/60included/167candidatecoverinspected",
+  "limits": "No originalGLES/modelrun;classification/labelnormalization/runmappingpending"
+}

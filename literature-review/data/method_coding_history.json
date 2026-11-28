@@ -24448,5 +24448,125 @@
     "batch": "EM-open-ended-position-evidence-boundaries",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_type",
+    "old": "",
+    "new": "open_text_survey_simulation;human_doublecoding;multilabel_BERT;group_distribution_validation;prompt_ablation",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;validation_and_external_validity;memory_and_persona",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_transferability",
+    "old": "",
+    "new": "Human-coded syntheticdomainclassifier/groupdistribution/promptablation useful;codingerror/timeknowledge/responseunitnotclosed",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "Direct empirical open-text measurement chain and human distribution reference,complements M179conceptualposition without proving openformat superiority",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "exact_formal_first_online;GLES_sampleweights_uniqueIDs;classifier_split_perclass_agreement_transfer;16vs17labels_normalization_refusal;JSentropyAPEcode;generationrevision_seed_temp_retry_runmapping",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "§3–4;AppC/D/F/G;Tables1–3/9/11/13selected",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M180.md;reports/german_open_opinion_EN.md;batches/method_round2/en_german_open_opinion/reading_checks.json",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EN-German-open-opinion-human-coding-case",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/en_german_open_opinion/results.json"
   }
 ]

@@ -1,0 +1,36 @@
+{
+  "scope": "Official25ppPDFmain1–9/limitationsethics10/AppA13/B18/C-D14/E-F15/G16–17;Table10–11p19/Table13healthrows21scoped;otherlargeplots/tables20–25notallread;referencesnotrescreened",
+  "visual_pages": [
+    6,
+    14,
+    16
+  ],
+  "nominal_annotation": {
+    "total": 1500,
+    "per_model": 500,
+    "coders": 2,
+    "weighted_F1": 0.93,
+    "split_size_and_agreement_pending": true
+  },
+  "table2": {
+    "points": 10,
+    "reported_correlation": -0.35,
+    "printed_rounded_Pearson": -0.32418080908271407,
+    "scope": "Roundingcanexplainnumericaldifference;bothnegative,JSsmallerbettercontradictsproseinterpretation"
+  },
+  "wave13": {
+    "LLM_entropy": 0.58,
+    "survey_entropy": 2.02,
+    "LLM_health_percent": 92.4,
+    "survey_health_percent": 59.5
+  },
+  "codebook": {
+    "Table9coarse": 16,
+    "Fig10ids": 17,
+    "LLM_refusal_addition_apparent_not_final_classifier_dimension_verified": true
+  },
+  "metric_conflict": "Eq9APEabsolute_nonnegative_vsTable7signednegativevalues;codepending",
+  "date": "official2025/7only;Crossrefcreated2025-08-04notfirstonline",
+  "dedup": "ExactDOIandnormalizedtitlecheckedagainstall236existing;none",
+  "limits": "Publishedtablearithmeticonly;notrawGLES/modelreanalysis"
+}

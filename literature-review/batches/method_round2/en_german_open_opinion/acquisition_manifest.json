@@ -1,0 +1,24 @@
+[
+  {
+    "kind": "page",
+    "url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": 200,
+    "bytes": 46851,
+    "sha256": "f296deaf263d425e79de0dbfa7c1a0b3f95b1b8fe56b13f6040f4e15917e7df6",
+    "pdf_signature": false
+  },
+  {
+    "kind": "PDF",
+    "url": "https://aclanthology.org/2025.acl-long.90.pdf",
+    "status": 200,
+    "bytes": 990641,
+    "sha256": "6f3c5940212457482889fe682cbd5f17694f8176b1df01d5183df0b96587c086",
+    "pdf_signature": true
+  },
+  {
+    "url": "https://api.crossref.org/works/10.18653/v1/2025.acl-long.90",
+    "status": 200,
+    "bytes": 2662,
+    "sha256": "d727f9a884098eb6195090c5f1ae91d306c198e3f508890d388ebf1e40d7ae98"
+  }
+]
