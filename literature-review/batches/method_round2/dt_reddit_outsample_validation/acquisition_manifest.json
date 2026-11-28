@@ -1,0 +1,29 @@
+[
+  {
+    "figure": 3,
+    "url": "https://www.jasss.org/29/2/3/Figure3.png",
+    "attempt": 1,
+    "status": "SSLEOF",
+    "notes": "Figure3 raised SSLEOF;Figure5 result not returned;neither file found;TLS verification kept",
+    "operation": "initial concurrent Figure3/5 requests"
+  },
+  {
+    "figure": 3,
+    "url": "https://www.jasss.org/29/2/3/Figure3.png",
+    "attempt": 2,
+    "status": "request_failed",
+    "error": "HTTPSConnectionPool(host='www.jasss.org', port=443): Max retries exceeded with url: /29/2/3/Figure3.png (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)')))"
+  },
+  {
+    "figure": 5,
+    "url": "https://www.jasss.org/29/2/3/Figure5.png",
+    "attempt": 2,
+    "status": "request_failed",
+    "error": "HTTPSConnectionPool(host='www.jasss.org', port=443): Max retries exceeded with url: /29/2/3/Figure5.png (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)')))"
+  },
+  {
+    "operation": "web tool open Figure5 and article",
+    "status": "not_accessible_via_tool",
+    "notes": "No visual read;formal HTML previously saved in DP remains available"
+  }
+]

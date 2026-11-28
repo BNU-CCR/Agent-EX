@@ -1,0 +1,4 @@
+model,reported_accuracy
+BART-MNLI,0.84
+Custom DistilBERT self-learning,0.83
+DistilBERT SST2,0.68

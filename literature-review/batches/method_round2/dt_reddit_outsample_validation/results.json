@@ -1,0 +1,34 @@
+{
+  "batch_id": "DT-Reddit-measurement-and-outsample-intervals",
+  "date": "2026-11-28",
+  "expected_master_sha256": "e7dcee5d20c55ea7f4086884c117db99b70090c4f1e15d00387558cd35f890f6",
+  "updates": [
+    {
+      "record_id": "M161",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M161.md",
+      "related_versions": "FormalHTML§§2–6/Tables3–8/captionsread;Figure3/5unavailable;no PDF/code equivalence claim",
+      "research_question": "带信任SIS能否预测平滑负面帖子比例，标签/端到端留出与均值区间如何限制验证？",
+      "method_type": "sentiment_measurement_plus_rule_network_SIS;68_8_temporal_holdout",
+      "mechanisms": "binarynegativecontagion;spontaneousrecovery;majoritybasedtrust;synchronousstate_then_trust",
+      "findings": "68/8ABMsplit;228humantexts→177agreementonly;kappa.55;classifierselectedoverall76weeks;meanCInotpredictionCI;AppleODEerror.0044<ABM.0048",
+      "reason": "正式日期和定向全文门通过；经验等级限平滑帖子比例保留检验，测量选择/区间与社会效度边界分开。",
+      "supplement_status": "Tables3–8transcribed;Figure3/5SSLfailure/no visual;GitHubonlylocated",
+      "evidence_location": "FormalHTML§§2–6;Tables3–8;Figure5caption;Eq4–7",
+      "relation_to_agent_ex": "区分语言测量、规则主体、帖子/人目标、参数保留与端到端选模；均值CI不替代现实预测区间。不改变冻结实验/调度。",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "MeasurementtoABMtemporalvalidationexample;conditionalaggregateholdoutnotgenerativeLLMworkflow",
+      "method_relevance_rationale": "实际平台数据的分类—平滑—网络ABM—八周保留链，提供验证设计与测量错配对照。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "rho_and_seed_flow;post_vs_agent_target;classifierselection_independent_test;mean_vs_prediction_interval;distance_sum_vs_average;fixedcode_runidentity",
+      "method_evidence_location": "§§2.2–2.7/3.6–3.15/4.1–4.6/5.6–5.14/6.2;Tables3–8;Figure5caption",
+      "method_coding_source": "reading-cards/M161.md;reports/reddit_outsample_validation_DT.md;batches/method_round2/dt_reddit_outsample_validation/",
+      "method_last_checked": "2026-11-28",
+      "notes": "摘要Reddit零样本情绪测量/信任SIS校准，明确短期样本外数据验证；测量误差、划分和闭环预测待全文。 仅摘要初筛；成熟度/证据unclear，无新增卡或验证单元。 DT:formalHTMLread;68/8targetsplitnotwholepipelinestability;humanagreementsubset/meanCI/predictioninterval/AppleODEcounterexample;imagesunavailable;noexecution",
+      "search_id": "DP-08;DP-27;DP-28;DT-01;DT-02;DT-03;DT-04;DT-05"
+    }
+  ],
+  "new_records": []
+}

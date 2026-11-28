@@ -1,0 +1,21 @@
+{
+  "base": "cd1eb1c",
+  "only_master_changed": "M161",
+  "old229_records_unchanged": true,
+  "old78_cards_unchanged": true,
+  "old208_units_unchanged": true,
+  "CU_unchanged": true,
+  "table_numeric_cells_checked": 57,
+  "source_HTML_hash": true,
+  "figures_obtained": false,
+  "catalogue_fulltext": 16,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    214,
+    1642,
+    42
+  ],
+  "limits": "Targeted HTML tables/captions;no figure visual read or code/rerun"
+}

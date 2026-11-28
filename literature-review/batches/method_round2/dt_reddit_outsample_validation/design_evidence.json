@@ -1,0 +1,54 @@
+{
+  "record_id": "M161",
+  "date": "2026-11-28",
+  "data": "Jan2015–Jun2016;42financialsubreddits;3companytexts;publication2026eligibilitynotdatasetyear",
+  "measurement": {
+    "models": [
+      "BART-MNLI",
+      "SST2DistilBERT",
+      "DistilBERTpseudo-label-finetuned"
+    ],
+    "pseudo_training": "Jan2015all42subredditsnotcompanyfiltered;25Kposts→6Kwithprobability>.9;49.6%positive",
+    "human_evaluation": "3textsperweek×76=228;177agreementtexts retained;51disagreements excluded;kappa.55 on full annotation streams;blind to model predictions",
+    "reported_accuracies": [
+      0.84,
+      0.83,
+      0.68
+    ],
+    "chosen": "customDistilBERT for smallsize/.83;no LLM generation in agent behavior",
+    "scope": "classification evaluation covers all76weeks,soABM68/8splitnotautomaticallyindependentend-to-endpipeline"
+  },
+  "network": "first5monthsundirectedreply/thread graph;largestcomponents;fixed771/882/1397nodes;companyusersmayoverlap",
+  "state": "binarynegativevspositive;neutralnotmodelled;asymmetricnegativecontagion+spontaneousrecovery;truststarts.5;synchronousstate_then_trust",
+  "target": "negative post proportion per week,then causal EMA;treated as de-noised true target;not direct person/trust measurement",
+  "split": {
+    "calibration_weeks": 68,
+    "reserved_weeks": 8,
+    "total": 76,
+    "holdout": "declared ABM parameter reserved target period;not new platform/population"
+  },
+  "replicates": "10percalibration/100bestmodelreported;same statistical seed wording ambiguous;independence not authenticated",
+  "figure5_intervals": {
+    "95percent": "pointwise simulation mean CI using standard error",
+    "halo": "±3 standard deviations across simulations",
+    "not": "predictive interval for real observations or empirical 95%coverage guarantee"
+  },
+  "results": {
+    "calibration_meanCI_capture_percent": {
+      "Google": 71,
+      "Apple": 30,
+      "Amazon": 34
+    },
+    "holdout_meanCI_capture_points_of8": {
+      "Google": 6,
+      "Apple": 8,
+      "Amazon": 6
+    },
+    "raw": "most original unsmoothed points outside meanCI",
+    "counterexample": "Apple Table8ODE.0044 < ABM.0048",
+    "distance_definition": "Eq7writes sum8 absolute differences;Table8caption says average;do not relabel verified MAE",
+    "not_established": "real trust mechanism,individualprivateopinions,shock/memestockforecast,generalLLMsocialvalidity"
+  },
+  "availability": "https://github.com/marta-baratto/Reddit_sentiment located only;no acquisition/execution",
+  "visual": "Figure3/5 requests SSL failure,web inaccessible;no visual claim"
+}

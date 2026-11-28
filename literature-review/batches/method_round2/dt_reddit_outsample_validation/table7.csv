@@ -1,0 +1,5 @@
+parameter,Google,Apple,Amazon
+beta_NSIS,0.0488,0.04,0.0392
+gamma_NSIS,0.029,0.0317,0.0309
+beta_ODE,0.3014,0.0464,0.0465
+gamma_ODE,0.0957,0.0159,0.0178

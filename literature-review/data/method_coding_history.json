@@ -22858,5 +22858,95 @@
     "batch": "DS-modeler-in-box-identity-date-and-access",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ds_modeler_access/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "sentiment_measurement_plus_rule_network_SIS;68_8_temporal_holdout",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "MeasurementtoABMtemporalvalidationexample;conditionalaggregateholdoutnotgenerativeLLMworkflow",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_relevance_rationale",
+    "old": "摘要Reddit零样本情绪测量/信任SIS校准，明确短期样本外数据验证；测量误差、划分和闭环预测待全文。",
+    "new": "实际平台数据的分类—平滑—网络ABM—八周保留链，提供验证设计与测量错配对照。",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "new": "rho_and_seed_flow;post_vs_agent_target;classifierselection_independent_test;mean_vs_prediction_interval;distance_sum_vs_average;fixedcode_runidentity",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_evidence_location",
+    "old": "Officialabstractonly;no fulltext/effectiveness inference",
+    "new": "§§2.2–2.7/3.6–3.15/4.1–4.6/5.6–5.14/6.2;Tables3–8;Figure5caption",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_coding_source",
+    "old": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "new": "reading-cards/M161.md;reports/reddit_outsample_validation_DT.md;batches/method_round2/dt_reddit_outsample_validation/",
+    "date": "2026-11-28",
+    "batch": "DT-Reddit-measurement-and-outsample-intervals",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
   }
 ]
