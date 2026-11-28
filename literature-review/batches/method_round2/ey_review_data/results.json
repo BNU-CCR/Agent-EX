@@ -1,0 +1,19 @@
+{
+  "batch_id": "EY",
+  "date": "2026-11-28",
+  "expected_master_sha256": "b8dfb6d80f3d3a6922f9fd82a94b3a41984d48abdbc322cc51a30a63f11371fd",
+  "updates": [
+    {
+      "record_id": "M181",
+      "search_id": "EX-01;EX-03;EX-07;EX-08;EX-09;EY-02;EY-03;EY-04;EY-07;EY-08",
+      "supplement_status": "OSF10selectedsources_total;EX3/EY7providerSHA256andsizeverified_staticread;anonymousCSVaggregateindependentaudit;authorRnotexecuted;notwholepackage",
+      "findings": "出版社摘要报告134期刊政策与49审查案例；不是134独立检错实验或49LLM模型。README明确从匿名化资料开始，未公开原始身份资料/匿名化程序。主文完整结果与效应未核。 | EY匿名数据51条/完成日期保留49；hours均值2.44898(n49)、邮件12.25(n48)、日历72.40816(n49)、问题总244/均4.97959/46条有问题。只核匿名资料算术，不将问题数当错误结论或未复现率；补充未logged作者模型列表重复days缺emails，未核已发表表。",
+      "notes": "Publisher PDF/XML/societymirror403;no fullbody/card or resultverification. 3selectedartifacthashesmatch not execution success. Official publishedAM dateconfirmed;candidate due incomplete reading. Rmd Sys.Date dynamicrender date notpublication. Wholecohort/coding/reportingcounts notnew2022+libraryrecords. | EY7selectedfiles providerSHA256/sizepassed;no authorRexecution. Independent data aggregation confirms51/49,distincthours/emails/days/issues denominators. Supplementarylist source issue bounded;mainmodels/loggedauthor list unaffected;renderedPDFnotcompared. No fulltext/card/maturity/evidencegrade upgrade.",
+      "method_pending_fields": "complete_maintext;VoRstatus/versionmapping;Study1policy_sample/codingrules/results;case_errorcriteria/severity/causalidentification;raw_anonymization_mapping;selectedcode_to_renderedtable;repositorylicense;independentrerun",
+      "method_coding_source": "reports/repro_review_EX.md;batches/method_round2/ex_repro_review/selected_artifact_manifest.json;reports/repro_review_data_EY.md;data/repro_review_study2_EY.json",
+      "method_evidence_location": "Publisher indexed abstract/disclaimer/selectedmethods;OSFReadme provenance/main.R sourcecalls/suppRmd NAdate_completed filter;EYanonymousCSV/functions/data/measures/descriptive/models selectedsourcechecks;not mainfulltext",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "code",
+    "url": "https://api.osf.io/v2/nodes/6kp8j/files/osfstorage/6a6a5bf05077013e8c92c9d5/?page[size]=100",
+    "status": 200,
+    "bytes": 18528,
+    "sha256": "fd947cdb681d07808d600854bb197661ecd323c9583bcbbe0c11740adda490c4",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_code_listing.json"
+  },
+  {
+    "name": "input",
+    "url": "https://api.osf.io/v2/nodes/6kp8j/files/osfstorage/6a6a5c12b05bb36ab40e4baa/?page[size]=100",
+    "status": 200,
+    "bytes": 3584,
+    "sha256": "4a0b082455d78dcde36658e067c898ad0e7205946a608933355a06478f230abf",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_input_listing.json"
+  },
+  {
+    "name": "empirical_insights",
+    "url": "https://api.osf.io/v2/nodes/6kp8j/files/osfstorage/6a6a5c212c1e5f0c7792cb49/?page[size]=100",
+    "status": 200,
+    "bytes": 2286,
+    "sha256": "fab81de7edcb64cfb1dd60e1cdc61e0079b501e13d2eca589e4fc43004778f20",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_empirical_listing.json"
+  }
+]

@@ -24978,5 +24978,35 @@
     "batch": "EX",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ex_repro_review/results.json"
+  },
+  {
+    "record_id": "M181",
+    "field": "method_pending_fields",
+    "old": "complete_maintext;VoRstatus/versionmapping;policy_sample/codingrules/results;caseoutcomes/errorcriteria/casualidentification;input/output/providerversionmapping;repositorylicense;independentrerun",
+    "new": "complete_maintext;VoRstatus/versionmapping;Study1policy_sample/codingrules/results;case_errorcriteria/severity/causalidentification;raw_anonymization_mapping;selectedcode_to_renderedtable;repositorylicense;independentrerun",
+    "date": "2026-11-28",
+    "batch": "EY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ey_review_data/results.json"
+  },
+  {
+    "record_id": "M181",
+    "field": "method_coding_source",
+    "old": "reports/repro_review_EX.md;batches/method_round2/ex_repro_review/selected_artifact_manifest.json",
+    "new": "reports/repro_review_EX.md;batches/method_round2/ex_repro_review/selected_artifact_manifest.json;reports/repro_review_data_EY.md;data/repro_review_study2_EY.json",
+    "date": "2026-11-28",
+    "batch": "EY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ey_review_data/results.json"
+  },
+  {
+    "record_id": "M181",
+    "field": "method_evidence_location",
+    "old": "Publisher indexed abstract/disclaimer/selectedmethods;OSFReadme provenance/main.R sourcecalls/suppRmd NAdate_completed filter",
+    "new": "Publisher indexed abstract/disclaimer/selectedmethods;OSFReadme provenance/main.R sourcecalls/suppRmd NAdate_completed filter;EYanonymousCSV/functions/data/measures/descriptive/models selectedsourcechecks;not mainfulltext",
+    "date": "2026-11-28",
+    "batch": "EY",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ey_review_data/results.json"
   }
 ]

@@ -1,0 +1,24 @@
+{
+  "record_id": "M181",
+  "scope": "Static selectedsources only;no authorRexecution/no renderedtablecomparison",
+  "definitions": {
+    "qhours": "hours_reviewed*4",
+    "issues": "issues_flagged_text+issues_flagged_repo",
+    "days": "date_completed-date_initiated",
+    "selection": "date_completed notNA"
+  },
+  "model_list_issue": {
+    "file": "02_empirical_insights_models.R",
+    "object": "models_negbin_authorsnotlogged",
+    "ordered_entries": [
+      "qhours",
+      "days",
+      "days",
+      "issues"
+    ],
+    "email_model_defined_but_omitted_from_this_list": true,
+    "supplementary_renderer": "supplementary.Rmd negbin-log-models-table uses list and labels time/emails/days/issues",
+    "not_established": "Whether circulatedsupplementPDF/publishedtable isgeneratedfromtheseexactfiles;mainloggedauthorslist correct;notgeneralallmodelswrongclaim"
+  },
+  "data_limits": "Data51statuscomplete,2missingdateexcluded;owndata confirms selectionnotwhyabsence;primaryauthorstatement needed for conflicts-of-interest explanation"
+}

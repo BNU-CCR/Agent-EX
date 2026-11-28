@@ -1,0 +1,29 @@
+{
+  "batch": "EY",
+  "checks": "passed",
+  "base": "b3d434d",
+  "master_changed_ids": [
+    "M181"
+  ],
+  "grading": "candidate/partial_provisional/unclear preserved",
+  "cards87_matrix252_venues_bibs": "normalizedtextunchanged",
+  "provider_file_size_sha256": "7/7 matched",
+  "independent_arithmetic": "savedaggregates match standalone audit;51/49 distinctmetricdenominators",
+  "author_code_execution": false,
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    253,
+    56,
+    1834,
+    12,
+    42
+  ],
+  "cover_B7": 68,
+  "maxcell": 29215,
+  "visual": "Reuse EX current238/68/55layout reviewed previousbatch;currentcellchecks;no newvisualclaim",
+  "protection": "57IDs/18hash/231prefix/72legacychangeledgerpassed",
+  "limitations": "No mainfulltext/printedtablecomparison;no scientific correctness or sensitivityspecificity certification"
+}

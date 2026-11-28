@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "EY-01",
+    "platform": "source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "M181 EXversion/OSFbinding/Readme/mainR/suppRmd;reusehashes",
+    "source_url": "batches/method_round2/ex_repro_review/selected_artifact_manifest.json",
+    "status": "reviewed",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  },
+  {
+    "search_id": "EY-02",
+    "platform": "official_listing",
+    "search_date": "2026-11-28",
+    "query_exact": "OSFcodefolder9files listing;notwholeprojectinventory",
+    "source_url": "https://api.osf.io/v2/nodes/6kp8j/files/osfstorage/6a6a5bf05077013e8c92c9d5/",
+    "status": "200",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  },
+  {
+    "search_id": "EY-03",
+    "platform": "official_listing",
+    "search_date": "2026-11-28",
+    "query_exact": "OSFinputfolder andStudy2subfolder datasetlocator",
+    "source_url": "https://api.osf.io/v2/nodes/6kp8j/files/osfstorage/6a6a5c12b05bb36ab40e4baa/",
+    "status": "200",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  },
+  {
+    "search_id": "EY-04",
+    "platform": "artifact_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "6R+1anonymousCSV GET200/7providerSHA256andbytesmatches",
+    "source_url": "https://osf.io/6kp8j/overview",
+    "status": "seven_files_verified",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  },
+  {
+    "search_id": "EY-05",
+    "platform": "static_source",
+    "search_date": "2026-11-28",
+    "query_exact": "Functions/data selection/variables;notexecution",
+    "source_url": "batches/method_round2/ey_review_data/source_checks.json",
+    "status": "staticread",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  },
+  {
+    "search_id": "EY-06",
+    "platform": "static_source",
+    "search_date": "2026-11-28",
+    "query_exact": "Measures/descriptivestats/models selecteddefinitions;model-listduplicate;resultsmodelsscope",
+    "source_url": "batches/method_round2/ey_review_data/source_checks.json",
+    "status": "staticread",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  },
+  {
+    "search_id": "EY-07",
+    "platform": "independent_arithmetic",
+    "search_date": "2026-11-28",
+    "query_exact": "OwnPython CSV51/49,variabledenominators/descriptivestats/groupcost;no authorRrun",
+    "source_url": "data/repro_review_study2_EY.json",
+    "status": "aggregates_checked",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  },
+  {
+    "search_id": "EY-08",
+    "platform": "synthesis_status",
+    "search_date": "2026-11-28",
+    "query_exact": "Evidence limits pluscurrentdeliverystatus/closurepriorities;no percentusedasacceptancemetric",
+    "source_url": "reports/repro_review_data_EY.md",
+    "status": "synthesized",
+    "notes": "Grouped source operation;notqueries/experiments;anonymousrowlevelnotredistributed"
+  }
+]

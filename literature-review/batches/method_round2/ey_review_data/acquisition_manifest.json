@@ -1,0 +1,240 @@
+[
+  {
+    "name": "02_empirical_insights_models.R",
+    "url": "https://osf.io/download/6a6a5c04b05bb36ab40e4b9e/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/c067a105d4dd0ce349db4ec1c6e88314ac89c30e777c3ae125ab624f5d76685e?response-content-disposition=attachment%3B+filename%3D%2202_empirical_insights_models.R%22%3B+filename%2A%3DUTF-8%27%2702_empirical_insights_models.R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T080116Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=d482f1c1fea1815a78aadd5cc82a56c0d78419b72071ea3266dd4fc0c7092913",
+    "status": 200,
+    "bytes": 3904,
+    "sha256": "c067a105d4dd0ce349db4ec1c6e88314ac89c30e777c3ae125ab624f5d76685e",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "02_empirical_insights_models.R",
+      "kind": "file",
+      "path": "/6a6a5c04b05bb36ab40e4b9e",
+      "size": 3904,
+      "provider": "osfstorage",
+      "materialized_path": "/code/02_empirical_insights_models.R",
+      "last_touched": null,
+      "date_modified": "2026-07-29T20:01:08.490492",
+      "date_created": "2026-07-29T20:01:08.490492Z",
+      "extra": {
+        "hashes": {
+          "md5": "6be4909f31ce4a9c89169830770a0833",
+          "sha256": "c067a105d4dd0ce349db4ec1c6e88314ac89c30e777c3ae125ab624f5d76685e"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_02_empirical_insights_models.R",
+    "provider_sha256_match": true
+  },
+  {
+    "name": "02_empirical_insights_measures.R",
+    "url": "https://osf.io/download/6a6a5c040006fb9d1022f09c/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/e7ee6cd037a856ff4f644763952423e2366f5988bc7a3acead2fe3f5ee2898df?response-content-disposition=attachment%3B+filename%3D%2202_empirical_insights_measures.R%22%3B+filename%2A%3DUTF-8%27%2702_empirical_insights_measures.R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T080117Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=7d21acd40e2342b740fa821bc296205d6a32f2d9d777f0f8fe994604d4137252",
+    "status": 200,
+    "bytes": 3968,
+    "sha256": "e7ee6cd037a856ff4f644763952423e2366f5988bc7a3acead2fe3f5ee2898df",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "02_empirical_insights_measures.R",
+      "kind": "file",
+      "path": "/6a6a5c040006fb9d1022f09c",
+      "size": 3968,
+      "provider": "osfstorage",
+      "materialized_path": "/code/02_empirical_insights_measures.R",
+      "last_touched": null,
+      "date_modified": "2026-07-29T20:01:08.542956",
+      "date_created": "2026-07-29T20:01:08.542956Z",
+      "extra": {
+        "hashes": {
+          "md5": "b8ffbf2d521906badacf5daae2146a1b",
+          "sha256": "e7ee6cd037a856ff4f644763952423e2366f5988bc7a3acead2fe3f5ee2898df"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_02_empirical_insights_measures.R",
+    "provider_sha256_match": true
+  },
+  {
+    "name": "02_empirical_insights_functions.R",
+    "url": "https://osf.io/download/6a6a5c05f5df993e820e4c62/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/2ee4c2a441e0c42520c93c21ab30da0f429144916442a433ae8a4c12ce4d5404?response-content-disposition=attachment%3B+filename%3D%2202_empirical_insights_functions.R%22%3B+filename%2A%3DUTF-8%27%2702_empirical_insights_functions.R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T080116Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=38e75aa8872ba122297181b0c28a1dc792a059808a36b594a8ad5968898fa899",
+    "status": 200,
+    "bytes": 671,
+    "sha256": "2ee4c2a441e0c42520c93c21ab30da0f429144916442a433ae8a4c12ce4d5404",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "02_empirical_insights_functions.R",
+      "kind": "file",
+      "path": "/6a6a5c05f5df993e820e4c62",
+      "size": 671,
+      "provider": "osfstorage",
+      "materialized_path": "/code/02_empirical_insights_functions.R",
+      "last_touched": null,
+      "date_modified": "2026-07-29T20:01:09.864693",
+      "date_created": "2026-07-29T20:01:09.864693Z",
+      "extra": {
+        "hashes": {
+          "md5": "382843d0b75cace4a5e52341d95df83d",
+          "sha256": "2ee4c2a441e0c42520c93c21ab30da0f429144916442a433ae8a4c12ce4d5404"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_02_empirical_insights_functions.R",
+    "provider_sha256_match": true
+  },
+  {
+    "name": "02_empirical_insights_data.R",
+    "url": "https://osf.io/download/6a6a5c0573244027930e4c34/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/2410c2a4d4787d1f96359edbb543938269e36301398a2ab1162da60d5e250c69?response-content-disposition=attachment%3B+filename%3D%2202_empirical_insights_data.R%22%3B+filename%2A%3DUTF-8%27%2702_empirical_insights_data.R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T080117Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=e930c73cc92cbd5f9ae92e15f3d4dca370a779e78212f44680381aa9cde95133",
+    "status": 200,
+    "bytes": 820,
+    "sha256": "2410c2a4d4787d1f96359edbb543938269e36301398a2ab1162da60d5e250c69",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "02_empirical_insights_data.R",
+      "kind": "file",
+      "path": "/6a6a5c0573244027930e4c34",
+      "size": 820,
+      "provider": "osfstorage",
+      "materialized_path": "/code/02_empirical_insights_data.R",
+      "last_touched": null,
+      "date_modified": "2026-07-29T20:01:09.870041",
+      "date_created": "2026-07-29T20:01:09.870041Z",
+      "extra": {
+        "hashes": {
+          "md5": "070edff6b9341a61d25c949bce16e2d8",
+          "sha256": "2410c2a4d4787d1f96359edbb543938269e36301398a2ab1162da60d5e250c69"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_02_empirical_insights_data.R",
+    "provider_sha256_match": true
+  },
+  {
+    "name": "02_empirical_insights_results_models.R",
+    "url": "https://osf.io/download/6a6a5c05a5e3e927ea92ca27/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/543bdf9253b0fb6efdde1bb3b59b7c7acd84674296d2536d900660b13eb84a23?response-content-disposition=attachment%3B+filename%3D%2202_empirical_insights_results_models.R%22%3B+filename%2A%3DUTF-8%27%2702_empirical_insights_results_models.R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T080116Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=2b02f718198fc6bc7f4c5bf26534e84dd79ae081976ee7fedc45d48f50d1799c",
+    "status": 200,
+    "bytes": 6027,
+    "sha256": "543bdf9253b0fb6efdde1bb3b59b7c7acd84674296d2536d900660b13eb84a23",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "02_empirical_insights_results_models.R",
+      "kind": "file",
+      "path": "/6a6a5c05a5e3e927ea92ca27",
+      "size": 6027,
+      "provider": "osfstorage",
+      "materialized_path": "/code/02_empirical_insights_results_models.R",
+      "last_touched": null,
+      "date_modified": "2026-07-29T20:01:09.889949",
+      "date_created": "2026-07-29T20:01:09.889949Z",
+      "extra": {
+        "hashes": {
+          "md5": "3dd8c40075983ab2c2a6bb7979b514dc",
+          "sha256": "543bdf9253b0fb6efdde1bb3b59b7c7acd84674296d2536d900660b13eb84a23"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_02_empirical_insights_results_models.R",
+    "provider_sha256_match": true
+  },
+  {
+    "name": "02_empirical_insights_results_descriptive.R",
+    "url": "https://osf.io/download/6a6a5c06f5df993e820e4c64/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/9bc7a148d3381c7b51b0b0f9a3323df5c18f9c28e4021fe01516d1114b776e74?response-content-disposition=attachment%3B+filename%3D%2202_empirical_insights_results_descriptive.R%22%3B+filename%2A%3DUTF-8%27%2702_empirical_insights_results_descriptive.R&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T080117Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=6b65b06c0a984935cf81b35f1b0391c34ff9d011e5dbc4837697d33b9c25dfba",
+    "status": 200,
+    "bytes": 5714,
+    "sha256": "9bc7a148d3381c7b51b0b0f9a3323df5c18f9c28e4021fe01516d1114b776e74",
+    "provider_attributes": {
+      "guid": null,
+      "checkout": null,
+      "name": "02_empirical_insights_results_descriptive.R",
+      "kind": "file",
+      "path": "/6a6a5c06f5df993e820e4c64",
+      "size": 5714,
+      "provider": "osfstorage",
+      "materialized_path": "/code/02_empirical_insights_results_descriptive.R",
+      "last_touched": null,
+      "date_modified": "2026-07-29T20:01:10.961635",
+      "date_created": "2026-07-29T20:01:10.961635Z",
+      "extra": {
+        "hashes": {
+          "md5": "91759802e4c0a23606b17a46c34884f8",
+          "sha256": "9bc7a148d3381c7b51b0b0f9a3323df5c18f9c28e4021fe01516d1114b776e74"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_02_empirical_insights_results_descriptive.R",
+    "provider_sha256_match": true
+  },
+  {
+    "name": "data_anonymized.csv",
+    "url": "https://osf.io/download/4h5pw/",
+    "final_url": "https://idvyorynw6xy.compat.objectstorage.eu-frankfurt-1.oraclecloud.com/cos-prod-osf-1-files-fra/2c38c6f995c96b904c7c3106021f911f244871a74a387a92a221b37249481070?response-content-disposition=attachment%3B+filename%3D%22data_anonymized.csv%22%3B+filename%2A%3DUTF-8%27%27data_anonymized.csv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=8a1e5869d3122814cba7bd4265a84ad444199855%2F20261128%2Feu-frankfurt-1%2Fs3%2Faws4_request&X-Amz-Date=20261128T080117Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=32d2fd610406a6187aedfd3e6673b138444d73249f69466c5007ee4b1ad73745",
+    "status": 200,
+    "bytes": 5453,
+    "sha256": "2c38c6f995c96b904c7c3106021f911f244871a74a387a92a221b37249481070",
+    "provider_attributes": {
+      "guid": "4h5pw",
+      "checkout": null,
+      "name": "data_anonymized.csv",
+      "kind": "file",
+      "path": "/6a6a5c2c73244027930e4c49",
+      "size": 5453,
+      "provider": "osfstorage",
+      "materialized_path": "/input/empirical_insights/data_anonymized.csv",
+      "last_touched": null,
+      "date_modified": "2026-07-29T20:01:48.273588",
+      "date_created": "2026-07-29T20:01:48.273588Z",
+      "extra": {
+        "hashes": {
+          "md5": "06071e32e444481cd68131da9f6bf788",
+          "sha256": "2c38c6f995c96b904c7c3106021f911f244871a74a387a92a221b37249481070"
+        },
+        "downloads": 0
+      },
+      "tags": [],
+      "current_user_can_comment": false,
+      "current_version": 1,
+      "show_as_unviewed": false
+    },
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EY_data_anonymized.csv",
+    "provider_sha256_match": true
+  }
+]
