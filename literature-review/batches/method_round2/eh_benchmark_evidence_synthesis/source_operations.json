@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "EH-01",
+    "platform": "fixed_git_evidence_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "M174/M176/M175 object/reference/calibration/guarantee/artifact/independentunit comparison from8fixedEGsources",
+    "source_url": "literature-review/batches/method_round2/eh_benchmark_evidence_synthesis/source_reuse.json",
+    "status": "local_synthesis",
+    "notes": "Onegroupedreuseoperation;not8newpapers/queries/originalsourcevalidation;no experiment/policyrefresh"
+  }
+]

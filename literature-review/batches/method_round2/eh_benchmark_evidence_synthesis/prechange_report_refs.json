@@ -1,0 +1,14 @@
+[
+  {
+    "path": "reports/methods_review_current_synthesis.md",
+    "commit": "e26dac1",
+    "sha256": "835a9ad6c18a6de59412186d729ed4517fbcad6438679df4b8883a556fb7d8ee",
+    "preservation": "Git baseline retained; no duplicate full-report copy"
+  },
+  {
+    "path": "reports/two_track_submission_strategy.md",
+    "commit": "e26dac1",
+    "sha256": "16620028a1354ce72743a1e14952dd96d8ad2517650d7ff9004c5bcedae13fab",
+    "preservation": "Git baseline retained; no duplicate full-report copy"
+  }
+]

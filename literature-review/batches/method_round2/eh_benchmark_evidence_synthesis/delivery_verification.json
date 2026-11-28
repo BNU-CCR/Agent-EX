@@ -1,0 +1,20 @@
+{
+  "base": "e26dac1",
+  "reused_sources": 8,
+  "prechange_report_refs": 2,
+  "comparison_rows": 3,
+  "master_matrix_tracker_venues_bibs_unchanged": true,
+  "Q9_current_counts_and_nexttask_checked": true,
+  "EG_archive_committed_bytes_verified": true,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    233,
+    1714,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "limits": "Local synthesis/consistency checks;no originalstudyrevalidation/modelrun/policyrefresh;counts/layoutreuseEFvisual"
+}
