@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "FP-01",
+    "platform": "web_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Three groupedtitlequeriesM012/EN07/CN012 thenthree targetedfulltextqueries;Thuenennewpath;searchsnippetsnotbody",
+    "source_url": "https://www.thuenen.de/en/",
+    "status": "new_institutional_pdf_lead",
+    "notes": "Grouped source operation not query count; no model/code execution"
+  },
+  {
+    "search_id": "FP-02",
+    "platform": "public_source_access",
+    "search_date": "2026-11-28",
+    "query_exact": "ScienceDirect403/JIS timeout/GESISJSshell;notnewfulltextforEN07/CN012",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506 | https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025 | https://search.gesis.org/publication/gris-publication-7ekjuqe1mvh0",
+    "status": "blocked_or_insufficient",
+    "notes": "Grouped source operation not query count; no model/code execution"
+  },
+  {
+    "search_id": "FP-03",
+    "platform": "institutional_pdf",
+    "search_date": "2026-11-28",
+    "query_exact": "Thuenen4374610bytes13pagesDOI/title/date/hash;notbodyread",
+    "source_url": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+    "status": "formal_layout_pdf_acquired",
+    "notes": "Grouped source operation not query count; no model/code execution"
+  },
+  {
+    "search_id": "FP-04",
+    "platform": "visual_date_identity",
+    "search_date": "2026-11-28",
+    "query_exact": "p1Availableonline10October2026/CCBY/DOI/issue2027 visuallychecked",
+    "source_url": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+    "status": "date_confirmed",
+    "notes": "Grouped source operation not query count; no model/code execution"
+  },
+  {
+    "search_id": "FP-05",
+    "platform": "closure_priority_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "sixkeyfulltext/versionpaths and13currentdatepending frommaster;refreshstalequeue",
+    "source_url": "data/priority_closure_FP.csv",
+    "status": "current_queue_reconciled",
+    "notes": "Grouped source operation not query count; no model/code execution"
+  }
+]

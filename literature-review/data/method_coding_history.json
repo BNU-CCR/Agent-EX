@@ -25798,5 +25798,15 @@
     "batch": "FO",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_pending_fields",
+    "old": "method_maturity; method_evidence_level; method_transferability; method_type;formal_first_online_date;publisher_fulltext",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;formal_body_reading;supplement_body_acquisition",
+    "date": "2026-11-28",
+    "batch": "FP",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fp_odd_acquisition/results.json"
   }
 ]

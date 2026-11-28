@@ -1,0 +1,15 @@
+{
+  "url": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+  "status": 200,
+  "bytes": 4374610,
+  "content_type": "application/pdf",
+  "final_url": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+  "sha256": "1c3f1bde8ae81a625f7932678463976ebfbfaeb4021c6c27b19c78f419cb2647",
+  "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FP_M012_Thuenen.response",
+  "pages": 13,
+  "actual_reading": "p1identity/date,p2abstract;bodypending",
+  "primary_discovery": "https://www.thuenen.de/en/",
+  "date_verified": "2026-10-10",
+  "license": "CC BY4.0 perPDFfooter",
+  "not_claimed": "bodyfullread/supplementacquisition/externalvalidity"
+}

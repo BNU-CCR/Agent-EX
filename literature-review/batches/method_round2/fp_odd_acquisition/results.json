@@ -1,0 +1,21 @@
+{
+  "batch_id": "FP",
+  "date": "2026-11-28",
+  "expected_master_sha256": "5b61964ed93cfa7332ad05d551832c5a40dd35be5ddd426c707d514faab7206a",
+  "updates": [
+    {
+      "record_id": "M012",
+      "online_first_date": "2026-10-10",
+      "date_basis": "FP Thuenen-institute-hosted final-layout PDF p1 Available online10October2026 visuallychecked;issue207/2027 retained;notCrossrefcreated/preprintday",
+      "date_eligibility": "confirmed",
+      "fulltext_url": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+      "supplement_status": "FP13pageformal-layoutPDFacquired identity/date/abstractonly;DOCX/ZIPnotacquired;bodyreadingnext",
+      "metadata_evidence_url": "https://pure.knaw.nl/portal/en/publications/twenty-years-of-the-odd-protocol-development-usage-extensions-and/ | https://www.ufz.de/index.php?de=20939&pub_id=33063 | https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+      "search_id": "S-M2-ODD-M012;S-M2-AD-Q5;S-M2-AD-NOTICE;S-M2-AD-UMU;CS-12;CS-15;CS-20;DV-01;DV-03;DV-04;ES-02;ES-05;ES-07;ES-09;FP-01;FP-02;FP-03;FP-04",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed. | CJ:DelftPDF4035717bytesHTML;hashinCJmanifest;noPDF/fulltext/dateupgrade;threeclassificationblanksretained | CS:newauthoruploadRG403;ESSredirectunavailable;DiVAAnubisdenial;UFZhistoricalpageonly;noPDF/date/classificationupgrade | DV:publisher-depositedCrossref200hasno published-online;print month/created not substituted for firstonline;date/status/grade unchanged | ES:verified abstract supports method_validity/method_evaluation purpose only;three blanks resolved as abstract_provisional. ASU issue2027-01-01 is not firstonline. Delft403HTML5717bytes;UFZ only older2006/2010 PDFs;no new fulltext/date/evidencegrade. | FP:newThueneninstitutionalPDF2004374610bytes13p;titleDOIandp1Availableonline2026-10-10confirmed;formalbodyacquirednotyetread;candidate/unclearunchanged;supersedespriorfulltext/datependingnotpriorfailureevidence",
+      "method_pending_fields": "method_maturity;method_evidence_level;method_transferability;method_type;formal_body_reading;supplement_body_acquisition",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

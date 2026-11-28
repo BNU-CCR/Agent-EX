@@ -1,4 +1,4 @@
-> 当前入口（2026-11-28，FO）：77正式纳入/90卡/263证据单元，61载体/31条件项，14日期待核。[九问题综合](methods_review_current_synthesis.md)及[M183补证](m183_counterfactual_evidence_FO.md)。下列批次旧数量保留历史身份。
+> 当前入口（2026-11-28，FP）：77正式纳入/90卡/263证据单元，61载体/31条件项，13日期待核。[九问题综合](methods_review_current_synthesis.md)及[M183补证](m183_counterfactual_evidence_FO.md)。下列批次旧数量保留历史身份。
 
 > EV：两刊报告政策强度/阶段已重核；当前稿须备材料但未认证合规。后续报告方法贡献需比较理解、检错或独立重构收益；M011/M003/M060/M065并不共同证明一套已验证工作流。见[报告与检错综合](reporting_and_error_detection_EV.md)。
 

@@ -1,0 +1,7 @@
+record_id,priority,current_state,next_concrete_action,affected_deliverable,remaining_limit
+M012,1,formal_pdf_acquired_date_confirmed,FQ读正式PDF§2/3/5–8，核叙述/技术说明、实施失误、代码链接与AI主张；再判断卡和纳入,标准范围与可复现性论证,正式正文方法尚未读；补充DOCX/ZIP仍未得
+EN07,2,abstract_only_access_unresolved,新路径仅在作者/机构出现可验证全文时跟进；当前不重复AUP失败下载,复现审计指标和失败原因,本次搜索未取得全文；6至少部分/30与6/14分母分开
+M015,2,author_v1_read_formal_comparison_pending,以机构新存档/更新版本为触发，核正式版相对v1方法增删,过程挖掘验证框架,不将作者v1数值冒充正式版；已读内容不重建
+EN03,2,formal_metadata_abstract_only,寻找作者新存档/期刊合法正文；保持正式与页面摘要差异待核,直接意见演化对照,代码README示例非论文全文
+EN04,2,author_v1_read_formal_body_pending,取新合法正式正文时核Higgs/规则基线与规模/启动筛选；不重复旧v1获取,网络扩散直接对照,v1不能代表正式模型/样本，密度疑点不归责正式版
+CN012,2,formal2025_metadata_abstract_only,取得合法官方/作者正文后读分类与理论风险；JIS本次timeout不当论文不存在,中文方法综述与应用定位,不因题名适配升成熟度/证据级别

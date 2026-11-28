@@ -1,0 +1,31 @@
+{
+  "checked": "2026-11-28",
+  "master_only_changed": [
+    "M012"
+  ],
+  "records": 240,
+  "cards": 90,
+  "matrix": 263,
+  "date_pending": 13,
+  "current_queue_exactly_matches_master": true,
+  "workbook_rows": [
+    28,
+    241,
+    62,
+    32,
+    264,
+    56,
+    1926,
+    16,
+    42,
+    35
+  ],
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "grade_unchanged": true,
+  "author_code_not_executed": true,
+  "goal_acceptance": false,
+  "check_correction": "Initial expected rowcount confused conference sheet with date queue; inspected actual sheet then corrected expectation;13 date queue independently matched master"
+}
