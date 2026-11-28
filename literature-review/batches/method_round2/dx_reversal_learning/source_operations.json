@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DX-01",
+    "platform": "reused_primary_fulltext",
+    "search_date": "2026-11-28",
+    "query_exact": "Reused DO2025-16 hash; read formal methods/results/discussion,Table1/Eq1–6",
+    "source_url": "https://www.jasss.org/28/3/8.html",
+    "status": "hash_verified_fulltext_read",
+    "notes": "Grouped source operations, not experiments/query counts; no raw data acquisition or code execution"
+  },
+  {
+    "search_id": "DX-02",
+    "platform": "official_figure_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "Download/hash/visually inspect Figure4/5/6; three successful PNG responses",
+    "source_url": "https://www.jasss.org/28/3/8/Figure4.png",
+    "status": "200_three_figures_inspected",
+    "notes": "Grouped source operations, not experiments/query counts; no raw data acquisition or code execution"
+  },
+  {
+    "search_id": "DX-03",
+    "platform": "source_numeric_reconciliation",
+    "search_date": "2026-11-28",
+    "query_exact": "Table1 priors/ABC counts, synthetic/single/serial MSE and MAP; figure-reference mismatch checked",
+    "source_url": "https://www.jasss.org/28/3/8.html",
+    "status": "local_source_check",
+    "notes": "Grouped source operations, not experiments/query counts; no raw data acquisition or code execution"
+  },
+  {
+    "search_id": "DX-04",
+    "platform": "method_coding",
+    "search_date": "2026-11-28",
+    "query_exact": "Correct research object to other/guppies; include bounded calibration evidence, add card and four units",
+    "source_url": "literature-review/reading-cards/M147.md",
+    "status": "local_coding",
+    "notes": "Grouped source operations, not experiments/query counts; no raw data acquisition or code execution"
+  },
+  {
+    "search_id": "DX-05",
+    "platform": "interpretation_and_export",
+    "search_date": "2026-11-28",
+    "query_exact": "Separate recovery/fit/conditional posterior; update current bounded tracker and synthesis",
+    "source_url": "literature-review/reports/reversal_identifiability_DX.md",
+    "status": "local_synthesis",
+    "notes": "Grouped source operations, not experiments/query counts; no raw data acquisition or code execution"
+  }
+]

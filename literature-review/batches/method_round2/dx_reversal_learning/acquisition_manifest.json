@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "reused_formal_HTML",
+    "url": "https://www.jasss.org/28/3/8.html",
+    "status": 200,
+    "bytes": 90891,
+    "sha256": "87a996366024453d87737b292429f906229929450144017c3715d30f9bda73c9",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DO_2025_16.html",
+    "original_batch": "DO2025-16"
+  },
+  {
+    "kind": "figure4",
+    "url": "https://www.jasss.org/28/3/8/Figure4.png",
+    "status": 200,
+    "bytes": 356960,
+    "sha256": "8468205d5a64881628ced1d39a369ae463631c5865ccee7b8f77fea0aa4c5309",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DX_M147_Figure4.png",
+    "content_type": "image/png"
+  },
+  {
+    "kind": "figure6",
+    "url": "https://www.jasss.org/28/3/8/Figure6.png",
+    "status": 200,
+    "bytes": 739554,
+    "sha256": "0c8089cf2b6f39512c3ba3c56ad5d9aa30eb28ae1bf780e44af0e33ed3695962",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DX_M147_Figure6.png",
+    "content_type": "image/png"
+  },
+  {
+    "kind": "figure5",
+    "url": "https://www.jasss.org/28/3/8/Figure5.png",
+    "status": 200,
+    "bytes": 389359,
+    "sha256": "cc623b06698c10b9f09d01d0e34edce0df48be71f7e012c8c5e7b794fe6364d7",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DX_M147_Figure5.png",
+    "content_type": "image/png"
+  }
+]

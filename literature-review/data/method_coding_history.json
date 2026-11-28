@@ -22988,5 +22988,105 @@
     "batch": "DV-taskbook-delivery-evidence-audit-and-export-repair",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dv_delivery_audit/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "stochastic_individual_microsimulation;ABC_rejection_calibration",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_contribution_type",
+    "old": "model_calibration;validation_and_external_validity",
+    "new": "model_calibration;validation_and_external_validity;theory_to_model_translation",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Known-truth recovery design and explicit input/output mapping transferable; empirical results limited to guppy aggregate reversal learning",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_relevance_rationale",
+    "old": "摘要两参数反转学习微观模拟用ABC/经验时序称完全可识别，可作行为子模型；识别定义、资料及验证独立性待全文。",
+    "new": "Simple behavioural submodel with observable aggregate calibration and synthetic recovery; compact posterior not globally unique mechanism proof",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "new": "raw_data_transform_version;code_and_seed_provenance;heterogeneity;multi_truth_recovery_SBC;full_joint_posterior;independent_holdout;PDF_figure_reference_consistency",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_evidence_location",
+    "old": "Officialabstractonly;no fulltext/effectiveness inference",
+    "new": "Methods ABC/reversal design;Results synthetic/single/serial;Discussion limitations;Table1;Eq1–6;Figures4–6",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M147",
+    "field": "method_coding_source",
+    "old": "reports/jasss_2025_screening_DO.md;batches/method_round2/do_jasss_2025_abstracts/screening.csv",
+    "new": "reports/reversal_identifiability_DX.md;reading-cards/M147.md;batches/method_round2/dx_reversal_learning/acquisition_manifest.json",
+    "date": "2026-11-28",
+    "batch": "DX-reversal-learning-identifiability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dx_reversal_learning/results.json"
   }
 ]

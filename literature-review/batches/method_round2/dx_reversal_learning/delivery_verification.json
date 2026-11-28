@@ -1,0 +1,25 @@
+{
+  "base": "1380128",
+  "record_changed_only": "M147",
+  "original_matrix_prefix": 213,
+  "new_units": 4,
+  "formal_HTML_and_figures_hashed": 4,
+  "cards_numbered": 80,
+  "tracker_master_fulltext_abstract": [
+    125,
+    17,
+    108
+  ],
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    218,
+    1662,
+    42
+  ],
+  "maxtext": 29215,
+  "formal_bib": 58,
+  "frontier_bib": 8,
+  "limits": "Numeric claims checked in formal text/figures; no raw-data/model execution, full-prior recovery or independent holdout verification; Bib checks structural only"
+}
