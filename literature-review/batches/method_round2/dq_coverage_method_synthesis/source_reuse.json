@@ -1,0 +1,56 @@
+[
+  {
+    "path": "data/literature_master.csv",
+    "base_commit": "7a77173",
+    "sha256_lf": "7047bd330868d2ab9a82761cb4bd9dfc12b7d2fcb02e2d7ddbb75e21e474a30c",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "data/jasss_screening_current.csv",
+    "base_commit": "7a77173",
+    "sha256_lf": "181892e657809921c5f61fd2e6646e63a4a6fd948d49a2b5799abcbe2d529925",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "data/method_validation_matrix.csv",
+    "base_commit": "7a77173",
+    "sha256_lf": "5a7a01e044e8b7a65829486dfeb5a1b2ecdf946aad5ddee0693707b6da781895",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "reading-cards/M006.md",
+    "base_commit": "7a77173",
+    "sha256_lf": "8dafd9945eda64f7d1c257459b02f5daefae59f92a1a02a8243d1d9479216c54",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "reading-cards/M033.md",
+    "base_commit": "7a77173",
+    "sha256_lf": "38c269a8fe98b7e2c7b1c4a83b86fe97160b903498b46410faeb5061ce973663",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "reading-cards/M050.md",
+    "base_commit": "7a77173",
+    "sha256_lf": "ed9bf7f1665ef0a1f9a1bfcd1b8147fb38d33f0b806d63f8239a7ab62c3692ad",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "reading-cards/M052.md",
+    "base_commit": "7a77173",
+    "sha256_lf": "6b6bf397528c61596859c1753d50a68d4d0332172e9d447f79ea902cc4c88bd8",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "reading-cards/M056.md",
+    "base_commit": "7a77173",
+    "sha256_lf": "7793fd29b29e3416eb94fe416b7ec2c597c96a01fa0cc481d112e0a9e30d1fbc",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  },
+  {
+    "path": "reading-cards/M057.md",
+    "base_commit": "7a77173",
+    "sha256_lf": "24b150bf6902b1e89525e4f54ae06bc3e567e6dd4873a088e7a33683835bc08d",
+    "usage": "local bounded coverage/method synthesis;no primary study rerun"
+  }
+]

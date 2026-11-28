@@ -1,0 +1,20 @@
+{
+  "base": "7a77173",
+  "source_hashes": 9,
+  "master230_unchanged": true,
+  "cards77_unchanged": true,
+  "units203_unchanged": true,
+  "tracker178_unchanged": true,
+  "year_table_rows": 5,
+  "method_comparison_rows": 6,
+  "priorities": 8,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    204,
+    1624,
+    42
+  ],
+  "limits": "Local synthesis,not new primary validation,policy refresh or database coverage"
+}
