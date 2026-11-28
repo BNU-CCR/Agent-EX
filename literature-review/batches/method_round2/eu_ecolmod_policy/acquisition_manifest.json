@@ -1,0 +1,46 @@
+[
+  {
+    "name": "shop",
+    "url": "https://shop.elsevier.com/journals/ecological-modelling/0304-3800",
+    "final_url": "https://shop.elsevier.com/journals/ecological-modelling/0304-3800",
+    "status": 200,
+    "bytes": 180760,
+    "sha256": "11d9f14cadfcb400aac9b122c8c93905e3e662706f98ce1d984cf2b8ff1f70b8",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EU_shop.response"
+  },
+  {
+    "name": "guide",
+    "url": "https://www.sciencedirect.com/journal/ecological-modelling/publish/guide-for-authors",
+    "final_url": "https://www.sciencedirect.com/journal/ecological-modelling/publish/guide-for-authors",
+    "status": 403,
+    "bytes": 832982,
+    "sha256": "d65f5983d019915a87a42393e5bf858e7d8c69b84dd06bfd80354dfd106621ae",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EU_guide.response"
+  },
+  {
+    "name": "oa",
+    "url": "https://www.sciencedirect.com/journal/ecological-modelling/publish/open-access-options",
+    "final_url": "https://www.sciencedirect.com/journal/ecological-modelling/publish/open-access-options",
+    "status": 403,
+    "bytes": 832982,
+    "sha256": "616e7e23a85ee2924c65b1e25f13f609265da141a229e2c657f3f20330b1e94b",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EU_oa.response"
+  },
+  {
+    "name": "official_pricing_index",
+    "url": "https://www.elsevier.com/about/policies-and-standards/pricing/journals",
+    "status": 200,
+    "bytes": 214223,
+    "sha256": "d92086d20dbac034c4600a9a93cce44db96555b95a7d75aac6c1902fb13d9300",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EU_pricing.response"
+  },
+  {
+    "url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "final_url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "status": 200,
+    "bytes": 176582,
+    "sha256": "abaf10026407fb688da92a87ade7583fd4d0d69bcac6a0ad19eeb999ac6c119a",
+    "is_zip": true,
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EU_official_APC.xlsx"
+  }
+]

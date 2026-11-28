@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "EU-01",
+    "platform": "official_guide",
+    "search_date": "2026-11-28",
+    "query_exact": "Guide and insights viawebreader;403,notread",
+    "source_url": "https://www.sciencedirect.com/journal/ecological-modelling/publish/guide-for-authors",
+    "status": "403",
+    "notes": "Grouped source operation;notquerytotal;no newpaper/card/policymandateinference"
+  },
+  {
+    "search_id": "EU-02",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Three grouped official-domain queries for types/data-code/APC;no validjournalguidepolicyreturned",
+    "source_url": "https://www.sciencedirect.com/journal/ecological-modelling",
+    "status": "discovery_not_policy",
+    "notes": "Grouped source operation;notquerytotal;no newpaper/card/policymandateinference"
+  },
+  {
+    "search_id": "EU-03",
+    "platform": "official_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "Publisher shop exactISSN0304-3800 scope and fourarticletypes;static200",
+    "source_url": "https://shop.elsevier.com/journals/ecological-modelling/0304-3800",
+    "status": "200_scope_types",
+    "notes": "Grouped source operation;notquerytotal;no newpaper/card/policymandateinference"
+  },
+  {
+    "search_id": "EU-04",
+    "platform": "official_guide_static",
+    "search_date": "2026-11-28",
+    "query_exact": "Guide/OAoptions GET403;failurehashes retainednotguidehash",
+    "source_url": "https://www.sciencedirect.com/journal/ecological-modelling/publish/open-access-options",
+    "status": "403_not_read",
+    "notes": "Grouped source operation;notquerytotal;no newpaper/card/policymandateinference"
+  },
+  {
+    "search_id": "EU-05",
+    "platform": "official_pricing_index",
+    "search_date": "2026-11-28",
+    "query_exact": "Officialpricing index web/static200 directAPCXLSXlink;pricechangesanddiscountscaveat",
+    "source_url": "https://www.elsevier.com/about/policies-and-standards/pricing/journals",
+    "status": "200_link_bound",
+    "notes": "Grouped source operation;notquerytotal;no newpaper/card/policymandateinference"
+  },
+  {
+    "search_id": "EU-06",
+    "platform": "official_apc_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Publisher-linkedXLSX200;APCrow907 exactISSN/title;dateOct5/2026;currencyheadersread",
+    "source_url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "status": "200_row_verified",
+    "notes": "Grouped source operation;notquerytotal;no newpaper/card/policymandateinference"
+  },
+  {
+    "search_id": "EU-07",
+    "platform": "venue_decision",
+    "search_date": "2026-11-28",
+    "query_exact": "Two maps update types/datedOAfees;data-code/lengthpending/currentpaperjudgmentretained",
+    "source_url": "reports/ecolmod_policy_EU.md",
+    "status": "bounded_update",
+    "notes": "Grouped source operation;notquerytotal;no newpaper/card/policymandateinference"
+  }
+]

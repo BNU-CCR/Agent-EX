@@ -1,0 +1,32 @@
+{
+  "batch": "EU",
+  "checks": "passed",
+  "base": "2584766",
+  "master_cards_matrix_bibs": "unchanged after lineending normalization",
+  "venue_changed_ids": [
+    "ECOLMOD"
+  ],
+  "officialAPC": {
+    "sheet": "APC",
+    "row": 907,
+    "asof": "2026-10-05",
+    "issn": "0304-3800",
+    "USD": 3290,
+    "excludes_tax": true
+  },
+  "recommendation_grade": "unchanged current_paper_domain_mismatch",
+  "workbook_rows": [
+    28,
+    238,
+    55,
+    31,
+    253,
+    56,
+    1793,
+    12,
+    42
+  ],
+  "cover_B7": 68,
+  "maxcell": 29215,
+  "scope": "Workbook cell and scoped diff checks;no new guide fulltext/experiment/independentindex"
+}

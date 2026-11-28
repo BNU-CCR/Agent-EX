@@ -1,0 +1,38 @@
+{
+  "source": {
+    "url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "final_url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "status": 200,
+    "bytes": 176582,
+    "sha256": "abaf10026407fb688da92a87ade7583fd4d0d69bcac6a0ad19eeb999ac6c119a",
+    "is_zip": true,
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EU_official_APC.xlsx"
+  },
+  "price_snapshot": "2026-10-05",
+  "note": "All prices excluding taxes;not live author quotation;discounts/institutional arrangements notassessed",
+  "headers": [
+    "ISSN",
+    "Title",
+    "Business model",
+    "USD",
+    "EUR",
+    "GBP",
+    "JPY"
+  ],
+  "match": [
+    {
+      "sheet": "APC",
+      "row": 907,
+      "values": [
+        "0304-3800",
+        "Ecological Modelling",
+        "Hybrid Open Access",
+        3290,
+        3000,
+        2630,
+        428460
+      ]
+    }
+  ],
+  "match_scope": "ExactISSNandtitleonejournalrow;other3240rowsnotreviewed"
+}
