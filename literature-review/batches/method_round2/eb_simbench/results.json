@@ -1,0 +1,35 @@
+{
+  "batch_id": "EB-SimBench-formal-method-reading",
+  "date": "2026-11-28",
+  "expected_master_sha256": "9a6d35fc9b0ca2d1097ffc8acb52dbd284db82a5ff0cc6437ba0d2321b66c20f",
+  "updates": [
+    {
+      "record_id": "M174",
+      "authors": "Tiancheng Hu; Joachim Baumann; Lorenzo Lupo; Nigel Collier; Dirk Hovy; Paul Röttger",
+      "screening_status": "included",
+      "reason": "正式ICLR全文支持静态群体回答分布的经验参照与方法评价；范围明确，不作动态社会过程验证。",
+      "research_question": "统一人类群体回答分布基准如何区分模型/引出方式、任务、人口条件与回答多样性的模拟保真？",
+      "method_type": "group_response_distribution_benchmark;TVD_baseline_normalized_score",
+      "mechanisms": "static_group_conditioned_distribution_elicitation;token_vs_verbalized_probabilities;entropy_fidelity_analysis",
+      "reading_status": "fulltext_checked",
+      "related_versions": "FormalICLR52ppPDFreadselectedmain/appendices;notauthor-preprintcomparison",
+      "supplement_status": "formalPDFselectedappendicesA–Jread;code/data_links_located_not_inspected",
+      "findings": "20数据集；表4汇总10930271完整目标/7167Pop/6343Grouped，后者挑高群体差异题。45模型10负分；最高S40.80为归一分数非正确率。base与instruct引出/部署不同；图5有all-models措辞反例；OLS中介不自动因果识别；非动态社会验证。",
+      "evidence_location": "FormalPDFpp1–11;20–28/30–33selectedAppA–J;Eq1–5;Tables1/4–8/12;Fig5visual",
+      "relation_to_agent_ex": "Distribution/empirical reference and elicitation/selection limits;static group fit does not establish network dynamics;no frozen-protocol/model changes",
+      "card_path": "reading-cards/M174.md",
+      "notes": "EB formalPDF52pp;targeted main/appendix reading,notallsourcearchives;Table4sums/Table745scoreschecked. Defaultcomparison confounds elicitation/backend withmodeltype;AppE every-modelclaim hasvisualLlama8Bcounterexample. First-online remainsEAofficialApr20. No code/data execution or currentmodelrankingclaim.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_contribution_type": "measurement;validation_and_external_validity;reproducibility_and_reporting",
+      "method_transferability": "Group distribution benchmark/metric and failure accounting transferable;not interactive process validity or all-models/training causal guarantee",
+      "method_relevance_rationale": "Official empirical group-response reference across defined tasks;static/singleturn benchmark with selection and elicitation limits",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "exact_score_split_weighting;fixed_code_to_paper_run_mapping;model_snapshot_backend;retry_failure_denominators;paired_cluster_uncertainty;raw_source_data_sampling;interactive_process_validation",
+      "method_evidence_location": "Formal52ppPDF;main§2–4/6;AppA/C–I/Jselected;Table4/7extracted;Fig5visualcounterexample",
+      "method_coding_source": "reading-cards/M174.md;reports/simbench_EB.md;batches/method_round2/eb_simbench/reading_checks.json",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

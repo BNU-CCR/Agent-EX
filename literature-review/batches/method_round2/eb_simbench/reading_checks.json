@@ -1,0 +1,36 @@
+{
+  "read_scope": "formal52ppPDF:mainpp1–11;AppA–Iselectedpp20–28/30–32;Jp33;notallL/M/O;referencesnotindependentlyscreened",
+  "formal_pdf_pages": 52,
+  "table4_sum": [
+    10930271,
+    7167,
+    6343
+  ],
+  "table7_models": 45,
+  "negative_scores": 10,
+  "figures_inspected": [
+    {
+      "page": 5,
+      "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EB_SimBench_p5.png",
+      "sha256": "4d4118e884e88b095c24e87b3bde300b89ce8ce3d938153d19a47e7d47f87221"
+    },
+    {
+      "page": 24,
+      "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EB_SimBench_p24.png",
+      "sha256": "87d1cb1e9d596c4d7bae6256495721ca4f9e8b5b1fa95e4cbd570173868ebf00"
+    },
+    {
+      "page": 32,
+      "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EB_SimBench_p32.png",
+      "sha256": "56157f4bd75100b5eac84d2120164e913912848fbc60f538eba47d510c2f3cbe"
+    }
+  ],
+  "visual_counterexample": "AppE prose says verbalized better for every tested instructed model;Figure5 Llama3.1-8B teal beloworange;only visual ordering,not numeric digitization",
+  "remaining": [
+    "exactsplitweightingcode",
+    "rawresponses/retries",
+    "fixedmodelsnapshotandquantizedbackendidentity",
+    "cluster/paireduncertainty",
+    "nointeractivevalidation"
+  ]
+}

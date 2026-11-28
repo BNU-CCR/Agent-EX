@@ -1,0 +1,30 @@
+{
+  "base": "7cf4bb1",
+  "only_master_record_changed": "M174",
+  "old235records_preserved": true,
+  "matrix_prefix": 217,
+  "new_units": 5,
+  "source_pdf_hash": true,
+  "visual_page_hashes": 3,
+  "table4_sums": [
+    10930271,
+    7167,
+    6343
+  ],
+  "table7_rows": 45,
+  "negative_scores": 10,
+  "cards_recognized11": 81,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    223,
+    1687,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "formal_bib": 59,
+  "frontier_bib": 8,
+  "limits": "Scoped formal reading; no code/data execution, replication, exactsplitweight or causal validation;Bibstructure/IDcheckonly"
+}

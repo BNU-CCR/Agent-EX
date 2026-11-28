@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "EB-01",
+    "platform": "official_PDF_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "DownloadofficialICLR52ppPDF/hash",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/2fc4d6a6400addda7493b9db258c34e0-Paper-Conference.pdf",
+    "status": "200_formal_pdf",
+    "notes": "Grouped source operation;notquery/experimentcount. No code execution/rawsourceaudit."
+  },
+  {
+    "search_id": "EB-02",
+    "platform": "targeted_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Mainpp1\u201311;selectedAppA\u2013J20\u201328/30\u201333;notallsourcearchives",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/2fc4d6a6400addda7493b9db258c34e0-Paper-Conference.pdf",
+    "status": "scoped_read",
+    "notes": "Grouped source operation;notquery/experimentcount. No code execution/rawsourceaudit."
+  },
+  {
+    "search_id": "EB-03",
+    "platform": "tables_and_denominator_check",
+    "search_date": "2026-11-28",
+    "query_exact": "Table4twentyrows/3countsums;Table7all45models/10negative;metricformula/mediationarithmetic",
+    "source_url": "literature-review/batches/method_round2/eb_simbench/reading_checks.json",
+    "status": "local_numeric_source_check",
+    "notes": "Grouped source operation;notquery/experimentcount. No code execution/rawsourceaudit."
+  },
+  {
+    "search_id": "EB-04",
+    "platform": "formal_page_visuals",
+    "search_date": "2026-11-28",
+    "query_exact": "Render/inspectp5/24/32;Fig5Llama8Borderingcounterexample;noexactdigitization",
+    "source_url": "literature-review/batches/method_round2/eb_simbench/reading_checks.json",
+    "status": "three_pages_inspected",
+    "notes": "Grouped source operation;notquery/experimentcount. No code execution/rawsourceaudit."
+  },
+  {
+    "search_id": "EB-05",
+    "platform": "coding_and_interpretation",
+    "search_date": "2026-11-28",
+    "query_exact": "IncludeM174asboundedstaticgroupdistributionvalidation;addcard/fiveunits;noexperiment",
+    "source_url": "literature-review/reports/simbench_EB.md",
+    "status": "local_evidence_update",
+    "notes": "Grouped source operation;notquery/experimentcount. No code execution/rawsourceaudit."
+  }
+]

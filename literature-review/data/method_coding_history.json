@@ -23828,5 +23828,105 @@
     "batch": "EA-crossdisciplinary-validation-six-abstracts",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "group_response_distribution_benchmark;TVD_baseline_normalized_score",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_contribution_type",
+    "old": "measurement;validation_and_external_validity",
+    "new": "measurement;validation_and_external_validity;reproducibility_and_reporting",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Group distribution benchmark/metric and failure accounting transferable;not interactive process validity or all-models/training causal guarantee",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_relevance_rationale",
+    "old": "统一人类行为模拟基准：摘要称20数据集，需全文核评分、人口匹配与长程过程适用边界。",
+    "new": "Official empirical group-response reference across defined tasks;static/singleturn benchmark with selection and elicitation limits",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_pending_fields",
+    "old": "fulltext;reference_independence;target_metrics;model_data_version;method_maturity;method_evidence_level",
+    "new": "exact_score_split_weighting;fixed_code_to_paper_run_mapping;model_snapshot_backend;retry_failure_denominators;paired_cluster_uncertainty;raw_source_data_sampling;interactive_process_validation",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_evidence_location",
+    "old": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "new": "Formal52ppPDF;main§2–4/6;AppA/C–I/Jselected;Table4/7extracted;Fig5visualcounterexample",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_coding_source",
+    "old": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "new": "reading-cards/M174.md;reports/simbench_EB.md;batches/method_round2/eb_simbench/reading_checks.json",
+    "date": "2026-11-28",
+    "batch": "EB-SimBench-formal-method-reading",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eb_simbench/results.json"
   }
 ]
