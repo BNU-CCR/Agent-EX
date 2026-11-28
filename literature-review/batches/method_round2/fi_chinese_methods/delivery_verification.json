@@ -1,0 +1,33 @@
+{
+  "batch": "FI",
+  "date": "2026-11-28",
+  "master_changed": [
+    "CN003",
+    "CN012"
+  ],
+  "records": 238,
+  "included": 75,
+  "cards": 88,
+  "units": 257,
+  "venues": 57,
+  "journal_candidates": 30,
+  "date_pending": 15,
+  "source_operations": 1888,
+  "workbook_rows": [
+    28,
+    239,
+    58,
+    31,
+    258,
+    56,
+    1889,
+    16,
+    42,
+    33
+  ],
+  "official_images_acquired": 16,
+  "article_pages_visually_read": 11,
+  "TOC_pages_read": 2,
+  "legacy_changes": 100,
+  "scope": "Selected official images and source/date checks;not wholejournal/CNKI coverage"
+}

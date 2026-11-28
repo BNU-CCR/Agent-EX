@@ -1,0 +1,30 @@
+{
+  "record_id": "CN003",
+  "official_page": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+  "read_images_zero_based": [
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75
+  ],
+  "printed_pages": "64-74",
+  "main_text": "64-71",
+  "figures_tables": "Fig1;Tables1-4",
+  "references": "viewed71-74_notindividuallyfollowed",
+  "toc_images": [
+    3,
+    4
+  ],
+  "date_evidence_image": 4,
+  "date_printed": "2022-10-10",
+  "date_role": "formal print publication fallback,not first online",
+  "verification": "human-readable model visual inspection of downloaded originals,not OCR",
+  "reading_finished": "2026-11-28"
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "FI-01",
+    "platform": "public_title_queries",
+    "search_date": "2026-11-28",
+    "query_exact": "[\"\\\"计算传播学的仿真研究范式\\\" \\\"优势\\\"\", \"\\\"从ABM到GABM\\\"\", \"\\\"计算传播学的仿真研究范式\\\" \\\"2022\\\" \\\"DOI\\\"\", \"\\\"计算传播学的仿真研究范式\\\" 新闻界 2022 期\", \"\\\"计算传播学的仿真研究范式\\\" site:cnki.net\", \"\\\"新闻界\\\" \\\"2022\\\" \\\"10\\\" \\\"王敏\\\"\", \"\\\"从ABM到GABM\\\" site:jis.ac.cn\", \"\\\"从ABM到GABM\\\" \\\"jis.ac.cn\\\" \\\"138\\\"\", \"\\\"从ABM到GABM\\\" 王志超 吕泽宇 pdf\", \"\\\"新闻界\\\" 官网 2022 10 目录 仿真\"]",
+    "source_url": "https://www.ixinwenjie.com/bk/",
+    "status": "discovery_notCNKIexport",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  },
+  {
+    "search_id": "FI-02",
+    "platform": "official_issue_navigation",
+    "search_date": "2026-11-28",
+    "query_exact": "Officialhome->2022year->issue10;notalljournalscreen",
+    "source_url": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+    "status": "official_primary200",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  },
+  {
+    "search_id": "FI-03",
+    "platform": "official_image_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "100imageURLslisted;16selecteddownloadshash",
+    "source_url": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+    "status": "selected_images_acquired",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  },
+  {
+    "search_id": "FI-04",
+    "platform": "visual_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "11articlepages64-74+2TOCimagesread;notOCRorrefsfollow",
+    "source_url": "reading-cards/CN003.md",
+    "status": "fulltext_checked_withscope",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  },
+  {
+    "search_id": "FI-05",
+    "platform": "formal_date_qualification",
+    "search_date": "2026-11-28",
+    "query_exact": "TOCimage4colophon2022-10-10printdatefallback",
+    "source_url": "batches/method_round2/fi_chinese_methods/reading_scope.json",
+    "status": "confirmed_notfirstonline",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  },
+  {
+    "search_id": "FI-06",
+    "platform": "CN012_official_lead",
+    "search_date": "2026-11-28",
+    "query_exact": "Officialindexed2025,4(2):138-157;TLSexpiredthreepaths",
+    "source_url": "https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+    "status": "indexed_only_direct_access_failed",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  },
+  {
+    "search_id": "FI-07",
+    "platform": "CN012_author_access",
+    "search_date": "2026-11-28",
+    "query_exact": "AuthorresearchmapPDF403146bytesnotPDF",
+    "source_url": "https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf",
+    "status": "blocked_notacquired",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  },
+  {
+    "search_id": "FI-08",
+    "platform": "method_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Theorytranslation/data_roles/predictionlimits2unitsandcard",
+    "source_url": "reports/chinese_method_sources_FI.md",
+    "status": "review_evidence_notexperiment",
+    "notes": "Groupedoperation notquerycount;noauthenticatedCNKIcoverageclaim"
+  }
+]

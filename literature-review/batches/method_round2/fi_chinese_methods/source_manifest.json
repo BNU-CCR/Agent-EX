@@ -1,0 +1,144 @@
+{
+  "date": "2026-11-28",
+  "sources": [
+    {
+      "key": "jisvol",
+      "url": "https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+      "error": "HTTPSConnectionPool(host='www.jis.ac.cn', port=443): Max retries exceeded with url: /CN/article/showVolumnArticle.do?juan=4&nian=2025 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))"
+    },
+    {
+      "key": "CN012authorpdf",
+      "url": "https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf",
+      "final_url": "https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf",
+      "status": 403,
+      "bytes": 146,
+      "sha256": "32f2fa940d4b4fe19aca1e53a24e5aac29c57b7c5ee78588325b87f1b649c864",
+      "pdf_magic": false
+    },
+    {
+      "key": "xwjhome",
+      "url": "https://www.ixinwenjie.com/bk/",
+      "final_url": "https://www.ixinwenjie.com/bk/",
+      "status": 200,
+      "bytes": 8095,
+      "sha256": "d5fa7c4b562a5c87b6d183e0157ccb68afbf6fb943bb554fead2a5194e0dd955"
+    },
+    {
+      "key": "jishttp",
+      "url": "http://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+      "error": "HTTPSConnectionPool(host='www.jis.ac.cn', port=443): Max retries exceeded with url: /CN/article/showVolumnArticle.do?juan=4&nian=2025 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))"
+    },
+    {
+      "key": "jisnoWWW",
+      "url": "https://jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+      "error": "HTTPSConnectionPool(host='jis.ac.cn', port=443): Max retries exceeded with url: /CN/article/showVolumnArticle.do?juan=4&nian=2025 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))"
+    },
+    {
+      "url": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+      "status": 200,
+      "bytes": 22331,
+      "sha256": "a0b9728cefcbef198c65d519b37638d3cbae9c335f6f3053367cfd0746459b51",
+      "image_urls": 100,
+      "selected_images": 16
+    }
+  ],
+  "selected_images": [
+    {
+      "index": 0,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155502974546.jpg",
+      "bytes": 655089,
+      "sha256": "f493e6edb3265c69eaf81809170e21797f521bb60811619dadbbd27b6af21725"
+    },
+    {
+      "index": 1,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155503018536.jpg",
+      "bytes": 477744,
+      "sha256": "67e613496251d37512f83968258a72121645439815b2e4f513873a47346e29c9"
+    },
+    {
+      "index": 2,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155503053465.jpg",
+      "bytes": 517040,
+      "sha256": "ae67ef2cb4782321f018bdf751d90facaedbde0ca0bb25b2c8ade5bb0ccd5e86"
+    },
+    {
+      "index": 65,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507502476.jpg",
+      "bytes": 720700,
+      "sha256": "a8faaa9aa90f71ef67a8c899da3e222706641c48dd1dc5005e870f58fb6a9d7a"
+    },
+    {
+      "index": 66,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507560195.jpg",
+      "bytes": 915845,
+      "sha256": "19b4e7e421a1646a75183a2a03f46d08b1bc71629baea646e05ed21fbe489f25"
+    },
+    {
+      "index": 3,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155503102489.jpg",
+      "bytes": 296600,
+      "sha256": "0f2f65f498d45f622662e65f23597743e8eb436259bfa4e2fab2b30f7f97e920"
+    },
+    {
+      "index": 4,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155503145968.jpg",
+      "bytes": 281395,
+      "sha256": "5fb4375248f1bc0a0f7930de3b893792e8493c3284a4fa66c54d5f1f925dc226"
+    },
+    {
+      "index": 67,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507620740.jpg",
+      "bytes": 1053712,
+      "sha256": "76f1fac88a4773855bb90e849114978c82ab1956ed8d3123dfcea2b7caa15796"
+    },
+    {
+      "index": 68,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507695376.jpg",
+      "bytes": 1153795,
+      "sha256": "1ef4d4e2c4291b8a96e696798c1b7264ee841e3f69e4139008c6d556e31b916c"
+    },
+    {
+      "index": 69,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507748877.jpg",
+      "bytes": 1175017,
+      "sha256": "b8ee245348462d85a1bcc2081554bd16aa9df5e86d0e202a6482c706d0feda19"
+    },
+    {
+      "index": 70,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507837208.jpg",
+      "bytes": 1022122,
+      "sha256": "59a27028a70458c37f92e7653ac0de092b2956a95f6471d41392fe1029d68252"
+    },
+    {
+      "index": 71,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507885764.jpg",
+      "bytes": 1099073,
+      "sha256": "fccb51982daaa9032d8baf8fce939d692b9bb47a15e522d482eb42acba129105"
+    },
+    {
+      "index": 72,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155507943210.jpg",
+      "bytes": 1121057,
+      "sha256": "a96bb09b1ca9fcaf8c38d816980f0e886ec81c7374726ac139b96a27029d7c44"
+    },
+    {
+      "index": 73,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155508017639.jpg",
+      "bytes": 1095004,
+      "sha256": "fd1f435ec48c1bb6aea9b02c446efda7440900f93600dfd0c72cf71f31d3f5d1"
+    },
+    {
+      "index": 74,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155508069105.jpg",
+      "bytes": 1051234,
+      "sha256": "fc71bd437b9b8b7b7dc722f1c8276a27d3eec6bb1c2d7c61388f8d86ee87ec59"
+    },
+    {
+      "index": 75,
+      "url": "https://imgcdn.scol.com.cn/media/2024/04/01/155508133989.jpg",
+      "bytes": 437852,
+      "sha256": "b265be41de18a05ddbd0d6473bb307a73c453d15f93706b69142e1b26b870d61"
+    }
+  ],
+  "scope": "16of100officialimagesacquired;13usedforreading11article+2TOC;noPDF/OCR;noauthorcode;CN012officialindexonly/TLSexpired/author403"
+}

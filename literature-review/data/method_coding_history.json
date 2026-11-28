@@ -25298,5 +25298,135 @@
     "batch": "FG",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fg_formal_status/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_type",
+    "old": "review",
+    "new": "conceptual_method_review_of_traditional_simulation",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_contribution_type",
+    "old": "other",
+    "new": "simulation_paradigm;theory_to_model_translation;model_calibration;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "review_or_critique",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_transferability",
+    "old": "pending：需核查全文中的可复用构件、实现入口及适用条件，不能以摘要或题名认定通用性。",
+    "new": "65页规则/参数/重复与敏感性流程，70-71页经验资料角色可用于设计报告；未提供通用可执行协议或独立留出验证。",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_relevance_rationale",
+    "old": "题录主题是仿真范式，可暂列方法核心待核；具体方法论贡献仍未知。",
+    "new": "方法论述直接讨论理论转译、经验参照和预测边界；传统仿真基线而非LLM框架或新实证试验。",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_coding_status",
+    "old": "metadata_pending",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_contribution_type（待全文复核）;method_relevance_tier;disciplinary_home",
+    "new": "first_online_date_optional_metadata;DOI_ifassigned;wholejournal2022onwardscreening;independent_rerun_notrequired_forthisconceptualreview",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_evidence_location",
+    "old": "CN009参考文献19及CN001参考文献提供题录。",
+    "new": "officialimages65-75=>printed64-74;main64-71;Fig1p65;data_roles70-71",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#CN003;batches/chinese/records.json#CN003",
+    "new": "data/literature_master.csv#CN003;batches/chinese/records.json#CN003;reading-cards/CN003.md;reports/chinese_method_sources_FI.md;batches/method_round2/fi_chinese_methods/reading_scope.json",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#CN012;batches/chinese/records.json#CN012",
+    "new": "data/literature_master.csv#CN012;batches/chinese/records.json#CN012;reports/chinese_method_sources_FI.md",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
   }
 ]

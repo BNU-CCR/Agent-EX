@@ -768,5 +768,235 @@
     "batch": "FB",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "official_url",
+    "old": "",
+    "new": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "metadata_evidence_url",
+    "old": "https://cjjc.ruc.edu.cn/CN/Y2024/V46/I9/135",
+    "new": "https://cjjc.ruc.edu.cn/CN/Y2024/V46/I9/135 | https://www.ixinwenjie.com/2022n/202404/83301327.html",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "online_first_date",
+    "old": "",
+    "new": "2022-10-10",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "date_basis",
+    "old": "2024国际新闻界官方论文参考文献19与2025全球传媒学刊参考文献均列2022；本论文日期待核实",
+    "new": "FI officialissueTOC/colophonimage4 printedpublication2022-10-10;approvedformalpublicationfallback;notfirstonline;2024webarchivepathnotpublicationyear",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "date_eligibility",
+    "old": "date_pending",
+    "new": "confirmed",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "related_versions",
+    "old": "formal_record; preprint_linkage_not_identified",
+    "new": "Official2022issue10printedpp64-74imagefacsimile;websitearchive2024notnewedition;DOIunverified",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "search_id",
+    "old": "CNS018;CNS023;CNS026;CNS029;CNS036;CNS039;CNS051",
+    "new": "CNS018;CNS023;CNS026;CNS029;CNS036;CNS039;CNS051;FI-01;FI-02;FI-03;FI-04;FI-05;FI-08",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "screening_status",
+    "old": "candidate",
+    "new": "included",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "reason",
+    "old": "讨论微观行为与宏观涌现及仿真方法的适用性；不能用摘要推定具体实验结果",
+    "new": "官网原刊11页影像已读并由目录/版权页核实2022正式出版；传统仿真方法论与案例综述，非LLM实证。",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "research_question",
+    "old": "待全文核查；拟对话问题：讨论微观行为与宏观涌现及仿真方法的适用性；不能用摘要推定具体实验结果",
+    "new": "仿真如何将传播理论转为可运行模型，并结合经验资料检验微观互动/宏观过程及预测边界？",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "method_type",
+    "old": "review",
+    "new": "conceptual_method_review_of_traditional_simulation",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "reading_status",
+    "old": "metadata_only",
+    "new": "fulltext_checked",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "fulltext_url",
+    "old": "",
+    "new": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "supplement_status",
+    "old": "no",
+    "new": "16officialpageimagesacquired/13read;noPDF/OCR/code;manifesthashoutsideGitraw",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "findings",
+    "old": "",
+    "new": "65页实现路径包含规则/参数、重复运行和敏感性；70-71页区分经验输入/输出/输入输出参照并批评相关匹配代替严格验证；论述/案例综合非新经验实验。",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "evidence_location",
+    "old": "",
+    "new": "printed64-71main/Fig1p65/Tables1-4pp66,68-70;72-74refs/Englishabstractviewed;TOCimage4date",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "relation_to_agent_ex",
+    "old": "讨论微观行为与宏观涌现及仿真方法的适用性；不能用摘要推定具体实验结果",
+    "new": "传统仿真已要求理论转译与经验参照；LLM自然语言/平台日志不自动构成新方法标准或外部效度。",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "card_path",
+    "old": "",
+    "new": "reading-cards/CN003.md",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN003",
+    "field": "notes",
+    "old": "",
+    "new": " | FI:official16selectedimageshashretained;11articlepagesvisuallyread;TOC/colophon2022-10-10fallback;DOInotverified;notPDFnorfull100pageissuecoverage;traditionalmethodcritique_notLLMexperiment.",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "metadata_evidence_url",
+    "old": "https://www.china-simulation.com/EN/article/downloadArticleFile.do?attachType=PDF&id=3836",
+    "new": "https://www.china-simulation.com/EN/article/downloadArticleFile.do?attachType=PDF&id=3836 | https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025 | https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "search_id",
+    "old": "CNS045",
+    "new": "CNS045;FI-01;FI-06;FI-07",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "date_basis",
+    "old": "2026综述官方PDF参考文献7列出题录；本篇正式版本待核实，刊物性质/是否集刊待核实",
+    "new": "2026综述官方PDF参考文献7列出题录；本篇正式版本待核实，刊物性质/是否集刊待核实 | FI officialvolumeindexed2025,4(2):138-157;directTLSexpired/authorPDF403;formalcarrierandpublicationrecordnotacquired,notexactdaygate",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "notes",
+    "old": "",
+    "new": " | FI:officialindexedvolumehas2025,4(2):138-157/authors/abstractfragment;directpublisherTLSexpiredandResearchmap403146bytesnotPDF;metadata_only/candidate/unclearretained;notfulltextread.",
+    "date": "2026-11-28",
+    "batch": "FI",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fi_chinese_methods/results.json"
   }
 ]

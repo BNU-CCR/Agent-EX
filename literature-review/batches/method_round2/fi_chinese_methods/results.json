@@ -1,0 +1,51 @@
+{
+  "batch_id": "FI",
+  "date": "2026-11-28",
+  "expected_master_sha256": "0d486166b1abe0c850affbd42d5507748f9d260a6fdaa79986ffbe947b0631e2",
+  "updates": [
+    {
+      "record_id": "CN003",
+      "official_url": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+      "metadata_evidence_url": "https://cjjc.ruc.edu.cn/CN/Y2024/V46/I9/135 | https://www.ixinwenjie.com/2022n/202404/83301327.html",
+      "online_first_date": "2022-10-10",
+      "date_basis": "FI officialissueTOC/colophonimage4 printedpublication2022-10-10;approvedformalpublicationfallback;notfirstonline;2024webarchivepathnotpublicationyear",
+      "date_eligibility": "confirmed",
+      "related_versions": "Official2022issue10printedpp64-74imagefacsimile;websitearchive2024notnewedition;DOIunverified",
+      "search_id": "CNS018;CNS023;CNS026;CNS029;CNS036;CNS039;CNS051;FI-01;FI-02;FI-03;FI-04;FI-05;FI-08",
+      "screening_status": "included",
+      "reason": "官网原刊11页影像已读并由目录/版权页核实2022正式出版；传统仿真方法论与案例综述，非LLM实证。",
+      "research_question": "仿真如何将传播理论转为可运行模型，并结合经验资料检验微观互动/宏观过程及预测边界？",
+      "research_object": "other",
+      "method_type": "conceptual_method_review_of_traditional_simulation",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://www.ixinwenjie.com/2022n/202404/83301327.html",
+      "supplement_status": "16officialpageimagesacquired/13read;noPDF/OCR/code;manifesthashoutsideGitraw",
+      "findings": "65页实现路径包含规则/参数、重复运行和敏感性；70-71页区分经验输入/输出/输入输出参照并批评相关匹配代替严格验证；论述/案例综合非新经验实验。",
+      "evidence_location": "printed64-71main/Fig1p65/Tables1-4pp66,68-70;72-74refs/Englishabstractviewed;TOCimage4date",
+      "relation_to_agent_ex": "传统仿真已要求理论转译与经验参照；LLM自然语言/平台日志不自动构成新方法标准或外部效度。",
+      "card_path": "reading-cards/CN003.md",
+      "notes": " | FI:official16selectedimageshashretained;11articlepagesvisuallyread;TOC/colophon2022-10-10fallback;DOInotverified;notPDFnorfull100pageissuecoverage;traditionalmethodcritique_notLLMexperiment.",
+      "method_contribution_type": "simulation_paradigm;theory_to_model_translation;model_calibration;validation_and_external_validity",
+      "method_maturity": "review_or_critique",
+      "disciplinary_home": "计算传播学的传统仿真方法论",
+      "method_transferability": "65页规则/参数/重复与敏感性流程，70-71页经验资料角色可用于设计报告；未提供通用可执行协议或独立留出验证。",
+      "method_evidence_level": "conceptual_claim",
+      "method_relevance_rationale": "方法论述直接讨论理论转译、经验参照和预测边界；传统仿真基线而非LLM框架或新实证试验。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "first_online_date_optional_metadata;DOI_ifassigned;wholejournal2022onwardscreening;independent_rerun_notrequired_forthisconceptualreview",
+      "method_evidence_location": "officialimages65-75=>printed64-74;main64-71;Fig1p65;data_roles70-71",
+      "method_coding_source": "data/literature_master.csv#CN003;batches/chinese/records.json#CN003;reading-cards/CN003.md;reports/chinese_method_sources_FI.md;batches/method_round2/fi_chinese_methods/reading_scope.json",
+      "method_last_checked": "2026-11-28"
+    },
+    {
+      "record_id": "CN012",
+      "metadata_evidence_url": "https://www.china-simulation.com/EN/article/downloadArticleFile.do?attachType=PDF&id=3836 | https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025 | https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf",
+      "search_id": "CNS045;FI-01;FI-06;FI-07",
+      "date_basis": "2026综述官方PDF参考文献7列出题录；本篇正式版本待核实，刊物性质/是否集刊待核实 | FI officialvolumeindexed2025,4(2):138-157;directTLSexpired/authorPDF403;formalcarrierandpublicationrecordnotacquired,notexactdaygate",
+      "notes": " | FI:officialindexedvolumehas2025,4(2):138-157/authors/abstractfragment;directpublisherTLSexpiredandResearchmap403146bytesnotPDF;metadata_only/candidate/unclearretained;notfulltextread.",
+      "method_coding_source": "data/literature_master.csv#CN012;batches/chinese/records.json#CN012;reports/chinese_method_sources_FI.md",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}
