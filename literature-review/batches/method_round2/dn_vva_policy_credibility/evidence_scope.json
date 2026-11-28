@@ -1,0 +1,29 @@
+{
+  "record_id": "M134",
+  "date": "2026-11-28",
+  "type": "conceptual methodological framework; no new validated deployment",
+  "verification_reference": "conceptual specification",
+  "validation_reference": "target system",
+  "accreditation_reference": "specific intended application and organizational acceptance",
+  "actors": [
+    "modellers",
+    "accreditation unit",
+    "policy actors"
+  ],
+  "independence": "Authors advise accreditors distinct from developers and policy actors; requires domain and ABM competence",
+  "case_basis": "Coast Guard historical published procedure described through cited sources;not independently audited current policy",
+  "hypothetical_school_example_steps": 14,
+  "hypothetical_boundary": "§5.1 explicitly reserves real-world validation for future;§7.4 repeats need for use case/evaluation",
+  "plan_components": 8,
+  "universal_plan": false,
+  "post_use": "Evaluate both implementation and model; discrepancy can reflect delivery deviations, not only model error;no automatic causal attribution",
+  "scopus_note": "Authors report 3 hits on2023-04-27;not our search or current recall estimate",
+  "formula_check": {
+    "source": "§4.17",
+    "reported": "PE=Pobj-Ceo; continue if PE>=Pobj",
+    "algebra": "For real-valued Pobj,Ceo the condition simplifies to Ceo<=0",
+    "counterexample": "Pobj=10,Ceo=5 => PE=5, condition false; this alone does not classify policy success without scale/direction",
+    "boundary": "Author outcome/goal direction and generality unclear;do not adopt as universal policy test;no publisher-PDF or cited book check"
+  },
+  "execution": "No code/models or policy implementation evaluated"
+}

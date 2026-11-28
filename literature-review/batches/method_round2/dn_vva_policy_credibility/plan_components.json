@@ -1,0 +1,58 @@
+[
+  {
+    "item": 1,
+    "component": "protocol_adaptation",
+    "interpretation": "记录适用协议及其调整，不能以协议名字代替测试",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Usage and adaptation of existing protocols or frameworks"
+  },
+  {
+    "item": 2,
+    "component": "conceptual_validation",
+    "interpretation": "模型实现前核概念/假设，可定量或系统专家审查；改动时重审",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Conceptual model validation"
+  },
+  {
+    "item": 3,
+    "component": "implementation_verification",
+    "interpretation": "持续检查实现与规格一致，使用软件测试等方法",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Implemented model verification"
+  },
+  {
+    "item": 4,
+    "component": "robustness",
+    "interpretation": "核假设及实现选择怎样影响结论，区别于经验拟合",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Robustness analysis"
+  },
+  {
+    "item": 5,
+    "component": "statistical_validation",
+    "interpretation": "比较输出和经验资料；资料缺乏时其他分析不自动补足现实效度",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Statistical validation"
+  },
+  {
+    "item": 6,
+    "component": "dynamic_validation",
+    "interpretation": "评估内部动态与机制解释，终点数据不足时尤其必要",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Model dynamics validation"
+  },
+  {
+    "item": 7,
+    "component": "expert_involvement",
+    "interpretation": "记录专家身份、问题、材料、访谈及具体认可范围",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Expert involvement"
+  },
+  {
+    "item": 8,
+    "component": "update_logs",
+    "interpretation": "记录计划/测试/模型修改及排除理由，保留可追溯变更",
+    "source": "https://www.jasss.org/27/4/4.html#3.5",
+    "source_item_heading": "Update logs"
+  }
+]

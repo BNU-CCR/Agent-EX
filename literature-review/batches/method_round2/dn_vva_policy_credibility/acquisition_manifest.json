@@ -1,0 +1,18 @@
+[
+  {
+    "figure": 2,
+    "url": "https://www.jasss.org/27/4/4/Figure2.png",
+    "status": 200,
+    "bytes": 63755,
+    "sha256": "88abd8bb259dbe9dcfda2cb46d461f6b6af8fe83cb69f134e91f7abddecfdfa3",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M134_DN_Figure2.png"
+  },
+  {
+    "figure": 4,
+    "url": "https://www.jasss.org/27/4/4/Figure4.png",
+    "status": 200,
+    "bytes": 253771,
+    "sha256": "8e8c460cc940ac9830685cb9cb428496a35bd957b98af0a710d8f7d08e58ebaa",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M134_DN_Figure4.png"
+  }
+]

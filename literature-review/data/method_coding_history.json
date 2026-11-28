@@ -17958,5 +17958,95 @@
     "batch": "DM-JASSS2024-remaining35-abstract-screen",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dm_jasss_2024_abstracts/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "conceptual_VVA_framework;living_verification_validation_plan;use_specific_accreditation",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "conceptual_framework",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "TailoredVVAplanning/use-specificassessmentroles;proposedworkflownotvalidatedLLMmethod",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_relevance_rationale",
+    "old": "摘要区分模型可信度与VV&A、提出V&V计划和政策认证框架；框架/政府案例不自动证明效果，优先全文。",
+    "new": "跨领域V&V计划、独立用途认证和双向使用后评价；概念依据与真实实施边界明确。",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "new": "real_world_framework_evaluation;organizational_cost_and_benefit;underlying_policy_sources;policy_effectiveness_formula_scale;LLM_specific_validation",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_evidence_location",
+    "old": "Officialabstractonly;no fulltext/effectiveness inference",
+    "new": "FormalHTML§§2.1–2.12/3.1–3.5/4.8–4.17/5.1–5.2/7.4;Figures2/4",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
+  },
+  {
+    "record_id": "M134",
+    "field": "method_coding_source",
+    "old": "reports/jasss_2024_screening_DM.md;batches/method_round2/dm_jasss_2024_abstracts/screening.csv",
+    "new": "reading-cards/M134.md;reports/vva_policy_credibility_DN.md;batches/method_round2/dn_vva_policy_credibility/",
+    "date": "2026-11-28",
+    "batch": "DN-VVA-planning-and-use-specific-accreditation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dn_vva_policy_credibility/results.json"
   }
 ]

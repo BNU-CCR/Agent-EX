@@ -1,0 +1,19 @@
+{
+  "base": "ab4b9e7",
+  "only_master_changed": "M134",
+  "old190_records_unchanged": true,
+  "old76_cards_unchanged": true,
+  "old199_units_unchanged": true,
+  "new_units": 4,
+  "source_images_hashed": 2,
+  "workbook_rows": [
+    192,
+    53,
+    31,
+    204,
+    1565,
+    42
+  ],
+  "maximum_text_cell": 20364,
+  "conceptual_boundary": "No deployment/effectiveness validation or code execution"
+}

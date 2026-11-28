@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DN-01",
+    "platform": "local_official_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "M134§1–7/Table1/lists reusedDM",
+    "source_url": "https://www.jasss.org/27/4/4.html",
+    "status": "formal_targeted_read",
+    "notes": "FormalHTMLreuse/twoPNG;underlyingpolicysourcesnotindependentlychecked;authorsScopusnotoursearch"
+  },
+  {
+    "search_id": "DN-02",
+    "platform": "local_primary_framework_extraction",
+    "search_date": "2026-11-28",
+    "query_exact": "Eightplanitems/threeactors/fourteenhypotheticalsteps;formulaalgebra",
+    "source_url": "https://www.jasss.org/27/4/4.html",
+    "status": "conceptual_scope_checked_not_effect_test",
+    "notes": "FormalHTMLreuse/twoPNG;underlyingpolicysourcesnotindependentlychecked;authorsScopusnotoursearch"
+  },
+  {
+    "search_id": "DN-03",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Figure2VVAthree_referents",
+    "source_url": "https://www.jasss.org/27/4/4/Figure2.png",
+    "status": "200_png_visual_checked",
+    "notes": "FormalHTMLreuse/twoPNG;underlyingpolicysourcesnotindependentlychecked;authorsScopusnotoursearch"
+  },
+  {
+    "search_id": "DN-04",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Figure4roles_accreditation_lifecycle",
+    "source_url": "https://www.jasss.org/27/4/4/Figure4.png",
+    "status": "200_png_visual_checked",
+    "notes": "FormalHTMLreuse/twoPNG;underlyingpolicysourcesnotindependentlychecked;authorsScopusnotoursearch"
+  },
+  {
+    "search_id": "DN-05",
+    "platform": "local_scope_comparison",
+    "search_date": "2026-11-28",
+    "query_exact": "Separateconceptualproposal/actualdeployment/LLMtransfer",
+    "source_url": "reports/vva_policy_credibility_DN.md",
+    "status": "bounded_synthesis_no_execution",
+    "notes": "FormalHTMLreuse/twoPNG;underlyingpolicysourcesnotindependentlychecked;authorsScopusnotoursearch"
+  }
+]

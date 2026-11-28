@@ -1,0 +1,34 @@
+{
+  "batch_id": "DN-VVA-planning-and-use-specific-accreditation",
+  "date": "2026-11-28",
+  "expected_master_sha256": "82a96bb28d4699b888c7cfd14c37df6dc4042e722e453cbf596b9e42f95f7834",
+  "updates": [
+    {
+      "record_id": "M134",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M134.md",
+      "research_question": "如何分离ABM可信度、V&V计划和特定政策用途认证，并明确角色责任与使用后评价？",
+      "method_type": "conceptual_VVA_framework;living_verification_validation_plan;use_specific_accreditation",
+      "mechanisms": "specification_target_application_references;three_actor_roles;revision_review;post_use_dual_evaluation",
+      "findings": "Eightplancomponents/threeactors;hypothetical14stepsnotdeployment;§5.1/7.4realworldvalidationfuture;policyformula_scopeunresolved",
+      "reason": "正式日期和全文门通过；限定为概念程序框架，真实验证未来，不以假设案例升级效果。",
+      "related_versions": "Formal publisherHTML§1–7/Table1/lists read;Figures2/4;no PDF or underlying policy equivalence claim",
+      "supplement_status": "Figures2and4acquired_visualchecked;no code or independent policy source audit",
+      "evidence_location": "FormalHTML§§1–7;Table1;§3.5eightitems;§5.1fourteensteps;Figures2/4",
+      "relation_to_agent_ex": "实现规格、目标系统与用途接受分别评价；计划/证据/责任可借鉴，不能据此宣称LLM现实效度或政策可用，不改变冻结实验。",
+      "method_maturity": "conceptual_framework",
+      "method_evidence_level": "conceptual_claim",
+      "method_transferability": "TailoredVVAplanning/use-specificassessmentroles;proposedworkflownotvalidatedLLMmethod",
+      "method_relevance_rationale": "跨领域V&V计划、独立用途认证和双向使用后评价；概念依据与真实实施边界明确。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "real_world_framework_evaluation;organizational_cost_and_benefit;underlying_policy_sources;policy_effectiveness_formula_scale;LLM_specific_validation",
+      "method_evidence_location": "FormalHTML§§2.1–2.12/3.1–3.5/4.8–4.17/5.1–5.2/7.4;Figures2/4",
+      "method_coding_source": "reading-cards/M134.md;reports/vva_policy_credibility_DN.md;batches/method_round2/dn_vva_policy_credibility/",
+      "method_last_checked": "2026-11-28",
+      "notes": "摘要区分模型可信度与VV&A、提出V&V计划和政策认证框架；框架/政府案例不自动证明效果，优先全文。 仅摘要初筛；成熟度/证据unclear，无新增卡或验证单元。 DN:全文后改概念框架/概念证据；八项计划/三角色/十四步假设例，不当真实部署；作者Scopus检索不计本库；政策公式尺度未核。",
+      "search_id": "DM-33;DM-36;DM-37;DN-01;DN-02;DN-03;DN-04;DN-05"
+    }
+  ],
+  "new_records": []
+}
