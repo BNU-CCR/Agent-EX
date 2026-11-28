@@ -6958,5 +6958,145 @@
     "batch": "CM-Findings-release-evidence-and-date-gap-triage",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cm_date_gap_triage/results.json"
+  },
+  {
+    "record_id": "R012",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv; batches/crossdisciplinary/records.json",
+    "new": "data/literature_master.csv; batches/crossdisciplinary/records.json;reports/friendship_validation_CN.md",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "R012",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_type",
+    "old": "",
+    "new": "llm_multiagent_social_simulation",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "validation_and_external_validity;interaction_protocol;memory_and_persona;emergence_analysis",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_maturity",
+    "old": "",
+    "new": "empirical_method_test",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_transferability",
+    "old": "",
+    "new": "Candidate/feed/stop/metricdisclosuretransferable;patternexamplewithoutmatchedhuman/nullcomparisonnotuniversalworkflow",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "worked_example",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "Networkpatternreproductionandmeasurementboundaryarecentralmethodquestion;notmerelytopicapplication",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "fulltext_supported",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formalversion/date;relationtoR012;matchedhuman/nullbaseline;modelrevision/temperature/seeds;eta/gammaimplementation;zero_denominators;runtime/stop;code/runprovenance",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "authorv1§2–4/Table1;notjournalVoR",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reading-cards/M051.md;reports/friendship_validation_CN.md",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "M051",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-27",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
   }
 ]

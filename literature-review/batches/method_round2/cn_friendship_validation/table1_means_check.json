@@ -1,0 +1,106 @@
+{
+  "source": "arXiv2502.05919v1 PDFp4 Table1;visualchecked",
+  "rows": [
+    {
+      "dataset": "US Election",
+      "metric": "in_degree",
+      "mean_follower_pct": 41.33,
+      "mean_followee_pct": 86.33,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "US Election",
+      "metric": "out_degree",
+      "mean_follower_pct": 26.66,
+      "mean_followee_pct": 32.0,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "US Election",
+      "metric": "NT",
+      "mean_follower_pct": 48.33,
+      "mean_followee_pct": 35.33,
+      "followee_exceeds_follower": false
+    },
+    {
+      "dataset": "US Election",
+      "metric": "NOT",
+      "mean_follower_pct": 48.66,
+      "mean_followee_pct": 44.0,
+      "followee_exceeds_follower": false
+    },
+    {
+      "dataset": "US Election",
+      "metric": "TTR",
+      "mean_follower_pct": 48.0,
+      "mean_followee_pct": 78.33,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "US Election",
+      "metric": "RPT",
+      "mean_follower_pct": 50.0,
+      "mean_followee_pct": 81.66,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "US Election",
+      "metric": "IAR",
+      "mean_follower_pct": 41.33,
+      "mean_followee_pct": 75.66,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "QAnon",
+      "metric": "in_degree",
+      "mean_follower_pct": 19.33,
+      "mean_followee_pct": 82.33,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "QAnon",
+      "metric": "out_degree",
+      "mean_follower_pct": 21.33,
+      "mean_followee_pct": 34.0,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "QAnon",
+      "metric": "NT",
+      "mean_follower_pct": 32.0,
+      "mean_followee_pct": 52.66,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "QAnon",
+      "metric": "NOT",
+      "mean_follower_pct": 30.0,
+      "mean_followee_pct": 60.33,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "QAnon",
+      "metric": "TTR",
+      "mean_follower_pct": 31.66,
+      "mean_followee_pct": 81.66,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "QAnon",
+      "metric": "RPT",
+      "mean_follower_pct": 29.66,
+      "mean_followee_pct": 81.33,
+      "followee_exceeds_follower": true
+    },
+    {
+      "dataset": "QAnon",
+      "metric": "IAR",
+      "mean_follower_pct": 33.0,
+      "mean_followee_pct": 62.33,
+      "followee_exceeds_follower": true
+    }
+  ],
+  "successes": 12,
+  "comparisons": 14,
+  "boundary": "Means only transcribed;SDs remain in primary source;12/14is not accuracy or human validation pass"
+}

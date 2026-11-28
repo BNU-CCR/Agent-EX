@@ -1,0 +1,47 @@
+[
+  {
+    "comparison_id": "VC158",
+    "record_id": "M051",
+    "method_control": "主体选择与推荐脚手架分开",
+    "comparison_or_reference": "top10语义关注候选/向量feed/记忆/停止规则",
+    "observable_error": "无显式地位偏好被写成系统无规则",
+    "evaluation_target": "网络生成机会结构",
+    "reported_evidence": "§2固定候选与更新流程；N100/Llama3 8B",
+    "scope_of_evidence": "authorv1_generative_network_worked_example",
+    "not_established": "LLM单独识别真实机制或无模型假设",
+    "transfer_to_agent_ex": "记录候选、曝光、状态与停止；不改冻结网络",
+    "source_location": "§2.1–2.2;PDFpp2–3",
+    "evidence_status": "author_preprint_read_not_reexecuted",
+    "checked_date": "2026-11-27"
+  },
+  {
+    "comparison_id": "VC159",
+    "record_id": "M051",
+    "method_control": "网络规律与独立效标分开",
+    "comparison_or_reference": "两资料/三run中邻居优势比例",
+    "observable_error": "12/14被当准确率/独立验证通过数",
+    "evaluation_target": "网络统计方向",
+    "reported_evidence": "表1七属性×两资料=14；12项followee>follower",
+    "scope_of_evidence": "authorv1_pattern_comparison_not_matched_humanvalidation",
+    "not_established": "同规模真人分布/留出预测/完整社会效度",
+    "transfer_to_agent_ex": "不同指标/单位/基线分列；经验初始化不是验证",
+    "source_location": "§3/Table1;PDFpp3–5",
+    "evidence_status": "author_preprint_read_not_reexecuted",
+    "checked_date": "2026-11-27"
+  },
+  {
+    "comparison_id": "VC160",
+    "record_id": "M051",
+    "method_control": "文字记号与实现对应",
+    "comparison_or_reference": "eta/gamma在定义和topk段命名相反",
+    "observable_error": "直接把文字疑点视为结果/代码错误",
+    "evaluation_target": "指标方向可追溯",
+    "reported_evidence": "§3定义eta为followee；§3.2段反称follower",
+    "scope_of_evidence": "authorv1_report_consistency_issue_not_code_failure",
+    "not_established": "实现确实反向或统计结果错误",
+    "transfer_to_agent_ex": "先核公式/方向/实现再命名指标",
+    "source_location": "§3/§3.2;PDFp4visual",
+    "evidence_status": "author_preprint_read_not_reexecuted",
+    "checked_date": "2026-11-27"
+  }
+]

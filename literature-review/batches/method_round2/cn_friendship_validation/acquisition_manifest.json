@@ -1,0 +1,30 @@
+[
+  {
+    "id": "R012-institution",
+    "url": "https://www.iris.unina.it/handle/11588/1045015",
+    "status": 403,
+    "bytes": 5550,
+    "sha256": "1aa5dd8d36d7402ada813ca13c3d0f06ff8cf308c226e98afd85b6e9754c6dc9",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\R012-institution_CN.response",
+    "pdf_header": false
+  },
+  {
+    "id": "R012-registry",
+    "url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104636",
+    "status": 200,
+    "bytes": 29536,
+    "sha256": "7bef9595c93ba129ed8742e84d29e84266346e044f9a904969448d8fc3ca43c2",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\R012-registry_CN.response",
+    "pdf_header": false
+  },
+  {
+    "id": "pilot-v1",
+    "url": "https://arxiv.org/pdf/2502.05919v1",
+    "status": 200,
+    "bytes": 769294,
+    "sha256": "ecb89529aa01c29636e8d377a4a3f4762e1b360939be476d91ecea71022225ac",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\pilot-v1_CN.response",
+    "pdf_header": true,
+    "pages": 6
+  }
+]

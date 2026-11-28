@@ -47,6 +47,8 @@
 
 - [Findings日期与缺口分流](reports/findings_dates_and_triage_CM.md)：保留两项未决，27项队列按实际获取/版本瓶颈排序。
 
+- [友谊悖论验证读本](reports/friendship_validation_CN.md)：新增M051作者稿精读，R012期刊版未取得，统计方向/脚手架/外部效度分开。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

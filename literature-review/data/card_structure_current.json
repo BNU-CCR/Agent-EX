@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "batch": "CI",
+  "batch": "CN",
   "cards": [
     {
       "path": "reading-cards/CN006.md",
@@ -1217,10 +1217,29 @@
       "inline_numbers": [],
       "recognized11": true,
       "format": "heading"
+    },
+    {
+      "path": "reading-cards/M051.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
     }
   ],
-  "heading11": 58,
+  "heading11": 59,
   "inline11": 6,
-  "recognized11": 64,
+  "recognized11": 65,
   "boundary": "Structure recognition only, not semantic acceptance or complete primary evidence audit"
 }

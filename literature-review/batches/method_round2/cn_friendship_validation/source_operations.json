@@ -1,0 +1,110 @@
+[
+  {
+    "search_id": "CN-01",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Validating generative agent-Based modeling\" pdf",
+    "source_url": "",
+    "status": "discovery",
+    "notes": ""
+  },
+  {
+    "search_id": "CN-02",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"10.1016/j.ipm.2026.104636\"",
+    "source_url": "",
+    "status": "discovery",
+    "notes": ""
+  },
+  {
+    "search_id": "CN-03",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open formalpublisher",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0306457326000282",
+    "status": "403",
+    "notes": ""
+  },
+  {
+    "search_id": "CN-04",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open institutionlisting",
+    "source_url": "https://www.iris.unina.it/handle/11588/1045015",
+    "status": "403",
+    "notes": "Searchlistingrestrictedfile;notPDFread"
+  },
+  {
+    "search_id": "CN-05",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Orlando\" \"friendship paradox\" pdf generative",
+    "source_url": "",
+    "status": "relatedearlierworkfound",
+    "notes": ""
+  },
+  {
+    "search_id": "CN-06",
+    "platform": "web_search",
+    "search_date": "2026-11-27",
+    "query_exact": "\"Validating generative\" \"Orlando\" arxiv",
+    "source_url": "",
+    "status": "relatedearlierworkfound",
+    "notes": ""
+  },
+  {
+    "search_id": "CN-07",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open authorv1submissionhistory",
+    "source_url": "https://arxiv.org/abs/2502.05919",
+    "status": "v1identity/datechecked",
+    "notes": ""
+  },
+  {
+    "search_id": "CN-08",
+    "platform": "web_open",
+    "search_date": "2026-11-27",
+    "query_exact": "Open versionedauthorHTML",
+    "source_url": "https://arxiv.org/html/2502.05919v1",
+    "status": "readable_authorversion",
+    "notes": ""
+  },
+  {
+    "search_id": "CN-09",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET institution/registry/versionedPDF",
+    "source_url": "https://www.iris.unina.it/handle/11588/1045015",
+    "status": "403",
+    "notes": "5550bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CN-10",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET institution/registry/versionedPDF",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104636",
+    "status": "200",
+    "notes": "29536bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CN-11",
+    "platform": "static_http",
+    "search_date": "2026-11-27",
+    "query_exact": "GET institution/registry/versionedPDF",
+    "source_url": "https://arxiv.org/pdf/2502.05919v1",
+    "status": "200",
+    "notes": "769294bytes;hashinmanifest"
+  },
+  {
+    "search_id": "CN-12",
+    "platform": "local_primary_reading",
+    "search_date": "2026-11-27",
+    "query_exact": "Read6pageauthorv1main§1–4;visualp4/Table1;version/denominatoraudit",
+    "source_url": "reports/friendship_validation_CN.md",
+    "status": "authorv1read_notjournal_fulltext",
+    "notes": ""
+  }
+]

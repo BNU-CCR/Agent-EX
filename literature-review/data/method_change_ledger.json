@@ -628,5 +628,35 @@
     "batch": "CC-architecture-ablation-and-process-selection-cards",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cc_architecture_process_cards/results.json"
+  },
+  {
+    "record_id": "R012",
+    "field": "related_versions",
+    "old": "",
+    "new": "Related earlier sameauthorworkarXiv2502.05919v1/WebSci25title;notestablishedidenticaljournalversion;earlier2datasetsvsjournalabstract3;noautomaticmerge",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "R012",
+    "field": "evidence_location",
+    "old": "官方Abstract和Section snippets；全文待得",
+    "new": "官方Abstract和Section snippets；全文待得 | CN:CrossrefmonthJune2026/noonlinefield;institutionrestrictedPDFlisting;earlierauthorv1notjournalread",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "R012",
+    "field": "notes",
+    "old": "",
+    "new": " | CN:formaljournalPDFnotacquired;Crossrefcreated23Jan2026notpublication;relatedM051preprintonly;2vs3datasetsnotinterchangeable;noformalreading/statusupgrade",
+    "date": "2026-11-27",
+    "batch": "CN-friendship-pattern-validation-and-version-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cn_friendship_validation/results.json"
   }
 ]
