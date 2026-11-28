@@ -1,0 +1,75 @@
+{
+  "url": "https://zenodo.org/api/records/15198397",
+  "status": 200,
+  "bytes": 5364,
+  "sha256": "c6d3c8b01b0f91cd7a2c3d9f36fa3d7021b41d59d35709eac16ecb45d4566b47",
+  "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FX_zenodo.response",
+  "title": "justinnk/text-to-crn: v1.1",
+  "doi": "10.5281/zenodo.16967398",
+  "files": [
+    {
+      "key": "justinnk/text-to-crn-v1.1.zip",
+      "size": 221679,
+      "checksum": "md5:2f0ac6f8b2b0721aa3584196646b82f2",
+      "links": {
+        "self": "https://zenodo.org/api/records/16967398/files/justinnk/text-to-crn-v1.1.zip/content"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "identifier": "https://github.com/justinnk/text-to-crn/tree/v1.1",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.15145040",
+      "relation": "isSupplementedBy",
+      "resource_type": "model",
+      "scheme": "doi"
+    }
+  ],
+  "download": {
+    "url": "https://zenodo.org/api/records/16967398/files/justinnk/text-to-crn-v1.1.zip/content",
+    "final_url": "https://zenodo.org/api/records/16967398/files/justinnk/text-to-crn-v1.1.zip/content",
+    "status": 200,
+    "bytes": 221679,
+    "sha256": "44216dabb1e04108fce95c936c472564266e70618dd70a0eeb66b23fe3b3b28b",
+    "md5": "2f0ac6f8b2b0721aa3584196646b82f2",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FX_text_to_crn_v1.1.zip"
+  },
+  "resolved_record_id": 16967398,
+  "conceptdoi": "10.5281/zenodo.15198397",
+  "versiondoi": "10.5281/zenodo.16967398",
+  "version": "v1.1",
+  "archive_comment": "2f3b1d56567b241839ae49af5f191cb860b20a55",
+  "members": 54,
+  "selected_files": [
+    {
+      "path": "justinnk-text-to-crn-2f3b1d5/README.md",
+      "bytes": 30776,
+      "sha256": "009cb5c54d4f06f214be6d79f66dcdd83bb56ab0070bd317a840a9816fdddfb1",
+      "actual_reading": "identity/setup/hardware caveat selected paragraphs"
+    },
+    {
+      "path": "justinnk-text-to-crn-2f3b1d5/tester.py",
+      "bytes": 17639,
+      "sha256": "a89dfb5f091e3125a79e8c556d2753b5f23e83d016b882b171613219e104b22b",
+      "actual_reading": "145-210,248-276,308-343"
+    },
+    {
+      "path": "justinnk-text-to-crn-2f3b1d5/find_best_lora.py",
+      "bytes": 1504,
+      "sha256": "dad353564e67231544307e21caadf08656af45a6f42cbe77e1d03784051dea35",
+      "actual_reading": "22-36"
+    },
+    {
+      "path": "justinnk-text-to-crn-2f3b1d5/precision_patch.txt",
+      "bytes": 1563,
+      "sha256": "ee166542c799f5180143de94d7099f8f6efa6a5249b2457b45f7873cade9110b",
+      "actual_reading": "selected diff;not applied"
+    }
+  ],
+  "scope": "Static selected source only;archive comment not independently checked Git remote;no raw results/weights/models/reexecution"
+}

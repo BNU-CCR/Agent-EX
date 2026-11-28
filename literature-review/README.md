@@ -1,3 +1,14 @@
+# 本轮交付入口
+
+- **先读：[方法论总报告与投稿建议](FINAL_REVIEW.md)**。
+- [必要缺口与处理顺序](FINAL_GAPS.md)：限时保留核心事项。
+- [文献与发表地图Excel](exports/literature_and_journals_methods.xlsx)｜[主表](data/literature_master.csv)｜[正式书目](exports/references_methods.bib)。
+- [九问题详版](reports/methods_review_current_synthesis.md)｜[进度与历史](progress.md)。
+
+限时交付当前：241条/92卡/273单元、79纳入/153候选/7前沿/2排除，62载体/31条件刊，1963分组操作。按用户要求收敛最终总报告/投稿建议/必要缺口；不再扩库或一般代码遍历。13日期/0空分类；完整授权覆盖和关键版本限制明确保留，整目标未验收。
+
+## 历史批次导航（按各批时点理解）
+
 > FW当前：241条/92卡/272单元、79纳入/153候选/7前沿/2排除，62载体/31条件刊，1960分组操作。M184正式方法精读并纳入；合成反应匹配/测试择优/解码SD/五人用户诊断分列，非动态或社会效度。13日期/0空分类；下一项FX静态核固定评价器与85/84.5运行映射，目标未验收。 [形式恢复评价](reports/formal_dsl_evaluation_FW.md)。
 
 > FV当前：241条/91卡/267单元、78纳入/154候选/7前沿/2排除，62载体/31条件刊，1954分组操作。新增M184/TOMACS形式DSL生成候选，作者28页正式PDF已得仅封面/摘要；OnlineAMMay28与VoRSep12分列，非社会主体效度。13日期/0空分类；下一项FW精读合成分割/恢复判据/基线与用户研究，目标未验收。 [形式DSL方法对照](reports/formal_dsl_identity_FV.md)。

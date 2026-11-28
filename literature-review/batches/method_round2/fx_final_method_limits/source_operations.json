@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "FX-01",
+    "platform": "fixed_public_archive",
+    "search_date": "2026-11-28",
+    "query_exact": "Concept15198397 resolvesv1.1record16967398;ZIP221679bytesMD5matches/SHA;54members;weightsnotdownloaded",
+    "source_url": "https://zenodo.org/api/records/15198397",
+    "status": "fixed_archive_acquired",
+    "notes": "Groupedsourceoperation notquerycount;notexecution"
+  },
+  {
+    "search_id": "FX-02",
+    "platform": "static_source_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "tester145-210/248-276/308-343;READMEselected;findbest22-36;precisiondiffselected",
+    "source_url": "https://zenodo.org/records/16967398",
+    "status": "bounded_static_inspection",
+    "notes": "No authorprogram/model execution;no counterexample test"
+  },
+  {
+    "search_id": "FX-03",
+    "platform": "method_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "Clarifyparsedcountguard/noninjectivematching/charactersets;no recalculationorfalsepositivefrequencyclaim",
+    "source_url": "reports/formal_evaluator_limits_FX.md",
+    "status": "material_limit_saved",
+    "notes": "Time-limitedconsolidation;no further peripheral audit"
+  }
+]

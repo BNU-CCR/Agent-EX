@@ -1,0 +1,26 @@
+{
+  "checked": "2026-11-28",
+  "user_time_constraint": "only_delivery_critical_check",
+  "new_reader_reports_local_links_present": true,
+  "master_only_changed": "M184",
+  "matrix_updated": [
+    "VC268"
+  ],
+  "matrix_added": [
+    "VC273"
+  ],
+  "workbook_rows": [
+    28,
+    242,
+    63,
+    32,
+    274,
+    56,
+    1964,
+    16,
+    42,
+    37
+  ],
+  "protected_baseline": "57IDs/18hashes/231prefix/112ledger verified by existing delivery check",
+  "limits": "Original coverage/version gaps retained;no new scientific audit or author execution;not fullgoalacceptance"
+}

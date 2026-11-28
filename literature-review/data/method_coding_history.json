@@ -26138,5 +26138,25 @@
     "batch": "FW",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fw_formal_dsl_reading/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_pending_fields",
+    "old": "fixed_evaluator_extra_reaction_and_symbolic_rate_semantics;test_reuse_optimism/independent_holdout;85_vs84.5_artifact_mapping;full_user_supplement;raw_run_identity;AM_VoR_collation;current_journal_scope/guide",
+    "new": "actual_falsepositive_incidence_and_raw_result_impact;historical_run_mapping/85_vs84.5;independent_holdout;full_user_supplement;AM_VoR_collation;current_journal_scope/guide",
+    "date": "2026-11-28",
+    "batch": "FX",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fx_final_method_limits/results.json"
+  },
+  {
+    "record_id": "M184",
+    "field": "method_coding_source",
+    "old": "reading-cards/M184.md;reports/formal_dsl_evaluation_FW.md;batches/method_round2/fw_formal_dsl_reading/reading_scope.json",
+    "new": "reading-cards/M184.md;reports/formal_dsl_evaluation_FW.md;batches/method_round2/fw_formal_dsl_reading/reading_scope.json;reports/formal_evaluator_limits_FX.md;batches/method_round2/fx_final_method_limits/source_manifest.json",
+    "date": "2026-11-28",
+    "batch": "FX",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fx_final_method_limits/results.json"
   }
 ]

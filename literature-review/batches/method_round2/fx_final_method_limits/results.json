@@ -1,0 +1,16 @@
+{
+  "batch_id": "FX",
+  "date": "2026-11-28",
+  "expected_master_sha256": "d5ba6e2382c6b10beaa9c91efe0b4949efd80c95d5f07621c960c42ef5f2df7e",
+  "updates": [
+    {
+      "record_id": "M184",
+      "supplement_status": "FX conceptDOI15198397resolvesfixedv1.1/16967398;221679byteZIPMD5/SHAverified;selectedtester/README/findbest/precisiondiffstaticallyread;no weights/results/model execution",
+      "notes": "FVfirst2PDFpagesidentity/abstractonly;1281993bytes28p;CCBY4.0PDFnotwebsiteCCBY-NCSA;authorStartedJan1year0001template/Nov1pagepublication/Jul5update_notpaperdates;AMvsVoRdistinct;no code/model execution | FW:formalmethods/evaluationread;800train/200test/3manualvalidation;testusedforselection;54LoRAtrains/selectedbestrep;84.5nominal169of200notrawhitsverified;no authorcode/model run | FX:v1.1testercombinesentityset/count/semantics;parsedreactiontotalmustmatch;matchingnotinjective andunderscorelessnamesbecomecharactersets;staticrisknotmeasuredimpact;85/84.5unresolved/no rawresults",
+      "method_pending_fields": "actual_falsepositive_incidence_and_raw_result_impact;historical_run_mapping/85_vs84.5;independent_holdout;full_user_supplement;AM_VoR_collation;current_journal_scope/guide",
+      "method_coding_source": "reading-cards/M184.md;reports/formal_dsl_evaluation_FW.md;batches/method_round2/fw_formal_dsl_reading/reading_scope.json;reports/formal_evaluator_limits_FX.md;batches/method_round2/fx_final_method_limits/source_manifest.json",
+      "search_id": "FV-01;FV-02;FV-03;FV-04;FV-05;FW-01;FW-02;FW-03;FW-04;FW-05;FW-06;FX-01;FX-02;FX-03"
+    }
+  ],
+  "new_records": []
+}
