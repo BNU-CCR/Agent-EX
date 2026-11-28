@@ -1,0 +1,27 @@
+{
+  "batch_id": "CS-ODD-access-and-fixed-implementation-artifact",
+  "date": "2026-11-28",
+  "expected_master_sha256": "1dbf8443d8e68db8a306e4aba1379264ec520629042a07d6f033c46dfbf29487",
+  "updates": [
+    {
+      "record_id": "M012",
+      "search_date": "2026-11-28",
+      "search_id": "S-M2-ODD-M012;S-M2-AD-Q5;S-M2-AD-NOTICE;S-M2-AD-UMU;CS-12;CS-15;CS-20",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed. | CJ:DelftPDF4035717bytesHTML;hashinCJmanifest;noPDF/fulltext/dateupgrade;threeclassificationblanksretained | CS:newauthoruploadRG403;ESSredirectunavailable;DiVAAnubisdenial;UFZhistoricalpageonly;noPDF/date/classificationupgrade",
+      "method_last_checked": "2026-11-28",
+      "method_coding_source": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md"
+    },
+    {
+      "record_id": "M003",
+      "search_date": "2026-11-28",
+      "search_id": "S-M2-ODD-M003;S-M2-AD-ARXIV;S-M2-AD-M003PUB;CS-23;CS-28",
+      "notes": "Statistically indistinguishable output under two parameter settings is not proof of equivalence across parameter space or implementation details.; Hosted/local model comparisons confound model capacity and deployment; not evidence of deployment causal effects.; precise first-online date pending; July2026 issue is not first-online proof | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:publisher403;exactfirstonlineunresolved;author versionequivalence statement not independentproof. | BS:publisherweb403/static403HTML832981bytes;institutionalJulyissueonly;exactfirstonlineunresolved. | CS:Zenodo19915447v3ZIP216857034bytes/MD5verified;staticselectedsourcesread;16models96rows/noqwen3pathsversusauthorTable1seventeen;generationandrunprovenancenotclosed;formalPDFrestricted/firstonlinedatepending",
+      "method_last_checked": "2026-11-28",
+      "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md",
+      "supplement_status": "fixed_Zenodo_v3_acquired_MD5_verified_selected_static_read_not_executed",
+      "method_evidence_location": "§§2–6; statistical comparison/PCA/Energy test and limitations;Zenodo19915447/01cell5/02cell2/03cells3,8,21/04cell5",
+      "related_versions": "formal journal work; read author-final arXiv v2 (2026-04-30); v1 2026-02-08 kept as version history, not separate work | AD:arXivrepository v1Feb8/v2Apr30 verified;author says typeset version differs only pagination/typography;not independentlycollated. | CS:Zenodo19915447v3explicitlyIsSupplementToformalDOIandarxiv;notproofeverypublishedresultisrepresented"
+    }
+  ],
+  "new_records": []
+}

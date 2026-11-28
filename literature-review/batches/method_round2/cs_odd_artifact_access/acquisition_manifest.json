@@ -1,0 +1,120 @@
+{
+  "zip": {
+    "url": "https://zenodo.org/api/records/19915447/files/suppl_abm_llm.zip/content",
+    "status": 200,
+    "bytes": 216857034,
+    "md5": "3e854208f57503384718ff79e42b4fe3",
+    "sha256": "a56067ae3f55a7f22bf44a684173e76eba6579086d639f3eff4c2e91274c28e6",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M003_CS_suppl_abm_llm.zip",
+    "record_doi": "10.5281/zenodo.19915447",
+    "retrieved": "2026-11-28",
+    "execution": "download_only_no_notebook_execution"
+  },
+  "member_count": 4590,
+  "uncompressed_bytes": 526710495,
+  "selected_members": [
+    {
+      "path": "README.md",
+      "bytes": 3586,
+      "sha256": "f2433c9853c1d374a0d44fcff2809ed2c95ad8060c79479a07f5d0168dae3408"
+    },
+    {
+      "path": "prompt.txt",
+      "bytes": 19139,
+      "sha256": "839660e8ad205fa85bfeb9c234c51f93367e40dabd4a0b0d87d43fb34112f69e"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 1449,
+      "sha256": "71d533d691188e76adc9fa58b761644b92392991603398935b6ae8733feaffac"
+    },
+    {
+      "path": "LICENSE_CODE.txt",
+      "bytes": 1125,
+      "sha256": "95794215fe9e0e6b8132e94b6bdaeaeab2d33f8d7b4e8cd5e5f71845eb8d76c2"
+    },
+    {
+      "path": "LICENSE_DATA.txt",
+      "bytes": 451,
+      "sha256": "f38d9d8480cdbd9711d7e7cd45825a712cba1276238abf68a3fa3fcaf91b2f95"
+    },
+    {
+      "path": "results_temp.csv",
+      "bytes": 18194,
+      "sha256": "5281e100833e4a9bd7bd06cc6beea794cd1a8fbaee0efe6d8454585da84c0000"
+    },
+    {
+      "path": "results.csv",
+      "bytes": 18229,
+      "sha256": "786cc8e77c85bebeb1041f83d31db5dedbf060083fe6f557b1ce405bc83faefd"
+    },
+    {
+      "path": "results_final.csv",
+      "bytes": 18518,
+      "sha256": "4093b919133845f985ff6e7460ad21e9e0cd277d66554e095e248a84da9065fe"
+    },
+    {
+      "path": "00_extract_code.ipynb",
+      "bytes": 2359,
+      "sha256": "6dcdfc2652cd1f5be7fc424c7b2c65fc2f5e499eab233971526ec88f248445a3"
+    },
+    {
+      "path": "01_check_code.ipynb",
+      "bytes": 106464,
+      "sha256": "300f028769b6c665bf26e51c0ef1efc3422f264e5c79d402831a7bd910646cfd"
+    },
+    {
+      "path": "02_run_models.ipynb",
+      "bytes": 254990,
+      "sha256": "3465a3339856200f64f3d55723b67b0ee3baec1d6ba4e464e0a441971204e1d8"
+    },
+    {
+      "path": "03_model_comparison.ipynb",
+      "bytes": 966593,
+      "sha256": "de7e984ee97ca641dd9a764acd2c58bca19227c9e9cb9afb23caaa4848971fb1"
+    },
+    {
+      "path": "04_scores_analysis.ipynb",
+      "bytes": 165455,
+      "sha256": "007f7c11e8a996613b24885888163d133d33f6286c4834aebb7397ae330ff745"
+    },
+    {
+      "path": "05_time_analysis.ipynb",
+      "bytes": 127049,
+      "sha256": "a67b684d103fad1beadf97e3670d7942964818cf43e424d023219421d5a67717"
+    },
+    {
+      "path": "06_code_quality.ipynb",
+      "bytes": 175203,
+      "sha256": "f1378803cee5745b80a995abd8e8f84d74c89b7dada40c344c0841f95fea039b"
+    },
+    {
+      "path": "nlexps.in.xml",
+      "bytes": 4154,
+      "sha256": "08adcf8468c593690675e30f228e18ea6f894a3bc597b420e92e1b305768ded6"
+    },
+    {
+      "path": "run_netlogo.sh",
+      "bytes": 1533,
+      "sha256": "2891020db24fd40f3c6cc6d885717794e262c4c3244637b2c7d7e89ec705e87d"
+    }
+  ],
+  "boundary": "Selected notebooks read statically; other members enumerated, not all contents reviewed; no thirdparty code executed",
+  "responses": [
+    {
+      "file": "M003_CS_zenodo.json",
+      "bytes": 13675,
+      "sha256": "faa7ee1e4ad67f3564b7d6fb28b95c74371c060177c00d9979bbc0dc1dccc577"
+    },
+    {
+      "file": "M003_CS_authorv2.html",
+      "bytes": 410556,
+      "sha256": "697f10225773f64d4839df664ca003c7872d5ec3eb3808e913e8d4a788719253"
+    },
+    {
+      "file": "M012_CS_RG.html",
+      "bytes": 23563,
+      "sha256": "f844730953ef09a11d20cb841e33e6485caf7a7cc2f874ac9880663eb9bb030a"
+    }
+  ]
+}

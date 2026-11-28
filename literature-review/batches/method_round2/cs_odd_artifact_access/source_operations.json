@@ -1,0 +1,254 @@
+[
+  {
+    "search_id": "CS-01",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Twenty years of ODD\" Grimm 2026 pdf",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-02",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"10.1016/j.envsoft.2026.107203\"",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-03",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Twenty years of the ODD protocol\" filetype:pdf -site:researchgate.net",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-04",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Twenty years of the ODD protocol\" site:literatur.thuenen.de",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-05",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Twenty years of the ODD protocol\" site:openmodelingfoundation.github.io",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-06",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"107203\" \"ODD\" \"pdf\" -site:scilit.com -site:sciencedirect.com -site:researchgate.net",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-07",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Twenty years of the ODD protocol\" site:diva-portal.org/smash/record.jsf",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-08",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Twenty years of the ODD protocol\" site:literatur.thuenen.de/digbib_extern",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-09",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Can large language models implement agent-based models\" \"2026\" \"April\"",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-10",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"10.1016/j.ecolmodel.2026.111624\" \"Available online\"",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-11",
+    "platform": "web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "\"Can large language models implement agent-based models\" pdf -site:researchgate.net -site:arxiv.org",
+    "source_url": "",
+    "status": "discovery_only_not_fulltext_or_date_confirmation",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-12",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "https://www.ufz.de/index.php?de=40429",
+    "source_url": "https://www.ufz.de/index.php?de=40429",
+    "status": "official_page_read",
+    "notes": "Historical ODD links are pre2022; no early paper acquired or counted; new2026 item points to known publication page"
+  },
+  {
+    "search_id": "CS-13",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "https://www.thuenen.de/de/literaturrecherche?tx_solr%5Bfilter%5D%5B0%5D=zeitschrift%3AEnvironmental+modelling+%26+software",
+    "source_url": "https://www.thuenen.de/de/literaturrecherche?tx_solr%5Bfilter%5D%5B0%5D=zeitschrift%3AEnvironmental+modelling+%26+software",
+    "status": "timeout",
+    "notes": "No file acquired"
+  },
+  {
+    "search_id": "CS-14",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "https://doi.org/10.22541/essoar.15005893/v1",
+    "source_url": "https://doi.org/10.22541/essoar.15005893/v1",
+    "status": "nonretryable_redirect_unavailable",
+    "notes": "No PDF acquired"
+  },
+  {
+    "search_id": "CS-15",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "https://www.researchgate.net/publication/408681003_Twenty_years_of_the_ODD_protocol_development_usage_extensions_and_lessons_learned_about_modelling_standards_development",
+    "source_url": "https://www.researchgate.net/publication/408681003_Twenty_years_of_the_ODD_protocol_development_usage_extensions_and_lessons_learned_about_modelling_standards_development",
+    "status": "author_upload_page_partial_text",
+    "notes": "v1 author uploaded preprint; not formal PDF; no full-reading card"
+  },
+  {
+    "search_id": "CS-16",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "https://umu.diva-portal.org/smash/latest.jsf?fs=false&language=en&p=10",
+    "source_url": "https://umu.diva-portal.org/smash/latest.jsf?fs=false&language=en&p=10",
+    "status": "access_denied",
+    "notes": "Anubis denial, not absence of fulltext"
+  },
+  {
+    "search_id": "CS-17",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "https://zenodo.org/records/19915447",
+    "source_url": "https://zenodo.org/records/19915447",
+    "status": "official_versioned_record_read",
+    "notes": "v3; supplement relation to M003 and arxiv; no claim paper firstonline date"
+  },
+  {
+    "search_id": "CS-18",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "https://scholar.tecnico.ulisboa.pt/records/HcFflZUWFCUnfEkAithrvm0xulIEICGWw91L",
+    "source_url": "https://scholar.tecnico.ulisboa.pt/records/HcFflZUWFCUnfEkAithrvm0xulIEICGWw91L",
+    "status": "institutional_record_read_file_restricted",
+    "notes": "3.3MB VoR restricted to authenticated users; July1 is issue-like date, not publisher first-online proof"
+  },
+  {
+    "search_id": "CS-19",
+    "platform": "web_find",
+    "search_date": "2026-11-28",
+    "query_exact": "Download full-text PDF",
+    "source_url": "https://www.researchgate.net/publication/408681003_Twenty_years_of_the_ODD_protocol_development_usage_extensions_and_lessons_learned_about_modelling_standards_development",
+    "status": "timeout",
+    "notes": "No download link established"
+  },
+  {
+    "search_id": "CS-20",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "https://www.researchgate.net/publication/408681003_Twenty_years_of_the_ODD_protocol_development_usage_extensions_and_lessons_learned_about_modelling_standards_development",
+    "source_url": "https://www.researchgate.net/publication/408681003_Twenty_years_of_the_ODD_protocol_development_usage_extensions_and_lessons_learned_about_modelling_standards_development",
+    "status": "403_html_not_pdf",
+    "notes": "23563 bytes; scratch M012_CS_RG.html"
+  },
+  {
+    "search_id": "CS-21",
+    "platform": "official_repository_api",
+    "search_date": "2026-11-28",
+    "query_exact": "Get fixed version metadata",
+    "source_url": "https://zenodo.org/api/records/19915447",
+    "status": "200_json",
+    "notes": "API relation isSupplementTo formal DOI and arxiv; hash in acquisition manifest"
+  },
+  {
+    "search_id": "CS-22",
+    "platform": "static_http_download",
+    "search_date": "2026-11-28",
+    "query_exact": "Download fixed supplementary ZIP",
+    "source_url": "https://zenodo.org/api/records/19915447/files/suppl_abm_llm.zip/content",
+    "status": "200_zip_size_md5_verified",
+    "notes": "216857034 bytes; MD5 matches fixed record; SHA256 in acquisition_manifest; no code execution"
+  },
+  {
+    "search_id": "CS-23",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "Open author v2 for version/denominator comparison",
+    "source_url": "https://arxiv.org/html/2602.10140v2",
+    "status": "author_html_read_targeted",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-24",
+    "platform": "web_find",
+    "search_date": "2026-11-28",
+    "query_exact": "Find 17 in author v2",
+    "source_url": "https://arxiv.org/html/2602.10140v2",
+    "status": "abstract_and_table1_scope_located",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-25",
+    "platform": "web_find",
+    "search_date": "2026-11-28",
+    "query_exact": "Find gpt- in author v2",
+    "source_url": "https://arxiv.org/html/2602.10140v2",
+    "status": "table1_and_results_located",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-26",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "Read author v2 sections3.2-3.3",
+    "source_url": "https://arxiv.org/html/2602.10140v2",
+    "status": "targeted_inference_pipeline_read",
+    "notes": ""
+  },
+  {
+    "search_id": "CS-27",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Preserve author v2 HTML for comparison",
+    "source_url": "https://arxiv.org/html/2602.10140v2",
+    "status": "200_html",
+    "notes": "410556 bytes; hash in manifest"
+  },
+  {
+    "search_id": "CS-28",
+    "platform": "local_static_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Read ZIP selected sources and count 3 CSV tables",
+    "source_url": "batches/method_round2/cs_odd_artifact_access/artifact_counts.json",
+    "status": "counts_and_mapping_verified_not_executed",
+    "notes": "96 rows/16 models/6 seeds; smoke35, final20 score6; noqwen3path; notebook cells located"
+  }
+]

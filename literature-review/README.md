@@ -181,3 +181,5 @@
 批次Y：[理论形式化边界](reports/theory_formalization_boundaries.md)，M029补正式PDF方法/示例/限制、1卡3单元；EFECT正式参考PDF已取得待Z精读。Y来源日期26日，交付核验27日，不覆盖历史检索日期。
 
 批次Z：[随机复现范围](reports/stochastic_reproducibility_scope.md)，EFECT VoR精读、1卡4单元；逐时点边缘与联合路径分开，解析反例不是作者实验。
+
+- [ODD版本与固定补充制品](reports/odd_artifact_access_CS.md)：M003分阶段评分、96行分母与统计预处理；M012全文缺口保留。
