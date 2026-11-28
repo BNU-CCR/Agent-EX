@@ -1,0 +1,36 @@
+[
+  {
+    "name": "crossref",
+    "url": "https://api.crossref.org/works/10.1016/j.ecolmodel.2026.111624",
+    "final_url": "https://api.crossref.org/works/10.1016/j.ecolmodel.2026.111624",
+    "status": 200,
+    "bytes": 23348,
+    "sha256": "9f80bc6e2647b9f73adf42bbf355f5647c1dc15ef9cfd606f4f23f2121ba0182",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ET_crossref.response"
+  },
+  {
+    "name": "arxiv",
+    "url": "https://arxiv.org/abs/2602.10140",
+    "final_url": "https://arxiv.org/abs/2602.10140",
+    "status": 200,
+    "bytes": 44257,
+    "sha256": "4dbb6ff59a3d43fa74749bcf6fd55eab9c01ebade55ebba7a978e28f72967e29",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ET_arxiv.response"
+  },
+  {
+    "name": "institution",
+    "url": "https://scholar.tecnico.ulisboa.pt/records/HcFflZUWFCUnfEkAithrvm0xulIEICGWw91L",
+    "final_url": "https://scholar.tecnico.ulisboa.pt/records/HcFflZUWFCUnfEkAithrvm0xulIEICGWw91L",
+    "status": 200,
+    "bytes": 32611,
+    "sha256": "ef682d23d051d5ac7a104be09334939fc50775a1b4e93ae8163a184b14c13eb2",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ET_institution.response"
+  },
+  {
+    "name": "previously_read_authorv2",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M003_CS_authorv2.html",
+    "sha256": "697f10225773f64d4839df664ca003c7872d5ec3eb3808e913e8d4a788719253",
+    "bytes": 410556,
+    "scope": "Reuse prior full-text reading;ET rechecks title/DOI and author-typeset statement only;no fresh full reread"
+  }
+]

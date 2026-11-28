@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "ET-01",
+    "platform": "source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "Reuse M003 CS/CT/DV source and card;check Task3.2 formal-date fallback and existing legal-author-version practice",
+    "source_url": "CODEX_TASK_2022_ONWARD.md;reading-cards/M003.md",
+    "status": "reviewed",
+    "notes": "Grouped operation,not new search/fulltext reading/experiment"
+  },
+  {
+    "search_id": "ET-02",
+    "platform": "publisher_registry",
+    "search_date": "2026-11-28",
+    "query_exact": "DOI/title/fourauthors formal articlevol517/111624;published and print2026-07;no online;creatednotused",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ecolmodel.2026.111624",
+    "status": "200_month_verified",
+    "notes": "Grouped operation,not new search/fulltext reading/experiment"
+  },
+  {
+    "search_id": "ET-03",
+    "platform": "author_repository",
+    "search_date": "2026-11-28",
+    "query_exact": "arXiv DOI/journalref/v2Apr30 author-typeset and pagination-only statement;not independent collation",
+    "source_url": "https://arxiv.org/abs/2602.10140",
+    "status": "200_version_relation_verified",
+    "notes": "Grouped operation,not new search/fulltext reading/experiment"
+  },
+  {
+    "search_id": "ET-04",
+    "platform": "institutional_repository",
+    "search_date": "2026-11-28",
+    "query_exact": "Formal titleDOI/vol/article;PublishedJuly1/2026;PDFrestrictednotdownloaded",
+    "source_url": "https://scholar.tecnico.ulisboa.pt/records/HcFflZUWFCUnfEkAithrvm0xulIEICGWw91L",
+    "status": "200_metadata_only",
+    "notes": "Grouped operation,not new search/fulltext reading/experiment"
+  },
+  {
+    "search_id": "ET-05",
+    "platform": "qualification",
+    "search_date": "2026-11-28",
+    "query_exact": "Candidate toincluded;date confirmed formal monthfallback;author fulltext reading explicitlyscoped;no new methodgrade",
+    "source_url": "reports/odd_formal_qualification_ET.md",
+    "status": "qualified_with_version_limits",
+    "notes": "Grouped operation,not new search/fulltext reading/experiment"
+  }
+]

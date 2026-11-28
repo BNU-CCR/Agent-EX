@@ -1,0 +1,33 @@
+{
+  "batch": "ET",
+  "checks": "passed",
+  "base": "60cc716",
+  "master_changed": [
+    "M003"
+  ],
+  "methodgrade": "unchanged",
+  "all_other86cards": "text unchanged after lineending normalization",
+  "matrix252": "unchanged",
+  "archived_card": "baseGitbytesmatch",
+  "formal_bib": 68,
+  "frontier_bib": 8,
+  "workbook_rows": [
+    28,
+    238,
+    55,
+    31,
+    253,
+    56,
+    1786,
+    12,
+    42
+  ],
+  "cover_B7": 68,
+  "maxcell": 29215,
+  "requirement_classes": {
+    "delivered_with_limits": 46,
+    "verified_structure": 4,
+    "partial_evidence": 16
+  },
+  "limits": "Structure and scoped diff verification;not semantic full-field acceptance"
+}

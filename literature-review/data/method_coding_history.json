@@ -24798,5 +24798,35 @@
     "batch": "ES",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/es_odd_abstract_classification/results.json"
+  },
+  {
+    "record_id": "M003",
+    "field": "method_pending_fields",
+    "old": "formal_first_online_date;formal_publisher_fulltext;author_formal_equivalence;run_provenance_and_Qwen3_coverage",
+    "new": "precise_first_online_date_optional_metadata;formal_publisher_fulltext_and_independent_collation;run_provenance_and_Qwen3_coverage",
+    "date": "2026-11-28",
+    "batch": "ET",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/et_odd_formal_qualification/results.json"
+  },
+  {
+    "record_id": "M003",
+    "field": "method_relevance_rationale",
+    "old": "17 LLMs, six generations each, compared generated implementation outputs with a known rule-based baseline; no human behavioural data validation.",
+    "new": "Author enumerates17 models;Table3 and fixedv3 contain16 models x6 generations=96 scored implementations. Technical specification/code/output comparison with rule-based baseline;no human behavioural validation. Formal qualification does not change controlled_comparison grade.",
+    "date": "2026-11-28",
+    "batch": "ET",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/et_odd_formal_qualification/results.json"
+  },
+  {
+    "record_id": "M003",
+    "field": "method_coding_source",
+    "old": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md;reports/delivery_audit_DV.md",
+    "new": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md;reports/delivery_audit_DV.md;reports/odd_formal_qualification_ET.md",
+    "date": "2026-11-28",
+    "batch": "ET",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/et_odd_formal_qualification/results.json"
   }
 ]

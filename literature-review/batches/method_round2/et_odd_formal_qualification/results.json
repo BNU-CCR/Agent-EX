@@ -1,0 +1,21 @@
+{
+  "batch_id": "ET",
+  "date": "2026-11-28",
+  "expected_master_sha256": "9258140d3a7fd445935ca20c29674f2fcc4791a29cc7ec193a71669116d6fb04",
+  "updates": [
+    {
+      "record_id": "M003",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ET publisher-deposited Crossref published/published-print2026-07;formal publication month fallback perapprovedtask3.2;institutional record July1 consistent at month precision;exactfirstonlinedayunknown,createdApr30notpublication",
+      "reason": "正式期刊DOI/题名/作者与2026-07正式出版月已核；arXiv v2明确对应该已发表论文，既有作者全文可用并标版本边界。按任务书3.2日期回退纳入；LLM为实现工具，非模型内社会主体。",
+      "method_pending_fields": "precise_first_online_date_optional_metadata;formal_publisher_fulltext_and_independent_collation;run_provenance_and_Qwen3_coverage",
+      "method_relevance_rationale": "Author enumerates17 models;Table3 and fixedv3 contain16 models x6 generations=96 scored implementations. Technical specification/code/output comparison with rule-based baseline;no human behavioural validation. Formal qualification does not change controlled_comparison grade.",
+      "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md;reports/delivery_audit_DV.md;reports/odd_formal_qualification_ET.md",
+      "notes": "Statistically indistinguishable output under two parameter settings is not proof of equivalence across parameter space or implementation details.; Hosted/local model comparisons confound model capacity and deployment; not evidence of deployment causal effects.; precise first-online date pending; July2026 issue is not first-online proof | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:publisher403;exactfirstonlineunresolved;author versionequivalence statement not independentproof. | BS:publisherweb403/static403HTML832981bytes;institutionalJulyissueonly;exactfirstonlineunresolved. | CS:Zenodo19915447v3ZIP216857034bytes/MD5verified;staticselectedsourcesread;16models96rows/noqwen3pathsversusauthorTable1seventeen;generationandrunprovenancenotclosed;formalPDFrestricted/firstonlinedatepending | CT:authorTable3andv3all96scorecellsmatch;Table1aloneincludesQwen3;2100CSVeach4001rows/6outputs;35groups30perparameterset;oldversionsmetadatanotfullread;missingQwen3reasonunresolved | DV:publisher-depositedCrossref200hasno published-online;print month/created not substituted for firstonline;date/status/grade unchanged | ET:formal publication2026-07 qualifies under approved3.2 fallback;authorv2 links formal DOI and claims typography/pagination-only difference;not independently collated. Author fulltext reading retained as author version,not publisherPDF. Included,exactdaystillunknown,no grade/rerun upgrade.",
+      "search_id": "S-M2-ODD-M003;S-M2-AD-ARXIV;S-M2-AD-M003PUB;CS-23;CS-28;DV-01;DV-02;DV-04;ET-02;ET-03;ET-04;ET-05",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}
