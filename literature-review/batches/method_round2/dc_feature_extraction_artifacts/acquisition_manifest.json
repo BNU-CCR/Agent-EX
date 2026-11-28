@@ -1,0 +1,92 @@
+[
+  {
+    "path": "ReadMe.md",
+    "github_blob_sha": "b77dd1333ab921622e5aac847b60ca27f0993c37",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/ReadMe.md",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_ReadMe.md",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 2307,
+    "local_sha256": "e14c3272cadcd8a27bbfac61337c024c450a32c09600dc205180ab761e2ba9f3",
+    "git_blob_match": true
+  },
+  {
+    "path": "Constants.py",
+    "github_blob_sha": "33a46da9aedab145dc930d8672c7093cd9b7c8b6",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Constants.py",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_Constants.py",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 90191,
+    "local_sha256": "bc9744d7f2db7495747befca3f4bf9e65bdb61c5e6d5ca46b92676d5b917dcf9",
+    "git_blob_match": true
+  },
+  {
+    "path": "Functions.py",
+    "github_blob_sha": "71f1be1110060d97d1e714a59cce916fb3f8a8bc",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Functions.py",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_Functions.py",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 20670,
+    "local_sha256": "7c6120b68805ae95843fab49751fbb943d2202fcdb9cc8080559e36f52faa0e5",
+    "git_blob_match": true
+  },
+  {
+    "path": "CosineSimilarity.py",
+    "github_blob_sha": "8059bc359cc7f3965d7ebd46508cb5ba10f27a2d",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/CosineSimilarity.py",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_CosineSimilarity.py",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 655,
+    "local_sha256": "804e7cd6e4f37448dcb28c77dd2a0acd40da10b0cb9f760e9f3c0c7bdf0030a6",
+    "git_blob_match": true
+  },
+  {
+    "path": "CosineSimilarityFunctions.py",
+    "github_blob_sha": "761ac53737262480d1c64c1d5fa1dc7f2eacf8f5",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/CosineSimilarityFunctions.py",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_CosineSimilarityFunctions.py",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 23188,
+    "local_sha256": "3956243c0741a7ce12bfcbe31c821c4c0b86f3c591037de737f60f56fed848ff",
+    "git_blob_match": true
+  },
+  {
+    "path": "main.py",
+    "github_blob_sha": "9457e46ffadd26d047fb5d582a3e33d0a79ec351",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/main.py",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_main.py",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 2490,
+    "local_sha256": "f49f97f6f68937ce2f3f8bd56bb8e71b8b8837683e04464bb135a1273d49b829",
+    "git_blob_match": true
+  },
+  {
+    "path": "Requirements.txt",
+    "github_blob_sha": "cfb96cbdee3a241020e2d5b9945e8460737af7d3",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Requirements.txt",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_Requirements.txt",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 222,
+    "local_sha256": "f5dcd9a43a8dc9ca343c27795a15eedbc7d769569cf9afc6e737f2341a4ffe87",
+    "git_blob_match": true
+  },
+  {
+    "path": "Results/BridgingGap/gpt-4o/PovertyPDF-gpt-4o-P1-0.1.json",
+    "github_blob_sha": "a45931159a9b595ed4e7cf538c066c9ef8f1ba62",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Results/BridgingGap/gpt-4o/PovertyPDF-gpt-4o-P1-0.1.json",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_sample0.json",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 22867,
+    "local_sha256": "50c053b2e92b9b2432855db48b160dc0abc92cc1940495c1034d43942262f67e",
+    "git_blob_match": true
+  },
+  {
+    "path": "Results/BridgingGap/phi-2/PovertyPDF-phi-2-P1-0.1.json",
+    "github_blob_sha": "22bae622cd74eb1ced0a0296a019c7be328a0394",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Results/BridgingGap/phi-2/PovertyPDF-phi-2-P1-0.1.json",
+    "file": "C:/Users/Bai Yuexi/AppData/Local/Temp/agentex-literature-export/DC_sample1.json",
+    "transport": "GitHub connector UTF-8;one serialization-added final LF removed;exact Git blob verified",
+    "bytes": 642,
+    "local_sha256": "65c9ae43ade6894585211420963558b97e6878a3ea6f8780ff45edd055e13060",
+    "git_blob_match": true
+  }
+]

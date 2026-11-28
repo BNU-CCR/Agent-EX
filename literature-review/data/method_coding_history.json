@@ -8238,5 +8238,35 @@
     "batch": "DB-EABSS-supplied-dialogue-and-prompt-controls",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/db_eabss_dialogue/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_pending_fields",
+    "old": "independent_reference_gold;manual_audit_denominator_raters;exact_model_revision_count;executed_budget;downstream_fidelity",
+    "new": "independent_reference_provenance;manual_audit_denominator_raters;exact_revision_and_DeepSeek_row;cache_to_paper_alignment;actual_selected_response_budget;downstream_fidelity",
+    "date": "2026-11-28",
+    "batch": "DC-feature-extraction-reference-and-artifact-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dc_feature_extraction_artifacts/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_evidence_location",
+    "old": "Formal HTML §§2.25–2.37/3.2–3.12/4.2–4.8;Figures3,8",
+    "new": "Formal HTML §§2.25–2.37/3.2–3.12/4.2–4.8;Figures3,8;180c617e Constants/Functions/CosineSimilarityFunctions specified lines;tree metadata;twoJSONsamples",
+    "date": "2026-11-28",
+    "batch": "DC-feature-extraction-reference-and-artifact-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dc_feature_extraction_artifacts/results.json"
+  },
+  {
+    "record_id": "M056",
+    "field": "method_coding_source",
+    "old": "reading-cards/M056.md;reports/modeller_assistance_DA.md",
+    "new": "reading-cards/M056.md;reports/modeller_assistance_DA.md;reports/feature_extraction_artifacts_DC.md",
+    "date": "2026-11-28",
+    "batch": "DC-feature-extraction-reference-and-artifact-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dc_feature_extraction_artifacts/results.json"
   }
 ]

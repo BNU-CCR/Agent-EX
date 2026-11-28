@@ -1,0 +1,98 @@
+[
+  {
+    "before": {
+      "comparison_id": "VC176",
+      "record_id": "M056",
+      "method_control": "提示与参考答案构造",
+      "comparison_or_reference": "Poverty/GPT4o调提示；modal回答加抽样人工审计",
+      "observable_error": "参考自洽与独立事实正确性可分离",
+      "evaluation_target": "特征提取参照",
+      "reported_evidence": "§2.27/3.2说明众数参照和至少一次正确的提示调整",
+      "scope_of_evidence": "四文档九提示的内部比较",
+      "not_established": "独立完整gold、留出文档和全量事实正确性",
+      "transfer_to_agent_ex": "先冻结规格与独立参照，再比较实现",
+      "source_location": "§§2.27/3.2/4.8",
+      "evidence_status": "formal_HTML_targeted_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    },
+    "after": {
+      "comparison_id": "VC176",
+      "record_id": "M056",
+      "method_control": "提示与参考答案构造",
+      "comparison_or_reference": "Poverty/GPT4o调提示；modal回答加抽样人工审计",
+      "observable_error": "参考自洽与独立事实正确性可分离",
+      "evaluation_target": "特征提取参照",
+      "reported_evidence": "§2.27/3.2说明众数参照和至少一次正确的提示调整；DC定位36固定参考文本并确认评分读取；来源/独立标注链未闭合",
+      "scope_of_evidence": "四文档九提示的内部比较",
+      "not_established": "独立完整gold、留出文档和全量事实正确性",
+      "transfer_to_agent_ex": "先冻结规格与独立参照，再比较实现",
+      "source_location": "§§2.27/3.2/4.8;DC180c617e specifiedConstants/Functions/CosineSimilarityFunctions lines and tree",
+      "evidence_status": "formal_HTML_plus_pinned_artifact_static_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    }
+  },
+  {
+    "before": {
+      "comparison_id": "VC177",
+      "record_id": "M056",
+      "method_control": "重复与相似度测量",
+      "comparison_or_reference": "每报告单元10次；MiniLM cosine均值/方差",
+      "observable_error": "语义接近或稳定可掩盖共同错误",
+      "evaluation_target": "重复提取一致性",
+      "reported_evidence": "Figures8/9报告cosine而非accuracy；10%人工抽查",
+      "scope_of_evidence": "文档/提示/模型局部对照",
+      "not_established": "提取准确率、ODD格式因果收益、动态忠实度",
+      "transfer_to_agent_ex": "分开稳定性、事实和动态检验",
+      "source_location": "§§2.37/3.4–3.12/4.8;Figure8",
+      "evidence_status": "formal_HTML_targeted_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    },
+    "after": {
+      "comparison_id": "VC177",
+      "record_id": "M056",
+      "method_control": "重复与相似度测量",
+      "comparison_or_reference": "每报告单元10次；MiniLM cosine均值/方差",
+      "observable_error": "语义接近或稳定可掩盖共同错误",
+      "evaluation_target": "重复提取一致性",
+      "reported_evidence": "Figures8/9报告cosine而非accuracy；10%人工抽查；DC五温度合并后方差标Std；commercial围栏格式筛选/空集零汇总",
+      "scope_of_evidence": "文档/提示/模型局部对照",
+      "not_established": "提取准确率、ODD格式因果收益、动态忠实度；有效答案分母及论文图/缓存精确对应",
+      "transfer_to_agent_ex": "分开稳定性、事实和动态检验",
+      "source_location": "§§2.37/3.4–3.12/4.8;Figure8;DC180c617e specifiedConstants/Functions/CosineSimilarityFunctions lines and tree",
+      "evidence_status": "formal_HTML_plus_pinned_artifact_static_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    }
+  },
+  {
+    "before": {
+      "comparison_id": "VC178",
+      "record_id": "M056",
+      "method_control": "模型筛选与身份记录",
+      "comparison_or_reference": "文字/流程/热图标签对账",
+      "observable_error": "commercial3/4与LLM10/图12口径不一",
+      "evaluation_target": "可复现范围",
+      "reported_evidence": "§2.25型号与§3.4写法不同；Figure8十二标签",
+      "scope_of_evidence": "报告内部身份/范围差异",
+      "not_established": "精确snapshot、全部执行次数与成本",
+      "transfer_to_agent_ex": "保留模型身份和淘汰/失败账",
+      "source_location": "§§2.25/3.4/4.2;Figures3,8",
+      "evidence_status": "formal_HTML_targeted_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    },
+    "after": {
+      "comparison_id": "VC178",
+      "record_id": "M056",
+      "method_control": "模型筛选与身份记录",
+      "comparison_or_reference": "文字/流程/热图标签对账",
+      "observable_error": "commercial3/4与LLM10/图12口径不一",
+      "evaluation_target": "可复现范围",
+      "reported_evidence": "§2.25型号与§3.4写法不同；Figure8十二标签；DC十开放模型分析列表+GPT4o、11模型/1980JSON路径；DeepSeek图行仍缺",
+      "scope_of_evidence": "报告内部身份/范围差异",
+      "not_established": "精确snapshot、全部执行次数与成本；当前生成/分析列表和JSON/TXT路径不一致不当已执行失败结论",
+      "transfer_to_agent_ex": "保留模型身份和淘汰/失败账",
+      "source_location": "§§2.25/3.4/4.2;Figures3,8;DC180c617e specifiedConstants/Functions/CosineSimilarityFunctions lines and tree",
+      "evidence_status": "formal_HTML_plus_pinned_artifact_static_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    }
+  }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "search_id": "DC-01",
+    "platform": "github_connector_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "Resolve paper-linked repository",
+    "source_url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-02",
+    "platform": "github_connector_branch",
+    "search_date": "2026-11-28",
+    "query_exact": "Pin default master commit",
+    "source_url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/branches/master",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-03",
+    "platform": "github_connector_tree",
+    "search_date": "2026-11-28",
+    "query_exact": "Read complete recursive tree metadata",
+    "source_url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/trees/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3?recursive=1",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-04",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire fixed text source ReadMe.md",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/ReadMe.md",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-05",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire fixed text source Constants.py",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Constants.py",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-06",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire fixed text source Functions.py",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Functions.py",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-07",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire fixed text source CosineSimilarity.py",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/CosineSimilarity.py",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-08",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire fixed text source CosineSimilarityFunctions.py",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/CosineSimilarityFunctions.py",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-09",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire fixed text source main.py",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/main.py",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-10",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire fixed text source Requirements.txt",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Requirements.txt",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-11",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire selected JSON sample",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Results/BridgingGap/gpt-4o/PovertyPDF-gpt-4o-P1-0.1.json",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-12",
+    "platform": "github_connector_file",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire selected JSON sample",
+    "source_url": "https://github.com/siamak-khatami/QA-ABM-Extraction/blob/180c617e82e95ff21bd2a0767ed2e3bc86cab2f3/Results/BridgingGap/phi-2/PovertyPDF-phi-2-P1-0.1.json",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-13",
+    "platform": "local_static_source_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read reference/metric/generation code;literal AST constants only",
+    "source_url": "reports/feature_extraction_artifacts_DC.md",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  },
+  {
+    "search_id": "DC-14",
+    "platform": "local_tree_metadata_inventory",
+    "search_date": "2026-11-28",
+    "query_exact": "Count paths by model/extension and bound result scope",
+    "source_url": "batches/method_round2/dc_feature_extraction_artifacts/repository_inventory.json",
+    "status": "metadata_or_text_acquired_and_bounded_static_read",
+    "notes": "Tree paths not authenticated runs; no import,model execution,pickle load or external API generation"
+  }
+]

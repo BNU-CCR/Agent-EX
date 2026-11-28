@@ -1,0 +1,112 @@
+{
+  "date": "2026-11-28",
+  "repository": "siamak-khatami/QA-ABM-Extraction",
+  "commit": "180c617e82e95ff21bd2a0767ed2e3bc86cab2f3",
+  "commit_date": "2025-02-16T20:44:50Z",
+  "tree_sha": "180c617e82e95ff21bd2a0767ed2e3bc86cab2f3",
+  "entries": 9276,
+  "blobs": 9231,
+  "truncated": false,
+  "extensions": {
+    "gitignore": 1,
+    "png": 71,
+    "py": 6,
+    "txt": 2,
+    "pdf": 4,
+    "md": 1,
+    "pickle": 7164,
+    "json": 1980,
+    "pkl": 1,
+    "csv": 1
+  },
+  "model_directories": [
+    "Results/BridgingGap/Embeddings",
+    "Results/BridgingGap/Llama-2-13b-chat-hf",
+    "Results/BridgingGap/Llama-2-7b-chat-hf",
+    "Results/BridgingGap/Meta-Llama-3-8B",
+    "Results/BridgingGap/Similarities",
+    "Results/BridgingGap/gemma-2-27b",
+    "Results/BridgingGap/gemma-2-9b",
+    "Results/BridgingGap/gemma-2b",
+    "Results/BridgingGap/gemma-7b",
+    "Results/BridgingGap/gpt-4o",
+    "Results/BridgingGap/phi-1",
+    "Results/BridgingGap/phi-1_5",
+    "Results/BridgingGap/phi-2"
+  ],
+  "selected_sources": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "32720e4834408b38e9b7f063d5857aea1270f8ed",
+      "size": 311,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/32720e4834408b38e9b7f063d5857aea1270f8ed"
+    },
+    {
+      "path": "Constants.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "33a46da9aedab145dc930d8672c7093cd9b7c8b6",
+      "size": 90191,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/33a46da9aedab145dc930d8672c7093cd9b7c8b6"
+    },
+    {
+      "path": "CosineSimilarity.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8059bc359cc7f3965d7ebd46508cb5ba10f27a2d",
+      "size": 655,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/8059bc359cc7f3965d7ebd46508cb5ba10f27a2d"
+    },
+    {
+      "path": "CosineSimilarityFunctions.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "761ac53737262480d1c64c1d5fa1dc7f2eacf8f5",
+      "size": 23188,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/761ac53737262480d1c64c1d5fa1dc7f2eacf8f5"
+    },
+    {
+      "path": "Functions.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71f1be1110060d97d1e714a59cce916fb3f8a8bc",
+      "size": 20670,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/71f1be1110060d97d1e714a59cce916fb3f8a8bc"
+    },
+    {
+      "path": "ReadMe.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b77dd1333ab921622e5aac847b60ca27f0993c37",
+      "size": 2307,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/b77dd1333ab921622e5aac847b60ca27f0993c37"
+    },
+    {
+      "path": "Requirements.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cfb96cbdee3a241020e2d5b9945e8460737af7d3",
+      "size": 222,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/cfb96cbdee3a241020e2d5b9945e8460737af7d3"
+    },
+    {
+      "path": "__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "main.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9457e46ffadd26d047fb5d582a3e33d0a79ec351",
+      "size": 2490,
+      "url": "https://api.github.com/repos/siamak-khatami/QA-ABM-Extraction/git/blobs/9457e46ffadd26d047fb5d582a3e33d0a79ec351"
+    }
+  ],
+  "scope": "Full tree metadata; only selected source files acquired next; not content/execution audit of 9000 result files"
+}

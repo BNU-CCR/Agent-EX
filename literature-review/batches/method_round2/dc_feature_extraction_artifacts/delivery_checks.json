@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-28",
+  "base": "63b8165",
+  "old113_records_unchanged": true,
+  "M056_status_date_maturity_evidence_unchanged": true,
+  "matrix_only_VC176to178_changed": true,
+  "old70_cards_unchanged": true,
+  "exact_source_and_sample_Git_blobs": 9,
+  "reference_inventory_cells": 36,
+  "limitations": "Static selected text;no thirdparty execution,pickle load or all-result authentication",
+  "workbook_sheets": 9,
+  "log_rows": 1417,
+  "cached_included": 50,
+  "visual_scope": "Summary count/date unchanged;DA visual retained"
+}

@@ -1,0 +1,18 @@
+{
+  "batch_id": "DC-feature-extraction-reference-and-artifact-scope",
+  "date": "2026-11-28",
+  "expected_master_sha256": "517380324b9d5ca473b9c44d4f0ede9b0331512f2db72e4b9b87a1de4b987229",
+  "updates": [
+    {
+      "record_id": "M056",
+      "supplement_status": "DC_fixed_public_commit_180c617e_7text_sources_2JSONsamples_static_read;no_author_execution_or_pickle_loading",
+      "related_versions": "Formal publisher HTML targeted methods/results read; no PDF acquired or author-version equivalence claimed;DC public Git snapshot180c617e,not authenticated original run version",
+      "notes": "LLM modeller-assistance evidence, not runtime social-agent validation. No third-party code executed; older case references not added as corpus records. DC:36 fixed refs;analysis10open+GPT4o,11resultdirs;five-temp pooling;variance in Std;commercial formatfilter;JSON/TXT fresh-path mismatch. Static snapshot not paper-run authentication.",
+      "method_pending_fields": "independent_reference_provenance;manual_audit_denominator_raters;exact_revision_and_DeepSeek_row;cache_to_paper_alignment;actual_selected_response_budget;downstream_fidelity",
+      "method_evidence_location": "Formal HTML §§2.25–2.37/3.2–3.12/4.2–4.8;Figures3,8;180c617e Constants/Functions/CosineSimilarityFunctions specified lines;tree metadata;twoJSONsamples",
+      "method_coding_source": "reading-cards/M056.md;reports/modeller_assistance_DA.md;reports/feature_extraction_artifacts_DC.md",
+      "search_id": "DA-01;DA-03;DA-04;DC-01;DC-02;DC-03;DC-04;DC-05;DC-06;DC-07;DC-08;DC-09;DC-10;DC-11;DC-12;DC-13;DC-14"
+    }
+  ],
+  "new_records": []
+}
