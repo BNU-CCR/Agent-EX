@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-28",
+  "appendix2_pages": 30,
+  "appendix1_pages": 6,
+  "targeted_read": "A2pp1–3,18–22,29–30;A1pp1,5–6;whole-document heading/string scan",
+  "visual_pages": [
+    "A2p1",
+    "A2p21",
+    "A2p30"
+  ],
+  "not_read": "All middle dialogue semantic consistency;allMermaid syntax;completeAppendix1linebyline",
+  "document_heading_counts": {
+    "User": 34,
+    "ChatGPT": 34
+  },
+  "boundary": "Document excerpts/heading scan, not executed run authentication"
+}

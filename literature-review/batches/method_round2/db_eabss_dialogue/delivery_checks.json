@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-28",
+  "base": "b49aad3",
+  "old113_records_unchanged": true,
+  "M057_status_date_maturity_evidence_unchanged": true,
+  "matrix_only_VC179_VC180_changed": true,
+  "old70_cards_unchanged": true,
+  "rawPDF_not_in_git": true,
+  "source_hashes_checked": 2,
+  "limitations": "Selected page reading and document scan, not complete dialogue or code validation",
+  "workbook_sheets": 9,
+  "source_log_rows_including_header": 1403,
+  "validation_rows_including_header": 182,
+  "cached_included": 50,
+  "bib_entries": 50,
+  "visual_scope": "Same summary counts/date as DA, reuse DA visual;PDF A2pp1,21,30 separately viewed"
+}

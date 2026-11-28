@@ -1,0 +1,21 @@
+[
+  {
+    "url": "https://www.jasss.org/28/3/2/Appendix2.pdf",
+    "status": 200,
+    "bytes": 784501,
+    "sha256": "7d819e6cd839c83d2b0f3d93415138ca8431724b967c08bf39009e76aaad5986",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M057_DB_Appendix2.pdf",
+    "observed_href": [
+      "https://www.jasss.org/28/3/2/Appendix2.pdf"
+    ],
+    "pages": 30
+  },
+  {
+    "url": "https://www.jasss.org/28/3/2/Appendix1.pdf",
+    "status": 200,
+    "bytes": 313680,
+    "sha256": "eabe47c593d5bc12ebbdfbe920e454277e082fd797c62e5ff162f66d81249b6d",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M057_DB_Appendix1.pdf",
+    "pages": 6
+  }
+]

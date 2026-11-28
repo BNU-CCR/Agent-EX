@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "DB-01",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire article-linked original conversation appendix",
+    "source_url": "https://www.jasss.org/28/3/2/Appendix2.pdf",
+    "status": "200_pdf30pages",
+    "notes": "No thirdparty execution;formatted dialogue not machine provenance"
+  },
+  {
+    "search_id": "DB-02",
+    "platform": "local_pdf_targeted_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read A2 selected pages;scan all heading/string counts;visual pp1,21,30",
+    "source_url": "https://www.jasss.org/28/3/2/Appendix2.pdf",
+    "status": "targeted_read_not_allpages_semantic_audit",
+    "notes": "No thirdparty execution;formatted dialogue not machine provenance"
+  },
+  {
+    "search_id": "DB-03",
+    "platform": "local_document_provenance_scan",
+    "search_date": "2026-11-28",
+    "query_exact": "Check displayed headings and date/model/editGPT tokens;metadata not run provenance",
+    "source_url": "https://www.jasss.org/28/3/2/Appendix2.pdf",
+    "status": "34pairs_not_APIcount;identity_not_independently_authenticated",
+    "notes": "No thirdparty execution;formatted dialogue not machine provenance"
+  },
+  {
+    "search_id": "DB-04",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire supplied prompt script Appendix1",
+    "source_url": "https://www.jasss.org/28/3/2/Appendix1.pdf",
+    "status": "200_pdf6pages",
+    "notes": "No thirdparty execution;formatted dialogue not machine provenance"
+  },
+  {
+    "search_id": "DB-05",
+    "platform": "local_pdf_targeted_comparison",
+    "search_date": "2026-11-28",
+    "query_exact": "Compare scriptp1/p5/p6 with dialogue controls/manualfollowup/conclusion",
+    "source_url": "https://www.jasss.org/28/3/2/Appendix1.pdf",
+    "status": "textual_imitation_and_extra_followup_documented",
+    "notes": "No thirdparty execution;formatted dialogue not machine provenance"
+  },
+  {
+    "search_id": "DB-06",
+    "platform": "local_primary_evidence_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Refine M057card/VC179VC180 with bounded attachment evidence",
+    "source_url": "reports/eabss_dialogue_DB.md",
+    "status": "no_new_record_or_evidence_grade",
+    "notes": "No thirdparty execution;formatted dialogue not machine provenance"
+  }
+]

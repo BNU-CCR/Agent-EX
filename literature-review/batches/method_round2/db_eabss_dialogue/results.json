@@ -1,0 +1,18 @@
+{
+  "batch_id": "DB-EABSS-supplied-dialogue-and-prompt-controls",
+  "date": "2026-11-28",
+  "expected_master_sha256": "9297d014adcfd287a993eb5f4efd3702a55cc54f00d87110c89900bfa8aaace7",
+  "updates": [
+    {
+      "record_id": "M057",
+      "supplement_status": "Appendix2PDF30pages_andAppendix1PDF6pages_acquired_targeted_read;no_code_or_model_execution",
+      "related_versions": "Formal publisher HTML targeted methods/results read; no PDF acquired or author-version equivalence claimed;DB official supplementary conversation/script acquired;targeted pages,not complete provenance authentication",
+      "notes": "LLM modeller-assistance evidence, not runtime social-agent validation. No third-party code executed; older case references not added as corpus records. DB:34 displayed exchange pairs not runtimecalls;Temperature/Top_p imitation explicit;extra class-relationship request visible;no independent timestamp/modelrevision authentication.",
+      "method_pending_fields": "exact_model_revision;manual_edit_history;complete_script_dialogue_alignment;independent_raters;human_control;downstream_fidelity",
+      "method_evidence_location": "Formal HTML §§3.9–3.17/5–7;Table1;Appendix2pp1–3,18–22,29–30;Appendix1pp1,5–6",
+      "method_coding_source": "reading-cards/M057.md;reports/modeller_assistance_DA.md;reports/eabss_dialogue_DB.md",
+      "search_id": "DA-02;DA-03;DA-05;DB-01;DB-02;DB-03;DB-04;DB-05;DB-06"
+    }
+  ],
+  "new_records": []
+}

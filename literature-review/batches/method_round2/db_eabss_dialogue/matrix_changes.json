@@ -1,0 +1,66 @@
+[
+  {
+    "before": {
+      "comparison_id": "VC179",
+      "record_id": "M057",
+      "method_control": "概念案例评价",
+      "comparison_or_reference": "单博物馆案例；七项定性标准",
+      "observable_error": "故事连贯与模型有效性可分离",
+      "evaluation_target": "概念建模可行性",
+      "reported_evidence": "主观模型选择、单次展示；目标非复刻原模型",
+      "scope_of_evidence": "作者proof-of-concept/案例经验",
+      "not_established": "净效率收益、独立盲评、可执行模型忠实度",
+      "transfer_to_agent_ex": "概念设计至实现/动态分段验收",
+      "source_location": "§§5.1–5.7/6.1/7.7;Table1",
+      "evidence_status": "formal_HTML_targeted_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    },
+    "after": {
+      "comparison_id": "VC179",
+      "record_id": "M057",
+      "method_control": "概念案例评价",
+      "comparison_or_reference": "单博物馆案例；七项定性标准",
+      "observable_error": "故事连贯与模型有效性可分离",
+      "evaluation_target": "概念建模可行性",
+      "reported_evidence": "主观模型选择、单次展示；目标非复刻原模型；DB30页附件34对文档标题、p21追加关系请求、p29–30总结指令与无经验数据限制",
+      "scope_of_evidence": "作者proof-of-concept/案例经验",
+      "not_established": "净效率收益、独立盲评、可执行模型忠实度；34对不认证API调用/独立run/完整编辑历史",
+      "transfer_to_agent_ex": "概念设计至实现/动态分段验收",
+      "source_location": "§§5.1–5.7/6.1/7.7;Table1;DB Appendix2pp1,19–22,29–30;Appendix1pp1,5–6",
+      "evidence_status": "formal_HTML_plus_targeted_published_appendices_not_reexecuted",
+      "checked_date": "2026-11-28"
+    }
+  },
+  {
+    "before": {
+      "comparison_id": "VC180",
+      "record_id": "M057",
+      "method_control": "参数与提示控制",
+      "comparison_or_reference": "提示imitateTemperature/Top_p；上下文mimicfine-tuning",
+      "observable_error": "文本指令未证明真实解码或权重改变",
+      "evaluation_target": "控制可追溯性",
+      "reported_evidence": "作者使用mimic/imitate而非API参数或训练记录",
+      "scope_of_evidence": "已读正文对操作的披露",
+      "not_established": "真实温度控制、权重更新与因果效果",
+      "transfer_to_agent_ex": "冻结真实配置并记录提示；不默认作者术语等价",
+      "source_location": "§§3.9–3.14/5.7",
+      "evidence_status": "formal_HTML_targeted_read_not_reexecuted",
+      "checked_date": "2026-11-28"
+    },
+    "after": {
+      "comparison_id": "VC180",
+      "record_id": "M057",
+      "method_control": "参数与提示控制",
+      "comparison_or_reference": "提示imitateTemperature/Top_p；上下文mimicfine-tuning",
+      "observable_error": "文本指令未证明真实解码或权重改变",
+      "evaluation_target": "控制可追溯性",
+      "reported_evidence": "作者使用mimic/imitate而非API参数或训练记录；DB脚本p1/对话p1均有imitateTemperature0.9/Top_p0.9原文",
+      "scope_of_evidence": "已读正文对操作的披露",
+      "not_established": "真实温度控制、权重更新与因果效果",
+      "transfer_to_agent_ex": "冻结真实配置并记录提示；不默认作者术语等价",
+      "source_location": "§§3.9–3.14/5.7;DB Appendix2pp1,19–22,29–30;Appendix1pp1,5–6",
+      "evidence_status": "formal_HTML_plus_targeted_published_appendices_not_reexecuted",
+      "checked_date": "2026-11-28"
+    }
+  }
+]

@@ -8208,5 +8208,35 @@
     "batch": "DA-two-LLM-modeller-assistance-papers",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/da_llm_modeller_assistance/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_pending_fields",
+    "old": "appendix_log_and_script;exact_model_revision;manual_edits;independent_raters;human_control;downstream_fidelity",
+    "new": "exact_model_revision;manual_edit_history;complete_script_dialogue_alignment;independent_raters;human_control;downstream_fidelity",
+    "date": "2026-11-28",
+    "batch": "DB-EABSS-supplied-dialogue-and-prompt-controls",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/db_eabss_dialogue/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_evidence_location",
+    "old": "Formal HTML §§3.9–3.17/5–7;Table1",
+    "new": "Formal HTML §§3.9–3.17/5–7;Table1;Appendix2pp1–3,18–22,29–30;Appendix1pp1,5–6",
+    "date": "2026-11-28",
+    "batch": "DB-EABSS-supplied-dialogue-and-prompt-controls",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/db_eabss_dialogue/results.json"
+  },
+  {
+    "record_id": "M057",
+    "field": "method_coding_source",
+    "old": "reading-cards/M057.md;reports/modeller_assistance_DA.md",
+    "new": "reading-cards/M057.md;reports/modeller_assistance_DA.md;reports/eabss_dialogue_DB.md",
+    "date": "2026-11-28",
+    "batch": "DB-EABSS-supplied-dialogue-and-prompt-controls",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/db_eabss_dialogue/results.json"
   }
 ]
