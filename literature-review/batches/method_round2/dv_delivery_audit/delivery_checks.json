@@ -1,0 +1,27 @@
+{
+  "base": "5aa1dda",
+  "only_master_changes": [
+    "M003",
+    "M012"
+  ],
+  "scientific_grades_dates_status_unchanged": true,
+  "old228_records_unchanged": true,
+  "cards79_units213_tracker_CU_unchanged": true,
+  "requirements66_IDs_preserved": true,
+  "policy_field_flags": 210,
+  "topic_trace_examples": 13,
+  "formal_bib": 57,
+  "frontier_bib": 8,
+  "date_pending_M022_no_year": true,
+  "lexical_bib_braces_and_IDs_checked": true,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    214,
+    1648,
+    42
+  ],
+  "maximum_text_cell": 29215,
+  "limits": "Bounded requirement audit;no independent human screening,study rerun,fulltext acquisition or policy refresh"
+}

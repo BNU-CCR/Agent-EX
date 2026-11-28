@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DV-01",
+    "platform": "local_approved_taskbook_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Review66registeredrequirements_againstapprovedscope",
+    "source_url": "reports/delivery_audit_DV.md",
+    "status": "bounded_evidence_audit_not_goal_acceptance",
+    "notes": "No new fulltext/records/experiment or policy refresh;independent dual human screen is not a taskbook mandatory gate"
+  },
+  {
+    "search_id": "DV-02",
+    "platform": "static_http_get_primary_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "M003publisherdepositedCrossref",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ecolmodel.2026.111624",
+    "status": "200_no_online_date",
+    "notes": "No new fulltext/records/experiment or policy refresh;independent dual human screen is not a taskbook mandatory gate"
+  },
+  {
+    "search_id": "DV-03",
+    "platform": "static_http_get_primary_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "M012publisherdepositedCrossref",
+    "source_url": "https://api.crossref.org/works/10.1016/j.envsoft.2026.107203",
+    "status": "200_no_online_date",
+    "notes": "No new fulltext/records/experiment or policy refresh;independent dual human screen is not a taskbook mandatory gate"
+  },
+  {
+    "search_id": "DV-04",
+    "platform": "local_delivery_repair",
+    "search_date": "2026-11-28",
+    "query_exact": "Pendingfields/frontierBib/JASSSstatus同步",
+    "source_url": "batches/method_round2/dv_delivery_audit/",
+    "status": "no scientific evidence upgrade",
+    "notes": "No new fulltext/records/experiment or policy refresh;independent dual human screen is not a taskbook mandatory gate"
+  },
+  {
+    "search_id": "DV-05",
+    "platform": "local_delivery_verification",
+    "search_date": "2026-11-28",
+    "query_exact": "Schemas/IDs/bibstatus/66evidencerows",
+    "source_url": "reports/delivery_audit_DV.md",
+    "status": "bounded_checks_not_fullsemantic_certification",
+    "notes": "No new fulltext/records/experiment or policy refresh;independent dual human screen is not a taskbook mandatory gate"
+  }
+]

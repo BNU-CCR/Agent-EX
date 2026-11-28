@@ -1,0 +1,24 @@
+{
+  "batch_id": "DV-taskbook-delivery-evidence-audit-and-export-repair",
+  "date": "2026-11-28",
+  "expected_master_sha256": "ce5c065352863e018dc8794de611644ea84f811d265b040e86ae969b48af7be2",
+  "updates": [
+    {
+      "record_id": "M003",
+      "method_pending_fields": "formal_first_online_date;formal_publisher_fulltext;author_formal_equivalence;run_provenance_and_Qwen3_coverage",
+      "method_last_checked": "2026-11-28",
+      "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md;reports/delivery_audit_DV.md",
+      "notes": "Statistically indistinguishable output under two parameter settings is not proof of equivalence across parameter space or implementation details.; Hosted/local model comparisons confound model capacity and deployment; not evidence of deployment causal effects.; precise first-online date pending; July2026 issue is not first-online proof | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:publisher403;exactfirstonlineunresolved;author versionequivalence statement not independentproof. | BS:publisherweb403/static403HTML832981bytes;institutionalJulyissueonly;exactfirstonlineunresolved. | CS:Zenodo19915447v3ZIP216857034bytes/MD5verified;staticselectedsourcesread;16models96rows/noqwen3pathsversusauthorTable1seventeen;generationandrunprovenancenotclosed;formalPDFrestricted/firstonlinedatepending | CT:authorTable3andv3all96scorecellsmatch;Table1aloneincludesQwen3;2100CSVeach4001rows/6outputs;35groups30perparameterset;oldversionsmetadatanotfullread;missingQwen3reasonunresolved | DV:publisher-depositedCrossref200hasno published-online;print month/created not substituted for firstonline;date/status/grade unchanged",
+      "search_id": "S-M2-ODD-M003;S-M2-AD-ARXIV;S-M2-AD-M003PUB;CS-23;CS-28;DV-01;DV-02;DV-04"
+    },
+    {
+      "record_id": "M012",
+      "method_pending_fields": "method_maturity; method_evidence_level; method_transferability; method_type;formal_first_online_date;publisher_fulltext",
+      "method_last_checked": "2026-11-28",
+      "method_coding_source": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md;reports/delivery_audit_DV.md",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed. | CJ:DelftPDF4035717bytesHTML;hashinCJmanifest;noPDF/fulltext/dateupgrade;threeclassificationblanksretained | CS:newauthoruploadRG403;ESSredirectunavailable;DiVAAnubisdenial;UFZhistoricalpageonly;noPDF/date/classificationupgrade | DV:publisher-depositedCrossref200hasno published-online;print month/created not substituted for firstonline;date/status/grade unchanged",
+      "search_id": "S-M2-ODD-M012;S-M2-AD-Q5;S-M2-AD-NOTICE;S-M2-AD-UMU;CS-12;CS-15;CS-20;DV-01;DV-03;DV-04"
+    }
+  ],
+  "new_records": []
+}

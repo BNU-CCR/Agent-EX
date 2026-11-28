@@ -1,0 +1,20 @@
+{
+  "two_round_screening": {
+    "authority": "CODEX_TASK_2022_ONWARD.md§8.1",
+    "required": "title/abstract then fulltext screening;not two independent people"
+  },
+  "cross_check": {
+    "authority": "CODEX_TASK_2022_ONWARD.md§8.3",
+    "status": "optional second agent cross-check;do not call independent human dual screening"
+  },
+  "database": {
+    "authority": "CODEX_TASK_2022_ONWARD.md§6.2/§6.3;METHODS_FIRST_REORIENTATION.md§9",
+    "required": "Use sources according to actual access;record blocked/unretrieved coverage;public search not database completion",
+    "boundary": "Access gap remains scientific coverage limitation;recording it is required and does not create mandatory unauthorised database access"
+  },
+  "experiments": {
+    "authority": "METHODS_FIRST_REORIENTATION.md§7.2/§7.3",
+    "required": "Recommend additional evidence for future paper;not execute new experiments as condition of this review"
+  },
+  "acceptance": "66 registered requirements audited in their original scope;no unweighted overall completion percentage;file existence and lexical markers not semantic acceptance"
+}

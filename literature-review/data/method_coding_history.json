@@ -22948,5 +22948,45 @@
     "batch": "DT-Reddit-measurement-and-outsample-intervals",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dt_reddit_outsample_validation/results.json"
+  },
+  {
+    "record_id": "M003",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "formal_first_online_date;formal_publisher_fulltext;author_formal_equivalence;run_provenance_and_Qwen3_coverage",
+    "date": "2026-11-28",
+    "batch": "DV-taskbook-delivery-evidence-audit-and-export-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dv_delivery_audit/results.json"
+  },
+  {
+    "record_id": "M003",
+    "field": "method_coding_source",
+    "old": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md",
+    "new": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md;reports/delivery_audit_DV.md",
+    "date": "2026-11-28",
+    "batch": "DV-taskbook-delivery-evidence-audit-and-export-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dv_delivery_audit/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_pending_fields",
+    "old": "method_maturity; method_evidence_level; method_transferability; method_type",
+    "new": "method_maturity; method_evidence_level; method_transferability; method_type;formal_first_online_date;publisher_fulltext",
+    "date": "2026-11-28",
+    "batch": "DV-taskbook-delivery-evidence-audit-and-export-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dv_delivery_audit/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_coding_source",
+    "old": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md",
+    "new": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md;reports/delivery_audit_DV.md",
+    "date": "2026-11-28",
+    "batch": "DV-taskbook-delivery-evidence-audit-and-export-repair",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dv_delivery_audit/results.json"
   }
 ]

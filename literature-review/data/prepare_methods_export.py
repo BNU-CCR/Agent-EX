@@ -26,3 +26,21 @@ for r in records:
  if r['doi']:props['doi']=r['doi']
  out.append('@'+typ+'{'+r['record_id']+',\n'+',\n'.join('  '+k+' = {'+v+'}' for k,v in props.items())+'\n}')
 (ROOT/'exports/references_methods.bib').write_text('\n\n'.join(out)+'\n',encoding='utf8');print(json.dumps(counts,ensure_ascii=False))
+
+# Keep preprints visible in a separate bibliography without mixing formal inclusion.
+frontier=[]
+for r in records:
+ if r['screening_status']!='frontier':continue
+ assert r['document_type']=='preprint',r['record_id']
+ props={'title':'{'+esc(r['title'])+'}',
+        'author':esc(' and '.join(x.strip() for x in r['authors'].split(';'))),
+        'url':r['fulltext_url'] or r['official_url'],
+        'howpublished':'Author preprint; formal publication not verified',
+        'note':esc(r['record_id']+'; frontier; reading='+r['reading_status']+'; date='+r['date_eligibility'])}
+ if r['date_eligibility']=='preprint_eligible' and re.match(r'^\d{4}',r['preprint_date']):
+  props['year']=r['preprint_date'][:4]
+ if r['doi']:props['doi']=r['doi']
+ arxiv=re.search(r'arxiv\.org/(?:abs|html|pdf)/(\d{4}\.\d{4,5}(?:v\d+)?)',props['url'])
+ if arxiv:props.update(archivePrefix='arXiv',eprint=arxiv.group(1))
+ frontier.append('@misc{'+r['record_id']+',\n'+',\n'.join('  '+k+' = {'+v+'}' for k,v in props.items())+'\n}')
+(ROOT/'exports/references_methods_frontier.bib').write_text('\n\n'.join(frontier)+'\n',encoding='utf8')

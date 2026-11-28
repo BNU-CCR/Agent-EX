@@ -1,0 +1,150 @@
+[
+  {
+    "record_id": "M003",
+    "url": "https://api.crossref.org/works/10.1016/j.ecolmodel.2026.111624",
+    "status": 200,
+    "bytes": 23348,
+    "sha256": "9f80bc6e2647b9f73adf42bbf355f5647c1dc15ef9cfd606f4f23f2121ba0182",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M003_DV_crossref.json",
+    "selected_metadata": {
+      "DOI": "10.1016/j.ecolmodel.2026.111624",
+      "title": [
+        "Can large language models implement agent-based models? An ODD-based replication study"
+      ],
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            30
+          ]
+        ],
+        "date-time": "2026-04-30T03:45:58Z",
+        "timestamp": 1777520758000
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Can large language models implement agent-based models? An ODD-based replication study",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Ecological Modelling",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.ecolmodel.2026.111624",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2026 Elsevier B.V. All rights are reserved, including those for text and data mining, AI training, and similar technologies.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ]
+    }
+  },
+  {
+    "record_id": "M012",
+    "url": "https://api.crossref.org/works/10.1016/j.envsoft.2026.107203",
+    "status": 200,
+    "bytes": 37180,
+    "sha256": "c614f94b9092066edb2ab24b62a45646961ebd06be34edbd52d9cca43abcd942",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M012_DV_crossref.json",
+    "selected_metadata": {
+      "DOI": "10.1016/j.envsoft.2026.107203",
+      "title": [
+        "Twenty years of the ODD protocol: development, usage, extensions, and lessons learned about modelling standards development"
+      ],
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2027,
+            1
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2027,
+            1
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            10
+          ]
+        ],
+        "date-time": "2026-10-10T15:22:48Z",
+        "timestamp": 1791645768000
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Twenty years of the ODD protocol: development, usage, extensions, and lessons learned about modelling standards development",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Environmental Modelling & Software",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.envsoft.2026.107203",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2026 The Authors. Published by Elsevier Ltd.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ]
+    }
+  }
+]

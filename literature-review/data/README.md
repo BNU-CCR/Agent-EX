@@ -70,3 +70,6 @@ CB新增`card_content_queue_current.json`为当前形式复核入口（46/64具�
 CC更新`card_content_queue_current.json`为48/64十一编号、16形式队列=10可修订/6保护。版本化HTML响应/旧卡备份/VC01、02、15、16细化及12/280、180/20024报告算术见CC批次目录，未新增实验。
 
 CM日期队列：date_gap_queue_current.csv带入27个date_pending原依据并分配后续操作；planned_not_executed不是已完成查询。64阅读卡有58标题式/6行内式十一条，audit_card_structure.py只核编号，不认证内容。
+
+
+DV现行验收：delivery_requirements.csv保留66个要求ID并新增acceptance_scope/current_evidence_check/review_class/priority；delivery_requirement_audit_DV.json为现行详细审计。topic_search_probes_DV.csv是六组查询的追溯示例，非总检索量；venue_policy_field_audit_DV.csv的210字段只作缺口标记，非实质核验率。书目正式57项与frontier8项分文件，M022日期pending省略year，R018仅摘要。旧BP/CI审计保留历史，不再当现行计数。
