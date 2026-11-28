@@ -1,0 +1,20 @@
+[
+  {
+    "search_id": "CT-01",
+    "platform": "official_repository_api",
+    "search_date": "2026-11-28",
+    "query_exact": "Read fixed Zenodo supplement version metadata",
+    "source_url": "https://zenodo.org/api/records/19915447/versions",
+    "status": "200_json_three_versions_metadata_only",
+    "notes": "19915447/19341256/18521256;oldZIPsnotdownloaded;noQwen3inrecorddescriptions"
+  },
+  {
+    "search_id": "CT-02",
+    "platform": "local_static_correspondence_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Compare author v2 Tables1/3 to fixedv3 scores and count all packaged generated CSV headers/rows",
+    "source_url": "batches/method_round2/ct_model_result_correspondence/correspondence_audit.json",
+    "status": "96cells_matched_2100headers_rows_checked_not_reexecuted",
+    "notes": "Reuse CS HTML/ZIP hashes; no new paper/fulltext or experimental execution"
+  }
+]

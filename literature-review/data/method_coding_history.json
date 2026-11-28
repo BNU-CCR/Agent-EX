@@ -7148,5 +7148,15 @@
     "batch": "CS-ODD-access-and-fixed-implementation-artifact",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cs_odd_artifact_access/results.json"
+  },
+  {
+    "record_id": "M003",
+    "field": "method_coding_source",
+    "old": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md",
+    "new": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md",
+    "date": "2026-11-28",
+    "batch": "CT-model-result-correspondence",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ct_model_result_correspondence/results.json"
   }
 ]

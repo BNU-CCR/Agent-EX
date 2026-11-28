@@ -183,3 +183,5 @@
 批次Z：[随机复现范围](reports/stochastic_reproducibility_scope.md)，EFECT VoR精读、1卡4单元；逐时点边缘与联合路径分开，解析反例不是作者实验。
 
 - [ODD版本与固定补充制品](reports/odd_artifact_access_CS.md)：M003分阶段评分、96行分母与统计预处理；M012全文缺口保留。
+
+- [模型清单与结果对应](reports/model_result_correspondence_CT.md)：96评分全部匹配；Qwen3范围与2100轨迹文件形状边界。

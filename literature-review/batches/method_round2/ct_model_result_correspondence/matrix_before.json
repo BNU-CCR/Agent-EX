@@ -1,0 +1,17 @@
+[
+  {
+    "comparison_id": "VC161",
+    "record_id": "M003",
+    "method_control": "分阶段失败与版本分母",
+    "comparison_or_reference": "固定v3三结果表/原始回答/作者Table1",
+    "observable_error": "17模型概括直接当102份已核生成",
+    "evaluation_target": "制品覆盖及选择分母",
+    "reported_evidence": "16×6=96;35过smoke;20score6/15score5;无Qwen3路径",
+    "scope_of_evidence": "fixed_artifact_counts_not_run_authentication",
+    "not_established": "遗漏原因/正式论文所有运行对应",
+    "transfer_to_agent_ex": "生成实现/run两层分别报告；保留失败",
+    "source_location": "Zenodo19915447/results*.csv;01cell5;04cell5",
+    "evidence_status": "selected_static_artifact_read_not_reexecuted",
+    "checked_date": "2026-11-28"
+  }
+]

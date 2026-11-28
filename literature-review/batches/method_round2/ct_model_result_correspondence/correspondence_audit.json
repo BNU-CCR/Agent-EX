@@ -1,0 +1,64 @@
+{
+  "checked": "2026-11-28",
+  "source_commit": "8aa285c",
+  "author_html_sha256": "697f10225773f64d4839df664ca003c7872d5ec3eb3808e913e8d4a788719253",
+  "zip_sha256": "a56067ae3f55a7f22bf44a684173e76eba6579086d639f3eff4c2e91274c28e6",
+  "models_table1": 17,
+  "models_table3": 16,
+  "matching_cells": 96,
+  "table1_without_table3": [
+    "qwen3"
+  ],
+  "simulation_groups": 35,
+  "files_per_group": 60,
+  "files_per_parameter": 30,
+  "rows_per_simulation_csv": {
+    "4001": 2100
+  },
+  "headers": {
+    ",total_prey,total_predators,total_food,mean_energy_prey,mean_energy_predators,mean_c": 2100
+  },
+  "versions": [
+    {
+      "id": 19915447,
+      "created": "2026-04-30T10:35:51.427832+00:00",
+      "publication_date": "2026-04-30",
+      "qwen3_in_description": false,
+      "files": [
+        {
+          "key": "suppl_abm_llm.zip",
+          "bytes": 216857034,
+          "checksum": "md5:3e854208f57503384718ff79e42b4fe3"
+        }
+      ]
+    },
+    {
+      "id": 19341256,
+      "created": "2026-03-30T22:40:17.052854+00:00",
+      "publication_date": "2026-03-30",
+      "qwen3_in_description": false,
+      "files": [
+        {
+          "key": "suppl_llms_abms.zip",
+          "bytes": 216856980,
+          "checksum": "md5:111115eedc40ae3e4eb0c748b8ac09ea"
+        }
+      ]
+    },
+    {
+      "id": 18521256,
+      "created": "2026-02-07T23:29:22.925443+00:00",
+      "publication_date": "2026-02-08",
+      "qwen3_in_description": false,
+      "files": [
+        {
+          "key": "suppl_llms_abms.zip",
+          "bytes": 216763766,
+          "checksum": "md5:307c0c5d25188138f7835a7344c1a3a4"
+        }
+      ]
+    }
+  ],
+  "version_api_sha256": "5734f567d1239230876c03395a2f1d34e7b4ba51c0446a0964c4bab3b7bcdbc8",
+  "boundary": "All packaged generated trajectory CSV headers/row counts checked; no numerical values/statistical test/run independence authenticated; old ZIP versions not downloaded"
+}

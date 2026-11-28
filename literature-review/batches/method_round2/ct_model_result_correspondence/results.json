@@ -1,0 +1,13 @@
+{
+  "batch_id": "CT-model-result-correspondence",
+  "date": "2026-11-28",
+  "expected_master_sha256": "104afb7ac31887d13a6d24db3c7b18b345872377d7dade5b255799ac6199d46e",
+  "updates": [
+    {
+      "record_id": "M003",
+      "method_coding_source": "author-final or publisher-version full text; see reading_scope and evidence_location;reports/odd_artifact_access_CS.md;reports/model_result_correspondence_CT.md",
+      "notes": "Statistically indistinguishable output under two parameter settings is not proof of equivalence across parameter space or implementation details.; Hosted/local model comparisons confound model capacity and deployment; not evidence of deployment causal effects.; precise first-online date pending; July2026 issue is not first-online proof | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:publisher403;exactfirstonlineunresolved;author versionequivalence statement not independentproof. | BS:publisherweb403/static403HTML832981bytes;institutionalJulyissueonly;exactfirstonlineunresolved. | CS:Zenodo19915447v3ZIP216857034bytes/MD5verified;staticselectedsourcesread;16models96rows/noqwen3pathsversusauthorTable1seventeen;generationandrunprovenancenotclosed;formalPDFrestricted/firstonlinedatepending | CT:authorTable3andv3all96scorecellsmatch;Table1aloneincludesQwen3;2100CSVeach4001rows/6outputs;35groups30perparameterset;oldversionsmetadatanotfullread;missingQwen3reasonunresolved"
+    }
+  ],
+  "new_records": []
+}
