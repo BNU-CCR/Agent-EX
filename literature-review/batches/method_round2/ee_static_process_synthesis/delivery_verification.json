@@ -1,0 +1,17 @@
+{
+  "base": "0e86628",
+  "fixed_sources": 7,
+  "comparison_rows": 2,
+  "master_matrix_tracker_venue_bibs_unchanged": true,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    228,
+    1700,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "limits": "Synthesisonly;no source revalidation/new experiment;counts/date/layout unchanged, reuseEDvisual"
+}

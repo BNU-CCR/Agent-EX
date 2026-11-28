@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "EE-01",
+    "platform": "fixed_git_crossstudy_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "M174/M176 target/population/metric/elicitation/unit/artifact comparison from7fixedEDsources",
+    "source_url": "literature-review/batches/method_round2/ee_static_process_synthesis/source_reuse.json",
+    "status": "local_synthesis",
+    "notes": "Onegroupedoperation,not7newpapers/queries/originalrevalidations;no policyrefresh or experiment"
+  }
+]
