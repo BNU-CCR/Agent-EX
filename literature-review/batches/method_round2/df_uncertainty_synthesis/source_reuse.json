@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-28",
+  "sources": [
+    {
+      "path": "reading-cards/M053.md",
+      "commit": "482f6c1",
+      "canonical_lf_sha256": "9415b2b127752f32a7b0692d32c2b5586556a25e4cb7646f260efc14b0932f50",
+      "role": "existing targeted fulltext card/report;no new primary source access"
+    },
+    {
+      "path": "reading-cards/M054.md",
+      "commit": "482f6c1",
+      "canonical_lf_sha256": "7046cc0c20f89e82e2cc20c79611c0d03785cc003e73ab9b7f80128e0e7f4bf8",
+      "role": "existing targeted fulltext card/report;no new primary source access"
+    },
+    {
+      "path": "reading-cards/M058.md",
+      "commit": "482f6c1",
+      "canonical_lf_sha256": "aa141390e0c7bcf35a497439052418ca7e22115011e02669501e06a92c078551",
+      "role": "existing targeted fulltext card/report;no new primary source access"
+    },
+    {
+      "path": "reports/identifiability_CW.md",
+      "commit": "482f6c1",
+      "canonical_lf_sha256": "e4c532ba0fdabd836cec630e2e5968eb0cfe2169bf1836a780436c60f523f898",
+      "role": "existing targeted fulltext card/report;no new primary source access"
+    },
+    {
+      "path": "reports/statistical_checks_CX.md",
+      "commit": "482f6c1",
+      "canonical_lf_sha256": "ea3ffe611aa0c453d2ca3541abab9b59b13c5de1ce55ae7821734159341120cf",
+      "role": "existing targeted fulltext card/report;no new primary source access"
+    },
+    {
+      "path": "reports/calibration_uncertainty_DE.md",
+      "commit": "482f6c1",
+      "canonical_lf_sha256": "0a9af8fc70543e74c757211c4b43af84db1f137f0893460403197eeee3abe6c7",
+      "role": "existing targeted fulltext card/report;no new primary source access"
+    },
+    {
+      "path": "reports/methods_review_current_synthesis.md",
+      "commit": "482f6c1",
+      "canonical_lf_sha256": "538ab08ae6448712b92ea00ee376af0364bee3e6319f775c78a388de6b1af20b",
+      "role": "existing targeted fulltext card/report;no new primary source access"
+    }
+  ],
+  "archive_context": "current_synthesis_before_DF preserves original bytes;relative links resolve from original reports directory,not archive location"
+}

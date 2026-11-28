@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "DF-01",
+    "platform": "local_fixed_source_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Compare three uncertainty targets and integrate current nine-question synthesis using7fixed482f6c1sources",
+    "source_url": "reports/uncertainty_claims_DF.md",
+    "status": "local_synthesis_only_no_evidence_upgrade",
+    "notes": "No newpaper/card/unit/grade;historicalsourceindexes preserved"
+  }
+]

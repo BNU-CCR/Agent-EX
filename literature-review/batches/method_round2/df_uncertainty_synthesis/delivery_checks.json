@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-28",
+  "fixed_source_commit": "482f6c1",
+  "fixed_source_hashes": 7,
+  "old_current_report_preserved": true,
+  "master_and185_units_unchanged": true,
+  "all72_cards_unchanged": true,
+  "new_source_operation": "one local synthesis only",
+  "limitations": "No new primary source reading or policy/experiment claims;full review not accepted",
+  "comparison_rows": 3,
+  "changed_report_local_links_checked": true,
+  "workbook_sheets": 9,
+  "log_rows_including_header": 1436,
+  "cached_included": 51,
+  "bib_entries": 51,
+  "visual_scope": "Summary counts/date unchanged,reuseDEview"
+}
