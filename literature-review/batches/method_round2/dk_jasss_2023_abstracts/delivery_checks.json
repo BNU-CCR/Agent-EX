@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-28",
+  "base": "9d6126b",
+  "old140_records_unchanged": true,
+  "all75_cards_unchanged": true,
+  "all195_units_unchanged": true,
+  "original_CU_inventory_unchanged": true,
+  "official_abstracts_read": 36,
+  "response_hashes": 36,
+  "new_candidates": 28,
+  "application_leads_not_final_excluded": 8,
+  "remaining_abstracts": 87,
+  "coverage_counts": {
+    "application_lead_retained_not_added": 18,
+    "existing_master_record": 19,
+    "added_abstract_candidate": 44,
+    "nonresearch_entry": 10,
+    "abstract_pending": 87
+  },
+  "limits": "Singleassistant abstract screen;no newfulltext/efficacy/policy/globalrecall claim",
+  "workbook_rows": [
+    169,
+    53,
+    31,
+    196,
+    1517,
+    42
+  ],
+  "workbook_sheets": 9,
+  "cached_included": 54,
+  "bib_entries": 54,
+  "DIMA_full_title_checked": true,
+  "max_text_cell_length": 15027,
+  "summary_visual_checked": true
+}

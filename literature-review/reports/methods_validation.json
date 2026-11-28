@@ -1,24 +1,24 @@
 {
   "checked": "2026-11-28",
   "checked_timezone": "Asia/Shanghai",
-  "records": 140,
+  "records": 168,
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 66,
-  "search_rows": 1477,
+  "search_rows": 1516,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 54,
-    "candidate": 76,
+    "candidate": 104,
     "frontier": 8,
     "excluded": 2
   },
   "method_tiers": {
-    "direct_comparator": 19,
-    "method_validation": 48,
-    "core_method": 52,
+    "direct_comparator": 32,
+    "method_validation": 56,
+    "core_method": 56,
     "peripheral": 11,
-    "application": 10
+    "application": 13
   },
   "fulltext_cards": 75,
   "date_pending": 27,

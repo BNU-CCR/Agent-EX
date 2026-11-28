@@ -1,0 +1,1808 @@
+[
+  {
+    "screen_id": "DK2023-01",
+    "url": "https://www.jasss.org/26/1/10.html",
+    "queue_title": "A Methodology to Develop Agent-Based Models for Policy Support Via Qualitative Inquiry",
+    "status": 200,
+    "bytes": 205666,
+    "sha256": "d8bc2114924d9c8caf28278dbfae16d66cc84c9d20ba2252e818b23aa55fdcc5",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_01.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Vittorio Nespeca",
+        "Tina Comes",
+        "Frances Brazier"
+      ],
+      "citation_title": [
+        "A Methodology to Develop Agent-Based Models for Policy Support Via Qualitative Inquiry"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5014"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Research Design, Simulation Methodology, Empirical Agent-Based Models, Information Diffusion, Information Management, Crisis Management"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/10/10.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract Qualitative research is a powerful means to capture human interactions and beh",
+    "abstract_read": true,
+    "abstract_summary": "摘要提出定性材料/理论到概念框架、再到通用与经验ABM的两阶段方法，以灾害信息管理说明；可迁移流程与效果待全文。",
+    "verified_title": "A Methodology to Develop Agent-Based Models for Policy Support Via Qualitative Inquiry"
+  },
+  {
+    "screen_id": "DK2023-02",
+    "url": "https://www.jasss.org/26/1/2.html",
+    "queue_title": "Confirmation Bias as a Mechanism to Focus Attention Enhances Signal Detection",
+    "status": 200,
+    "bytes": 99361,
+    "sha256": "1a9023211535fa18b2fd91c522c5cfb836a8ad769a3d4fe89942b3d920681281",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_02.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Michael Vogrin",
+        "Guilherme Wood",
+        "Thomas Schmickl"
+      ],
+      "citation_title": [
+        "Confirmation Bias as a Mechanism to Focus Attention Enhances Signal Detection"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4954"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Confirmation Bias, Heuristics, Social Theory of Reasoning, Signal Detection, Polarization"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/2/2.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract Confirmation bias has been traditionally seen as a detrimental aspect of the h",
+    "abstract_read": true,
+    "abstract_summary": "单主体信号检测/适应度偏差的理论应用，极化只作延伸讨论；保留认知偏差应用入口，不据摘要否认方法价值。",
+    "verified_title": "Confirmation Bias as a Mechanism to Focus Attention Enhances Signal Detection"
+  },
+  {
+    "screen_id": "DK2023-03",
+    "url": "https://www.jasss.org/26/1/5.html",
+    "queue_title": "Agent-Based Simulation of Land Use Governance (ABSOLUG) in Tropical Commodity Frontiers",
+    "status": 200,
+    "bytes": 141027,
+    "sha256": "096411a5f7fd3aacc58893b9c610306bf0f6b728ec2fe89a1608f8fabec8457b",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_03.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Marius von Essen",
+        "Eric F Lambin"
+      ],
+      "citation_title": [
+        "Agent-Based Simulation of Land Use Governance (ABSOLUG) in Tropical Commodity Frontiers"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4951"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Land Use Change, Socio-Ecological Systems, Tropical Forests, Environmental Governance, Sustainable Resource Use, Agent-Based Modeling"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/5/5.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract Well-designed land use governance that involves multiple stakeholders is cruci",
+    "abstract_read": true,
+    "abstract_summary": "土地治理情景和常规局部/全局敏感性为主，未明确一般方法增量；保留生态治理应用，非终局排除。",
+    "verified_title": "Agent-Based Simulation of Land Use Governance (ABSOLUG) in Tropical Commodity Frontiers"
+  },
+  {
+    "screen_id": "DK2023-04",
+    "url": "https://www.jasss.org/26/1/6.html",
+    "queue_title": "Conditions and Effects of Norm Internalization",
+    "status": 200,
+    "bytes": 168764,
+    "sha256": "066c801c001d65f6c330ebc62d85591a222c3a3930018033b2d5cafa3de080cc",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_04.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Marlene Batzke",
+        "Andreas Ernst"
+      ],
+      "citation_title": [
+        "Conditions and Effects of Norm Internalization"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5003"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Norms, Internalization, Learning, Social Dilemma, Cooperation, Decision-Making"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/6/6.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract Norm internalization refers to the process of adoption of normative beliefs by",
+    "abstract_read": true,
+    "abstract_summary": "规范内化心理构件的理论合作博弈应用；保留规范机制线索，暂不扩主方法/意见直接对照库。",
+    "verified_title": "Conditions and Effects of Norm Internalization"
+  },
+  {
+    "screen_id": "DK2023-05",
+    "url": "https://www.jasss.org/26/1/7.html",
+    "queue_title": "Emergency Warning Dissemination in a Multiplex Social Network",
+    "status": 200,
+    "bytes": 172889,
+    "sha256": "fb91eff3449d77fa9f078dd68e3ad04d632843b3aeaad03703299ca931309da7",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_05.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Charles Koll",
+        "Michael Lindell",
+        "Chen Chen",
+        "Haizhong Wang"
+      ],
+      "citation_title": [
+        "Emergency Warning Dissemination in a Multiplex Social Network"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4946"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Emergency Warnings, Multiplex Social Networks, Official Broadcasts, Information Contagion, Agent-Based Models"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/7/7.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract Disasters vary in many characteristics, but their amount of forewarning—the am",
+    "abstract_read": true,
+    "abstract_summary": "摘要将广播与多层电话/口碑/社媒网络传播分开，参数源于经验；可作提供信息/到达机制对照，不认定警告收到等同理解或行为。",
+    "verified_title": "Emergency Warning Dissemination in a Multiplex Social Network"
+  },
+  {
+    "screen_id": "DK2023-06",
+    "url": "https://www.jasss.org/26/1/8.html",
+    "queue_title": "A Geospatial Bounded Confidence Model Including Mega-Influencers with an Application to Covid-19 Vaccine Hesitancy",
+    "status": 200,
+    "bytes": 75622,
+    "sha256": "f4789330df7684d094fecc80e4e8f81de8cd076b4c8d119ed6967b76055ad1e5",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_06.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Anna Haensch",
+        "Natasa Dragovic",
+        "Christoph Borgers",
+        "Bruce Boghosian"
+      ],
+      "citation_title": [
+        "A Geospatial Bounded Confidence Model Including Mega-Influencers with an Application to Covid-19 Vaccine Hesitancy"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5027"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Bounded Confidence Model, Opinion Dynamics, Spatial Modeling, Network Dynamics"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/8/8.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract We introduce a geospatial bounded confidence model with mega-influencers, insp",
+    "abstract_read": true,
+    "abstract_summary": "摘要扩展地理有界信心/mega-influencer模型，特定参数近似疫苗调查；作为网络/地理意见对照，不预认参数唯一或未见预测。",
+    "verified_title": "A Geospatial Bounded Confidence Model Including Mega-Influencers with an Application to Covid-19 Vaccine Hesitancy"
+  },
+  {
+    "screen_id": "DK2023-07",
+    "url": "https://www.jasss.org/26/2/1.html",
+    "queue_title": "Social Identity and Organizational Control: Results of an Agent-Based Simulation",
+    "status": 200,
+    "bytes": 229700,
+    "sha256": "2311ae0fd3924b9dca6503eb5b60f8aa9d28b98817df28d3d6c29f340619ae92",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_07.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Friederike Wall"
+      ],
+      "citation_title": [
+        "Social Identity and Organizational Control: Results of an Agent-Based Simulation"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4934"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Complexity, Coordination, Group Performance, Organizational Decision-Making, Social Free Riding, Social Identity"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/1/1.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract It has long been recognised that the identification of organizational members ",
+    "abstract_read": true,
+    "abstract_summary": "摘要组织认同内生变化与控制机制/任务复杂度反馈，保留身份—情境应用；非独立人类效度或意见实验。",
+    "verified_title": "Social Identity and Organizational Control: Results of an Agent-Based Simulation"
+  },
+  {
+    "screen_id": "DK2023-08",
+    "url": "https://www.jasss.org/26/2/11.html",
+    "queue_title": "Evolutionary Model Discovery of Human Behavioral Factors Driving Decision-Making in Irrigation Experiments",
+    "status": 200,
+    "bytes": 64782,
+    "sha256": "a6c33d9ebb52308e3b9468520208f7aebc45e7b1af4c1e1ab6284a57ac494efa",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_08.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Lux Miranda",
+        "Ozlem O. Garibay",
+        "Jacopo Baggio"
+      ],
+      "citation_title": [
+        "Evolutionary Model Discovery of Human Behavioral Factors Driving Decision-Making in Irrigation Experiments"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5069"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Inverse Generative Social Science, Evolutionary Model Discovery, Social-Ecological Systems, Irrigation Systems"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/11/11.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract Small farms are thought to produce around a third of the global crop supply. B",
+    "abstract_read": true,
+    "abstract_summary": "摘要用EMD搜索灌溉人类实验的行为规则并优于手工ABM拟合；参照/留出与鲁棒性操作待全文。",
+    "verified_title": "Evolutionary Model Discovery of Human Behavioral Factors Driving Decision-Making in Irrigation Experiments"
+  },
+  {
+    "screen_id": "DK2023-09",
+    "url": "https://www.jasss.org/26/2/12.html",
+    "queue_title": "Learning Interpretable Logic for Agent-Based Models from Domain Independent Primitives",
+    "status": 200,
+    "bytes": 134217,
+    "sha256": "fff364a9705401f4e9beccd240153029a7eba0546b9ea7b2c3f30b9395236bf7",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_09.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Rory Greig",
+        "Chris Major",
+        "Michalina Pacholska",
+        "Sebastian Bending",
+        "Jordi Arranz"
+      ],
+      "citation_title": [
+        "Learning Interpretable Logic for Agent-Based Models from Domain Independent Primitives"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5087"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Program Synthesis, Genetic Programming, Agent Based Modelling, Inverse Generative Social Science, Evolutionary Computing, Model Induction"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/12/12.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract Genetic programming (GP) is a powerful method applicable to Inverse Generative",
+    "abstract_read": true,
+    "abstract_summary": "摘要用通用原语DSL/遗传编程学习可解释主体逻辑，两个域目标来自参考模型；泛化/噪声主张不当真人效度。",
+    "verified_title": "Learning Interpretable Logic for Agent-Based Models from Domain Independent Primitives"
+  },
+  {
+    "screen_id": "DK2023-10",
+    "url": "https://www.jasss.org/26/2/2.html",
+    "queue_title": "Dyadic Interaction Shapes Social Identity in the Axelrod Model Using Empirical Data",
+    "status": 200,
+    "bytes": 116112,
+    "sha256": "2470c472278562415da153c3e607ef8fd7e2c66d406dd3fa8da16dcc17502ae9",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_10.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Alejandro Dinkelberg",
+        "Pádraig MacCarron",
+        "Paul J. Maher",
+        "David JP O'Sullivan",
+        "Michael Quayle"
+      ],
+      "citation_title": [
+        "Dyadic Interaction Shapes Social Identity in the Axelrod Model Using Empirical Data"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4992"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Social Identity Approach, Empirically-Driven Agent-Based Models, Opinion Change, Opinion Dynamics, Axelrod''s Model of Cultural Dissemination"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/2/2.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract Group dynamics and inter-group relations influence the self-perception. The So",
+    "abstract_read": true,
+    "abstract_summary": "摘要比较Axelrod/阈值及显式身份扩展与纵向意见调查，称显式身份未改善给定数据拟合；不外推身份理论被否定。",
+    "verified_title": "Dyadic Interaction Shapes Social Identity in the Axelrod Model Using Empirical Data"
+  },
+  {
+    "screen_id": "DK2023-11",
+    "url": "https://www.jasss.org/26/2/4.html",
+    "queue_title": "Can Social Norms Explain Long-Term Trends in Alcohol Use? Insights from Inverse Generative Social Science",
+    "status": 200,
+    "bytes": 155439,
+    "sha256": "f37bc430174d4bf000704393c06ad426712f425e7a9cd46b8b68495d624cb756",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_11.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Tuong Manh Vu",
+        "Charlotte Buckley",
+        "João A. Duro",
+        "Alan Brennan",
+        "Joshua M. Epstein",
+        "Robin C. Purshouse"
+      ],
+      "citation_title": [
+        "Can Social Norms Explain Long-Term Trends in Alcohol Use? Insights from Inverse Generative Social Science"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5077"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modelling, Psychosocial Mechanisms of Alcohol Use, Inverse Generative Social Science"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/4/4.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract Social psychological theory posits entities and mechanisms that attempt to exp",
+    "abstract_read": true,
+    "abstract_summary": "摘要多目标语法遗传编程iGSS拟合男女饮酒趋势，并称保留趋势数据验证成功；同时质疑结构理论有效性，优先核验证设计。",
+    "verified_title": "Can Social Norms Explain Long-Term Trends in Alcohol Use? Insights from Inverse Generative Social Science"
+  },
+  {
+    "screen_id": "DK2023-12",
+    "url": "https://www.jasss.org/26/2/5.html",
+    "queue_title": "The Role of Argument Strength and Informational Biases in Polarization and Bi-Polarization Effects",
+    "status": 200,
+    "bytes": 150446,
+    "sha256": "e0360e7ec9155abc3b69616efbbf11e8d40205728abc7e37b23259c0cc0838e8",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_12.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Carlo Proietti",
+        "Davide Chiarella"
+      ],
+      "citation_title": [
+        "The Role of Argument Strength and Informational Biases in Polarization and Bi-Polarization Effects"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5062"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Argumentation, Argument Communication Theory, Polarization, Bi-Polarization, Opinion Dynamics, Epistemic Vigilance"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/5/5.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract This work explores, on a simulative basis, the informational causes of polariz",
+    "abstract_read": true,
+    "abstract_summary": "摘要区分同向群体极化与双极化，比较论证强度/信息协议/同质性和强偏差；术语按作者操作化，不混用经典双峰。",
+    "verified_title": "The Role of Argument Strength and Informational Biases in Polarization and Bi-Polarization Effects"
+  },
+  {
+    "screen_id": "DK2023-13",
+    "url": "https://www.jasss.org/26/2/6.html",
+    "queue_title": "Social Agents? A Systematic Review of Social Identity Formalizations",
+    "status": 200,
+    "bytes": 118789,
+    "sha256": "c28f05deb82a857f5049b282135e6bc82c6e157badd9e04d2210488e26cd4273",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_13.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Geeske Scholz",
+        "Nanda Wijermans",
+        "Rocco Paolillo",
+        "Martin Neumann",
+        "Torsten Masson",
+        "Émile Chappin",
+        "Anne Templeton",
+        "Geo Kocheril"
+      ],
+      "citation_title": [
+        "Social Agents? A Systematic Review of Social Identity Formalizations"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5066"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Formalization, Social Identity, Review, Social Context, Self-Categorization, Theory"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/6/6.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract Simulating collective decision-making and behaviour is at the heart of many ag",
+    "abstract_read": true,
+    "abstract_summary": "摘要系统综述社会身份ABM形式化，未见统一默认实现并提示理论引用模糊；方法综述，不当效能比较或全域新颖性证明。",
+    "verified_title": "Social Agents? A Systematic Review of Social Identity Formalizations"
+  },
+  {
+    "screen_id": "DK2023-14",
+    "url": "https://www.jasss.org/26/2/7.html",
+    "queue_title": "Generating Mixed Patterns of Residential Segregation: An Evolutionary Approach",
+    "status": 200,
+    "bytes": 91122,
+    "sha256": "04a8153ce784489d47629ec7a6430a193d4d35546f2f27789d74a12d9625869b",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_14.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Chathika Gunaratne",
+        "Erez Hatna",
+        "Joshua M. Epstein",
+        "Ivan Garibay"
+      ],
+      "citation_title": [
+        "Generating Mixed Patterns of Residential Segregation: An Evolutionary Approach"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5081"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modeling, Residential Segregation, Genetic Programing, Simulation, Complex Systems, Machine Learning"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/7/7.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract The Schelling model of residential segregation  has demonstrated that even the",
+    "abstract_read": true,
+    "abstract_summary": "摘要EMD搜索搬迁规则以生成共存混合隔离模式，强调因素组合；模式目标/经验独立性与选择预算待核。",
+    "verified_title": "Generating Mixed Patterns of Residential Segregation: An Evolutionary Approach"
+  },
+  {
+    "screen_id": "DK2023-15",
+    "url": "https://www.jasss.org/26/3/1.html",
+    "queue_title": "Classification-Based Opinion Formation Model Embedding Agents’ Psychological Traits",
+    "status": 200,
+    "bytes": 221847,
+    "sha256": "09ad5144ed4674e275e75ee0572025924a6af7ae7866f85d0261a88f19c3cb99",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_15.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Carlos Andres Devia",
+        "Giulia Giordano"
+      ],
+      "citation_title": [
+        "Classification-Based Opinion Formation Model Embedding Agents’ Psychological Traits"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5058"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Social Simulation, Agent-Based Model, Opinion Formation, Opinion Dynamics, Real Data Validation"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/1/1.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract We propose an agent-based opinion formation model characterised by a two-fold ",
+    "abstract_read": true,
+    "abstract_summary": "摘要将邻居意见感知设为有限等级并加入心理特质，用WVS比较；与完美连续读出不同，校准/留出范围待核。",
+    "verified_title": "Classification-Based Opinion Formation Model Embedding Agents’ Psychological Traits"
+  },
+  {
+    "screen_id": "DK2023-16",
+    "url": "https://www.jasss.org/26/3/10.html",
+    "queue_title": "The Role of Social Identity in a Population's Adoption of Prosocial Common-Pool Behavior",
+    "status": 200,
+    "bytes": 116646,
+    "sha256": "382ab51bcaf647043e5eaf54f16d2a18c749fd52642a71c352a34d4353c54cd2",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_16.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Garry Sotnik",
+        "Serhii Choporov",
+        "Thaddeus Shannon"
+      ],
+      "citation_title": [
+        "The Role of Social Identity in a Population's Adoption of Prosocial Common-Pool Behavior"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5132"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Model, Commitment, Multilevel Group Selection, Multilevel Neighborhood Selection, Prosocial Common-Pool Behavior, Social Identity"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/10/10.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract Prosocial common-pool behavior – subtractable and non-excludable behavior that",
+    "abstract_read": true,
+    "abstract_summary": "摘要动态多重身份/自组织群体影响亲社会采用，依赖密度/承诺/群体移动；保留身份应用，不倒推真实人口政策预测。",
+    "verified_title": "The Role of Social Identity in a Population's Adoption of Prosocial Common-Pool Behavior"
+  },
+  {
+    "screen_id": "DK2023-17",
+    "url": "https://www.jasss.org/26/3/11.html",
+    "queue_title": "Polarization in Social Media: A Virtual Worlds-Based Approach",
+    "status": 200,
+    "bytes": 124371,
+    "sha256": "ff55e8dae61a9c283005ed3ee9a13ecce9ac3fbeb0b4dead9df32e8620a71d0a",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_17.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Dennis Jacob",
+        "Sven Banisch"
+      ],
+      "citation_title": [
+        "Polarization in Social Media: A Virtual Worlds-Based Approach"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5170"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based-Model (ABM), Polarization Structure, Homophily, Polarization, Social Media Platforms"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/11/11.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract As social media becomes increasingly integrated within the fabric of our digit",
+    "abstract_read": true,
+    "abstract_summary": "摘要扩展public-private split与虚拟世界登录/完整网，区分不同极化；直接关联私人/公开和局部/平台过程，未等同真实社媒。",
+    "verified_title": "Polarization in Social Media: A Virtual Worlds-Based Approach"
+  },
+  {
+    "screen_id": "DK2023-18",
+    "url": "https://www.jasss.org/26/3/12.html",
+    "queue_title": "Agent-Based Simulation of Policy Funding Tradeoffs Through the Lens of Legitimacy and Hardship",
+    "status": 200,
+    "bytes": 94898,
+    "sha256": "56cd70422b29af975a29574adba4c5e7411ca64c78c5b0058cc02483c567ec84",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_18.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Jack Mitcham"
+      ],
+      "citation_title": [
+        "Agent-Based Simulation of Police Funding Tradeoffs Through the Lens of Legitimacy and Hardship"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5169"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Model, Crime, Criminology, Global Sensitivity Analysis, Public Policy, Policy Modelling"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/12/12.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract There are mixed results in the literature when examining the impact of police ",
+    "abstract_read": true,
+    "abstract_summary": "警务/福利支出与困难/合法性感知的政策应用；保留应用理由，不因标题旧误写Policy否认来源。",
+    "verified_title": "Agent-Based Simulation of Police Funding Tradeoffs Through the Lens of Legitimacy and Hardship"
+  },
+  {
+    "screen_id": "DK2023-19",
+    "url": "https://www.jasss.org/26/3/14.html",
+    "queue_title": "Superiority Bias and Communication Noise Can Enhance Collective Problem Solving",
+    "status": 200,
+    "bytes": 96179,
+    "sha256": "b1c23ed5fe6d2d39c55b4481fd03d2e47b8711d6459e7ec8c86961745702d8a9",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_19.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Amin Boroomand",
+        "Paul E. Smaldino"
+      ],
+      "citation_title": [
+        "Superiority Bias and Communication Noise Can Enhance Collective Problem Solving"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5154"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Collective Intelligence, NK Landscape, Agent-Based Model, Error, Diversity"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/14/14.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract Error affects most human judgments and communications. Here we consider two ty",
+    "abstract_read": true,
+    "abstract_summary": "NK集体问题求解的噪声/偏差与成本权衡应用；保留团队学习线索，暂非意见过程直接比较或一般验证方法。",
+    "verified_title": "Superiority Bias and Communication Noise Can Enhance Collective Problem Solving"
+  },
+  {
+    "screen_id": "DK2023-20",
+    "url": "https://www.jasss.org/26/3/2.html",
+    "queue_title": "How Polarization Extends to New Topics: An Agent-Based Model Derived from Experimental Data",
+    "status": 200,
+    "bytes": 78584,
+    "sha256": "f40d0944b32331f8c63789a37efc1e69800eb211285a38b428bb57a735aeac1c",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_20.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Dino Carpentras",
+        "Adrian Lueders",
+        "Paul J. Maher",
+        "Caoimhe O'Reilly",
+        "Michael Quayle"
+      ],
+      "citation_title": [
+        "How Polarization Extends to New Topics: An Agent-Based Model Derived from Experimental Data"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5105"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Experimental Validation, Micro-Dynamic Rule, Opinion Dynamics, Update Rule"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/2/2.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract Polarization is a key phenomenon which has been linked to increasing disliking",
+    "abstract_read": true,
+    "abstract_summary": "摘要由真人实验建社会身份意见模型，内群吸引/外群固执不含排斥也能出现新议题极化；微规则与宏观验证需全文分开。",
+    "verified_title": "How Polarization Extends to New Topics: An Agent-Based Model Derived from Experimental Data"
+  },
+  {
+    "screen_id": "DK2023-21",
+    "url": "https://www.jasss.org/26/3/3.html",
+    "queue_title": "Spatial Disparities in Vaccination and the Risk of Infection in a Multi-Region Agent-Based Model of Epidemic Dynamics",
+    "status": 200,
+    "bytes": 146538,
+    "sha256": "b42fba6252ee090e5eca6d892db90e6298d9541f7afba5a034f300eb1212bb28",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_21.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Myong-Hun Chang",
+        "Troy Tassier"
+      ],
+      "citation_title": [
+        "Spatial Disparities in Vaccination and the Risk of Infection in a Multi-Region Agent-Based Model of Epidemic Dynamics"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5095"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Infectious Disease, Epidemic, Contact Networks, Risk of Infection, Agent-Based Computational Model"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/3/3.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract We investigate the impact that disparities in regional vaccine coverage have o",
+    "abstract_read": true,
+    "abstract_summary": "多地区疫苗异质性和空间/网络测量分辨率应用；保留聚合测量线索，未优先新增一般方法候选。",
+    "verified_title": "Spatial Disparities in Vaccination and the Risk of Infection in a Multi-Region Agent-Based Model of Epidemic Dynamics"
+  },
+  {
+    "screen_id": "DK2023-22",
+    "url": "https://www.jasss.org/26/3/5.html",
+    "queue_title": "Identifying the Impact of Artifacts-Based Exploration and Exploitation on Routines’ Formation Dynamics: An Agent-Based Model",
+    "status": 200,
+    "bytes": 128785,
+    "sha256": "8ebae3a2607e138a51e7030db2dfb0f3f560794c6341f95bf75cc9792e2ea1fd",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_22.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Dehua Gao",
+        "Yumei Yang"
+      ],
+      "citation_title": [
+        "Identifying the Impact of Artifacts-Based Exploration and Exploitation on Routines’ Formation Dynamics: An Agent-Based Model"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5092"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Organizational Routines, Routine Dynamics, Artifacts, Exploration and Exploitation, Agent-Based Modeling (ABM)"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/5/5.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract Organizational routines are at the core in capturing the typical way of how or",
+    "abstract_read": true,
+    "abstract_summary": "组织惯例与材料制品/探索利用的理论应用；保留理论形式化线索，尚未按摘要确定可迁移流程。",
+    "verified_title": "Identifying the Impact of Artifacts-Based Exploration and Exploitation on Routines’ Formation Dynamics: An Agent-Based Model"
+  },
+  {
+    "screen_id": "DK2023-23",
+    "url": "https://www.jasss.org/26/3/6.html",
+    "queue_title": "An Agent-Based Simulation Model of Pedestrian Evacuation Based on Bayesian Nash Equilibrium",
+    "status": 200,
+    "bytes": 92331,
+    "sha256": "f824624d725d87feeae59240eeb0b0d340199bf54c32b7d6ff588f90b34d57a6",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_23.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Yiyu Wang",
+        "Jiaqi Ge",
+        "Alexis Comber"
+      ],
+      "citation_title": [
+        "An Agent-Based Simulation Model of Pedestrian Evacuation Based on Bayesian Nash Equilibrium"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5037"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Bayesian Nash Equilibrium, Pedestrian Modelling, Crowd Simulation, Game Theory, Agent-Based Simulations"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/6/6.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract This research incorporates Bayesian game theory into pedestrian evacuation in ",
+    "abstract_read": true,
+    "abstract_summary": "BNE行人疏散行为比较应用；保留架构/行为线索，摘要不足确认独立经验验证或通用方法。",
+    "verified_title": "An Agent-Based Simulation Model of Pedestrian Evacuation Based on Bayesian Nash Equilibrium"
+  },
+  {
+    "screen_id": "DK2023-24",
+    "url": "https://www.jasss.org/26/3/8.html",
+    "queue_title": "On the Interplay of Gullibility, Plausibility, and Criticism: A Computational Model of Epistemic Vigilance",
+    "status": 200,
+    "bytes": 118510,
+    "sha256": "ad2cddc9346014c09545d37dbb0ff1d33a2c9d4bc81b6663f67e34856ad5ed8e",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_24.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Daniel Reisinger",
+        "Marie L. Kogler",
+        "Georg Jäger"
+      ],
+      "citation_title": [
+        "On the Interplay of Gullibility, Plausibility, and Criticism: A Computational Model of Epistemic Vigilance"
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5136"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Computational Modeling, Epistemic Vigilance, Rumor Diffusion, Polarization, Micro-Macro Link"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/8/8.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract Humans heavily depend on communication. We constantly share new ideas, catch u",
+    "abstract_read": true,
+    "abstract_summary": "摘要形式化论证批评、消息可置信与发送者能力检查，研究信息阻隔/极化；作信息机制对照，未建立真实认知机制唯一。",
+    "verified_title": "On the Interplay of Gullibility, Plausibility, and Criticism: A Computational Model of Epistemic Vigilance"
+  },
+  {
+    "screen_id": "DK2023-25",
+    "url": "https://www.jasss.org/26/3/9.html",
+    "queue_title": "When \"I\" Becomes \"We\": Modelling Dynamic Identity on Autonomous Agents",
+    "status": 200,
+    "bytes": 154474,
+    "sha256": "d3ea1d4f2f1a453b4c2b6cab961eb1b50e2d50df49168dee2abc304a9c9c3705",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_25.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Inês Lobo",
+        "Joana Dimas",
+        "Samuel Mascarenhas",
+        "Diogo Rato",
+        "Rui Prada"
+      ],
+      "citation_title": [
+        "When "
+      ],
+      "citation_publication_date": [
+        "2023-06-30"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5146"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Social Identity Approach, Social Context, Dynamic Identity, Agent-Based Model, Social Bias"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/3/9/9.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 30-Jun-2023 Abstract Individuals change who they are in response to their social environment. In ot",
+    "abstract_read": true,
+    "abstract_summary": "摘要形式化DIMA动态身份显著性并接入主体架构，以两情境示例；个人/社会身份切换机制可迁移性待全文，不当LLM验证。",
+    "verified_title": "When \"I\" Becomes \"We\": Modelling Dynamic Identity on Autonomous Agents"
+  },
+  {
+    "screen_id": "DK2023-26",
+    "url": "https://www.jasss.org/26/4/1.html",
+    "queue_title": "What Matters Most in Supporting Cooperation, the Gossip Content or the Gossiper’s Intention? Simulating Motive Interpretation in Gossip Dynamics",
+    "status": 200,
+    "bytes": 89109,
+    "sha256": "5f72fa8f82f8bfd7cb2d88d8e2552b3c3933c0dc45ea836b162cdabab1f51c48",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_26.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Martina Testori",
+        "Francesca Giardini",
+        "Charlotte K Hemelrijk",
+        "Terence D Dores Cruz",
+        "Bianca Beersma"
+      ],
+      "citation_title": [
+        "What Matters Most in Supporting Cooperation, the Gossip Content or the Gossiper’s Intention? Simulating Motive Interpretation in Gossip Dynamics"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5194"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Gossip, Reputation, Cooperation, Agent-Based Model, Multi-Layer Reputation, Motives"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/1/1.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract Gossip provides individuals a great volume of information, which allows them t",
+    "abstract_read": true,
+    "abstract_summary": "摘要将八卦信息内容、说话者可靠性和合作行动的声誉分层；保留信任/信息应用，不直接当意见动力学或人类因果验证。",
+    "verified_title": "What Matters Most in Supporting Cooperation, the Gossip Content or the Gossiper’s Intention? Simulating Motive Interpretation in Gossip Dynamics"
+  },
+  {
+    "screen_id": "DK2023-27",
+    "url": "https://www.jasss.org/26/4/11.html",
+    "queue_title": "Bounded Confidence Revisited: What We Overlooked, Underestimated, and Got Wrong",
+    "status": 200,
+    "bytes": 311713,
+    "sha256": "0e1b1b53f8594f953ba747a0cea5768ef28fc86b6b09929f5d0cb432b9a083c6",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_27.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Rainer Hegselmann"
+      ],
+      "citation_title": [
+        "Bounded Confidence Revisited: What We Overlooked, Underestimated, and Got Wrong"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5257"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Opinion Dynamics, Bounded Confidence Model, Floating-Point Arithmetic, Agent-Based Modelling"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/11/11.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract In the bounded confidence model (BC-model) (Hegselmann and Krause 2002), perio",
+    "abstract_read": true,
+    "abstract_summary": "摘要重新分析有界信心非单调转变并提出精确分数算术枚举；数值精度/算法范围须全文，不笼统推广任意社会模拟。",
+    "verified_title": "Bounded Confidence Revisited: What We Overlooked, Underestimated, and Got Wrong"
+  },
+  {
+    "screen_id": "DK2023-28",
+    "url": "https://www.jasss.org/26/4/12.html",
+    "queue_title": "Opinion Dynamics Model Revealing Yet Undetected Cognitive Biases",
+    "status": 200,
+    "bytes": 101907,
+    "sha256": "cb82e8cb016408281b4181247b64593b7e98faec704770b1c9a1ed39ff9fc501",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_28.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Guillaume Deffuant"
+      ],
+      "citation_title": [
+        "Opinion Dynamics Model Revealing Yet Undetected Cognitive Biases"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5196"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Opinion Dynamics, Cognitive Biases, Experiment"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/12/12.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract This paper synthesises a recent research that includes opinion dynamics models",
+    "abstract_read": true,
+    "abstract_summary": "摘要模型导出认知偏差再设计真人实验检测，方法→实验路径重要；样本、预期与独立验证范围待核。",
+    "verified_title": "Opinion Dynamics Model Revealing Yet Undetected Cognitive Biases"
+  },
+  {
+    "screen_id": "DK2023-29",
+    "url": "https://www.jasss.org/26/4/2.html",
+    "queue_title": "How Availability Heuristic, Confirmation Bias and Fear May Drive Societal Polarisation: An Opinion Dynamics Simulation of the Case of COVID-19 Vaccination",
+    "status": 200,
+    "bytes": 154549,
+    "sha256": "1541a7cce2827b253341e0308210600fad5da5b6174ebe69e8a6fd82a734efac",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_29.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Teng Li",
+        "Wander Jager"
+      ],
+      "citation_title": [
+        "How Availability Heuristic, Confirmation Bias and Fear May Drive Societal Polarisation: An Opinion Dynamics Simulation of the Case of COVID-19 Vaccination"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5135"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "COVID-19 Vaccination, Fear, Cognitive Bias, Opinion Polarisation, HUMAT"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/2/2.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract The stark contrast between different opinions on COVID-19 vaccination suggests",
+    "abstract_read": true,
+    "abstract_summary": "摘要HUMAT模型组合恐惧、可得性与确认偏差以及权威影响；保留信息选择/意见直接对照，不把情景结果当疫情因果预测。",
+    "verified_title": "How Availability Heuristic, Confirmation Bias and Fear May Drive Societal Polarisation: An Opinion Dynamics Simulation of the Case of COVID-19 Vaccination"
+  },
+  {
+    "screen_id": "DK2023-30",
+    "url": "https://www.jasss.org/26/4/3.html",
+    "queue_title": "Equation-Based Versus Agent-Based Models: Why Not Embrace Both for an Efficient Parameter Calibration?",
+    "status": 200,
+    "bytes": 140065,
+    "sha256": "039b18cc23e11147902afd388569894a81f7806f7689c8ee3565f70fdf77320f",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_30.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Priscilla Avegliano",
+        "Jaime Simão Sichman"
+      ],
+      "citation_title": [
+        "Equation-Based Versus Agent-Based Models: Why Not Embrace Both for an Efficient Parameter Calibration?"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5183"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Parameter Fitting, Calibration and Validation, System Dynamics"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/3/3.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract In this work, we propose 2LevelCalibration, a multi-stage approach for the cal",
+    "abstract_read": true,
+    "abstract_summary": "摘要2LevelCalibration先用方程模型选参数区域再细校ABM，并比较住房数据任务；代理偏差/预算/留出待核。",
+    "verified_title": "Equation-Based Versus Agent-Based Models: Why Not Embrace Both for an Efficient Parameter Calibration?"
+  },
+  {
+    "screen_id": "DK2023-31",
+    "url": "https://www.jasss.org/26/4/4.html",
+    "queue_title": "Network Structure Can Amplify Innovation Adoption and Polarization in Group-Structured Populations with Outgroup Aversion",
+    "status": 200,
+    "bytes": 152880,
+    "sha256": "3e75b6cf1a15e0b08153a035d508f0bcf61cb47362e42ca695fe2b38449986a2",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_31.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Bruce Miller",
+        "Ivan Garibay",
+        "Jacopo Baggio",
+        "Edwin Nassiff"
+      ],
+      "citation_title": [
+        "Network Structure Can Amplify Innovation Adoption and Polarization in Group-Structured Populations with Outgroup Aversion"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5167"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Innovation Diffusion, Outgroup Aversion, Innovation Adoption, Polarization, Social Networks, Agent-Based Model"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/4/4.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract Individuals’ decisions to adopt an innovation can be influenced by the frequen",
+    "abstract_read": true,
+    "abstract_summary": "摘要网络/非网络对照及外群厌恶、频率依赖、模块度与中心性影响采用/极化；结构与身份机制的限定基线。",
+    "verified_title": "Network Structure Can Amplify Innovation Adoption and Polarization in Group-Structured Populations with Outgroup Aversion"
+  },
+  {
+    "screen_id": "DK2023-32",
+    "url": "https://www.jasss.org/26/4/5.html",
+    "queue_title": "Scientific Disagreements and the Diagnosticity of Evidence: How Too Much Data May Lead to Polarization",
+    "status": 200,
+    "bytes": 150213,
+    "sha256": "51dea958d460f31b50ad45dc55c5d241f1d14420bdc6f9267b93c0e0068038d5",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_32.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Matteo Michelini",
+        "Javier Osorio",
+        "Wybo Houkes",
+        "Dunja Šešelja",
+        "Christian Straßer"
+      ],
+      "citation_title": [
+        "Scientific Disagreements and the Diagnosticity of Evidence: How Too Much Data May Lead to Polarization"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5113"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Diagnostic Value of Evidence, Scientific Disagreement, Polarization"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/5/5.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract Scientific disagreements sometimes persist even if scientists fully share resu",
+    "abstract_read": true,
+    "abstract_summary": "摘要科学家对证据诊断性赋值不同可随数据/分享范围出现极化；给定假设结论，不认定现实中更多数据必增极化。",
+    "verified_title": "Scientific Disagreements and the Diagnosticity of Evidence: How Too Much Data May Lead to Polarization"
+  },
+  {
+    "screen_id": "DK2023-33",
+    "url": "https://www.jasss.org/26/4/6.html",
+    "queue_title": "An Assimilation Anomaly: Averaging-Induced Reversal of Overall Opinion in Two Interacting Societies",
+    "status": 200,
+    "bytes": 125048,
+    "sha256": "94ff6b1d223c0f9813ae8a59320820cfadc43f3743d0f79ab6b250b12e6a0880",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_33.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Jacob Landsberg",
+        "Adam Landsberg"
+      ],
+      "citation_title": [
+        "An Assimilation Anomaly:  Averaging-Induced Reversal of Overall Opinion in Two Interacting Societies"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5150"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Opinion Dynamics, Social Influence, Computational Social Science, Cultural Dissemination, Social Networks, Sociophysics"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/6/6.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract Assimilation – the tendency for individuals to adjust their opinions to more c",
+    "abstract_read": true,
+    "abstract_summary": "摘要简单局部均值同化可使两群整体相对位置逆转；与极化/碎片不同，保留过程/聚合解释边界。",
+    "verified_title": "An Assimilation Anomaly: Averaging-Induced Reversal of Overall Opinion in Two Interacting Societies"
+  },
+  {
+    "screen_id": "DK2023-34",
+    "url": "https://www.jasss.org/26/4/7.html",
+    "queue_title": "The Wisdom of the Small Crowd: Myside Bias and Group Discussion",
+    "status": 200,
+    "bytes": 246039,
+    "sha256": "4fdc2d7406d893064074cd40b2b03470e395a930e789df10c636b0e3f4a9a748",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_34.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Edoardo Baccini",
+        "Zoé Christoff",
+        "Stephan Hartmann",
+        "Rineke Verbrugge"
+      ],
+      "citation_title": [
+        "The Wisdom of the Small Crowd: Myside Bias and Group Discussion"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5184"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Myside Bias, Group Deliberation, Agent-Based Modeling, Truth-Tracking, Wisdom of the Crowd"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/7/7.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract The my-side bias is a well-documented cognitive bias in the evaluation of argu",
+    "abstract_read": true,
+    "abstract_summary": "摘要将贝叶斯my-side bias用于小群体讨论，结果依赖偏差分布与群体规模；真值追踪定义及成本/重复待核。",
+    "verified_title": "The Wisdom of the Small Crowd: Myside Bias and Group Discussion"
+  },
+  {
+    "screen_id": "DK2023-35",
+    "url": "https://www.jasss.org/26/4/8.html",
+    "queue_title": "Job Done? Future Modeling Challenges After 20 Years of Work on Bounded-Confidence Models",
+    "status": 200,
+    "bytes": 127326,
+    "sha256": "511758a5554b29c4f82870e8dadb3ec5b4de2784b72bdf28d6db545c2bbfcbeb",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_35.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Shuo Liu",
+        "Michael Mäs",
+        "Haoxiang Xia",
+        "Andreas Flache"
+      ],
+      "citation_title": [
+        "Job Done? Future Modeling Challenges After 20 Years of Work on Bounded-Confidence Models"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5137"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Bounded-Confidence, Opinion Dynamics, Social Influence, Opinion Polarization, Agent-Based Modeling"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/8/8.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract Since the first publication of the bounded-confidence models 20 years ago, hun",
+    "abstract_read": true,
+    "abstract_summary": "摘要反思20年有界信心并用极简同化/排斥组合展示反直觉结果；比较/整合方法基线，非LLM跨情境验证。",
+    "verified_title": "Job Done? Future Modeling Challenges After 20 Years of Work on Bounded-Confidence Models"
+  },
+  {
+    "screen_id": "DK2023-36",
+    "url": "https://www.jasss.org/26/4/9.html",
+    "queue_title": "Calibrating an Opinion Dynamics Model to Empirical Opinion Distributions and Transitions",
+    "status": 200,
+    "bytes": 123963,
+    "sha256": "145bef8f1d5ccffc8a415d1b2e630b549b546a3bb9ac5a55451d20e0629e781d",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DK_2023_36.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Martin Gestefeld",
+        "Jan Lorenz"
+      ],
+      "citation_title": [
+        "Calibrating an Opinion Dynamics Model to Empirical Opinion Distributions and Transitions"
+      ],
+      "citation_publication_date": [
+        "2023-10-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5204"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modeling, Social Influence, Opinion Dynamics, Political Trust, Survey"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/4/9/9.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2023 Abstract Agent-based models of opinion dynamics enable the investigation of societal ph",
+    "abstract_read": true,
+    "abstract_summary": "摘要同时拟合1235意见分布与Swiss面板转变并暴露极端/中立不足；校准、个体匹配与留出需逐层核验。",
+    "verified_title": "Calibrating an Opinion Dynamics Model to Empirical Opinion Distributions and Transitions"
+  }
+]
