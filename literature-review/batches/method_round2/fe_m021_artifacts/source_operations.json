@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "FE-01",
+    "platform": "github_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "Repository/default main/commit/tree/releases identity; tags endpoint rejected",
+    "source_url": "https://api.github.com/repos/elisacomposta/YAnalysis/git/trees/816ab7041d4a0b17dc82cf3cfa02e0ba36b5e4c1?recursive=1",
+    "status": "fixed_tree_read",
+    "notes": "Grouped operation not query count; selected scope only; no third-party execution"
+  },
+  {
+    "search_id": "FE-02",
+    "platform": "github_selected_text",
+    "search_date": "2026-11-28",
+    "query_exact": "9 root/src text files fetched fixed SHA; do not run",
+    "source_url": "https://github.com/elisacomposta/YAnalysis/tree/816ab7041d4a0b17dc82cf3cfa02e0ba36b5e4c1",
+    "status": "selected_static_read",
+    "notes": "Grouped operation not query count; selected scope only; no third-party execution"
+  },
+  {
+    "search_id": "FE-03",
+    "platform": "raw_fallback",
+    "search_date": "2026-11-28",
+    "query_exact": "Root notebook connector oversized rejection; raw200 static JSON acquired",
+    "source_url": "https://raw.githubusercontent.com/elisacomposta/YAnalysis/816ab7041d4a0b17dc82cf3cfa02e0ba36b5e4c1/y_result_visualization.ipynb",
+    "status": "acquired_not_executed",
+    "notes": "Grouped operation not query count; selected scope only; no third-party execution"
+  },
+  {
+    "search_id": "FE-04",
+    "platform": "raw_notebooks",
+    "search_date": "2026-11-28",
+    "query_exact": "fp/nf notebooks raw200 static code-cell read; no outputs rerun",
+    "source_url": "https://github.com/elisacomposta/YAnalysis/tree/816ab7041d4a0b17dc82cf3cfa02e0ba36b5e4c1/visualizations",
+    "status": "acquired_not_executed",
+    "notes": "Grouped operation not query count; selected scope only; no third-party execution"
+  },
+  {
+    "search_id": "FE-05",
+    "platform": "local_identity_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "12 byte lengths/Git blobs/SHA256; baseline tree78CSV/78DB",
+    "source_url": "batches/method_round2/fe_m021_artifacts/source_manifest.json",
+    "status": "verified_selected_scope",
+    "notes": "Grouped operation not query count; selected scope only; no third-party execution"
+  },
+  {
+    "search_id": "FE-06",
+    "platform": "static_method_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "nf perfilePearson/q95/endminusstart/labels; no author code or models executed",
+    "source_url": "reports/m021_artifact_audit_FE.md",
+    "status": "static_evidence_with_limits",
+    "notes": "Grouped operation not query count; selected scope only; no third-party execution"
+  }
+]

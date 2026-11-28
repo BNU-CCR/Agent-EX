@@ -1,0 +1,803 @@
+{
+  "counts": {
+    "artifish/fc_net/ContentRecSys/misinfo00 .csv": 10,
+    "artifish/fc_net/ContentRecSys/misinfo00 .db": 10,
+    "artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00 .csv": 10,
+    "artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00 .db": 10,
+    "artifish/nul_net/ContentRecSys/misinfo00 .csv": 10,
+    "artifish/nul_net/ContentRecSys/misinfo00 .db": 10,
+    "artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00 .csv": 10,
+    "artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00 .db": 10,
+    "llama70/fc_net/ContentRecSys/misinfo00 .csv": 10,
+    "llama70/fc_net/ContentRecSys/misinfo00 .db": 10,
+    "llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00 .csv": 10,
+    "llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00 .db": 10,
+    "llama70/nul_net/ContentRecSys/misinfo00 .csv": 10,
+    "llama70/nul_net/ContentRecSys/misinfo00 .db": 10,
+    "llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00 .csv": 8,
+    "llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00 .db": 8
+  },
+  "files": [
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run01.csv",
+      "sha": "d76c604d22cbbd221dffb472c2ef32a2bf4646a3",
+      "size": 118507
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run01.db",
+      "sha": "bb1ab9680ce2e73f03f36c3b713aa5e65b4c3ef7",
+      "size": 983040
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run02.csv",
+      "sha": "bc16fa7201c62e206786e0a4ec73b44c39a1fa9a",
+      "size": 116898
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run02.db",
+      "sha": "d0f0f7d9634ad2e058ad2fb65300ed726eb6276e",
+      "size": 954368
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run03.csv",
+      "sha": "224f439f95eb9131fa4a13a6b6d4d48a5bf4ace2",
+      "size": 106303
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run03.db",
+      "sha": "37f19f26ec2d7e99327b938ff4dc4a5d10c01792",
+      "size": 962560
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run04.csv",
+      "sha": "b3585c057bec2ab4050975ddf2d8fd75c5f1b096",
+      "size": 123540
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run04.db",
+      "sha": "c6ec165cbaa8937d432b732cc429d09bf7228631",
+      "size": 962560
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run05.csv",
+      "sha": "6bc246e8fb37f69ab204139a6cd29bcdd20367bb",
+      "size": 127036
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run05.db",
+      "sha": "a2d1abc059e74bf585db0e1f8ac060ffd5436891",
+      "size": 978944
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run06.csv",
+      "sha": "fabd120c0735e5a26f1738c5d1c447c38b03705d",
+      "size": 113612
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run06.db",
+      "sha": "55c1b68da647dab542c6f132c91b52b5d85914e7",
+      "size": 954368
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run07.csv",
+      "sha": "e5f4d8c5a065a8aad0899bb2eea68f0dc0251c3e",
+      "size": 138840
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run07.db",
+      "sha": "0a9ff506750c0d10128637e920c92b47468766fa",
+      "size": 1024000
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run08.csv",
+      "sha": "3014da0138340f8d4d3f71e08741eda6281a124f",
+      "size": 123195
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run08.db",
+      "sha": "1b12cdbbfea2177b403467ad31d9191965d4b713",
+      "size": 983040
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run09.csv",
+      "sha": "0d7dcec649530bece85f0156e618ae58d853eb29",
+      "size": 106409
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run09.db",
+      "sha": "7f0bd5500afbf9406d4982616eec7d4bc5b899a8",
+      "size": 958464
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run10.csv",
+      "sha": "4d3c901c45061b7191ef240aebc67e1aceec9cc0",
+      "size": 121765
+    },
+    {
+      "path": "simulations/artifish/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_20250718152711_run10.db",
+      "sha": "3273ea8641e147e3458a46e79b9d35c537745923",
+      "size": 1028096
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run01.csv",
+      "sha": "4bd85aed1fb1715c79bac3c46ff4b32762e9d6b3",
+      "size": 103199
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run01.db",
+      "sha": "185fbf912fbcb2702c7b46c9ab2a880c3f4d4a81",
+      "size": 909312
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run02.csv",
+      "sha": "2f5f765c42596514fbd157f1671f7c2138587763",
+      "size": 100983
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run02.db",
+      "sha": "d28e5af81a9020cef0249361a640ca391986927d",
+      "size": 917504
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run03.csv",
+      "sha": "d971090b2b91684e8c7ca57bf04dbfe9f638a91b",
+      "size": 106393
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run03.db",
+      "sha": "eb4a4253cb68aabcc8a31948a2bfa6fbd5db4c66",
+      "size": 933888
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run04.csv",
+      "sha": "3d85b55a18abaf9653558cdc181ab8241e0fcd33",
+      "size": 116293
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run04.db",
+      "sha": "accae114a4d9613d2f644c9504a73b63091173f9",
+      "size": 921600
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run05.csv",
+      "sha": "1cc62f1a13bb3bc508637fea8703ce89b8e2377b",
+      "size": 111506
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run05.db",
+      "sha": "d0543d4446703186a3ee786fb2bc999b6b8d703e",
+      "size": 933888
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run06.csv",
+      "sha": "3a69164183e7579d6fe1bef5255d07e113f37e4f",
+      "size": 134617
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run06.db",
+      "sha": "75a764526bab7c625aedd486359e809b30d8335d",
+      "size": 970752
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run07.csv",
+      "sha": "9902a7be24ebaf45c6a3a86b658d59a1a0850ff4",
+      "size": 130008
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run07.db",
+      "sha": "475158556ae304dd468ab92aa17c3a7d120c73a4",
+      "size": 958464
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run08.csv",
+      "sha": "781c445368ac38202a13011ca095c35117635676",
+      "size": 120250
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run08.db",
+      "sha": "7efe3fa3e843a2d2f5e555f4947b82a02e56f5fb",
+      "size": 958464
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run09.csv",
+      "sha": "bb5028e21d32a287865215ae2ea65fdd2bb512b1",
+      "size": 109447
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run09.db",
+      "sha": "62d597a483532821413a6734d576e4ac2028abc3",
+      "size": 909312
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run10.csv",
+      "sha": "4217398bd05ead3759358fc584f61764aa6325f5",
+      "size": 118921
+    },
+    {
+      "path": "simulations/artifish/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_20250717094220_run10.db",
+      "sha": "11157fc2fcc0988e3e0e133eccfb12bc0dcb3c8d",
+      "size": 958464
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run01.csv",
+      "sha": "cf261596bbd10c822bd58f7412efb2f69627ce8e",
+      "size": 132514
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run01.db",
+      "sha": "f2a092f93f59a46e3d6bb17dba934aa4f88f2108",
+      "size": 978944
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run02.csv",
+      "sha": "ca068acc4f26896eef691b57e522a76466099f3c",
+      "size": 98428
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run02.db",
+      "sha": "f708752e85a794932c87177aa324414a663baefe",
+      "size": 929792
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run03.csv",
+      "sha": "9f0e80089b15654ede89b017ff399fcad9f0d693",
+      "size": 138557
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run03.db",
+      "sha": "f3064bd2ae76764f632ca312e5d5dafad045d0a3",
+      "size": 1003520
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run04.csv",
+      "sha": "db5f48eb1db29e48cf01b679f34e86b06cecf1ef",
+      "size": 117577
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run04.db",
+      "sha": "4113be0da0237a0ea546cb4cac70ee786a5eb73b",
+      "size": 995328
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run05.csv",
+      "sha": "b1d07d5e3fec7d0459f909f29544fac4412c8931",
+      "size": 123204
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run05.db",
+      "sha": "0a0e0bc34e1850c3bc24f906e504209d8eb3ceeb",
+      "size": 966656
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run06.csv",
+      "sha": "d79b24c2f7f6d7aeb346c90c3cb9ffb82b6d3bba",
+      "size": 115593
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run06.db",
+      "sha": "7c9b7b7c776b928dec0dbf682fa3d2c52062bd0d",
+      "size": 966656
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run07.csv",
+      "sha": "4f6dfb9c3a41e0c1d5e67e30f854970345755812",
+      "size": 107819
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run07.db",
+      "sha": "98cebccf2afdaaa7044ff6f6a3682de8a9110d57",
+      "size": 937984
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run08.csv",
+      "sha": "873c25c401309cd7c49c4bf86aa4d4a2927f3e58",
+      "size": 122492
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run08.db",
+      "sha": "57e03828f2a4564ab28c3622c2d7d0ecaccfc0d1",
+      "size": 966656
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run09.csv",
+      "sha": "a3b633e8652b49f88d865dbd9f9b8f419c1516b2",
+      "size": 117171
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run09.db",
+      "sha": "827c82b0f23a6bf62fe8e36efd77630d817b2e1e",
+      "size": 970752
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run10.csv",
+      "sha": "e5a3d9562cd17f8e2d346d0c8ce1baf76669c8ab",
+      "size": 117086
+    },
+    {
+      "path": "simulations/artifish/nul_net/ContentRecSys/misinfo00/run10.db",
+      "sha": "0a23f67999669b93a792b4a384e0ba1b5f67172c",
+      "size": 966656
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run01.csv",
+      "sha": "206c25a92d2d205de6d95e31debd7b463c760661",
+      "size": 97699
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run01.db",
+      "sha": "dd496860d3c4785fdeccafc96f11cbc578f90fa3",
+      "size": 897024
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run02.csv",
+      "sha": "2b772c0361fae314270a71888eedb5d905795566",
+      "size": 123951
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run02.db",
+      "sha": "04aa0bce5180d6c7aa9c9d61aa4b14a0203bf0c0",
+      "size": 942080
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run03.csv",
+      "sha": "9e014a050a51bcab683e3e73bde30f32385ace41",
+      "size": 103764
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run03.db",
+      "sha": "58c26231f9e2b9937b16a1bc9c7dee1f751e9cae",
+      "size": 925696
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run04.csv",
+      "sha": "32225486fad14dffb65ddc0e4cc1774bc3bf0a47",
+      "size": 125614
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run04.db",
+      "sha": "850eca3a8e3efac9c2fc5c06b5c981a03f3d987b",
+      "size": 958464
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run05.csv",
+      "sha": "bf5d6d3b0514ffb0b8f7fb2b627306019a4447e8",
+      "size": 117140
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run05.db",
+      "sha": "75be70a082c59ff2c65cb2d89e86446cac8b8062",
+      "size": 929792
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run06.csv",
+      "sha": "2f8ed75744ac03066444645f7c93eeb2d83d2cdd",
+      "size": 107535
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run06.db",
+      "sha": "060abab2d8bd54b1edb7ab37ea12b03cc6c7445b",
+      "size": 913408
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run07.csv",
+      "sha": "9f17b8d91223d5bacded4524e149fed55b739446",
+      "size": 111684
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run07.db",
+      "sha": "f4331e998401abd001bb9ba066bd33de4a5a6557",
+      "size": 909312
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run08.csv",
+      "sha": "506af9afa97d682355ea01568f0d94496c36b1b6",
+      "size": 88475
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run08.db",
+      "sha": "538c16fce11172e39e235a857601c911d290166e",
+      "size": 884736
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run09.csv",
+      "sha": "9ee17ca2d2bbe699b45f57df88bf829b46db6da8",
+      "size": 98191
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run09.db",
+      "sha": "a0037ceba91aa83624d4044a70bd8946d6974ffa",
+      "size": 884736
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run10.csv",
+      "sha": "57449561160c93f8a27951cb28d7b0b3c945303b",
+      "size": 112303
+    },
+    {
+      "path": "simulations/artifish/nul_net/ReverseChronoFollowersPopularity/misinfo00/run10.db",
+      "sha": "508f18872ba6aa29a9303bc19f6a96c966ba8a88",
+      "size": 937984
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run1.csv",
+      "sha": "8cd3ff6e6803283ffe2246a8feff924aa857eef9",
+      "size": 182119
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run1.db",
+      "sha": "6835110885bcebbb1b4e14ca9622520e46c92dad",
+      "size": 1142784
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run2.csv",
+      "sha": "9a494bd11a6dc87f2ce69be64afdedc0839dc6a2",
+      "size": 188762
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run2.db",
+      "sha": "995fb49a70e996cce3cad8166e3e4539fd8614f0",
+      "size": 1142784
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run3.csv",
+      "sha": "fdbde6e248854ddb872c344c2e9b6aff92852f22",
+      "size": 205905
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run3.db",
+      "sha": "d55e0bd6c64628c5135e87fc2417ddb51c34ab9c",
+      "size": 1187840
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run4.csv",
+      "sha": "6eb3bd65b30cdf00b323a2c39edcedfdab97b6c3",
+      "size": 206100
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250829123234_run4.db",
+      "sha": "ef860e00e1f5981e648f3082326a928ed9132c1d",
+      "size": 1208320
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run05.csv",
+      "sha": "bd979f0cf3be51f1e5c291d74555dce9b635d131",
+      "size": 165019
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run05.db",
+      "sha": "cdac63a3a09bd1af0898a46b6a2a5cc5ccd5cfd1",
+      "size": 1118208
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run06.csv",
+      "sha": "1c8b83d98adc04bf77f2f1b2a776d401c3051905",
+      "size": 186387
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run06.db",
+      "sha": "d178bd1daac16dd7a988aad995d9d50c0a80390d",
+      "size": 1122304
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run07.csv",
+      "sha": "637d9b8da729d5601089fb82e6ee113b01a5ce5a",
+      "size": 150300
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run07.db",
+      "sha": "204dc6715778519113316b95bdd20343082b92ad",
+      "size": 1122304
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run08.csv",
+      "sha": "9bb3c5232ff4e4c2f98569d7b9ffa27d6ab9a2be",
+      "size": 165107
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run08.db",
+      "sha": "72e57c713f893acd12170ed234bfc282341796a4",
+      "size": 1118208
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run09.csv",
+      "sha": "4d7a6ca7ffab000553bc8c935fd439f078802ed6",
+      "size": 198020
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250902210348_run09.db",
+      "sha": "0f82bf43252bfb723ab11d53bd87794c7f5ee7d3",
+      "size": 1167360
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250906130823_run10.csv",
+      "sha": "906df09a6ed355c3969fe38be79fb48c1a06e543",
+      "size": 208778
+    },
+    {
+      "path": "simulations/llama70/fc_net/ContentRecSys/misinfo00/d21a100m00nfcrx_ll70u_20250906130823_run10.db",
+      "sha": "999d01d7ede5d2b1ceb1ed927cd010ca3a4f70e5",
+      "size": 1187840
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run1.csv",
+      "sha": "c36136111995bb544811fc8501d2a4a0150bb54e",
+      "size": 207701
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run1.db",
+      "sha": "a5fa5b5d56a20e5065454ef969219436fb1a207d",
+      "size": 1146880
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run3.csv",
+      "sha": "f79f8024b0dd5ad07e1f16bfc190bebffd5606d9",
+      "size": 178046
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run3.db",
+      "sha": "2210812cd92039713fc69df34288cc903be262d9",
+      "size": 1085440
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run4.csv",
+      "sha": "cca50dc7bf38cc967fa411322a956dcba92d08ba",
+      "size": 166264
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run4.db",
+      "sha": "fd1cb4ad942465118967654d4a6d4b453a58fa52",
+      "size": 1073152
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run5.csv",
+      "sha": "427266c9b62121457fa3aed14526f104d47b6348",
+      "size": 191832
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250829123033_run5.db",
+      "sha": "a919262a8f3cd2eb4e5518350b683dc5dd5db31e",
+      "size": 1110016
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115838_run2.csv",
+      "sha": "9903a3d86aa0830b0af2093817a9171169790019",
+      "size": 191161
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115838_run2.db",
+      "sha": "1dc822b29d2ffe6dbd2404296a9c74c954221f2a",
+      "size": 1130496
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run06.csv",
+      "sha": "cbc2c097ee556705c0b363cf2c698c20a27cef16",
+      "size": 161927
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run06.db",
+      "sha": "1295f10e79ca4bafb555a6a29e79e58817e38cf6",
+      "size": 1064960
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run07.csv",
+      "sha": "4dcd214d8a293d7a7b0da2933cbcb12f2ac2c3fa",
+      "size": 178927
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run07.db",
+      "sha": "ac57df12f88ff04206a5ee088cb01ca4a7f526f8",
+      "size": 1105920
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run08.csv",
+      "sha": "026d3fd8b2dccb7fc6bf4abdd8b3be9b63d941fb",
+      "size": 199744
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run08.db",
+      "sha": "569034beecee62ed0490c955f5825c06dcfdfc0f",
+      "size": 1150976
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run09.csv",
+      "sha": "7a98f37139a82598d329b6f8544287b50a0abe92",
+      "size": 183208
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run09.db",
+      "sha": "2e1f0b6e4a9f1de5b084f84e444825e8e05f927e",
+      "size": 1142784
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run10.csv",
+      "sha": "13c592b20fb23d412baa4eb4c4caafdeef5b2d7a",
+      "size": 185163
+    },
+    {
+      "path": "simulations/llama70/fc_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nfcrd_ll70u_20250902115842_run10.db",
+      "sha": "3965264310a8971017a478d190343dc8910c2dc0",
+      "size": 1138688
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run1.csv",
+      "sha": "e34d76e2691a32a06fc554b9dacaf0ad5076add2",
+      "size": 169342
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run1.db",
+      "sha": "c9f3640d8aa5807e78855ab5a79e65784c86445f",
+      "size": 1105920
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run2.csv",
+      "sha": "e5ca85907b7275c425c69ab3476ebdc7ac7b5c91",
+      "size": 181033
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run2.db",
+      "sha": "07ee43ff36f83ec3b1130d3cafeb69b8d3ed3c2e",
+      "size": 1134592
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run3.csv",
+      "sha": "19a913f69c81cdc87525417fe5aac5f936ee3417",
+      "size": 224066
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run3.db",
+      "sha": "ac45036628ee0a5fb535dfb0fccf49bd28f5cc09",
+      "size": 1232896
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run4.csv",
+      "sha": "73448039a2711874de05c7bf32120bb2553eba7c",
+      "size": 211282
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run4.db",
+      "sha": "24fccede0e061bd5faac94eed682616199599df1",
+      "size": 1183744
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run5.csv",
+      "sha": "7724b74249384f62883bfa5c993f0b30d90e008c",
+      "size": 210842
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250829122830_run5.db",
+      "sha": "f1c49ef009cda1d3550511bc5c866b5535cb82be",
+      "size": 1216512
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run06.csv",
+      "sha": "d795edf1621789053e3d7249532bd863f95e6bdb",
+      "size": 203046
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run06.db",
+      "sha": "e5515be9534785dc180e55100ce91ad226c9ecc4",
+      "size": 1171456
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run07.csv",
+      "sha": "f31522b1a7aaa7bdb8967f4c23e0521225980b59",
+      "size": 156373
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run07.db",
+      "sha": "5e6a23dbcccef5f33c7da54cc77b1336ad1974a4",
+      "size": 1105920
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run08.csv",
+      "sha": "42824d2422e9abd8e11864dce285d93bf4b75b1c",
+      "size": 212921
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run08.db",
+      "sha": "b7407ca0d4e5e957668d4cc10e5993c6010636c3",
+      "size": 1196032
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run09.csv",
+      "sha": "f1158674fad01d5abcecf7dbdd03dd43d9fe4f34",
+      "size": 204109
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run09.db",
+      "sha": "6bbfd22359dd84d0f29d12b9a2a1f0ad3b119d73",
+      "size": 1200128
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run10.csv",
+      "sha": "9ff1b229f2d3e6c30b25b18b88d7749951c67079",
+      "size": 184454
+    },
+    {
+      "path": "simulations/llama70/nul_net/ContentRecSys/misinfo00/d21a100m00nnulrx_ll70u_20250902205949_run10.db",
+      "sha": "f1d83328e1c7f3583a63b4aff5b1eeb23fbfcc11",
+      "size": 1191936
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901103939_run1.csv",
+      "sha": "20b89b953386538fc3848cc45e5c2d8599f90803",
+      "size": 172287
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901103939_run1.db",
+      "sha": "5c680040d20f2215bfb762e4bb1a712b00a6c2f7",
+      "size": 1056768
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901104039_run3.csv",
+      "sha": "6346aceea40fe4bd64b4cc59a4d1b482f51ea99d",
+      "size": 194856
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901104039_run3.db",
+      "sha": "f9d60acafdc999a2fc903b8489f2c759fa66b811",
+      "size": 1167360
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901104053_run4.csv",
+      "sha": "7e63dddce8c7c2242b1a94209f1fdba8d1ff07ff",
+      "size": 209151
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901104053_run4.db",
+      "sha": "0090e4500511f390a0559564a691872e9a047fc5",
+      "size": 1171456
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901104350_run5.csv",
+      "sha": "5bb45b8cdf8e30021ab9d3b01f48bea0b4aca82d",
+      "size": 173797
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250901104350_run5.db",
+      "sha": "4849b0b6bf933d2acc5b182a47debbe84f8edd94",
+      "size": 1081344
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250902115642_run2.csv",
+      "sha": "3433fe4e9662a686577d29f0dc08cc9c2fc7fa54",
+      "size": 204186
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250902115642_run2.db",
+      "sha": "72f71ff2ba9aa56346fb0d894eb7d5f4ab42c1c3",
+      "size": 1163264
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250906131052_run6.csv",
+      "sha": "811f7c77aff38495c54e6a60dbceb337a53a0b96",
+      "size": 198917
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250906131052_run6.db",
+      "sha": "24ffe732c5731103eca46af77af6cef0d4813dfc",
+      "size": 1138688
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250906131144_run09.csv",
+      "sha": "d9fedc3532951489223e615d0c232eaef3f91c05",
+      "size": 175487
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250906131144_run09.db",
+      "sha": "125914a8f6efe575bfe336e09734bb238d713fbb",
+      "size": 1126400
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250906131144_run10.csv",
+      "sha": "a2fca96c785f72e20fcc84e4f485d25d20ca6e56",
+      "size": 174619
+    },
+    {
+      "path": "simulations/llama70/nul_net/ReverseChronoFollowersPopularity/misinfo00/d21a100m00nnulrd_ll70u_20250906131144_run10.db",
+      "sha": "53817a97c5143c36e780fbcc1b3446dd42b2de5f",
+      "size": 1081344
+    }
+  ],
+  "scope": "Git tree only, not row inspection/completion/model identity or paper figure provenance; 78 CSV +78 DB; 7 directories10 each/1 directory8 each; pair correspondence is basename only"
+}

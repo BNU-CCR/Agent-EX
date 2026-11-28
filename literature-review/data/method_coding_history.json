@@ -25238,5 +25238,45 @@
     "batch": "FD",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fd_m021_formal/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_transferability",
+    "old": "机构库确认2026会议出版关系；现实资料校准候选，正式全文、DOI与首次在线日仍需核实。",
+    "new": "正式ICWSM经验初始化与负面模式验证先例；固定分析代码可区分逐文件相关、95分位与个体差值，但历史运行/模型和公开快照尚未建立对应。",
+    "date": "2026-11-28",
+    "batch": "FE",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fe_m021_artifacts/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_relevance_rationale",
+    "old": "机构库确认2026会议出版关系；现实资料校准候选，正式全文、DOI与首次在线日仍需核实。",
+    "new": "正式全文、DOI和2026-05-25已核；经验比较支持method_validation，非整体保真成功或跨情境效度。FE静态制品加强指标口径，不提高等级。",
+    "date": "2026-11-28",
+    "batch": "FE",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fe_m021_artifacts/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_pending_fields",
+    "old": "independent_heldout_empirical_validation;exact_model_digest/seeds/failure_and_run_provenance;correlation_pooling_vs_perrun_mapping;instantiated_bias_instructions_memory_Decision;stance_label_shift_numeric_mapping;FJ_weights_susceptibility_update_details;fixed_author_code_data_release_mapping;cross_context_validation",
+    "new": "independent_heldout_empirical_validation;exact_model_digest/seeds/failure_and_run_provenance;published_figures_vs_fixed_snapshot_78files_mapping;label_order_and_missing_cells_input_audit;instantiated_bias_instructions_memory_Decision;runtime_stance_label_numeric_parser;FJ_weights_susceptibility_update_details;cross_context_validation",
+    "date": "2026-11-28",
+    "batch": "FE",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fe_m021_artifacts/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_source",
+    "old": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_qualification_FC.md;reports/m021_formal_reading_FD.md;batches/method_round2/fd_m021_formal/version_block_checks.json",
+    "new": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_qualification_FC.md;reports/m021_formal_reading_FD.md;batches/method_round2/fd_m021_formal/version_block_checks.json;reports/m021_artifact_audit_FE.md;batches/method_round2/fe_m021_artifacts/source_manifest.json",
+    "date": "2026-11-28",
+    "batch": "FE",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fe_m021_artifacts/results.json"
   }
 ]

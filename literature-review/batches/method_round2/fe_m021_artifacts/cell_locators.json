@@ -1,0 +1,62 @@
+[
+  {
+    "file": "visualizations/nf_visualizations.ipynb",
+    "cell_index_zero_based": 2,
+    "source_sha256": "f2232fef0a35ef367734bb8acbef89df630014befe4f3ce3d44cb6177ac58c48",
+    "source_lines": 2,
+    "locators": [
+      "real_coalition_distrib"
+    ],
+    "executed": false
+  },
+  {
+    "file": "visualizations/nf_visualizations.ipynb",
+    "cell_index_zero_based": 6,
+    "source_sha256": "5c5c41b1c5a0674625cd83a83f2c1e350acd671401e54bf56ba247d3ac28d721",
+    "source_lines": 82,
+    "locators": [
+      "stats.pearsonr"
+    ],
+    "executed": false
+  },
+  {
+    "file": "visualizations/nf_visualizations.ipynb",
+    "cell_index_zero_based": 8,
+    "source_sha256": "392c081354b228d03e46ad2b06df80ad5b8c6a87751013e933014badef2d5be2",
+    "source_lines": 40,
+    "locators": [
+      "avg_matrix = matrices.mean"
+    ],
+    "executed": false
+  },
+  {
+    "file": "visualizations/nf_visualizations.ipynb",
+    "cell_index_zero_based": 14,
+    "source_sha256": "5c636dd2dff7feb0e29b8018729af39ec008d9fbb85e3214defcfd63abbd9700",
+    "source_lines": 80,
+    "locators": [
+      "stats.pearsonr"
+    ],
+    "executed": false
+  },
+  {
+    "file": "visualizations/nf_visualizations.ipynb",
+    "cell_index_zero_based": 30,
+    "source_sha256": "9926f37fd0f01e617929070b3c911bd17cf106cb1ea4c95fbe3f3e28275a75de",
+    "source_lines": 89,
+    "locators": [
+      "def plot_op_score_by_coalition"
+    ],
+    "executed": false
+  },
+  {
+    "file": "visualizations/nf_visualizations.ipynb",
+    "cell_index_zero_based": 32,
+    "source_sha256": "77332b0e75052ec9a813948ca51ed496e7b57d79b54d9114e65e38f76eff20cf",
+    "source_lines": 112,
+    "locators": [
+      "shift = sorted_scores"
+    ],
+    "executed": false
+  }
+]

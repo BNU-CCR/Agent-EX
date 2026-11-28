@@ -1,0 +1,20 @@
+{
+  "batch_id": "FE",
+  "date": "2026-11-28",
+  "expected_master_sha256": "83348afd2dad88e57b2b4d2d5d6d6db33497904fbab50344b9f65fdf24576fd6",
+  "updates": [
+    {
+      "record_id": "M021",
+      "search_id": "S-M2-J-M021;FC-06;FC-08;FD-01;FD-02;FD-04;FD-06;FE-01;FE-02;FE-03;FE-04;FE-05;FE-06",
+      "supplement_status": "FE fixed YAnalysis816ab704:12 selected text/notebook blobs verified; nf notebook static read; baseline tree78CSV/78DB not nominal80; data content and runtime YClient/YServer not inspected; no execution",
+      "method_transferability": "正式ICWSM经验初始化与负面模式验证先例；固定分析代码可区分逐文件相关、95分位与个体差值，但历史运行/模型和公开快照尚未建立对应。",
+      "method_relevance_rationale": "正式全文、DOI和2026-05-25已核；经验比较支持method_validation，非整体保真成功或跨情境效度。FE静态制品加强指标口径，不提高等级。",
+      "method_pending_fields": "independent_heldout_empirical_validation;exact_model_digest/seeds/failure_and_run_provenance;published_figures_vs_fixed_snapshot_78files_mapping;label_order_and_missing_cells_input_audit;instantiated_bias_instructions_memory_Decision;runtime_stance_label_numeric_parser;FJ_weights_susceptibility_update_details;cross_context_validation",
+      "method_coding_source": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_qualification_FC.md;reports/m021_formal_reading_FD.md;batches/method_round2/fd_m021_formal/version_block_checks.json;reports/m021_artifact_audit_FE.md;batches/method_round2/fe_m021_artifacts/source_manifest.json",
+      "notes": "Actual authorv2 read; formalPDF403 and exactformaldate/DOIpending. HTML prompt bodies missing despite headings. Empiricalcomparison is not claimed validationpass; no rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | FC:formalqualificationconfirmed;newformalPDF17pages/322561bytesacquired_identityfirstpageonly;previouscardauthorv2;maintextcomparisonnextFD;notnewfullread | FDformalPDFtargetedread;oldauthorv2cardarchived;selectedversionblockcomparison—notfullcollation. Three new evidenceunits/2existing sources updated;nominal80runsnotexecutioncertification;no fixedcode/run inspection. Included withsame methodgrades. | FE:fixed12selectedanalysis/notebookfilesGitblobverified;perCSV4/12Pearsonandq.95located;end-minus-startshift;78baselineCSV/78DBtreeonly,onecell8not10;notpaperexecutioncertification;runtimeparsernotinspected. Prior pending formal metadata and code acquisition notes are historical, superseded by FC-FE.",
+      "findings": "正式版经验比较及负面相关证据保持；FE固定nf笔记本逐CSV相关/联盟对q.95/末次减初次意见差值已定位。当前树78CSV/78DB非名义80，论文历史图/运行对应未核；非少跑或数值错误证明。",
+      "evidence_location": "Formalpp580–586;589–592;selectedcaptions593–594;FE YAnalysis816ab704 nf cells6/8/14/30/32"
+    }
+  ],
+  "new_records": []
+}

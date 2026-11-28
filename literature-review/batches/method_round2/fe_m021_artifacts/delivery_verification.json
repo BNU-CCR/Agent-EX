@@ -1,0 +1,34 @@
+{
+  "batch": "FE",
+  "date": "2026-11-28",
+  "master_changed": [
+    "M021"
+  ],
+  "matrix_changed": [
+    "VC253",
+    "VC255"
+  ],
+  "records": 238,
+  "cards": 87,
+  "validation_units": 255,
+  "selected_blob_identities": 12,
+  "baseline_same_stem_pairs": 78,
+  "source_operations": 1867,
+  "added_operations": 6,
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    256,
+    56,
+    1868,
+    16,
+    42,
+    31
+  ],
+  "method_grades_unchanged": true,
+  "author_code_executed": false,
+  "verification_note": "Prior scoped assertions passed before workbook check; read-only XLSX does not expose max_row so full row iteration used",
+  "scope": "Structural and selected static source checks,not full research acceptance or historical-run certification"
+}
