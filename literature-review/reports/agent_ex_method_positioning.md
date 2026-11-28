@@ -1,4 +1,6 @@
-> DU现行入口：[九问题综合](methods_review_current_synthesis.md)已更新；本报告标题下有当前判读，旧批数量只作快照。
+> 当前入口（2026-11-28，FL）：75正式纳入/88阅读卡/257证据单元，58载体/31条件投稿项，14日期待核。[九问题综合](methods_review_current_synthesis.md)与[原范围核对](delivery_scope_FL.md)为当前解释；下列带批次名的旧数量保留为历史快照。
+
+> 历史入口：DU：[九问题综合](methods_review_current_synthesis.md)已更新；本报告标题下有当前判读，旧批数量只作快照。
 
 > DF现行整合：[三研究推断与统计主张](uncertainty_claims_DF.md)及[九问题正文](methods_review_current_synthesis.md)已更新。124条/72卡/185单元、51纳入；区间宽度、覆盖、识别和外部效度分开，下列批次旧数量按历史理解。
 
@@ -12,9 +14,9 @@
 
 > DA补充（2026-11-28）：114条/71卡/181单元、50正式纳入。[两项辅助建模方法](modeller_assistance_DA.md)补足LLM作为建模者助手的用途；提取相似度、概念故事质量与实现/社会效度分开。原渠道优先级不变，未刷新政策。下文旧统计保留为历史快照。
 
-> CZ现行入口（2026-11-28）：112条/69卡/175证据单元，48正式纳入；完整综述尚未验收。[七文献评价对象综合](evaluation_targets_CZ.md)补框架、推断、统计、拟合与实现的证据边界。下文BR基础数量与分批补记保留为历史快照；当前统计以progress.md为准。
+> 历史入口：CZ（2026-11-28）：112条/69卡/175证据单元，48正式纳入；完整综述尚未验收。[七文献评价对象综合](evaluation_targets_CZ.md)补框架、推断、统计、拟合与实现的证据边界。下文BR基础数量与分批补记保留为历史快照；当前统计以progress.md为准。
 
-> BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
+> 历史入口：BR：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
 
 # Agent-EX的方法位置与可辩护贡献
 

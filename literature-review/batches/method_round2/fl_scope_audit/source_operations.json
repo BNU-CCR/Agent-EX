@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "FL-01",
+    "platform": "local_original_scope_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Read originaltask sections3/5/6/8/10/12+round2sections3/4/7/10;66stableIDs",
+    "source_url": "reports/delivery_scope_FL.md",
+    "status": "scoped_reconciliation_notglobalacceptance",
+    "notes": "Groupedlocaloperation;nointernetquery/fulltext/modelrun"
+  },
+  {
+    "search_id": "FL-02",
+    "platform": "local_original_scope_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Reconcilecurrentmaster75/cards88/257matrix/58venues/31candidates/14dates and4namedentries",
+    "source_url": "reports/delivery_scope_FL.md",
+    "status": "scoped_reconciliation_notglobalacceptance",
+    "notes": "Groupedlocaloperation;nointernetquery/fulltext/modelrun"
+  },
+  {
+    "search_id": "FL-03",
+    "platform": "local_original_scope_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Refresh217lexicalpolicycells/66closure rows;remove13extrauniversalinventorygates;retainactualcoveragegaps",
+    "source_url": "reports/delivery_scope_FL.md",
+    "status": "scoped_reconciliation_notglobalacceptance",
+    "notes": "Groupedlocaloperation;nointernetquery/fulltext/modelrun"
+  }
+]

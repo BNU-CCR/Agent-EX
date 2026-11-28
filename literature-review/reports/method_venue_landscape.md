@@ -1,10 +1,12 @@
-> FA：六个现有条件刊的官方日期APC已核，Social Networks官方范围现可读；是可选混合OA标价，不升推荐、不代表指南/索引已核。见[费用与范围](elsevier_fee_fields_FA.md)。
+> 当前入口（2026-11-28，FL）：75正式纳入/88阅读卡/257证据单元，58载体/31条件投稿项，14日期待核。[九问题综合](methods_review_current_synthesis.md)与[原范围核对](delivery_scope_FL.md)为当前解释；下列带批次名的旧数量保留为历史快照。
+
+> FA：六个地图刊（其中四个为当时条件投稿项）的官方日期APC已核，Social Networks官方范围现可读；是可选混合OA标价，不升推荐、不代表指南/索引已核。见[费用与范围](elsevier_fee_fields_FA.md)。
 
 > EX新增The American Statistician单篇M181已接收作者版，发表地图55入口（34刊/20会议/1仓库）；scope/政策未核、无新投稿推荐，仍30条件刊。见[版本与证据](repro_review_EX.md)。
 
 > EU补证：Ecological Modelling官方四类稿型与2026-10-05APC表已核（Hybrid OA USD3290未税）；指南403/篇幅/数据代码义务仍待核，领域与推荐等级不变。见[来源与边界](ecolmod_policy_EU.md)。
 
-> EQ现行入口（2026-11-28）：54载体=33期刊/20会议入口/1仓库，30条件期刊。41命名入口均登记，JASSS178发现集合摘要分流125主表17全文108摘要/43应用线索/10非研究；其余40无整刊目录完成认证。JASSS/CCR指南费用沿用BU/DW，DOAJ/Scopus官方快照已按ISSN确认，WoS子库仍待核。ACL2025开放编码、2026静态/动态AI评价与KDD研究助手各有不同先例，不互相替代或自动推荐；[九问题Q4/Q7](methods_review_current_synthesis.md)与[EQ审计](delivery_audit_EQ.md)为当前入口。下文旧批次数字按历史快照理解。
+> 历史入口：EQ（2026-11-28）：54载体=33期刊/20会议入口/1仓库，30条件期刊。41命名入口均登记，JASSS178发现集合摘要分流125主表17全文108摘要/43应用线索/10非研究；其余40无整刊目录完成认证。JASSS/CCR指南费用沿用BU/DW，DOAJ/Scopus官方快照已按ISSN确认，WoS子库仍待核。ACL2025开放编码、2026静态/动态AI评价与KDD研究助手各有不同先例，不互相替代或自动推荐；[九问题Q4/Q7](methods_review_current_synthesis.md)与[EQ审计](delivery_audit_EQ.md)为当前入口。下文旧批次数字按历史快照理解。
 
 > DK覆盖更新：2023余36摘要完成；JASSS63在库/18应用线索/10非研究/87待摘要。当前168记录/75卡/195单元、54纳入。新增均摘要候选，未核政策或升级成熟度；见[2023筛选](jasss_2023_screening_DK.md)。
 
@@ -18,7 +20,7 @@
 
 > BU现行政策：[两刊核查](priority_journal_policies_BU.md)。JASSS官方APC€800另适用VAT、可申请减免；CCR无APC。CCR现行OJS的接收后模板、复现检查、2000词公告与CCBY4取代2023PDF相应旧值。历史费用待核语句不作当前这两刊的状态，独立索引仍待核。
 
-> BR现行入口：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
+> 历史入口：BR：[九问题统一综合](methods_review_current_synthesis.md)整合本报告与后续专题；源文件固定于BQ960e0ca。以下分批接续语句按历史记录理解，当前任务以progress.md为准。
 
 # 方法研究发表生态：定向证据版
 

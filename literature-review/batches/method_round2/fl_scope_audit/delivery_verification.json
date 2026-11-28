@@ -1,0 +1,30 @@
+{
+  "batch": "FL",
+  "records": 238,
+  "included": 75,
+  "cards": 88,
+  "units": 257,
+  "venues": 58,
+  "candidates": 31,
+  "date_pending": 14,
+  "source_operations": 1899,
+  "original_requirement_ids": 66,
+  "requirement_classes_unchanged": true,
+  "named_entries": 41,
+  "mapped_entries": 38,
+  "entries_without_dated_formal_linked_record": 7,
+  "lexical_policy_cells": 217,
+  "workbook_rows": [
+    28,
+    239,
+    59,
+    32,
+    258,
+    56,
+    1900,
+    16,
+    42,
+    33
+  ],
+  "scope": "Scoped reconciliation and structural checks;not whole-goal completion or semantic field certification"
+}
