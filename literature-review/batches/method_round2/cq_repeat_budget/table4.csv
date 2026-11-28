@@ -1,0 +1,7 @@
+Simulation parameter,Value
+Number of agents,1500
+Node degree,250
+Number of simulations ( N ),5
+GA population size,50
+GA number of generations,10
+Individual runs,50

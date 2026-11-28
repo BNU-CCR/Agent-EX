@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "CQ-01",
+    "platform": "static_http",
+    "search_date": "2026-11-28",
+    "query_exact": "GET formal table4 or figure4",
+    "source_url": "https://link.springer.com/article/10.1007/s43681-024-00527-1/tables/4",
+    "status": "200",
+    "notes": "hashinmanifest"
+  },
+  {
+    "search_id": "CQ-02",
+    "platform": "static_http",
+    "search_date": "2026-11-28",
+    "query_exact": "GET formal table4 or figure4",
+    "source_url": "https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs43681-024-00527-1/MediaObjects/43681_2024_527_Fig4_HTML.png",
+    "status": "200",
+    "notes": "hashinmanifest"
+  },
+  {
+    "search_id": "CQ-03",
+    "platform": "local_primary_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "Read existing AppendixA.1/Table4 and visually inspectFig4;separate runlevels",
+    "source_url": "reports/repeat_budget_CQ.md",
+    "status": "targeted_appendix_and_visual_checked",
+    "notes": "Noexecution/rawrunbudgetaudit"
+  }
+]

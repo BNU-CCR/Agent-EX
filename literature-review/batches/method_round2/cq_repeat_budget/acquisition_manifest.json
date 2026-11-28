@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://link.springer.com/article/10.1007/s43681-024-00527-1/tables/4",
+    "status": 200,
+    "bytes": 217520,
+    "sha256": "318f544f46ba0e6094a6ad96382ba616bd107429dacc3a8e762fc50e5cf50b0a",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EN11_CQ_table4.html"
+  },
+  {
+    "url": "https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs43681-024-00527-1/MediaObjects/43681_2024_527_Fig4_HTML.png",
+    "status": 200,
+    "bytes": 61996,
+    "sha256": "ddb6b117239683650c70437285836fb486681c5a6c2927568980bac46b73c10f",
+    "path": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EN11_CQ_Fig4.png"
+  }
+]
