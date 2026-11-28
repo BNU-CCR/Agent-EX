@@ -7888,5 +7888,85 @@
     "batch": "CX-statistical-checks-and-guarantee-scope",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cx_statistical_model_checking/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "selected_methodological_overview;validation_plan_guidance;crossdisciplinary_critique",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "review_or_critique",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "question/purpose/referrent/version mapping useful;selected author guidance not benchmarked universal standard;formula3.52notadopted",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type",
+    "new": "underlying_examples_not_independently_reassessed;allPDFpages_not_separately_read;efficacy_of_author_method_selection_not_tested",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_evidence_location",
+    "old": "Official article abstract and citation metadata only",
+    "new": "Formal HTML §§1–4/Table1;formalPDFp12§3.52 visual formula check",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
+  },
+  {
+    "record_id": "M055",
+    "field": "method_coding_source",
+    "old": "reports/jasss_inventory_CU.md;batches/method_round2/cu_jasss_inventory/acquisition_manifest.json",
+    "new": "reading-cards/M055.md;reports/validation_support_CY.md;batches/method_round2/cy_validation_support_methods/",
+    "date": "2026-11-28",
+    "batch": "CY-validation-support-methods-and-scope",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cy_validation_support_methods/results.json"
   }
 ]

@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "CY-01",
+    "platform": "local_primary_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read M055 ninevalidation-supportingmethods/discussion andauthorTable1",
+    "source_url": "https://www.jasss.org/27/1/11.html",
+    "status": "formal_html_targeted_read_reused_CU",
+    "notes": "Selectedguidance notsystematicbenchmark;TableX/x noteffectivenessscores"
+  },
+  {
+    "search_id": "CY-02",
+    "platform": "static_http_get_and_visual_pdf_read",
+    "search_date": "2026-11-28",
+    "query_exact": "AcquireformalPDFandcheck§3.52formulaonp12",
+    "source_url": "https://www.jasss.org/27/1/11/11.pdf",
+    "status": "200_pdf_32pages_onlyp12_visual_crosscheck",
+    "notes": "1565608bytes/hash;notall32pagesnewread"
+  },
+  {
+    "search_id": "CY-03",
+    "platform": "ancillary_statistical_definition_search",
+    "search_date": "2026-11-28",
+    "query_exact": "site.itl.nist.gov familywise error 1 alpha multiple comparisons independent tests",
+    "source_url": "",
+    "status": "background_definition_discovery_not_corpus_search",
+    "notes": "Noearlypaperacquired/oradded;2022lowerboundforreviewunchanged;definitioncheckonly"
+  },
+  {
+    "search_id": "CY-04",
+    "platform": "ancillary_statistical_definition_search",
+    "search_date": "2026-11-28",
+    "query_exact": "site.online.stat.psu.edu \"1 -\" \"family\" \"alpha\" independent",
+    "source_url": "",
+    "status": "background_definition_discovery_not_corpus_search",
+    "notes": "Noearlypaperacquired/oradded;2022lowerboundforreviewunchanged;definitioncheckonly"
+  },
+  {
+    "search_id": "CY-05",
+    "platform": "web_open_official_documentation",
+    "search_date": "2026-11-28",
+    "query_exact": "Checkindividualvsfamilyerrorandsinglecomparisoncase",
+    "source_url": "https://support.minitab.com/en-us/minitab/help-and-how-to/statistical-modeling/anova/supporting-topics/multiple-comparisons/what-are-individual-and-family-error-rates/",
+    "status": "official_definition_read_not_literature_record",
+    "notes": "Undatedofficialdocumentation;notformalpublicationeligibilityevidence"
+  },
+  {
+    "search_id": "CY-06",
+    "platform": "static_http_get",
+    "search_date": "2026-11-28",
+    "query_exact": "Preserveofficialdefinitionresponse",
+    "source_url": "https://support.minitab.com/en-us/minitab/help-and-how-to/statistical-modeling/anova/supporting-topics/multiple-comparisons/what-are-individual-and-family-error-rates/",
+    "status": "200_html",
+    "notes": "hash in acquisitionmanifest;ancillaryonly"
+  },
+  {
+    "search_id": "CY-07",
+    "platform": "local_method_crosswalk_and_formula_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Transcribe10concerns/9methods and mapbenefits/limits;checksingle-testformula",
+    "source_url": "data/validation_support_methods_CY.csv",
+    "status": "review_guidance_saved_not_nine_empirical_experiments",
+    "notes": "AuthorX/x preserved;projectinferences separate;no protocolchanges"
+  }
+]

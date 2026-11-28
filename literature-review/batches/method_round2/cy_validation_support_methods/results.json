@@ -1,0 +1,29 @@
+{
+  "batch_id": "CY-validation-support-methods-and-scope",
+  "date": "2026-11-28",
+  "expected_master_sha256": "6e417eaa49ec4dbb15fa6674e0709e1d82222a438abe3a7a24b2f8c4844b9c39",
+  "updates": [
+    {
+      "record_id": "M055",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M055.md",
+      "research_question": "如何按用途、参照、领域与资源选择验证支持方法，避免将多方法指南当通用合格标准？",
+      "method_type": "selected_methodological_overview;validation_plan_guidance;crossdisciplinary_critique",
+      "method_maturity": "review_or_critique",
+      "method_evidence_level": "conceptual_claim",
+      "method_transferability": "question/purpose/referrent/version mapping useful;selected author guidance not benchmarked universal standard;formula3.52notadopted",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "underlying_examples_not_independently_reassessed;allPDFpages_not_separately_read;efficacy_of_author_method_selection_not_tested",
+      "method_evidence_location": "Formal HTML §§1–4/Table1;formalPDFp12§3.52 visual formula check",
+      "method_coding_source": "reading-cards/M055.md;reports/validation_support_CY.md;batches/method_round2/cy_validation_support_methods/",
+      "method_last_checked": "2026-11-28",
+      "reason": "正式全文/日期门通过；选择性方法综述与用途指南，不将综述覆盖当原创验证实验。",
+      "findings": "Nine selected guidance methods;Table1authorpotential noteffectiveness;empirical/roleplay/iGSSlabels needsource-specificmapping;formula3.52FWERmislabeled inHTML/PDF",
+      "notes": "摘要综述九种validation-supporting方法及各自局限；不把方法清单当统一强制标准或作者完成九项验证。 | Publication date is official; content/validation scope pending fulltext. No card or evidence unit added. | CY:targetedformalHTMLread;formalPDF32pagesonlyp12crosschecked;reviewnotnineexperiments;FWERformulaissueconfirmed;ancillarydefinitiondocnotcorpusaddition",
+      "search_id": "CU-31;CY-01;CY-02;CY-07",
+      "supplement_status": "formalPDF_acquired_p12_formula_checked;underlying_example_code_not_acquired_or_executed"
+    }
+  ],
+  "new_records": []
+}

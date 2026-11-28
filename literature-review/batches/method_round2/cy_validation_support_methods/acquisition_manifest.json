@@ -1,0 +1,19 @@
+[
+  {
+    "url": "https://www.jasss.org/27/1/11/11.pdf",
+    "status": 200,
+    "bytes": 1565608,
+    "sha256": "0079e4173f83d5b1d7ebed5f8219d68768635a9935b6c8f75916ce79cf423255",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M055_CY_formal.pdf",
+    "pages": 32,
+    "formula_page": 12
+  },
+  {
+    "url": "https://support.minitab.com/en-us/minitab/help-and-how-to/statistical-modeling/anova/supporting-topics/multiple-comparisons/what-are-individual-and-family-error-rates/",
+    "status": 200,
+    "bytes": 11861,
+    "sha256": "92109db696592f697605bf5563a5980e6b31df7e71522721d2d00bb121317b41",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M055_CY_ancillary_definition.html",
+    "scope": "ancillary statistical definition check only;not an eligible paper or independent corpus record"
+  }
+]

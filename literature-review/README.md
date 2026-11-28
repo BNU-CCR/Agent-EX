@@ -193,3 +193,5 @@
 - [参数可识别性与校准](reports/identifiability_CW.md)：M053合成真值/SBC/回拟合、观测与架构共同变化。
 
 - [统计检查与保证范围](reports/statistical_checks_CX.md)：M054重复/预热、14参数候选及闭源分析器的可审计边界。
+
+- [九类验证支持方法](reports/validation_support_CY.md)：M055用途/参照/局限、作者判断矩阵与正式版本公式核查。

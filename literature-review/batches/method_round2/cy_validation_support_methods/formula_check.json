@@ -1,0 +1,15 @@
+{
+  "source": "§3.52;formalPDFp12;HTMLsame",
+  "printed": "familywise_error=(1-alpha)^n",
+  "single_test_check": {
+    "alpha": 0.05,
+    "n": 1,
+    "printed_value": 0.95,
+    "required_single_test_error": 0.05
+  },
+  "independent_all_true_nulls_equal_size_formula": "FWER=1-(1-alpha)^n",
+  "conditions": "Independent tests;all true nulls;equal actual size alpha. Not asserted for arbitrary dependent tests.",
+  "definition_reference": "https://support.minitab.com/en-us/minitab/help-and-how-to/statistical-modeling/anova/supporting-topics/multiple-comparisons/what-are-individual-and-family-error-rates/",
+  "reference_role": "Official statistical software definition, ancillary check only;no new literature record or pre2022 paper added",
+  "boundary": "Confirms equation does not equal FWER under stated meaning;does not invalidate all conceptual guidance or rerun reviewed examples"
+}
