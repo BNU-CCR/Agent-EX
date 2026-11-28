@@ -1,0 +1,30 @@
+{
+  "pdf_pages": 15,
+  "read": "main1–9,limitations/ethics10,appendicesA–I12–15;references10–11notrescreened",
+  "visual_pages": [
+    5,
+    12,
+    15
+  ],
+  "model_rows": 16,
+  "nominal_test_pairs": 10000,
+  "country_question_cells": 71,
+  "prompt_probe_pairs": 2130,
+  "parse_exclusions": {
+    "Gemini": 1623,
+    "Llama_base": 12
+  },
+  "prior_dev_test": 10000,
+  "own_analytic_checks": {
+    "frequency_reward_human_sampling": 0.8285714285714285,
+    "frequency_reward_modal": 1,
+    "ratio_of_means_not_mean_squared_ratio": true
+  },
+  "conflicting_or_overscoped_prose": [
+    "everymodelbetween52.6and63.2_falsefor12of16Table2rows",
+    "bestaccuracy_notworstW1;GRPOdist_morecollapsedthanTuluDPO",
+    "crossentropytoconditionalmean_claimnotuniversal",
+    "Bayesconditionalmeanreference_notlowerboundforanypointpredictor"
+  ],
+  "limits": "Published table transcription/arithmetic and analytic scope checks;no raw WVS or model reanalysis"
+}

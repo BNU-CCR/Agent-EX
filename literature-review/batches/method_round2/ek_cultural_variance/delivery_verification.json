@@ -1,0 +1,24 @@
+{
+  "base": "8bdead5",
+  "master_changed": [
+    "M178"
+  ],
+  "matrix_old_prefix_preserved": 237,
+  "cards": 85,
+  "heading_cards": 79,
+  "inline_cards": 6,
+  "model_table_rows": 16,
+  "below_52_6_accuracy": 12,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    244,
+    1735,
+    11,
+    42
+  ],
+  "formal_bib": 60,
+  "status": "passed",
+  "limits": "Only published-source transcription/arithmetic/math scope;no raw WVS/modelrun;exactdatepending"
+}

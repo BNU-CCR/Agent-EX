@@ -1,0 +1,36 @@
+# M178 — 跨文化调查模拟：点预测、离散保持与训练比较的边界
+
+## 1. 书目与实际阅读
+Rojin Ziaei，The Limits of Simulated Societies: How Post-Training and Survey Fine-Tuning Erase Cross-Cultural Variance，IJCNLP-AACL2026 Long，3152–3166，DOI10.18653/2026.aacl-long.144。[官方15页PDF](https://aclanthology.org/2026.aacl-long.144.pdf)取得/hash；正文1–9、局限/伦理10、附录A–I（12–15）已读，参考10–11未重筛，p5/12/15目视。官网当前citation_publication_date只有2026/11；会期11月6–10日及Crossref created11月9日不替代首次在线日。正式身份已核，精确日期pending，保留candidate，不新建重复研究。
+
+## 2. 问题、用途与等级
+评价persona条件下WVS答案的点预测与群体分布能否同时保真，比较一般后训练、额外调查微调、解码和事后混合。method_validation / empirical_method_test / empirical_validation，限静态调查的人工经验参照；不是互动网络、文化发展轨迹或整个社会过程的外部验证。拟人化“consensus collapse”在此为统计输出压缩，不是交流使私人意见趋同的机制。
+
+## 3. 数据、人格与留出单位
+WVS Wave7十二国，21问题中15训练/6测试；100000训练pairs（GRPO50000）、10000测试pairs。persona约59–70词，含年龄/性别/国家、SACSECVAL/RESEMAVAL三档、信任/社团/宗教。不是只有人口属性。六题×十二国少GBR–Q189，共71cell；pairs不是10000独立受访者或71独立实验。按问题留出，不是已证明人员/国家/调查工具留出；同一respondent跨题关联、survey权重及实际唯一人数待数据核。全部英文prompt，而非英语国家原调查本地语言。
+
+## 4. 派生信息重叠与泛化
+附录B承认测试Q29/Q182是persona所含RESEMAVAL指数的组成项，训练Q6/Q185亦参与指数；Q57信任作persona不进评价。排除两个测试题后重算clean4，但没有用剔除成分后的指数重建persona，故只减少直接目标重叠，不认证严格无泄漏或全新价值领域泛化。表9：Tulu WVS-DPO sigma .50→.43，Qwen WVS-DPO .62→.64，跨模型方向不同；干净四题仍保留点准确/离散不一致的有限观察，不能替代输入信息审计。
+
+## 5. 指标、尺度与分母
+Accuracy/MAE按所有有效pairs汇总；W1及sigma_r按country–question cell计算后平均，sigma_r=SD预测/SD真人。主要衡量cell内离散，并非国家均值之间的方差或同persona条件方差。sigma_r=1也不能保证分布形状、个体匹配或动态机制正确，过离散不是更好。单cell比率.5对应该cell方差比.25，但全库平均SD比.5不推出全库方差保留25%（平均比率的平方不等平均平方）。4/10点原始序数量尺的MAE/W1非共同标准化距离；零真人方差cell/有效覆盖处理待代码。表2Gemini有效8377（剔1623/16.23%），Llama base9988（剔12）；其他10000，不能直接当完全相同样本排名。
+
+## 6. 训练比较与可归因范围
+11零样本checkpoint、5 WVS微调变体。Tulu轨迹base→SFT，ACC50.3→51.2、sigma1.22→.59；后续DPO .64、RLVR .60，非每阶段单调下降。base completion模板、后训练chat模板不同；附录I明确Qwen零样本API而微调本地，Tulu各检查点也跨HuggingFace API/本地，额外70B微调NF4。因此同家族比较加强关联解释，却未隔离所有服务、模板、精度与训练差异。GRPO-dist相对稀疏reward还把有效batch16改128，不是只改reward的纯消融。未测pretraining人口覆盖或logits，不把non-WEIRD差异直接归因训练语料不足。
+
+## 7. 主要结果与统计重复
+Tulu WVS-DPO最准确57.9/MAE.78，sigma .50，W1 .55；原Tulu DPO49.7/.95/.64/.69，说明位置/分布距离改善可伴离散下降。Qwen WVS-DPO38.4→53.0，sigma .73→.62，W1 1.01→.73。Qwen GRPO-dist sigma .21比Tulu .50更低。正文“every model”介于52.6全题mode与63.2cell-mode之间，与表2十二个低于52.6的行不符；cell-mode63.2为in-sample oracle，非新样本可直接部署基线。最准确不等最差W1，不沿用正文“least distributionally faithful”的泛化。95%CI来自1000次71cell cluster bootstrap，不是1000训练重复或seed/run置信度；同人跨题相关/配对和失败剔除需审计。
+
+## 8. 解码与分布引出
+两微调DPO扫T=0/.5/.7/1，Tulu sigma .50→.51、W1 .55→.54；Qwen .62→.65/W1 .73→.73，按印刷精度近乎不变但Tulu非逐字相同。只支持所测区间/两模型；未测T>1、其他采样或微调模型分布prompt。Qwen新greedy与主表126/10000答案不同，1.26%不是额外训练重复。GPT4o的2130-pair probe（71cell×30）distribution elicitation后采样：sigma .61→1.34、W1 .63→.57、ACC51.2→39.5，Q189恢复至1.02但Q1过离散2.02。故不同引出方式能改动方差、未证明找回真实个体信息，且未在微调模型验证。
+
+## 9. 混合校准与理论解释
+prior mixing按Bernoulli(alpha)为每pair选择Tulu WVS-DPO或Qwen零样本输出，不是logits平均/模型权重再训练。1995dev选alpha .95、8005留出，heldout sigma .51→.62、W1 .54→.51、ACC58.3→57.0；十routing seeds sigma .60±.02，区分seed42 .62与seed均值。Nigeria heldout .13→.36不可和全10000的.11混用。dev用真人答案择alpha，所以“推断不需真人数据”不等无经验校准。有限混合后残差不能证明所有output mixing不可恢复或定位深层表示损伤。
+
+作者将交叉熵最优点预测写作E[Y|X]、附录条件均值解释方差称任何点预测的floor，数学主张需限缩：类别交叉熵拟合条件概率；最终点决策取决损失/解码，不一概为均值。全方差恒等式适用于条件均值，不约束任意f(X)的方差；常数预测可为0。独立等概率二元X/Y，令f(X)=X即可sigma=1而无预测信息，说明非最优预测也可匹配边际离散。462K微数据、年龄按十岁分档、去小于5人cell估计的oracle .31是特定粗化输入与样本的条件均值参照，不是所有预测方法的可达下界。分布reward p(a|cell)/max p的期望由选mode最大化，不以保留完整频率为最优；两类.7/.3例，按真人概率抽样得.8286、一直mode得1。均为本项目解析范围核查，未重算WVS/模型。
+
+## 10. 对Agent-EX与发表生态
+直接帮助区分初始/个体点预测、组内分布、组间差异、互动过程与机制推断。Agent-EX中端点集中不能仅由曲线认定社会影响，须保留无社会暴露/信息流等已冻结对照；本篇不授权修改主模型、微调、矩阵/N/T/串行协议。后续方法稿可检验评价对象与引出/部署差异如何改变结论，不能用noise恢复方差冒充真人效度。IJCNLP-AACL正式NLP方法评价先例，单篇不证明持续社会模拟专门共同体；当前指南/完整目录未核，不升级投稿优先。
+
+## 11. 缺口与接续
+精确在线日、人员/问题/国家拆分、原始WVS/权重/零方差/解析缺失、模型snapshot/服务精度/训练重复、rawbootstrap、代码/数据可获取性仍待核。当前官方页未见论文专属代码/附件链接，不能据此断言无代码；未独立执行训练或模拟。下一项EL将M174/M176/M178的分布/点指标、split、校准与过程主张整合，随后继续M179开放式评价；不重复造库。[EK报告](../reports/cultural_variance_EK.md)。

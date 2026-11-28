@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "EK-01",
+    "platform": "official_pdf_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "15pp477375bytesSHA256",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144.pdf",
+    "status": "200_formal_PDF",
+    "notes": "Grouped operations,not independentqueries/experiments;no modeltraining or thirdpartyexecution"
+  },
+  {
+    "search_id": "EK-02",
+    "platform": "official_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "currentpage2026/11only;EAexistingCrossrefreuse_notnewdate",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144/",
+    "status": "200_page_month_pending",
+    "notes": "Grouped operations,not independentqueries/experiments;no modeltraining or thirdpartyexecution"
+  },
+  {
+    "search_id": "EK-03",
+    "platform": "method_fulltext",
+    "search_date": "2026-11-28",
+    "query_exact": "main1–9/limitations10/AppA–I12–15;refsnotrescreened",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144.pdf",
+    "status": "scoped_fulltext",
+    "notes": "Grouped operations,not independentqueries/experiments;no modeltraining or thirdpartyexecution"
+  },
+  {
+    "search_id": "EK-04",
+    "platform": "numeric_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "Table2sixteenpoints/parsecounts/71cells/1995+8005/2130",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144.pdf",
+    "status": "local_table_arithmetic",
+    "notes": "Grouped operations,not independentqueries/experiments;no modeltraining or thirdpartyexecution"
+  },
+  {
+    "search_id": "EK-05",
+    "platform": "visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "p5/12/15tables/split/precisionchecked",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144.pdf",
+    "status": "three_pages_inspected",
+    "notes": "Grouped operations,not independentqueries/experiments;no modeltraining or thirdpartyexecution"
+  },
+  {
+    "search_id": "EK-06",
+    "platform": "analytic_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "conditionalmeannotallpointfloor;frequencyrewardmodecounterexample",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144.pdf",
+    "status": "local_mathematical_scope_not_raw_reanalysis",
+    "notes": "Grouped operations,not independentqueries/experiments;no modeltraining or thirdpartyexecution"
+  },
+  {
+    "search_id": "EK-07",
+    "platform": "coding_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "M178candidateheld;1card6units;trainingbackendandstaticprocesslimits",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144.pdf",
+    "status": "local_update",
+    "notes": "Grouped operations,not independentqueries/experiments;no modeltraining or thirdpartyexecution"
+  }
+]

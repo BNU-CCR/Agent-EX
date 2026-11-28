@@ -1,0 +1,33 @@
+{
+  "batch_id": "EK-cultural-variance-training-measurement-boundaries",
+  "date": "2026-11-28",
+  "expected_master_sha256": "d2119b9a9e63abdbac86d839d1b72a052c123edd580a6d39b1b841423cc354c4",
+  "updates": [
+    {
+      "record_id": "M178",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M178.md",
+      "reason": "正式全文支持WVS点预测/组内离散与训练/引出比较；精确首发日pending，candidate保持。",
+      "research_question": "How do post-training, survey fine-tuning and elicitation affect individual prediction and within-country-question response dispersion?",
+      "method_type": "survey_response_validation;dispersion_diagnostic;posttraining_comparison;temperature_prompt_probe;heldout_prior_mixing",
+      "mechanisms": "value_encoded_persona;question_holdout;conditional_prediction;distribution_elicitation;probabilistic_model_routing",
+      "findings": "71country-questioncells/10000pairs;TuluWVS-DPOACC57.9/sigma.50whileW1improves.69to.55;API-localandpromptprecisionconfounds;twoindex-overlaptestitems/clean4notrebuiltpersona. GPT4odistributionprobeoverdisperses;prior1995dev8005testnotgeneralcure.Conditionalmeanfloor/CEmeanclaimsrequirelimiting.",
+      "related_versions": "OfficialACL15ppPDFread;currentofficialpage2026/11only;conferenceNov6–10andCrossrefcreatednotfirstonline",
+      "supplement_status": "AppA–Iread;officialpagepaper-specificcode/attachmentsnotlocated_notabsence;rawdata/code/runnotacquired",
+      "evidence_location": "OfficialPDFmain1–9/limitationsethics10/AppA–I12–15;Tables2–17;page5/12/15visual",
+      "relation_to_agent_ex": "Separate static individual/distribution/cellwithinspread from dynamic opinion mechanism;deployment/elicitation/split confounds;frozenmodelmatrixunchanged",
+      "notes": "EA bounded targeted public discovery;not full inventory/database export. No new card/evidence-unit/maturity upgrade.  EK official15ppscopedfullread;referencesnotrescreened. Ownmathcounterexamplesnotmodelruns. Datepending/candidateretained;codeabsenceunclaimed.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "Multi-estimand validation/split/measurement/deployment audit transferable;not proof of interactive social-process validity",
+      "method_relevance_rationale": "Empirical WVS diagnostic exposes accuracy/within-cell dispersion tradeoffs and elicitation sensitivity with bounded heldout mixture",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "exact_formal_first_online;rawWVS_weights_uniqueIDs_respondentsplit;zeroSDcell_parsingmissingness;modelrevision_backend_precision_runmapping_trainingrepeats;code_rawbootstrap;index_overlap_rebuiltpersona",
+      "method_evidence_location": "§3–5/Table2–7;AppB/C/E/I/Table9/13/17",
+      "method_coding_source": "reading-cards/M178.md;reports/cultural_variance_EK.md;batches/method_round2/ek_cultural_variance/reading_checks.json",
+      "method_last_checked": "2026-11-28",
+      "search_id": "EA-01;EA-06;EK-01;EK-02"
+    }
+  ],
+  "new_records": []
+}

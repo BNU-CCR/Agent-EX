@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://aclanthology.org/2026.aacl-long.144.pdf",
+    "status": 200,
+    "bytes": 477375,
+    "sha256": "61d573faabffb1108b0aef5aa7a31a4142bc0842a0af68976207931da555db3c",
+    "content_type": "application/pdf",
+    "pdf_signature": true
+  },
+  {
+    "url": "https://aclanthology.org/2026.aacl-long.144/",
+    "status": 200,
+    "bytes": 47073,
+    "sha256": "69cd9fc7414dde38d86ecc5f6d9c21c717957acc4058682666a3fdd318e616ea"
+  }
+]
