@@ -15108,5 +15108,95 @@
     "batch": "DK-JASSS-2023-remaining36-abstract-screen",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dk_jasss_2023_abstracts/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "grammar_based_iGSS;NSGAII_structure_search;reserved_temporal_empirical_validation",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Restrictedgrammar/heldouttime/theoreticalcredibilityworkflow;not multi_context or LLM validation",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_relevance_rationale",
+    "old": "摘要多目标语法遗传编程iGSS拟合男女饮酒趋势，并称保留趋势数据验证成功；同时质疑结构理论有效性，优先核验证设计。",
+    "new": "结构—参数搜索与真实保留年份验证的正例，同时揭示拟合/理论可信度分离。",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "new": "1984_vs1985start;157_vs156structures;fixed_code_target_identity;execution_budget;cross_population_shock_transfer",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_evidence_location",
+    "old": "Officialabstractonly;no fulltext/effectiveness inference",
+    "new": "FormalHTML§§3.8/4.12/4.20/5.5–5.6/6.2/6.5–6.13/7.3;Figures6/8",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
+  },
+  {
+    "record_id": "M091",
+    "field": "method_coding_source",
+    "old": "reports/jasss_2023_screening_DK.md;batches/method_round2/dk_jasss_2023_abstracts/screening.csv",
+    "new": "reading-cards/M091.md;reports/igss_temporal_validation_DL.md;batches/method_round2/dl_igss_temporal_validation/",
+    "date": "2026-11-28",
+    "batch": "DL-igss-temporal-validation-and-theoretical-credibility",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dl_igss_temporal_validation/results.json"
   }
 ]

@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DL-01",
+    "platform": "local_official_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "M091§3–7selectedListing/captions;reuseDK",
+    "source_url": "https://www.jasss.org/26/2/4.html",
+    "status": "formal_targeted_read",
+    "notes": "PrimaryformalHTMLreuse;twoPNGacquired;code/dataonlylocated;not independent database query"
+  },
+  {
+    "search_id": "DL-02",
+    "platform": "local_primary_design_extraction",
+    "search_date": "2026-11-28",
+    "query_exact": "Windows/targets/grammar/parameterselection/budget/countscope",
+    "source_url": "https://www.jasss.org/26/2/4.html",
+    "status": "source_design_checked_not_rerun",
+    "notes": "PrimaryformalHTMLreuse;twoPNGacquired;code/dataonlylocated;not independent database query"
+  },
+  {
+    "search_id": "DL-03",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Figure6targetandmodeltrajectories",
+    "source_url": "https://www.jasss.org/26/2/4/Figure6.png",
+    "status": "200_png_visual_checked",
+    "notes": "PrimaryformalHTMLreuse;twoPNGacquired;code/dataonlylocated;not independent database query"
+  },
+  {
+    "search_id": "DL-04",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Figure8reservedvalidationfront",
+    "source_url": "https://www.jasss.org/26/2/4/Figure8.png",
+    "status": "200_png_visual_checked",
+    "notes": "PrimaryformalHTMLreuse;twoPNGacquired;code/dataonlylocated;not independent database query"
+  },
+  {
+    "search_id": "DL-05",
+    "platform": "local_scope_comparison",
+    "search_date": "2026-11-28",
+    "query_exact": "Separateheldouttime/theory/transfer",
+    "source_url": "reports/igss_temporal_validation_DL.md",
+    "status": "bounded_synthesis_no_execution",
+    "notes": "PrimaryformalHTMLreuse;twoPNGacquired;code/dataonlylocated;not independent database query"
+  }
+]

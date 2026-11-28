@@ -1,9 +1,123 @@
 {
   "date": "2026-11-28",
-  "batch": "DJ",
+  "batch": "DL",
   "cards": [
     {
-      "path": "reading-cards/CN006.md",
+      "path": "reading-cards/R001.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R002.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R003.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R004.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R006.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R007.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R008.md",
       "heading_numbers": [],
       "inline_numbers": [
         1,
@@ -22,9 +136,8 @@
       "format": "inline"
     },
     {
-      "path": "reading-cards/CN007.md",
-      "heading_numbers": [],
-      "inline_numbers": [
+      "path": "reading-cards/R009.md",
+      "heading_numbers": [
         1,
         2,
         3,
@@ -37,8 +150,142 @@
         10,
         11
       ],
+      "inline_numbers": [],
       "recognized11": true,
-      "format": "inline"
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R010.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R013.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R014.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R015.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R016.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R017.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/R021.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
     },
     {
       "path": "reading-cards/EN01.md",
@@ -117,6 +364,44 @@
       "format": "inline"
     },
     {
+      "path": "reading-cards/CN006.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
+      "path": "reading-cards/CN007.md",
+      "heading_numbers": [],
+      "inline_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "recognized11": true,
+      "format": "inline"
+    },
+    {
       "path": "reading-cards/M001.md",
       "heading_numbers": [
         1,
@@ -155,7 +440,7 @@
       "format": "heading"
     },
     {
-      "path": "reading-cards/M003.md",
+      "path": "reading-cards/M005.md",
       "heading_numbers": [
         1,
         2,
@@ -193,7 +478,45 @@
       "format": "heading"
     },
     {
-      "path": "reading-cards/M005.md",
+      "path": "reading-cards/M003.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M010.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M011.md",
       "heading_numbers": [
         1,
         2,
@@ -251,44 +574,6 @@
     },
     {
       "path": "reading-cards/M008.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/M010.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/M011.md",
       "heading_numbers": [
         1,
         2,
@@ -1143,273 +1428,7 @@
       "format": "heading"
     },
     {
-      "path": "reading-cards/R001.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R002.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R003.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R004.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R006.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R007.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R008.md",
-      "heading_numbers": [],
-      "inline_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "recognized11": true,
-      "format": "inline"
-    },
-    {
-      "path": "reading-cards/R009.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R010.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R013.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R014.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R015.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R016.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R017.md",
-      "heading_numbers": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "inline_numbers": [],
-      "recognized11": true,
-      "format": "heading"
-    },
-    {
-      "path": "reading-cards/R021.md",
+      "path": "reading-cards/M091.md",
       "heading_numbers": [
         1,
         2,
@@ -1428,8 +1447,8 @@
       "format": "heading"
     }
   ],
-  "heading11": 69,
+  "heading11": 70,
   "inline11": 6,
-  "recognized11": 75,
+  "recognized11": 76,
   "boundary": "Structure recognition only, not semantic acceptance or complete primary evidence audit"
 }

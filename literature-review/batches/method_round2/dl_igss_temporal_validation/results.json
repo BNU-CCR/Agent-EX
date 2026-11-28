@@ -1,0 +1,34 @@
+{
+  "batch_id": "DL-igss-temporal-validation-and-theoretical-credibility",
+  "date": "2026-11-28",
+  "expected_master_sha256": "f90f0450bd31dbf112a73edfb42116412d318e7736218c58bbeeea19bee227aa",
+  "updates": [
+    {
+      "record_id": "M091",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M091.md",
+      "research_question": "iGSS结构搜索能否改善经验趋势解释，保留年份验证与理论可信度如何分别评估？",
+      "method_type": "grammar_based_iGSS;NSGAII_structure_search;reserved_temporal_empirical_validation",
+      "mechanisms": "habitual_vs_intentional;descriptive_injunctive_norms;autonomy;grammar_restricted_intention",
+      "findings": "NY1985–2010structuresearch/2011–2015reserved;holdoutkneeadvantagereduced;somecomplexoverfit;norm/autonomytheoryconflict;notLLM",
+      "reason": "正式日期与定向全文通过；确有保留年份经验检验，但同纽约聚合目标及理论可信度边界严格保留。",
+      "related_versions": "Formal publisher HTML sections3–7 selected Listing/captions;Figures6/8;no PDF/code equivalence claim",
+      "supplement_status": "Figures6and8acquired_visualchecked;Bitbucketcode_and_targetsonlylocated",
+      "evidence_location": "FormalHTML§§3–7;Listing1;Figures6/8",
+      "relation_to_agent_ex": "区分拟合、保留时间、跨人口、机制可信度；报告选择与目标动态范围，保留理论反例。传统ABM对照，不改变冻结LLM实验。",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "Restrictedgrammar/heldouttime/theoreticalcredibilityworkflow;not multi_context or LLM validation",
+      "method_relevance_rationale": "结构—参数搜索与真实保留年份验证的正例，同时揭示拟合/理论可信度分离。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "1984_vs1985start;157_vs156structures;fixed_code_target_identity;execution_budget;cross_population_shock_transfer",
+      "method_evidence_location": "FormalHTML§§3.8/4.12/4.20/5.5–5.6/6.2/6.5–6.13/7.3;Figures6/8",
+      "method_coding_source": "reading-cards/M091.md;reports/igss_temporal_validation_DL.md;batches/method_round2/dl_igss_temporal_validation/",
+      "method_last_checked": "2026-11-28",
+      "notes": "摘要多目标语法遗传编程iGSS拟合男女饮酒趋势，并称保留趋势数据验证成功；同时质疑结构理论有效性，优先核验证设计。 仅摘要初筛；成熟度/证据unclear，无新增卡或验证单元。 DL:正式定向全文后升级；保留期经验验证仅同地区聚合趋势，理论解释仍受反证；1984/1985和157/156差异保留；未执行。",
+      "search_id": "DK-11;DK-37;DK-38;DL-01;DL-02;DL-03;DL-04;DL-05"
+    }
+  ],
+  "new_records": []
+}

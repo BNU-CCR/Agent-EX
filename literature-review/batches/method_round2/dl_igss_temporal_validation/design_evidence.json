@@ -1,0 +1,71 @@
+{
+  "record_id": "M091",
+  "date": "2026-11-28",
+  "model": "rule-based C++ Repast HPC alcohol ABM; not LLM",
+  "synthetic_agents": 1000,
+  "age_range": [
+    18,
+    80
+  ],
+  "target_setting": "New York; BRFSS adjusted to alcohol sales",
+  "target_series": "3 measures x 2 sex groups = 6 annual aggregate series",
+  "measures": [
+    "past-year prevalence",
+    "grams ethanol/day among drinkers",
+    "drinking days/month among drinkers"
+  ],
+  "windows": {
+    "parameter_calibration_section_3_8": "1984-2010",
+    "structural_search_section_4_20": "1985-2010",
+    "reserved_validation_both": "2011-2015",
+    "unresolved": "Different start years retained; underlying target files not acquired"
+  },
+  "search": {
+    "baseline_LHS_parameter_samples": 1000,
+    "parameter_options": [
+      "male-best",
+      "female-best",
+      "balanced"
+    ],
+    "objectives": [
+      "male worst normalized error",
+      "female worst normalized error",
+      "tree node complexity"
+    ],
+    "runs_per_evaluation": 10,
+    "population": 500,
+    "maximum_generations": 50,
+    "reported_stop_generation": 45,
+    "crossover": 0.75,
+    "mutation": 0.25,
+    "reported_final_nondominated": 157,
+    "parameter_option_counts_section_6_2": [
+      17,
+      134,
+      5
+    ],
+    "parameter_option_sum": 156,
+    "count_boundary": "157 vs 156 remains unresolved; no reconstruction",
+    "complexity_range": [
+      10,
+      105
+    ],
+    "runtime_report": "about 3 hours/generation; author i9-7980XE 36 cores; total execution cost not authenticated"
+  },
+  "inference": [
+    "Actual reserved target years, same NY context; not new population or unconditional blind forecast",
+    "Knee candidate retains good heldout performance but relative advantage reduced",
+    "Some high-complexity structures deteriorate; smaller holdout dynamic range favors flat low-complexity models",
+    "Selected precalibrated parameter options and grammar-built constants, not robust full nested recalibration of every structure",
+    "Alternative norm/autonomy relationships conflict with wider evidence; original structure more theoretically consistent"
+  ],
+  "figure6_shading": {
+    "targets": "95% confidence intervals",
+    "model": "range of all model runs"
+  },
+  "repositories_located_only": [
+    "https://bitbucket.org/r01cascade/ge_norm_igss/",
+    "https://bitbucket.org/r01cascade/calibration_jasss/"
+  ],
+  "execution": "None; no code or targets acquired or rerun"
+}
