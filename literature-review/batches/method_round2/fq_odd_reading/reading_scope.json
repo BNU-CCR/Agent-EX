@@ -1,0 +1,43 @@
+{
+  "version": "Institutional hosted final-layout PDF/DOI10.1016/j.envsoft.2026.107203",
+  "pages": 13,
+  "bytes": 4374610,
+  "sha256": "1c3f1bde8ae81a625f7932678463976ebfbfaeb4021c6c27b19c78f419cb2647",
+  "sections_read": [
+    "2",
+    "3",
+    "4 selected narrative",
+    "5",
+    "6",
+    "7",
+    "8",
+    "AI declaration"
+  ],
+  "printed_pages_focused": [
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "selected_reference_page": 12,
+  "visuals": [
+    "Table1p3",
+    "Fig1p4",
+    "Fig2p4"
+  ],
+  "not_claimed": [
+    "all thirteen pages word by word",
+    "all Table2/3 or reference studies verified",
+    "supplement/rawScopus acquired",
+    "bibliometrics independently recalculated",
+    "all ODD journal policies confirmed",
+    "AI documentation benchmark or independent rerun"
+  ],
+  "source_limit": "Bodyneverexceeds30 statement vs Fig2Veterinarynear40 visible; do not make universal30claim",
+  "cross_reference": "M011 cited result reused_notnewexperiment"
+}

@@ -1,0 +1,32 @@
+{
+  "batch_id": "FQ",
+  "date": "2026-11-28",
+  "expected_master_sha256": "7d33ea9b4c9c852f2ee1555505907db04cd6a620b4ad0593c83f765e6c3437b0",
+  "updates": [
+    {
+      "record_id": "M012",
+      "screening_status": "included",
+      "reason": "2026-10-10正式在线与合法机构正式PDF已核；定向正文支持报告规范/复现边界的方法核心综述，非新验证成功实验。",
+      "research_question": "ODD的使用、扩展与局限如何支持模型描述、设计和标准生态？",
+      "method_type": "modelling_standard_review_with_descriptive_bibliometrics_and_experiential_guidance",
+      "reading_status": "fulltext_checked",
+      "supplement_status": "formal13pPDFfocusedread;SupplementaryData/ZIPnotacquired;no rawScopus/countreexecution",
+      "findings": "正文将描述/沟通与其他生命周期责任区分；开发流程主要经验基础；引用共现是使用代理，非实施质量；AI初稿需审阅且可能漏边界。",
+      "evidence_location": "formalPDF sec2-3/5-8 pp2-5,7-11;Table1/Fig1-2;selectedp12referenceM011",
+      "relation_to_agent_ex": "用于说明主体/状态/时间/调度、子模型和代码映射及评价边界；不凭ODD标题或文档完整认证运行合规/人类效度，不修改冻结方案。",
+      "card_path": "reading-cards/M012.md",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed. | CJ:DelftPDF4035717bytesHTML;hashinCJmanifest;noPDF/fulltext/dateupgrade;threeclassificationblanksretained | CS:newauthoruploadRG403;ESSredirectunavailable;DiVAAnubisdenial;UFZhistoricalpageonly;noPDF/date/classificationupgrade | DV:publisher-depositedCrossref200hasno published-online;print month/created not substituted for firstonline;date/status/grade unchanged | ES:verified abstract supports method_validity/method_evaluation purpose only;three blanks resolved as abstract_provisional. ASU issue2027-01-01 is not firstonline. Delft403HTML5717bytes;UFZ only older2006/2010 PDFs;no new fulltext/date/evidencegrade. | FP:newThueneninstitutionalPDF2004374610bytes13p;titleDOIandp1Availableonline2026-10-10confirmed;formalbodyacquirednotyetread;candidate/unclearunchanged;supersedespriorfulltext/datependingnotpriorfailureevidence | FQ:formal-focusedread2-3/5-8;Table1/Figs1-2visual;M01115/18iscitedexistingstudy_notnewexperiment;Fig2Veterinarynear40vsbodynever30retained;no supplement/rawdata/codeexecution",
+      "method_maturity": "review_or_critique",
+      "method_evidence_level": "conceptual_claim",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "分开规范模板/指南/术语与实际执行、模型描述与评价、文献引用代理与采用质量；同名变量/过程及算法标识支持追溯但不证明执行成功。",
+      "method_relevance_rationale": "直接讨论ODD标准、复现、AI辅助与共同体采纳，是方法核心；成熟度review_or_critique与conceptual_claim指规范功效主张，文献计数另记描述证据。",
+      "method_pending_fields": "supplementary_data_and_querydetails;citation_proxy_quality;formal_vs_ESSversion_collation;independent_standard_effect;AI_draft_edgecase_accuracy;uncollated_reference_studies",
+      "method_evidence_location": "sec3/Figs2-3citationproxy;5.2/Box1experience;6.1-6.3specification/code;7.2AI;7.3-7.4/8scope;M011referencep12",
+      "method_coding_source": "reading-cards/M012.md;reports/odd_standard_evidence_FQ.md;batches/method_round2/fq_odd_reading/reading_scope.json",
+      "method_last_checked": "2026-11-28",
+      "search_id": "S-M2-ODD-M012;S-M2-AD-Q5;S-M2-AD-NOTICE;S-M2-AD-UMU;CS-12;CS-15;CS-20;DV-01;DV-03;DV-04;ES-02;ES-05;ES-07;ES-09;FP-01;FP-02;FP-03;FP-04;FQ-01;FQ-02;FQ-03;FQ-04;FQ-05"
+    }
+  ],
+  "new_records": []
+}

@@ -1,0 +1,36 @@
+{
+  "checked": "2026-11-28",
+  "master_changed": [
+    "M012"
+  ],
+  "new_matrix": [
+    "VC264",
+    "VC265",
+    "VC266",
+    "VC267"
+  ],
+  "original_matrix_263_preserved": true,
+  "records": 240,
+  "included": 78,
+  "cards": 91,
+  "matrix": 267,
+  "formal_bib_ids_match": true,
+  "workbook_rows": [
+    28,
+    241,
+    62,
+    32,
+    268,
+    56,
+    1931,
+    16,
+    42,
+    36
+  ],
+  "requirement_ids_and_classes_preserved": 66,
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "limits": "No author code/model/supplement execution;not goal acceptance"
+}

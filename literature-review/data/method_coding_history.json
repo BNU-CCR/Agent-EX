@@ -25808,5 +25808,95 @@
     "batch": "FP",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fp_odd_acquisition/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_type",
+    "old": "pending_fulltext",
+    "new": "modelling_standard_review_with_descriptive_bibliometrics_and_experiential_guidance",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "review_or_critique",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "分开规范模板/指南/术语与实际执行、模型描述与评价、文献引用代理与采用质量；同名变量/过程及算法标识支持追溯但不证明执行成功。",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_relevance_rationale",
+    "old": "Verified publisher and coauthor-institution abstracts identify reflection on reporting-standard development, use and extensions;purpose/core classification provisional. No full-text maturity or validation judgment.",
+    "new": "直接讨论ODD标准、复现、AI辅助与共同体采纳，是方法核心；成熟度review_or_critique与conceptual_claim指规范功效主张，文献计数另记描述证据。",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;formal_body_reading;supplement_body_acquisition",
+    "new": "supplementary_data_and_querydetails;citation_proxy_quality;formal_vs_ESSversion_collation;independent_standard_effect;AI_draft_edgecase_accuracy;uncollated_reference_studies",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_evidence_location",
+    "old": "Publisher abstract/highlights; KNAW lines78–86 and bibliography;ES publisher Abstract/Highlights and ASU Abstract paragraphs1-3;notbody",
+    "new": "sec3/Figs2-3citationproxy;5.2/Box1experience;6.1-6.3specification/code;7.2AI;7.3-7.4/8scope;M011referencep12",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_coding_source",
+    "old": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md;reports/delivery_audit_DV.md;reports/odd_abstract_classification_ES.md;batches/method_round2/es_odd_abstract_classification/coding_decisions.json",
+    "new": "reading-cards/M012.md;reports/odd_standard_evidence_FQ.md;batches/method_round2/fq_odd_reading/reading_scope.json",
+    "date": "2026-11-28",
+    "batch": "FQ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fq_odd_reading/results.json"
   }
 ]
