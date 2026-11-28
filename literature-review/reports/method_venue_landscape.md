@@ -1,3 +1,5 @@
+> FA：六个现有条件刊的官方日期APC已核，Social Networks官方范围现可读；是可选混合OA标价，不升推荐、不代表指南/索引已核。见[费用与范围](elsevier_fee_fields_FA.md)。
+
 > EX新增The American Statistician单篇M181已接收作者版，发表地图55入口（34刊/20会议/1仓库）；scope/政策未核、无新投稿推荐，仍30条件刊。见[版本与证据](repro_review_EX.md)。
 
 > EU补证：Ecological Modelling官方四类稿型与2026-10-05APC表已核（Hybrid OA USD3290未税）；指南403/篇幅/数据代码义务仍待核，领域与推荐等级不变。见[来源与边界](ecolmod_policy_EU.md)。

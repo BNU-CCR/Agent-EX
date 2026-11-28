@@ -1,0 +1,39 @@
+{
+  "batch": "FA",
+  "checks": "passed",
+  "base": "4bf950c",
+  "master_cards_matrix_bibs_current_sources": "unchangednormalizedtext",
+  "changed_rows": {
+    "method_venue_map": [
+      "SMPT",
+      "EMS",
+      "SOCNET",
+      "INS",
+      "ESWA",
+      "IPM"
+    ],
+    "journal_submission_candidates": [
+      "SMPT",
+      "EMS",
+      "ESWA",
+      "IPM"
+    ]
+  },
+  "recommendation_grades": "unchanged",
+  "APC": "sixexactISSN/table/currency/date/untaxedrows rereadmatched",
+  "scope": "SocialNetworksofficialshop200contentread;guidenotread",
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    253,
+    56,
+    1843,
+    12,
+    42,
+    30
+  ],
+  "cover_B7": 68,
+  "limits": "Sixmappedvenues/fourexistingcandidates;INSandSOCNETnotaddedtosubmissiontable;no new experiment/fulltext/index/mandatoryfeeclaim"
+}

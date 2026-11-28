@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "FA-01",
+    "platform": "official_pricing_page",
+    "search_date": "2026-11-28",
+    "query_exact": "Publisherpricingindexcurrent page links APCXLSX;subjecttochange/discounts",
+    "source_url": "https://www.elsevier.com/about/policies-and-standards/pricing/journals",
+    "status": "read",
+    "notes": "Groupedsourceoperation;not5queries/experiments;no recommendationupgrade"
+  },
+  {
+    "search_id": "FA-02",
+    "platform": "official_APC_file",
+    "search_date": "2026-11-28",
+    "query_exact": "GET200176582bytes/SHAabaf1002;Oct5date;6exactISSN/title/currencyrows;titlevariantsretained",
+    "source_url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "status": "six_rows_verified",
+    "notes": "Groupedsourceoperation;not5queries/experiments;no recommendationupgrade"
+  },
+  {
+    "search_id": "FA-03",
+    "platform": "official_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "SocialNetworksshop200/ISSN0378-8733;network contribution/scopeconditions;notfullguide",
+    "source_url": "https://shop.elsevier.com/journals/social-networks/0378-8733",
+    "status": "scope_content_verified",
+    "notes": "Groupedsourceoperation;not5queries/experiments;no recommendationupgrade"
+  },
+  {
+    "search_id": "FA-04",
+    "platform": "policy_coding",
+    "search_date": "2026-11-28",
+    "query_exact": "Sixexistingconditionalvenue/candidaterows datedoptionalOAfees;recommendationgradesunchanged",
+    "source_url": "data/journal_APC_rows_FA.csv",
+    "status": "updated",
+    "notes": "Groupedsourceoperation;not5queries/experiments;no recommendationupgrade"
+  },
+  {
+    "search_id": "FA-05",
+    "platform": "fit_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Network asobject/process/method distinctfromnetwork asbackground;no new mandatoryexperiment",
+    "source_url": "reports/elsevier_fee_fields_FA.md",
+    "status": "bounded_inference",
+    "notes": "Groupedsourceoperation;not5queries/experiments;no recommendationupgrade"
+  }
+]

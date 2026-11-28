@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "status": 200,
+    "bytes": 176582,
+    "sha256": "abaf10026407fb688da92a87ade7583fd4d0d69bcac6a0ad19eeb999ac6c119a",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FA_official_APC.xlsx"
+  },
+  {
+    "url": "https://shop.elsevier.com/journals/social-networks/0378-8733",
+    "final_url": "https://shop.elsevier.com/journals/social-networks/0378-8733",
+    "status": 200,
+    "bytes": 181539,
+    "sha256": "f94936f4768d0aacddde8fc3ee0a351c4971569c2c14c6be200cf92b02e45f8a",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FA_social_networks.response"
+  }
+]

@@ -1,0 +1,106 @@
+{
+  "acquisition": {
+    "url": "https://legacyfileshare.elsevier.com/els_com_pricing/article-publishing-charge.xlsx",
+    "status": 200,
+    "bytes": 176582,
+    "sha256": "abaf10026407fb688da92a87ade7583fd4d0d69bcac6a0ad19eeb999ac6c119a",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FA_official_APC.xlsx"
+  },
+  "date_cell": "All prices excluding taxes. Prices as of date: 05-Oct-2026",
+  "headers": [
+    "ISSN",
+    "Title",
+    "Business model",
+    "USD",
+    "EUR",
+    "GBP",
+    "JPY"
+  ],
+  "matches": [
+    {
+      "venue_id": "EMS",
+      "sheet": "APC",
+      "row": 994,
+      "values": [
+        "1364-8152",
+        "Environmental Modelling and Software",
+        "Hybrid Open Access",
+        3570,
+        3260,
+        2860,
+        464930
+      ]
+    },
+    {
+      "venue_id": "ESWA",
+      "sheet": "APC",
+      "row": 1072,
+      "values": [
+        "0957-4174",
+        "Expert Systems With Applications",
+        "Hybrid Open Access",
+        3630,
+        3310,
+        2910,
+        472740
+      ]
+    },
+    {
+      "venue_id": "IPM",
+      "sheet": "APC",
+      "row": 1346,
+      "values": [
+        "0306-4573",
+        "Information Processing and Management",
+        "Hybrid Open Access",
+        3350,
+        3060,
+        2680,
+        436280
+      ]
+    },
+    {
+      "venue_id": "INS",
+      "sheet": "APC",
+      "row": 1348,
+      "values": [
+        "0020-0255",
+        "Information Sciences",
+        "Hybrid Open Access",
+        3040,
+        2770,
+        2430,
+        395900
+      ]
+    },
+    {
+      "venue_id": "SMPT",
+      "sheet": "APC",
+      "row": 2811,
+      "values": [
+        "1569-190X",
+        "Simulation Modelling Practice and Theory",
+        "Hybrid Open Access",
+        2970,
+        2710,
+        2380,
+        386790
+      ]
+    },
+    {
+      "venue_id": "SOCNET",
+      "sheet": "APC",
+      "row": 2827,
+      "values": [
+        "0378-8733",
+        "Social Networks",
+        "Hybrid Open Access",
+        3960,
+        3610,
+        3170,
+        515720
+      ]
+    }
+  ],
+  "matching": "ExactISSN key;publisher titleandampersand variants retained asprinted;no fuzzymatch"
+}
