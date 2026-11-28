@@ -1,0 +1,32 @@
+{
+  "base": "8c840fd",
+  "old211_records_unchanged": true,
+  "old77_cards_unchanged": true,
+  "old203_units_unchanged": true,
+  "CU_unchanged": true,
+  "official_abstracts_read": 26,
+  "response_hashes": 26,
+  "new_candidates": 19,
+  "application_leads_not_final_excluded": 7,
+  "remaining_abstracts": 0,
+  "coverage_counts": {
+    "application_lead_retained_not_added": 43,
+    "existing_master_record": 19,
+    "added_abstract_candidate": 106,
+    "nonresearch_entry": 10
+  },
+  "catalogue_master_reading": {
+    "fulltext_checked": 15,
+    "abstract_checked": 110
+  },
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    204,
+    1623,
+    42
+  ],
+  "maximum_text_cell": 29142,
+  "limits": "Bounded discovered directory abstract screening only;no independent dual/fulltext/database recall claim"
+}

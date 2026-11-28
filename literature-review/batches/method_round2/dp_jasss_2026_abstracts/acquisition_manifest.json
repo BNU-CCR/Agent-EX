@@ -1,0 +1,1624 @@
+[
+  {
+    "screen_id": "DP2026-01",
+    "url": "https://www.jasss.org/29/1/1.html",
+    "queue_title": "Effect of Network Homophily and Partisanship on Social Media to “Oil Spill” Polarizations",
+    "status": 200,
+    "bytes": 106316,
+    "sha256": "8515b012e624648185c0a08ac6a22d333504859ef82e297b8aa5c1dd788ecea0",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_01.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Takuya Nagura",
+        "Eizo Akiyama"
+      ],
+      "citation_author_email": [
+        "takuya.nagura@akiyama-lab.net",
+        "eizo@sk.tsukuba.ac.jp"
+      ],
+      "citation_author_institution": [
+        "University of Tsukuba",
+        "University of Tsukuba"
+      ],
+      "citation_title": [
+        "Effect of Network Homophily and Partisanship on Social Media to “Oil Spill” Polarizations"
+      ],
+      "citation_publication_date": [
+        "2026-01-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5807"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Oil Spill Polarization, Network Homophily, Partisanship, Multi Agent Simulation, Cognitive Balance Theory, Social Media"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/1/1/1.pdf"
+      ]
+    },
+    "visible_title": "Effect of Network Homophily and Partisanship on Social Media to “Oil Spill” Polarizations",
+    "visible_publication_context": "Published: 31-Jan-2026 Abstract Recent research has been conducted on \"oil spill polarization,\" whereby preferences for topic",
+    "abstract_read": true,
+    "abstract_summary": "摘要身份/同质网络解释非政治议题外溢极化，缩小模拟与中等党派人群观察差异；不当现实验证。",
+    "verified_title": "Effect of Network Homophily and Partisanship on Social Media to “Oil Spill” Polarizations"
+  },
+  {
+    "screen_id": "DP2026-02",
+    "url": "https://www.jasss.org/29/1/3.html",
+    "queue_title": "Fallow Land Simulations to Fight Against Soil Degradation: Engaging Stakeholders with Model Exploration",
+    "status": 200,
+    "bytes": 190266,
+    "sha256": "d3b422d66015fc5f4e9e05b06c5fc5ef1e74613e8ea31dc2ca6b64e18b11f51a",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_02.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Paul Chapron",
+        "Mathieu Leclaire",
+        "Arthur Scriban",
+        "Dominique Masse",
+        "Romain Reuillon",
+        "Abigail Fallot",
+        "Etienne Delay"
+      ],
+      "citation_author_email": [
+        "paul.chapron@ign.fr",
+        "mathieu.leclaire@iscpif.fr",
+        "arthur.scriban@cirad.fr",
+        "dominique.masse@ird.fr",
+        "romain.reuillon@iscpif.fr",
+        "abigail.fallot@cirad.fr",
+        "etienne.delay@cirad.fr"
+      ],
+      "citation_author_institution": [
+        "Université Gustave Eiffel, ENSG, IGN, LASTIG",
+        "Institut des Systhèmes Complexes - CNRS",
+        "CIRAD, UMR SELMET",
+        "IRD, UMR Eco&Sols Pole de Recherche (ex-LMI) IESOL - (ISRA-UCAD-UT-IO-INERA-IRD)",
+        "Institut des Systhèmes Complexes - CNRS",
+        "CIRAD, UMR SENS",
+        "CIRAD, UMR SELMET"
+      ],
+      "citation_title": [
+        "Fallow Land Simulations to Fight Against Soil Degradation: Engaging Stakeholders with Model Exploration"
+      ],
+      "citation_publication_date": [
+        "2026-01-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5816"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Social Solidarity, Agro-Pastoral Systems, Soil Fertility, Agent-Based Modeling, Model Calibration, Senegal"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/1/3/3.pdf"
+      ]
+    },
+    "visible_title": "Fallow Land Simulations to Fight Against Soil Degradation: Engaging Stakeholders with Model Exploration",
+    "visible_publication_context": "Published: 31-Jan-2026 Abstract This methodological paper forms part of a modelling approach conducted in the Senegalese grou",
+    "abstract_read": true,
+    "abstract_summary": "摘要共同构模与不可测社会团结因素校准，结合地方知识/生态数据重现25年历史；过程与不可测构念识别待核。",
+    "verified_title": "Fallow Land Simulations to Fight Against Soil Degradation: Engaging Stakeholders with Model Exploration"
+  },
+  {
+    "screen_id": "DP2026-03",
+    "url": "https://www.jasss.org/29/1/4.html",
+    "queue_title": "BotSim: Mitigating the Formation of Conspiratorial Societies with Useful Bots",
+    "status": 200,
+    "bytes": 184900,
+    "sha256": "d75898762a5afb128fff4635b2bf869905bd8e3d22e36944e4dd4b173d2e3f80",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_03.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Lynnette Hui Xian Ng",
+        "Kathleen M. Carley"
+      ],
+      "citation_author_email": [
+        "lynnetteng@cmu.edu",
+        "carley@andrew.cmu.edu"
+      ],
+      "citation_author_institution": [
+        "Carnegie Mellon University",
+        "Carnegie Mellon University"
+      ],
+      "citation_title": [
+        "BotSim: Mitigating the Formation of Conspiratorial Societies with Useful Bots"
+      ],
+      "citation_publication_date": [
+        "2026-01-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5881"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent Based Modeling, Cyber Social Agents, Social Media Bots"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/1/4/4.pdf"
+      ]
+    },
+    "visible_title": "BotSim: Mitigating the Formation of Conspiratorial Societies with Useful Bots",
+    "visible_publication_context": "Published: 31-Jan-2026 Abstract Societies can become a conspiratorial society where there is a majority of humans that believ",
+    "abstract_read": true,
+    "abstract_summary": "摘要BotSim小世界中信息纠正与正面消息bot比较，区分生成/消费/传播；AI措辞不自动意味着LLM或真人效度。",
+    "verified_title": "BotSim: Mitigating the Formation of Conspiratorial Societies with Useful Bots"
+  },
+  {
+    "screen_id": "DP2026-04",
+    "url": "https://www.jasss.org/29/1/5.html",
+    "queue_title": "OPOSim: An Agent-Based Model for Evaluating Long-Term Effects of Opioid Policy Outcomes in North Carolina",
+    "status": 200,
+    "bytes": 189398,
+    "sha256": "f2f29220402b2d898029c68e144e9884a3f79ead0ba6a3d79d0d0a13bb796b44",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_04.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Michael A. Duprey",
+        "Joëlla W. Adams",
+        "Sazid S. Khan",
+        "Georgiy V. Bobashev"
+      ],
+      "citation_author_email": [
+        "mduprey@rti.org",
+        "jadams@rti.org",
+        "sskhan@rti.org",
+        "gbobashev@rti.org"
+      ],
+      "citation_author_institution": [
+        "RTI International",
+        "RTI International",
+        "RTI International",
+        "RTI International"
+      ],
+      "citation_title": [
+        "OPOSim: An Agent-Based Model for Evaluating Long-Term Effects of Opioid Policy Outcomes in North Carolina"
+      ],
+      "citation_publication_date": [
+        "2026-01-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5892"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modeling, Social Networks, Opioid Epidemic, Opioid Use Disorder, Prevention Strategies, Public Health Policy"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/1/5/5.pdf"
+      ]
+    },
+    "visible_title": "OPOSim: An Agent-Based Model for Evaluating Long-Term Effects of Opioid Policy Outcomes in North Carolina",
+    "visible_publication_context": "Published: 31-Jan-2026 Abstract The opioid epidemic remains a critical public health issue in the United States, with North C",
+    "abstract_read": true,
+    "abstract_summary": "北卡阿片政策长时滞应用，保留网络行为/政策背景，摘要不足支持通用方法效果。",
+    "verified_title": "OPOSim: An Agent-Based Model for Evaluating Long-Term Effects of Opioid Policy Outcomes in North Carolina"
+  },
+  {
+    "screen_id": "DP2026-05",
+    "url": "https://www.jasss.org/29/1/7.html",
+    "queue_title": "All Models Are Wrong, but Can They Be Useful? Lessons from COVID-19 Agent-Based Models: A Systematic Review",
+    "status": 200,
+    "bytes": 113099,
+    "sha256": "571e81c04bfff65a60224394228f5acccaa58d610bc01916a7e381c3dc960da5",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_05.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Emma Von Hoene",
+        "Sara Von Hoene",
+        "Szandra Péter",
+        "Ethan Hopson",
+        "Emily Csizmadia",
+        "Faith Fenyk",
+        "Kai Barner",
+        "Timothy Leslie",
+        "Hamdi Kavak",
+        "Andreas Züfle",
+        "Amira Roess",
+        "Taylor Anderson"
+      ],
+      "citation_author_email": [
+        "evonhoen@gmu.edu",
+        "svonhoen@gmu.edu",
+        "speter26@gmu.edu",
+        "ehopson2@gmu.edu",
+        "ecsizmad@gmu.edu",
+        "ffenyk@gmu.edu",
+        "kbarner@gmu.edu",
+        "tleslie@gmu.edu",
+        "hkavak@gmu.edu",
+        "azufle@emory.edu",
+        "aroess@gmu.edu",
+        "tander6@gmu.edu"
+      ],
+      "citation_author_institution": [
+        "George Mason University",
+        "George Mason University",
+        "George Mason University",
+        "George Mason University",
+        "George Mason University",
+        "George Mason University",
+        "George Mason University",
+        "George Mason University",
+        "George Mason University",
+        "Emory University",
+        "George Mason University",
+        "George Mason University"
+      ],
+      "citation_title": [
+        "All Models Are Wrong, but Can They Be Useful? Lessons from COVID-19 Agent-Based Models: A Systematic Review"
+      ],
+      "citation_publication_date": [
+        "2026-01-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5937"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "COVID-19, Agent-Based Models, Infectious Disease Modeling, Systematic Literature Review"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/1/7/7.pdf"
+      ]
+    },
+    "visible_title": "All Models Are Wrong, but Can They Be Useful? Lessons from COVID-19 Agent-Based Models: A Systematic Review",
+    "visible_publication_context": "Published: 31-Jan-2026 Abstract The COVID-19 pandemic prompted a surge in computational models to simulate disease dynamics a",
+    "abstract_read": true,
+    "abstract_summary": "摘要系统回顾536篇2020–2023疫情ABM并编码九用途标准；本库纳2026综述一条，原样本年代/比例另记，不追加536。",
+    "verified_title": "All Models Are Wrong, but Can They Be Useful? Lessons from COVID-19 Agent-Based Models: A Systematic Review"
+  },
+  {
+    "screen_id": "DP2026-06",
+    "url": "https://www.jasss.org/29/2/1.html",
+    "queue_title": "Success-Driven User Activity Contributes to Online Polarization",
+    "status": 200,
+    "bytes": 132052,
+    "sha256": "aef8a24e8a9c4107efd1b33d3a885582ff43eebab6319ac1eaafdd4b79d18ba8",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_06.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Sophia Horn",
+        "Sven Banisch",
+        "Veronika Batzdorfer",
+        "Andreas Reitenbach",
+        "Fabio Sartori",
+        "Daniel Schwabe",
+        "Michael Mäs"
+      ],
+      "citation_author_email": [
+        "sophia.horn@kit.edu",
+        "sven.banisch@kit.edu",
+        "veronika.batzdorfer@kit.edu",
+        "andreas.reitenbach@kit.edu",
+        "fabio.sartori@kit.edu",
+        "dschwabe@gmail.com",
+        "michael.maes@kit.edu"
+      ],
+      "citation_author_institution": [
+        "Karlsruhe Institute of Technology, Institute of Technology Futures, Department of Sociology",
+        "Karlsruhe Institute of Technology, Institute of Technology Futures, Department of Sociology",
+        "Karlsruhe Institute of Technology, Institute of Technology Futures, Department of Sociology",
+        "Karlsruhe Institute of Technology, Institute of Technology Futures, Department of Sociology",
+        "Karlsruhe Institute of Technology, Institute of Technology Futures, Department of Sociology",
+        "Visiting Researcher, Jozef Stefan Institute",
+        "Karlsruhe Institute of Technology, Institute of Technology Futures, Department of Sociology"
+      ],
+      "citation_title": [
+        "Success-Driven User Activity Contributes to Online Polarization"
+      ],
+      "citation_publication_date": [
+        "2026-03-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5947"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Opinion Polarization, Success-Driven User Activity, Online Social Networks, Agent-Based Modeling, Reinforcement Learning"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/2/1/1.pdf"
+      ]
+    },
+    "visible_title": "Success-Driven User Activity Contributes to Online Polarization",
+    "visible_publication_context": "Published: 31-Mar-2026 Abstract Online social networks are often seen as a breeding ground of political polarization. This st",
+    "abstract_read": true,
+    "abstract_summary": "摘要Axelrod扩展成功驱动活动/富者愈富可使全连接等情形极化，作为注意/活动异质机制直接对照。",
+    "verified_title": "Success-Driven User Activity Contributes to Online Polarization"
+  },
+  {
+    "screen_id": "DP2026-07",
+    "url": "https://www.jasss.org/29/2/2.html",
+    "queue_title": "The Role of Monetary Evaluation and Social Pressure Within the Residential Rooftop Photovoltaic Systems Diffusion Model PVact",
+    "status": 200,
+    "bytes": 175561,
+    "sha256": "54d386047be1168b368d46b9ae93258713dd0e20238b0f94c2325246fe9c8da7",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_07.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Simon Johanning",
+        "Daniel Abitz",
+        "Stefan Kühne",
+        "Thomas Bruckner"
+      ],
+      "citation_author_email": [
+        "johanning@wifa.uni-leipzig.de",
+        "daniel.abitz@uni-leipzig.de",
+        "stefan.kuehne@uni-leipzig.de",
+        "bruckner@wifa.uni-leipzig.de"
+      ],
+      "citation_author_institution": [
+        "Institute for Infrastructure and Resources Management (IIRM), University Leipzig",
+        "Universitätsrechenzentrum der Uni Leipzig",
+        "Universitätsrechenzentrum der Uni Leipzig",
+        "Institute for Infrastructure and Resources Management (IIRM), University Leipzig"
+      ],
+      "citation_title": [
+        "The Role of Monetary Evaluation and  Social Pressure Within the Residential Rooftop Photovoltaic Systems Diffusion Model PVact"
+      ],
+      "citation_publication_date": [
+        "2026-03-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5952"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Photovoltaic Adoption Decisions, Monetary Assessment of Household Photovoltaic, Normative Pressure, Exploratory Modeling, Computational Social Sciences"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/2/2/2.pdf"
+      ]
+    },
+    "visible_title": "The Role of Monetary Evaluation and  Social Pressure Within the Residential Rooftop Photovoltaic Systems Diffusion Model PVact",
+    "visible_publication_context": "Published: 31-Mar-2026 Abstract Private households account for 25.8% of the EU’s final energy consumption and have a rooftop ",
+    "abstract_read": true,
+    "abstract_summary": "摘要IRPact/PVact探索性扩散框架比较规范压力/态度/网络，强调不确定条件下探索用途；敏感性不自动预测有效。",
+    "verified_title": "The Role of Monetary Evaluation and Social Pressure Within the Residential Rooftop Photovoltaic Systems Diffusion Model PVact"
+  },
+  {
+    "screen_id": "DP2026-08",
+    "url": "https://www.jasss.org/29/2/3.html",
+    "queue_title": "Modeling Sentiment Spread in Reddit's Financial Communities Through Epidemiological and Deep Learning Approaches",
+    "status": 200,
+    "bytes": 119723,
+    "sha256": "88accbb0c9024a8823562b7b4b85edde200b1dcf796f9974ada8c59dfbf6ca3f",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_08.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Marta Baratto",
+        "Lorenzo Paletto",
+        "Roberto Esposito",
+        "Marco Maggiora"
+      ],
+      "citation_author_email": [
+        "marta.baratto@unito.it",
+        "lorenzo.paletto@unito.it",
+        "roberto.esposito@unito.it",
+        "marco.maggiora@unito.it"
+      ],
+      "citation_author_institution": [
+        "University of Torino",
+        "FIDA srl",
+        "University of Torino",
+        "University of Torino"
+      ],
+      "citation_title": [
+        "Modeling Sentiment Spread in Reddit's Financial Communities Through Epidemiological and Deep Learning Approaches"
+      ],
+      "citation_publication_date": [
+        "2026-03-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5992"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modelling, Opinion Dynamics, NLP, Sentiment Analysis, SIS Dynamics, Zero-Shot Classification"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/2/3/3.pdf"
+      ]
+    },
+    "visible_title": "Modeling Sentiment Spread in Reddit's Financial Communities Through Epidemiological and Deep Learning Approaches",
+    "visible_publication_context": "Published: 31-Mar-2026 Abstract We investigate how sentiment towards certain companies spreads in social media. We focus on R",
+    "abstract_read": true,
+    "abstract_summary": "摘要Reddit零样本情绪测量/信任SIS校准，明确短期样本外数据验证；测量误差、划分和闭环预测待全文。",
+    "verified_title": "Modeling Sentiment Spread in Reddit's Financial Communities Through Epidemiological and Deep Learning Approaches"
+  },
+  {
+    "screen_id": "DP2026-09",
+    "url": "https://www.jasss.org/29/2/4.html",
+    "queue_title": "Online Protest and Repression in Authoritarian Settings",
+    "status": 200,
+    "bytes": 122140,
+    "sha256": "7be90a5c9b25f0a8a0b680dd023ea3cce5c31023044ecc29de848b69c501b623",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_09.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Aytalina Kulichkina",
+        "Annie Waldherr",
+        "Nanda Wijermans"
+      ],
+      "citation_author_email": [
+        "aytalina.kulichkina@univie.ac.at",
+        "annie.waldherr@univie.ac.at",
+        "nanda.wijermans@su.se"
+      ],
+      "citation_author_institution": [
+        "University of Vienna",
+        "University of Vienna",
+        "Stockholm University"
+      ],
+      "citation_title": [
+        "Online Protest and Repression in Authoritarian Settings"
+      ],
+      "citation_publication_date": [
+        "2026-03-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5960"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Protest, Repression, Social Media, Authoritarianism, Agent-Based Model"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/2/4/4.pdf"
+      ]
+    },
+    "visible_title": "Online Protest and Repression in Authoritarian Settings",
+    "visible_publication_context": "Published: 31-Mar-2026 Abstract Digital spaces increasingly shape the dynamics of contemporary activism in authoritarian cont",
+    "abstract_read": true,
+    "abstract_summary": "摘要威权背景在线表达/潜在抗议倾向与镇压不同过程，公开沉默与潜态累积分开，作为私人—公开层对照。",
+    "verified_title": "Online Protest and Repression in Authoritarian Settings"
+  },
+  {
+    "screen_id": "DP2026-10",
+    "url": "https://www.jasss.org/29/2/5.html",
+    "queue_title": "Heterogeneity in Agent-Based Models",
+    "status": 200,
+    "bytes": 183467,
+    "sha256": "cb5600246840b16c2d78eed53c033a367b1c4e6876418da9d9ab566be9a676d6",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_10.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Deborah Olukan",
+        "Jonathan Ward",
+        "Nick Malleson",
+        "Jiaqi Ge"
+      ],
+      "citation_author_email": [
+        "deborah.olukan@kcl.ac.uk",
+        "j.a.ward@leeds.ac.uk",
+        "n.s.malleson@leeds.ac.uk",
+        "j.ge@leeds.ac.uk"
+      ],
+      "citation_author_institution": [
+        "King's College London",
+        "University of Leeds",
+        "University of Leeds",
+        "University of Leeds"
+      ],
+      "citation_title": [
+        "Heterogeneity in Agent-Based Models"
+      ],
+      "citation_publication_date": [
+        "2026-03-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5872"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modelling, Heterogeneity, Parameter Identification, Approximate Bayesian Computation Calibration, Contagion"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/2/5/5.pdf"
+      ]
+    },
+    "visible_title": "Heterogeneity in Agent-Based Models",
+    "visible_publication_context": "Published: 31-Mar-2026 Abstract Agent-based models are flexible tools that allow modellers to capture heterogeneity in agent ",
+    "abstract_read": true,
+    "abstract_summary": "摘要均质/异质传染模型ABC对照，识别依赖统计量敏感性、描述复杂度可损估计；识别定义和证据域待全文。",
+    "verified_title": "Heterogeneity in Agent-Based Models"
+  },
+  {
+    "screen_id": "DP2026-11",
+    "url": "https://www.jasss.org/29/2/6.html",
+    "queue_title": "Stratified Configuration Model for Simulating Networks",
+    "status": 200,
+    "bytes": 125331,
+    "sha256": "0575df4437bed83b6c9c690a81187637999d726eec3ce1868ab1065ec01ae1d7",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_11.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Carlos Miguel Moreira Gonçalves",
+        "Pablo Ignacio Fierens",
+        "Leandro Rêgo"
+      ],
+      "citation_author_email": [
+        "carlosmiguel@fisica.ufc.br",
+        "pfierens@itba.edu.ar",
+        "leandro@dema.ufc.br"
+      ],
+      "citation_author_institution": [
+        "Federal University of Ceará",
+        "Instituto Tecnológico de Buenos Aires",
+        "Federal University of Ceará"
+      ],
+      "citation_title": [
+        "Stratified Configuration Model for Simulating Networks"
+      ],
+      "citation_publication_date": [
+        "2026-03-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6026"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Complex Networks, Stratified Networks, Configuration Model"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/2/6/6.pdf"
+      ]
+    },
+    "visible_title": "Stratified Configuration Model for Simulating Networks",
+    "visible_publication_context": "Published: 31-Mar-2026 Abstract Conventional network generation models exhibit limitations in capturing complex structural pa",
+    "abstract_read": true,
+    "abstract_summary": "摘要分层配置网络按节点属性建图、提高聚类，完整/不完整信息两算法；12%边损/十倍聚类的基准待核。",
+    "verified_title": "Stratified Configuration Model for Simulating Networks"
+  },
+  {
+    "screen_id": "DP2026-12",
+    "url": "https://www.jasss.org/29/2/7.html",
+    "queue_title": "Generating a Contact Matrix for Aged Care Settings in Australia: An Agent-Based Model Study",
+    "status": 200,
+    "bytes": 168733,
+    "sha256": "9e1e5895babcfafcfdf2bc9c5afd4ef827a877afe00fea5c1548ed23260043bc",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_12.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Haley Stone",
+        "Mohana Kunasekaran",
+        "Christopher Poulos",
+        "C. Raina MacIntyre",
+        "David Heslop"
+      ],
+      "citation_author_email": [
+        "haley.stone@glasgow.ac.uk",
+        "m.kunasekaran@unsw.edu.au",
+        "c.poulos@unsw.edu.au",
+        "r.macintyre@unsw.edu.au",
+        "d.heslop@unsw.edu.au"
+      ],
+      "citation_author_institution": [
+        "University of New South Wales",
+        "University of New South Wales",
+        "University of New South Wales",
+        "University of New South Wales",
+        "University of New South Wales"
+      ],
+      "citation_title": [
+        "Generating a Contact Matrix for Aged Care Settings in Australia: An Agent-Based Model Study"
+      ],
+      "citation_publication_date": [
+        "2026-03-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5993"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Infectious Disease Transmission, Agent-Based Modelling, Epidemiological Modelling, Aged Care, Risk"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/2/7/7.pdf"
+      ]
+    },
+    "visible_title": "Generating a Contact Matrix for Aged Care Settings in Australia: An Agent-Based Model Study",
+    "visible_publication_context": "Published: 31-Mar-2026 Abstract Understanding infectious disease transmission in institutional settings requires modelling ap",
+    "abstract_read": true,
+    "abstract_summary": "摘要养老机构任务日程/工作流生成接触矩阵，行为与布局解耦，使用活动日记；可迁移性/接触验证待核。",
+    "verified_title": "Generating a Contact Matrix for Aged Care Settings in Australia: An Agent-Based Model Study"
+  },
+  {
+    "screen_id": "DP2026-13",
+    "url": "https://www.jasss.org/29/3/1.html",
+    "queue_title": "S-Frame Vs. I-Frame Interventions: The Transformation-Robustness Trade-off in Behavioural Policy",
+    "status": 200,
+    "bytes": 143763,
+    "sha256": "0150aefcb16f4048be95e548b7871af4a4aa6d026f754673c7c6894f0871e0db",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_13.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Giuseppe Alessandro Veltri"
+      ],
+      "citation_author_email": [
+        "gaveltri@nus.edu.sg"
+      ],
+      "citation_author_institution": [
+        "National University of Singapore"
+      ],
+      "citation_title": [
+        "S-Frame Vs. I-Frame Interventions: The Transformation-Robustness Trade-off in Behavioural Policy"
+      ],
+      "citation_publication_date": [
+        "2026-06-30"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6041"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Behavioural Interventions, Nudge, S-Frame, I-Frame, Policy Misspecification, Agent-Based Model"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/3/1/1.pdf"
+      ]
+    },
+    "visible_title": "S-Frame Vs. I-Frame Interventions: The Transformation-Robustness Trade-off in Behavioural Policy",
+    "visible_publication_context": "Published: 30-Jun-2026 Abstract This paper evaluates the risk–benefit profiles of individual-level (i-frame) and system-level",
+    "abstract_read": true,
+    "abstract_summary": "摘要正式化网络误设/异质/冲击三风险及四结果比较个人与系统干预；风险框架为模型内评价，非已证现实策略。",
+    "verified_title": "S-Frame Vs. I-Frame Interventions: The Transformation-Robustness Trade-off in Behavioural Policy"
+  },
+  {
+    "screen_id": "DP2026-14",
+    "url": "https://www.jasss.org/29/3/2.html",
+    "queue_title": "Origin of Inequality in Transegalitarian Societies: An Agent Based Model",
+    "status": 200,
+    "bytes": 145089,
+    "sha256": "5d9bdaa489fadaf08002c12fb3b040f0e51e27d86d54c99bfdd5027eb6163ab9",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_14.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Pawel Sobkowicz"
+      ],
+      "citation_author_email": [
+        "pawelsobko@gmail.com"
+      ],
+      "citation_author_institution": [
+        "NOMATEN Centre of Excellence, National Centre for Nuclear Research, Otwock-Świerk, Poland"
+      ],
+      "citation_title": [
+        "Origin of Inequality in Transegalitarian Societies: An Agent Based Model"
+      ],
+      "citation_publication_date": [
+        "2026-06-30"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6098"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Inequality, Hunter-Gatherer Societies, Foraging Societies, Talent Vs. Luck, Greed, Assortative Matching"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/3/2/2.pdf"
+      ]
+    },
+    "visible_title": "Origin of Inequality in Transegalitarian Societies: An Agent Based Model",
+    "visible_publication_context": "Published: 30-Jun-2026 Abstract We present  an agent based model (ABM), describing the origins of inequalities and social str",
+    "abstract_read": true,
+    "abstract_summary": "资源/技能/择配/遗传学习解释猎采社会不平等应用，保留人类学理论线索。",
+    "verified_title": "Origin of Inequality in Transegalitarian Societies: An Agent Based Model"
+  },
+  {
+    "screen_id": "DP2026-15",
+    "url": "https://www.jasss.org/29/3/3.html",
+    "queue_title": "Simulating Extinction and its Role in Food Reinforcement Learning for Ultra-Processed Foods",
+    "status": 200,
+    "bytes": 142659,
+    "sha256": "8f656669e7f58535a56ffbf0cfd2068c42c43a5bbee2f286d2eacab31cb5b135",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_15.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Jiri Kaan",
+        "Yara Khaluf",
+        "Kristina Thompson",
+        "Spencer Moore"
+      ],
+      "citation_author_email": [
+        "jiri.kaan@wur.nl",
+        "y.khaluf@vu.nl",
+        "kristina.thompson@wur.nl",
+        "spencer.moore@wur.nl"
+      ],
+      "citation_author_institution": [
+        "Wageningen University",
+        "Vrije Universiteit Amsterdam",
+        "Wageningen University",
+        "Wageningen University"
+      ],
+      "citation_title": [
+        "Simulating Extinction and its Role in Food Reinforcement Learning for Ultra-Processed Foods"
+      ],
+      "citation_publication_date": [
+        "2026-06-30"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6083"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Microsimulation, Food Environment, Ultra-Processed Food, Food Reinforcement Learning, Exctinction"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/3/3/3.pdf"
+      ]
+    },
+    "visible_title": "Simulating Extinction and its Role in Food Reinforcement Learning for Ultra-Processed Foods",
+    "visible_publication_context": "Published: 30-Jun-2026 Abstract Food environments such as supermarkets and school cafeterias are increasingly dominated by ul",
+    "abstract_read": true,
+    "abstract_summary": "加工食品可得性与消退学习干预应用，保留行为子模型线索；不以模拟所需比例直接作现实政策阈值。",
+    "verified_title": "Simulating Extinction and its Role in Food Reinforcement Learning for Ultra-Processed Foods"
+  },
+  {
+    "screen_id": "DP2026-16",
+    "url": "https://www.jasss.org/29/3/4.html",
+    "queue_title": "Party Competition with Costly Voting",
+    "status": 200,
+    "bytes": 129224,
+    "sha256": "35be6c9db5b1a76abd58983052b1b479ed1f231029f84e1358cdba55bbebf5ab",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_16.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Thomas Mustillo"
+      ],
+      "citation_author_email": [
+        "tmustill@nd.edu"
+      ],
+      "citation_author_institution": [
+        "University of Notre Dame"
+      ],
+      "citation_title": [
+        "Party Competition with Costly Voting"
+      ],
+      "citation_publication_date": [
+        "2026-06-30"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6117"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Spatial Model of Party Competitio, Voter Turnout, Costly Voting, Agent-Based Model, Political Polarization, Centroidal Voronoi Tessellation, Lloyd's Algorithm"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/3/4/4.pdf"
+      ]
+    },
+    "visible_title": "Party Competition with Costly Voting",
+    "visible_publication_context": "Published: 30-Jun-2026 Abstract This study investigates political party competition within a two-dimensional policy space. It",
+    "abstract_read": true,
+    "abstract_summary": "有成本投票与党派策略/代表性应用，保留政治行为背景，不重设整体检索中心。",
+    "verified_title": "Party Competition with Costly Voting"
+  },
+  {
+    "screen_id": "DP2026-17",
+    "url": "https://www.jasss.org/29/3/5.html",
+    "queue_title": "Calibrating a Global Trade Agent-Based Model with an HPC–ABC–SMC Framework",
+    "status": 200,
+    "bytes": 106256,
+    "sha256": "f5daa7e327bec4ac8cc94d4aad4e10d60c015e6b7444e335fa6de35094dbf9f8",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_17.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Kejian Li",
+        "Jiaqi Ge",
+        "Nik Lomax",
+        "J. Gareth Polhill"
+      ],
+      "citation_author_email": [
+        "mm202kl@leeds.ac.uk",
+        "j.ge@leeds.ac.uk",
+        "n.m.lomax@leeds.ac.uk",
+        "gary.polhill@hutton.ac.uk"
+      ],
+      "citation_author_institution": [
+        "University of Leeds",
+        "University of Leeds",
+        "University of Leeds",
+        "The James Hutton Institute"
+      ],
+      "citation_title": [
+        "Calibrating a Global Trade Agent-Based Model with an HPC–ABC–SMC Framework"
+      ],
+      "citation_publication_date": [
+        "2026-06-30"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6072"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Calibration, Approximate Bayesian Computation, High-Performance Computing, Parameter Uncertainty Quantification, Genetic Algorithm, Agent-Based Modelling"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/3/5/5.pdf"
+      ]
+    },
+    "visible_title": "Calibrating a Global Trade Agent-Based Model with an HPC–ABC–SMC Framework",
+    "visible_publication_context": "Published: 30-Jun-2026 Abstract This study presents a High-Performance Computing and Approximate Bayesian Computation-Sequent",
+    "abstract_read": true,
+    "abstract_summary": "摘要HPC–ABC–SMC以映射缓存/任务并行校准贸易伙伴与量，42.1倍成本/后验解释待全文；效率不等校准覆盖。",
+    "verified_title": "Calibrating a Global Trade Agent-Based Model with an HPC–ABC–SMC Framework"
+  },
+  {
+    "screen_id": "DP2026-18",
+    "url": "https://www.jasss.org/29/3/6.html",
+    "queue_title": "Mapping Complex Agent-Based Model Parameter Spaces Using Metamodels and Mixed Adaptive Sampling",
+    "status": 200,
+    "bytes": 135685,
+    "sha256": "3878ce996d7e5e25327c28d45503f0d73fef9fa477cafe08f1e77793592781d4",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_18.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Preetam Kulkarni",
+        "Caroline Krejci",
+        "Victoria C.P. Chen"
+      ],
+      "citation_author_email": [
+        "kulkarnipreetamg66@gmail.com",
+        "caroline.krejci@uta.edu",
+        "vchen@uta.edu"
+      ],
+      "citation_author_institution": [
+        "University of Texas at Arlington",
+        "University of Texas at Arlington",
+        "University of Texas at Arlington"
+      ],
+      "citation_title": [
+        "Mapping Complex Agent-Based Model Parameter Spaces Using Metamodels and Mixed Adaptive Sampling"
+      ],
+      "citation_publication_date": [
+        "2026-06-30"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "3"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6161"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modeling, Sequential Sampling, Metamodeling, Crowd Logistics"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/3/6/6.pdf"
+      ]
+    },
+    "visible_title": "Mapping Complex Agent-Based Model Parameter Spaces Using Metamodels and Mixed Adaptive Sampling",
+    "visible_publication_context": "Published: 30-Jun-2026 Abstract Large-scale agent-based models (ABM) of complex adaptive systems often have a high number of ",
+    "abstract_read": true,
+    "abstract_summary": "摘要混合自适应与纯序贯抽样比较，在隔离和物流ABM分析覆盖/非线性聚集；代理解释与真实机制区分。",
+    "verified_title": "Mapping Complex Agent-Based Model Parameter Spaces Using Metamodels and Mixed Adaptive Sampling"
+  },
+  {
+    "screen_id": "DP2026-19",
+    "url": "https://www.jasss.org/29/4/1.html",
+    "queue_title": "From Population Diversity to Contact Diversity: A Network-Based Generalization of the Greenberg Index",
+    "status": 200,
+    "bytes": 169486,
+    "sha256": "ab9c0adc6efb36b63ae27c0271e16a37fb1c961274195df52229bb31ffc6ea27",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_19.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Marco Civico"
+      ],
+      "citation_author_email": [
+        "marco.civico@unige.ch"
+      ],
+      "citation_author_institution": [
+        "Université de Genève"
+      ],
+      "citation_title": [
+        "From Population Diversity to Contact Diversity: A Network-Based Generalization of the Greenberg Index"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6155"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Linguistic Diversity, Social Networks, Contact Diversity, Multilingualism, Language Policy, Network Analysis"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/1/1.pdf"
+      ]
+    },
+    "visible_title": "From Population Diversity to Contact Diversity: A Network-Based Generalization of the Greenberg Index",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract Quantifying linguistic diversity is central to the analysis of multilingual societies, yet wi",
+    "abstract_read": true,
+    "abstract_summary": "摘要N-GDI按互动连接衡量语言接触多样性，区分人口组成/结构曝光/沟通重合；同人口不等实际接触。",
+    "verified_title": "From Population Diversity to Contact Diversity: A Network-Based Generalization of the Greenberg Index"
+  },
+  {
+    "screen_id": "DP2026-20",
+    "url": "https://www.jasss.org/29/4/11.html",
+    "queue_title": "Explaining the “Harmonic” Signature in a Tag-Based Model of the Evolution of Altruism",
+    "status": 200,
+    "bytes": 101610,
+    "sha256": "9cc498a3315858a1d8aae4fd28dd66c5951cda8bab98a297fa95785029786594",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_20.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Shade T. Shutters"
+      ],
+      "citation_author_email": [
+        "shade.shutters@asu.edu"
+      ],
+      "citation_author_institution": [
+        "Arizona State University"
+      ],
+      "citation_title": [
+        "Explaining the “Harmonic” Signature in a Tag-Based Model of the Evolution of Altruism"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6197"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Altruism, Cooperation, Agent-Based Model, Network Dynamics, Tag-Based Strategy, Evolutionary Game Theory"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/11/11.pdf"
+      ]
+    },
+    "visible_title": "Explaining the “Harmonic” Signature in a Tag-Based Model of the Evolution of Altruism",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract This paper offers an explanation for the anomalous and unexplained behavior of an agent-based",
+    "abstract_read": true,
+    "abstract_summary": "既有标签利他模型的量化阈值用概念和最小解析模型解释，保留实现诊断线索；2015原论文不独立入本轮。",
+    "verified_title": "Explaining the “Harmonic” Signature in a Tag-Based Model of the Evolution of Altruism"
+  },
+  {
+    "screen_id": "DP2026-21",
+    "url": "https://www.jasss.org/29/4/2.html",
+    "queue_title": "Work-From-Home Preferences in Labour Market Matching: Evidence from an Agent-Based Model",
+    "status": 200,
+    "bytes": 156842,
+    "sha256": "71f11036e0f062c58ea5d0d0b8fdb94753cf15650e5959cd68bbe827bd6ec2c0",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_21.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Mario Javier Rodriguez Ureta",
+        "Carl Barton"
+      ],
+      "citation_author_email": [
+        "m.rodriguezureta@bbk.ac.uk",
+        "c.barton@bbk.ac.uk"
+      ],
+      "citation_author_institution": [
+        "Birkbeck College, University of London",
+        "Birkbeck College, University of London"
+      ],
+      "citation_title": [
+        "Work-From-Home Preferences in Labour Market Matching: Evidence from an Agent-Based Model"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6142"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent Based Modelling, Labour Market, Work-From-Home, Recruitment Strategies, Personal Preferences, Hiring Dynamics"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/2/2.pdf"
+      ]
+    },
+    "visible_title": "Work-From-Home Preferences in Labour Market Matching: Evidence from an Agent-Based Model",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract This paper explores how personal preferences affect labour market outcomes using an agent-bas",
+    "abstract_read": true,
+    "abstract_summary": "IT劳动匹配/居家偏好应用，保留经济行为背景，未见明确通用方法检验。",
+    "verified_title": "Work-From-Home Preferences in Labour Market Matching: Evidence from an Agent-Based Model"
+  },
+  {
+    "screen_id": "DP2026-22",
+    "url": "https://www.jasss.org/29/4/3.html",
+    "queue_title": "Will China Become a Christian-Majority Nation? Regulation, Demand, and an Agent-Based Test of the Supply-Side Theory",
+    "status": 200,
+    "bytes": 118708,
+    "sha256": "cacf07596a5a19fe8195cfee3123c630e329c3e28b621b7bc9e2467acf4020e1",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_22.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Ruiqian Li"
+      ],
+      "citation_author_email": [
+        "rli@american.edu"
+      ],
+      "citation_author_institution": [
+        "American University"
+      ],
+      "citation_title": [
+        "Will China Become a Christian-Majority Nation? Regulation, Demand, and an Agent-Based Test of the Supply-Side Theory"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6237"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modeling, Rational-Choice Theory of Religion, Religious Demand, Christianity in China, Secularization"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/3/3.pdf"
+      ]
+    },
+    "visible_title": "Will China Become a Christian-Majority Nation? Regulation, Demand, and an Agent-Based Test of the Supply-Side Theory",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract Whether China will become a Christian-majority nation in the twenty-first century is among th",
+    "abstract_read": true,
+    "abstract_summary": "摘要供给理论形式化后检验其内在机制是否足够，明确解释非预测、敏感性/网络/分母；理论压力测试方法候选。",
+    "verified_title": "Will China Become a Christian-Majority Nation? Regulation, Demand, and an Agent-Based Test of the Supply-Side Theory"
+  },
+  {
+    "screen_id": "DP2026-23",
+    "url": "https://www.jasss.org/29/4/4.html",
+    "queue_title": "When Contact Backfires and when It Does Not: A Computational Model of the Opinion Dynamics of Intergroup Attitudes",
+    "status": 200,
+    "bytes": 172250,
+    "sha256": "5e0845e3782a0ad3b388dd0e7b2d14fa6596692f3a90f17ee7004ffc0eadc60b",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_23.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Andreas Flache",
+        "Alla Loseva",
+        "Yade Rotte"
+      ],
+      "citation_author_email": [
+        "a.flache@rug.nl",
+        "a.loseva@rug.nl",
+        "yade.rotte@gmail.com"
+      ],
+      "citation_author_institution": [
+        "University of Groningen",
+        "University of Groningen",
+        "Arriva Nederland"
+      ],
+      "citation_title": [
+        "When Contact Backfires and When It Does Not: A Computational Model of the Opinion Dynamics of Intergroup Attitudes"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6172"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Opinion Dynamics, Affective Polarization, Intergroup Contact, Social Influence, Homophily, Social Simulation"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/4/4.pdf"
+      ]
+    },
+    "visible_title": "When Contact Backfires and When It Does Not: A Computational Model of the Opinion Dynamics of Intergroup Attitudes",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract Concerns about affective polarization have renewed interest in intergroup contact as a means ",
+    "abstract_read": true,
+    "abstract_summary": "摘要组间接触/组内影响/变化关系可改善或恶化群际态度，提供身份接触和反馈机制对照。",
+    "verified_title": "When Contact Backfires and When It Does Not: A Computational Model of the Opinion Dynamics of Intergroup Attitudes"
+  },
+  {
+    "screen_id": "DP2026-24",
+    "url": "https://www.jasss.org/29/4/7.html",
+    "queue_title": "Essential Workers at Risk: An Agent-Based Model (SAFE-ABM) with Uncertainty Quantification",
+    "status": 200,
+    "bytes": 176159,
+    "sha256": "fd941a551f0ca497e9f8d5ce464142262a55788eb114967e9f115ff8d03aa0d4",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_24.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Elizabeth B. Amona",
+        "Indranil Sahoo",
+        "Ya Su",
+        "Edward L. Boone",
+        "Gwendoline Nelis",
+        "Ryad Ghanam"
+      ],
+      "citation_author_email": [
+        "e0amon02@louisville.edu",
+        "sahooi@vcu.edu",
+        "suyaf@vcu.edu",
+        "elboone@vcu.edu",
+        "gwendoline.nelis@student.uclouvain.be",
+        "raghanam@vcu.edu"
+      ],
+      "citation_author_institution": [
+        "University of Louisville",
+        "Virginia Commonwealth University",
+        "Virginia Commonwealth University",
+        "Virginia Commonwealth University",
+        "Sciensano",
+        "Virginia Commonwealth University School of the Arts in Qatar"
+      ],
+      "citation_title": [
+        "Essential Workers at Risk: An Agent-Based Model (SAFE-ABM) with Uncertainty Quantification"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6276"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Model, Uncertainty Quantification, Localized Interventions Analysis, Bayesian Statistics, Epidemiology"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/7/7.pdf"
+      ]
+    },
+    "visible_title": "Essential Workers at Risk: An Agent-Based Model (SAFE-ABM) with Uncertainty Quantification",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract Essential workers face elevated infection risks due to their critical roles during pandemics,",
+    "abstract_read": true,
+    "abstract_summary": "摘要SAFE-ABM整合Bayesian UQ，工作轮换/隔离比较；后验对象、覆盖与参数/政策不确定性待全文。",
+    "verified_title": "Essential Workers at Risk: An Agent-Based Model (SAFE-ABM) with Uncertainty Quantification"
+  },
+  {
+    "screen_id": "DP2026-25",
+    "url": "https://www.jasss.org/29/4/8.html",
+    "queue_title": "Vahana.Jl: A Framework (Not Only) for Large-Scale Agent-Based Models",
+    "status": 200,
+    "bytes": 110640,
+    "sha256": "8c465bd0fe6433729c1034bc468073a008d1b0afb244b3ba2d44b842183565e3",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_25.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Steffen Fürst",
+        "Tim Conrad",
+        "Carlo Jaeger",
+        "Sarah Wolf"
+      ],
+      "citation_author_email": [
+        "fuerst@tu-berlin.de",
+        "conrad@zib.de",
+        "carlo.jaeger@globalclimateforum.org",
+        "sarah.wolf@fu-berlin.de"
+      ],
+      "citation_author_institution": [
+        "Technische Universität Berlin",
+        "Zuse Institut Berlin",
+        "Global Climate Forum e.V.",
+        "Freie Universität Berlin"
+      ],
+      "citation_title": [
+        "Vahana.Jl: A Framework (Not Only) for Large-Scale Agent-Based Models"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6319"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modeling, Social Networks, High Performace Computing (HPC), Graph Dynamical Systems"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/8/8.pdf"
+      ]
+    },
+    "visible_title": "Vahana.Jl: A Framework (Not Only) for Large-Scale Agent-Based Models",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract Agent-based models (ABMs) offer a powerful framework for understanding complex systems. Howev",
+    "abstract_read": true,
+    "abstract_summary": "摘要Vahana.jl以同步图动态形式化/分布计算及两案例评估性能；数学语义、预算与适用条件待核，不修改冻结平台。",
+    "verified_title": "Vahana.Jl: A Framework (Not Only) for Large-Scale Agent-Based Models"
+  },
+  {
+    "screen_id": "DP2026-26",
+    "url": "https://www.jasss.org/29/4/9.html",
+    "queue_title": "Emergent Collapse and Resilience in Sequential Task Networks: A Dynamic Agent Based Simulation of Error Management Incivility and Managerial Oversight",
+    "status": 200,
+    "bytes": 169985,
+    "sha256": "2de59955a4a1088213e8d2f31451bb91b4369aad7054aac8313e1a8d1b7774fa",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DP_2026_26.html",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Antonis Chatzipanagiotou"
+      ],
+      "citation_author_email": [
+        "chatzipanagiotou.antonios@outlook.com"
+      ],
+      "citation_author_institution": [
+        "Hellenic American University"
+      ],
+      "citation_title": [
+        "Emergent Collapse and Resilience in Sequential Task Networks: A Dynamic Agent Based Simulation of Error Management Incivility and Managerial Oversight"
+      ],
+      "citation_publication_date": [
+        "2026-10-31"
+      ],
+      "citation_volume": [
+        "29"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.6297"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent Based Modeling, Error Management Culture, Workplace Incivility, Organizational Tipping Points, System Dynamics, Resentment Accumulation"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/29/4/9/9.pdf"
+      ]
+    },
+    "visible_title": "Emergent Collapse and Resilience in Sequential Task Networks: A Dynamic Agent Based Simulation of Error Management, Incivility and Managerial Oversight",
+    "visible_publication_context": "Published: 31-Oct-2026 Abstract Organizations operate under conditions of imperfect performance where human error is inevitab",
+    "abstract_read": true,
+    "abstract_summary": "组织任务—错误—怨恨离职应用，保留微观宏观双目标；RF交叉验证输出/R²与30seed稳定性不等真人外部验证。",
+    "verified_title": "Emergent Collapse and Resilience in Sequential Task Networks: A Dynamic Agent Based Simulation of Error Management, Incivility and Managerial Oversight"
+  }
+]

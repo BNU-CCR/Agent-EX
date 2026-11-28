@@ -20448,5 +20448,2285 @@
     "batch": "DO-JASSS2025-remaining26-abstract-screen",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/do_jasss_2025_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "direct_comparator",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "memory_and_persona;interaction_protocol;application",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要身份/同质网络解释非政治议题外溢极化，缩小模拟与中等党派人群观察差异；不当现实验证。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M155",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;model_calibration;agent_architecture",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要共同构模与不可测社会团结因素校准，结合地方知识/生态数据重现25年历史；过程与不可测构念识别待核。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M156",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "direct_comparator",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "interaction_protocol;environment_design;application",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要BotSim小世界中信息纠正与正面消息bot比较，区分生成/消费/传播；AI措辞不自动意味着LLM或真人效度。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M157",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "reproducibility_and_reporting;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要系统回顾536篇2020–2023疫情ABM并编码九用途标准；本库纳2026综述一条，原样本年代/比例另记，不追加536。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M158",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "direct_comparator",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "interaction_protocol;emergence_analysis;application",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要Axelrod扩展成功驱动活动/富者愈富可使全连接等情形极化，作为注意/活动异质机制直接对照。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M159",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;theory_to_model_translation;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要IRPact/PVact探索性扩散框架比较规范压力/态度/网络，强调不确定条件下探索用途；敏感性不自动预测有效。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M160",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;model_calibration;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要Reddit零样本情绪测量/信任SIS校准，明确短期样本外数据验证；测量误差、划分和闭环预测待全文。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M161",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "direct_comparator",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "interaction_protocol;measurement;application",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要威权背景在线表达/潜在抗议倾向与镇压不同过程，公开沉默与潜态累积分开，作为私人—公开层对照。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M162",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "model_calibration;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要均质/异质传染模型ABC对照，识别依赖统计量敏感性、描述复杂度可损估计；识别定义和证据域待全文。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M163",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "environment_design;model_calibration;measurement",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要分层配置网络按节点属性建图、提高聚类，完整/不完整信息两算法；12%边损/十倍聚类的基准待核。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M164",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "agent_architecture;environment_design;interaction_protocol",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要养老机构任务日程/工作流生成接触矩阵，行为与布局解耦，使用活动日记；可迁移性/接触验证待核。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M165",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "validation_and_external_validity;measurement;environment_design",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要正式化网络误设/异质/冲击三风险及四结果比较个人与系统干预；风险框架为模型内评价，非已证现实策略。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M166",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "model_calibration;validation_and_external_validity;reproducibility_and_reporting",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要HPC–ABC–SMC以映射缓存/任务并行校准贸易伙伴与量，42.1倍成本/后验解释待全文；效率不等校准覆盖。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M167",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "model_calibration;measurement;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要混合自适应与纯序贯抽样比较，在隔离和物流ABM分析覆盖/非线性聚集；代理解释与真实机制区分。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M168",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;environment_design;interaction_protocol",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要N-GDI按互动连接衡量语言接触多样性，区分人口组成/结构曝光/沟通重合；同人口不等实际接触。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M169",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "theory_to_model_translation;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要供给理论形式化后检验其内在机制是否足够，明确解释非预测、敏感性/网络/分母；理论压力测试方法候选。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M170",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "direct_comparator",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "memory_and_persona;interaction_protocol;application",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要组间接触/组内影响/变化关系可改善或恶化群际态度，提供身份接触和反馈机制对照。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M171",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "model_calibration;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要SAFE-ABM整合Bayesian UQ，工作轮换/隔离比较；后验对象、覆盖与参数/政策不确定性待全文。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M172",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "simulation_paradigm;interaction_protocol;reproducibility_and_reporting",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "摘要Vahana.jl以同步图动态形式化/分布计算及两案例评估性能；数学语义、预算与适用条件待核，不修改冻结平台。",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Officialabstractonly;no fulltext/effectiveness inference",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/jasss_2026_screening_DP.md;batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M173",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DP-JASSS2026-remaining26-abstract-screen",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
   }
 ]

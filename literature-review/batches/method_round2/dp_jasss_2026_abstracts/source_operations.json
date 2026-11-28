@@ -1,0 +1,263 @@
+[
+  {
+    "search_id": "DP-01",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract01",
+    "source_url": "https://www.jasss.org/29/1/1.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-02",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract02",
+    "source_url": "https://www.jasss.org/29/1/3.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-03",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract03",
+    "source_url": "https://www.jasss.org/29/1/4.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-04",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract04",
+    "source_url": "https://www.jasss.org/29/1/5.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-05",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract05",
+    "source_url": "https://www.jasss.org/29/1/7.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-06",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract06",
+    "source_url": "https://www.jasss.org/29/2/1.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-07",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract07",
+    "source_url": "https://www.jasss.org/29/2/2.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-08",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract08",
+    "source_url": "https://www.jasss.org/29/2/3.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-09",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract09",
+    "source_url": "https://www.jasss.org/29/2/4.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-10",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract10",
+    "source_url": "https://www.jasss.org/29/2/5.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-11",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract11",
+    "source_url": "https://www.jasss.org/29/2/6.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-12",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract12",
+    "source_url": "https://www.jasss.org/29/2/7.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-13",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract13",
+    "source_url": "https://www.jasss.org/29/3/1.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-14",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract14",
+    "source_url": "https://www.jasss.org/29/3/2.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-15",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract15",
+    "source_url": "https://www.jasss.org/29/3/3.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-16",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract16",
+    "source_url": "https://www.jasss.org/29/3/4.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-17",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract17",
+    "source_url": "https://www.jasss.org/29/3/5.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-18",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract18",
+    "source_url": "https://www.jasss.org/29/3/6.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-19",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract19",
+    "source_url": "https://www.jasss.org/29/4/1.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-20",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract20",
+    "source_url": "https://www.jasss.org/29/4/11.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-21",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract21",
+    "source_url": "https://www.jasss.org/29/4/2.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-22",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract22",
+    "source_url": "https://www.jasss.org/29/4/3.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-23",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract23",
+    "source_url": "https://www.jasss.org/29/4/4.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-24",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract24",
+    "source_url": "https://www.jasss.org/29/4/7.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-25",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract25",
+    "source_url": "https://www.jasss.org/29/4/8.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-26",
+    "platform": "static_http_get_official_abstract",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSS2026remainingabstract26",
+    "source_url": "https://www.jasss.org/29/4/9.html",
+    "status": "200_abstract_read",
+    "notes": "Officialmetadata/datechecked;HTMLhashsaved;abstractonlynotfulltext;abstractdivparsed;noexecution"
+  },
+  {
+    "search_id": "DP-27",
+    "platform": "local_primary_abstract_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Readall26completeabstracts;method/direct/applicationdecisions",
+    "source_url": "batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "status": "19candidates7applicationleads",
+    "notes": "Singleassistant screening,not dual screening/fulltext review/database recall"
+  },
+  {
+    "search_id": "DP-28",
+    "platform": "local_primary_abstract_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "26datesmeta_vs_visible_andDPItitlededup",
+    "source_url": "batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "status": "all2026datesagree;punctuationvariantretained",
+    "notes": "Singleassistant screening,not dual screening/fulltext review/database recall"
+  },
+  {
+    "search_id": "DP-29",
+    "platform": "local_primary_abstract_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Updatebounded178directorytracking",
+    "source_url": "batches/method_round2/dp_jasss_2026_abstracts/screening.csv",
+    "status": "0abstractpending43applicationleads",
+    "notes": "Singleassistant screening,not dual screening/fulltext review/database recall"
+  }
+]
