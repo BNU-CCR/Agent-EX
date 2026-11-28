@@ -1,0 +1,35 @@
+{
+  "base": "29c4e51",
+  "changed_records": [
+    "M034",
+    "M035",
+    "M175",
+    "M176",
+    "M178",
+    "M179",
+    "M180"
+  ],
+  "records": 237,
+  "formal_included": 67,
+  "candidate": 160,
+  "date_pending": 25,
+  "cards": 87,
+  "units": 252,
+  "no_new_work_card_unit_or_methodgrade": true,
+  "seven_before_card_Git_bytes_verified": true,
+  "matrix_unchanged": true,
+  "formal_bib_IDs_match": 67,
+  "frontier_bib": 8,
+  "workbook_rows": [
+    238,
+    55,
+    31,
+    253,
+    1772,
+    12,
+    42
+  ],
+  "visual": "Current237/67/160coverand21core38validationinspected",
+  "status": "passed",
+  "limits": "Verifiedformalpublicationmonthfallback_notexactfirstonlinedays;other25pendingunchanged;no modelrun"
+}

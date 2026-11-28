@@ -24598,5 +24598,165 @@
     "batch": "EO-German-fixed-code-and-public-aggregate-audit",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/eo_german_fixed_code/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;fixedcode_data_retrieval_cutoff;heldout_design;metric_DTW_implementation;raw_repeats;prior_prediction_timestamp;TableVI_discrepancy",
+    "new": "fixedcode_data_retrieval_cutoff;heldout_design;metric_DTW_implementation;raw_repeats;prior_prediction_timestamp;TableVI_discrepancy",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_coding_source",
+    "old": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit",
+    "new": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M034",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;formal_formula_code_run_reconciliation;full_induction_budget;patched_dependency_env;model_revision_seed;rawrun_equivalence_path_dependence",
+    "new": "formal_formula_code_run_reconciliation;full_induction_budget;patched_dependency_env;model_revision_seed;rawrun_equivalence_path_dependence",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_coding_source",
+    "old": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit",
+    "new": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M035",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_pending_fields",
+    "old": "exact_formal_first_online;actualrunmanifest/modelrevision/cost/failure;human_annotation_protocol_agreement;CLMthreshold_loss_exchangeability_and_finalselection;population_source_transform_joint_fit;culture11vs7All;profile_metric_mapping;clock_weighting_scheduling;Park_norm_count;author_code_data_calibration_release_and_paper_mapping",
+    "new": "actualrunmanifest/modelrevision/cost/failure;human_annotation_protocol_agreement;CLMthreshold_loss_exchangeability_and_finalselection;population_source_transform_joint_fit;culture11vs7All;profile_metric_mapping;clock_weighting_scheduling;Park_norm_count;author_code_data_calibration_release_and_paper_mapping",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_coding_source",
+    "old": "reading-cards/M175.md;reports/liveculturebench_EF.md;batches/method_round2/ef_liveculturebench/reading_checks.json;reports/liveculture_release_EG.md",
+    "new": "reading-cards/M175.md;reports/liveculturebench_EF.md;batches/method_round2/ef_liveculturebench/reading_checks.json;reports/liveculture_release_EG.md;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_pending_fields",
+    "old": "exact_formal_first_online;Religion76vs80attributes;rawlabels_annotation_protocol;completecase_population_mapping;ASPG_outofsample_selection;model_snapshot_think_and_decoding_identity;parsing_failure_cost;dynamic_process_validation",
+    "new": "Religion76vs80attributes;rawlabels_annotation_protocol;completecase_population_mapping;ASPG_outofsample_selection;model_snapshot_think_and_decoding_identity;parsing_failure_cost;dynamic_process_validation",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_coding_source",
+    "old": "reading-cards/M176.md;reports/relimap_ED.md;batches/method_round2/ed_relimap/reading_checks.json",
+    "new": "reading-cards/M176.md;reports/relimap_ED.md;batches/method_round2/ed_relimap/reading_checks.json;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_pending_fields",
+    "old": "exact_formal_first_online;rawWVS_weights_uniqueIDs_respondentsplit;zeroSDcell_parsingmissingness;modelrevision_backend_precision_runmapping_trainingrepeats;code_rawbootstrap;index_overlap_rebuiltpersona",
+    "new": "rawWVS_weights_uniqueIDs_respondentsplit;zeroSDcell_parsingmissingness;modelrevision_backend_precision_runmapping_trainingrepeats;code_rawbootstrap;index_overlap_rebuiltpersona",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_coding_source",
+    "old": "reading-cards/M178.md;reports/cultural_variance_EK.md;batches/method_round2/ek_cultural_variance/reading_checks.json",
+    "new": "reading-cards/M178.md;reports/cultural_variance_EK.md;batches/method_round2/ek_cultural_variance/reading_checks.json;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_pending_fields",
+    "old": "exact_formal_first_online;53study_coding_inventory;16vs17category_count;empirical_case_annotation_classifier_reference;open_vs_closed_effects",
+    "new": "53study_coding_inventory;16vs17category_count;empirical_case_annotation_classifier_reference;open_vs_closed_effects",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_coding_source",
+    "old": "reading-cards/M179.md;reports/open_ended_position_EM.md;batches/method_round2/em_open_ended_position/reading_checks.json",
+    "new": "reading-cards/M179.md;reports/open_ended_position_EM.md;batches/method_round2/em_open_ended_position/reading_checks.json;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_pending_fields",
+    "old": "exact_formal_first_online;GLES_sampleweights_uniqueIDs;classifier_actualsplit_perclass_agreement_transfer;fallbackfrequency_rawoutputs;Table7signedAPE_path;generationrevision_config_runmapping",
+    "new": "GLES_sampleweights_uniqueIDs;classifier_actualsplit_perclass_agreement_transfer;fallbackfrequency_rawoutputs;Table7signedAPE_path;generationrevision_config_runmapping",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_coding_source",
+    "old": "reading-cards/M180.md;reports/german_open_opinion_EN.md;batches/method_round2/en_german_open_opinion/reading_checks.json;reports/german_fixed_code_EO.md;data/german_code_crosswalk_EO.csv",
+    "new": "reading-cards/M180.md;reports/german_open_opinion_EN.md;batches/method_round2/en_german_open_opinion/reading_checks.json;reports/german_fixed_code_EO.md;data/german_code_crosswalk_EO.csv;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+    "date": "2026-11-28",
+    "batch": "ER-official-conference-publication-month-qualification",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/er_conference_date_precision/results.json"
   }
 ]

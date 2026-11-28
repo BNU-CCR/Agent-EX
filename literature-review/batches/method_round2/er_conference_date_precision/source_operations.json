@@ -1,0 +1,83 @@
+[
+  {
+    "search_id": "ER-01",
+    "platform": "official_publication_date_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "M034 officialmetadata DOI/title/publicationmonth;notcalendarinference",
+    "source_url": "https://aclanthology.org/2025.findings-acl.468/",
+    "status": "200_month_verified",
+    "notes": "Sourceoperationnotsearchquery;no exactdayinvented"
+  },
+  {
+    "search_id": "ER-02",
+    "platform": "official_publication_date_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "M035 officialmetadata DOI/title/publicationmonth;notcalendarinference",
+    "source_url": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "status": "200_month_verified",
+    "notes": "Sourceoperationnotsearchquery;no exactdayinvented"
+  },
+  {
+    "search_id": "ER-03",
+    "platform": "official_publication_date_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "M175 officialmetadata DOI/title/publicationmonth;notcalendarinference",
+    "source_url": "https://aclanthology.org/2026.acl-long.1247/",
+    "status": "200_month_verified",
+    "notes": "Sourceoperationnotsearchquery;no exactdayinvented"
+  },
+  {
+    "search_id": "ER-04",
+    "platform": "official_publication_date_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "M176 officialmetadata DOI/title/publicationmonth;notcalendarinference",
+    "source_url": "https://aclanthology.org/2026.emnlp-main.1269/",
+    "status": "200_month_verified",
+    "notes": "Sourceoperationnotsearchquery;no exactdayinvented"
+  },
+  {
+    "search_id": "ER-05",
+    "platform": "official_publication_date_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "M178 officialmetadata DOI/title/publicationmonth;notcalendarinference",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144/",
+    "status": "200_month_verified",
+    "notes": "Sourceoperationnotsearchquery;no exactdayinvented"
+  },
+  {
+    "search_id": "ER-06",
+    "platform": "official_publication_date_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "M179 officialmetadata DOI/title/publicationmonth;notcalendarinference",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "200_month_verified",
+    "notes": "Sourceoperationnotsearchquery;no exactdayinvented"
+  },
+  {
+    "search_id": "ER-07",
+    "platform": "official_publication_date_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "M180 officialmetadata DOI/title/publicationmonth;notcalendarinference",
+    "source_url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": "200_month_verified",
+    "notes": "Sourceoperationnotsearchquery;no exactdayinvented"
+  },
+  {
+    "search_id": "ER-08",
+    "platform": "approved_scope_calibration",
+    "search_date": "2026-11-28",
+    "query_exact": "Taskbook3.2/publicationfallback and protocolmonthallowed;no newexactdaygate",
+    "source_url": "literature-review/CODEX_TASK_2022_ONWARD.md",
+    "status": "original_scope_applied",
+    "notes": "Policycorrectionnotloweredtimewindow"
+  },
+  {
+    "search_id": "ER-09",
+    "platform": "qualification_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "Sevenexistingfulltextpapersincluded/dateconfirmed;cards/Bib/conference/map/requirementsupdated",
+    "source_url": "literature-review/data/date_qualification_ER.csv",
+    "status": "local_update",
+    "notes": "No newwork/card/unit/methodgrade/experiment"
+  }
+]

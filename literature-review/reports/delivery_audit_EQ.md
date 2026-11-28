@@ -1,3 +1,5 @@
+> 后续ER修订：本报告是EQ提交29c4e51的32日期/60纳入审计快照。七篇ACL官方正式年月资格现按批准原规则确认，当前67纳入/25日期pending；[ER修正与理由](conference_date_precision_ER.md)、data/delivery_status_ER.json及现行要求矩阵说明变更，不倒改本报告历史审计。
+
 # EQ：批准任务书的当前交付审计
 
 2026-11-28，对现有66个稳定要求ID逐项恢复原始范围，读取两份任务书、当前数据/报告/索引证据与交付链；不以文件存在、篇数、检查通过或未发现错误宣布全部完成。基线da5409e。原矩阵在批次中留存，DV审计保持历史身份，现行[66项矩阵](../data/delivery_requirements.csv)与[逐项审计](../data/delivery_requirement_audit_EQ.json)更新。

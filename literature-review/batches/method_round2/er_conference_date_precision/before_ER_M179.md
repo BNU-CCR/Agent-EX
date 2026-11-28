@@ -1,0 +1,34 @@
+# M179 — 开放式社会模拟：立场、测量链与经验支撑
+
+## 1. 书目、类型与阅读范围
+Bolei Ma等，Too Open for Opinion? Embracing Open-Endedness in Large Language Models for Social Simulation，EACL2026 Volume1 Long Papers，1998–2016，DOI10.18653/v1/2026.eacl-long.89。[官方19页PDF](https://aclanthology.org/2026.eacl-long.89.pdf)取得/hash；正文1–10、附录A17–18/B19已读，参考10–16仅定位Ma2025相关条目、未全面重筛；p4/9/19目视。官方两页Responsible NLP Checklist已读。论文自称position paper，正式载体为EACL主会长文，不能自动改称独立position track。当前官网仅2026/3，Crossref无published-online，created2026-03-23不是在线发表日；日期pending、candidate保持。
+
+## 2. 主张与证据等级
+主张把不限定选项的自由文本作为社会模拟的核心信号，以发现未知主题、异质观点及表达方式，连接调查方法与NLP分析。core_method / conceptual_framework / conceptual_claim。§8明确主要概念综合，无新大规模实验或benchmark；checklist B/C/D均No，E说明GPT5仅润色。不能将文中的建议、人类调查类比或他人案例升级为本篇已实测有效的新流程。
+
+## 3. 开放性的操作定义
+§2按prompt是否限定回答选项定义open-endedness，不按是否使用自回归生成；封闭选择也可先生成再映射类别，或直接用token概率。本文不是开放式进化/开放世界环境/网络重连理论，也没有给定多主体状态、更新时钟、memory、feed或重试实现。原始回答自由、后续编码有限类别可以并存，不能把二者当逻辑冲突。
+
+## 4. 人类调查类比与八维映射
+表1八维为measurement、exploration、design、directive bias、pretesting、engagement/expressiveness、individuality、methodological utility。从人类访谈/问卷的优点映射到LLM机会，不是八项独立LLM实验。人类参与动机不可直接类推LLM；本文亦说明LLM无动机约束。自由文字可减少选项菜单限制，但题目、persona、systemprompt、语言、采样及编码仍可能引导输出；并未消除研究者介入。
+
+## 5. 经验材料与综述计数
+作者对Anthis2025所列53研究跟进，报告11有开放文本（20.75%约21%）、4主要靠自由文本评价（7.55%约8%）。是特定既有清单的跟进，不是所有2022+研究的开放文本比例；本文未提供本轮可独立重编码的完整53行裁决表/双筛一致性。图1气候题是示意，不是受控比较结果。附录B引用Ma2025德国案例的修改编码表，正文称16类但图列ID0–16共17行；保留口径差异，勿擅删LLM refusal、don’t know、not specified等状态。
+
+## 6. 分析方案与编码效度
+§5建议codebook、训练/双重编码/裁决、content analysis、关键词/主题、传统分类器、BERT、LLM及human–machine hybrid。是可操作的工具路线而非统一已验证管线。编码器对类别的可靠性、人类与合成文本域迁移、未知主题/多标签边界、拒绝与未答分母须另核；独立人工或外部参照不能由同一LLM生成并自评替代。附录17行仅类别名，没有给此论文新标注样本量/一致性/准确率，不能把图当验证结果。
+
+## 7. 评价框架与主张范围
+§6提出coherence、diversity、empirical realism三部分，外加情境适当性、人类判断/真实资料分布；未给新组合评分、权重或跨场景基准。词汇/句式不同不证明观点或主体异质性；coherence/相似度不能单独证明真实性。Sui Generis来自他人文本多样性研究，不是本文已验证用于社会模拟的指标。作者对ROUGE/BERTScore不足的判断限于此种评价目标，不能改写成它们在任何任务都无用。
+
+## 8. 理由、少数观点与局限
+自由生成的解释可作为输出材料分析，并非内在认知/因果机制的直接可见证据；本文把reasoning用于persona一致性/结论自检的主张未在此做忠实性检验。生成罕见或新观点不证明真实少数群体的分布被找回；“更自然”也可能为流利但虚构。§9承认开放形式会减轻、放大还是重塑偏差仍开放，存在analytic flexibility/幻觉/来源和同质化风险。不能只引用正面倡议，把作者对真人参照和偏差未知的限定删去。
+
+## 9. 实现、复现与伦理范围
+本文无新模型参数、运行预算或制品，checklist确认无计算实验/人类标注；不把不存在的新run配置列成作者漏报实验。53清单跟进与引用案例仍需来源追踪。合成引语应明示synthetic，不作为真实受访者声音；涉及persona资料的人类参照与许可需具体研究核，本文伦理讨论不等实际风险测量。当前仅官方全文/checklist及元数据取得，不声称独立复跑或全面核其被引文献。
+
+## 10. 对Agent-EX与发表生态
+对本项目最直接的价值是把生成、公开文本、编码读出、汇总和目标参照分层；开放帖子不自动使数值private_state失效，数值状态也不要求社会表达只能封闭选项。已冻结private primary/public secondary与串行事件语义不由此改动；生成理由不能充机制证明。后续方法研究可比较原始自由文本经不同读出后结论是否稳定，另核人工参照、主题发现与真实少数视角；尚未实施。EACL收录方法立场先例不意味着本项目可把一般结果稿改成position，也不证明开放式经验效度，投稿优先不升级。
+
+## 11. 缺口与下一项
+精确首发日、53研究的完整计数裁决、16/17类别口径、核心案例的标注/分类/真人参照及版本待核。下一批EN定向找Ma2025德国开放意见案例的正式来源并去重，核人机编码链和群体分布评价，再决定是否新增或深化；不是扩大为全文参考文献无界追索。31日期/3空分类及数据库/独立索引缺口保留。[EM报告](../reports/open_ended_position_EM.md)。

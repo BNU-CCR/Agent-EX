@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-28",
+  "baseline_audit": "data/delivery_requirement_audit_EQ.json",
+  "baseline_commit": "29c4e51",
+  "reviewed_ids": [
+    "M034",
+    "M035",
+    "M175",
+    "M176",
+    "M178",
+    "M179",
+    "M180"
+  ],
+  "change": "datequalificationonly;sevenexistingfulltextconferencepapersconfirmed/included",
+  "counts": {
+    "records": 237,
+    "included": 67,
+    "candidate": 160,
+    "frontier": 8,
+    "excluded": 2,
+    "cards": 87,
+    "units": 252,
+    "date_pending": 25
+  },
+  "unchanged": [
+    "methodgrades",
+    "studies",
+    "cards",
+    "validationunits",
+    "venuepriority",
+    "frozenexperiments"
+  ],
+  "not_established": "Exactfirstonlinedays/fullindependentreproduction/completecoverage;EQauditnotrewritten"
+}

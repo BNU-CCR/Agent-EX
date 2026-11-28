@@ -1,0 +1,85 @@
+{
+  "batch_id": "ER-official-conference-publication-month-qualification",
+  "date": "2026-11-28",
+  "expected_master_sha256": "9750a95e099b7d992faf2e98c4ffac3e6dea7c1600de4e57012bf79fa3100a88",
+  "updates": [
+    {
+      "record_id": "M034",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ER officialACLcitation_publication_date=2025-07 verified DOI/title;formalpublicationmonthfallback perapprovedtask3.2/protocol;exactfirstonlinedayunknown_notinvented;notmeeting/created",
+      "reason": "正式论文集身份、官方出版年月及相关全文已核，依批准日期回退与两阶段筛选规则纳入；原方法/实证/版本局限保持，不新增精确日硬门。",
+      "method_pending_fields": "fixedcode_data_retrieval_cutoff;heldout_design;metric_DTW_implementation;raw_repeats;prior_prediction_timestamp;TableVI_discrepancy",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AJformalPDFfocusedread;authorpredictivetimestampnotindependentlyverified,notretrospectiveaccusation. TableVIinternalGTonly,notexternalpoliticalfactverification;noexperiment/codeexecution. | CM:official2025conferencehomepage_newschecked_noexplicitproceedingsreleasefound;Anthologymonthretained;Crossrefpublished/print/issued2025only,onlineabsent;created/depositednotpublication;datepending/candidateunchanged ER correctedextraexact-daygate:officialformalpublicationmonthqualifiesperTask3.2;no newreading/evidencegrade/run;exactonlineprecisionremainsunknown.",
+      "method_coding_source": "reading-cards/M034.md;data/gas3_tableVI_audit_AJ.csv;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+      "method_last_checked": "2026-11-28"
+    },
+    {
+      "record_id": "M035",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ER officialACLcitation_publication_date=2025-11 verified DOI/title;formalpublicationmonthfallback perapprovedtask3.2/protocol;exactfirstonlinedayunknown_notinvented;notmeeting/created",
+      "reason": "正式论文集身份、官方出版年月及相关全文已核，依批准日期回退与两阶段筛选规则纳入；原方法/实证/版本局限保持，不新增精确日硬门。",
+      "method_pending_fields": "formal_formula_code_run_reconciliation;full_induction_budget;patched_dependency_env;model_revision_seed;rawrun_equivalence_path_dependence",
+      "notes": "AGmetadataonly;PDFappearinginsearchresultsnotfulltextreading;Findingsisdistinctfrommaintrack. | AIofficialPDFfocusedread;tweet/total/runtimecostdistinct;arithmeticfromroundedtable. Empiricalscope two datasets,notvalidatedgeneralworkflow;fitnesssignunresolved notcodeerrorclaim. | AKfixed00878bc4/11filesblobverified:fitness -w2*token,notrewardinglongtext inpublicpath. Maycommitlinks preprint;formalrunmappingunverified. Partialenvarchivesnotrebuilt. | CM:official2025conferencehomepage_newschecked_noexplicitproceedingsreleasefound;Anthologymonthretained;Crossrefpublished/print/issued2025only,onlineabsent;created/depositednotpublication;datepending/candidateunchanged ER correctedextraexact-daygate:officialformalpublicationmonthqualifiesperTask3.2;no newreading/evidencegrade/run;exactonlineprecisionremainsunknown.",
+      "method_coding_source": "reading-cards/M035.md;data/ecolang_cost_audit_AI.csv;data/ecolang_artifact_audit_AK.json;reports/findings_dates_and_triage_CM.md;officialnews_and_registry_date_audit;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+      "method_last_checked": "2026-11-28"
+    },
+    {
+      "record_id": "M175",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ER officialACLcitation_publication_date=2026-07 verified DOI/title;formalpublicationmonthfallback perapprovedtask3.2/protocol;exactfirstonlinedayunknown_notinvented;notmeeting/created",
+      "reason": "正式论文集身份、官方出版年月及相关全文已核，依批准日期回退与两阶段筛选规则纳入；原方法/实证/版本局限保持，不新增精确日硬门。",
+      "method_pending_fields": "actualrunmanifest/modelrevision/cost/failure;human_annotation_protocol_agreement;CLMthreshold_loss_exchangeability_and_finalselection;population_source_transform_joint_fit;culture11vs7All;profile_metric_mapping;clock_weighting_scheduling;Park_norm_count;author_code_data_calibration_release_and_paper_mapping",
+      "notes": "EF officialPDF30ppscopedread/notallactioncatalogue;primaryABScomparison andofficialchecklistadded. Author annotation notindependentexpertpanel. FirstauthorPDFhyphenViet-Thanh vsmetaVietThanh preservedasnamevariant,notnewwork. Nominal1000targetepisodes/backbone notruncompletion certification;no model/codeexecution. | EG main836b121e complete tree1README57bytes/data-linkpending;firstbranchlistmain/releaselistempty;tagsconnectorrejectednotabsence;no code/runtime verification. ER correctedextraexact-daygate:officialformalpublicationmonthqualifiesperTask3.2;no newreading/evidencegrade/run;exactonlineprecisionremainsunknown.",
+      "method_coding_source": "reading-cards/M175.md;reports/liveculturebench_EF.md;batches/method_round2/ef_liveculturebench/reading_checks.json;reports/liveculture_release_EG.md;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+      "method_last_checked": "2026-11-28"
+    },
+    {
+      "record_id": "M176",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ER officialACLcitation_publication_date=2026-10 verified DOI/title;formalpublicationmonthfallback perapprovedtask3.2/protocol;exactfirstonlinedayunknown_notinvented;notmeeting/created",
+      "reason": "正式论文集身份、官方出版年月及相关全文已核，依批准日期回退与两阶段筛选规则纳入；原方法/实证/版本局限保持，不新增精确日硬门。",
+      "method_pending_fields": "Religion76vs80attributes;rawlabels_annotation_protocol;completecase_population_mapping;ASPG_outofsample_selection;model_snapshot_think_and_decoding_identity;parsing_failure_cost;dynamic_process_validation",
+      "notes": "ED scopedformalreading;candidate/datependingretained,PDFcoverdatedconferencenotfirstonline. 18/69sourcecomparisonschecked,notindependentexperiments. Filteredanalyticaltarget/no surveyweights;Mediaannotatedlabelsnotallhumanverified;no code/modelrun. ER correctedextraexact-daygate:officialformalpublicationmonthqualifiesperTask3.2;no newreading/evidencegrade/run;exactonlineprecisionremainsunknown.",
+      "method_coding_source": "reading-cards/M176.md;reports/relimap_ED.md;batches/method_round2/ed_relimap/reading_checks.json;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+      "method_last_checked": "2026-11-28"
+    },
+    {
+      "record_id": "M178",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ER officialACLcitation_publication_date=2026-11 verified DOI/title;formalpublicationmonthfallback perapprovedtask3.2/protocol;exactfirstonlinedayunknown_notinvented;notmeeting/created",
+      "reason": "正式论文集身份、官方出版年月及相关全文已核，依批准日期回退与两阶段筛选规则纳入；原方法/实证/版本局限保持，不新增精确日硬门。",
+      "method_pending_fields": "rawWVS_weights_uniqueIDs_respondentsplit;zeroSDcell_parsingmissingness;modelrevision_backend_precision_runmapping_trainingrepeats;code_rawbootstrap;index_overlap_rebuiltpersona",
+      "notes": "EA bounded targeted public discovery;not full inventory/database export. No new card/evidence-unit/maturity upgrade.  EK official15ppscopedfullread;referencesnotrescreened. Ownmathcounterexamplesnotmodelruns. Datepending/candidateretained;codeabsenceunclaimed. ER correctedextraexact-daygate:officialformalpublicationmonthqualifiesperTask3.2;no newreading/evidencegrade/run;exactonlineprecisionremainsunknown.",
+      "method_coding_source": "reading-cards/M178.md;reports/cultural_variance_EK.md;batches/method_round2/ek_cultural_variance/reading_checks.json;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+      "method_last_checked": "2026-11-28"
+    },
+    {
+      "record_id": "M179",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ER officialACLcitation_publication_date=2026-03 verified DOI/title;formalpublicationmonthfallback perapprovedtask3.2/protocol;exactfirstonlinedayunknown_notinvented;notmeeting/created",
+      "reason": "正式论文集身份、官方出版年月及相关全文已核，依批准日期回退与两阶段筛选规则纳入；原方法/实证/版本局限保持，不新增精确日硬门。",
+      "method_pending_fields": "53study_coding_inventory;16vs17category_count;empirical_case_annotation_classifier_reference;open_vs_closed_effects",
+      "notes": "EA bounded targeted public discovery;not full inventory/database export. No new card/evidence-unit/maturity upgrade.  EMpositionfulltext/checklistread;no empiricalupgrade. Referencesnotrescreened;53studypercentagesnotrecoded. CoreGermanMa2025caseleadnotnewrecordyet. ER correctedextraexact-daygate:officialformalpublicationmonthqualifiesperTask3.2;no newreading/evidencegrade/run;exactonlineprecisionremainsunknown.",
+      "method_coding_source": "reading-cards/M179.md;reports/open_ended_position_EM.md;batches/method_round2/em_open_ended_position/reading_checks.json;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+      "method_last_checked": "2026-11-28"
+    },
+    {
+      "record_id": "M180",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "date_basis": "ER officialACLcitation_publication_date=2025-07 verified DOI/title;formalpublicationmonthfallback perapprovedtask3.2/protocol;exactfirstonlinedayunknown_notinvented;notmeeting/created",
+      "reason": "正式论文集身份、官方出版年月及相关全文已核，依批准日期回退与两阶段筛选规则纳入；原方法/实证/版本局限保持，不新增精确日硬门。",
+      "method_pending_fields": "GLES_sampleweights_uniqueIDs;classifier_actualsplit_perclass_agreement_transfer;fallbackfrequency_rawoutputs;Table7signedAPE_path;generationrevision_config_runmapping",
+      "notes": "ENtargetedcitationchasefromM179;notallreferencecrawl. OfficialauthornamevsPDFvariantsnotnewwork. No rawGLES/modelrun;tablearithmeticonly. EOstaticfixedcode/readnotexecute;publicaggregatearithmeticnotrawreplication. Map17/defaultPMF14andsplitlocated;publishedrunmappingstillpending. ER correctedextraexact-daygate:officialformalpublicationmonthqualifiesperTask3.2;no newreading/evidencegrade/run;exactonlineprecisionremainsunknown.",
+      "method_coding_source": "reading-cards/M180.md;reports/german_open_opinion_EN.md;batches/method_round2/en_german_open_opinion/reading_checks.json;reports/german_fixed_code_EO.md;data/german_code_crosswalk_EO.csv;reports/conference_date_precision_ER.md;data/date_qualification_ER.csv",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

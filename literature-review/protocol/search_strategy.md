@@ -38,3 +38,5 @@ search_id稳定，平台搜索总数无法可靠读取时result_count留空；re
 - 2026-11-26：Crossref部分429保留失败记录，已可用的出版社页继续核查，不高频重复请求。
 
 第二轮X已实际补validation of generative social simulation、LLM agent calibration、stochastic reproducibility LLM agent simulation、theory formalization agent-based model四组公开查询，精确式在S-M2-X-Q01–04。年份文本不作数据库过滤，字面词匹配不作召回率；后续由真实命中/去重和官方全文推进，见reports/theme_search_followup.md。
+
+ER执行校准（2026-11-28）：上文既有正式出版日期回退/会议年月精度规则继续有效；七篇ACL正式全文官方年月已核，按任务书3.2改时间资格confirmed并纳入，精确在线日未知不新增为硬门。online_first_date沿用年月，date_basis明示formalpublicationfallback，不猜日/不采用created。其他25日期未决不自动放宽。见reports/conference_date_precision_ER.md。

@@ -1,0 +1,36 @@
+# M035 — EcoLANG：压缩了什么，保持了什么？
+
+## 1. 书目、版本与范围
+Xinyi Mou; Chen Qian; Wei Liu; Ling Yan; Yao Hu; Xuanjing Huang; Zhongyu Wei. EcoLANG: Efficient and Effective Agent Communication Language Induction for Social Simulation. Findings EMNLP2025,5287–5304；DOI10.18653/v1/2025.findings-emnlp.284。[正式页](https://aclanthology.org/2025.findings-emnlp.284/)与[18页正式PDF](https://aclanthology.org/2025.findings-emnlp.284.pdf)。2026-11-27定向读PDF pp3–9,12–17（§3–6/限制/AppA/B关键段），表1、式2已渲染目视。精确首发日仍未得，2025-11和会期不代替在线日，candidate保留。Checklist链接实际404/HTML，未读；AI仅见代码链接；AK后续固定11文件见制品报告。
+
+## 2. 问题与对象
+能否缩短主体通信而保持所测社会模拟表现？不是减少LLM调用次数。PHEME196线程、每线程2–31用户；HiSim的Metoo/Roe各1000用户。三次重复为run，不把主体数当独立重复。
+
+## 3. 方法构造
+WordNet/频率与token长度筛词并映射token，受限解码；在人设对话development/validation数据上用GPT-4o评persona alignment和expressiveness，以遗传式规则提示搜索五代，再迁移到OASIS社会模拟。词频语料与目标议题相关，HiSim用事件前tweet，故是有议题资料的迁移，不是完全无目标域信息。
+
+## 4. 信息、平台与参数
+主体Llama-3.1-8B-Instruct，temperature0；PHEME步数依线程最大深度，HiSim14步。HiSim禁推荐，仅外部新闻/关注关系，其余记忆机制用OASIS默认，精确版本未独立核。不能据此将全部平台行为归语言压缩或直接等同原HiSim实现；AppB.5明确未以原HiSim平台为baseline。
+
+## 5. 对照与效度
+Base、Summary、AutoForm、KQML与Vocab/Rule组件消融。PHEME初始stance、末belief/分布JS；HiSim初始stance/content及随时间均值偏差/标准差差异后再平均。另有句向量/词分布/长度。它们是选定投影，不自动证明每个主体、依赖路径或机制保持。三run均值不构成非劣/等效检验。
+
+## 6. 成本分母
+表1区分生成tweet的token_r、全部prompt token_p和全部completion token_c。按已四舍五入表值，EcoLANG相对Base的token_r约省20.3%/24.7%（PHEME/HiSim），但token_p+token_c仅约省3.1%/6.2%。表9 HiSim运行时间980→850秒（13.2%），与token比例不同；规则搜索、judge与语料构造预算未在这张下游表核齐，不称端到端费用收益。受限解码本身不降显存；表9星号的降低需部署前物理裁词表。
+
+## 7. 结果、迁移与证据
+empirical_method_test/empirical_validation，限两个目标数据集、所选指标与平台。表4将规则迁移到Qwen/Mistral，非整套词表/流程迁移；部分指标退步，如Qwen PHEME stance与belief_JS。不能写各模型各指标均不下降。AgentTorch扩展用36原型，作者也提示内容/多样性代价，不能仅以效率判断质量。
+
+## 8. 评价者与公式未决
+AppA.2的50对话人工检验报告GPT-4o κ=0.48；AppB.6另取100实例、两人核GPT-4o-mini标签，一致性stance0.94/belief0.78，不能合成一个通用评价准确率。式2以正号加入归一化token数，AppA.2 λ_eff=+0.6；AK固定公开00878bc4代码实际减去w2*token、align/exp除5并选高分，故公开实现惩罚长生成，与印刷表达不同。正式运行版本关联未证，不断言实现错误。11文件静态读未复跑，种子/模型revision及修改包环境未核齐。
+
+## 9. Agent-EX比较（本项目推论）
+通信内容/长度会改变后续feed与记忆，因此成本控制也可能是机制干预。分别检验输出、全部上下文、运行时间、调用次数和过程保持；不要把宏观均值接近当完整轨迹等价。不改冻结prompt/曝光/记忆参数。
+
+## 10. 写作与投稿用途
+Findings正式效率方法先例，显示方法稿可以围绕控制/效度权衡，不只比速度。当前稿不声称已实现该压缩；独立方法稿可比较成本分母、观测投影和过程偏差。本卡重算是文献表值审计，非新实验。
+
+## 11. 待核与制品
+精确首发日、正式运行与公开fitness实现映射、全流程预算、完整OASIS版本/随机性、配对原始结果/等效与轨迹效度。hash见source_acquisition_manifest_AI.json；表值重算见ecolang_cost_audit_AI.csv；综合见communication_efficiency_validity.md。下一项读M034群体主体再处理代码公式问题。
+
+AK补记：公式方向与环境边界见[跟进报告](../reports/ecolang_formula_artifact_followup.md)。公开代码不是奖励长文本；未验证正式版运行和所有预算/依赖，未复跑。

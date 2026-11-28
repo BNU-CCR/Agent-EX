@@ -1,0 +1,265 @@
+[
+  {
+    "record_id": "M034",
+    "url": "https://aclanthology.org/2025.findings-acl.468/",
+    "status": 200,
+    "bytes": 44824,
+    "sha256": "d38e67badbb9d2ceda315fb395f30cb366714e23dbb1e6596123802a70b5e230",
+    "metadata": {
+      "citation_title": [
+        "GA-S3: Comprehensive Social Network Simulation with Group Agents"
+      ],
+      "citation_author": [
+        "Yunyao Zhang",
+        "Zikai Song",
+        "Hang Zhou",
+        "Wenfeng Ren",
+        "Yi-Ping Phoebe Chen",
+        "Junqing Yu",
+        "Wei Yang"
+      ],
+      "citation_conference_title": [
+        "Findings of the Association for Computational Linguistics: ACL 2025"
+      ],
+      "citation_publication_date": [
+        "2025/7"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2025.findings-acl.468.pdf"
+      ],
+      "citation_firstpage": [
+        "8950"
+      ],
+      "citation_lastpage": [
+        "8970"
+      ],
+      "citation_doi": [
+        "10.18653/v1/2025.findings-acl.468"
+      ]
+    }
+  },
+  {
+    "record_id": "M035",
+    "url": "https://aclanthology.org/2025.findings-emnlp.284/",
+    "status": 200,
+    "bytes": 45630,
+    "sha256": "6300b3dcaf7110d57630c4db3456d35d788b18d17c51c899fc1b10f1bce8bff3",
+    "metadata": {
+      "citation_title": [
+        "EcoLANG: Efficient and Effective Agent Communication Language Induction for Social Simulation"
+      ],
+      "citation_author": [
+        "Xinyi Mou (牟馨忆)",
+        "Chen Qian",
+        "Wei Liu",
+        "Ling Yan",
+        "Yao Hu",
+        "Xuan-Jing Huang (黄萱菁)",
+        "Zhongyu Wei (魏忠钰)"
+      ],
+      "citation_conference_title": [
+        "Findings of the Association for Computational Linguistics: EMNLP 2025"
+      ],
+      "citation_publication_date": [
+        "2025/11"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2025.findings-emnlp.284.pdf"
+      ],
+      "citation_firstpage": [
+        "5287"
+      ],
+      "citation_lastpage": [
+        "5304"
+      ],
+      "citation_doi": [
+        "10.18653/v1/2025.findings-emnlp.284"
+      ]
+    }
+  },
+  {
+    "record_id": "M175",
+    "url": "https://aclanthology.org/2026.acl-long.1247/",
+    "status": 200,
+    "bytes": 44873,
+    "sha256": "c658eee5460f43a172ccd5302588ebf8292c7c0588b14320434fd2589c5febca",
+    "metadata": {
+      "citation_title": [
+        "LiveCultureBench: a Multi-Agent, Multi-Cultural Benchmark for Large Language Models in Dynamic Social Simulations"
+      ],
+      "citation_author": [
+        "Viet Thanh Pham",
+        "Lizhen Qu",
+        "Thuy-Trang Vu",
+        "Gholamreza Haffari",
+        "Dinh Phung"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)"
+      ],
+      "citation_publication_date": [
+        "2026/7"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.acl-long.1247.pdf"
+      ],
+      "citation_firstpage": [
+        "27076"
+      ],
+      "citation_lastpage": [
+        "27105"
+      ],
+      "citation_doi": [
+        "10.18653/v1/2026.acl-long.1247"
+      ]
+    }
+  },
+  {
+    "record_id": "M176",
+    "url": "https://aclanthology.org/2026.emnlp-main.1269/",
+    "status": 200,
+    "bytes": 43826,
+    "sha256": "ded3d59b21ea5dbe8d5720df59977126b574974069e9e6c8618c5a15f495e163",
+    "metadata": {
+      "citation_title": [
+        "Understanding Reliability in LLM-based Human Behavior Simulation"
+      ],
+      "citation_author": [
+        "Pei Wang",
+        "Lei Wang",
+        "Yuanzi Li",
+        "Xu Chen"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing"
+      ],
+      "citation_publication_date": [
+        "2026/10"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.emnlp-main.1269.pdf"
+      ],
+      "citation_firstpage": [
+        "28919"
+      ],
+      "citation_lastpage": [
+        "28936"
+      ],
+      "citation_doi": [
+        "10.18653/2026.emnlp-main.1269"
+      ]
+    }
+  },
+  {
+    "record_id": "M178",
+    "url": "https://aclanthology.org/2026.aacl-long.144/",
+    "status": 200,
+    "bytes": 47073,
+    "sha256": "69cd9fc7414dde38d86ecc5f6d9c21c717957acc4058682666a3fdd318e616ea",
+    "metadata": {
+      "citation_title": [
+        "The Limits of Simulated Societies: How Post-Training and Survey Fine-Tuning Erase Cross-Cultural Variance"
+      ],
+      "citation_author": [
+        "Rojin Ziaei"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 15th International Joint Conference on Natural Language Processing and the 5th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics (Volume 1: Long Papers)"
+      ],
+      "citation_publication_date": [
+        "2026/11"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.aacl-long.144.pdf"
+      ],
+      "citation_firstpage": [
+        "3152"
+      ],
+      "citation_lastpage": [
+        "3166"
+      ],
+      "citation_doi": [
+        "10.18653/2026.aacl-long.144"
+      ]
+    }
+  },
+  {
+    "record_id": "M179",
+    "url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": 200,
+    "bytes": 44959,
+    "sha256": "5aaae9a4411b0d9b4646d3e08bac872721aad4c3ebae0d5e81fc73a127a39df2",
+    "metadata": {
+      "citation_title": [
+        "Too Open for Opinion? Embracing Open-Endedness in Large Language Models for Social Simulation"
+      ],
+      "citation_author": [
+        "Bolei Ma",
+        "Yong Cao",
+        "Indira Sen",
+        "Anna-Carolina Haensch",
+        "Frauke Kreuter",
+        "Barbara Plank",
+        "Daniel Hershcovich"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 19th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers)"
+      ],
+      "citation_publication_date": [
+        "2026/3"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.eacl-long.89.pdf"
+      ],
+      "citation_firstpage": [
+        "1998"
+      ],
+      "citation_lastpage": [
+        "2016"
+      ],
+      "citation_doi": [
+        "10.18653/v1/2026.eacl-long.89"
+      ]
+    }
+  },
+  {
+    "record_id": "M180",
+    "url": "https://aclanthology.org/2025.acl-long.90/",
+    "status": 200,
+    "bytes": 46851,
+    "sha256": "f296deaf263d425e79de0dbfa7c1a0b3f95b1b8fe56b13f6040f4e15917e7df6",
+    "metadata": {
+      "citation_title": [
+        "Algorithmic Fidelity of Large Language Models in Generating Synthetic German Public Opinions: A Case Study"
+      ],
+      "citation_author": [
+        "Bolei Ma",
+        "Berk Yoztyurk",
+        "Anna-Carolina Haensch",
+        "Xinpeng Wang",
+        "Markus Herklotz",
+        "Frauke Kreuter",
+        "Barbara Plank",
+        "Matthias Aßenmacher"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)"
+      ],
+      "citation_publication_date": [
+        "2025/7"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2025.acl-long.90.pdf"
+      ],
+      "citation_firstpage": [
+        "1785"
+      ],
+      "citation_lastpage": [
+        "1809"
+      ],
+      "citation_doi": [
+        "10.18653/v1/2025.acl-long.90"
+      ]
+    }
+  }
+]
