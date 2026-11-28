@@ -1,0 +1,119 @@
+[
+  {
+    "search_id": "EA-01",
+    "platform": "public_web_discovery_four_queries",
+    "search_date": "2026-11-28",
+    "query_exact": "[\"site.aclanthology.org 2026 social simulation validation reproducibility large language models benchmark\", \"site:proceedings.neurips.cc 2025 \\\"social simulation\\\" validation\", \"site:openreview.net 2026 \\\"social simulation\\\" benchmark\", \"site:aclanthology.org 2025 \\\"social simulation\\\" \\\"calibration\\\"\"]",
+    "source_url": "literature-review/batches/method_round2/ea_crossdisciplinary_validation/search_protocol.json",
+    "status": "bounded_primary_leads",
+    "notes": "Firstquerysiteprefixmalformed;allselectedprimarypagesindependentlychecked;notdatabaserecall"
+  },
+  {
+    "search_id": "EA-02",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "SimBench",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/2fc4d6a6400addda7493b9db258c34e0-Abstract-Conference.html",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-03",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "LiveCultureBench",
+    "source_url": "https://aclanthology.org/2026.acl-long.1247/",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-04",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "ReliMap",
+    "source_url": "https://aclanthology.org/2026.emnlp-main.1269/",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-05",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "ReplicatorBench",
+    "source_url": "https://api.crossref.org/works/10.1145/3770855.3819003",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-06",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "LimitsSocieties",
+    "source_url": "https://aclanthology.org/2026.aacl-long.144/",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-07",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "TooOpen",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-08",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "LiveCultureBench_Crossref",
+    "source_url": "https://api.crossref.org/works/10.18653/v1/2026.acl-long.1247",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-09",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "ReliMap_Crossref",
+    "source_url": "https://api.crossref.org/works/10.18653/2026.emnlp-main.1269",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-10",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "LimitsSocieties_Crossref",
+    "source_url": "https://api.crossref.org/works/10.18653/2026.aacl-long.144",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-11",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "TooOpen_Crossref",
+    "source_url": "https://api.crossref.org/works/10.18653/v1/2026.eacl-long.89",
+    "status": "429",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-12",
+    "platform": "primary_metadata_or_abstract_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "ReplicatorBench_author_hosted_PDF",
+    "source_url": "https://www.cs.odu.edu/~jwu/downloads/pubs/soos-2026-kdd/soos-2026-kdd.pdf",
+    "status": "200",
+    "notes": "Hash/source saved;fullabstract only;PDF onlyp1abstract/identity;Crossrefcreated notonline;429preserved"
+  },
+  {
+    "search_id": "EA-13",
+    "platform": "local_dedup_and_screening",
+    "search_date": "2026-11-28",
+    "query_exact": "Sixnewcandidateidentities/exactDOIandnormalizedtitle;17leadboundedinventory;nofulltextupgrade",
+    "source_url": "literature-review/batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "status": "six_candidates",
+    "notes": "Grouped operations notqueries/experiments;otherleadsdeferrednotexcluded"
+  }
+]

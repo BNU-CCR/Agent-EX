@@ -1,0 +1,966 @@
+[
+  {
+    "kind": "SimBench",
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/2fc4d6a6400addda7493b9db258c34e0-Abstract-Conference.html",
+    "status": 200,
+    "bytes": 9730,
+    "sha256": "1750b3a8f306ae682d07b9bfbf68172d9793e2b50cefa5a48a14f360b6ea0cbd",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_SimBench.html",
+    "content_type": "text/html; charset=utf-8",
+    "meta": {
+      "citation_title": [
+        "SimBench: Benchmarking the Ability of Large Language Models to Simulate Human Behaviors"
+      ],
+      "citation_author": [
+        "Hu, Tiancheng",
+        "Baumann, Joachim",
+        "Lupo, Lorenzo",
+        "Collier, Nigel",
+        "Hovy, Dirk",
+        "Röttger, Paul"
+      ],
+      "citation_journal_title": [
+        "International Conference on Learning Representations"
+      ],
+      "citation_volume": [
+        "2026"
+      ],
+      "citation_firstpage": [
+        "28290"
+      ],
+      "citation_lastpage": [
+        "28341"
+      ],
+      "citation_pdf_url": [
+        "https://proceedings.iclr.cc/paper_files/paper/2026/file/2fc4d6a6400addda7493b9db258c34e0-Paper-Conference.pdf"
+      ],
+      "citation_publication_date": [
+        "2026-04-20"
+      ]
+    },
+    "abstracts": [],
+    "links": [
+      {
+        "text": "Paper",
+        "href": "/paper_files/paper/2026/file/2fc4d6a6400addda7493b9db258c34e0-Paper-Conference.pdf"
+      }
+    ]
+  },
+  {
+    "kind": "LiveCultureBench",
+    "url": "https://aclanthology.org/2026.acl-long.1247/",
+    "status": 200,
+    "bytes": 44873,
+    "sha256": "c658eee5460f43a172ccd5302588ebf8292c7c0588b14320434fd2589c5febca",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_LiveCultureBench.html",
+    "content_type": "text/html; charset=utf-8",
+    "meta": {
+      "citation_title": [
+        "LiveCultureBench: a Multi-Agent, Multi-Cultural Benchmark for Large Language Models in Dynamic Social Simulations"
+      ],
+      "citation_author": [
+        "Viet Thanh Pham",
+        "Lizhen Qu",
+        "Thuy-Trang Vu",
+        "Gholamreza Haffari",
+        "Dinh Phung"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)"
+      ],
+      "citation_publication_date": [
+        "2026/7"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.acl-long.1247.pdf"
+      ],
+      "citation_firstpage": [
+        "27076"
+      ],
+      "citation_lastpage": [
+        "27105"
+      ],
+      "citation_doi": [
+        "10.18653/v1/2026.acl-long.1247"
+      ]
+    },
+    "abstracts": [
+      "Abstract Large language models (LLMs) are increasingly deployed as autonomous agents, yet evaluations focus primarily on task success rather than cultural appropriateness or evaluator reliability. We introduce LiveCultureBench, a multi-cultural, dynamic benchmark that embeds LLMs as agents in a simulated town and evaluates them on both task completion and adherence to socio-cultural norms. The simulation models a small city as a location graph with synthetic residents having diverse demographic and cultural profiles. Each episode assigns one resident a daily goal while others provide social context. An LLM-based verifier generates structured judgments on norm violations and task progress, which we aggregate into metrics capturing task-norm trade-offs and verifier uncertainty. Using LiveCultureBench across models and cultural profiles, we study (i) cross-cultural robustness of LLM agents, (ii) how they balance effectiveness against norm sensitivity, and (iii) when LLM-as-a-judge evaluation is reliable for automated benchmarking versus when human oversight is needed."
+    ],
+    "links": [
+      {
+        "text": "L ive C ulture B ench: a Multi-Agent, Multi-Cultural Benchmark for Large Language Models in Dynamic Social Simulations",
+        "href": "https://aclanthology.org/2026.acl-long.1247.pdf"
+      },
+      {
+        "text": "10.18653/v1/2026.acl-long.1247",
+        "href": "https://doi.org/10.18653/v1/2026.acl-long.1247"
+      },
+      {
+        "text": "https://aclanthology.org/2026.acl-long.1247.pdf",
+        "href": "https://aclanthology.org/2026.acl-long.1247.pdf"
+      },
+      {
+        "text": "2026.acl-long.1247.checklist.pdf",
+        "href": "https://aclanthology.org/attachments/2026.acl-long.1247.checklist.pdf"
+      },
+      {
+        "text": "PDF",
+        "href": "https://aclanthology.org/2026.acl-long.1247.pdf"
+      },
+      {
+        "text": "Checklist",
+        "href": "https://aclanthology.org/attachments/2026.acl-long.1247.checklist.pdf"
+      }
+    ]
+  },
+  {
+    "kind": "ReliMap",
+    "url": "https://aclanthology.org/2026.emnlp-main.1269/",
+    "status": 200,
+    "bytes": 43826,
+    "sha256": "ded3d59b21ea5dbe8d5720df59977126b574974069e9e6c8618c5a15f495e163",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_ReliMap.html",
+    "content_type": "text/html; charset=utf-8",
+    "meta": {
+      "citation_title": [
+        "Understanding Reliability in LLM-based Human Behavior Simulation"
+      ],
+      "citation_author": [
+        "Pei Wang",
+        "Lei Wang",
+        "Yuanzi Li",
+        "Xu Chen"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing"
+      ],
+      "citation_publication_date": [
+        "2026/10"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.emnlp-main.1269.pdf"
+      ],
+      "citation_firstpage": [
+        "28919"
+      ],
+      "citation_lastpage": [
+        "28936"
+      ],
+      "citation_doi": [
+        "10.18653/2026.emnlp-main.1269"
+      ]
+    },
+    "abstracts": [
+      "Abstract Large language models (LLMs) are increasingly used to simulate human survey responses and behavioral reactions, yet unreliable simulations can mislead social science conclusions. However, existing evaluations focus on end-to-end scores, leaving it unclear how different aspects of the simulation process interact to determine reliability. We propose ReliMap, which decomposes LLM-based human behavior simulation into three structured layers and evaluates reliability at both the individual level (R1) and population level (R2) across three configuration dimensions: model capacity, profile completeness, and population coverage. Through experiments across four simulation tasks and eleven LLMs, we find that all models exhibit substantial distributional bias without profile conditioning. Profile conditioning reduces this bias with diminishing returns. Larger models benefit more, and attribute informativeness matters more than quantity. Critically, R1 gains do not reliably transfer to R2—individual and population-level reliability can move in opposite directions. At the population layer, increasing coverage reduces variance but not systematic bias, with R2 stabilizing at around 50–100 individuals. These findings highlight that reliable simulation cannot be achieved by optimizing any single layer in isolation, but requires coordinated improvement across all three."
+    ],
+    "links": [
+      {
+        "text": "Understanding Reliability in LLM -based Human Behavior Simulation",
+        "href": "https://aclanthology.org/2026.emnlp-main.1269.pdf"
+      },
+      {
+        "text": "10.18653/2026.emnlp-main.1269",
+        "href": "https://doi.org/10.18653/2026.emnlp-main.1269"
+      },
+      {
+        "text": "https://aclanthology.org/2026.emnlp-main.1269.pdf",
+        "href": "https://aclanthology.org/2026.emnlp-main.1269.pdf"
+      },
+      {
+        "text": "PDF",
+        "href": "https://aclanthology.org/2026.emnlp-main.1269.pdf"
+      }
+    ]
+  },
+  {
+    "kind": "ReplicatorBench",
+    "url": "https://api.crossref.org/works/10.1145/3770855.3819003",
+    "status": 200,
+    "bytes": 14705,
+    "sha256": "f4de15f5457f30dcce526f61b0bd6f40c57d8a51f9407d7c934485095ff7540c",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_ReplicatorBench.json",
+    "content_type": "application/json",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            12
+          ]
+        ],
+        "date-time": "2026-10-12T17:57:09Z",
+        "timestamp": 1791827829719,
+        "version": "4.3.4"
+      },
+      "publisher-location": "New York, NY, USA",
+      "reference-count": 25,
+      "publisher": "ACM",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                8,
+                8
+              ]
+            ],
+            "date-time": "2026-08-08T00:00:00Z",
+            "timestamp": 1786147200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/legalcode"
+        }
+      ],
+      "funder": [
+        {
+          "name": "Coefficient Giving",
+          "award": [
+            "N&#x5c;&#x2f;A"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "N&#x5c;&#x2f;A"
+              ]
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "dl.acm.org"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1145/3770855.3819003",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            6
+          ]
+        ],
+        "date-time": "2026-08-06T17:15:47Z",
+        "timestamp": 1786036547000
+      },
+      "page": "11693-11704",
+      "update-policy": "https://doi.org/10.1145/crossmark-policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "<scp>ReplicatorBench:</scp>\n                    Benchmarking LLM Agents for Replicability in Social and Behavioral Sciences"
+      ],
+      "prefix": "10.1145",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0002-8365-4562",
+          "authenticated-orcid": false,
+          "given": "Bang",
+          "family": "Nguyen",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Computer Science and Engineering, University of Notre Dame, Notre Dame, IN, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7089-6354",
+          "authenticated-orcid": false,
+          "given": "Dominik",
+          "family": "Soós",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Computer Science, Old Dominion University, Norfolk, VA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0005-4102-8290",
+          "authenticated-orcid": false,
+          "given": "Qian",
+          "family": "Ma",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Sciences and Technology, Pennsylvania State University, University Park, PA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-1593-4052",
+          "authenticated-orcid": false,
+          "given": "Rochana R.",
+          "family": "Obadage",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Computer Science, Old Dominion University, Norfolk, VA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0003-3175-6484",
+          "authenticated-orcid": false,
+          "given": "Zack",
+          "family": "Ranjan",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Sciences and Technology, Pennsylvania State University, University Park, PA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-8582-5914",
+          "authenticated-orcid": false,
+          "given": "Sai",
+          "family": "Koneru",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Sciences and Technology, Pennsylvania State University, University Park, PA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4959-5143",
+          "authenticated-orcid": false,
+          "given": "Timothy M.",
+          "family": "Errington",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Center for Open Science, Washington, DC, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6458-1703",
+          "authenticated-orcid": false,
+          "given": "Shakhlo",
+          "family": "Nematova",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Center for Open Science, Washington, DC, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-1464-0848",
+          "authenticated-orcid": false,
+          "given": "Sarah",
+          "family": "Rajtmajer",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Sciences and Technology, Pennsylvania State University, University Park, PA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0173-4463",
+          "authenticated-orcid": false,
+          "given": "Jian",
+          "family": "Wu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Computer Science, Old Dominion University, Norfolk, VA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-3009-519X",
+          "authenticated-orcid": false,
+          "given": "Meng",
+          "family": "Jiang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Computer Science and Engineering, University of Notre Dame, Notre Dame, IN, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "320",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            8
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_3_2_2_1_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nazanin Alipourfard Beatrix Arendt Daniel M Benjamin Noam Benkler Michael Bishop Mark Burstein Martin Bush James Caverlee Yiling Chen Chae Clark et al. 2021. Systematizing confidence in open research and evidence (SCORE).",
+          "DOI": "10.31235/osf.io/46mnb"
+        },
+        {
+          "key": "e_1_3_2_2_2_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Abel Brodeur Derek Mikola Nikolai Cook Thomas Brailey Ryan Briggs Alexandra de Gendre Yannick Dupraz Lenka Fiala Jacopo Gabani Romain Gauriot et al. 2024. Mass Reproducibility and Replicability: A New Hope. Technical Report. The Institute for Replication (I4R).",
+          "DOI": "10.2139/ssrn.4790780"
+        },
+        {
+          "key": "e_1_3_2_2_3_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Colin F Camerer Anna Dreber Eskil Forsell Teck-Hua Ho Jürgen Huber Magnus Johannesson Michael Kirchler Johan Almenberg Adam Altmejd Taizan Chan et al. 2016. Evaluating replicability of laboratory experiments in economics. Science V351 6280 (2016) 1433-1436.",
+          "DOI": "10.1126/science.aaf0918"
+        },
+        {
+          "key": "e_1_3_2_2_4_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1126/science.aac4716"
+        },
+        {
+          "key": "e_1_3_2_2_5_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/2025.findings-acl.1210"
+        },
+        {
+          "key": "e_1_3_2_2_6_1",
+          "volume-title": "ResearchCodeBench: Benchmarking LLMs on Implementing Novel Machine Learning Research Code. arXiv preprint arXiv:2506.02314",
+          "author": "Hua Tianyu",
+          "year": "2025",
+          "unstructured": "Tianyu Hua, Harper Hua, Violet Xiang, Benjamin Klieger, Sang T Truong, Weixin Liang, Fan-Yun Sun, and Nick Haber. 2025. ResearchCodeBench: Benchmarking LLMs on Implementing Novel Machine Learning Research Code. arXiv preprint arXiv:2506.02314 (2025)."
+        },
+        {
+          "key": "e_1_3_2_2_7_1",
+          "volume-title": "ROUGE: A Package for Automatic Evaluation of Summaries. In Text Summarization Branches Out",
+          "author": "Lin Chin-Yew",
+          "year": "2004",
+          "unstructured": "Chin-Yew Lin. 2004. ROUGE: A Package for Automatic Evaluation of Summaries. In Text Summarization Branches Out. Association for Computational Linguistics, Barcelona, Spain, 74-81. https://aclanthology.org/W04-1013/"
+        },
+        {
+          "key": "e_1_3_2_2_8_1",
+          "volume-title": "Llm4sr: A survey on large language models for scientific research. arXiv preprint arXiv:2501.04306",
+          "author": "Luo Ziming",
+          "year": "2025",
+          "unstructured": "Ziming Luo, Zonglin Yang, Zexin Xu, Wei Yang, and Xinya Du. 2025. Llm4sr: A survey on large language models for scientific research. arXiv preprint arXiv:2501.04306 (2025)."
+        },
+        {
+          "key": "e_1_3_2_2_9_1",
+          "volume-title": "Abhijeetsingh Meena, Aryan Prakhar, Tirth Vora, Tushar Khot, Ashish Sabharwal, and Peter Clark.",
+          "author": "Majumder Bodhisattwa Prasad",
+          "year": "2024",
+          "unstructured": "Bodhisattwa Prasad Majumder, Harshit Surana, Dhruv Agarwal, Bhavana Dalvi Mishra, Abhijeetsingh Meena, Aryan Prakhar, Tirth Vora, Tushar Khot, Ashish Sabharwal, and Peter Clark. 2024. Discoverybench: Towards data-driven discovery with large language models. arXiv preprint arXiv:2407.01725 (2024)."
+        },
+        {
+          "key": "e_1_3_2_2_10_1",
+          "doi-asserted-by": "publisher",
+          "unstructured": "B. Nguyen and D. Soós. 2026. ReplicatorBench: Benchmarking LLM Agents for Replicability in Social and Behavioral Sciences: Supplementary Artifact. doi:10.5281/zenodo.20506946",
+          "DOI": "10.5281/zenodo.20506946"
+        },
+        {
+          "key": "e_1_3_2_2_11_1",
+          "volume-title": "V18, 3",
+          "author": "Nosek Brian A",
+          "year": "2020",
+          "unstructured": "Brian A Nosek and Timothy M Errington. 2020. What is replication? PLoS biology, V18, 3 (2020), e3000691."
+        },
+        {
+          "key": "e_1_3_2_2_12_1",
+          "volume-title": "Information, Division on Engineering, Physical Sciences, Committee on Applied, Theoretical Statistics, et al.",
+          "author": "National Academies of Sciences, Medicine, Policy, Global Affairs",
+          "year": "2019",
+          "unstructured": "National Academies of Sciences, Medicine, Policy, Global Affairs, Board on Research Data, Information, Division on Engineering, Physical Sciences, Committee on Applied, Theoretical Statistics, et al., 2019. Reproducibility and replicability in science. National Academies Press."
+        },
+        {
+          "key": "e_1_3_2_2_13_1",
+          "volume-title": "Towards scientific intelligence: A survey of llm-based scientific agents. arXiv preprint arXiv:2503.24047",
+          "author": "Ren Shuo",
+          "year": "2025",
+          "unstructured": "Shuo Ren, Pu Jian, Zhenjiang Ren, Chunlin Leng, Can Xie, and Jiajun Zhang. 2025. Towards scientific intelligence: A survey of llm-based scientific agents. arXiv preprint arXiv:2503.24047 (2025)."
+        },
+        {
+          "key": "e_1_3_2_2_14_1",
+          "volume-title": "Core-bench: Fostering the credibility of published research through a computational reproducibility agent benchmark. arXiv preprint arXiv:2409.11363",
+          "author": "Siegel Zachary S",
+          "year": "2024",
+          "unstructured": "Zachary S Siegel, Sayash Kapoor, Nitya Nagdir, Benedikt Stroebl, and Arvind Narayanan. 2024. Core-bench: Fostering the credibility of published research through a computational reproducibility agent benchmark. arXiv preprint arXiv:2409.11363 (2024)."
+        },
+        {
+          "key": "e_1_3_2_2_15_1",
+          "volume-title": "Leon Maksin, Rachel Dias, Evan Mays, Benjamin Kinsella, Wyatt Thompson, et al.",
+          "author": "Starace Giulio",
+          "year": "2025",
+          "unstructured": "Giulio Starace, Oliver Jaffe, Dane Sherburn, James Aung, Jun Shern Chan, Leon Maksin, Rachel Dias, Evan Mays, Benjamin Kinsella, Wyatt Thompson, et al., 2025. PaperBench: Evaluating AI's Ability to Replicate AI Research. arXiv preprint arXiv:2504.01848 (2025)."
+        },
+        {
+          "key": "e_1_3_2_2_16_1",
+          "volume-title": "Scicode: A research coding benchmark curated by scientists. Advances in Neural Information Processing Systems, V37",
+          "author": "Tian Minyang",
+          "year": "2024",
+          "unstructured": "Minyang Tian, Luyu Gao, Shizhuo Zhang, Xinan Chen, Cunwei Fan, Xuefei Guo, Roland Haas, Pan Ji, Kittithat Krongchon, Yao Li, et al., 2024. Scicode: A research coding benchmark curated by scientists. Advances in Neural Information Processing Systems, V37 (2024), 30624-30650."
+        },
+        {
+          "key": "e_1_3_2_2_17_1",
+          "volume-title": "LLMs Love Python: A Study of LLMs' Bias for Programming Languages and Libraries. arXiv preprint arXiv:2503.17181",
+          "author": "Twist Lukas",
+          "year": "2025",
+          "unstructured": "Lukas Twist, Jie M Zhang, Mark Harman, Don Syme, Joost Noppen, and Detlef Nauck. 2025. LLMs Love Python: A Study of LLMs' Bias for Programming Languages and Libraries. arXiv preprint arXiv:2503.17181 (2025)."
+        },
+        {
+          "key": "e_1_3_2_2_18_1",
+          "volume-title": "Forty-first International Conference on Machine Learning.",
+          "author": "Wang Xingyao",
+          "year": "2024",
+          "unstructured": "Xingyao Wang, Yangyi Chen, Lifan Yuan, Yizhe Zhang, Yunzhu Li, Hao Peng, and Heng Ji. 2024. Executable code actions elicit better llm agents. In Forty-first International Conference on Machine Learning."
+        },
+        {
+          "key": "e_1_3_2_2_19_1",
+          "volume-title": "V7, 1",
+          "author": "Willroth Emily C",
+          "year": "2024",
+          "unstructured": "Emily C Willroth and Olivia E Atherton. 2024. Best laid plans: A guide to reporting preregistration deviations. Advances in Methods and Practices in Psychological Science, V7, 1 (2024), 25152459231213802."
+        },
+        {
+          "key": "e_1_3_2_2_20_1",
+          "volume-title": "Scireplicate-bench: Benchmarking llms in agent-driven algorithmic reproduction from research papers. arXiv preprint arXiv:2504.00255",
+          "author": "Xiang Yanzheng",
+          "year": "2025",
+          "unstructured": "Yanzheng Xiang, Hanqi Yan, Shuyin Ouyang, Lin Gui, and Yulan He. 2025. Scireplicate-bench: Benchmarking llms in agent-driven algorithmic reproduction from research papers. arXiv preprint arXiv:2504.00255 (2025)."
+        },
+        {
+          "key": "e_1_3_2_2_21_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Shuo Yan Ruochen Li Ziming Luo Zimu Wang Daoyang Li Liqiang Jing Kaiyu He Peilin Wu George Michalopoulos Yue Zhang et al. 2025. LMR-BENCH: Evaluating LLM Agent's Ability on Reproducing Language Modeling Research. arXiv preprint arXiv:2506.17335 (2025).",
+          "DOI": "10.18653/v1/2025.emnlp-main.314"
+        },
+        {
+          "key": "e_1_3_2_2_22_1",
+          "unstructured": "Shunyu Yao Jeffrey Zhao Dian Yu Nan Du Izhak Shafran Karthik R Narasimhan and Yuan Cao. [n.d.]. React: Synergizing reasoning and acting in language models. In The eleventh international conference on learning representations."
+        },
+        {
+          "key": "e_1_3_2_2_23_1",
+          "volume-title": "Dalya Baron, Philipp Frank, Sergio Martin-Alvarez, Nolan Koblischke, Frank J Qu, et al.",
+          "author": "Ye Christine",
+          "year": "2025",
+          "unstructured": "Christine Ye, Sihan Yuan, Suchetha Cooray, Steven Dillmann, Ian LV Roque, Dalya Baron, Philipp Frank, Sergio Martin-Alvarez, Nolan Koblischke, Frank J Qu, et al., 2025. ReplicationBench: Can AI Agents Replicate Astrophysics Research Papers? arXiv preprint arXiv:2510.24591 (2025)."
+        },
+        {
+          "key": "e_1_3_2_2_24_1",
+          "volume-title": "Bertscore: Evaluating text generation with bert. arXiv preprint arXiv:1904.09675",
+          "author": "Zhang Tianyi",
+          "year": "2019",
+          "unstructured": "Tianyi Zhang, Varsha Kishore, Felix Wu, Kilian Q Weinberger, and Yoav Artzi. 2019. Bertscore: Evaluating text generation with bert. arXiv preprint arXiv:1904.09675 (2019)."
+        },
+        {
+          "key": "e_1_3_2_2_25_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lianmin Zheng Wei-Lin Chiang Ying Sheng Siyuan Zhuang Zhanghao Wu Yonghao Zhuang Zi Lin Zhuohan Li Dacheng Li Eric Xing et al. 2023. Judging llm-as-a-judge with mt-bench and chatbot arena. Advances in neural information processing systems V36 (2023) 46595-46623.",
+          "DOI": "10.52202/075280-2020"
+        }
+      ],
+      "event": {
+        "name": "KDD '26: The 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+        "location": "Jeju Island Republic of Korea",
+        "sponsor": [
+          "SIGMOD ACM Special Interest Group on Management of Data",
+          "SIGKDD ACM Special Interest Group on Knowledge Discovery in Data"
+        ]
+      },
+      "container-title": [
+        "Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2"
+      ],
+      "original-title": [],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            7
+          ]
+        ],
+        "date-time": "2026-08-07T01:16:05Z",
+        "timestamp": 1786065365000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://dl.acm.org/doi/10.1145/3770855.3819003"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            8
+          ]
+        ]
+      },
+      "references-count": 25,
+      "alternative-id": [
+        "10.1145/3770855.3819003",
+        "10.1145/3770855"
+      ],
+      "URL": "https://doi.org/10.1145/3770855.3819003",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            8
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2026-08-08",
+          "order": 3,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "kind": "LimitsSocieties",
+    "url": "https://aclanthology.org/2026.aacl-long.144/",
+    "status": 200,
+    "bytes": 47073,
+    "sha256": "69cd9fc7414dde38d86ecc5f6d9c21c717957acc4058682666a3fdd318e616ea",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_LimitsSocieties.html",
+    "content_type": "text/html; charset=utf-8",
+    "meta": {
+      "citation_title": [
+        "The Limits of Simulated Societies: How Post-Training and Survey Fine-Tuning Erase Cross-Cultural Variance"
+      ],
+      "citation_author": [
+        "Rojin Ziaei"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 15th International Joint Conference on Natural Language Processing and the 5th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics (Volume 1: Long Papers)"
+      ],
+      "citation_publication_date": [
+        "2026/11"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.aacl-long.144.pdf"
+      ],
+      "citation_firstpage": [
+        "3152"
+      ],
+      "citation_lastpage": [
+        "3166"
+      ],
+      "citation_doi": [
+        "10.18653/2026.aacl-long.144"
+      ]
+    },
+    "abstracts": [
+      "Abstract Using large language models (LLMs) to simulate diverse human populations promises to transform computational social science. However, the accuracy of these simulations remains unclear because current evaluations prioritize predicting an average response over capturing the rich diversity of opinions within real human groups. Here, we develop a diagnostic framework measuring both accuracy and viewpoint retention across 10,000 respondent-question pairs from the World Values Survey, spanning twelve countries and six continents. By evaluating nine LLMs across four alignment paradigms (zero-shot, SFT, DPO, GRPO) against ground-truth human responses, we identify a failure mode we term consensus collapse. While training alignment improves point accuracy, we find that it compresses the range of outputs toward a single demographic stereotype. The highest-performing model (Tulu 3 70B DPO, 57.9% accuracy) retains only 50% of real human variance (σr = 0.50). We demonstrate this collapse is within the models’ underlying parameters rather than decoding procedures; temperature scaling up to T = 1.0 alters fewer than 3.7% of predictions. Furthermore, this diversity loss is inequitable, erasing significantly more variation for Global South populations like Nigeria (σr = 0.11) and Ethiopia (σr = 0.16) compared to Western democracies (σr = 0.70–0.87), with accuracy-rewarded GRPO unable to reverse this effect. While mixing an aligned model with an unaligned prior partially mitigates the collapse (reducing W1 from 0.55 to 0.52), substantial gaps remain (Nigeria recovering from σr = 0.14 to 0.47). Ultimately, we find that modern AI alignment methods trade distributional diversity for point accuracy, challenging existing assumptions for using LLMs as substitutes for human populations. Yet, by exposing the mechanics of this collapse, our work provides insight for future methods designed to value and preserve diverse human viewpoints."
+    ],
+    "links": [
+      {
+        "text": "The Limits of Simulated Societies: How Post-Training and Survey Fine-Tuning Erase Cross-Cultural Variance",
+        "href": "https://aclanthology.org/2026.aacl-long.144.pdf"
+      },
+      {
+        "text": "10.18653/2026.aacl-long.144",
+        "href": "https://doi.org/10.18653/2026.aacl-long.144"
+      },
+      {
+        "text": "https://aclanthology.org/2026.aacl-long.144.pdf",
+        "href": "https://aclanthology.org/2026.aacl-long.144.pdf"
+      },
+      {
+        "text": "PDF",
+        "href": "https://aclanthology.org/2026.aacl-long.144.pdf"
+      }
+    ]
+  },
+  {
+    "kind": "TooOpen",
+    "url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": 200,
+    "bytes": 44959,
+    "sha256": "5aaae9a4411b0d9b4646d3e08bac872721aad4c3ebae0d5e81fc73a127a39df2",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_TooOpen.html",
+    "content_type": "text/html; charset=utf-8",
+    "meta": {
+      "citation_title": [
+        "Too Open for Opinion? Embracing Open-Endedness in Large Language Models for Social Simulation"
+      ],
+      "citation_author": [
+        "Bolei Ma",
+        "Yong Cao",
+        "Indira Sen",
+        "Anna-Carolina Haensch",
+        "Frauke Kreuter",
+        "Barbara Plank",
+        "Daniel Hershcovich"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the 19th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers)"
+      ],
+      "citation_publication_date": [
+        "2026/3"
+      ],
+      "citation_pdf_url": [
+        "https://aclanthology.org/2026.eacl-long.89.pdf"
+      ],
+      "citation_firstpage": [
+        "1998"
+      ],
+      "citation_lastpage": [
+        "2016"
+      ],
+      "citation_doi": [
+        "10.18653/v1/2026.eacl-long.89"
+      ]
+    },
+    "abstracts": [
+      "Abstract Large Language Models (LLMs) are increasingly used to simulate public opinion and other social phenomena. Most current studies constrain these simulations to multiple-choice or short-answer formats for ease of scoring and comparison, but such closed designs overlook the inherently generative nature of LLMs. In this position paper, we argue that open-endedness, using free-form text that captures topics, viewpoints, and reasoning processes “in” LLMs, is essential for realistic social simulation. Drawing on decades of survey methodology research and recent advances in NLP, we argue why this open-endedness is valuable in LLM social simulations, showing how it can improve measurement and design, support exploration of unanticipated views, and reduce researcher-imposed directive bias. It also captures expressiveness and individuality, aids in pretesting, and ultimately enhances methodological utility. We call for novel practices and evaluation frameworks that leverage rather than constrain the open-ended generative diversity of LLMs, creating synergies between NLP and social science."
+    ],
+    "links": [
+      {
+        "text": "Too Open for Opinion? Embracing Open-Endedness in Large Language Models for Social Simulation",
+        "href": "https://aclanthology.org/2026.eacl-long.89.pdf"
+      },
+      {
+        "text": "10.18653/v1/2026.eacl-long.89",
+        "href": "https://doi.org/10.18653/v1/2026.eacl-long.89"
+      },
+      {
+        "text": "https://aclanthology.org/2026.eacl-long.89.pdf",
+        "href": "https://aclanthology.org/2026.eacl-long.89.pdf"
+      },
+      {
+        "text": "2026.eacl-long.89.checklist.pdf",
+        "href": "https://aclanthology.org/attachments/2026.eacl-long.89.checklist.pdf"
+      },
+      {
+        "text": "PDF",
+        "href": "https://aclanthology.org/2026.eacl-long.89.pdf"
+      },
+      {
+        "text": "Checklist",
+        "href": "https://aclanthology.org/attachments/2026.eacl-long.89.checklist.pdf"
+      }
+    ]
+  },
+  {
+    "kind": "LiveCultureBench_Crossref",
+    "url": "https://api.crossref.org/works/10.18653/v1/2026.acl-long.1247",
+    "status": 200,
+    "bytes": 2293,
+    "sha256": "aa5096953881f2d48630ab2e5db6954f6c0343f488d192b068e854c9d7d6fae9",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_LiveCultureBench_crossref.json",
+    "dates": {
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            1
+          ]
+        ],
+        "date-time": "2026-07-01T12:25:50Z",
+        "timestamp": 1782908750000
+      }
+    }
+  },
+  {
+    "kind": "ReliMap_Crossref",
+    "url": "https://api.crossref.org/works/10.18653/2026.emnlp-main.1269",
+    "status": 200,
+    "bytes": 2031,
+    "sha256": "2ff9c69cf76f7d7f94acc84cff3e2a1cf11be055733e160f47b9163db40a8d3e",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_ReliMap_crossref.json",
+    "dates": {
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            29
+          ]
+        ],
+        "date-time": "2026-10-29T16:16:22Z",
+        "timestamp": 1793290582000
+      }
+    }
+  },
+  {
+    "kind": "LimitsSocieties_Crossref",
+    "url": "https://api.crossref.org/works/10.18653/2026.aacl-long.144",
+    "status": 200,
+    "bytes": 1935,
+    "sha256": "408df32fe90eabe29c578e8b37a64bb5447bafa92b21556d138709bcef7f30f7",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_LimitsSocieties_crossref.json",
+    "dates": {
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            11,
+            9
+          ]
+        ],
+        "date-time": "2026-11-09T16:04:16Z",
+        "timestamp": 1794240256000
+      }
+    }
+  },
+  {
+    "kind": "TooOpen_Crossref",
+    "url": "https://api.crossref.org/works/10.18653/v1/2026.eacl-long.89",
+    "status": 429,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_TooOpen_crossref.json"
+  },
+  {
+    "kind": "ReplicatorBench_author_hosted_PDF",
+    "url": "https://www.cs.odu.edu/~jwu/downloads/pubs/soos-2026-kdd/soos-2026-kdd.pdf",
+    "status": 200,
+    "bytes": 791675,
+    "sha256": "e85a63db78903aa76c55580f4c47a659a7076b9aaaaf49e5f7c96803f4621fb4",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EA_ReplicatorBench_author.pdf",
+    "content_type": "application/pdf"
+  }
+]

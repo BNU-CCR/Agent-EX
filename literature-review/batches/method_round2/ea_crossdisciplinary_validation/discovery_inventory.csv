@@ -1,0 +1,18 @@
+title_or_search_label,url,decision,record_id,boundary
+SimBench: Benchmarking the Ability of Large Language Models to Simulate Human Behaviors,https://proceedings.iclr.cc/paper_files/paper/2026/hash/2fc4d6a6400addda7493b9db258c34e0-Abstract-Conference.html,selected_candidate,M174,metadata/fullabstract read
+"LiveCultureBench: a Multi-Agent, Multi-Cultural Benchmark for Large Language Models in Dynamic Social Simulations",https://aclanthology.org/2026.acl-long.1247/,selected_candidate,M175,metadata/fullabstract read
+Understanding Reliability in LLM-based Human Behavior Simulation,https://aclanthology.org/2026.emnlp-main.1269/,selected_candidate,M176,metadata/fullabstract read
+ReplicatorBench: Benchmarking LLM Agents for Replicability in Social and Behavioral Sciences,https://doi.org/10.1145/3770855.3819003,selected_candidate,M177,metadata/fullabstract read
+The Limits of Simulated Societies: How Post-Training and Survey Fine-Tuning Erase Cross-Cultural Variance,https://aclanthology.org/2026.aacl-long.144/,selected_candidate,M178,metadata/fullabstract read
+Too Open for Opinion? Embracing Open-Endedness in Large Language Models for Social Simulation,https://aclanthology.org/2026.eacl-long.89/,selected_candidate,M179,metadata/fullabstract read
+Empirical Realism,https://aclanthology.org/2026.eacl-long.51/,existing,M007,Exactworkalreadyread;no newpaper
+Position:LLMBasedSocialSimulationsRequireaBoundary,https://proceedings.mlr.press/v306/wu26co.html,existing,M039,Existingformalpositionwork
+SocialMaze,https://aclanthology.org/2026.findings-emnlp.1213/,deferred_formal_lead,,AI socialreasoning;fullabstract/identitystillpending
+Fine-TuningforSocial-MediaUserSimulation,https://aclanthology.org/2026.emnlp-main.2251/,deferred_formal_lead,,Evaluator/modelcomparison;sourcepagepending
+SMMU,https://aclanthology.org/2026.findings-emnlp.2434/,deferred_formal_lead,,Multimodalsocialunderstanding;sourcepagepending
+SAGE,https://aclanthology.org/2026.findings-acl.1905/,deferred_formal_lead,,Judge/psychologicalfidelityclaim;sourcepagepending
+MultimodalSafetyEvaluation,https://aclanthology.org/2026.acl-long.1915/,deferred_formal_lead,,SimulationAIcapability;sourcepagepending
+MASS:Memory-AugmentedSocialSimulation,https://aclanthology.org/2026.findings-acl.988/,deferred_formal_lead,,Acronymcollision:distinctfromM001Multi-AgentSocialSimulation;doNOTdedupbyMASS
+BiasCascade,https://arxiv.org/abs/2611.28854,deferred_preprint_lead,,preprint;notformal/included
+WillScalingImproveSocialSimulation,https://arxiv.org/abs/2607.02464,deferred_preprint_lead,,preprint;notformal/included
+ArtificialSocietiesBenchmark,https://arxiv.org/abs/2609.30030,deferred_preprint_lead,,preprint;notformal/included

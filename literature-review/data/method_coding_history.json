@@ -23108,5 +23108,725 @@
     "batch": "DZ-modelling-cycle-formal-version-access",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dz_modelling_cycle_version/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "统一人类行为模拟基准：摘要称20数据集，需全文核评分、人口匹配与长程过程适用边界。",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;reference_independence;target_metrics;model_data_version;method_maturity;method_evidence_level",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M174",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "仿真城镇中任务/文化规范与LLM评判器可靠性；需核独立人类参照，不把能力测试当人类社会效度。",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;reference_independence;target_metrics;model_data_version;exact_formal_first_online;method_maturity;method_evidence_level",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "个体与人口可靠性可能方向相反；需核三层定义、四任务/十一模型参照及抽样/留出。",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;reference_independence;target_metrics;model_data_version;exact_formal_first_online;method_maturity;method_evidence_level",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;validation_and_external_validity;reproducibility_and_reporting",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "研究复现助手的三阶段能力评价，包含不可复现主张；需核新资料与重用资料、过程/结果判据。",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;reference_independence;target_metrics;model_data_version;method_maturity;method_evidence_level",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "method_validation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "跨文化调查点准确与方差保持可相悖；需核训练/留出、方差定义及摘要/正文一致性。",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;reference_independence;target_metrics;model_data_version;exact_formal_first_online;method_maturity;method_evidence_level",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M178",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_type",
+    "old": "",
+    "new": "abstract_provisional_fulltext_pending",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_relevance_tier",
+    "old": "",
+    "new": "core_method",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_contribution_type",
+    "old": "",
+    "new": "measurement;validation_and_external_validity",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_maturity",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_transferability",
+    "old": "",
+    "new": "pending_fulltext",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_evidence_level",
+    "old": "",
+    "new": "unclear",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_relevance_rationale",
+    "old": "",
+    "new": "开放式输出的测量/方法观点；需核实证演示与立场性主张，不把自由文本自动当真实性改善。",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_coding_status",
+    "old": "",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_pending_fields",
+    "old": "",
+    "new": "fulltext;reference_independence;target_metrics;model_data_version;exact_formal_first_online;method_maturity;method_evidence_level",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_evidence_location",
+    "old": "",
+    "new": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_coding_source",
+    "old": "",
+    "new": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_last_checked",
+    "old": "",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EA-crossdisciplinary-validation-six-abstracts",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ea_crossdisciplinary_validation/results.json"
   }
 ]

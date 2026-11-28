@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-28",
+  "research_lower_bound": "2022-01-01",
+  "supplement_window": "2025–2026 targeted public-web replenishment, not replacement of full2022+search",
+  "queries_exact": [
+    "site.aclanthology.org 2026 social simulation validation reproducibility large language models benchmark",
+    "site:proceedings.neurips.cc 2025 \"social simulation\" validation",
+    "site:openreview.net 2026 \"social simulation\" benchmark",
+    "site:aclanthology.org 2025 \"social simulation\" \"calibration\""
+  ],
+  "query_error": "First literal query has site.aclanthology.org rather than site:aclanthology.org; results consequently not domain-bounded. Error preserved, primary pages independently verified.",
+  "selection": "Six distinct method-evaluation/workflow/measurement candidates selected for explicit validation-reference relevance and official formal provenance; other discovered leads retained, not excluded; no database recall claim",
+  "screening": "title/full abstract only; no maturity/evidence promotion before fulltext",
+  "date_rule": "Exact primary publication date where available; ACL month only kept partial, created not substituted"
+}

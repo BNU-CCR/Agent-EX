@@ -1,0 +1,28 @@
+{
+  "base": "c89cbd0",
+  "original230unchanged": true,
+  "new_candidates": 6,
+  "acquisition_hashes": 11,
+  "discovery_counts": {
+    "selected_candidate": 6,
+    "existing": 2,
+    "deferred_formal_lead": 6,
+    "deferred_preprint_lead": 3
+  },
+  "old_matrix_tracker_journal_candidates_bibs_unchanged": true,
+  "conference_sources_original_rows": 4,
+  "conference_sources_current_rows": 10,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    218,
+    1682,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "date_pending": 31,
+  "visual": "current summary rendered and inspected",
+  "limitations": "Abstract screening only;source distinction/date precision preserved;not database recall/policy verification"
+}
