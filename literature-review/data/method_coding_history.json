@@ -25088,5 +25088,125 @@
     "batch": "FB",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_coding_source",
+    "old": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_release_dates_CK.md;registry_date_fields_audit",
+    "new": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_release_dates_CK.md;registry_date_fields_audit;reports/conference_qualification_FC.md",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M020",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_date;publication_artifact_match;judge_human_validation;exact_model_digest;code_reexecution",
+    "new": "precise_first_online_date_optional_metadata;publication_artifact_match;judge_human_validation;exact_model_digest;code_reexecution",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_source",
+    "old": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation",
+    "new": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_qualification_FC.md",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_pending_fields",
+    "old": "formal_version_text;first_online_date;formal_DOI;heldout_validation;full_prompt_text;code_reexecution",
+    "new": "formal_version_text_comparison;heldout_validation;full_prompt_text;code_reexecution",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M036",
+    "field": "method_coding_source",
+    "old": "reading-cards/M036.md;data/source_acquisition_manifest_AM.json",
+    "new": "reading-cards/M036.md;data/source_acquisition_manifest_AM.json;reports/conference_qualification_FC.md",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M036",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M036",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;200_222_denominator;author_order;complete_artifact_run_mapping;judge_bias;dependency_statistics;external_ecological_validity",
+    "new": "precise_first_online_day_optional_metadata;200_222_denominator;author_order;complete_artifact_run_mapping;judge_bias;dependency_statistics;external_ecological_validity",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_coding_source",
+    "old": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json;data/trust_artifact_audit_AP.json",
+    "new": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json;data/trust_artifact_audit_AP.json;reports/conference_qualification_FC.md",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M037",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_day;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;GPT4_snapshot_seeds;historical_artifact_config_run_mapping;VRR_and_parser_effect;external_transfer",
+    "new": "precise_first_online_day_optional_metadata;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;GPT4_snapshot_seeds;historical_artifact_config_run_mapping;VRR_and_parser_effect;external_transfer",
+    "date": "2026-11-28",
+    "batch": "FC",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fc_conference_qualification/results.json"
   }
 ]

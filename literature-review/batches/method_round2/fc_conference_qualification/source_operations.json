@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "FC-01",
+    "platform": "source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "Task3.2/ER/FB andfourpriorcards;archivebeforeGitbytes",
+    "source_url": "reading-cards/M020.md;reading-cards/M021.md;reading-cards/M036.md;reading-cards/M037.md",
+    "status": "reviewed",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  },
+  {
+    "search_id": "FC-02",
+    "platform": "official_ICLR",
+    "search_date": "2026-11-28",
+    "query_exact": "Officialpage/Bibtexyear2024/Conference/PDFbinding;webBibtexunsupportedbutstatic200",
+    "source_url": "https://proceedings.iclr.cc/paper_files/paper/3823-/bibtex",
+    "status": "200_yearqualified",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  },
+  {
+    "search_id": "FC-03",
+    "platform": "official_NeurIPS",
+    "search_date": "2026-11-28",
+    "query_exact": "Officialpage/Bibtexyear2024vol37/MainConferenceTrack/DOI/Curran",
+    "source_url": "https://proceedings.neurips.cc/paper_files/paper/23259-/bibtex",
+    "status": "200_yearqualified",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  },
+  {
+    "search_id": "FC-04",
+    "platform": "official_AAMAS",
+    "search_date": "2026-11-28",
+    "query_exact": "IFAAMAS2026publishedproceedings/TOCanchorR/page1518;DOItitleauthorsregistry200withoutdates;Datacite404notinvalidDOI",
+    "source_url": "https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm",
+    "status": "200_yearqualified",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  },
+  {
+    "search_id": "FC-05",
+    "platform": "institutional_formal_pdf",
+    "search_date": "2026-11-28",
+    "query_exact": "Polimirecord/bound17pPDF200322561bytes;firstpageICWSM2026/p578copyright/identityreadandvisual;notwholebody",
+    "source_url": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+    "status": "acquired_identityonly",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  },
+  {
+    "search_id": "FC-06",
+    "platform": "publisher_registry",
+    "search_date": "2026-11-28",
+    "query_exact": "ExacttitlequeryandDOI10.1609/icwsm.v20i1.42655;authors/vol20/578-594/onlinedateMay25match",
+    "source_url": "https://api.crossref.org/works/10.1609/icwsm.v20i1.42655",
+    "status": "200_date_DOIverified",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  },
+  {
+    "search_id": "FC-07",
+    "platform": "publisher_access",
+    "search_date": "2026-11-28",
+    "query_exact": "Filename61296derivedcandidateendpointnotverifiedtarget/520;correctregistered42655also520;notusedtoinferabsence",
+    "source_url": "https://ojs.aaai.org/index.php/ICWSM/article/view/42655",
+    "status": "520_formal_source_available_institution",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  },
+  {
+    "search_id": "FC-08",
+    "platform": "qualification",
+    "search_date": "2026-11-28",
+    "query_exact": "4datequalified/3included;M021candidatependingnewformalbodycomparison;grades/scopesretained",
+    "source_url": "reports/conference_qualification_FC.md",
+    "status": "scoped_qualification",
+    "notes": "Groupedsourceoperation;notquerycounts;publicationyearnotmeetingdate"
+  }
+]

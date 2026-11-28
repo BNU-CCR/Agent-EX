@@ -1,0 +1,124 @@
+[
+  {
+    "record_id": "M036",
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/b3075b88e583a0e98d8b24338a613060-Abstract-Conference.html",
+    "final_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/b3075b88e583a0e98d8b24338a613060-Abstract-Conference.html",
+    "status": 200,
+    "bytes": 9964,
+    "sha256": "0116fe13bb8cbaace7755cf637d76b5ab466790fd45559e125ee79a019a066c8",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M036.response"
+  },
+  {
+    "record_id": "M037",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/1cb57fcf7ff3f6d37eebae5becc9ea6d-Abstract-Conference.html",
+    "final_url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/1cb57fcf7ff3f6d37eebae5becc9ea6d-Abstract-Conference.html",
+    "status": 200,
+    "bytes": 10336,
+    "sha256": "13af1bdb5c437e1bf2fbe8d7f7cb909f43f8ca938a1aa48bd6bd6f527e20dc9a",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M037.response"
+  },
+  {
+    "record_id": "M020",
+    "url": "https://ifaamas.org/Proceedings/aamas2026/",
+    "final_url": "https://ifaamas.org/Proceedings/aamas2026/",
+    "status": 200,
+    "bytes": 4116,
+    "sha256": "c4958c60225a06a3681becf8425fcb8c2a5ade57ed706f99b3000b40e44eeb92",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M020.response"
+  },
+  {
+    "record_id": "M021",
+    "url": "https://re.public.polimi.it/handle/11311/1317866",
+    "final_url": "https://re.public.polimi.it/handle/11311/1317866",
+    "status": 200,
+    "bytes": 50873,
+    "sha256": "0fe270019c546eee20e221c363fe6202c82bfd35ef7a89dc9494781e26926fe3",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M021.response"
+  },
+  {
+    "name": "M036_bib",
+    "url": "https://proceedings.iclr.cc/paper_files/paper/3823-/bibtex",
+    "final_url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/b3075b88e583a0e98d8b24338a613060-Bibtex-Conference.bib",
+    "status": 200,
+    "bytes": 668,
+    "sha256": "30ffb3278cc573db6e1f1bf3209f496d264dc1180755977c992d946868a65cc7",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M036_bib.response"
+  },
+  {
+    "name": "M037_bib",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/23259-/bibtex",
+    "final_url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/1cb57fcf7ff3f6d37eebae5becc9ea6d-Bibtex-Conference.bib",
+    "status": 200,
+    "bytes": 775,
+    "sha256": "9244399e602477bdf274ccab7ffb3018340255463511e3025bb7a704a9d397e4",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M037_bib.response"
+  },
+  {
+    "name": "M020_toc",
+    "url": "https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm",
+    "final_url": "https://ifaamas.org/Proceedings/aamas2026/forms/contents.htm",
+    "status": 200,
+    "bytes": 488548,
+    "sha256": "ce2bc7fc5da340930343901506a9ce37c0334d4068f07546431c9deee3f13de9",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M020_toc.response"
+  },
+  {
+    "name": "M021_pdf",
+    "url": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+    "final_url": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+    "status": 200,
+    "bytes": 322561,
+    "sha256": "7ed1e905e9d153231805c41e1498fdfef750eb7e47c3e95ac06c55a6dbed27df",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M021_pdf.response"
+  },
+  {
+    "name": "M021_publisher",
+    "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/61296",
+    "final_url": "https://ojs.aaai.org/index.php/ICWSM/article/view/61296",
+    "status": 520,
+    "bytes": 7327,
+    "sha256": "fe8acde8d7518215ad368afb2694b46c96d0838ccedf447db9679e48e2a9e522",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M021_publisher.response"
+  },
+  {
+    "name": "M020_registry",
+    "url": "https://api.datacite.org/dois/10.65109/vavc8140",
+    "final_url": "https://api.datacite.org/dois/10.65109/vavc8140",
+    "status": 404,
+    "bytes": 87,
+    "sha256": "30b443bb0e590a597609b71b83a2424d39b6f050b18d234c6543cdd1f8791b6b",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M020_registry.response"
+  },
+  {
+    "name": "M021_registry",
+    "url": "https://api.crossref.org/works/10.1609/icwsm.v20i1.42655",
+    "final_url": "https://api.crossref.org/works/10.1609/icwsm.v20i1.42655",
+    "status": 200,
+    "bytes": 4077,
+    "sha256": "ee4c954852e85c230b52ea8fd15aa932126d7204aa46f988bdbb35360fe0f36e",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M021_registry.response"
+  },
+  {
+    "name": "M021_correct_publisher",
+    "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/42655",
+    "final_url": "https://ojs.aaai.org/index.php/ICWSM/article/view/42655",
+    "status": 520,
+    "bytes": 7329,
+    "sha256": "dae443a2318f97016dc420424be9a76a48df95a1cad44976356e3c48dbee50f9",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M021_correct_publisher.response"
+  },
+  {
+    "url": "https://api.crossref.org/works?query.title=Simulating%20Online%20Social%20Media%20Conversations%20on%20Controversial%20Topics%20Using%20AI%20Agents%20Calibrated%20on%20Real-World%20Data&rows=3",
+    "status": 200,
+    "bytes": 9952,
+    "sha256": "063801e8ea894566fc5c43568181cb74288b6938fb8f954e92f39693f12f0b65",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M021_crossref_search.response"
+  },
+  {
+    "url": "https://api.crossref.org/works/10.65109/VAVC8140",
+    "status": 200,
+    "bytes": 1933,
+    "sha256": "182d067f905e7f3ac615bd4b2301e000cf39a55065aa94a93249094b9f8446f2",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M020_crossref.response"
+  }
+]

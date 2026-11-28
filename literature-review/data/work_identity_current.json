@@ -1,10 +1,10 @@
 {
   "records": 238,
   "coded_work_id_groups": 238,
-  "included_records": 69,
-  "included_work_id_groups": 69,
+  "included_records": 72,
+  "included_work_id_groups": 72,
   "included_journal_records": 50,
-  "included_conference_records": 19,
+  "included_conference_records": 22,
   "journal_sources": 30,
   "duplicate_dois": [],
   "blank_work_ids": 0,

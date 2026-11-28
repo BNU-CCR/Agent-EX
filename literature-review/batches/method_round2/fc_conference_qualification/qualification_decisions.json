@@ -1,0 +1,22 @@
+{
+  "M020": {
+    "year": "2026",
+    "formal_source": "IFAAMAS2026 published proceedings/ISBN979-8-4007-2317-9/TOC researchanchorR/page1518;DOItitle/authorsCrossrefmatchbutregistrydateabsent",
+    "include": true
+  },
+  "M021": {
+    "year": "2026-05-25",
+    "formal_source": "Crossref10.1609/icwsm.v20i1.42655 published-online;Polimi17pageformal-layout ICWSM2026pp578-594 identity",
+    "include": false
+  },
+  "M036": {
+    "year": "2024",
+    "formal_source": "OfficialICLRproceedingsConference/Bibtexyear2024 volume2024 andboundformalPDF",
+    "include": true
+  },
+  "M037": {
+    "year": "2024",
+    "formal_source": "OfficialNeurIPSvol37/MainConferenceTrack/Bibtexyear2024/publisherCurran/DOI",
+    "include": true
+  }
+}

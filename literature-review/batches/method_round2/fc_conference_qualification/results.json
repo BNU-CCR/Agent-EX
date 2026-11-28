@@ -1,0 +1,63 @@
+{
+  "batch_id": "FC",
+  "date": "2026-11-28",
+  "expected_master_sha256": "26d62d66ef7e45f8f8f5f36ec5147e5f884b0d985663cc7974a39a45824db2bc",
+  "updates": [
+    {
+      "record_id": "M020",
+      "online_first_date": "2026",
+      "date_eligibility": "confirmed",
+      "date_basis": "FC IFAAMAS2026 published proceedings/ISBN979-8-4007-2317-9/TOC researchanchorR/page1518;DOItitle/authorsCrossrefmatchbutregistrydateabsent;approvedTask3.2formalpublicationprecisionfallback;formalpublicationyearknown_exactonlinedayunknown;notconferenceeventdate",
+      "search_id": "S-M2-J-M020;FC-04;FC-08",
+      "method_coding_source": "reading-cards/M020.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_release_dates_CK.md;registry_date_fields_audit;reports/conference_qualification_FC.md",
+      "method_last_checked": "2026-11-28",
+      "notes": "FormalPDF read; static7file audit pinned93256122ecaa76943b0702cc6c6317765398b397 (Oct1 after Mayconference), not established paper runartifact. Judgeandoneagent both llama3:latest; runner default nonrepetition lexical; evidence first10charsmatch; noexecution. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | CK:Crossrefcreated/deposited24May2026notpublicationdates;published/online/printfieldsabsent;DataCite404;officialIFAAMASindexyearonly;candidate/date_pendingretained | FC:formalqualificationconfirmed;officialpublicationyearfallbackverified;no exactonline dayinvented;includedwithpreviousformalreadingscope;methodgradesunchanged",
+      "screening_status": "included",
+      "reason": "官方正式论文集身份/出版年及已有正式正文核查成立，按原3.2回退纳入；各卡原方法/版本/效度限制保持。",
+      "method_pending_fields": "precise_first_online_date_optional_metadata;publication_artifact_match;judge_human_validation;exact_model_digest;code_reexecution"
+    },
+    {
+      "record_id": "M021",
+      "online_first_date": "2026-05-25",
+      "date_eligibility": "confirmed",
+      "date_basis": "FC Crossref10.1609/icwsm.v20i1.42655 published-online;Polimi17pageformal-layout ICWSM2026pp578-594 identity;approvedTask3.2formalpublicationprecisionfallback;exactregisteredonlinedate_notinstitutionJan1",
+      "search_id": "S-M2-J-M021;FC-06;FC-08",
+      "method_coding_source": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_qualification_FC.md",
+      "method_last_checked": "2026-11-28",
+      "notes": "Actual authorv2 read; formalPDF403 and exactformaldate/DOIpending. HTML prompt bodies missing despite headings. Empiricalcomparison is not claimed validationpass; no rerun. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | FC:formalqualificationconfirmed;newformalPDF17pages/322561bytesacquired_identityfirstpageonly;previouscardauthorv2;maintextcomparisonnextFD;notnewfullread",
+      "doi": "10.1609/icwsm.v20i1.42655",
+      "metadata_evidence_url": "https://re.public.polimi.it/handle/11311/1317866 | https://www.icwsm.org/2026/program.html | https://api.crossref.org/works/10.1609/icwsm.v20i1.42655",
+      "fulltext_url": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+      "related_versions": "arXiv:2509.18985 (author preprint); formal version relationship not text-compared | FC:formalICWSM20(1)2026pp578-594 DOIverified;institution17pPDFacquired;notyetbodycomparedtoauthorv2",
+      "method_pending_fields": "formal_version_text_comparison;heldout_validation;full_prompt_text;code_reexecution",
+      "supplement_status": "partial_appendix_checked_prompts_missing_in_HTML;FCformal17pPDFacquired_identityonly_notmainreading"
+    },
+    {
+      "record_id": "M036",
+      "online_first_date": "2024",
+      "date_eligibility": "confirmed",
+      "date_basis": "FC OfficialICLRproceedingsConference/Bibtexyear2024 volume2024 andboundformalPDF;approvedTask3.2formalpublicationprecisionfallback;formalpublicationyearknown_exactonlinedayunknown;notconferenceeventdate",
+      "search_id": "S-M2-AM-Q1;S-M2-AM-Q2;S-M2-AM-Q3;S-M2-AM-Q4;S-M2-AM-GUIDE;S-M2-AM-CFP;S-M2-AM-FORMAL;S-M2-AM-REPRO;S-M2-AM-DATES;S-M2-AM-PDF;S-M2-AM-BIB;S-M2-AM-LENGTH;S-M2-AM-AI;S-M2-AM-READ;FC-02;FC-08",
+      "method_coding_source": "reading-cards/M036.md;data/source_acquisition_manifest_AM.json;reports/conference_qualification_FC.md",
+      "method_last_checked": "2026-11-28",
+      "notes": "PDFauthororderQi/Yudiffersofficialabstract; retainedPDForder. No rerun; firstformaldatepending. | FC:formalqualificationconfirmed;officialpublicationyearfallbackverified;no exactonline dayinvented;includedwithpreviousformalreadingscope;methodgradesunchanged",
+      "screening_status": "included",
+      "reason": "官方正式论文集身份/出版年及已有正式正文核查成立，按原3.2回退纳入；各卡原方法/版本/效度限制保持。",
+      "method_pending_fields": "precise_first_online_day_optional_metadata;200_222_denominator;author_order;complete_artifact_run_mapping;judge_bias;dependency_statistics;external_ecological_validity"
+    },
+    {
+      "record_id": "M037",
+      "online_first_date": "2024",
+      "date_eligibility": "confirmed",
+      "date_basis": "FC OfficialNeurIPSvol37/MainConferenceTrack/Bibtexyear2024/publisherCurran/DOI;approvedTask3.2formalpublicationprecisionfallback;formalpublicationyearknown_exactonlinedayunknown;notconferenceeventdate",
+      "search_id": "S-M2-AN-Q4;S-M2-AN-FORMAL;S-M2-AO-PDF;S-M2-AO-READ;S-M2-AO-VISUAL;S-M2-AP-TREE;S-M2-AP-LOCAL;FC-03;FC-08",
+      "method_coding_source": "reading-cards/M037.md;data/source_acquisition_manifest_AO.json;data/trust_artifact_audit_AP.json;reports/conference_qualification_FC.md",
+      "method_last_checked": "2026-11-28",
+      "notes": "ANabstracthistoryretained;AOformalPDFfocusedread;no newhumanrecruitment;no code/modelrun;dategateunchanged. | APfixeda3f14f0d/13filesblobverified;2026commitnotprovenformalrun;53persona/32pairedroles;code_resultmappingunresolved. | FC:formalqualificationconfirmed;officialpublicationyearfallbackverified;no exactonline dayinvented;includedwithpreviousformalreadingscope;methodgradesunchanged",
+      "screening_status": "included",
+      "reason": "官方正式论文集身份/出版年及已有正式正文核查成立，按原3.2回退纳入；各卡原方法/版本/效度限制保持。",
+      "method_pending_fields": "precise_first_online_day_optional_metadata;historical_data_digitization;elicitation_comparability;effect_equivalence_and_dependence;persona_generation;GPT4_snapshot_seeds;historical_artifact_config_run_mapping;VRR_and_parser_effect;external_transfer"
+    }
+  ],
+  "new_records": []
+}

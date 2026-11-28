@@ -1,0 +1,33 @@
+{
+  "batch": "FC",
+  "checks": "passed",
+  "base": "6234eb8",
+  "master_changed": [
+    "M020",
+    "M021",
+    "M036",
+    "M037"
+  ],
+  "date_pending": 17,
+  "included": 72,
+  "cards": "4qualificationnotes/83others unchangednormalizedtext;fouroldGitbytesarchived",
+  "matrix252": "unchanged",
+  "M021": "newDOI/date/formalPDFidentityonly;candidate;readingscopepriorauthorv2",
+  "methodgrades": "unchanged",
+  "conference_sources": 15,
+  "formal_bib": 72,
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    253,
+    56,
+    1856,
+    16,
+    42,
+    31
+  ],
+  "cover_B7": 72,
+  "limits": "No new mainbodyreading/experiment;no conferenceeventdate substitution"
+}
