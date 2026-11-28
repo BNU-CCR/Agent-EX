@@ -1,0 +1,15 @@
+{
+  "batch_id": "DZ-modelling-cycle-formal-version-access",
+  "date": "2026-11-28",
+  "expected_master_sha256": "3fccf7efc17b6c9fccb4f66421bde0f0081fd79b5e221434f29be9ba352dde67",
+  "updates": [
+    {
+      "record_id": "M044",
+      "metadata_evidence_url": "https://api.crossref.org/works/10.1007/978-3-032-31712-4_43;https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43;https://essa.eu.org/sig/sig-llm4abm-large-language-models-for-agent-based-modelling/;https://portal.findresearcher.sdu.dk/en/publications/large-language-models-foragent-based-modelling-current-andpossibl/",
+      "method_last_checked": "2026-11-28",
+      "method_coding_source": "reading-cards/M044.md;reports/modelling_cycle_roles.md;reports/modelling_cycle_version_DZ.md",
+      "notes": "BEformalPDFHTTP200isHTMLsubscriptionpreview;v1PDFsuccess18pages. DirectFirstOnlineJuly30verified. RLRsingleScopusEnglish/implementedABMfilter;20/22implementationnotfieldsuccess;noqueryrerun. | DZ publisher preview reconfirmed30July2026/601–619;2Nottinghamrepositoryentry403;SDUmetadataonly;arxivonlyv1;formal-fulltext/version-equivalence stillpending;no status/evidence upgrade."
+    }
+  ],
+  "new_records": []
+}

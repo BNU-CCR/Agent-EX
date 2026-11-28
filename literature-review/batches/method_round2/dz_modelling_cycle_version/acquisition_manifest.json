@@ -1,0 +1,55 @@
+[
+  {
+    "kind": "publisher",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43",
+    "final_url": "https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43",
+    "status": 200,
+    "bytes": 369394,
+    "sha256": "d6679478593d10fea2e9d96d7f0e5603856db54ac0397b7767f01c78b38703a8",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DZ_M044_publisher.html",
+    "content_type": "text/html; charset=utf-8",
+    "discovered_links": []
+  },
+  {
+    "kind": "nottingham68533314",
+    "url": "https://nottingham-repository.worktribe.com/index.php/output/68533314/large-language-models-for-agent-based-modelling-current-and-possible-uses-across-the-modelling-cycle",
+    "final_url": "https://nottingham-repository.worktribe.com/index.php/output/68533314/large-language-models-for-agent-based-modelling-current-and-possible-uses-across-the-modelling-cycle",
+    "status": 403,
+    "bytes": 6049,
+    "sha256": "4e80abc2828d28b86fec6348d75106e94f21e096c8cd51d2185dbf89d4d6654c",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DZ_M044_nottingham68533314.html",
+    "content_type": "text/html; charset=UTF-8",
+    "discovered_links": []
+  },
+  {
+    "kind": "nottingham70037143",
+    "url": "https://nottingham-repository.worktribe.com/index.php/output/70037143/large-language-models-for-agent-based-modelling-current-and-possible-uses-across-the-modelling-cycle",
+    "final_url": "https://nottingham-repository.worktribe.com/index.php/output/70037143/large-language-models-for-agent-based-modelling-current-and-possible-uses-across-the-modelling-cycle",
+    "status": 403,
+    "bytes": 6049,
+    "sha256": "c3b6151fc36eabff617ab8fced828c6891f5c1788e48942b79d4c77a058c6724",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DZ_M044_nottingham70037143.html",
+    "content_type": "text/html; charset=UTF-8",
+    "discovered_links": []
+  },
+  {
+    "kind": "sdu",
+    "url": "https://portal.findresearcher.sdu.dk/en/publications/large-language-models-foragent-based-modelling-current-andpossibl/",
+    "final_url": "https://portal.findresearcher.sdu.dk/en/publications/large-language-models-foragent-based-modelling-current-andpossibl/",
+    "status": 200,
+    "bytes": 60630,
+    "sha256": "5b42784c5e1d66df462457a0edc8a2b281eea7ea33105525ece90d20d30ab032",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DZ_M044_sdu.html",
+    "content_type": "text/html;charset=UTF-8",
+    "discovered_links": []
+  },
+  {
+    "kind": "arxiv_version_history",
+    "url": "https://arxiv.org/abs/2507.05723",
+    "status": 200,
+    "bytes": 44082,
+    "sha256": "6e1cd201ae5d83bb1e6e20e64d736f7227cff46f0192172fdcc021c4958cc073",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DZ_M044_arxiv.html",
+    "content_type": "text/html; charset=utf-8"
+  }
+]

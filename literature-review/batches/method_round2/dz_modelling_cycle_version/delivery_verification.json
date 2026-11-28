@@ -1,0 +1,16 @@
+{
+  "base": "311778c",
+  "only_master_record_changed": "M044",
+  "status_reading_date_maturity_unchanged": true,
+  "source_hashes": 5,
+  "matrix_tracker_bibs_unchanged": true,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    218,
+    1669,
+    42
+  ],
+  "limitations": "No formal fulltext acquired or version comparison; current counts/layout reuse DX visual; no whole-field coverage claim"
+}

@@ -23088,5 +23088,25 @@
     "batch": "DX-reversal-learning-identifiability",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dx_reversal_learning/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DZ-modelling-cycle-formal-version-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dz_modelling_cycle_version/results.json"
+  },
+  {
+    "record_id": "M044",
+    "field": "method_coding_source",
+    "old": "reading-cards/M044.md;reports/modelling_cycle_roles.md",
+    "new": "reading-cards/M044.md;reports/modelling_cycle_roles.md;reports/modelling_cycle_version_DZ.md",
+    "date": "2026-11-28",
+    "batch": "DZ-modelling-cycle-formal-version-access",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dz_modelling_cycle_version/results.json"
   }
 ]

@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "DZ-01",
+    "platform": "public_primary_source_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "ExactDOI/title search for institutional formal chapter copies",
+    "source_url": "https://doi.org/10.1007/978-3-032-31712-4_43",
+    "status": "two_repository_entries_discovered",
+    "notes": "Grouped source operations; no fulltext acquisition/reading-count upgrade or experiment. Search/HTTPaccess distinct; no bypass."
+  },
+  {
+    "search_id": "DZ-02",
+    "platform": "publisher_metadata_recheck",
+    "search_date": "2026-11-28",
+    "query_exact": "Current first-online30July2026/pages601\u2013619 and subscription-preview layer",
+    "source_url": "https://link.springer.com/chapter/10.1007/978-3-032-31712-4_43",
+    "status": "200_preview_not_fulltext",
+    "notes": "Grouped source operations; no fulltext acquisition/reading-count upgrade or experiment. Search/HTTPaccess distinct; no bypass."
+  },
+  {
+    "search_id": "DZ-03",
+    "platform": "institutional_repository_access",
+    "search_date": "2026-11-28",
+    "query_exact": "Two Nottingham repository pages web/static both403;notfulltext",
+    "source_url": "https://nottingham-repository.worktribe.com/index.php/output/68533314/large-language-models-for-agent-based-modelling-current-and-possible-uses-across-the-modelling-cycle",
+    "status": "403_two_entries",
+    "notes": "Grouped source operations; no fulltext acquisition/reading-count upgrade or experiment. Search/HTTPaccess distinct; no bypass."
+  },
+  {
+    "search_id": "DZ-04",
+    "platform": "institutional_metadata_check",
+    "search_date": "2026-11-28",
+    "query_exact": "SDU confirms chapter601\u2013619/SSC2025meeting/2026publication;DocumentsLinksDOIonly",
+    "source_url": "https://portal.findresearcher.sdu.dk/en/publications/large-language-models-foragent-based-modelling-current-andpossibl/",
+    "status": "200_metadata_only",
+    "notes": "Grouped source operations; no fulltext acquisition/reading-count upgrade or experiment. Search/HTTPaccess distinct; no bypass."
+  },
+  {
+    "search_id": "DZ-05",
+    "platform": "author_version_history",
+    "search_date": "2026-11-28",
+    "query_exact": "arxiv stillonlyv1July8_2025;relatedformalDOI notfulltext-equivalenceproof",
+    "source_url": "https://arxiv.org/abs/2507.05723",
+    "status": "200_only_v1",
+    "notes": "Grouped source operations; no fulltext acquisition/reading-count upgrade or experiment. Search/HTTPaccess distinct; no bypass."
+  },
+  {
+    "search_id": "DZ-06",
+    "platform": "local_boundary_reconciliation",
+    "search_date": "2026-11-28",
+    "query_exact": "Preserve candidate/author-v1 reading and maturity;record formal-text gap",
+    "source_url": "literature-review/reports/modelling_cycle_version_DZ.md",
+    "status": "local_evidence_update",
+    "notes": "Grouped source operations; no fulltext acquisition/reading-count upgrade or experiment. Search/HTTPaccess distinct; no bypass."
+  }
+]
