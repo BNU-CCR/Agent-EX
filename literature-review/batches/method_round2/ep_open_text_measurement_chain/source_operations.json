@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "EP-01",
+    "platform": "fixed_evidence_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Eightfixedsources;openinput-generation-coding-aggregation-reference;Q3/two-trackrewritten",
+    "source_url": "literature-review/batches/method_round2/ep_open_text_measurement_chain/source_reuse.json",
+    "status": "local_synthesis",
+    "notes": "Groupedreuse;no newpaper/card/unit/grade/policy/experiment"
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "checked": "2026-11-28",
+  "sources": [
+    {
+      "path": "reading-cards/M179.md",
+      "ref": "613f543",
+      "bytes": 6047,
+      "sha256": "ef97e598bc51fdc52341224dccf4d8264ed248686c4523bfebc7706029ce8620"
+    },
+    {
+      "path": "reading-cards/M180.md",
+      "ref": "613f543",
+      "bytes": 7415,
+      "sha256": "adbf5d6be1143c0fa6729492e2986c5bd831ee77aebbc709d0462fbec6b646be"
+    },
+    {
+      "path": "reports/open_ended_position_EM.md",
+      "ref": "613f543",
+      "bytes": 2360,
+      "sha256": "03647ef85ad406e5de9befc8ce9e6fe3ae0adbbccba582ef57d548fd92f19a5e"
+    },
+    {
+      "path": "reports/german_open_opinion_EN.md",
+      "ref": "613f543",
+      "bytes": 2599,
+      "sha256": "1093fc0e3445ee009f1359c189b95d9f12596352ad471f9a09ce1141debfc8e9"
+    },
+    {
+      "path": "reports/german_fixed_code_EO.md",
+      "ref": "613f543",
+      "bytes": 5407,
+      "sha256": "744633a89f38258543145881d0f9018549a754511f826b75f4e62b477e3a0262"
+    },
+    {
+      "path": "data/german_code_crosswalk_EO.csv",
+      "ref": "613f543",
+      "bytes": 1952,
+      "sha256": "4aab9c65663ecd3709f3751ec41e21974197f3c59b100dee601f39f9ba138141"
+    },
+    {
+      "path": "batches/method_round2/eo_german_fixed_code/numeric_checks.json",
+      "ref": "613f543",
+      "bytes": 4611,
+      "sha256": "817a88eb0177d04fa6f7def866144fe0c48141fd1ed6212fad50a5f03a83fa81"
+    },
+    {
+      "path": "batches/method_round2/eo_german_fixed_code/files_manifest.json",
+      "ref": "613f543",
+      "bytes": 5613,
+      "sha256": "9618b7f3353ab28a411a49efb0c9f23dea9b65ce6a32b9a2e71ba2ef8aca60bd"
+    }
+  ],
+  "scope": "Existingfixedsourcesonly;no newweb/code/model/policyrefresh",
+  "before_reports": [
+    {
+      "path": "reports/methods_review_current_synthesis.md",
+      "ref": "613f543",
+      "sha256": "93eb0fb690344cc210687e00cf1e3890c1b71df5491b4dc0d973ace4f4af036f"
+    },
+    {
+      "path": "reports/two_track_submission_strategy.md",
+      "ref": "613f543",
+      "sha256": "4ede7578e8a7247a38e8f3d0c0a08fb5aa0a4ad3da10e9177eb2ca5b8f5f6495"
+    }
+  ]
+}

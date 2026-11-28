@@ -1,0 +1,22 @@
+{
+  "base": "613f543",
+  "source_hashes": 8,
+  "master_matrix_cards_venues_conferences_unchanged": true,
+  "chain_rows": 5,
+  "substantive_Q3_two_track_rewrite": true,
+  "records": 237,
+  "cards": 87,
+  "units": 252,
+  "formal_included": 60,
+  "workbook_rows": [
+    238,
+    55,
+    31,
+    253,
+    1760,
+    12,
+    42
+  ],
+  "status": "passed",
+  "limits": "Existingevidence_synthesis_no_newexperiment_or_policy;coverlayout/countsunchangedfromENvisual"
+}
