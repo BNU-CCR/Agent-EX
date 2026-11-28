@@ -189,3 +189,5 @@
 - [JASSS官方目录核查](reports/jasss_inventory_CU.md)：20期/178条身份对账、空目录页边界与四个新增摘要候选。
 
 - [GPLab评价证据分层](reports/gplab_evaluation_CV.md)：正式全文/新卡，初始化、LLMjudge、提示配置与SD边界。
+
+- [参数可识别性与校准](reports/identifiability_CW.md)：M053合成真值/SBC/回拟合、观测与架构共同变化。

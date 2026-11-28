@@ -1,0 +1,53 @@
+[
+  {
+    "key": "bounded_training",
+    "value": 320000,
+    "source": "§4.26",
+    "basis": "64*100*50 reported and arithmetic checked"
+  },
+  {
+    "key": "bounded_diagnostics",
+    "value": 200,
+    "source": "§4.30",
+    "basis": "synthetic prior draws/datasets;not200humans"
+  },
+  {
+    "key": "posterior_samples",
+    "value": 3000,
+    "source": "§4.31",
+    "basis": "draws per conditional posterior;not independent datasets"
+  },
+  {
+    "key": "bounded_recovery_correlation",
+    "value": 0.919,
+    "source": "§4.34/Figure3",
+    "basis": "reported global Pearson;does not imply local identification"
+  },
+  {
+    "key": "sir_training_per_pipeline",
+    "value": 768000,
+    "source": "§5.19/5.31",
+    "basis": "64*120*100;second same schedule;not verified complete execution budget"
+  },
+  {
+    "key": "recovery_mu_before_after_r",
+    "value": [
+      0.455,
+      0.789
+    ],
+    "source": "§5.32",
+    "basis": "data AND encoder/dimension changed together"
+  },
+  {
+    "key": "posterior_contraction_delay",
+    "value": 0.26,
+    "source": "§5.34",
+    "basis": "representative two-series dataset;not universal parameter error"
+  },
+  {
+    "key": "all_data_synthetic",
+    "value": true,
+    "source": "§4.42/5.33/5.35/6.3",
+    "basis": "empirical-like are simulated observations;no real heldout outcomes"
+  }
+]

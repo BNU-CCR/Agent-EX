@@ -1,0 +1,29 @@
+{
+  "batch_id": "CW-identifiability-and-calibration-boundaries",
+  "date": "2026-11-28",
+  "expected_master_sha256": "db86fe8cd1de567a48e94b2d51b7339e2628fb0cda1083b4114a064b1998d232",
+  "updates": [
+    {
+      "record_id": "M053",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M053.md",
+      "research_question": "给定模型/先验/观测与神经摘要时，ABM参数是否可恢复；SBC和回拟合何时不能证明唯一机制？",
+      "method_type": "traditional_rule_abm;normalizing_flow_amortized_bayesian_inference;synthetic_parameter_recovery;SBC",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "controlled_comparison",
+      "method_transferability": "diagnostic separation and parameterposterior checks transferable;conditional onprior/model/observations/summary;trainingexpense notgeneralLLMvalidatedworkflow",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "supplement_hyperparameters;code_run_correspondence;fullposteriorchecks;structural_vs_summary_nonidentifiability",
+      "method_evidence_location": "Official §§3–6;Figures3/16 visual;documentation/availability text",
+      "method_coding_source": "reading-cards/M053.md;reports/identifiability_CW.md;batches/method_round2/cw_identifiability/source_reuse.json",
+      "method_last_checked": "2026-11-28",
+      "findings": "SBC/selfconsistency distinct fromlocalrecovery andempiricalvalidity;alltoy/synthetic;richdataandencoderjointchange;goodtrajectoryfitwithweakDidentification",
+      "reason": "正式全文/日期门通过；合成方法比较支持可识别性诊断，不提升为真实行为/跨人群验证。",
+      "notes": "摘要提出normalizing-flow/BayesFlow摊销贝叶斯参数估计与可识别性评估；两例为意见/传染病，不将generative AI自动当LLM。 | Publication date is official; content/validation scope pending fulltext. No card or evidence unit added. | CW:formalHTMLread;Figure3/16visual;synthetic-only;nohumanvalidation;dataandencoderjointchange;nocodeexecution",
+      "search_id": "CU-29;CW-01;CW-02;CW-03;CW-04",
+      "supplement_status": "documentationlinks_seen_not_acquired;Figures3_16_read;no_code_or_weights_loaded"
+    }
+  ],
+  "new_records": []
+}

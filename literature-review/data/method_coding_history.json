@@ -7728,5 +7728,85 @@
     "batch": "CV-GPLab-evaluation-boundaries",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cv_gplab_evaluation/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "traditional_rule_abm;normalizing_flow_amortized_bayesian_inference;synthetic_parameter_recovery;SBC",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "diagnostic separation and parameterposterior checks transferable;conditional onprior/model/observations/summary;trainingexpense notgeneralLLMvalidatedworkflow",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type",
+    "new": "supplement_hyperparameters;code_run_correspondence;fullposteriorchecks;structural_vs_summary_nonidentifiability",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_evidence_location",
+    "old": "Official article abstract and citation metadata only",
+    "new": "Official §§3–6;Figures3/16 visual;documentation/availability text",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
+  },
+  {
+    "record_id": "M053",
+    "field": "method_coding_source",
+    "old": "reports/jasss_inventory_CU.md;batches/method_round2/cu_jasss_inventory/acquisition_manifest.json",
+    "new": "reading-cards/M053.md;reports/identifiability_CW.md;batches/method_round2/cw_identifiability/source_reuse.json",
+    "date": "2026-11-28",
+    "batch": "CW-identifiability-and-calibration-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/cw_identifiability/results.json"
   }
 ]

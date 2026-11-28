@@ -133,3 +133,7 @@ CA接续：[三研究校准/验证任务](calibration_validation_tasks_CA.md)区
 
 ## CV：GPLab评价参照分层（2026-11-28）
 [GPLab正式精读](gplab_evaluation_CV.md)支持主体/子系统架构与内部跨配置比较。调查初始化、LLM人格/特质一致、DeepSeekR1政策逻辑评分分别保留；五场景高分不自动为五个独立人类效度检验。§6.9的SD按表题记SD；不认证75独立运行或采用其并行引擎/规模修改Agent-EX。JASSS目录新证据另见[CU](jasss_inventory_CU.md)，不是完整语义召回或政策刷新。
+
+
+## CW：参数恢复、校准与拟合（2026-11-28）
+[M053正式精读](identifiability_CW.md)显示SBC自洽、局部参数恢复、回拟合和独立经验效度是不同问题；全为合成toy数据，不将empirical-like当真实观测。新增恢复序列同时改摘要架构，不解释为资料单因素净效应；高r/高收缩/好拟合均不单独证明机制唯一。相关研究建议未执行或更改Agent-EX协议。
