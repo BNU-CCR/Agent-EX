@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "DU-01",
+    "platform": "local_fixed_source_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Three studies/window/target/selection/interval;integrateQ3Q4Q9andpositioning",
+    "source_url": "reports/temporal_validation_synthesis_DU.md",
+    "status": "fixed_DT_sources_no_new_network",
+    "notes": "12fixedsources/fourbefore-docarchives;no records/cards/units/evidencegrades/experiments changed"
+  }
+]

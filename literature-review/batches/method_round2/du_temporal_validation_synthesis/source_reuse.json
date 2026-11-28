@@ -1,0 +1,78 @@
+[
+  {
+    "path": "reading-cards/M009.md",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "3cea765b8729ba57169fc902bce4096f2d184e71006c55895003f4f27f13d9d5",
+    "usage": "Fixed DT source;local synthesis only"
+  },
+  {
+    "path": "reading-cards/M161.md",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "9c6a8c11a46960042249d93d05c8a9badda8ff52ee49b06d01aa4ee86804ebda",
+    "usage": "Fixed DT source;local synthesis only"
+  },
+  {
+    "path": "reading-cards/M091.md",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "4e87287bb5d28e4325ee51e071ffcdb454c8a5220d419052e93c7f0ec0a304ab",
+    "usage": "Fixed DT source;local synthesis only"
+  },
+  {
+    "path": "batches/method_round2/dr_physicsagentabm/design_evidence.json",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "1312aac0e661e112caba07c74a318f7190661072934602b75eb07722d97cce06",
+    "usage": "Fixed DT source;local synthesis only"
+  },
+  {
+    "path": "batches/method_round2/dt_reddit_outsample_validation/design_evidence.json",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "59bbf8b6b18435705be571d78159bc3aea5d5e56df4d7c66992266f3ee18d02b",
+    "usage": "Fixed DT source;local synthesis only"
+  },
+  {
+    "path": "batches/method_round2/dl_igss_temporal_validation/design_evidence.json",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "bee7f3987c2a9279d23d382a6e8b50c51df072d045535cb1f2a05bfcd7ca5693",
+    "usage": "Fixed DT source;local synthesis only"
+  },
+  {
+    "path": "reports/methods_review_current_synthesis.md",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "fa5e8fdb653c451198857d21e8f29c746daba6a0745014e1f30d7cbe1a6ef885",
+    "usage": "Fixed DT source;local synthesis only",
+    "archived_path": "batches/method_round2/du_temporal_validation_synthesis/methods_review_current_synthesis_before_DU.md"
+  },
+  {
+    "path": "reports/two_track_submission_strategy.md",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "bbfd9df99c67cd7f63738c99f1a019c7c1fe04eeab20b056bc50bc4375d23c98",
+    "usage": "Fixed DT source;local synthesis only",
+    "archived_path": "batches/method_round2/du_temporal_validation_synthesis/two_track_submission_strategy_before_DU.md"
+  },
+  {
+    "path": "reports/agent_ex_method_positioning.md",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "2e169fe9b7b65c1e412eec2b921657f7b6771785b1c2b1a89aff8129d4856952",
+    "usage": "Fixed DT source;local synthesis only",
+    "archived_path": "batches/method_round2/du_temporal_validation_synthesis/agent_ex_method_positioning_before_DU.md"
+  },
+  {
+    "path": "reports/method_landscape.md",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "62ca84feef6892939df5a574074feda299913e276acbf74e27b9d407f64dafe6",
+    "usage": "Fixed DT source;local synthesis only",
+    "archived_path": "batches/method_round2/du_temporal_validation_synthesis/method_landscape_before_DU.md"
+  },
+  {
+    "path": "data/literature_master.csv",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "c436c12e62cfa02e5808a678c7067a3fccdc7a4d54a3226be639a1cd315331d4",
+    "usage": "Fixed DT source;local synthesis only"
+  },
+  {
+    "path": "data/jasss_screening_current.csv",
+    "base_commit": "1f642e1",
+    "sha256_git_bytes": "90743c35e7229ca9ac23738fdbe2db89d80d69b384d623403cc3a6215b0d184e",
+    "usage": "Fixed DT source;local synthesis only"
+  }
+]

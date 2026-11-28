@@ -1,0 +1,4 @@
+record_id,publication_identity,LLM_role,time_design,target_and_measurement,selection_boundary,uncertainty_meaning,positive_evidence,not_established,source_card
+M009,author arXivv2;frontier,簇抽象与符号hazard，另训练神经预测,28日历史/7日预测，每窗重训；金融head5/7差异,病例重建；合成交易者对宏观regime；Wiki代理,只评有事件轨迹；早停/stride未闭合,NLL/Brier概率评分不是纯校准；±项定义未闭合,作者报告多域滚动预测和消融,零样本跨域、个体心理真值、全指标占优、认证总成本,reading-cards/M009.md
+M161,formal JASSS2026;included,语言分类测量；主体为规则SIS,68周校准/8周保留，76步,负面帖子比例经EMA；177一致人类标签子集,分类器选模评估覆盖76周；帖子/主体权重不同,100模拟均值SE的95%CI，另3SD；非现实预测区间,确有参数保留期；报告部分趋势拟合,完整测量链独立、全公司胜ODE、真实信任机制、95%预测覆盖,reading-cards/M161.md
+M091,formal JASSS2023;included,传统规则ABM/语法结构搜索,结构1985–2010/保留2011–2015；参数段另写1984,纽约BRFSS按销售调整，三指标×男女六均值序列,同地区温和趋势；保留动态范围较小,目标95%CI/模型全部run范围分开,折中候选保留期仍较好；部分复杂结构恶化,唯一机制、理论可信度、重大政策冲击/跨人口泛化,reading-cards/M091.md

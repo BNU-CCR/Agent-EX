@@ -1,0 +1,20 @@
+{
+  "base": "1f642e1",
+  "fixed_sources": 12,
+  "archived_git_byte_identical_reports": 4,
+  "master230_unchanged": true,
+  "cards79_unchanged": true,
+  "units213_unchanged": true,
+  "tracker_CU_unchanged": true,
+  "comparison_rows": 3,
+  "Q3_Q4_Q9_integrated": true,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    214,
+    1643,
+    42
+  ],
+  "limits": "Local comparative synthesis;not new study/policy/experiment evidence"
+}
