@@ -25708,5 +25708,95 @@
     "batch": "FN",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fn_ssr_precedent/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_type",
+    "old": "traditional_ABM_education_scenario_author_abstract_only",
+    "new": "traditional_empirically_parameterized_ABM_counterfactual_scenarios",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_transferability",
+    "old": "待正文核初始化、资料角色、反事实和验证设计；摘要不支持具体方法优点或可迁移性结论。",
+    "new": "历史拟合与独立验证、模型反事实与具体政策效果、参数不确定性与模拟随机性逐层区分；不将更多agents当独立重复。",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_relevance_rationale",
+    "old": "用于指定刊的实际传统ABM应用发表核验；方法贡献及与LLM模拟的可迁移对照仍待全文。",
+    "new": "传统经验参数化ABM用于应用层与方法责任对照；受控比较指模型情景，不代表现实随机干预或人类外部效度成立。",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_pending_fields",
+    "old": "authorWPbodyreading;formal_version_difference;calibration/reference/data_roles;counterfactualidentification;methodcontribution;code_data/runmapping;first_online_day_optional",
+    "new": "formal_body_version_collation;independent_holdout_validation;posterior_sampling_diagnostics;uncertainty_component_separation;fixed_code_data_runmapping;real_policy_intervention_effect",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_evidence_location",
+    "old": "primaryEdWorkingPapersabstract+PDFcover;publishermetadata;notbody",
+    "new": "authorWP3.1-3.3pp7-12/4pp12-15/5pp15-17/Figs2-4/A1/TableA1;formalabstractonly",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
+  },
+  {
+    "record_id": "M183",
+    "field": "method_coding_source",
+    "old": "reports/ssr_formal_precedent_FN.md;batches/method_round2/fn_ssr_precedent/source_manifest.json",
+    "new": "reading-cards/M183.md;reports/m183_counterfactual_evidence_FO.md;batches/method_round2/fo_m183_reading/reading_scope.json",
+    "date": "2026-11-28",
+    "batch": "FO",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fo_m183_reading/results.json"
   }
 ]

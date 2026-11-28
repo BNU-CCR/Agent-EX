@@ -1,0 +1,25 @@
+{
+  "read_version": "CALDER WP259-0122 January2022;repositorylabelMarch2022",
+  "pdf_pages": 33,
+  "printed_pages_read": [
+    "3",
+    "7-17",
+    "27"
+  ],
+  "visual_pdf_pages": [
+    29,
+    30,
+    31,
+    33
+  ],
+  "not_claimed": [
+    "full formal2023 body reading",
+    "all references/math audit",
+    "holdout prediction validation",
+    "real policy causal effects",
+    "author code execution"
+  ],
+  "formal_abstract_comparison": "coarse conclusions concordant;not body collation",
+  "electronic_date": "2023-10-20",
+  "pubmed_id": "37981397"
+}

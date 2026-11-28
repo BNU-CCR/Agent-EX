@@ -1,0 +1,34 @@
+{
+  "checked": "2026-11-28",
+  "master_only_changed": [
+    "M183"
+  ],
+  "new_matrix_units": [
+    "VC261",
+    "VC262",
+    "VC263"
+  ],
+  "records": 240,
+  "included": 77,
+  "cards": 90,
+  "matrix": 263,
+  "workbook_rows": [
+    28,
+    241,
+    62,
+    32,
+    264,
+    56,
+    1921,
+    16,
+    42,
+    35
+  ],
+  "workbook_B7": 77,
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "no_author_code_execution": true,
+  "scope": "structural_and_scoped_content_checks_not_full_goal_acceptance"
+}

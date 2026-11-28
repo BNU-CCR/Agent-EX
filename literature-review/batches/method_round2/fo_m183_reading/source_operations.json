@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "FO-01",
+    "platform": "legal_author_pdf",
+    "search_date": "2026-11-28",
+    "query_exact": "Reuse/recheck33pageWPidentity/hash;no redownload",
+    "source_url": "https://edworkingpapers.com/sites/default/files/CALDER%20WP%20259-0122.pdf",
+    "status": "identity_rechecked",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FO-02",
+    "platform": "focused_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "printed3/7-17 methods/results/limits,TableA1p27;notallreferences/mathaudit",
+    "source_url": "reading-cards/M183.md",
+    "status": "focused_author_fulltext_read",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FO-03",
+    "platform": "official_pubmed_xml",
+    "search_date": "2026-11-28",
+    "query_exact": "PMID37981397 DOI/PII/Electronic2023-10-20 andformalabstract;notformalbody",
+    "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=37981397&retmode=xml",
+    "status": "metadata_and_abstract_confirmed",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FO-04",
+    "platform": "figure_inspection",
+    "search_date": "2026-11-28",
+    "query_exact": "Figs2/3/4/A1 PDF29/30/31/33 axes/reference/90percentintervals;notdigitized",
+    "source_url": "batches/method_round2/fo_m183_reading/reading_scope.json",
+    "status": "selected_figures_visually_checked",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FO-05",
+    "platform": "method_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "Historicalreference/scenarios/uncertaintyunits;no independentpolicyvalidation",
+    "source_url": "reports/m183_counterfactual_evidence_FO.md",
+    "status": "scoped_integration",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  }
+]

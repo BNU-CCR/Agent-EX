@@ -1,4 +1,4 @@
-> 当前入口（2026-11-28，FN）：76正式纳入/89阅读卡/260证据单元，61载体/31条件投稿项，14日期待核。[九问题综合](methods_review_current_synthesis.md)与[原范围核对](delivery_scope_FL.md)为当前解释；下列带批次名的旧数量保留为历史快照。
+> 当前入口（2026-11-28，FO）：77正式纳入/90卡/263证据单元，61载体/31条件项，14日期待核。[九问题综合](methods_review_current_synthesis.md)及[M183补证](m183_counterfactual_evidence_FO.md)。下列批次旧数量保留历史身份。
 
 > FA：六个地图刊（其中四个为当时条件投稿项）的官方日期APC已核，Social Networks官方范围现可读；是可选混合OA标价，不升推荐、不代表指南/索引已核。见[费用与范围](elsevier_fee_fields_FA.md)。
 

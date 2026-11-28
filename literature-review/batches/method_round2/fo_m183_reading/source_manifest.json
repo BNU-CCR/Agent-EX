@@ -1,0 +1,16 @@
+[
+  {
+    "file": "FN_M183_authorWP.pdf",
+    "bytes": 1224090,
+    "sha256": "3e0ce8947dea8a6a9046b9d1f480b91a01068d77bff53119c79d38d923b3eee9",
+    "archive_location": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FN_M183_authorWP.pdf",
+    "role": "authorWPfulltext"
+  },
+  {
+    "file": "FO_pubmed.xml",
+    "bytes": 5227,
+    "sha256": "bf59340e87182e7e23f45b010ee5382fc386b13a02f79d172f7d202bcdf69f4f",
+    "archive_location": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FO_pubmed.xml",
+    "role": "officialmetadataandabstract"
+  }
+]
