@@ -25428,5 +25428,45 @@
     "batch": "FI",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "method_coding_status",
+    "old": "metadata_pending",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_contribution_type（待全文复核）;method_relevance_tier;disciplinary_home",
+    "new": "fulltext;method_maturity;method_evidence_level;method_transferability;method_contribution_type;first_online_day_optional_metadata;complete2025issuecatalogue",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "method_evidence_location",
+    "old": "CN007参考文献7提供题录，原文未读。",
+    "new": "originalpublisherabstractviaindex;newuniversityhostabout/submit;notfulltext",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#CN012;batches/chinese/records.json#CN012;reports/chinese_method_sources_FI.md",
+    "new": "data/literature_master.csv#CN012;batches/chinese/records.json#CN012;reports/chinese_method_sources_FI.md;reports/jis_identity_policy_FJ.md;batches/method_round2/fj_jis_identity/indexed_metadata_decision.json",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
   }
 ]

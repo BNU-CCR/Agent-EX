@@ -998,5 +998,125 @@
     "batch": "FI",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fi_chinese_methods/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "official_url",
+    "old": "",
+    "new": "https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "metadata_evidence_url",
+    "old": "https://www.china-simulation.com/EN/article/downloadArticleFile.do?attachType=PDF&id=3836 | https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025 | https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf",
+    "new": "https://www.china-simulation.com/EN/article/downloadArticleFile.do?attachType=PDF&id=3836 | https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025 | https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf | https://jis.hrbeu.edu.cn/about.html | https://jis.hrbeu.edu.cn/issue/",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "online_first_date",
+    "old": "",
+    "new": "2025",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "date_basis",
+    "old": "2026综述官方PDF参考文献7列出题录；本篇正式版本待核实，刊物性质/是否集刊待核实 | FI officialvolumeindexed2025,4(2):138-157;directTLSexpired/authorPDF403;formalcarrierandpublicationrecordnotacquired,notexactdaygate",
+    "new": "FJ originalofficialvolume search-indexmetadata2025,4(2):138-157+directuniversityhostjournalidentity;approvedformalyearprecisionfallback;firstonlinedayunknown;oldhostdirectTLSfailurepreserved",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "date_eligibility",
+    "old": "date_pending",
+    "new": "confirmed",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "reason",
+    "old": "传统规则到生成式规则的认识论比较线索，尚不能据题名推断作者结论",
+    "new": "主办方直证正式期刊性质，原官网索引题录支持2025年精度；只读出版者摘要未取得正文，保持核心候选与unclear。",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "reading_status",
+    "old": "metadata_only",
+    "new": "abstract_read",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "research_question",
+    "old": "待全文核查；拟对话问题：传统规则到生成式规则的认识论比较线索，尚不能据题名推断作者结论",
+    "new": "生成式AI如何拓展社会模拟的基本构件、实践模式与方法风险？（出版者摘要主张，正文未读）",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "findings",
+    "old": "",
+    "new": "出版者摘要提出按典型任务/场景分类GABM实践模式并讨论理论挑战；没有正文，不据此判断具体框架或验证成果。",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "evidence_location",
+    "old": "",
+    "new": "originalpublisherindexedvolume2025,4(2):138-157/title/authors/abstract;newhostabout/issue/submit actualHTML",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "search_id",
+    "old": "CNS045;FI-01;FI-06;FI-07",
+    "new": "CNS045;FI-01;FI-06;FI-07;FJ-01;FJ-02;FJ-03;FJ-04;FJ-05;FJ-06;FJ-07",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
+  },
+  {
+    "record_id": "CN012",
+    "field": "notes",
+    "old": " | FI:officialindexedvolumehas2025,4(2):138-157/authors/abstractfragment;directpublisherTLSexpiredandResearchmap403146bytesnotPDF;metadata_only/candidate/unclearretained;notfulltextread.",
+    "new": " | FI:officialindexedvolumehas2025,4(2):138-157/authors/abstractfragment;directpublisherTLSexpiredandResearchmap403146bytesnotPDF;metadata_only/candidate/unclearretained;notfulltextread. | FJ:universityhostconfirmsformalacademicbimonthly;publisherindexed2025yearconfirmedunderoriginalfallback;candidate/bodyabsent;newhost2025onlyissue4and2queriesnohitsnotabsenceproof;guidepublicread;reader401.",
+    "date": "2026-11-28",
+    "batch": "FJ",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fj_jis_identity/results.json"
   }
 ]

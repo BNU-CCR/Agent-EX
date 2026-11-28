@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "FJ-01",
+    "platform": "public_queries",
+    "search_date": "2026-11-28",
+    "query_exact": "[\"\\\"智能社会研究\\\" \\\"2025\\\" \\\"第2期\\\" 出版\", \"\\\"从ABM到GABM\\\" \\\"出版社\\\"\", \"\\\"智能社会研究\\\" \\\"集刊\\\"\", \"\\\"从ABM到GABM\\\" site:jis.hrbeu.edu.cn\", \"\\\"智能社会研究\\\" site:jis.hrbeu.edu.cn \\\"主办\\\"\", \"\\\"从ABM到GABM\\\" \\\"2025-03\\\"\", \"\\\"从 ABM 到 GABM\\\" \\\"2025\\\" \\\"王志超\\\"\", \"\\\"从ABM到GABM\\\" \\\"138-157\\\"\"]",
+    "source_url": "https://jis.hrbeu.edu.cn/about.html",
+    "status": "discovery_and_originalpublisherindexedmetadata",
+    "notes": "Groupedoperation notquerytotal;noauthenticatedCNKIexport"
+  },
+  {
+    "search_id": "FJ-02",
+    "platform": "university_journal_identity",
+    "search_date": "2026-11-28",
+    "query_exact": "Directaboutbimonthly/host/publisher;notjikan",
+    "source_url": "https://jis.hrbeu.edu.cn/about.html",
+    "status": "primary200",
+    "notes": "Groupedoperation notquerytotal;noauthenticatedCNKIexport"
+  },
+  {
+    "search_id": "FJ-03",
+    "platform": "archive_and_site_queries",
+    "search_date": "2026-11-28",
+    "query_exact": "archive2025onlyissue4;GETformGABM/WangZhichaonoresults",
+    "source_url": "https://jis.hrbeu.edu.cn/issue/ | https://jis.hrbeu.edu.cn/search/",
+    "status": "bounded_noabsenceproof",
+    "notes": "Groupedoperation notquerytotal;noauthenticatedCNKIexport"
+  },
+  {
+    "search_id": "FJ-04",
+    "platform": "author_guide",
+    "search_date": "2026-11-28",
+    "query_exact": "PublicChinese/abstract300/keywords3-5/refs/anonymity;nosubmission",
+    "source_url": "https://jis.hrbeu.edu.cn/submit.html",
+    "status": "primary200_read",
+    "notes": "Groupedoperation notquerytotal;noauthenticatedCNKIexport"
+  },
+  {
+    "search_id": "FJ-05",
+    "platform": "year_qualification",
+    "search_date": "2026-11-28",
+    "query_exact": "Publisherindexed2025,4(2):138-157+verifiedcarrier;yearfallback",
+    "source_url": "batches/method_round2/fj_jis_identity/indexed_metadata_decision.json",
+    "status": "confirmed_year_notbody",
+    "notes": "Groupedoperation notquerytotal;noauthenticatedCNKIexport"
+  },
+  {
+    "search_id": "FJ-06",
+    "platform": "reader_access",
+    "search_date": "2026-11-28",
+    "query_exact": "Originalpublisherreaderfallback401authrequired;noacquisition",
+    "source_url": "https://r.jina.ai/https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+    "status": "blocked_notacquired",
+    "notes": "Groupedoperation notquerytotal;noauthenticatedCNKIexport"
+  },
+  {
+    "search_id": "FJ-07",
+    "platform": "fit_assessment",
+    "search_date": "2026-11-28",
+    "query_exact": "LowpriorityChinese_methodconditional;noindex/feesassumption",
+    "source_url": "reports/jis_identity_policy_FJ.md",
+    "status": "review_inference_noteditorialdecision",
+    "notes": "Groupedoperation notquerytotal;noauthenticatedCNKIexport"
+  }
+]

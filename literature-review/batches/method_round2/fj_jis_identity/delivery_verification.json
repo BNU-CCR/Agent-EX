@@ -1,0 +1,31 @@
+{
+  "batch": "FJ",
+  "date": "2026-11-28",
+  "master_changed": [
+    "CN012"
+  ],
+  "other_237_rows_unchanged": true,
+  "records": 238,
+  "included": 75,
+  "cards": 88,
+  "units": 257,
+  "date_pending": 14,
+  "venues": 58,
+  "journal_candidates": 31,
+  "source_operations": 1895,
+  "workbook_rows": [
+    28,
+    239,
+    59,
+    32,
+    258,
+    56,
+    1896,
+    16,
+    42,
+    33
+  ],
+  "legacy_changes": 112,
+  "scope": "Officialcarrier/guideandindexedyear;noCN012body or fullcatalogue certification",
+  "method_grades_unchanged": true
+}

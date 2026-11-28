@@ -1,0 +1,27 @@
+{
+  "record_id": "CN012",
+  "source_url": "https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+  "access": "publisher content as returned in public search index,not direct HTML acquisition",
+  "query": "\"从ABM到GABM\" \"138-157\"",
+  "title": "从ABM到GABM——生成式人工智能对社会模拟的重塑",
+  "authors": [
+    "王志超",
+    "吕泽宇"
+  ],
+  "volume": 4,
+  "issue": 2,
+  "year": 2025,
+  "pages": "138-157",
+  "abstract_read": true,
+  "body_read": false,
+  "date_precision": "year",
+  "formal_carrier_source": "https://jis.hrbeu.edu.cn/about.html",
+  "decision": "confirmed formal year under approved precision fallback;candidate because body absent",
+  "not_established": [
+    "exact first online",
+    "fulltext",
+    "2025newhostcompletecatalogue",
+    "indexing",
+    "DOI"
+  ]
+}

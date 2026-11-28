@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-28",
+  "sources": [
+    {
+      "key": "about",
+      "url": "https://jis.hrbeu.edu.cn/about.html",
+      "status": 200,
+      "bytes": 40015,
+      "sha256": "65554ce39e4312b525e5aff59229d965b4d58d882f2b9ccf41f0c46bd4462614"
+    },
+    {
+      "key": "issues",
+      "url": "https://jis.hrbeu.edu.cn/issue/",
+      "status": 200,
+      "bytes": 30019,
+      "sha256": "ccec2b3565cec6f81423ae3e7eceb90fc113066083710c9c34f2857472ea8cdd"
+    },
+    {
+      "key": "adv",
+      "url": "https://jis.hrbeu.edu.cn/advsearch/",
+      "status": 200,
+      "bytes": 18913,
+      "sha256": "07ffebf4a49359129dbb68e75c11c7f76eb6642bd3eab6e4b616a24222b2c240"
+    },
+    {
+      "query": "GABM",
+      "url": "https://jis.hrbeu.edu.cn/search/?is_search=1&keyword=GABM",
+      "status": 200,
+      "bytes": 14027,
+      "sha256": "5b961d2d433f647491f0c437f64526e0ba22d646c1a97c7ed03099ff5a7418a1"
+    },
+    {
+      "query": "王志超",
+      "url": "https://jis.hrbeu.edu.cn/search/?is_search=1&keyword=%E7%8E%8B%E5%BF%97%E8%B6%85",
+      "status": 200,
+      "bytes": 14129,
+      "sha256": "0d9b370f32499478bde2cd8b27f0a169614d895e98cc3b93a6d5617cf4964cd3"
+    },
+    {
+      "url": "https://jis.hrbeu.edu.cn/submit.html",
+      "status": 200,
+      "bytes": 15657,
+      "sha256": "c4f38edb3ef3a206cb916463c90ce5e420b35c7d1422c84309b967b9e937e96f"
+    },
+    {
+      "url": "https://r.jina.ai/https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+      "status": 401,
+      "bytes": 343,
+      "sha256": "1d9f06ef9ca47c90ceea483f98e3d9a0b84f2598917b5b516d74441318779e61"
+    }
+  ],
+  "scope": "Universityhostabout/archive/guideand2queriesactuallyfetched;oldofficialvolumeindexedonly;noCN012fulltext/modelrun"
+}

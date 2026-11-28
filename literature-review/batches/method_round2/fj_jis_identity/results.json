@@ -1,0 +1,28 @@
+{
+  "batch_id": "FJ",
+  "date": "2026-11-28",
+  "expected_master_sha256": "4bcdbd1d6329b6a3eda4f8461432acf154cbea94dc7830b15d93650afc5fa051",
+  "updates": [
+    {
+      "record_id": "CN012",
+      "official_url": "https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025",
+      "metadata_evidence_url": "https://www.china-simulation.com/EN/article/downloadArticleFile.do?attachType=PDF&id=3836 | https://www.jis.ac.cn/CN/article/showVolumnArticle.do?juan=4&nian=2025 | https://researchmap.jp/zhichaowang/published_papers/49927776/attachment_file.pdf | https://jis.hrbeu.edu.cn/about.html | https://jis.hrbeu.edu.cn/issue/",
+      "online_first_date": "2025",
+      "date_basis": "FJ originalofficialvolume search-indexmetadata2025,4(2):138-157+directuniversityhostjournalidentity;approvedformalyearprecisionfallback;firstonlinedayunknown;oldhostdirectTLSfailurepreserved",
+      "date_eligibility": "confirmed",
+      "reason": "主办方直证正式期刊性质，原官网索引题录支持2025年精度；只读出版者摘要未取得正文，保持核心候选与unclear。",
+      "reading_status": "abstract_read",
+      "research_question": "生成式AI如何拓展社会模拟的基本构件、实践模式与方法风险？（出版者摘要主张，正文未读）",
+      "findings": "出版者摘要提出按典型任务/场景分类GABM实践模式并讨论理论挑战；没有正文，不据此判断具体框架或验证成果。",
+      "evidence_location": "originalpublisherindexedvolume2025,4(2):138-157/title/authors/abstract;newhostabout/issue/submit actualHTML",
+      "search_id": "CNS045;FI-01;FI-06;FI-07;FJ-01;FJ-02;FJ-03;FJ-04;FJ-05;FJ-06;FJ-07",
+      "notes": " | FI:officialindexedvolumehas2025,4(2):138-157/authors/abstractfragment;directpublisherTLSexpiredandResearchmap403146bytesnotPDF;metadata_only/candidate/unclearretained;notfulltextread. | FJ:universityhostconfirmsformalacademicbimonthly;publisherindexed2025yearconfirmedunderoriginalfallback;candidate/bodyabsent;newhost2025onlyissue4and2queriesnohitsnotabsenceproof;guidepublicread;reader401.",
+      "method_coding_status": "abstract_provisional",
+      "method_pending_fields": "fulltext;method_maturity;method_evidence_level;method_transferability;method_contribution_type;first_online_day_optional_metadata;complete2025issuecatalogue",
+      "method_evidence_location": "originalpublisherabstractviaindex;newuniversityhostabout/submit;notfulltext",
+      "method_coding_source": "data/literature_master.csv#CN012;batches/chinese/records.json#CN012;reports/chinese_method_sources_FI.md;reports/jis_identity_policy_FJ.md;batches/method_round2/fj_jis_identity/indexed_metadata_decision.json",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}
