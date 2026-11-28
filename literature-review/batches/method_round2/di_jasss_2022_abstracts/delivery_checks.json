@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-28",
+  "base": "91de962",
+  "old124_records_unchanged": true,
+  "all74_cards_unchanged": true,
+  "all191_units_unchanged": true,
+  "original_CU_inventory_unchanged": true,
+  "official_abstracts_read": 26,
+  "new_candidates": 16,
+  "application_leads_not_final_excluded": 10,
+  "response_hashes_checked": 26,
+  "remaining_abstracts": 123,
+  "coverage_counts": {
+    "application_lead_retained_not_added": 10,
+    "existing_master_record": 19,
+    "added_abstract_candidate": 16,
+    "abstract_pending": 123,
+    "nonresearch_entry": 10
+  },
+  "limits": "Single assistant abstract priority screen;not dualscreen/fulltext/completefieldrecall;no efficacy upgrade",
+  "workbook_rows": [
+    141,
+    53,
+    31,
+    192,
+    1473,
+    42
+  ],
+  "workbook_sheets": 9,
+  "cached_included": 53,
+  "bib_entries": 53,
+  "max_text_cell_length": 8727,
+  "summary_visual_checked": true
+}

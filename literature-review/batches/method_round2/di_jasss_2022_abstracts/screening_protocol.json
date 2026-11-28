@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-28",
+  "source": "CU fixed178-directory inventory;remaining2022 rows only",
+  "year_basis": "2022 issue queue;formal article dates checked individually before master eligibility",
+  "scope": "2022+ methods-first approved reorientation;traditionalABMmethodology eligible without LLM",
+  "decisions": {
+    "method_candidate": "Abstract explicitly proposes/evaluates transferable modelling construction,calibration,validation,measurement,reporting or methodological critique",
+    "direct_candidate": "Abstract explicitly addresses network/opinion/socialidentity/socialinfluence mechanisms relevant to Agent-EX",
+    "application_lead": "Substantive application without clear transferable-method/direct-comparison signal;retain in screening ledger,not definitive fulltext exclusion",
+    "unclear": "Insufficient abstract evidence/access;retain pending,never zero-hit"
+  },
+  "gates": "Abstract-only stays candidate/unclear maturity+evidence;no card/unit unless fulltext read;DOI/title dedup;articlemeta+visibledate gate",
+  "limits": "Single-assistant primary abstract screening,not independent dual screening or fulltext review"
+}
