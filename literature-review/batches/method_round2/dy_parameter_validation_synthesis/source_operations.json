@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "DY-01",
+    "platform": "fixed_git_evidence_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "M147/M053/M058 recovery,SBC,coverage,conditional/joint inference comparison from5fixedDXsources",
+    "source_url": "literature-review/batches/method_round2/dy_parameter_validation_synthesis/source_reuse.json",
+    "status": "local_synthesis_no_new_external_verification",
+    "notes": "One grouped reuse operation; not5new papers/independent studies, queries or experiment reruns"
+  }
+]

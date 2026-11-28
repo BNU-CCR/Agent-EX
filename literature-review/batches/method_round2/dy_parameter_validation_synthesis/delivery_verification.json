@@ -1,0 +1,17 @@
+{
+  "base": "be24f7a",
+  "reused_fixed_sources": 5,
+  "archives": 2,
+  "comparison_rows": 3,
+  "master_matrix_tracker_CU_Bibs_unchanged": true,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    218,
+    1663,
+    42
+  ],
+  "maxtext": 29215,
+  "limitation": "Synthesis from existing reading evidence; no original study revalidation/experiments; counts/layout unchanged, reuse DX visual check"
+}
