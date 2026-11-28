@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DJ-01",
+    "platform": "local_official_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "ReadM078§3–7 andselectedAppendix8 reusedDI",
+    "source_url": "https://www.jasss.org/25/3/4.html",
+    "status": "formal_targeted_read",
+    "notes": "PrimaryformalHTMLreuse;code/underlyingoldliteraturenotacquired"
+  },
+  {
+    "search_id": "DJ-02",
+    "platform": "local_primary_table_design_transcription",
+    "search_date": "2026-11-28",
+    "query_exact": "TranscribeTable2nineparameterspermodel anddesign/budgetreports",
+    "source_url": "https://www.jasss.org/25/3/4.html#tab2",
+    "status": "18numbers_and401times17checked_not_fit_reanalysis",
+    "notes": "PrimaryformalHTMLreuse;code/underlyingoldliteraturenotacquired"
+  },
+  {
+    "search_id": "DJ-03",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire/inspect Figure4calibration/fitteddata",
+    "source_url": "https://www.jasss.org/25/3/4/Figure4.png",
+    "status": "200_png_visual_checked",
+    "notes": "PrimaryformalHTMLreuse;code/underlyingoldliteraturenotacquired"
+  },
+  {
+    "search_id": "DJ-04",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire/inspect Figure6parametersand8restartcurves",
+    "source_url": "https://www.jasss.org/25/3/4/Figure6.png",
+    "status": "200_png_visual_checked",
+    "notes": "PrimaryformalHTMLreuse;code/underlyingoldliteraturenotacquired"
+  },
+  {
+    "search_id": "DJ-05",
+    "platform": "local_scope_comparison",
+    "search_date": "2026-11-28",
+    "query_exact": "Separateapproximategradients/sizebudgets/fit/validation",
+    "source_url": "reports/differentiable_calibration_DJ.md",
+    "status": "no_code_or_gradients_executed",
+    "notes": "PrimaryformalHTMLreuse;code/underlyingoldliteraturenotacquired"
+  }
+]

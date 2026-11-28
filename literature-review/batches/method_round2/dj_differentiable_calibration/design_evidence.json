@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-28",
+  "data": {
+    "districts": 401,
+    "years": 17,
+    "year_range": [
+      2000,
+      2016
+    ],
+    "aggregate_cells": 6817,
+    "calibrated_parameters": 25,
+    "target": "annualnewPVadopters<10kWp",
+    "validation": "§6.1explicitlynotdiscussed;no holdouttestclaimed"
+  },
+  "model": {
+    "irreversible_adoption": true,
+    "utility": "one-step differentiable utility;weighted sum in example",
+    "Gaussian": "expected-loss approximation",
+    "Threshold": "heuristic f=1 not exact derivative/proven direction",
+    "endogenous_attributes": "three dependencies omitted in example;§4.16 warns gradients not exact",
+    "opinion_submodel": "rule-basedopinion/peer/media;not LLM"
+  },
+  "comparison": {
+    "BayesianOptimization": {
+      "steps_reported": 700,
+      "R2_approx": -0.7,
+      "agents": "not separately fixed in readsection"
+    },
+    "DirectSearch": {
+      "steps_reported": 650,
+      "R2": "less0",
+      "agents": 640000
+    },
+    "Adam": {
+      "initial_agents": 16000,
+      "after600steps_agents": 640000,
+      "final_agents": 1600000,
+      "R2_approx": 0.7
+    },
+    "budget_scope": "Optimization steps/different size schedules,not matched walltime/token/seed budget"
+  },
+  "multiple_solutions": {
+    "smaller_model_agents": 320000,
+    "calibration_restarts": 8,
+    "reported_average_parameter_vector_distance": 1.65,
+    "scope": "Similar losses do not identify unique coefficients;not formal structural-identifiability proof"
+  }
+}

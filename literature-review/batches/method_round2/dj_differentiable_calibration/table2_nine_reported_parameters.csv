@@ -1,0 +1,3 @@
+model,alpha1,alpha2,alpha3,alpha4,alpha5,alpha6,alpha7,alpha8,alpha9
+Threshold,-0.18,0.77,0.34,-0.15,-0.08,0.01,-0.09,0.05,2.87
+Gaussian,-0.2,0.64,1.73,-0.79,-0.27,0.27,-1.08,0.66,4.2

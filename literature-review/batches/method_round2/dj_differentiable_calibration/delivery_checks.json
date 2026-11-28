@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-28",
+  "base": "6803deb",
+  "old139_records_unchanged": true,
+  "old74_cards_unchanged": true,
+  "old191_units_unchanged": true,
+  "new_card": 1,
+  "new_units": 4,
+  "source_figure_hashes_checked": 2,
+  "structure": "75=69heading+6inline;not semantic acceptance",
+  "limits": "No code/gradients/fit rerun;matched-cost and holdout not established",
+  "table2_18numbers_match": true,
+  "aggregate_cells_arithmetic": true,
+  "current_tracker_master_statuses_match": true,
+  "report_links_checked": true,
+  "workbook_sheets": 9,
+  "workbook_rows": [
+    141,
+    53,
+    31,
+    196,
+    1478,
+    42
+  ],
+  "cached_included": 54,
+  "bib_entries": 54,
+  "summary_visual_checked": true
+}

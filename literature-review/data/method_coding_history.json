@@ -11658,5 +11658,95 @@
     "batch": "DI-JASSS-2022-remaining-26-abstract-screen",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/di_jasss_2022_abstracts/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "differentiable_adoption_ABM;approximate_expected_loss_gradient;Adam_vs_gradientfree_calibration",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Conditionspecificcalibrationbaseline;separateapproximation/convergence/budget/identification/holdout;not general LLM fine-tuning method",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_relevance_rationale",
+    "old": "摘要提出可微ABM/梯度校准并拟合25参数光伏数据，报告R²约.7；摘要不足判断独立留出或预算公平。",
+    "new": "可微规则采用模型校准的比较证据、近似局限和明确验证缺口，补方法主线。",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;reference_selection_and_validation_scope",
+    "new": "gradient_approximation_effect;matched_total_cost_and_repeated_baselines;independent_holdout;fixed_code_snapshot_and_run_identity;remaining_parameter_values",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_evidence_location",
+    "old": "Official abstract only;no fulltext efficacy inference",
+    "new": "FormalHTML§§3.1–3.13/4.1–4.16/5.1–5.16/6.1–6.5/7/8selected;Table2;Figures4/6",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
+  },
+  {
+    "record_id": "M078",
+    "field": "method_coding_source",
+    "old": "reports/jasss_2022_screening_DI.md;batches/method_round2/di_jasss_2022_abstracts/screening.csv",
+    "new": "reading-cards/M078.md;reports/differentiable_calibration_DJ.md;batches/method_round2/dj_differentiable_calibration/",
+    "date": "2026-11-28",
+    "batch": "DJ-differentiable-adoption-calibration-and-validation-boundary",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dj_differentiable_calibration/results.json"
   }
 ]
