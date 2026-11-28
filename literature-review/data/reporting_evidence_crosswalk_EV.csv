@@ -1,0 +1,8 @@
+crosswalk_id,evaluation_object,source_location,evidence_type,already_supported,reporting_preparation,unestablished_benefit,transfer_limit
+RE01,规范含义与理论构件,M060 §§3.6-3.8/5-6;M012 verified abstract,M060 conceptual taxonomy;M012 abstractprovisional,谁需理解什么、模型描述目的明确；未实测理解改善,声明规范/清单增加了什么内容,受众任务正确性/一致性/耗时；摘要不能充当规范效果检验,适用于模型解释；非期刊规定统一测试
+RE02,描述到实现,M011 §§2-3 tables2-3;M003 authorv2 §§2-6,M011 non-original modeller reconstruction;M003 code generation benchmark,M011报告15成功2部分1失败/18，部分原作者协助；M003固定96生成评分分母,描述/初始化/调度/参数到实现对应,缺陷能否定位、重构是否准确；无随机有无ODD组不能说ODD净效果,实现校验不证明社会行为真实
+RE03,代码与运行身份,M003 CS/CT/EJ related source boundaries,Selected fixed artifacts/static checks;no execution,代码hash与结果表可对应；实际模型/运行/随机源仍需独立证明,发布代码/依赖/模型/命令/归档定位,指定命令能否从固定环境重得目标输出，不能把hash一致称重跑成功,当前综述不认证Agent-EX制品合规
+RE04,动力学输出等同,M003 comparison notebook and CT scope,Controlled technical comparison,两参数下统计未拒绝及逐run标准化，只支持该判据的有限比较,明确标准化、时序、输出分母、参数域和随机运行层次,绝对水平/机制或全参数空间等同仍缺；非显著不等价,不得以生态规则基准替人类效度
+RE05,可视化总览,M065 §§2-5/6-7;M060 §3.7,Worked example/coding review;conceptual transparency,图示省略规则/参数，更多图特征未证明读者理解更好,总览指向正文详细规格、事件与观测定义,读者/重构任务与成本，非流程图存在或特征数量,LLM更新/失败语义须另有详细定义
+RE06,结果与测量链,M011 table3;M003 scoring/CT;EP existing synthesis,Existing source comparison;no new data,运行输出、读出规则、聚合与主张是不同对应关系,图表到输入/分析版本与失败缺失分母的映射,替代测量改变结论只证敏感性；降低误判需独立参照,不将日志或图表重算称生成全链复现
+RE07,独立重构与迁移,M011 reconstruction;M003 single reference;M060/M065 utilitylimits,Empirical/conceptual sources kept separate,M011独立者重构有实际证据但模型多较简单；M003单参考域,报告协助、耗时、模型复杂度与复现任务,不同人员/任务成功与失败区域；多seed非外部效度,建议后续方法研究；不要求本综述执行新实验

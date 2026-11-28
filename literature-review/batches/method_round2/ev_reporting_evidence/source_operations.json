@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "EV-01",
+    "platform": "source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "BUcurrentpolicy/DWindex snapshot; no price/index rerefresh",
+    "source_url": "reports/priority_journal_policies_BU.md",
+    "status": "reviewed",
+    "notes": "Grouped source operation;not queries/experiments"
+  },
+  {
+    "search_id": "EV-02",
+    "platform": "official_web",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSSsubmit web reader unavailable",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": "unavailable",
+    "notes": "Grouped source operation;not queries/experiments"
+  },
+  {
+    "search_id": "EV-03",
+    "platform": "official_web",
+    "search_date": "2026-11-28",
+    "query_exact": "CCRsubmissions official page read;A-C/stages/exceptions",
+    "source_url": "https://journal.computationalcommunication.org/about/submissions",
+    "status": "200",
+    "notes": "Grouped source operation;not queries/experiments"
+  },
+  {
+    "search_id": "EV-04",
+    "platform": "official_static",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSSsubmit200 normative strength/selfcontained/modelaccess",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": "200",
+    "notes": "Grouped source operation;not queries/experiments"
+  },
+  {
+    "search_id": "EV-05",
+    "platform": "official_static",
+    "search_date": "2026-11-28",
+    "query_exact": "JASSSabout200 sufficient replication information",
+    "source_url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "status": "200",
+    "notes": "Grouped source operation;not queries/experiments"
+  },
+  {
+    "search_id": "EV-06",
+    "platform": "official_static",
+    "search_date": "2026-11-28",
+    "query_exact": "CCRsubmit200 source/hash stage check",
+    "source_url": "https://journal.computationalcommunication.org/about/submissions",
+    "status": "200",
+    "notes": "Grouped source operation;not queries/experiments"
+  },
+  {
+    "search_id": "EV-07",
+    "platform": "evidence_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "M003/M011/M012abstract/M060/M065 scoped evidence comparison",
+    "source_url": "batches/method_round2/ev_reporting_evidence/source_reuse_manifest.json",
+    "status": "reviewed_not_new_reading",
+    "notes": "Grouped source operation;not queries/experiments"
+  },
+  {
+    "search_id": "EV-08",
+    "platform": "synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "9policyclaims/7evidenceobjects/currentQ7Q8 and two-trackrevision",
+    "source_url": "reports/reporting_and_error_detection_EV.md",
+    "status": "synthesized",
+    "notes": "Grouped source operation;not queries/experiments"
+  }
+]

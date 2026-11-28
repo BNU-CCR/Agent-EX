@@ -1,0 +1,27 @@
+{
+  "batch": "EV",
+  "checks": "passed",
+  "base": "c185430",
+  "master_cards_matrix_bibs": "normalizedtextunchanged",
+  "venue_rows_changed": [
+    "JASSS",
+    "CCR"
+  ],
+  "recommendations": "unchanged",
+  "policy_claims": 9,
+  "crosswalk_objects": 7,
+  "workbook_rows": [
+    28,
+    238,
+    55,
+    31,
+    253,
+    56,
+    1801,
+    12,
+    42
+  ],
+  "cover68": true,
+  "source_operations": 1800,
+  "limits": "No new experiment/readinggrade/projectcomplianceclaim;layout reused,currentcellchecks"
+}

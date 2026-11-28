@@ -1,0 +1,56 @@
+[
+  {
+    "path": "reports/priority_journal_policies_BU.md",
+    "bytes": 5155,
+    "sha256": "2e6a5120b5d02bdd549062526ff5e6923cf171f99f4dec48b80655b1266ce445",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "reports/priority_journal_index_DW.md",
+    "bytes": 4126,
+    "sha256": "ceb56d4c248d3235c79141ef83c40266008fa79fb9359a60b17f81d8f6629a9b",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "reading-cards/M003.md",
+    "bytes": 4262,
+    "sha256": "874add828705559125b713ece71f50d6a5b20fc11787d965b653c841aedcbe19",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "reading-cards/M011.md",
+    "bytes": 2205,
+    "sha256": "5488a2e327604e4a88d204b629aa946aee0b51eab535bc3d1cb439a81c3cb9af",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "data/literature_master.csv",
+    "bytes": 528742,
+    "sha256": "526ec38e517fb437ada49a45b1ca60a9347981278db469df116eebf557209497",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "reading-cards/M060.md",
+    "bytes": 3566,
+    "sha256": "df71d85b2044a4ca3e3e64e4fdf15612d3fed2a4475c8b208c847a50e9399f0d",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "reading-cards/M065.md",
+    "bytes": 3645,
+    "sha256": "8537d024af098e48e3e0700da768754ccb20e6edba2591e5b0a1e8a55fbe0756",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "reports/odd_abstract_classification_ES.md",
+    "bytes": 2830,
+    "sha256": "30ff9485b06d57adb7c3ff6f45cf8ff715818528eb7122b571574aeffa84fe6e",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  },
+  {
+    "path": "reports/odd_formal_qualification_ET.md",
+    "bytes": 3161,
+    "sha256": "10e51c42998f6e15fb78259bf5671e5b68da457e76cc718e5ea483b8092b4566",
+    "scope": "Reuse existing reading/evidence;not new fulltext access;M012 abstract only"
+  }
+]

@@ -1,0 +1,10 @@
+claim_id,venue,normative_strength,stage,target,source_location,scoped_interpretation,source_url,checked_date
+J01,JASSS,requires,manuscript,sufficient_replication_information,About editorial policy,About要求复现实验所需信息；不是完成独立复现认证,https://www.jasss.org/v02/page_content_includes/_include_about.html,2026-11-28
+J02,JASSS,strongly_encourages,review_to_publication,code_and_documentation,Replication and making your model public,代码与文档为强烈鼓励；不能改写为无例外强制开源,https://www.jasss.org/v02/page_content_includes/_include_submit.html,2026-11-28
+J03,JASSS,recommends,documentation,ODD_optional,Replication/model documentation,ODD推荐但非必用格式；老参考文献不新增2022前独立记录,https://www.jasss.org/v02/page_content_includes/_include_submit.html,2026-11-28
+J04,JASSS,procedural_within_recommended_service,archive,CoMSES_handle,CoMSES library workflow,走CoMSES时有文档审查/永久handle流程；非所有稿件都必须用CoMSES,https://www.jasss.org/v02/page_content_includes/_include_submit.html,2026-11-28
+J05,JASSS,must,manuscript_and_review,self_contained_plus_reviewer_link,Replication final paragraph,正文须独立可理解；欲评审查看的模型链接写入稿件，附件不自动送达,https://www.jasss.org/v02/page_content_includes/_include_submit.html,2026-11-28
+C01,CCR,postacceptance_check,postacceptance,model_data_code_results,Reproducibility Requirements A-C,模型/数据环境/划分排除/依赖/模型/结果命令/成本与环境在接收后检查,https://journal.computationalcommunication.org/about/submissions,2026-11-28
+C02,CCR,expects_if_possible,accepted_article,sharing_with_exceptions,Reproducibility Requirements final paragraphs,尽可能共享资料代码；受限或处理数据替代须说明,https://journal.computationalcommunication.org/about/submissions,2026-11-28
+C03,CCR,recommendation,archive,persistent_repository_license,Reproducibility Requirements final paragraphs,建议持久仓库和许可；不建议仅GitHub，不是禁止GitHub,https://journal.computationalcommunication.org/about/submissions,2026-11-28
+C04,CCR,must_with_article_type_exception,initial_submission,anonymity,Author Guidelines and checklist,初投研究匿名，工具/数据公告例外；公开作者链接需处理,https://journal.computationalcommunication.org/about/submissions,2026-11-28

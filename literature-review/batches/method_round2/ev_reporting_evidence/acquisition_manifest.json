@@ -1,0 +1,29 @@
+[
+  {
+    "name": "jasss_submit",
+    "url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "final_url": "https://www.jasss.org/v02/page_content_includes/_include_submit.html",
+    "status": 200,
+    "bytes": 29079,
+    "sha256": "6e1b293c9fe5db10aa743abd4d18b13d7364f222fc7292eb9d83cd701f9564a6",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EV_jasss_submit.response"
+  },
+  {
+    "name": "jasss_about",
+    "url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "final_url": "https://www.jasss.org/v02/page_content_includes/_include_about.html",
+    "status": 200,
+    "bytes": 5488,
+    "sha256": "edd6cd6e541b5a38e8de24cc9c50469a5aec56f68a60aaf1c63a8ed314d58892",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EV_jasss_about.response"
+  },
+  {
+    "name": "ccr_submissions",
+    "url": "https://journal.computationalcommunication.org/about/submissions",
+    "final_url": "https://journal.computationalcommunication.org/about/submissions",
+    "status": 200,
+    "bytes": 24178,
+    "sha256": "a3b935e5e7b8d17cc60d0ca15950cc91041dbc2b0194506d6ad3502cfd6c8de0",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EV_ccr_submissions.response"
+  }
+]
