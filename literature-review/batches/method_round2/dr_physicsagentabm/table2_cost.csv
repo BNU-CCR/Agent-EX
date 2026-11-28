@@ -1,0 +1,8 @@
+metric,flat,alpha1,alpha075,alpha06
+API calls,8250,1083,833,683
+Prompt tokens,2000000,540000,415000,340000
+Completion tokens,300000,250000,187500,150000
+Total tokens,2300000,790000,602500,490000
+WCT seconds,300,40,30,24
+Total WCT minutes,500,66,50,40
+ET-F1,0.62,0.81,0.81,0.81

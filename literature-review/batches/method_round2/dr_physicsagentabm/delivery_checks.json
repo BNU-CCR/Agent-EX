@@ -1,0 +1,23 @@
+{
+  "base": "56077d9",
+  "only_master_changed": "M009",
+  "old229_records_unchanged": true,
+  "old77_cards_unchanged": true,
+  "old203_units_unchanged": true,
+  "tracker_CU_unchanged": true,
+  "pdf_pages": 28,
+  "source_hashes": 2,
+  "cost_rows": 7,
+  "ablation_rows": 7,
+  "selected_metric_rows": 12,
+  "workbook_rows": [
+    231,
+    53,
+    31,
+    209,
+    1629,
+    42
+  ],
+  "maximum_text_cell": 29142,
+  "limits": "Authorpreprint targeted read;no code/runs/table statistics recomputed"
+}

@@ -1,0 +1,35 @@
+{
+  "batch_id": "DR-PhysicsAgentABM-versioned-method-validation",
+  "date": "2026-11-28",
+  "expected_master_sha256": "a03e35a91416ded6c445d1db80d9381568e939bdbecc2bfa6098db573d963a31",
+  "updates": [
+    {
+      "record_id": "M009",
+      "reading_status": "fulltext_checked",
+      "fulltext_url": "https://arxiv.org/pdf/2602.06030v2",
+      "card_path": "reading-cards/M009.md",
+      "related_versions": "AuthorarXivv2Feb6;v1Feb5;PDFfooterFeb10notformalpublication;28pages;no formal venue verified",
+      "research_question": "簇级符号—神经推断如何改善时序转移预测与成本，真实/代理参照、滚动分割和效率预算支持什么结论？",
+      "method_type": "cluster_level_neurosymbolic_GABM;ANCHOR;rolling_window_event_forecast",
+      "mechanisms": "behavioralmotifclustering;state_metaLLMhazards;multimodalneuralprediction;confidencefusion;localstochasticsynchronousrealization",
+      "supplement_status": "AppendixBalgorithm/Table5prompts/E_Fselectedread;Tables1selected2and3transcribed;no code run",
+      "findings": "28daylookback7dayforecast;eventbearingonly;3domainrecalibrationsnotzeroshottransfer;macroproxyfinanceattention;financeNLLcounterexample;calls1233vs1083",
+      "evidence_location": "Authorv2pp3–10/15/19–28selected;Tables1–3/5–9",
+      "reason": "明确版本作者全文及经验滚动比较已读；frontier保持，参照/划分/预算边界保留。",
+      "relation_to_agent_ex": "簇与个体推断职责、代理真值及条件事件评价分开；成本须含学习/诊断/重聚类；不改冻结串行语义，不以宏观拟合证实个体社会效度。",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "HierarchicalLLM/neuralabstractionandrollingeventevaluation;proxy-specificempiricalcomparison;notvalidatedzero-shottransfer",
+      "method_relevance_rationale": "LLM参与簇抽象及符号转移，与神经概率预测融合；可比较方法成本和经验参照范围。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "formal_version;code_snapshot_runidentity;window_stride_nested_earlystop;proxy_measurement;replicate_uncertainty;APIcounts_and_totalcost;causal_input_timestamps",
+      "method_evidence_location": "v2§§3–5;Tables1–3/5–9;AppendixE_Fpp23–28",
+      "method_coding_source": "reading-cards/M009.md;reports/physicsagentabm_DR.md;batches/method_round2/dr_physicsagentabm/",
+      "method_last_checked": "2026-11-28",
+      "notes": "DR:arXivv2read;frontierpreserved;notformalpublication;28/7eventbearingforecastand3domain-specificfits;reportedmetric/cost/headhorizon discrepancies retained;no execution",
+      "search_id": "S-M2-C-M009;DR-01;DR-02;DR-03;DR-04;DR-05",
+      "search_date": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

@@ -1,0 +1,8 @@
+configuration,EETE,F1,NLL,Brier,latency_seconds
+Neural-only,3.15,0.62,0.96,0.31,0.6
+Symbolic-only,2.98,0.66,0.88,0.27,35.8
+Naive fusion,2.71,0.69,0.82,0.25,36.1
+Flat agents/no clustering,4.92,0.63,1.21,0.39,283
+No state-agent,2.64,0.61,0.79,0.23,268.4
+No meta-agent,2.81,0.68,0.83,0.26,135.2
+Full,1.92,0.81,0.73,0.16,41.1

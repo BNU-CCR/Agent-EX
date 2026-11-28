@@ -22728,5 +22728,105 @@
     "batch": "DP-JASSS2026-remaining26-abstract-screen",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dp_jasss_2026_abstracts/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_type",
+    "old": "llm_multiagent_social_simulation",
+    "new": "cluster_level_neurosymbolic_GABM;ANCHOR;rolling_window_event_forecast",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "HierarchicalLLM/neuralabstractionandrollingeventevaluation;proxy-specificempiricalcomparison;notvalidatedzero-shottransfer",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_relevance_rationale",
+    "old": "验证实际社会模拟方法，而非只评LLM任务能力。",
+    "new": "LLM参与簇抽象及符号转移，与神经概率预测融合；可比较方法成本和经验参照范围。",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_pending_fields",
+    "old": "fulltext;formal_version;calibration_split;validation_protocol",
+    "new": "formal_version;code_snapshot_runidentity;window_stride_nested_earlystop;proxy_measurement;replicate_uncertainty;APIcounts_and_totalcost;causal_input_timestamps",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_evidence_location",
+    "old": "abstract",
+    "new": "v2§§3–5;Tables1–3/5–9;AppendixE_Fpp23–28",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_coding_source",
+    "old": "batches/method_round2/c_crossdisciplinary/",
+    "new": "reading-cards/M009.md;reports/physicsagentabm_DR.md;batches/method_round2/dr_physicsagentabm/",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
+  },
+  {
+    "record_id": "M009",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "DR-PhysicsAgentABM-versioned-method-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dr_physicsagentabm/results.json"
   }
 ]

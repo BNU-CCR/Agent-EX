@@ -1,0 +1,78 @@
+{
+  "record_id": "M009",
+  "version": "arXiv2602.06030v2",
+  "v1_submitted": "2026-02-05",
+  "v2_submitted": "2026-02-06",
+  "pdf_footer": "Preprint.February10,2026;not formal publication date",
+  "pages": 28,
+  "read_scope": "Main§§3–6 pp3–10;AppendixB algorithm p15/Table5 and selected prompts pp19–23;E/F pp23–28;selected introduction/related work. References and remaining motif descriptions not exhaustively reviewed.",
+  "architecture": "ANCHOR clusters + symbolic state/meta agents + trained multimodal neural pathway + confidence MLP fusion + synchronous local stochastic realization",
+  "LLM": "GPT-4o-mini alias;no frozen snapshot identified",
+  "model_parameters": {
+    "epidemiology": "Meta temp0.3/state0.5;max1500/800;top_p0.9/freqpenalty0.1",
+    "finance": "Meta0.2/state0.4;max1200/600;top_p0.85/freq0",
+    "attention": "Meta0.3/state0.5;max1200/600;top_p0.9/freq0.1"
+  },
+  "window": "28-day lookback;7-day forecasts;retrain/recalibrate each step;stride/nested early-stop split unclosed",
+  "evaluation_selection": "event-bearing forecast trajectories;windows averaged;not unconditional whole-population calibration",
+  "domains": [
+    {
+      "name": "Singapore",
+      "N": 1000,
+      "M": 4,
+      "days": 83,
+      "reference": "MOHfirst1000confirmedcases;exposureinferred5–7daysbeforecase;GPT4oprofileenrichment"
+    },
+    {
+      "name": "finance",
+      "N": 100,
+      "M": 5,
+      "days": 184,
+      "reference": "synthetictraders;everyagentcomparedtomacroS&P500regime;notobservedindividualsentiment"
+    },
+    {
+      "name": "attention",
+      "N": 250,
+      "M": 3,
+      "days": 90,
+      "reference": "syntheticpopulation;normalizedWikipageviewsandwindowaggregates;notindividualattention"
+    }
+  ],
+  "training": "separate domain encoders;AdamW;300/200/150epochs;validation earlystop listed without precise split;not zero-shot cross-domain transfer",
+  "budget_checks": {
+    "prose_calls": [
+      8250,
+      1233
+    ],
+    "table_calls": [
+      8250,
+      1083,
+      833,
+      683
+    ],
+    "prose_ratio": 6.690997566909975,
+    "table_ratios": [
+      7.617728531855955,
+      9.903961584633853,
+      12.079062957540264
+    ],
+    "token_ratios": [
+      2.911392405063291,
+      4.6938775510204085
+    ],
+    "runtime_ratios": [
+      7.5,
+      12.5
+    ],
+    "total_wct_scope": "table500/66/50/40minutes versus per-step300/40/30/24seconds;100-step-like scale but horizon not independently defined;do not infer executed total"
+  },
+  "report_discrepancies": [
+    "§4.2.2 says all metrics best;finance NLLours.49 vsLLM-MAS.29/singleLLM.36",
+    "§5 text1233APIcalls vsTable2alpha1=1083",
+    "Table7finance5-dayhead vs§4.1/Table8/9 seven-dayhorizon",
+    "Appendix says latent/GTneverinput yet Table6 includes historicalGT/current proportions;could be permitted history,needs timestamps/artifacts;not proved leakage",
+    "Table1attentionLLM-MAS ET-F1=.48±1.00;uncertainty definition/replicate count not closed"
+  ],
+  "read_pdf_link_audit": "No github/gitlab/code/zenodo/osf repository URI identified among PDF links;not proof no public code exists",
+  "execution": "None;no model/code downloaded or run"
+}

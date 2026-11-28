@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DR-01",
+    "platform": "static_http_get_version_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "ReadarXivv2history/title/date",
+    "source_url": "https://arxiv.org/abs/2602.06030v2",
+    "status": "200_version_history_checked",
+    "notes": "arXivauthorpreprintnotformal;no code or thirdparty model execution"
+  },
+  {
+    "search_id": "DR-02",
+    "platform": "static_http_get_author_pdf",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire28pagev2;targetedmethod/experiments/appendixread",
+    "source_url": "https://arxiv.org/pdf/2602.06030v2",
+    "status": "200_author_v2_targeted_read",
+    "notes": "arXivauthorpreprintnotformal;no code or thirdparty model execution"
+  },
+  {
+    "search_id": "DR-03",
+    "platform": "local_primary_table_transcription",
+    "search_date": "2026-11-28",
+    "query_exact": "Table1selected12rows/Table2cost/Table3ablation;ratios",
+    "source_url": "batches/method_round2/dr_physicsagentabm/",
+    "status": "numbers_checked_no_results_rerun",
+    "notes": "arXivauthorpreprintnotformal;no code or thirdparty model execution"
+  },
+  {
+    "search_id": "DR-04",
+    "platform": "local_pdf_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Renderandinspectp6/9/25",
+    "source_url": "https://arxiv.org/pdf/2602.06030v2",
+    "status": "three_pages_visual_checked",
+    "notes": "arXivauthorpreprintnotformal;no code or thirdparty model execution"
+  },
+  {
+    "search_id": "DR-05",
+    "platform": "local_scope_comparison",
+    "search_date": "2026-11-28",
+    "query_exact": "Separateproxy/rollingevents/transfer/calibration/cost",
+    "source_url": "reports/physicsagentabm_DR.md",
+    "status": "bounded_synthesis_no_execution",
+    "notes": "arXivauthorpreprintnotformal;no code or thirdparty model execution"
+  }
+]

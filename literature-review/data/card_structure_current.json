@@ -1,6 +1,6 @@
 {
   "date": "2026-11-28",
-  "batch": "DN",
+  "batch": "DR",
   "cards": [
     {
       "path": "reading-cards/R001.md",
@@ -574,6 +574,25 @@
     },
     {
       "path": "reading-cards/M008.md",
+      "heading_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "inline_numbers": [],
+      "recognized11": true,
+      "format": "heading"
+    },
+    {
+      "path": "reading-cards/M009.md",
       "heading_numbers": [
         1,
         2,
@@ -1466,8 +1485,8 @@
       "format": "heading"
     }
   ],
-  "heading11": 71,
+  "heading11": 72,
   "inline11": 6,
-  "recognized11": 77,
+  "recognized11": 78,
   "boundary": "Structure recognition only, not semantic acceptance or complete primary evidence audit"
 }

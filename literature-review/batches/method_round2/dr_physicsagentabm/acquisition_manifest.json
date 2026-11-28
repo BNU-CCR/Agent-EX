@@ -1,0 +1,18 @@
+[
+  {
+    "kind": "abs",
+    "url": "https://arxiv.org/abs/2602.06030v2",
+    "status": 200,
+    "bytes": 41493,
+    "sha256": "80847afa46070dd5777f5d5f7d22b32c16ee6c3996ddd12619b8535bf7db259d",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M009_DR_v2.html"
+  },
+  {
+    "kind": "pdf",
+    "url": "https://arxiv.org/pdf/2602.06030v2",
+    "status": 200,
+    "bytes": 21292023,
+    "sha256": "376ef861d716203ad97f4332e617f0892ebaa21e6023a5748ab157e32fff5f3b",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M009_DR_v2.pdf"
+  }
+]
