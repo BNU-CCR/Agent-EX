@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-28",
+  "base": "206e4ca",
+  "old114_records_unchanged": true,
+  "old71_cards_unchanged": true,
+  "all181_units_unchanged": true,
+  "new_abstract_only_candidates": 10,
+  "new_dates_confirmed": 10,
+  "maturity_and_evidence": "unclear for all10",
+  "historical_CU_inventory_unchanged": true,
+  "policy_not_refreshed": true,
+  "fulltext_not_claimed": true,
+  "workbook_rows": [
+    125,
+    53,
+    31,
+    182,
+    1430,
+    42
+  ],
+  "workbook_sheets": 9,
+  "cached_included": 50,
+  "bib_entries": 50,
+  "summary_visual_checked": true
+}

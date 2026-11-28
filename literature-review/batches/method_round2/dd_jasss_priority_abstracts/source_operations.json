@@ -1,0 +1,119 @@
+[
+  {
+    "search_id": "DD-01",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/25/2/1.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-02",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/25/2/6.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-03",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/26/1/4.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-04",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/26/1/9.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-05",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/26/2/8.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-06",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/26/2/9.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-07",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/27/2/4.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-08",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/27/4/1.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-09",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/28/2/2.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-10",
+    "platform": "static_official_article_GET",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire known priority lead official HTML metadata/abstract",
+    "source_url": "https://www.jasss.org/28/4/11.html",
+    "status": "200_official_abstract_and_date",
+    "notes": "Full HTML available but only abstract/metadata read;no fulltext coding"
+  },
+  {
+    "search_id": "DD-11",
+    "platform": "local_primary_abstract_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read ten official abstracts and separate author claims from evidence",
+    "source_url": "batches/method_round2/dd_jasss_priority_abstracts/acquisition_and_abstracts.json",
+    "status": "ten_abstracts_read",
+    "notes": "No maturity/validation upgrade"
+  },
+  {
+    "search_id": "DD-12",
+    "platform": "local_identity_date_screen",
+    "search_date": "2026-11-28",
+    "query_exact": "Deduplicate ten DOI/titles against114;compare meta and visible Published",
+    "source_url": "data/literature_master.csv",
+    "status": "ten_unique_confirmed_dates",
+    "notes": "M064 article2024-03-31 differs fromCUissue2024-04-03;articledateused"
+  },
+  {
+    "search_id": "DD-13",
+    "platform": "local_coverage_reconciliation",
+    "search_date": "2026-11-28",
+    "query_exact": "Reconcile remaining10 priority titles without changing historicalCU178snapshot",
+    "source_url": "data/jasss_inventory_CU.csv",
+    "status": "all12priorityleads_nowprocessed;149otherarticlesnotabstractscreened",
+    "notes": "Not complete journal or database recall"
+  }
+]

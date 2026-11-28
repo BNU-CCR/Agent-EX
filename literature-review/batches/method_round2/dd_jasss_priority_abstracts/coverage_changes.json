@@ -1,0 +1,30 @@
+[
+  {
+    "before": {
+      "taskbook_section": "4.1",
+      "requested_venue": "JASSS",
+      "map_venue_id": "JASSS",
+      "audit_status": "official_directory_bounded_20issues_178entries_semantic_screen_partial",
+      "sample_record_ids": "R003;R006;M013;M052;M053;M054;M055;M056;M057",
+      "scope_check": "officialdirectory/titletriage;4newabstracts;BUguidepolicyunchanged",
+      "coverage_boundary": "19populatedissuepages/1empty;6indexonly;178entriesincl10nonresearch;161titleleadsneedabstractscreen;notallfulltext/databasecoverage",
+      "next_action": "CU12优先题名中DA已完成两项辅助建模；余10项继续摘要筛选；178目录身份不当完整内容覆盖",
+      "checked_date": "2026-11-28",
+      "evidence_urls": ";https://jasss.soc.surrey.ac.uk/index_by_issue.html;reports/jasss_inventory_CU.md",
+      "source_operation_ids": "CU-01..CU-32;DA-01;DA-02;DA-04;DA-05"
+    },
+    "after": {
+      "taskbook_section": "4.1",
+      "requested_venue": "JASSS",
+      "map_venue_id": "JASSS",
+      "audit_status": "official_directory_bounded_20issues_178entries_semantic_screen_partial",
+      "sample_record_ids": "R003;R006;M013;M052;M053;M054;M055;M056;M057;M058;M059;M060;M061;M062;M063;M064;M065;M066;M067",
+      "scope_check": "officialdirectory/titletriage;4newabstracts;BUguidepolicyunchanged",
+      "coverage_boundary": "19populatedissuepages/1empty;6indexonly;178entriesincl10nonresearch;161titleleadsneedabstractscreen;notallfulltext/databasecoverage",
+      "next_action": "DD已完成CU12优先题名摘要处理；19在库样本/149其他文章尚未摘要筛；DE精读M058校准与不确定性",
+      "checked_date": "2026-11-28",
+      "evidence_urls": ";https://jasss.soc.surrey.ac.uk/index_by_issue.html;reports/jasss_inventory_CU.md",
+      "source_operation_ids": "CU-01..CU-32;DA-01;DA-02;DA-04;DA-05;DD-01to13"
+    }
+  }
+]

@@ -1,0 +1,505 @@
+[
+  {
+    "url": "https://www.jasss.org/25/2/1.html",
+    "status": 200,
+    "bytes": 134483,
+    "sha256": "f68828261180a7d5123b4462ddee189878b66279671f0a7f4bec4176a2709d85",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_1.html",
+    "queue_title": "Calibrating Agent-Based Models Using Uncertainty Quantification Methods",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Josie McCulloch",
+        "Jiaqi Ge",
+        "Jonathan A. Ward",
+        "Alison Heppenstall",
+        "J. Gareth Polhill",
+        "Nick Malleson"
+      ],
+      "citation_title": [
+        "Calibrating Agent-Based Models Using Uncertainty Quantification Methods"
+      ],
+      "citation_publication_date": [
+        "2022-03-31"
+      ],
+      "citation_volume": [
+        "25"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4791"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Calibration, Optimisation, History Matching, Proximate Bayesian Computation, Uncertainty, Agent-Based Modelling"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/25/2/1/1.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2022 Abstract Agent-based models (ABMs) can be found across a number of diverse application areas ranging from simulating ",
+    "abstract_read": true,
+    "abstract_summary": "摘要提出HistoryMatching+ABC校准流程，并称用三种复杂度模型展示；尚未核参照、误差定义或比较预算。"
+  },
+  {
+    "url": "https://www.jasss.org/25/2/6.html",
+    "status": 200,
+    "bytes": 135496,
+    "sha256": "915cf060bf9926ce6bf6d953948ecdc8f57f0ebf22c78a8d0df047bdb0c67395",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_2.html",
+    "queue_title": "Generation of Synthetic Populations in Social Simulations: A Review of Methods and Practices",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Kevin Chapuis",
+        "Patrick Taillandier",
+        "Alexis Drogoul"
+      ],
+      "citation_title": [
+        "Generation of Synthetic Populations in Social Simulations: A Review of Methods and Practices"
+      ],
+      "citation_publication_date": [
+        "2022-03-31"
+      ],
+      "citation_volume": [
+        "25"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4762"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Synthetic Population, Agent-Based Simulation Model Initialisation, Data-Driven Social Simulation"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/25/2/6/6.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2022 Abstract With the aim of building realistic model of social systems, designers of agent-based models tend to incorpor",
+    "abstract_read": true,
+    "abstract_summary": "摘要回顾合成人口构建方法及JASSS2011–2021实践；本轮只纳入2022综述，不新增其早期被引样本。"
+  },
+  {
+    "url": "https://www.jasss.org/26/1/4.html",
+    "status": 200,
+    "bytes": 136657,
+    "sha256": "05061474b697f882dbbe343b35129bbb67da1ec79631c2eb2bed37681798b177",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_3.html",
+    "queue_title": "Unpacking a Black Box: A Conceptual Anatomy Framework for Agent-Based Social Simulation Models",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Özge Dilaver",
+        "Nigel Gilbert"
+      ],
+      "citation_title": [
+        "Unpacking a Black Box: A Conceptual Anatomy Framework for Agent-Based Social Simulation Models"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.4998"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Transparency, Sensemaking, Model Structure, Model Description, Epistemology of Computer Simulation, Research Habitus"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/4/4.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract This paper aims to improve the transparency of agent-based social simulation (ABSS) models and make it easie",
+    "abstract_read": true,
+    "abstract_summary": "摘要提出agency/structure/environment/actions-interactions/temporality五构件与透明性分类；规范价值与效果需全文分开。"
+  },
+  {
+    "url": "https://www.jasss.org/26/1/9.html",
+    "status": 200,
+    "bytes": 218995,
+    "sha256": "93979f9a330978ce32ac49bce90d682987a8efdf0601803126bf1417845ea14d",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_4.html",
+    "queue_title": "Using Machine Learning for Agent Specifications in Agent-Based Models and Simulations: A Critical Review and Guidelines",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Molood Ale Ebrahim Dehkordi",
+        "Jonas Lechner",
+        "Amineh Ghorbani",
+        "Igor Nikolic",
+        "Émile Chappin",
+        "Paulien Herder"
+      ],
+      "citation_title": [
+        "Using Machine Learning for Agent Specifications in Agent-Based Models and Simulations: A Critical Review and Guidelines"
+      ],
+      "citation_publication_date": [
+        "2023-01-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "1"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5016"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Machine Learning, Agent-Based Modelling, Modelling Purpose, Structured Literature Review, Guidelines"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/1/9/9.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Jan-2023 Abstract Agent-based modelling and simulation (ABMS), whether simple toy models or complex data-driven ones, is regul",
+    "abstract_read": true,
+    "abstract_summary": "摘要结构综述ML用于主体结构/决策规格并按模型用途给指南；不能当LLM特定验证结果。"
+  },
+  {
+    "url": "https://www.jasss.org/26/2/8.html",
+    "status": 200,
+    "bytes": 162461,
+    "sha256": "c9f6489225a7bdbacac4ef1a5f52c5f89dfc6e197d374a888eb36a93e626bed5",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_5.html",
+    "queue_title": "Social Simulation Models as Refuting Machines",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Nicolas Mauhe",
+        "Luis R. Izquierdo",
+        "Segismundo S. Izquierdo"
+      ],
+      "citation_title": [
+        "Social Simulation Models as Refuting Machines"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5076"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Social Simulation, Computer Simulation, Refutation, Modelling, Counter-Example, Markov Chain"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/8/8.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract This paper discusses a prominent way in which social simulations can contribute (and have contributed) to th",
+    "abstract_read": true,
+    "abstract_summary": "摘要主张模拟反例可反驳理论信念；理论排除与现实机制识别需全文核查。"
+  },
+  {
+    "url": "https://www.jasss.org/26/2/9.html",
+    "status": 200,
+    "bytes": 188370,
+    "sha256": "f4a9dfc427415f76304e05687f20317515a0a28ec1447405e8145b4cb322d577",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_6.html",
+    "queue_title": "Inverse Generative Social Science: Backward to the Future",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Joshua M. Epstein"
+      ],
+      "citation_title": [
+        "Inverse Generative Social Science: Backward to the Future"
+      ],
+      "citation_publication_date": [
+        "2023-03-31"
+      ],
+      "citation_volume": [
+        "26"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5083"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Modeling, Generative Social Science, Inverse Generative Social Science, Artificial Intelligence, Evolutionary Computing, Rational Choice Theory"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/26/2/9/9.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2023 Abstract The agent-based model is the principal scientific instrument of generative social science. Typically, we des",
+    "abstract_read": true,
+    "abstract_summary": "摘要iGSS从宏观目标反向演化微观规则家族；限制在预设原语/组合，不预认唯一真实机制。"
+  },
+  {
+    "url": "https://www.jasss.org/27/2/4.html",
+    "status": 200,
+    "bytes": 154292,
+    "sha256": "a4e83edab4243f71b8baf9fb97b7e7b3d2354cdeb3dc3ea68c5c712d57ca2df8",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_7.html",
+    "queue_title": "Reliable and Efficient Agent-Based Modeling and Simulation",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Alessia Antelmi",
+        "Pasquale Caramante",
+        "Gennaro Cordasco",
+        "Giuseppe D'Ambrosio",
+        "Daniele De Vinco",
+        "Francesco Foglia",
+        "Luca Postiglione",
+        "Carmine Spagnuolo"
+      ],
+      "citation_title": [
+        "Reliable and Efficient Agent-Based Modeling and Simulation"
+      ],
+      "citation_publication_date": [
+        "2024-03-31"
+      ],
+      "citation_volume": [
+        "27"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5300"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Model, Agent-Based Simulation Engine, Model Exploration and Optimization, Reliability and  Efficiency, Open-Source"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/27/2/4/4.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2024 Abstract Agent-based models represent a primary methodology to untangle and study complex systems. Over the last deca",
+    "abstract_read": true,
+    "abstract_summary": "摘要krABMaga展示Rust框架、性能/扩展与校准例；安全性/速度作者主张不当独立效度。"
+  },
+  {
+    "url": "https://www.jasss.org/27/4/1.html",
+    "status": 200,
+    "bytes": 792483,
+    "sha256": "03e438760edecb5225405bac28177413c590d2ed0fc4f553d9aae9d70c892b2e",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_8.html",
+    "queue_title": "Visual ODD: A Standardised Visualisation Illustrating the Narrative of Agent-Based Models",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Leonna Szangolies",
+        "Marie-Sophie Rohwäder",
+        "Hazem Ahmed",
+        "Fatima Jahanmiri",
+        "Alexander Wagner",
+        "Rodrigo Souto-Veiga",
+        "Volker Grimm",
+        "Cara Gallagher"
+      ],
+      "citation_title": [
+        "Visual ODD: A Standardised Visualisation Illustrating the Narrative of Agent-Based Models"
+      ],
+      "citation_publication_date": [
+        "2024-10-31"
+      ],
+      "citation_volume": [
+        "27"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5450"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Individual-Based Model, ODD Protocol, Good Modelling Practice, Conceptual Model Diagram, Graphical Abstract, Science Communication"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/27/4/1/1.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2024 Abstract Agent-based models (ABMs) are commonly used tools across diverse disciplines, from ecology to social science",
+    "abstract_read": true,
+    "abstract_summary": "摘要vODD提出固定位置的图示、模板与实例；描述可读性/比较收益待全文，不当强制报告标准。"
+  },
+  {
+    "url": "https://www.jasss.org/28/2/2.html",
+    "status": 200,
+    "bytes": 164442,
+    "sha256": "d86d1a2b4220bde9dfe2c31559f49f3dfcfca84b85692546db7e7787714b8890",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_9.html",
+    "queue_title": "Communicating Agent-Based Models to Stakeholders: A Scoping Review",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Zenith Arnejo",
+        "Benoit Gaudou",
+        "Mehdi Saqalli",
+        "Nathaniel Bantayan"
+      ],
+      "citation_title": [
+        "Communicating Agent-Based Models to Stakeholders: A Scoping Review"
+      ],
+      "citation_publication_date": [
+        "2025-03-31"
+      ],
+      "citation_volume": [
+        "28"
+      ],
+      "citation_issue": [
+        "2"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5623"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "Agent-Based Model (ABM), Communication Approach, Model Communication, Scoping Review, Stakeholder Participation"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/28/2/2/2.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Mar-2025 Abstract Agent-based models (ABMs) are widely used in fields such as ecology, natural resource management, and policy",
+    "abstract_read": true,
+    "abstract_summary": "摘要称65篇scopingreview并指出交流评价缺口；尚未核筛选流程、样本年份或利益相关者效果。"
+  },
+  {
+    "url": "https://www.jasss.org/28/4/11.html",
+    "status": 200,
+    "bytes": 165783,
+    "sha256": "f894cbf9f635567217d810aeae170fca803eb7975be1eb6a26ee50a07fa75535",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\DD_article_10.html",
+    "queue_title": "AGENTBLOCKS: A Community Platform for Sharing, Comparing, and Improving Reusable Building Blocks for (Agent-Based) Models",
+    "metadata": {
+      "citation_journal_title": [
+        "Journal of Artificial Societies and Social Simulation"
+      ],
+      "citation_issn": [
+        "1460-7425"
+      ],
+      "citation_author": [
+        "Tatiana Filatova",
+        "Liz Verbeek",
+        "Martijn Warnier",
+        "Amineh Ghorbani",
+        "Igor Nikolic",
+        "Volker Grimm",
+        "Uta Berger",
+        "Michael Barton",
+        "Andrew Bell",
+        "Allen Lee",
+        "Nicholas R Magliocca",
+        "Thorid Wagenblast"
+      ],
+      "citation_title": [
+        "AGENTBLOCKS: A Community Platform for Sharing, Comparing, and Improving Reusable Building Blocks for (Agent-Based) Models"
+      ],
+      "citation_publication_date": [
+        "2025-10-31"
+      ],
+      "citation_volume": [
+        "28"
+      ],
+      "citation_issue": [
+        "4"
+      ],
+      "citation_doi": [
+        "10.18564/jasss.5831"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_keywords": [
+        "FAIR Principles, Open Access, Behavioral Theory, Individual-Based Models, Complex Adaptive Systems"
+      ],
+      "citation_pdf_url": [
+        "https://www.jasss.org/28/4/11/11.pdf"
+      ]
+    },
+    "visible_publication_context": "Published: 31-Oct-2025 Abstract Agent-based modeling proliferates across applications and scientific disciplines. The downsides of this succ",
+    "abstract_read": true,
+    "abstract_summary": "摘要AGENTBLOCKS提出可重用机制代码组件/文档模板与社区平台；公开平台不当已验证标准或采用效果。"
+  }
+]
