@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "DH-01",
+    "platform": "local_primary_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read M065 main scope/design/complexity/accessibility and conclusion reusedDD",
+    "source_url": "https://www.jasss.org/27/4/1.html",
+    "status": "formal_targeted_read",
+    "notes": "No original248papers/template acquisition;authorcodingcounts only"
+  },
+  {
+    "search_id": "DH-02",
+    "platform": "local_author_coding_transcription",
+    "search_date": "2026-11-28",
+    "query_exact": "Transcribe248authorcodingrows;countcategoriesanddenominators",
+    "source_url": "https://www.jasss.org/27/4/1.html#app:D",
+    "status": "not_independent_rescreening_or_new248corpus",
+    "notes": "No original248papers/template acquisition;authorcodingcounts only"
+  },
+  {
+    "search_id": "DH-03",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire/inspect Figure1reviewcounts and meanSD",
+    "source_url": "https://www.jasss.org/27/4/1/Figure1.png",
+    "status": "200_png_visual_checked",
+    "notes": "No original248papers/template acquisition;authorcodingcounts only"
+  },
+  {
+    "search_id": "DH-04",
+    "platform": "static_http_get_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Acquire/inspect Figure2baselinevODDlayout",
+    "source_url": "https://www.jasss.org/27/4/1/Figure2.png",
+    "status": "200_png_visual_checked",
+    "notes": "No original248papers/template acquisition;authorcodingcounts only"
+  },
+  {
+    "search_id": "DH-05",
+    "platform": "local_evidence_boundary_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Separate overview/details,authorcoding and audience effectiveness",
+    "source_url": "reports/visual_odd_DH.md",
+    "status": "no_template_execution_or_causal_effect_test",
+    "notes": "No original248papers/template acquisition;authorcodingcounts only"
+  }
+]

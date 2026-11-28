@@ -1,0 +1,30 @@
+[
+  {
+    "before": {
+      "taskbook_section": "4.1",
+      "requested_venue": "JASSS",
+      "map_venue_id": "JASSS",
+      "audit_status": "official_directory_bounded_20issues_178entries_semantic_screen_partial",
+      "sample_record_ids": "R003;R006;M013;M052;M053;M054;M055;M056;M057;M058;M059;M060;M061;M062;M063;M064;M065;M066;M067",
+      "scope_check": "officialdirectory/titletriage;4newabstracts;BUguidepolicyunchanged",
+      "coverage_boundary": "19populatedissuepages/1empty;6indexonly;178entriesincl10nonresearch;161titleleadsneedabstractscreen;notallfulltext/databasecoverage",
+      "next_action": "19在库样本，M058在DE已正式精读；DG精读M060概念剖析，再M065vODD；149其他文章待摘要筛",
+      "checked_date": "2026-11-28",
+      "evidence_urls": ";https://jasss.soc.surrey.ac.uk/index_by_issue.html;reports/jasss_inventory_CU.md",
+      "source_operation_ids": "CU-01..CU-32;DA-01;DA-02;DA-04;DA-05;DD-01to13;DE-01;DF-01"
+    },
+    "after": {
+      "taskbook_section": "4.1",
+      "requested_venue": "JASSS",
+      "map_venue_id": "JASSS",
+      "audit_status": "official_directory_bounded_20issues_178entries_semantic_screen_partial",
+      "sample_record_ids": "R003;R006;M013;M052;M053;M054;M055;M056;M057;M058;M059;M060;M061;M062;M063;M064;M065;M066;M067",
+      "scope_check": "officialdirectory/titletriage;4newabstracts;BUguidepolicyunchanged",
+      "coverage_boundary": "19populatedissuepages/1empty;6indexonly;178entriesincl10nonresearch;161titleleadsneedabstractscreen;notallfulltext/databasecoverage",
+      "next_action": "DG/DH已读M060/M065；19在库样本，149其他文章待摘要筛；DI先筛2022余26篇并记录方法相关性/排除/失败",
+      "checked_date": "2026-11-28",
+      "evidence_urls": ";https://jasss.soc.surrey.ac.uk/index_by_issue.html;reports/jasss_inventory_CU.md",
+      "source_operation_ids": "CU-01..CU-32;DA-01;DA-02;DA-04;DA-05;DD-01to13;DE-01;DF-01;DG-01;DH-01;DH-02"
+    }
+  }
+]

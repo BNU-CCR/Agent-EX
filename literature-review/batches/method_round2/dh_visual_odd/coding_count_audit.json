@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-28",
+  "scope": "Transcribed author codes only;not independent coding of248 originals",
+  "all_rows": 248,
+  "unique_ids": 248,
+  "categories": {
+    "model": {
+      "yes": 190,
+      "no": 57,
+      "article retracted!": 1
+    },
+    "visualisation": {
+      "none": 35,
+      "": 57,
+      "flow chart": 97,
+      "other": 50,
+      "vodd": 9
+    },
+    "ODD": {
+      "yes": 171,
+      "": 52,
+      "no": 22,
+      "yes (odd+d)": 1,
+      "partially": 2
+    },
+    "placement": {
+      "": 92,
+      "manuscript": 135,
+      "appendix": 16,
+      "appendix, manuscript": 1,
+      "manuscript & supp.": 1,
+      "manucsript": 1,
+      "manunscript": 1,
+      "manuscript, appendix": 1
+    },
+    "discipline": {
+      "life science": 133,
+      "social science": 57,
+      "physical science": 12,
+      "": 32,
+      "health science": 11,
+      "health science, social science": 1,
+      "life science, social science": 1,
+      "social science, health science": 1
+    }
+  },
+  "feature_yes_counts": [
+    124,
+    33,
+    41,
+    5,
+    3
+  ],
+  "visualised": 156,
+  "model_yes": 190,
+  "ODD_exact_yes_all": 171,
+  "ODD_exact_yes_model_only": 167,
+  "social_science_with_mixed": 60,
+  "life_science_exact": 133,
+  "maintext_placement_exact": 135,
+  "maintext_placement_with_explicit_mixed_and_two_typos": 140,
+  "body_placement_report": 123,
+  "figure1C_other_n": 49,
+  "other_category_rows": 50,
+  "other_all_feature_blank_id": "159",
+  "figure1B_caption_n": 190,
+  "boundary": "Figure1Bdisplaypercentmatchesyes/156;caption190/body123andODD171scope not fully reconciled;no interpolation of partial codes or mean/SD recomputation"
+}

@@ -9648,5 +9648,95 @@
     "batch": "DG-conceptual-anatomy-and-transparency-boundaries",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/dg_conceptual_transparency/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "visual_model_overview_guidance;illustrative_layout_examples;citation_sample_visualisation_coding",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "conceptual_framework",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "worked_example",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Panel/scale linkage useful for communicating models;needs detailed specification and audience-task assessment;not execution/validity certificate",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_relevance_rationale",
+    "old": "摘要vODD提出固定位置的图示、模板与实例；描述可读性/比较收益待全文，不当强制报告标准。",
+    "new": "模型报告/可视化方法提案、实例及作者编码回顾；直接补报告与透明性主线。",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability;method_type;validation_reference_and_scope",
+    "new": "author_coding_denominator_reconciliation;partial_score_mean_SD_implementation;coding_raters_reliability;template_snapshot;independent_reader_effectiveness",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_evidence_location",
+    "old": "Official article abstract and metadata only",
+    "new": "FormalHTML§§1.9–1.11/2.1/3–4/7.1;AppendixDTable1;Figures1–2",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
+  },
+  {
+    "record_id": "M065",
+    "field": "method_coding_source",
+    "old": "reports/jasss_priority_abstracts_DD.md;batches/method_round2/dd_jasss_priority_abstracts/acquisition_and_abstracts.json",
+    "new": "reading-cards/M065.md;reports/visual_odd_DH.md;batches/method_round2/dh_visual_odd/",
+    "date": "2026-11-28",
+    "batch": "DH-visual-ODD-overview-and-review-denominators",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/dh_visual_odd/results.json"
   }
 ]

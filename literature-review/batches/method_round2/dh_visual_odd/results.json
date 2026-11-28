@@ -1,0 +1,34 @@
+{
+  "batch_id": "DH-visual-ODD-overview-and-review-denominators",
+  "date": "2026-11-28",
+  "expected_master_sha256": "05fc6f7b1feb5ff1320619d7331c467bc4d722aee06ce03fcdea706ac347f39e",
+  "updates": [
+    {
+      "record_id": "M065",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M065.md",
+      "research_question": "标准化模型总览如何连接文字ODD，现有图示内容回顾是否支持理解或复现收益？",
+      "method_type": "visual_model_overview_guidance;illustrative_layout_examples;citation_sample_visualisation_coding",
+      "mechanisms": "fixed_panel_locations;initialisation_process_observation_links;scaleandoptionalpatternpanels",
+      "findings": "Overview complements detailed ODD;248author-coded citation records show heterogeneous figure content;denominator/report discrepancies remain;no reader efficacy test",
+      "reason": "正式全文/日期门通过；图示提案和实例/回顾，不以更多特征编码升级理解/复现效度。",
+      "related_versions": "Formal publisherHTML targeted mainsections/AppendixDcoding read;Figures1/2visual;no PDF/templateversionequivalence",
+      "supplement_status": "AppendixDauthorcoding248rows_transcribed;Figure1and2acquired;template_link_only_not_downloaded",
+      "evidence_location": "FormalHTML§§1–4/5.1–5.2/5.7–5.12/6–7;AppendixDTable1;Figures1–2",
+      "relation_to_agent_ex": "可借鉴初始化—事件过程—观测对应，明确私人/公开/表达输出与时间尺度，并将图省略信息指向协议。是否帮助读者理解需另有任务/受众评价；不以好看的流程图替代事件语义、代码核验或人类外部效度，不改变冻结研究。",
+      "method_maturity": "conceptual_framework",
+      "method_evidence_level": "worked_example",
+      "method_transferability": "Panel/scale linkage useful for communicating models;needs detailed specification and audience-task assessment;not execution/validity certificate",
+      "method_relevance_rationale": "模型报告/可视化方法提案、实例及作者编码回顾；直接补报告与透明性主线。",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "author_coding_denominator_reconciliation;partial_score_mean_SD_implementation;coding_raters_reliability;template_snapshot;independent_reader_effectiveness",
+      "method_evidence_location": "FormalHTML§§1.9–1.11/2.1/3–4/7.1;AppendixDTable1;Figures1–2",
+      "method_coding_source": "reading-cards/M065.md;reports/visual_odd_DH.md;batches/method_round2/dh_visual_odd/",
+      "method_last_checked": "2026-11-28",
+      "notes": "摘要vODD提出固定位置的图示、模板与实例；描述可读性/比较收益待全文，不当强制报告标准。 本轮仅正式摘要初筛，不增加全文卡、验证单元或成熟度。 DH:formalread;248authorcodesnotnewcorpus;Figure1Bpercentmatches156rathercaption190;placement135exact/140broadvsbody123;SDnotCI;no efficacy upgrade",
+      "search_id": "DD-08;DD-11;DD-12;DH-01;DH-02;DH-03;DH-04;DH-05"
+    }
+  ],
+  "new_records": []
+}

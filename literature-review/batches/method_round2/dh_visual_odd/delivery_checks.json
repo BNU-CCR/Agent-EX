@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-28",
+  "base": "1c4d5f8",
+  "old123_records_unchanged": true,
+  "old73_cards_unchanged": true,
+  "old188_units_unchanged": true,
+  "new_card": 1,
+  "new_units": 3,
+  "source_figure_hashes": 2,
+  "author_coding_only_not_new_corpus": true,
+  "structure": "74=68heading+6inline;not semantic acceptance",
+  "limitations": "No original248paper rescreen,template/code run,partialweight meanSD reanalysis or reader effect experiment",
+  "author_table248rows_exact_transcription": true,
+  "placement_counts_135_and140_checked": true,
+  "workbook_sheets": 9,
+  "workbook_rows": [
+    125,
+    53,
+    31,
+    192,
+    1444,
+    42
+  ],
+  "cached_included": 53,
+  "bib_entries": 53,
+  "summary_visual_checked": true,
+  "updated_report_local_links_checked": true
+}

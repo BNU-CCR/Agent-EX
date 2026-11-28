@@ -1,0 +1,249 @@
+ID,model,visualisation,initialisation,scales & resolution,purpose,sub-models,output variables,placement,ODD,temporal model,spatial model,discipline
+1,yes,none,,,,,,,yes,yes,no,life science
+2,no,,,,,,,,,,,life science
+3,no,,,,,,,,,,,social science
+4,yes,flow chart,partially,partially,no,yes,no,manuscript,yes,yes,yes,life science
+5,yes,other,partially,no,no,no,no,manuscript,yes,yes,yes,life science
+6,no,,,,,,,,,,,life science
+7,no,,,,,,,,,,,social science
+8,no,,,,,,,,,,,physical science
+9,no,,,,,,,,,,,life science
+10,no,,,,,,,,,,,life science
+11,yes,flow chart,no,no,no,yes,no,manuscript,yes,no,yes,life science
+12,no,,,,,,,,,,,life science
+13,yes,other,no,no,no,no,no,manuscript,yes,yes,no,life science
+14,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+15,yes,none,,,,,,,yes,yes,yes,life science
+16,no,,,,,,,,,,,life science
+17,no,,,,,,,,,,,life science
+18,no,,,,,,,,,,,life science
+19,yes,flow chart,no,no,no,yes,no,appendix,yes,yes,yes,life science
+20,yes,other,partially,partially,no,no,no,manuscript,no,yes,no,life science
+21,yes,none,,,,,,,yes,yes,yes,life science
+22,no,,,,,,,,,,,physical science
+23,yes,flow chart,no,no,no,yes,no,manuscript,yes,no,no,social science
+24,yes,other,no,partially,no,yes,no,manuscript,yes,yes,yes,life science
+25,yes,flow chart,partially,partially,yes,yes,yes,"appendix, manuscript",yes,yes,yes,life science
+26,no,,,,,,,,,,,life science
+27,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+28,yes,other,yes,partially,no,no,no,appendix,yes,yes,no,life science
+29,yes,other,no,no,no,yes,no,manuscript,yes,yes,no,life science
+30,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+31,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,life science
+32,yes,none,,,,,,,yes,yes,yes,life science
+33,yes,vodd,yes,no,no,yes,yes,manuscript,yes,yes,yes,life science
+34,yes,flow chart,no,no,yes,yes,no,manuscript,yes,yes,no,social science
+35,yes,vodd,no,partially,no,yes,yes,manuscript,yes,yes,yes,life science
+36,yes,flow chart,no,no,no,yes,no,appendix,yes,yes,no,social science
+37,yes,other,partially,no,no,no,no,appendix,yes,yes,yes,social science
+38,yes,flow chart,partially,no,no,yes,no,appendix,yes,yes,yes,life science
+39,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+40,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+41,yes,other,no,no,no,yes,yes,manuscript,yes,yes,yes,life science
+42,yes,none,,,,,,,yes,yes,yes,social science
+43,no,,,,,,,,,,,social science
+44,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+45,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+46,yes,other,no,no,no,yes,no,manuscript,yes,yes,yes,social science
+47,no,,,,,,,,,,,
+48,yes,none,no,no,no,no,no,,no,yes,no,social science
+49,yes,other,yes,no,no,no,no,manuscript,no,no,no,social science
+50,no,,,,,,,,,,,
+51,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+52,yes,other,no,no,no,no,no,manuscript,yes,yes,yes,life science
+53,no,,,,,,,,,,,
+54,yes,none,,,,,,,yes,yes,yes,life science
+55,no,,,,,,,,,,,
+56,no,,,,,,,,,,,
+57,yes,flow chart,yes,no,no,yes,no,manuscript,yes,yes,yes,life science
+58,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,social science
+59,yes,other,yes,no,no,yes,yes,manuscript,yes,yes,yes,life science
+60,yes,none,,,,,,,yes,yes,yes,life science
+61,no,,,,,,,,,,,
+62,yes,flow chart,no,no,no,yes,no,manuscript,yes,no,yes,life science
+63,yes,other,no,no,no,yes,no,manuscript,yes,yes,no,life science
+64,no,,,,,,,,,,,
+65,yes,vodd,yes,yes,no,yes,yes,manuscript,yes,yes,no,life science
+66,yes,other,yes,no,no,yes,yes,manuscript,yes,yes,yes,life science
+67,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,life science
+68,yes,none,,,,,,,no,yes,yes,life science
+69,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+70,yes,flow chart,yes,no,no,yes,yes,manuscript,yes,yes,yes,social science
+71,no,,,,,,,,,,,life science
+72,yes,vodd,yes,no,no,yes,yes,appendix,yes,yes,yes,life science
+73,yes,other,partially,partially,no,no,no,manuscript,yes,yes,yes,life science
+74,no,,,,,,,,,,,
+75,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,social science
+76,yes,flow chart,yes,no,no,yes,no,manuscript,no,yes,no,social science
+77,yes,other,yes,no,no,yes,yes,manuscript,yes,yes,no,life science
+78,yes,flow chart,yes,no,no,yes,no,appendix,yes,yes,yes,life science
+79,yes,flow chart,yes,no,no,yes,no,appendix,yes,yes,yes,life science
+80,yes,none,,,,,,,yes,yes,yes,life science
+81,yes,flow chart,yes,no,no,yes,no,manuscript,yes,yes,yes,life science
+82,yes,flow chart,no,no,no,yes,yes,manuscript,yes,yes,no,social science
+83,yes,flow chart,no,no,no,yes,yes,appendix,yes,yes,no,social science
+84,yes,other,partially,no,no,yes,no,manuscript,yes,yes,no,social science
+85,yes,flow chart,partially,no,no,yes,yes,manuscript,yes,yes,yes,life science
+86,no,,,,,,,,,,,
+87,no,,,,,,,,,,,
+88,yes,other,partially,no,no,yes,no,manuscript,yes,yes,yes,social science
+89,yes,other,yes,no,no,yes,no,manuscript,yes,yes,yes,physical science
+90,no,,,,,,,,,,,
+91,yes,other,partially,no,no,yes,no,manuscript,yes,yes,no,life science
+92,yes,flow chart,partially,no,no,no,no,manuscript,yes,yes,yes,life science
+93,yes,other,partially,no,no,yes,no,manuscript,yes,yes,yes,social science
+94,yes,other,partially,no,no,no,no,manuscript,yes,yes,yes,physical science
+95,yes,other,partially,no,no,no,yes,manuscript,yes,yes,yes,life science
+96,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,life science
+97,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+98,yes,flow chart,yes,no,no,yes,no,manuscript,yes,yes,no,social science
+99,yes,flow chart,yes,no,no,yes,no,appendix,yes,yes,no,life science
+100,yes,other,yes,yes,no,no,no,manuscript,yes,yes,yes,physical science
+101,yes,other,yes,yes,no,no,no,manuscript,yes,yes,yes,life science
+102,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,life science
+103,yes,other,partially,no,no,no,no,manuscript,no,yes,yes,physical science
+104,no,,,,,,,,,,,
+105,yes,other,no,no,no,yes,yes,manuscript,no,yes,yes,physical science
+106,no,,,,,,,,,,,life science
+107,no,,,,,,,,,,,social science
+108,no,,,,,,,,,,,physical science
+109,yes,other,partially,partially,no,no,yes,manuscript,yes,no,yes,social science
+110,yes,none,,,,,,,yes,yes,yes,social science
+111,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,health science
+112,yes,none,,,,,,,yes,yes,yes,life science
+113,yes,other,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+114,article retracted!,,,,,,,,,,,
+115,yes,other,no,no,no,no,no,manuscript,no,no,no,life science
+116,yes,flow chart,partially,partially,no,yes,no,manuscript,yes,yes,yes,social science
+117,yes,flow chart,no,no,no,yes,no,manuscript,no,yes,no,social science
+118,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+119,yes,none,,,,,,,no,yes,no,social science
+120,yes,none,,,,,,,yes,yes,no,life science
+121,yes,other,no,no,no,no,no,manuscript,no,yes,no,life science
+122,yes,flow chart,no,no,no,yes,yes,manuscript,yes,yes,yes,life science
+123,yes,other,partially,partially,no,yes,yes,manuscript,no,no,yes,physical science
+124,yes,other,partially,no,no,yes,yes,manuscript,yes,yes,yes,life science
+125,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,physical science
+126,no,,,,,,,,,,,life science
+127,yes,flow chart,partially,partially,no,yes,yes,manuscript,yes,yes,yes,physical science
+128,yes,flow chart,partially,partially,no,yes,yes,manuscript,yes (odd+d),yes,yes,social science
+129,yes,flow chart,partially,no,no,yes,yes,manuscript,yes,yes,yes,life science
+130,yes,flow chart,yes,partially,no,yes,no,manuscript,yes,yes,yes,life science
+131,yes,vodd,yes,no,no,yes,yes,manuscript,yes,yes,yes,life science
+132,yes,other,no,no,no,no,no,manuscript,yes,yes,yes,life science
+133,yes,flow chart,yes,partially,no,yes,no,manuscript,yes,yes,yes,health science
+134,yes,flow chart,partially,partially,no,no,yes,manuscript,yes,yes,yes,health science
+135,yes,flow chart,partially,partially,no,yes,yes,manuscript,yes,yes,yes,life science
+136,no,,,,,,,,yes,,,social science
+137,yes,flow chart,yes,no,no,yes,no,manuscript,yes,yes,yes,life science
+138,yes,flow chart,no,no,no,yes,yes,manuscript,yes,ues,yes,life science
+139,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+140,yes,none,,,,,,,no,yes,yes,social science
+141,no,,,,,,,,,,,
+142,yes,none,,,,,,,yes,yes,yes,life science
+143,yes,flow chart,no,no,no,no,no,manuscript,yes,yes,yes,life science
+144,yes,other,partially,partially,no,yes,yes,manuscript,yes,yes,no,health science
+145,yes,flow chart,partially,no,no,yes,yes,appendix,yes,yes,yes,health science
+146,yes,none,,,,,,,yes,yes,yes,health science
+147,yes,flow chart,yes,no,no,yes,yes,manuscript & supp.,yes,yes,yes,life science
+148,yes,vodd,yes,partially,no,yes,yes,manucsript,yes,yes,yes,life science
+149,yes,other,partially,partially,no,yes,yes,manuscript,yes,yes,yes,life science
+150,yes,flow chart,partially,no,no,yes,yes,manunscript,yes,yes,yes,social science
+151,yes,flow chart,partially,no,no,yes,yes,manuscript,yes,yes,no,physical science
+152,yes,none,,,,,,,yes,yes,yes,life science
+153,no,,,,,,,,no,,,life science
+154,yes,flow chart,yes,partially,no,yes,no,manuscript,yes,yes,yes,social science
+155,no,,,,,,,,yes,,,social science
+156,yes,none,,,,,,,yes,yes,yes,life science
+157,yes,other,yes,yes,no,no,yes,appendix,yes,yes,yes,health science
+158,yes,flow chart,no,partially,no,yes,no,manuscript,yes,yes,yes,social science
+159,yes,other,,,,,,manuscript,yes,yes,yes,life science
+160,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+161,no,,,,,,,,,,,social science
+162,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,social science
+163,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+164,yes,flow chart,partially,no,yes,yes,no,manuscript,yes,yes,yes,life science
+165,no,none,,,,,,,no,no,no,
+166,yes,flow chart,yes,partially,no,yes,yes,manuscript,yes,yes,yes,social science
+167,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+168,yes,flow chart,partially,no,no,yes,no,manuscript,no,yes,yes,"health science, social science"
+169,yes,flow chart,partially,no,no,yes,no,appendix,yes,yes,yes,life science
+170,yes,other,partially,partially,no,no,no,manuscript,yes,yes,yes,life science
+171,yes,none,,,,,,,yes,yes,yes,life science
+172,yes,flow chart,no,no,no,yes,yes,manuscript,yes,yes,yes,life science
+173,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+174,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+175,yes,flow chart,yes,partially,no,yes,no,"manuscript, appendix",yes,yes,yes,life science
+176,yes,none,,,,,,,yes,yes,yes,"life science, social science"
+177,no,,,,,,,,,,,
+178,no,,,,,,,,,,,
+179,yes,none,,,,,,,yes,yes,no,life science
+180,no,,,,,,,,,,,
+181,yes,none,,,,,,,yes,yes,yes,social science
+182,no,,,,,,,,,,,
+183,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+184,no,,,,,,,,,,,
+185,yes,none,,,,,,,yes,yes,yes,life science
+186,yes,flow chart,no,no,no,yes,no,appendix,yes,yes,yes,life science
+187,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,social science
+188,yes,none,,,,,,,yes,yes,yes,life science
+189,yes,vodd,yes,no,no,yes,yes,manuscript,yes,yes,yes,life science
+190,no,,,,,,,,,,,
+191,yes,other,no,no,no,no,no,manuscript,yes,yes,yes,life science
+192,yes,vodd,partially,partially,no,yes,yes,manuscript,yes,yes,yes,life science
+193,yes,flow chart,no,no,no,yes,no,appendix,yes,yes,yes,social science
+194,yes,none,,,,,,,yes,yes,yes,life science
+195,yes,flow chart,no,no,no,yes,no,appendix,yes,yes,yes,life science
+196,yes,flow chart,partially,partially,no,yes,yes,manuscript,yes,yes,yes,life science
+197,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+198,yes,other,no,no,no,partially,no,manuscript,yes,yes,no,social science
+199,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,"social science, health science"
+200,no,,,,,,,,,,,
+201,yes,other,no,no,no,yes,no,manuscript,partially,yes,no,social science
+202,yes,none,,,,,,,partially,yes,yes,life science
+203,yes,flow chart,no,no,no,partially,no,manuscript,yes,yes,yes,life science
+204,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,life science
+205,no,,,,,,,,,,,
+206,no,,,,,,,,,,,
+207,no,,,,,,,,,,,
+208,yes,vodd,yes,partially,no,no,yes,manuscript,yes,yes,yes,life science
+209,no,,,,,,,,,,,life science
+210,yes,other,no,no,no,yes,no,manuscript,yes,yes,yes,social science
+211,yes,flow chart,yes,yes,no,yes,no,manuscript,yes,yes,no,life science
+212,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+213,yes,other,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+214,yes,none,,,,,,,yes,yes,no,social science
+215,yes,none,,,,,,,no,yes,yes,health science
+216,yes,other,partially,no,no,yes,no,manuscript,yes,yes,yes,life science
+217,no,,,,,,,,,,,
+218,no,,,,,,,,,,,
+219,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,unclear,social science
+220,no,,,,,,,,,,,health science
+221,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+222,yes,other,partially,no,no,yes,no,manuscript,yes,yes,yes,social science
+223,yes,other,no,partially,no,no,no,manuscript,yes,yes,no,life science
+224,yes,other,yes,no,no,no,no,manuscript,no,yes,yes,health science
+225,no,,,,,,,,,,,
+226,yes,flow chart,no,no,no,no,no,manuscript,no,yes,yes,social science
+227,no,,,,,,,,,,,
+228,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,social science
+229,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+230,no,,,,,,,,,,,
+231,yes,none,,,,,,,no,yes,yes,life science
+232,yes,other,no,no,no,yes,no,manuscript,yes,yes,no,social science
+233,yes,flow chart,partially,no,no,yes,no,manuscript,yes,yes,yes,social science
+234,yes,flow chart,partially,no,no,yes,no,manuscript,no,yes,no,life science
+235,yes,flow chart,partially,partially,no,yes,no,manuscript,yes,yes,yes,life science
+236,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,life science
+237,yes,flow chart,no,partially,no,no,yes,manuscript,yes,yes,yes,social science
+238,no,,,,,,,,yes,,,social science
+239,no,,,,,,,,yes,,,
+240,yes,none,,,,,,,yes,yes,yes,health science
+241,no,,,,,,,,,,,
+242,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,social science
+243,yes,other,partially,no,no,no,no,manuscript,yes,yes,yes,social science
+244,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,no,life science
+245,yes,none,,,,,,,yes,yes,yes,life science
+246,yes,none,,,,,,,no,yes,yes,social science
+247,yes,none,,,,,,,yes,yes,yes,social science
+248,yes,flow chart,no,no,no,yes,no,manuscript,yes,yes,yes,social science
