@@ -1,0 +1,146 @@
+[
+  {
+    "search_id": "EW-01",
+    "platform": "official_article",
+    "search_date": "2026-11-28",
+    "query_exact": "OJS title/DOI/date/abstract read",
+    "source_url": "https://journal.computationalcommunication.org/article/view/5926",
+    "status": "200_abstract",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-02",
+    "platform": "official_galley_web",
+    "search_date": "2026-11-28",
+    "query_exact": "PDFlink redirectsAUP loadingpage;notbody",
+    "source_url": "https://journal.computationalcommunication.org/article/view/5926/4490",
+    "status": "redirect_notfulltext",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-03",
+    "platform": "official_fulltext_web",
+    "search_date": "2026-11-28",
+    "query_exact": "FullTexttab still loading;no bodyread",
+    "source_url": "https://www.aup-online.com/content/journals/10.5117/CCR2024.1.5.CHAN",
+    "status": "notfulltext",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-04",
+    "platform": "publisher_static",
+    "search_date": "2026-11-28",
+    "query_exact": "AUP403HTML5606bytesnotPDF",
+    "source_url": "https://www.aup-online.com/content/journals/10.5117/CCR2024.1.5.CHAN",
+    "status": "403",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-05",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Exacttitlepdf initial search;VUdiscovered",
+    "source_url": "public_web_search",
+    "status": "metadata_discovery",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-06",
+    "platform": "official_static",
+    "search_date": "2026-11-28",
+    "query_exact": "OJS200 andVU200 metadata;no VUdirectfile",
+    "source_url": "https://research.vu.nl/en/publications/what-makes-computational-communication-science-irreproducible/",
+    "status": "abstract_metadata_only",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-07",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Two exacttitle queriesgithub/osf;secondary rubricnotusedformethodfacts",
+    "source_url": "public_web_search",
+    "status": "no_primaryfulltext",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-08",
+    "platform": "author_source",
+    "search_date": "2026-11-28",
+    "query_exact": "Authorhomepage/blog200 DOIonly;notpaperbody",
+    "source_url": "https://chainsawriot.com/postmannheim/2025/11/20/kazoo.html",
+    "status": "no_fulltext_link",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-09",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Two grouped exacttitlepdf/DOIpdfqueries",
+    "source_url": "public_web_search",
+    "status": "no_primaryfulltext",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-10",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Two grouped filteredPDF/exacttitledatarepositoryqueries",
+    "source_url": "public_web_search",
+    "status": "no_primaryfulltext",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-11",
+    "platform": "official_galley_static",
+    "search_date": "2026-11-28",
+    "query_exact": "BoundgalleyGET redirectsAUP403HTML",
+    "source_url": "https://journal.computationalcommunication.org/article/view/5926/4490",
+    "status": "403",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-12",
+    "platform": "publisher_registry",
+    "search_date": "2026-11-28",
+    "query_exact": "Crossref200 registeredfulltextURLfound;printJan1notreplaceOJSonlineMay16",
+    "source_url": "https://api.crossref.org/works/10.5117/CCR2024.1.5.CHAN",
+    "status": "200_metadata",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-13",
+    "platform": "registered_fulltext",
+    "search_date": "2026-11-28",
+    "query_exact": "RegisteredURLwebunavailable/static4035793bytesHTML",
+    "source_url": "https://www.aup-online.com/content/journals/10.5117/CCR2024.1.5.CHAN?crawler=true&mimetype=application/pdf",
+    "status": "403_notPDF",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-14",
+    "platform": "author_repo_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "PublicAPIreproducibility user:chainsawriot;no targetrepo bound",
+    "source_url": "https://api.github.com/search/repositories?q=reproducibility+user:chainsawriot",
+    "status": "200_no_verified_target",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-15",
+    "platform": "repo_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "PublicAPI CCR reproducibility;no verified target",
+    "source_url": "https://api.github.com/search/repositories?q=CCR+reproducibility",
+    "status": "200_no_verified_target",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  },
+  {
+    "search_id": "EW-16",
+    "platform": "abstract_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "Separate6/30overall and6/14selected at-least-partial rates;fullsuccessunknown",
+    "source_url": "reports/ccr_audit_access_EW.md",
+    "status": "abstract_only_noupgrade",
+    "notes": "Groupedoperation;notindependentqueries/negativecoveragesearch"
+  }
+]

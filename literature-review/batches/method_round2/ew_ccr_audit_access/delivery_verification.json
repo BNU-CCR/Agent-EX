@@ -1,0 +1,27 @@
+{
+  "batch": "EW",
+  "checks": "passed",
+  "base": "7bd73ee",
+  "master_changed": [
+    "EN07"
+  ],
+  "cards_matrix_bibs": "unchangednormalizedtext",
+  "status": "candidate/abstract_provisional preserved",
+  "legacy_changes": 72,
+  "originalIDs": 57,
+  "protectedhashes": 18,
+  "originalLogPrefix": 231,
+  "workbook_rows": [
+    28,
+    238,
+    55,
+    31,
+    253,
+    56,
+    1817,
+    12,
+    42
+  ],
+  "cover_B7": 68,
+  "limits": "No new fulltext/card/unit/experiment;layout reused,cellchecks current"
+}

@@ -24828,5 +24828,35 @@
     "batch": "ET",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/et_odd_formal_qualification/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "method_pending_fields",
+    "old": "method_maturity;method_evidence_level;method_transferability",
+    "new": "publisher_or_author_fulltext;audit_cohort_cutoff;criteria_partial_vs_full;environment_interventions_time_budget;failure_code_denominators;artifact_identity_and_rerun",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "method_coding_source",
+    "old": "data/literature_master.csv#EN07;batches/english/results.json#EN07",
+    "new": "data/literature_master.csv#EN07;batches/english/results.json#EN07;reports/ccr_audit_access_EW.md",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "method_last_checked",
+    "old": "2026-11-26",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
   }
 ]

@@ -658,5 +658,65 @@
     "batch": "CN-friendship-pattern-validation-and-version-boundary",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/cn_friendship_validation/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "metadata_evidence_url",
+    "old": "",
+    "new": "https://research.vu.nl/en/publications/what-makes-computational-communication-science-irreproducible/",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "search_id",
+    "old": "EV07",
+    "new": "EV07;EW-01;EW-06;EW-16",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "search_date",
+    "old": "2026-11-26",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "supplement_status",
+    "old": "not_checked",
+    "new": "EW_fulltext_link_redirects_publisher403;registered_fulltext403;no_code_or_data_acquired",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "findings",
+    "old": "摘要：30篇文章中仅6篇至少部分复现；数据代码不全是障碍，不外推到全部传播学。",
+    "new": "官方摘要：30篇中16缺代码和/或数据，另14尝试执行，6至少部分重现。6/30=20%为全部队列的至少部分重现比例；6/14=42.9%仅对有材料尝试执行子集。未核完全成功率、审计干预/时限和失败细分，不外推全学科或LLM模拟。",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "EN07",
+    "field": "notes",
+    "old": "",
+    "new": " | EW:OJSabstract/date200;galley redirectsAUP403;registeredfulltext403notPDF;VUonlymetadata/abstract;authorblog DOIonly. Three grouped webdiscovery roundsplusauthorrepo/globalrepo searches yielded no verifiedfulltext. No card/grade/statusupgrade. 6atleastpartial is not6fullyreproduced;16unverifiable is not16provenwrong.",
+    "date": "2026-11-28",
+    "batch": "EW",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ew_ccr_audit_access/results.json"
   }
 ]

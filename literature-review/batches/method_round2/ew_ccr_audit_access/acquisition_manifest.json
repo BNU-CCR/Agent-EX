@@ -1,0 +1,102 @@
+[
+  {
+    "name": "publisher_html",
+    "url": "https://www.aup-online.com/content/journals/10.5117/CCR2024.1.5.CHAN",
+    "status": 403,
+    "bytes": 5606,
+    "sha256": "348312d779d126b6516be7b5e638138c5a3fd585c6650cf770cd98c3a5928c69",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_publisher.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "official_abstract",
+    "url": "https://journal.computationalcommunication.org/article/view/5926",
+    "status": 200,
+    "bytes": 29592,
+    "sha256": "b15005685c87c09bcacecd129812d36def4730616462d9a75d06fde4da853e77",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_ojs.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "institution_metadata",
+    "url": "https://research.vu.nl/en/publications/what-makes-computational-communication-science-irreproducible/",
+    "status": 200,
+    "bytes": 53137,
+    "sha256": "fe627aea8f17090e419fe08171bfce429d8dba33b0c862123520c9935c3530b2",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_vu.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "author_homepage",
+    "url": "https://chainsawriot.com/",
+    "status": 200,
+    "bytes": 8550,
+    "sha256": "400228773e58d468201fd4426e68ad63007b1285afa8432fdef83cf7d45efb03",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_author.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "author_blog",
+    "url": "https://chainsawriot.com/postmannheim/2025/11/20/kazoo.html",
+    "status": 200,
+    "bytes": 9875,
+    "sha256": "cdab752a9622f025fabfb784e5131cd4c49e78ef8b0676ce54af3083c0350930",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_blog.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "official_galley",
+    "url": "https://journal.computationalcommunication.org/article/view/5926/4490",
+    "status": 403,
+    "bytes": 5606,
+    "sha256": "7fda28fb6569ca1a6abc826003159c3c9c6439b86bcb646ee3ccdd60f5b88182",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_galley.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "publisher_registry",
+    "url": "https://api.crossref.org/works/10.5117/CCR2024.1.5.CHAN",
+    "status": 200,
+    "bytes": 2164,
+    "sha256": "7467ba452aaf241bead7928f1db656652846fd949a9524005563f7a20bfe414f",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_crossref.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "author_repo_discovery",
+    "url": "https://api.github.com/search/repositories?q=reproducibility+user:chainsawriot",
+    "status": 200,
+    "bytes": 21587,
+    "sha256": "2a53052581c29a43ebff52f02ec731399cf4e1cc8abcea2485b35b4f7f71eab9",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_author_repo_search.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "repo_discovery",
+    "url": "https://api.github.com/search/repositories?q=CCR+reproducibility",
+    "status": 200,
+    "bytes": 129522,
+    "sha256": "63afa5bc6669f05fdd8e21b4a91d05ebae65dafe41305dd96531af2d39ab40f9",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_repo_search.response",
+    "is_pdf": false,
+    "scope": "HTML/metadata/discovery;notfulltext"
+  },
+  {
+    "name": "publisher_registered_fulltext",
+    "url": "https://www.aup-online.com/content/journals/10.5117/CCR2024.1.5.CHAN?crawler=true&mimetype=application/pdf",
+    "final_url": "https://www.aup-online.com/content/journals/10.5117/CCR2024.1.5.CHAN?crawler=true&mimetype=application/pdf",
+    "status": 403,
+    "bytes": 5793,
+    "sha256": "562b4fa361349cf50ed86173fbe5209a5b6eb1f77af2676745c9888ac0be641a",
+    "is_pdf": false,
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EW_registered_fulltext.response"
+  }
+]

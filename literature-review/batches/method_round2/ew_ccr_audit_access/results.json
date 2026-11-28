@@ -1,0 +1,20 @@
+{
+  "batch_id": "EW",
+  "date": "2026-11-28",
+  "expected_master_sha256": "526ec38e517fb437ada49a45b1ca60a9347981278db469df116eebf557209497",
+  "updates": [
+    {
+      "record_id": "EN07",
+      "metadata_evidence_url": "https://research.vu.nl/en/publications/what-makes-computational-communication-science-irreproducible/",
+      "search_id": "EV07;EW-01;EW-06;EW-16",
+      "search_date": "2026-11-28",
+      "supplement_status": "EW_fulltext_link_redirects_publisher403;registered_fulltext403;no_code_or_data_acquired",
+      "findings": "官方摘要：30篇中16缺代码和/或数据，另14尝试执行，6至少部分重现。6/30=20%为全部队列的至少部分重现比例；6/14=42.9%仅对有材料尝试执行子集。未核完全成功率、审计干预/时限和失败细分，不外推全学科或LLM模拟。",
+      "notes": " | EW:OJSabstract/date200;galley redirectsAUP403;registeredfulltext403notPDF;VUonlymetadata/abstract;authorblog DOIonly. Three grouped webdiscovery roundsplusauthorrepo/globalrepo searches yielded no verifiedfulltext. No card/grade/statusupgrade. 6atleastpartial is not6fullyreproduced;16unverifiable is not16provenwrong.",
+      "method_pending_fields": "publisher_or_author_fulltext;audit_cohort_cutoff;criteria_partial_vs_full;environment_interventions_time_budget;failure_code_denominators;artifact_identity_and_rerun",
+      "method_coding_source": "data/literature_master.csv#EN07;batches/english/results.json#EN07;reports/ccr_audit_access_EW.md",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}
