@@ -1,0 +1,74 @@
+[
+  {
+    "search_id": "EO-01",
+    "platform": "fixed_repository",
+    "search_date": "2026-11-28",
+    "query_exact": "main8af633a/tree267nontruncated",
+    "source_url": "https://github.com/soda-lmu/llm-opinion-german/tree/8af633a8383d4bab63eba52e0c21e3b638f62914",
+    "status": "fixed_tree",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  },
+  {
+    "search_id": "EO-02",
+    "platform": "selected_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "18fileGitblob/lengthSHA256verified",
+    "source_url": "https://github.com/soda-lmu/llm-opinion-german/tree/8af633a8383d4bab63eba52e0c21e3b638f62914",
+    "status": "18verified",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  },
+  {
+    "search_id": "EO-03",
+    "platform": "classifier_static_read",
+    "search_date": "2026-11-28",
+    "query_exact": "mixedtraining/rowsplit/thresholdfallback",
+    "source_url": "https://github.com/soda-lmu/llm-opinion-german/tree/8af633a8383d4bab63eba52e0c21e3b638f62914",
+    "status": "static_read",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  },
+  {
+    "search_id": "EO-04",
+    "platform": "metric_static_read",
+    "search_date": "2026-11-28",
+    "query_exact": "17map14PMF/labeloccurrence/JS/APE/config",
+    "source_url": "https://github.com/soda-lmu/llm-opinion-german/tree/8af633a8383d4bab63eba52e0c21e3b638f62914",
+    "status": "static_read",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  },
+  {
+    "search_id": "EO-05",
+    "platform": "notebook_scoped_read",
+    "search_date": "2026-11-28",
+    "query_exact": "125cellsselectedsource_read_notexecuted",
+    "source_url": "https://github.com/soda-lmu/llm-opinion-german/tree/8af633a8383d4bab63eba52e0c21e3b638f62914",
+    "status": "scoped_static",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  },
+  {
+    "search_id": "EO-06",
+    "platform": "aggregate_numeric_check",
+    "search_date": "2026-11-28",
+    "query_exact": "4publicPMFs/30Table2values/r-.350877;notrawreplication",
+    "source_url": "https://github.com/soda-lmu/llm-opinion-german/tree/8af633a8383d4bab63eba52e0c21e3b638f62914",
+    "status": "independent_aggregate_arithmetic",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  },
+  {
+    "search_id": "EO-07",
+    "platform": "official_dependency_reference",
+    "search_date": "2026-11-28",
+    "query_exact": "SciPyjensenshannonbaseparameterofficialdocs",
+    "source_url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.jensenshannon.html",
+    "status": "official_docs_read",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  },
+  {
+    "search_id": "EO-08",
+    "platform": "integration",
+    "search_date": "2026-11-28",
+    "query_exact": "M180/VC248249250252updated_nonewgrade/unit",
+    "source_url": "https://github.com/soda-lmu/llm-opinion-german/tree/8af633a8383d4bab63eba52e0c21e3b638f62914",
+    "status": "local_update",
+    "notes": "Groupedoperations;no authorcode/modelexecution;aggregatechecknotfullreplication"
+  }
+]

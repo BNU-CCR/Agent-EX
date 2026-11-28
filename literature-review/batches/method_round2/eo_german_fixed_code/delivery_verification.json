@@ -1,0 +1,30 @@
+{
+  "base": "b742320",
+  "master_changed": [
+    "M180"
+  ],
+  "matrix_changed": [
+    "VC248",
+    "VC249",
+    "VC250",
+    "VC252"
+  ],
+  "records": 237,
+  "cards": 87,
+  "units": 252,
+  "files_blob_verified": 18,
+  "public_table_matches": 30,
+  "correlation": -0.35087705272939457,
+  "archived_card_Git_bytes_verified": true,
+  "workbook_rows": [
+    238,
+    55,
+    31,
+    253,
+    1759,
+    12,
+    42
+  ],
+  "status": "passed",
+  "limits": "No originalGLES or authorprogram/model execution;publicaggregatecheckonly;layout/countsunchangedsinceENvisual"
+}

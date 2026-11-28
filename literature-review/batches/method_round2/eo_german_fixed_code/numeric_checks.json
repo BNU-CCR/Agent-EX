@@ -1,0 +1,217 @@
+{
+  "public_aggregate_only": true,
+  "no_rawGLES_or_authorcode_execution": true,
+  "correlation": -0.35087705272939457,
+  "table2_checks": [
+    {
+      "wave": "12",
+      "metric": "LLM_entropy",
+      "paper": 2.9,
+      "derived": 2.9011242265818065,
+      "matches_2dp": true
+    },
+    {
+      "wave": "12",
+      "metric": "survey_entropy",
+      "paper": 2.93,
+      "derived": 2.9331840240606595,
+      "matches_2dp": true
+    },
+    {
+      "wave": "12",
+      "metric": "JS_distance",
+      "paper": 0.29,
+      "derived": 0.2871070553961174,
+      "matches_2dp": true
+    },
+    {
+      "wave": "13",
+      "metric": "LLM_entropy",
+      "paper": 0.58,
+      "derived": 0.5820901130531747,
+      "matches_2dp": true
+    },
+    {
+      "wave": "13",
+      "metric": "survey_entropy",
+      "paper": 2.02,
+      "derived": 2.0200296335771237,
+      "matches_2dp": true
+    },
+    {
+      "wave": "13",
+      "metric": "JS_distance",
+      "paper": 0.29,
+      "derived": 0.2896642350859343,
+      "matches_2dp": true
+    },
+    {
+      "wave": "14",
+      "metric": "LLM_entropy",
+      "paper": 1.67,
+      "derived": 1.6717856112454275,
+      "matches_2dp": true
+    },
+    {
+      "wave": "14",
+      "metric": "survey_entropy",
+      "paper": 2.24,
+      "derived": 2.237348888749209,
+      "matches_2dp": true
+    },
+    {
+      "wave": "14",
+      "metric": "JS_distance",
+      "paper": 0.24,
+      "derived": 0.23580420792946216,
+      "matches_2dp": true
+    },
+    {
+      "wave": "15",
+      "metric": "LLM_entropy",
+      "paper": 1.31,
+      "derived": 1.3110159774545682,
+      "matches_2dp": true
+    },
+    {
+      "wave": "15",
+      "metric": "survey_entropy",
+      "paper": 2.31,
+      "derived": 2.312775616892893,
+      "matches_2dp": true
+    },
+    {
+      "wave": "15",
+      "metric": "JS_distance",
+      "paper": 0.22,
+      "derived": 0.22389539739223635,
+      "matches_2dp": true
+    },
+    {
+      "wave": "16",
+      "metric": "LLM_entropy",
+      "paper": 2.12,
+      "derived": 2.1163655695993064,
+      "matches_2dp": true
+    },
+    {
+      "wave": "16",
+      "metric": "survey_entropy",
+      "paper": 2.53,
+      "derived": 2.5335722115974413,
+      "matches_2dp": true
+    },
+    {
+      "wave": "16",
+      "metric": "JS_distance",
+      "paper": 0.2,
+      "derived": 0.19624267233779974,
+      "matches_2dp": true
+    },
+    {
+      "wave": "17",
+      "metric": "LLM_entropy",
+      "paper": 2.2,
+      "derived": 2.1994365244486125,
+      "matches_2dp": true
+    },
+    {
+      "wave": "17",
+      "metric": "survey_entropy",
+      "paper": 2.82,
+      "derived": 2.8155086750946072,
+      "matches_2dp": true
+    },
+    {
+      "wave": "17",
+      "metric": "JS_distance",
+      "paper": 0.23,
+      "derived": 0.2313851959885139,
+      "matches_2dp": true
+    },
+    {
+      "wave": "18",
+      "metric": "LLM_entropy",
+      "paper": 2.27,
+      "derived": 2.273110087114234,
+      "matches_2dp": true
+    },
+    {
+      "wave": "18",
+      "metric": "survey_entropy",
+      "paper": 2.75,
+      "derived": 2.753301669937672,
+      "matches_2dp": true
+    },
+    {
+      "wave": "18",
+      "metric": "JS_distance",
+      "paper": 0.23,
+      "derived": 0.22617542791155845,
+      "matches_2dp": true
+    },
+    {
+      "wave": "19",
+      "metric": "LLM_entropy",
+      "paper": 2.46,
+      "derived": 2.4577695296015616,
+      "matches_2dp": true
+    },
+    {
+      "wave": "19",
+      "metric": "survey_entropy",
+      "paper": 2.85,
+      "derived": 2.8465590274514105,
+      "matches_2dp": true
+    },
+    {
+      "wave": "19",
+      "metric": "JS_distance",
+      "paper": 0.22,
+      "derived": 0.21929018779098575,
+      "matches_2dp": true
+    },
+    {
+      "wave": "20",
+      "metric": "LLM_entropy",
+      "paper": 2.46,
+      "derived": 2.4634070966778063,
+      "matches_2dp": true
+    },
+    {
+      "wave": "20",
+      "metric": "survey_entropy",
+      "paper": 2.92,
+      "derived": 2.9220582336125474,
+      "matches_2dp": true
+    },
+    {
+      "wave": "20",
+      "metric": "JS_distance",
+      "paper": 0.24,
+      "derived": 0.2352203476129499,
+      "matches_2dp": true
+    },
+    {
+      "wave": "21",
+      "metric": "LLM_entropy",
+      "paper": 2.49,
+      "derived": 2.490120072245018,
+      "matches_2dp": true
+    },
+    {
+      "wave": "21",
+      "metric": "survey_entropy",
+      "paper": 2.19,
+      "derived": 2.1864087524453892,
+      "matches_2dp": true
+    },
+    {
+      "wave": "21",
+      "metric": "JS_distance",
+      "paper": 0.3,
+      "derived": 0.3011838556118627,
+      "matches_2dp": true
+    }
+  ]
+}

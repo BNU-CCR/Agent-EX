@@ -1,0 +1,18 @@
+{
+  "batch_id": "EO-German-fixed-code-and-public-aggregate-audit",
+  "date": "2026-11-28",
+  "expected_master_sha256": "c6e61ce1cc017ab0c9a64c929a2a179ff699e1770ef8ac49cba31b4976dfba2c",
+  "updates": [
+    {
+      "record_id": "M180",
+      "supplement_status": "EO Git8af633a18selectedfilesblobverified;4publicPMFtablesarithmeticallychecked;rawGLES/weights/runoutputsnotacquired",
+      "findings": "1500synthetictexts/twohumancoders/BERTweightedF1.93notpopulationvalidity. LlamaJS~.28vsGemma.62;stylelengthgap/2019COVIDlexicalcontamination. Historicalwavesnotinteractiveforecast;Table2negativeentropy-JScorrelationproseinterpretationconflict;wave13LLM.58/92.4vs human2.02/59.5;APEsignedtablepending. EOpublicmulticlassPMFsreproduce30Table2cells/r-.350877;naturalJSvsbase2entropy. Mixedtraining/rowsplit42;14labelconditionalPMF;fallbackname-vectordifferenceconditionalfrequencyunknown.",
+      "notes": "ENtargetedcitationchasefromM179;notallreferencecrawl. OfficialauthornamevsPDFvariantsnotnewwork. No rawGLES/modelrun;tablearithmeticonly. EOstaticfixedcode/readnotexecute;publicaggregatearithmeticnotrawreplication. Map17/defaultPMF14andsplitlocated;publishedrunmappingstillpending.",
+      "method_pending_fields": "exact_formal_first_online;GLES_sampleweights_uniqueIDs;classifier_actualsplit_perclass_agreement_transfer;fallbackfrequency_rawoutputs;Table7signedAPE_path;generationrevision_config_runmapping",
+      "method_evidence_location": "§3–4;AppC/D/F/G;Tables1–3/9/11/13selected;Git8af633a classifier/data_prep/metrics/notebookselected;4publicPMF",
+      "method_coding_source": "reading-cards/M180.md;reports/german_open_opinion_EN.md;batches/method_round2/en_german_open_opinion/reading_checks.json;reports/german_fixed_code_EO.md;data/german_code_crosswalk_EO.csv",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

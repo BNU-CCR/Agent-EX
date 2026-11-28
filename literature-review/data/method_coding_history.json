@@ -24568,5 +24568,35 @@
     "batch": "EN-German-open-opinion-human-coding-case",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/en_german_open_opinion/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_pending_fields",
+    "old": "exact_formal_first_online;GLES_sampleweights_uniqueIDs;classifier_split_perclass_agreement_transfer;16vs17labels_normalization_refusal;JSentropyAPEcode;generationrevision_seed_temp_retry_runmapping",
+    "new": "exact_formal_first_online;GLES_sampleweights_uniqueIDs;classifier_actualsplit_perclass_agreement_transfer;fallbackfrequency_rawoutputs;Table7signedAPE_path;generationrevision_config_runmapping",
+    "date": "2026-11-28",
+    "batch": "EO-German-fixed-code-and-public-aggregate-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eo_german_fixed_code/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_evidence_location",
+    "old": "§3–4;AppC/D/F/G;Tables1–3/9/11/13selected",
+    "new": "§3–4;AppC/D/F/G;Tables1–3/9/11/13selected;Git8af633a classifier/data_prep/metrics/notebookselected;4publicPMF",
+    "date": "2026-11-28",
+    "batch": "EO-German-fixed-code-and-public-aggregate-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eo_german_fixed_code/results.json"
+  },
+  {
+    "record_id": "M180",
+    "field": "method_coding_source",
+    "old": "reading-cards/M180.md;reports/german_open_opinion_EN.md;batches/method_round2/en_german_open_opinion/reading_checks.json",
+    "new": "reading-cards/M180.md;reports/german_open_opinion_EN.md;batches/method_round2/en_german_open_opinion/reading_checks.json;reports/german_fixed_code_EO.md;data/german_code_crosswalk_EO.csv",
+    "date": "2026-11-28",
+    "batch": "EO-German-fixed-code-and-public-aggregate-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/eo_german_fixed_code/results.json"
   }
 ]

@@ -1,0 +1,1277 @@
+{
+  "checked": "2026-11-28",
+  "repo": "soda-lmu/llm-opinion-german",
+  "branch": "main",
+  "commit": "8af633a8383d4bab63eba52e0c21e3b638f62914",
+  "committer_date": "2025-08-03T14:42:27Z",
+  "tree_sha": "8af633a8383d4bab63eba52e0c21e3b638f62914",
+  "truncated": false,
+  "entries": 267,
+  "files": [
+    {
+      "path": ".DS_Store",
+      "sha": "37df8f1b14f2a13b0f7901ab82075f2b83bd0696",
+      "size": 8196
+    },
+    {
+      "path": "README.md",
+      "sha": "1d69d6f48d27e97dc13b7f24a2db000de26261b1",
+      "size": 3490
+    },
+    {
+      "path": "data/.DS_Store",
+      "sha": "097293fab610932b20cfcb54284d85d7a47d8da3",
+      "size": 8196
+    },
+    {
+      "path": "data/bert_train_data/annotated_answers.csv",
+      "sha": "8214a73573fe061c7153cb003a70d24765aa9a75",
+      "size": 628804
+    },
+    {
+      "path": "data/coding_values/berufabschluss_dict.json",
+      "sha": "7607a1f820ce9bd5ef98b21205f1deb0f6a6bad8",
+      "size": 587
+    },
+    {
+      "path": "data/coding_values/berufabschluss_lookup.csv",
+      "sha": "fe9d41594f6491652a901ea08dea1114b03fb0d8",
+      "size": 1346
+    },
+    {
+      "path": "data/coding_values/education_lookup.csv",
+      "sha": "63ed17afa2d649b17ae514cc9dbe3f402c38da13",
+      "size": 473376
+    },
+    {
+      "path": "data/coding_values/first_most_imp_coding_list.json",
+      "sha": "e6b3005c92ec987d1aa7335f589bcb818b6c760a",
+      "size": 1934
+    },
+    {
+      "path": "data/coding_values/gender_dict.json",
+      "sha": "e2ef3209397d114114a7ffa311275c2f86c259db",
+      "size": 80
+    },
+    {
+      "path": "data/coding_values/leaning_party_dict.json",
+      "sha": "040c4b23cd0ba6791d4cf7583c81a5b0e45fd9d6",
+      "size": 236
+    },
+    {
+      "path": "data/coding_values/map.csv",
+      "sha": "90120f2e650e620cfc3c7a9ec4dbade581dfe363",
+      "size": 2759
+    },
+    {
+      "path": "data/coding_values/month_names_german.json",
+      "sha": "3b365e6ff6a2ccd8bd185f7e4f16f937b653c0d4",
+      "size": 237
+    },
+    {
+      "path": "data/coding_values/ostwest_dict.json",
+      "sha": "3a7f28035afdc2bc4a9c9fc7dd085edaa5b72ce6",
+      "size": 75
+    },
+    {
+      "path": "data/coding_values/schulabschluss_dict.json",
+      "sha": "ea945a1b9e41a884873ea254b750890495e1c47a",
+      "size": 228
+    },
+    {
+      "path": "data/processed/ZA6838_w12_sA_v6-0-0.dta",
+      "sha": "14e00bbf7859683b0b67356e7b6f52d41cf3fc61",
+      "size": 3875582
+    },
+    {
+      "path": "data/processed/berufabschluss.csv",
+      "sha": "b75c9138b9cc4ec2454e941e2c7eaef5f5a43104",
+      "size": 1283
+    },
+    {
+      "path": "data/processed/coding_list3.csv",
+      "sha": "ac9897845bcf47049afef17e25e107cb3a38c219",
+      "size": 19519
+    },
+    {
+      "path": "data/processed/ex1_labeled.csv",
+      "sha": "623d99c76863c82a3170d3586d6b5b3318a08ccc",
+      "size": 83356
+    },
+    {
+      "path": "data/processed/fig1_data.csv",
+      "sha": "121cedce7927da3ba5b0dbb62d6ce22e18733c8f",
+      "size": 8920
+    },
+    {
+      "path": "data/processed/llama_classes_v1.csv",
+      "sha": "11ac44d30c81219114f5e02e1b3b31783474397d",
+      "size": 11244
+    },
+    {
+      "path": "data/processed/llama_sample.csv",
+      "sha": "875e7f439da99c6aca67649bc565daa709e28d02",
+      "size": 65777
+    },
+    {
+      "path": "data/processed/llama_sample2.csv",
+      "sha": "beeb16c2cabc7418f4de5d499e94cef8e993af8f",
+      "size": 112209
+    },
+    {
+      "path": "data/processed/llama_sample_answers.csv",
+      "sha": "faea9f1260009d309033b04a5d0a7d15cc199df2",
+      "size": 133934
+    },
+    {
+      "path": "data/processed/sample1000.csv",
+      "sha": "790a7bb2fe6f5aa36e131a5a59b8d799b5eeb5cd",
+      "size": 802397
+    },
+    {
+      "path": "data/processed/sample_100_stratified.csv",
+      "sha": "80b07f8cf37bc83021ea205bc322b058124d32f6",
+      "size": 2909
+    },
+    {
+      "path": "data/processed/sample_w12_stratified.csv",
+      "sha": "d8ef27ca9becb30732006c4a6883294859e36c24",
+      "size": 759109
+    },
+    {
+      "path": "data/prompts/prompt.txt",
+      "sha": "e0792ea53d45110cf8bf419951a41e65b4f248fd",
+      "size": 837
+    },
+    {
+      "path": "notebooks/paper_figures.ipynb",
+      "sha": "5f0891e087c71e36d03aae6b02ce5a93f6ef1b35",
+      "size": 126853
+    },
+    {
+      "path": "requirements.txt",
+      "sha": "615b6ed1ed2b642589ee205f70eef3ffd8f044ca",
+      "size": 390
+    },
+    {
+      "path": "results/.DS_Store",
+      "sha": "92d15fc2e28720d7cddba97c4810c8ca3c6d7d8c",
+      "size": 10244
+    },
+    {
+      "path": "results/ablationExperiment/.DS_Store",
+      "sha": "02bcc707b7f10f78b436db12c683ff91b6c8d216",
+      "size": 14340
+    },
+    {
+      "path": "results/ablationExperiment/cramer_results_multiclass.csv",
+      "sha": "a4bd44dc7b7c204c8427b2fc85e1b8bcef4fdb3c",
+      "size": 349
+    },
+    {
+      "path": "results/ablationExperiment/cramer_results_multilabel.csv",
+      "sha": "40f4af62b5f5586079b82b6e7e598c61821020e4",
+      "size": 347
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_age_multiclass.csv",
+      "sha": "20e1d5aba77fee4bbea28833091549cf0a78b58e",
+      "size": 3987
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_age_multilabel.csv",
+      "sha": "81651f580887ef578af1d76ece1a0c0c2ae95ac1",
+      "size": 4070
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_berufabschluss_multiclass.csv",
+      "sha": "3cbf527bb9ff9ee8ccc33562a8aea8dffb541b17",
+      "size": 4013
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_berufabschluss_multilabel.csv",
+      "sha": "880afc63e057bc5abe69d9950992dab63d9791ea",
+      "size": 4031
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_eastwest_multiclass.csv",
+      "sha": "3679dab28feccf9d87b44e79dd1c44cc663432a3",
+      "size": 4088
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_eastwest_multilabel.csv",
+      "sha": "fe3974cdf2ff9e1cebe72e78b8362df899862cd5",
+      "size": 4067
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_gender_multiclass.csv",
+      "sha": "feafa8c1e81716ae66f1092e680bdb66822ab7b0",
+      "size": 4084
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_gender_multilabel.csv",
+      "sha": "5873f8b6a2f445012ecb38e0addae026b00ab891",
+      "size": 4114
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_party_multiclass.csv",
+      "sha": "27a685701748b30276f7108d347263f583fce123",
+      "size": 4009
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_party_multilabel.csv",
+      "sha": "f950384dbb98685572f5d2f85ab0180dcc0e9a08",
+      "size": 3995
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_schulabschluss_multiclass.csv",
+      "sha": "3c3c8dd7f398da056b61ea52b433741470e1a056",
+      "size": 3977
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_1VAR_schulabschluss_multilabel.csv",
+      "sha": "2dbd09d3d2b18e4062913a823cf7aebef11148f8",
+      "size": 4089
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_Llama2_all_multiclass.csv",
+      "sha": "a924376f9f536208046103ade9ce5f15f7638182",
+      "size": 4169
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_Llama2_all_multilabel.csv",
+      "sha": "8c109417387afc995f3e972f0466874f34041d98",
+      "size": 4185
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_Llama2_base_multiclass.csv",
+      "sha": "6dbbf33345c1fae209e6e88789e763ed161f4d94",
+      "size": 3960
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_Llama2_base_multilabel.csv",
+      "sha": "40a243f24f157266ee47cad2a47c88237735543d",
+      "size": 4047
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_age_multiclass.csv",
+      "sha": "708218dfc57bcc80f5e26e83baf788256bc13143",
+      "size": 4132
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_age_multilabel.csv",
+      "sha": "048095fa9de07e2cd34a34ee7d30a680df6ce29a",
+      "size": 4121
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_berufabschluss_multiclass.csv",
+      "sha": "66b4ec3fb0c6c128aeb7b6aa3da243b478029da6",
+      "size": 4143
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_berufabschluss_multilabel.csv",
+      "sha": "ed8c16426b9328458fd0860778f939c8b60e92b5",
+      "size": 4155
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_eastwest_multiclass.csv",
+      "sha": "282d0c36ad7eb5a9f1ebafa7495f364e4a6a9321",
+      "size": 3974
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_eastwest_multilabel.csv",
+      "sha": "d42380bdb4b484d7305502f1f14a65f5532eb415",
+      "size": 4085
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_gender_multiclass.csv",
+      "sha": "db583bc8f36863887327f446f51b21570c979c8a",
+      "size": 4101
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_gender_multilabel.csv",
+      "sha": "d11f29a0a0a8ed677474b5390bbf28ea638597b5",
+      "size": 4133
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_party_multiclass.csv",
+      "sha": "5fed649e3c4e6d84a39f70df346a5e43d15bd683",
+      "size": 4025
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_party_multilabel.csv",
+      "sha": "ebf76d0781bc90d899e7d86a91cae19cec69fe8b",
+      "size": 4143
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_schulabschluss_multiclass.csv",
+      "sha": "197304fbedfeaba44170ecfe7f7a31f2588a1e4a",
+      "size": 4134
+    },
+    {
+      "path": "results/ablationExperiment/llm_group_pmf_without_schulabschluss_multilabel.csv",
+      "sha": "ccc4e2c233e249fa778da5ad0e6f29d0d412a744",
+      "size": 4137
+    },
+    {
+      "path": "results/ablationExperiment/llm_population_level_pmf_multiclass.csv",
+      "sha": "280dbbef29d4cb76b973a157ef57a22541a8f7d9",
+      "size": 1883
+    },
+    {
+      "path": "results/ablationExperiment/llm_population_level_pmf_multilabel.csv",
+      "sha": "b8400e91a81656d62c717fcff396579ecb5090c5",
+      "size": 4413
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_age_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_age_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_berufabschluss_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_berufabschluss_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_eastwest_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_eastwest_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_gender_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_gender_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_party_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_party_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_schulabschluss_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_1VAR_schulabschluss_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_Llama2_all_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_Llama2_all_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_Llama2_base_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_Llama2_base_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_age_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_age_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_berufabschluss_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_berufabschluss_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_eastwest_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_eastwest_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_gender_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_gender_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_party_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_party_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_schulabschluss_multiclass.csv",
+      "sha": "071c1ab37cfd5c0ac1ae3f5081c99ecff158431c",
+      "size": 4168
+    },
+    {
+      "path": "results/ablationExperiment/survey_group_pmf_without_schulabschluss_multilabel.csv",
+      "sha": "abf29c8980ab864bcf5b1f91b048a17520e12443",
+      "size": 4180
+    },
+    {
+      "path": "results/ablationExperiment/survey_population_level_pmf_multiclass.csv",
+      "sha": "2211cdb985b90aac0371279dd0dd64aab942dccd",
+      "size": 1897
+    },
+    {
+      "path": "results/ablationExperiment/survey_population_level_pmf_multilabel.csv",
+      "sha": "98da6bedfa27421294d166b7acca49d5eee2e478",
+      "size": 4539
+    },
+    {
+      "path": "results/modelExperiment/.DS_Store",
+      "sha": "f092d51047de356ea7cb00c6f6b8a05934ce0fc9",
+      "size": 10244
+    },
+    {
+      "path": "results/modelExperiment/ape_results.csv",
+      "sha": "cc06f33e681a95380ab70a739b5870f91f13f3f7",
+      "size": 211
+    },
+    {
+      "path": "results/modelExperiment/llm_group_pmf_Llama2_all_multiclass.csv",
+      "sha": "48f7dabfb4e61d2cfa6362c3e8bbf098393b22a8",
+      "size": 4325
+    },
+    {
+      "path": "results/modelExperiment/llm_group_pmf_Llama2_all_multilabel.csv",
+      "sha": "d6a1a992fceba59fe64580bae60300531a969a73",
+      "size": 4473
+    },
+    {
+      "path": "results/modelExperiment/llm_group_pmf_google-gemma-7b-it_12_1712704376_modified_multiclass.csv",
+      "sha": "b76d61d82a2765e71662c4cf231059b40e3f4645",
+      "size": 4221
+    },
+    {
+      "path": "results/modelExperiment/llm_group_pmf_google-gemma-7b-it_12_1712704376_modified_multilabel.csv",
+      "sha": "5077a014bfdbc642cc4eb892756b726f983b4d78",
+      "size": 4394
+    },
+    {
+      "path": "results/modelExperiment/llm_group_pmf_mistralai-Mixtral-8x7B-Instruct-v0.1_12_1712772173_multiclass.csv",
+      "sha": "293604f7fa3a9a22404f78c21b97c6d4b0f658f4",
+      "size": 4200
+    },
+    {
+      "path": "results/modelExperiment/llm_group_pmf_mistralai-Mixtral-8x7B-Instruct-v0.1_12_1712772173_multilabel.csv",
+      "sha": "4322aa5125484b83f7c62c4c4df39402be0f6fea",
+      "size": 4437
+    },
+    {
+      "path": "results/modelExperiment/llm_population_level_pmf_multiclass.csv",
+      "sha": "69ee77ba542e5c0cb8feaa5a28f9f036eec1c6ab",
+      "size": 802
+    },
+    {
+      "path": "results/modelExperiment/llm_population_level_pmf_multilabel.csv",
+      "sha": "ec47fa02318d7e9230341118426944ed8a4b1611",
+      "size": 1324
+    },
+    {
+      "path": "results/modelExperiment/survey_group_pmf_Llama2_all_multiclass.csv",
+      "sha": "3c4ddb1f118ec36c44b23fb6cb465b4b4e9d9fd3",
+      "size": 4643
+    },
+    {
+      "path": "results/modelExperiment/survey_group_pmf_Llama2_all_multilabel.csv",
+      "sha": "8db171a0934127834669c70d24e6cfc5b1197c3e",
+      "size": 4629
+    },
+    {
+      "path": "results/modelExperiment/survey_group_pmf_google-gemma-7b-it_12_1712704376_modified_multiclass.csv",
+      "sha": "3c4ddb1f118ec36c44b23fb6cb465b4b4e9d9fd3",
+      "size": 4643
+    },
+    {
+      "path": "results/modelExperiment/survey_group_pmf_google-gemma-7b-it_12_1712704376_modified_multilabel.csv",
+      "sha": "8db171a0934127834669c70d24e6cfc5b1197c3e",
+      "size": 4629
+    },
+    {
+      "path": "results/modelExperiment/survey_group_pmf_mistralai-Mixtral-8x7B-Instruct-v0.1_12_1712772173_multiclass.csv",
+      "sha": "3c4ddb1f118ec36c44b23fb6cb465b4b4e9d9fd3",
+      "size": 4643
+    },
+    {
+      "path": "results/modelExperiment/survey_group_pmf_mistralai-Mixtral-8x7B-Instruct-v0.1_12_1712772173_multilabel.csv",
+      "sha": "8db171a0934127834669c70d24e6cfc5b1197c3e",
+      "size": 4629
+    },
+    {
+      "path": "results/modelExperiment/survey_population_level_pmf_multiclass.csv",
+      "sha": "d91cae1a98a5e44561832b5d4e5f8c0b26603c61",
+      "size": 805
+    },
+    {
+      "path": "results/modelExperiment/survey_population_level_pmf_multilabel.csv",
+      "sha": "e7e0f9bfdc6ac063f8b05ade073281ac198568b9",
+      "size": 1426
+    },
+    {
+      "path": "results/waveExperiment/ape_results_multiclass.csv",
+      "sha": "de7f30b3946b494c4d9024633dbd7d99c2a5d376",
+      "size": 247
+    },
+    {
+      "path": "results/waveExperiment/ape_results_multilabel.csv",
+      "sha": "235909f5994592a0fd971915818364dbe05edd1d",
+      "size": 417
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_12_multiclass.csv",
+      "sha": "3b62c4d3cd4d28a64a3e24927bc56f2ba17b3932",
+      "size": 4167
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_12_multilabel.csv",
+      "sha": "ef002d143609b108cb36e2a0708860355600dff0",
+      "size": 4183
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_13_multiclass.csv",
+      "sha": "67399047eb0272802ffdf4d3339a622f6c62495c",
+      "size": 3700
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_13_multilabel.csv",
+      "sha": "1be5ed369e649b34ca4057455a9b81358d4fb8e6",
+      "size": 3887
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_14_multiclass.csv",
+      "sha": "5df3a8e463e917068effff29c2f6371f1e7bfc49",
+      "size": 4004
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_14_multilabel.csv",
+      "sha": "5872a3030efedbda16f63c1ff03f85a686054286",
+      "size": 4055
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_15_multiclass.csv",
+      "sha": "9a3d2e02619f3519a5c5b4d66e8cf182b3ef5e9a",
+      "size": 3839
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_15_multilabel.csv",
+      "sha": "efad7e0665c9f2c9df46378f9084e4488bb8823c",
+      "size": 4013
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_16_multiclass.csv",
+      "sha": "a7fef2df26a9a35e2ced828f025ca813dbabd163",
+      "size": 3897
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_16_multilabel.csv",
+      "sha": "8f02b5f59ad4a369c3a0e848f8572fc261adf67d",
+      "size": 4063
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_17_multiclass.csv",
+      "sha": "602f7ed06c02baae02b46515e17cece6295356f8",
+      "size": 3864
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_17_multilabel.csv",
+      "sha": "ec9b74eed79dd18291eba933d5f662e09b83ae08",
+      "size": 4021
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_18_multiclass.csv",
+      "sha": "48822a061dc20596d1ee6c897fa783a38f835a43",
+      "size": 3989
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_18_multilabel.csv",
+      "sha": "ab864c95c8d0dd9cc2e97800a0f215f9e6e40599",
+      "size": 4080
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_19_multiclass.csv",
+      "sha": "3970eb945cb4668b142dc1e574d3c866695fe135",
+      "size": 4007
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_19_multilabel.csv",
+      "sha": "27c5c03bdfe8bf30f5f938683392c170ee936571",
+      "size": 4072
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_20_multiclass.csv",
+      "sha": "01faef19e30b76027761f124154c1b77e01636ee",
+      "size": 3978
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_20_multilabel.csv",
+      "sha": "005c8359850f66fc00cb67239cf149488d769371",
+      "size": 4052
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_21_multiclass.csv",
+      "sha": "0c18ef1aacdb3e4e7a4db0736344a1ae7abaefb4",
+      "size": 3904
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_21_multilabel.csv",
+      "sha": "6500126a621e143935f3fb3dbc1f3575a5fe17b7",
+      "size": 4059
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave12.csv",
+      "sha": "d6a1a992fceba59fe64580bae60300531a969a73",
+      "size": 4473
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave12_multiclass.csv",
+      "sha": "59acc96bdf4fb5878332ecbd0e44c2420dd46336",
+      "size": 8119
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave12_multilabel.csv",
+      "sha": "d6a1a992fceba59fe64580bae60300531a969a73",
+      "size": 4473
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave13.csv",
+      "sha": "5dc66a9e5b7d43a3ec055e430b5ccac41350d53f",
+      "size": 4177
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave13_multiclass.csv",
+      "sha": "73828f89b697ae011a55ba005892d81077777200",
+      "size": 7262
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave13_multilabel.csv",
+      "sha": "5dc66a9e5b7d43a3ec055e430b5ccac41350d53f",
+      "size": 4177
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave14.csv",
+      "sha": "f53768d0c782a1bd5152bdeac6479926bd84f492",
+      "size": 4345
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave14_multiclass.csv",
+      "sha": "67b6a76e0fba9d2b3a45e2e8b04e5a219ffd4345",
+      "size": 8113
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave14_multilabel.csv",
+      "sha": "f53768d0c782a1bd5152bdeac6479926bd84f492",
+      "size": 4345
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave15.csv",
+      "sha": "4d0bbd9c50366a87b64e0bc695a1d724fe6dc9eb",
+      "size": 4303
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave15_multiclass.csv",
+      "sha": "84f56ef18f0610e70d900569d2d8465c35ce3e46",
+      "size": 7256
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave15_multilabel.csv",
+      "sha": "4d0bbd9c50366a87b64e0bc695a1d724fe6dc9eb",
+      "size": 4303
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave16.csv",
+      "sha": "34fed6df09ee440a7e00185be397a2562a09dd30",
+      "size": 4353
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave17.csv",
+      "sha": "886813816ea0873457caa4bcd58fa813277bb460",
+      "size": 4311
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave18.csv",
+      "sha": "eaf01063bf3de6f69a34e6df9c3ec3c3c96e24c3",
+      "size": 4370
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave19.csv",
+      "sha": "2ba10fbda5322ab7c1b7a47a4ba50ccd77131820",
+      "size": 4362
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave20.csv",
+      "sha": "6095162602fa3fbf8dd8f4d0d19cc1419c159b6d",
+      "size": 4342
+    },
+    {
+      "path": "results/waveExperiment/llm_group_pmf_wave21.csv",
+      "sha": "ee7ceb4fe74312da5117f3909a0ae2921eb24369",
+      "size": 4349
+    },
+    {
+      "path": "results/waveExperiment/llm_population_level_pmf_multiclass.csv",
+      "sha": "25fd8e6ae0894cda8f17e69480b39d11a377f74d",
+      "size": 1288
+    },
+    {
+      "path": "results/waveExperiment/llm_population_level_pmf_multilabel.csv",
+      "sha": "e6e116484d5c49fcd39b33b2a324e74a83a7e02a",
+      "size": 3042
+    },
+    {
+      "path": "results/waveExperiment/llm_population_level_pmf_wave12_to_wave21.csv",
+      "sha": "67c485daab2dd4cb59a06d1881b6759b2c4c44ca",
+      "size": 3148
+    },
+    {
+      "path": "results/waveExperiment/llm_population_level_pmf_wave12_to_wave21multiclass.csv",
+      "sha": "328f19640fdeca6c6d97a5eb2708cfd18c586821",
+      "size": 804
+    },
+    {
+      "path": "results/waveExperiment/llm_population_level_pmf_wave12_to_wave21multilabel.csv",
+      "sha": "93fd8c9abbc3bcec60fea3831ebfa521227c17ed",
+      "size": 1465
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_12_multiclass.csv",
+      "sha": "8d3a0e5d78897bb880910957c67a176b22a687bc",
+      "size": 4166
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_12_multilabel.csv",
+      "sha": "3262f9f63f5373099447d089a474e65008d3a5ff",
+      "size": 4178
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_13_multiclass.csv",
+      "sha": "5283eb9d94b8f528b25ac51fb64e622c1081aa2c",
+      "size": 4077
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_13_multilabel.csv",
+      "sha": "cd4b3f3745d1bd3da7221533a9997b813c284375",
+      "size": 4081
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_14_multiclass.csv",
+      "sha": "887ee8077785209b375870d128a65eeb9e75afb7",
+      "size": 4091
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_14_multilabel.csv",
+      "sha": "27bf255e7a01b25a3bbcdacc8d99fec602ec6e57",
+      "size": 4095
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_15_multiclass.csv",
+      "sha": "ce14dc937f888a6d9d1694e2dc58eea4ba234fa8",
+      "size": 4159
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_15_multilabel.csv",
+      "sha": "0ba09aaee96934e8adc19effd41de8d848934a29",
+      "size": 4171
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_16_multiclass.csv",
+      "sha": "9af485286cf3d1ab501784673e3d7e9589877968",
+      "size": 4142
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_16_multilabel.csv",
+      "sha": "3de9ec6d797963089be4aa5da555a02647c236ae",
+      "size": 4165
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_17_multiclass.csv",
+      "sha": "efaf7a8c4d51a359b3084dc043c62981fb6b84bc",
+      "size": 4179
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_17_multilabel.csv",
+      "sha": "8a4f5d563584be808fae568cd78f8ff6b88e5aa2",
+      "size": 4169
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_18_multiclass.csv",
+      "sha": "1968e8c54419429fb1ee4bf0a808bd8dbc4caab3",
+      "size": 4131
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_18_multilabel.csv",
+      "sha": "cbb054e4a93ecd1feec61a80fd30bb0718520981",
+      "size": 4157
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_19_multiclass.csv",
+      "sha": "d3d2a0b621d6e96d0dab2111040940bcacbf3a9e",
+      "size": 4144
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_19_multilabel.csv",
+      "sha": "d8f6f49b21d5e574c35581172c02513c5b864b71",
+      "size": 4175
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_20_multiclass.csv",
+      "sha": "9aa0f847db22fc89a2907697f828866204ae4115",
+      "size": 4177
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_20_multilabel.csv",
+      "sha": "dc0baca4bbbaca82d2f01bfccb2a36dfd218ef7a",
+      "size": 4195
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_21_multiclass.csv",
+      "sha": "99ee517d369c412ed60a7200c65b51c1026e62ba",
+      "size": 4154
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_21_multilabel.csv",
+      "sha": "325057df2bcd9e6edfa15b8a915611acc464fb40",
+      "size": 4156
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave12.csv",
+      "sha": "8db171a0934127834669c70d24e6cfc5b1197c3e",
+      "size": 4629
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave12_multiclass.csv",
+      "sha": "974b59ad2156aae9a22c890b52e21082716b946f",
+      "size": 8965
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave12_multilabel.csv",
+      "sha": "8db171a0934127834669c70d24e6cfc5b1197c3e",
+      "size": 4629
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave13.csv",
+      "sha": "68910876db227ca02e0378c67883c9fe4b5c6272",
+      "size": 4563
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave13_multiclass.csv",
+      "sha": "741a4ba7ad79d5c435d9f1f5db93830f0d6b7a1c",
+      "size": 8962
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave13_multilabel.csv",
+      "sha": "68910876db227ca02e0378c67883c9fe4b5c6272",
+      "size": 4563
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave14.csv",
+      "sha": "3721278499cb9f210f1a13a139e3e54e3e3c4505",
+      "size": 4546
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave14_multiclass.csv",
+      "sha": "1014ce7e2c6e6fafc984337e3ce43a069faff43e",
+      "size": 8961
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave14_multilabel.csv",
+      "sha": "3721278499cb9f210f1a13a139e3e54e3e3c4505",
+      "size": 4546
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave15.csv",
+      "sha": "e47f28db68358b945c681623484fd7d505883b8a",
+      "size": 4639
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave15_multiclass.csv",
+      "sha": "dbb579c61648d5a60c4ee1f24999ac794982e8bf",
+      "size": 8964
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave15_multilabel.csv",
+      "sha": "e47f28db68358b945c681623484fd7d505883b8a",
+      "size": 4639
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave16.csv",
+      "sha": "68dcd6fa0ccd6ca7d258d4a83f9791b2c53c8569",
+      "size": 4622
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave17.csv",
+      "sha": "dbbf1ddf6309af0cb0acc10368e5c903cc6c0b02",
+      "size": 4649
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave18.csv",
+      "sha": "4b6661238a041130014f7a1498feb244673801c7",
+      "size": 4639
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave19.csv",
+      "sha": "9618dff165699420fc05723885058699221b3cd9",
+      "size": 4652
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave20.csv",
+      "sha": "2052757380319167e76782a33c4fb8a564552f82",
+      "size": 4664
+    },
+    {
+      "path": "results/waveExperiment/survey_group_pmf_wave21.csv",
+      "sha": "58f10f46c8b3d9562de1b47dfbad9bfbb9026770",
+      "size": 4628
+    },
+    {
+      "path": "results/waveExperiment/survey_population_level_pmf_multiclass.csv",
+      "sha": "29af56f9f74ace37a4e09ebabd4fe14631f1d7f9",
+      "size": 1323
+    },
+    {
+      "path": "results/waveExperiment/survey_population_level_pmf_multilabel.csv",
+      "sha": "44ad2a403030efc165f48ab24d87e890da08628e",
+      "size": 3203
+    },
+    {
+      "path": "results/waveExperiment/survey_population_level_pmf_wave12_to_wave21.csv",
+      "sha": "8e6bb990cd219b4444a318840d4cb7c45abd6a75",
+      "size": 3664
+    },
+    {
+      "path": "results/waveExperiment/survey_population_level_pmf_wave12_to_wave21_multiclass.csv",
+      "sha": "b53e7011483a0d896eae803c048b769772544830",
+      "size": 828
+    },
+    {
+      "path": "results/waveExperiment/survey_population_level_pmf_wave12_to_wave21_multilabel.csv",
+      "sha": "c8e43416e14b455b76ae553d8f3252eb0dc2f1d8",
+      "size": 1664
+    },
+    {
+      "path": "setup.py",
+      "sha": "8d3adda1c2fbda6c860210fbfa52242ffc795078",
+      "size": 172
+    },
+    {
+      "path": "src/.DS_Store",
+      "sha": "6065ec05c05fe3e0c1d0466d3f83ea9df0aa6d6f",
+      "size": 8196
+    },
+    {
+      "path": "src/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "src/analysis/.DS_Store",
+      "sha": "53eb6cec5d67fc151ff8daaa16096ac6f5ec632e",
+      "size": 8196
+    },
+    {
+      "path": "src/analysis/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "src/analysis/ablationExperiment/.DS_Store",
+      "sha": "7ae8ce8e211a8b7e4ec083d58752c791379bc7d1",
+      "size": 6148
+    },
+    {
+      "path": "src/analysis/ablationExperiment/analysis.py",
+      "sha": "8d1ecd818fd0d4653db405dba6a0d22d4da18626",
+      "size": 3553
+    },
+    {
+      "path": "src/analysis/ablationExperiment/plot.py",
+      "sha": "ffd0e5973e4470c168dc396d22eb845b57f9c2d7",
+      "size": 3843
+    },
+    {
+      "path": "src/analysis/ablationExperiment/utils.py",
+      "sha": "6e7d560ea6ba89ed4da2f137af26b76d34394060",
+      "size": 12522
+    },
+    {
+      "path": "src/analysis/data_processing.py",
+      "sha": "fdd3f7f1d08cb90a7739bc298a690bc58066f4db",
+      "size": 9715
+    },
+    {
+      "path": "src/analysis/experiment_utils.py",
+      "sha": "05d7b7b46104751b06c1e821487f7e657ce22bf7",
+      "size": 6200
+    },
+    {
+      "path": "src/analysis/main.py",
+      "sha": "d28dfc877fe9adf24af1d85bbd486a914c56b6d7",
+      "size": 75
+    },
+    {
+      "path": "src/analysis/metrics.py",
+      "sha": "1ac2a632bc7e2e93e3c177d7b76b4c6283319b17",
+      "size": 14241
+    },
+    {
+      "path": "src/analysis/modelExperiment/.DS_Store",
+      "sha": "7ae8ce8e211a8b7e4ec083d58752c791379bc7d1",
+      "size": 6148
+    },
+    {
+      "path": "src/analysis/modelExperiment/analysis.py",
+      "sha": "cb5e17acf64761a1793933908a1cf0ae2ae64a6d",
+      "size": 2448
+    },
+    {
+      "path": "src/analysis/modelExperiment/plot.py",
+      "sha": "874180d5a3045565f116febe071f8b873dd6d482",
+      "size": 4559
+    },
+    {
+      "path": "src/analysis/modelExperiment/utils.py",
+      "sha": "aaffd0d255fcfbc24fad9f04589ae0e22ca6024c",
+      "size": 8251
+    },
+    {
+      "path": "src/analysis/plots.py",
+      "sha": "0e2418bb0f4a8a8cd63de8c89a90475ed6e83843",
+      "size": 4276
+    },
+    {
+      "path": "src/analysis/waveExperiment/.DS_Store",
+      "sha": "9b9c5f3bbd6b2e2d66b750c76d3619c37d4bfa9e",
+      "size": 6148
+    },
+    {
+      "path": "src/analysis/waveExperiment/analysis.py",
+      "sha": "30728e7cb4d0cfbdfefafe247aa817ecc873c507",
+      "size": 3958
+    },
+    {
+      "path": "src/analysis/waveExperiment/plots.py",
+      "sha": "4a431936b17941f9fb698703863060d271453dac",
+      "size": 21869
+    },
+    {
+      "path": "src/analysis/waveExperiment/utils.py",
+      "sha": "629025ddd9270a9e5018d4c9f1c1b5b6dae0841d",
+      "size": 11779
+    },
+    {
+      "path": "src/bert/bert_classifier.py",
+      "sha": "dd5c9e8c12734c306aee50fa05f466c32b238769",
+      "size": 14948
+    },
+    {
+      "path": "src/bert/custom_trainer.py",
+      "sha": "f481563693853a9842148cab2a566462257972e3",
+      "size": 2537
+    },
+    {
+      "path": "src/bert/data_prep.py",
+      "sha": "5f49d2f60e3dbda680356e7d2804c9c1b382e67b",
+      "size": 14026
+    },
+    {
+      "path": "src/bert/db_loss.py",
+      "sha": "50e7874dfd64ff8f283f40822f08522d6cda81ef",
+      "size": 2118
+    },
+    {
+      "path": "src/bert/focal_loss.py",
+      "sha": "ee2a2a2f75d28ea8d1f02abef76931396f542c78",
+      "size": 822
+    },
+    {
+      "path": "src/bert/hyperparameter_tuning.py",
+      "sha": "b786ce26f46eff2b04fee091ece68260fe9cdf01",
+      "size": 2627
+    },
+    {
+      "path": "src/bert/metrics.py",
+      "sha": "9418e583f99e77cfbed71a1c842ec71604cf3916",
+      "size": 2799
+    },
+    {
+      "path": "src/bert/predict.py",
+      "sha": "626c767d22f7510bf8edab7d278d73394a289db8",
+      "size": 1264
+    },
+    {
+      "path": "src/bert/resample_loss.py",
+      "sha": "e29fdd1bbd0f0358a39174ddd496c4aa757b62ac",
+      "size": 9732
+    },
+    {
+      "path": "src/bert/train.py",
+      "sha": "57f967c6a218ed8f3d4bd490dfecae451a1076f3",
+      "size": 4239
+    },
+    {
+      "path": "src/bert/utils.py",
+      "sha": "1df9096fcc81c6fef721e517dcd550444b6d80ab",
+      "size": 2630
+    },
+    {
+      "path": "src/data/.DS_Store",
+      "sha": "131f8cd9ab5f47c4aa419d5634fbb4407af148a6",
+      "size": 6148
+    },
+    {
+      "path": "src/data/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "src/data/education_preprocess.py",
+      "sha": "47ec18f1ba731978821daed702a5b9924a304699",
+      "size": 5704
+    },
+    {
+      "path": "src/data/process_data.py",
+      "sha": "e9b166ba10543a388dad2772f5355dc7a4238a27",
+      "size": 5440
+    },
+    {
+      "path": "src/data/read_data.py",
+      "sha": "361aef26d05c26567a8d68ea4e7b5b28bd28f1ba",
+      "size": 2338
+    },
+    {
+      "path": "src/experiment/.DS_Store",
+      "sha": "fdb9c718c4964024fa4ccfaf2dfa0db08b2f7142",
+      "size": 6148
+    },
+    {
+      "path": "src/experiment/HFTextGenerator.py",
+      "sha": "d065419ec7e5570529e903c9976ee04af0694ab3",
+      "size": 2806
+    },
+    {
+      "path": "src/experiment/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "src/experiment/experiment.env",
+      "sha": "7884437164518420e382d534f9a14058219303cc",
+      "size": 105
+    },
+    {
+      "path": "src/experiment/experiment.example.env",
+      "sha": "af56399d8153f55a5ee22b0b7644b0f1f18d1a88",
+      "size": 127
+    },
+    {
+      "path": "src/experiment/experiment.py",
+      "sha": "a3f48b6c831c1814dda41e54e0dc60c9c2032533",
+      "size": 6742
+    },
+    {
+      "path": "src/experiment/experiment_config_paper.json",
+      "sha": "00c92dc951bc522d1a7c3db20e9c2d317f6c09f1",
+      "size": 382
+    },
+    {
+      "path": "src/experiment/experiment_utils.py",
+      "sha": "7b6ef472a040f3411ad47d8f672f34e2ac5cc082",
+      "size": 1819
+    },
+    {
+      "path": "src/experiment/llama_config.json",
+      "sha": "99521e238ad3bb0f04de1a01f0d095039df50b30",
+      "size": 427
+    },
+    {
+      "path": "src/logger.py",
+      "sha": "9c0fa578123ff37377c276cf6d53d6009d657f68",
+      "size": 645
+    },
+    {
+      "path": "src/paths.py",
+      "sha": "9c3cc452eaa3b08a026785e9d38fbd6819ccc71a",
+      "size": 1498
+    },
+    {
+      "path": "src/utils.py",
+      "sha": "1ab7db684f0c2f32b6911b2f5130af424fb38da1",
+      "size": 2734
+    }
+  ],
+  "selected_paths": [
+    "README.md",
+    "notebooks/paper_figures.ipynb",
+    "src/analysis/data_processing.py",
+    "src/analysis/metrics.py",
+    "src/bert/bert_classifier.py",
+    "src/bert/data_prep.py",
+    "src/bert/metrics.py",
+    "src/bert/train.py",
+    "src/experiment/experiment_config_paper.json",
+    "src/experiment/HFTextGenerator.py",
+    "src/experiment/llama_config.json",
+    "src/analysis/waveExperiment/analysis.py",
+    "src/analysis/waveExperiment/utils.py",
+    "results/waveExperiment/llm_population_level_pmf_multiclass.csv",
+    "results/waveExperiment/llm_population_level_pmf_multilabel.csv",
+    "results/waveExperiment/survey_population_level_pmf_multiclass.csv",
+    "results/waveExperiment/survey_population_level_pmf_multilabel.csv",
+    "data/coding_values/map.csv"
+  ]
+}
