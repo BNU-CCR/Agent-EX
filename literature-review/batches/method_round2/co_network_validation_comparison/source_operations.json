@@ -1,0 +1,12 @@
+[
+  {
+    "search_id": "CO-01",
+    "platform": "local_fixed_source_synthesis",
+    "search_date": "2026-11-28",
+    "coverage_end": "2026-11-27",
+    "query_exact": "Compare four fixed reading cards by empirical data role, selection/stopping, evaluation target and independent unit",
+    "source_url": "reports/network_validation_comparison_CO.md",
+    "status": "existing_sources_synthesized_no_new_acquisition",
+    "notes": "Fixedbe970ac;notanewinternetsearch;primarysourcecutoff27Nov;analysis28Nov"
+  }
+]
