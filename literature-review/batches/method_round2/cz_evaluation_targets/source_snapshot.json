@@ -1,0 +1,47 @@
+[
+  {
+    "path": "reading-cards/M052.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "6b6bf397528c61596859c1753d50a68d4d0332172e9d447f79ea902cc4c88bd8"
+  },
+  {
+    "path": "reading-cards/M053.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "9415b2b127752f32a7b0692d32c2b5586556a25e4cb7646f260efc14b0932f50"
+  },
+  {
+    "path": "reading-cards/M054.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "7046cc0c20f89e82e2cc20c79611c0d03785cc003e73ab9b7f80128e0e7f4bf8"
+  },
+  {
+    "path": "reading-cards/M055.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "363b3d4a6adddb0b13699d5e8af751fa99568a153c8321d20ee043e54422319a"
+  },
+  {
+    "path": "reading-cards/M025.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "98eafd0b7a841b0dee4c848632df5b238677e00249bfc781211f10e611dbbc39"
+  },
+  {
+    "path": "reading-cards/EN11.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "e0b16af089c12487d6f7339472ca2d0eb9bebb1e0dbf0b4d3e7ca7a9cb2ec1da"
+  },
+  {
+    "path": "reading-cards/M003.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "d47c7a1a8468ac6c60e872c187bc9e9e6a7e787b1f687409d878c9cbed1ee6d1"
+  },
+  {
+    "path": "reports/calibration_boundary_CP.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "e0312297558cdfa3a571e0edee21990832a7f972a0fc7a10a1aa1901bb67e01b"
+  },
+  {
+    "path": "reports/repeat_budget_CQ.md",
+    "commit": "1fed90e",
+    "git_lf_sha256": "042517fe5ba7d37d16fbae2e8f5c448308c0d30dd4f18fd13c0cdbcdd3012932"
+  }
+]

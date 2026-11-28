@@ -1,0 +1,11 @@
+[
+  {
+    "search_id": "CZ-01",
+    "platform": "local_fixed_evidence_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Comparesevenworks:target/reference/selection/unit/decision/claim/currentandfuturepapers",
+    "source_url": "reports/evaluation_targets_CZ.md",
+    "status": "fixed_source_synthesis_saved_no_new_acquisition",
+    "notes": "Ninefilesfixed1fed90e;nostatus/card/unitupgrade;notnewexperiments/policysearch"
+  }
+]

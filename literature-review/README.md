@@ -195,3 +195,5 @@
 - [统计检查与保证范围](reports/statistical_checks_CX.md)：M054重复/预热、14参数候选及闭源分析器的可审计边界。
 
 - [九类验证支持方法](reports/validation_support_CY.md)：M055用途/参照/局限、作者判断矩阵与正式版本公式核查。
+
+- [七文献评价对象综合](reports/evaluation_targets_CZ.md)：对象/参照/选择/单位/判据对应及当前、后续论文主张。
