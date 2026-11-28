@@ -25898,5 +25898,25 @@
     "batch": "FQ",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fq_odd_reading/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_pending_fields",
+    "old": "supplementary_data_and_querydetails;citation_proxy_quality;formal_vs_ESSversion_collation;independent_standard_effect;AI_draft_edgecase_accuracy;uncollated_reference_studies",
+    "new": "supplement/rawScopus;exact_ABM_query_fields_syntax;ODD_reference_matching;year_limits_dedup_denominators;manual_correct_use_validation;ESSversioncollation;independent_standard_effect;AI_edgecase_accuracy",
+    "date": "2026-11-28",
+    "batch": "FR",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fr_odd_bibliometric_scope/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_coding_source",
+    "old": "reading-cards/M012.md;reports/odd_standard_evidence_FQ.md;batches/method_round2/fq_odd_reading/reading_scope.json",
+    "new": "reading-cards/M012.md;reports/odd_standard_evidence_FQ.md;batches/method_round2/fq_odd_reading/reading_scope.json;reports/odd_bibliometric_scope_FR.md;data/odd_bibliometric_claim_scope_FR.csv",
+    "date": "2026-11-28",
+    "batch": "FR",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fr_odd_bibliometric_scope/results.json"
   }
 ]

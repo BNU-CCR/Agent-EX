@@ -1,0 +1,13 @@
+field,source_supported_description,location,evidence_status,claim_limit
+database,Scopus,sec3,author_reported,本库未取得该作者Scopus导出，不能说本轮数据库覆盖完成
+ABM_query,提及agent-based/individual-basedmodelling的文献,sec3,broad_description_only,无确切字段/完整语法/类型限制，不能自拟字符串冒充原检索式
+ODD_match,引用三原ODD文章或ODD+D,sec3,reference_set_described,确切引用匹配/异体/去重/漏检规则未核
+snapshot,2026-06-23,Figs2-3captions,date_in_caption,是作者抓取日期，不是文献首发日或本库检索日
+year_slice,allpublications与2020onwards比较,sec3/Fig3,labels_only,下限/上限/未定年/earlyaccess处理未取得
+discipline,ScopusASJC多分类,Fig2caption,nonexclusive_classification,各学科计数相加不能当独特文章总数
+journal_selection,比例最高十刊,Fig3caption,selected_sample,不当所有刊或LLM模拟共同体排名；筛选阈值未知
+denominator,相关ABM/IBM文献按学科/刊分组,sec3/Figs2-3,counts_not_independently_recalculated,记录去重/类型/年份/小样本与重分类处理未知
+correct_implementation,所读正文未建立逐篇正确完整使用ODD的人工核查,sec3scope,not_established,引用共现率不是正确采用率或标准功效
+low_volume,少于1000篇的学科比例可能受小样本影响,sec3,author_caution,不能据高百分比推成熟共同体
+figure_text,正文≤30%与Fig2Veterinary接近40%,sec3/Fig2visual,discrepancy_retained,原资料未得，不输出通用≤30%或推断原因
+raw_material,机构主文有，附件/原始语料未取得；API429,FRsourceaccess/AppendixA,access_limited,未获取不等不存在，不能认证统计重算或全量召回

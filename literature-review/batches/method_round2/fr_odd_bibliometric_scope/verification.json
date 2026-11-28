@@ -1,0 +1,45 @@
+{
+  "checked": "2026-11-28",
+  "master_changes": [
+    [
+      "M012",
+      [
+        "search_id",
+        "supplement_status",
+        "notes",
+        "method_pending_fields",
+        "method_coding_source"
+      ]
+    ]
+  ],
+  "records": 240,
+  "cards": 91,
+  "matrix267_unchanged": true,
+  "claim_scope_rows": 12,
+  "source_response_hashes_verified": 3,
+  "source_statuses": [
+    200,
+    200,
+    429
+  ],
+  "workbook_rows": [
+    28,
+    241,
+    62,
+    32,
+    268,
+    56,
+    1936,
+    16,
+    42,
+    36
+  ],
+  "requirement_classes_unchanged": 66,
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "no_grade_or_status_change": true,
+  "no_author_code_execution": true,
+  "goal_acceptance": false
+}

@@ -1,0 +1,59 @@
+[
+  {
+    "tag": "institute_home",
+    "url": "https://www.thuenen.de/en/",
+    "status": 200,
+    "bytes": 52744,
+    "sha256": "e4ecb9c6e9cea3a52b2bfcbf56f046024e0a3f61ef85591d675100e26a6994ca",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FR_institute_home.response",
+    "final_url": "https://www.thuenen.de/en/",
+    "selected_links": [
+      {
+        "text": "DOI:10.1016/j.envsoft.2026.107203",
+        "url": "https://doi.org/10.1016/j.envsoft.2026.107203"
+      },
+      {
+        "text": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+        "url": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf"
+      }
+    ]
+  },
+  {
+    "tag": "author_publications",
+    "url": "https://www.humboldt.edu/ecological-modeling/publications-and-products",
+    "status": 200,
+    "bytes": 119250,
+    "sha256": "f086e594a0d02c66c21970d5120c53750fc0c1a5d1c07844ecc19e97a283140a",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FR_author_publications.response",
+    "final_url": "https://www.humboldt.edu/ecological-modeling/publications-and-products",
+    "selected_links": [
+      {
+        "text": "www.railsback-grimm-abm-book.com.",
+        "url": "http://www.railsback-grimm-abm-book.com/"
+      },
+      {
+        "text": "at this site",
+        "url": "http://www.railsback-grimm-abm-book.com/MPAI/"
+      },
+      {
+        "text": "web page with updates to the article here",
+        "url": "http://www.railsback-grimm-abm-book.com/jasss-models/"
+      },
+      {
+        "text": "Volker Grimm's web site",
+        "url": "http://www.ufz.de/index.php?de=4976"
+      }
+    ]
+  },
+  {
+    "tag": "publisher_metadata",
+    "url": "https://api.elsevier.com/content/article/PII:S1364815226003506?httpAccept=text/xml",
+    "status": 429,
+    "bytes": 180,
+    "sha256": "02f6d1d49ded4e0b0898231f5939ef4ad814352d39372ed5e91b8f5b69bf0d8c",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FR_publisher_metadata.response",
+    "final_url": "https://api.elsevier.com/content/article/PII:S1364815226003506?httpAccept=text/xml",
+    "text_excerpt": "{\"error-response\":{\"error-code\":\"RATE_LIMIT_EXCEEDED\",\"error-message\":\"Rate of requests exceeds specified limits. Recommend lowering request rate and/or concurrency of requests.\"}}",
+    "selected_links": []
+  }
+]

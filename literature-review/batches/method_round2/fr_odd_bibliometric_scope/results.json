@@ -1,0 +1,16 @@
+{
+  "batch_id": "FR",
+  "date": "2026-11-28",
+  "expected_master_sha256": "efd3915a05e0e23b64364aa9d07792304e00746889b8dc5332d059225727f058",
+  "updates": [
+    {
+      "record_id": "M012",
+      "search_id": "S-M2-ODD-M012;S-M2-AD-Q5;S-M2-AD-NOTICE;S-M2-AD-UMU;CS-12;CS-15;CS-20;DV-01;DV-03;DV-04;ES-02;ES-05;ES-07;ES-09;FP-01;FP-02;FP-03;FP-04;FQ-01;FQ-02;FQ-03;FQ-04;FQ-05;FR-01;FR-02;FR-03;FR-04;FR-05",
+      "supplement_status": "FRnewinstitutehome/authorpublicationpages200listnoverifiedsupplement;PDFlinksDOIonly;Elseviermetadata429;rawScopus/DOCX/ZIPnotacquired",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed. | CJ:DelftPDF4035717bytesHTML;hashinCJmanifest;noPDF/fulltext/dateupgrade;threeclassificationblanksretained | CS:newauthoruploadRG403;ESSredirectunavailable;DiVAAnubisdenial;UFZhistoricalpageonly;noPDF/date/classificationupgrade | DV:publisher-depositedCrossref200hasno published-online;print month/created not substituted for firstonline;date/status/grade unchanged | ES:verified abstract supports method_validity/method_evaluation purpose only;three blanks resolved as abstract_provisional. ASU issue2027-01-01 is not firstonline. Delft403HTML5717bytes;UFZ only older2006/2010 PDFs;no new fulltext/date/evidencegrade. | FP:newThueneninstitutionalPDF2004374610bytes13p;titleDOIandp1Availableonline2026-10-10confirmed;formalbodyacquirednotyetread;candidate/unclearunchanged;supersedespriorfulltext/datependingnotpriorfailureevidence | FQ:formal-focusedread2-3/5-8;Table1/Figs1-2visual;M01115/18iscitedexistingstudy_notnewexperiment;Fig2Veterinarynear40vsbodynever30retained;no supplement/rawdata/codeexecution | FR:institutionhomepagePDF/DOIconfirmed;authorpublicationpage200noM012supplementverified;publisherAPI429notzeromaterial;12fieldbibliometricclaimscopeaudit;noqueryreconstruction/recallclaim",
+      "method_pending_fields": "supplement/rawScopus;exact_ABM_query_fields_syntax;ODD_reference_matching;year_limits_dedup_denominators;manual_correct_use_validation;ESSversioncollation;independent_standard_effect;AI_edgecase_accuracy",
+      "method_coding_source": "reading-cards/M012.md;reports/odd_standard_evidence_FQ.md;batches/method_round2/fq_odd_reading/reading_scope.json;reports/odd_bibliometric_scope_FR.md;data/odd_bibliometric_claim_scope_FR.csv"
+    }
+  ],
+  "new_records": []
+}

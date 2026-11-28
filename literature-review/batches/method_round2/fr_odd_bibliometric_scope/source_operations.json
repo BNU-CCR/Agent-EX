@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "FR-01",
+    "platform": "targeted_web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "Threequeries107203+Grimm+Supplementary/dn071466supplement/ODDtitle+Data+Scopus;noverifiednewattachment",
+    "source_url": "https://www.thuenen.de/en/",
+    "status": "no_verified_supplement_discovered",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FR-02",
+    "platform": "formal_pdf_links",
+    "search_date": "2026-11-28",
+    "query_exact": "13pagesURIannotations;DOIlinks onp1/11,notdirectattachmentlist",
+    "source_url": "https://literatur.thuenen.de/digbib_extern/dn071466.pdf",
+    "status": "links_inspected",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FR-03",
+    "platform": "primary_institution_author_pages",
+    "search_date": "2026-11-28",
+    "query_exact": "Thuenenhome200listsDOI/PDF;Humboldtpublications200noverifiedM012attachment",
+    "source_url": "https://www.thuenen.de/en/ | https://www.humboldt.edu/ecological-modeling/publications-and-products",
+    "status": "primary_pages_checked",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FR-04",
+    "platform": "publisher_metadata_endpoint",
+    "search_date": "2026-11-28",
+    "query_exact": "PII S1364815226003506metadatarequest429;no retry/noattachment inference",
+    "source_url": "https://api.elsevier.com/content/article/PII:S1364815226003506?httpAccept=text/xml",
+    "status": "rate_limited_not_content",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  },
+  {
+    "search_id": "FR-05",
+    "platform": "claim_scope_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "12fields:query/ODDmatching/year/dedup/ASJC/journalchoice/implementation;notreconstructedquery",
+    "source_url": "data/odd_bibliometric_claim_scope_FR.csv",
+    "status": "source_scope_saved",
+    "notes": "Grouped source operation not query count; no author code/model execution"
+  }
+]
