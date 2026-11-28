@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://aclanthology.org/2026.eacl-long.89.pdf",
+    "status": 200,
+    "bytes": 664604,
+    "sha256": "42846ccc194ba86a641912434dacfffe5f39908ac1d007d089fa5f550be7b50d",
+    "content_type": "application/pdf",
+    "pdf_signature": true
+  },
+  {
+    "url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": 200,
+    "bytes": 44959,
+    "sha256": "5aaae9a4411b0d9b4646d3e08bac872721aad4c3ebae0d5e81fc73a127a39df2"
+  },
+  {
+    "url": "https://api.crossref.org/works/10.18653/v1/2026.eacl-long.89",
+    "status": 200,
+    "bytes": 2549,
+    "sha256": "96dcd0d322a2fb66863817dbf3f2a3b244bbebc9d7281913a1fffd4ec22dafd2"
+  },
+  {
+    "url": "https://aclanthology.org/attachments/2026.eacl-long.89.checklist.pdf",
+    "status": 200,
+    "bytes": 65487,
+    "sha256": "d534d8f9edd799470dd3c40b673163f7ccb0dc946c4b8b2b3eda58e3ded31fbb",
+    "pdf_signature": true
+  }
+]

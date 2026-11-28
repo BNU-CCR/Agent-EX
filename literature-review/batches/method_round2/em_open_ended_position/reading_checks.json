@@ -1,0 +1,49 @@
+{
+  "scope": "Official19ppPDFmain1–10/AppA17–18/AppB19;reference10–16onlyMa2025citationlocated_notrescreened;official2ppchecklist",
+  "visual_pages": [
+    4,
+    9,
+    19
+  ],
+  "paper_type": "Self-describedpositionpaper;formalEACLlongpaperpublication",
+  "checklist": {
+    "B_artifacts": false,
+    "C_computational_experiments": false,
+    "D_human_annotations": false,
+    "E_AIassistance": true
+  },
+  "literature_followup": {
+    "reported_denominator": 53,
+    "any_opentext": 11,
+    "primary_opentext": 4,
+    "any_percent": 20.754716981132077,
+    "primary_percent": 7.547169811320755,
+    "not_independently_recoded": true
+  },
+  "coding_example": {
+    "prose_categories": 16,
+    "listed_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "observed_count": 17,
+    "not_new_annotation_validation": true
+  },
+  "date": "Officialmonth2026/3;Crossrefcreated2026-03-23notpublicationdate;preciseonlinepending",
+  "limits": "No independentempiricaltrialororiginalreviewrecoding;freegeneratedrationalesnotproveninternalmechanism"
+}

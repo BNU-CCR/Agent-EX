@@ -1,0 +1,34 @@
+{
+  "batch_id": "EM-open-ended-position-evidence-boundaries",
+  "date": "2026-11-28",
+  "expected_master_sha256": "d7856e307fd944c63c4cd21c606b542f4b423814fd29be60a9ada8216704a5a9",
+  "updates": [
+    {
+      "record_id": "M179",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M179.md",
+      "reason": "正式方法立场全文与checklist支持开放生成/编码/评价议程；无新实验，精确首发日pending，candidate保持。",
+      "research_question": "How can open-ended elicitation and coding enrich social simulation, and what empirical validation is still required?",
+      "method_type": "position_paper;conceptual_method_framework;survey_NLP_method_transfer;open_text_coding_agenda",
+      "mechanisms": "unconstrained_prompt;free_generation;qualitative_quantitative_coding;human_machine_annotation;multidimensional_evaluation",
+      "related_versions": "OfficialEACL19ppPDFmain1–10/AppA–B17–19read;2ppofficialchecklist;monthonly2026/3,preciseonlinepending",
+      "date_basis": "OfficialACLmonth2026/3;currentCrossref200hasnoonline/created2026-03-23notpublicationdate",
+      "supplement_status": "Official2ppchecklistread;no_new_artifact_experiment_annotation_per_BCD;53studycodingtable_notreconstructed",
+      "findings": "Conceptualpositionnotnewempiricalbenchmark. Promptopenendednessdistinctfromdownstreamfinitecoding;coherence/diversity/empiricalrealismagenda. Authors53studyfollowup11any/4primaryopen;notfieldrate. AppBprose16vsIDs0–16(17). Generatedrationalesnotmechanismproof;biasdirectionexplicitlyunresolved.",
+      "evidence_location": "FormalPDF§2–6/8–9;Table1;AppA/B/Fig2;officialchecklistB/C/D/E;visual4/9/19",
+      "relation_to_agent_ex": "Separate generation/publictext/coding/aggregation/reference;openpostscompatiblewithfrozenprivate-publicmeasurement;no causal proof from rationales",
+      "notes": "EA bounded targeted public discovery;not full inventory/database export. No new card/evidence-unit/maturity upgrade.  EMpositionfulltext/checklistread;no empiricalupgrade. Referencesnotrescreened;53studypercentagesnotrecoded. CoreGermanMa2025caseleadnotnewrecordyet.",
+      "method_maturity": "conceptual_framework",
+      "method_evidence_level": "conceptual_claim",
+      "method_transferability": "Elicitation/coding/reference separation and unknown/refusal denominator discipline;needs empirical testing,not validated workflow",
+      "method_relevance_rationale": "Explicitly conceptual survey-NLP bridge clarifies open input vs coded outputs and coherence/diversity/externalreference needs",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "exact_formal_first_online;53study_coding_inventory;16vs17category_count;empirical_case_annotation_classifier_reference;open_vs_closed_effects",
+      "method_evidence_location": "§2–6/8–9;AppB;checklistBCD",
+      "method_coding_source": "reading-cards/M179.md;reports/open_ended_position_EM.md;batches/method_round2/em_open_ended_position/reading_checks.json",
+      "method_last_checked": "2026-11-28",
+      "search_id": "EA-01;EA-07;EM-01;EM-02;EM-03"
+    }
+  ],
+  "new_records": []
+}

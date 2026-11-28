@@ -1,0 +1,22 @@
+{
+  "base": "578d307",
+  "changed_master_records": [
+    "M179"
+  ],
+  "previous_matrix_prefix_preserved": 243,
+  "cards": 86,
+  "heading_cards": 80,
+  "inline_cards": 6,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    248,
+    1743,
+    11,
+    42
+  ],
+  "formal_bib_entries": 60,
+  "status": "passed",
+  "limits": "Conceptualsource/checklist;notnewempiricalvalidation;precisedatepending;coverlayoutunchangedfromEIvisual"
+}

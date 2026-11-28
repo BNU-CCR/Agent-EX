@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "EM-01",
+    "platform": "official_pdf",
+    "search_date": "2026-11-28",
+    "query_exact": "19pp664604bytesSHA256",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "200_formal_PDF",
+    "notes": "Grouped sourceoperation,notindependentqueries/experiments;no new original study execution"
+  },
+  {
+    "search_id": "EM-02",
+    "platform": "official_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "currentACLpage/Crossrefonlineabsent_creatednotused",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "month_date_pending",
+    "notes": "Grouped sourceoperation,notindependentqueries/experiments;no new original study execution"
+  },
+  {
+    "search_id": "EM-03",
+    "platform": "official_checklist",
+    "search_date": "2026-11-28",
+    "query_exact": "2ppB/C/DNo_Eyes",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "200_checklist",
+    "notes": "Grouped sourceoperation,notindependentqueries/experiments;no new original study execution"
+  },
+  {
+    "search_id": "EM-04",
+    "platform": "scoped_fulltext",
+    "search_date": "2026-11-28",
+    "query_exact": "main1–10/AppA17–18/B19;refMa2025only",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "position_read",
+    "notes": "Grouped sourceoperation,notindependentqueries/experiments;no new original study execution"
+  },
+  {
+    "search_id": "EM-05",
+    "platform": "numeric_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "11/53and4/53;16prosevs17IDs",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "local_counts_not_recoding",
+    "notes": "Grouped sourceoperation,notindependentqueries/experiments;no new original study execution"
+  },
+  {
+    "search_id": "EM-06",
+    "platform": "visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "p4/9/19tableconcept/limitations/codebook",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "three_pages_inspected",
+    "notes": "Grouped sourceoperation,notindependentqueries/experiments;no new original study execution"
+  },
+  {
+    "search_id": "EM-07",
+    "platform": "integration",
+    "search_date": "2026-11-28",
+    "query_exact": "oneconceptualcard4units;noempiricalupgrade",
+    "source_url": "https://aclanthology.org/2026.eacl-long.89/",
+    "status": "local_update",
+    "notes": "Grouped sourceoperation,notindependentqueries/experiments;no new original study execution"
+  }
+]

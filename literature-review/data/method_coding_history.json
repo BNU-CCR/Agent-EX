@@ -24358,5 +24358,95 @@
     "batch": "EK-cultural-variance-training-measurement-boundaries",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ek_cultural_variance/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "position_paper;conceptual_method_framework;survey_NLP_method_transfer;open_text_coding_agenda",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "conceptual_framework",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "conceptual_claim",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Elicitation/coding/reference separation and unknown/refusal denominator discipline;needs empirical testing,not validated workflow",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_relevance_rationale",
+    "old": "开放式输出的测量/方法观点；需核实证演示与立场性主张，不把自由文本自动当真实性改善。",
+    "new": "Explicitly conceptual survey-NLP bridge clarifies open input vs coded outputs and coherence/diversity/externalreference needs",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_pending_fields",
+    "old": "fulltext;reference_independence;target_metrics;model_data_version;exact_formal_first_online;method_maturity;method_evidence_level",
+    "new": "exact_formal_first_online;53study_coding_inventory;16vs17category_count;empirical_case_annotation_classifier_reference;open_vs_closed_effects",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_evidence_location",
+    "old": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "new": "§2–6/8–9;AppB;checklistBCD",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
+  },
+  {
+    "record_id": "M179",
+    "field": "method_coding_source",
+    "old": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "new": "reading-cards/M179.md;reports/open_ended_position_EM.md;batches/method_round2/em_open_ended_position/reading_checks.json",
+    "date": "2026-11-28",
+    "batch": "EM-open-ended-position-evidence-boundaries",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/em_open_ended_position/results.json"
   }
 ]
