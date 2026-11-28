@@ -51,6 +51,8 @@
 
 - [四研究校准验证对照](reports/network_validation_comparison_CO.md)：规律/拟合/模式、资料角色与独立检验分列。
 
+- [EN11校准边界补核](reports/calibration_boundary_CP.md)：同数据流程、五run用途与JS divergence。
+
 ## 两条投稿路线
 
 - **当前论文**：以社会模拟方法为基础，研究 LLM 智能体群体中的意见演化与社会互动过程。

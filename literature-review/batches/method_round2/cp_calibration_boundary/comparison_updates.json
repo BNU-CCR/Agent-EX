@@ -1,0 +1,28 @@
+[
+  {
+    "before": {
+      "record_id": "EN11",
+      "read_version": "FormalpublisherHTML;protectedcardunchanged",
+      "empirical_role": "Threeempiricaltopicscalibrate_recommendersignalweights",
+      "selection_and_stop": "Geneticalgorithm_fourweights;candidate5runs;fullselection/heldoutboundaryneedsprimaryrecheck",
+      "evaluation": "Normalizedspeed/volumeerror;JensenShannondistance",
+      "unit": "N1500;5runspercandidate_notnewhumanrepeats",
+      "independent_reference": "Independenttrain/testsplit_notestablishedbycurrentcard;do_notassertabsent",
+      "what_supported": "Empiricallyconstrained_proofofconcept_fit",
+      "what_not_supported": "Recoveryofactualplatformalgorithm;LLMopinionvalidity",
+      "source_location": "EN11items4–8/11;formal§5.1–5.2/7.2"
+    },
+    "after": {
+      "record_id": "EN11",
+      "read_version": "FormalpublisherHTML;protectedcardunchanged",
+      "empirical_role": "Threeempiricaltopicscalibrate_recommendersignalweights",
+      "selection_and_stop": "Geneticalgorithm_fourweights;candidate5runs;fullselection/heldoutboundaryneedsprimaryrecheck",
+      "evaluation": "Normalizedspeed/volumeerror;JensenShannondivergence_notautomatically_sqrt_distance",
+      "unit": "N1500;5runspercandidate_notnewhumanrepeats",
+      "independent_reference": "CPformal5.4describessamedatasetcalibration/optimization/evaluation;separateheldoutnotdescribedinthesesections;notclaimallartifactsabsent",
+      "what_supported": "Empiricallyconstrained_proofofconcept_fit",
+      "what_not_supported": "Recoveryofactualplatformalgorithm;LLMopinionvalidity",
+      "source_location": "EN11items4–8/11;formal§5.1–5.2/7.2;CPformal§5.1–5.4/6"
+    }
+  }
+]

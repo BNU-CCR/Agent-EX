@@ -1,0 +1,29 @@
+[
+  {
+    "search_id": "CP-01",
+    "platform": "web_open",
+    "search_date": "2026-11-28",
+    "query_exact": "Open formal EN11 article",
+    "source_url": "https://link.springer.com/article/10.1007/s43681-024-00527-1",
+    "status": "formalHTML_readable",
+    "notes": "Targetedmethodsrecheck"
+  },
+  {
+    "search_id": "CP-02",
+    "platform": "static_http",
+    "search_date": "2026-11-28",
+    "query_exact": "GET formal HTML",
+    "source_url": "https://link.springer.com/article/10.1007/s43681-024-00527-1",
+    "status": "200",
+    "notes": "hashinmanifest"
+  },
+  {
+    "search_id": "CP-03",
+    "platform": "local_primary_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "Read formal5.1–5.4/6;checkdisclosureandindependentreference",
+    "source_url": "reports/calibration_boundary_CP.md",
+    "status": "primary_design_rechecked",
+    "notes": "No code or fullappendix audit"
+  }
+]
