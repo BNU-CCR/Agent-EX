@@ -25008,5 +25008,85 @@
     "batch": "EY",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ey_review_data/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "method_coding_source",
+    "old": "reports/ipm_scope_and_access_boundaries.md;data/ipm_access_audit_BK.json",
+    "new": "reports/ipm_scope_and_access_boundaries.md;data/ipm_access_audit_BK.json;reports/formal_month_qualification_FB.md",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_coding_source",
+    "old": "reading-cards/M025.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF",
+    "new": "reading-cards/M025.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF;reports/formal_month_qualification_FB.md",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "M025",
+    "field": "method_pending_fields",
+    "old": "precise_first_online_date;externalSupplementB;code_reexecution;independent_longitudinal_validation;scope_and_guide",
+    "new": "precise_first_online_date_optional_metadata;externalSupplementB;code_reexecution;independent_longitudinal_validation;type_specific_guide_and_length;full_parameter_budget_seed",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_coding_source",
+    "old": "reading-cards/M031.md",
+    "new": "reading-cards/M031.md;reports/formal_month_qualification_FB.md",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_last_checked",
+    "old": "2026-11-27",
+    "new": "2026-11-28",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "M031",
+    "field": "method_pending_fields",
+    "old": "first_formal_online_date;formal_vs_author_version;ML_baselines;test_period_update_freeze;code_model_seed;cross_cohort_transfer",
+    "new": "precise_first_online_date_optional_metadata;formal_vs_author_version;ML_baselines;test_period_update_freeze;code_model_seed;cross_cohort_transfer",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
   }
 ]

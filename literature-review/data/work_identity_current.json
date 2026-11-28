@@ -1,11 +1,11 @@
 {
   "records": 238,
   "coded_work_id_groups": 238,
-  "included_records": 68,
-  "included_work_id_groups": 68,
-  "included_journal_records": 49,
+  "included_records": 69,
+  "included_work_id_groups": 69,
+  "included_journal_records": 50,
   "included_conference_records": 19,
-  "journal_sources": 29,
+  "journal_sources": 30,
   "duplicate_dois": [],
   "blank_work_ids": 0,
   "interpretation": "work_id groups are coded bibliographic units,not proof of statistical or substantive independence;known related versions retained within records"

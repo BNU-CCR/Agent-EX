@@ -718,5 +718,55 @@
     "batch": "EW",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ew_ccr_audit_access/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "online_first_date",
+    "old": "",
+    "new": "2026-07",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "date_eligibility",
+    "old": "date_pending",
+    "new": "confirmed",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "date_basis",
+    "old": "Crossrefpublishedprint2026-07;created2026-02-23;published-onlineabsent;OpenAlexsamecreateddate_notindependentproof",
+    "new": "FBpublisher-depositedCrossref published/published-print=2026-07;title/authors/venue matched;approvedTask3.2formalpublicationmonthfallback,notexactfirstonlineday;created/DOIsuffix/copyrightnotused",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "search_id",
+    "old": "S-X-VERIFY-R005",
+    "new": "S-X-VERIFY-R005;FB-02;FB-05",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
+  },
+  {
+    "record_id": "R005",
+    "field": "notes",
+    "old": "BKofficialIPMscopechecked;directarticle403;OpenAlexdateequalsCrossrefcreated_notpublicationproof;noPDF;authorsiteDOIonly",
+    "new": "BKofficialIPMscopechecked;directarticle403;OpenAlexdateequalsCrossrefcreated_notpublicationproof;noPDF;authorsiteDOIonly | FBformalpublicationmonth2026-07qualified perapproved3.2;preciseonlineunknownnotinvented;candidate retained for incomplete fulltext or known versiondifference,not exactdaygate",
+    "date": "2026-11-28",
+    "batch": "FB",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fb_formal_month/results.json"
   }
 ]

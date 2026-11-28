@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "FB-01",
+    "platform": "scope_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "ApprovedTask3.2/ER/ET andexistingM025/M031reading scope;date/contentseparate",
+    "source_url": "CODEX_TASK_2022_ONWARD.md;reports/conference_date_precision_ER.md;reports/odd_formal_qualification_ET.md",
+    "status": "reviewed",
+    "notes": "Groupedsourceoperation;not newfulltext reading/experiment;precisionfallback notcreateddate"
+  },
+  {
+    "search_id": "FB-02",
+    "platform": "publisher_registry",
+    "search_date": "2026-11-28",
+    "query_exact": "R005title/authors/IPM/63(5)/104689 formal2026-07;no online",
+    "source_url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104689",
+    "status": "200",
+    "notes": "Groupedsourceoperation;not newfulltext reading/experiment;precisionfallback notcreateddate"
+  },
+  {
+    "search_id": "FB-03",
+    "platform": "publisher_registry_plus_source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "M025title/authors/SocialNetworks76/150-159 formal2024-01;CFPDF10pages firstpageidentity/CCBYNCND no preciseonline date",
+    "source_url": "https://api.crossref.org/works/10.1016/j.socnet.2023.09.001",
+    "status": "200_and_cached_pdf_checked",
+    "notes": "Groupedsourceoperation;not newfulltext reading/experiment;precisionfallback notcreateddate"
+  },
+  {
+    "search_id": "FB-04",
+    "platform": "publisher_registry",
+    "search_date": "2026-11-28",
+    "query_exact": "M031title/authors/TRC191/105818 formal2026-10;priorv1/formalMLbaselinedifference retained",
+    "source_url": "https://api.crossref.org/works/10.1016/j.trc.2026.105818",
+    "status": "200",
+    "notes": "Groupedsourceoperation;not newfulltext reading/experiment;precisionfallback notcreateddate"
+  },
+  {
+    "search_id": "FB-05",
+    "platform": "qualification",
+    "search_date": "2026-11-28",
+    "query_exact": "Three dates confirmed;onlyM025included;R005abstract/M031knownversiondifference candidates;no evidencegradechange",
+    "source_url": "reports/formal_month_qualification_FB.md",
+    "status": "qualified_scoped",
+    "notes": "Groupedsourceoperation;not newfulltext reading/experiment;precisionfallback notcreateddate"
+  }
+]

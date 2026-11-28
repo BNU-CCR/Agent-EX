@@ -1,0 +1,330 @@
+[
+  {
+    "record_id": "R005",
+    "url": "https://api.crossref.org/works/10.1016/j.ipm.2026.104689",
+    "status": 200,
+    "bytes": 16358,
+    "sha256": "d9f72966e7883e89d494d760a3f59120a72f20ef8569f32fb7291acfd4a60c53",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FB_R005_crossref.response",
+    "metadata": {
+      "title": [
+        "RoleSimLLM: Towards large-scale and comprehensive social propagation simulation via role-based LLM-driven agents"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-3267-5769",
+          "authenticated-orcid": false,
+          "given": "Jiaxing",
+          "family": "Zheng",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0006-0136-3710",
+          "authenticated-orcid": false,
+          "given": "Changqing",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6294-0431",
+          "authenticated-orcid": false,
+          "given": "Peng",
+          "family": "Wu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-0424-9845",
+          "authenticated-orcid": false,
+          "given": "Li",
+          "family": "Pan",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "Information Processing &amp; Management"
+      ],
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            23
+          ]
+        ],
+        "date-time": "2026-02-23T10:54:49Z",
+        "timestamp": 1771844089000
+      },
+      "volume": "63",
+      "issue": "5",
+      "article-number": "104689"
+    }
+  },
+  {
+    "record_id": "M025",
+    "url": "https://api.crossref.org/works/10.1016/j.socnet.2023.09.001",
+    "status": 200,
+    "bytes": 21282,
+    "sha256": "42286c8302fbc5f64f3df78c199609de98d1c73c64b4fd2932bac59f07c44503",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FB_M025_crossref.response",
+    "metadata": {
+      "title": [
+        "Status, cognitive overload, and incomplete information in advice-seeking networks: An agent-based model"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-7570-6380",
+          "authenticated-orcid": false,
+          "given": "Francesco",
+          "family": "Renzini",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7473-1928",
+          "authenticated-orcid": false,
+          "given": "Federico",
+          "family": "Bianchi",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Flaminio",
+          "family": "Squazzoni",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "Social Networks"
+      ],
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            1
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            1
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2023,
+            9,
+            25
+          ]
+        ],
+        "date-time": "2023-09-25T06:57:28Z",
+        "timestamp": 1695625048000
+      },
+      "volume": "76",
+      "issue": null,
+      "article-number": null
+    }
+  },
+  {
+    "record_id": "M031",
+    "url": "https://api.crossref.org/works/10.1016/j.trc.2026.105818",
+    "status": 200,
+    "bytes": 22180,
+    "sha256": "ceed5dd82c7db740c07d9c9cdec316441990b42ef401987991c9df1b9a805a59",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FB_M031_crossref.response",
+    "metadata": {
+      "title": [
+        "Aligning LLM agents with human learning and adjustment behavior: A dual agent approach"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-9880-2698",
+          "authenticated-orcid": false,
+          "given": "Tianming",
+          "family": "Liu",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jirong",
+          "family": "Yang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-3117-5463",
+          "authenticated-orcid": false,
+          "given": "Yafeng",
+          "family": "Yin",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Manzi",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Linghao",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zheng",
+          "family": "Zhu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "Transportation Research Part C: Emerging Technologies"
+      ],
+      "published-online": null,
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            10
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            10
+          ]
+        ]
+      },
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            24
+          ]
+        ],
+        "date-time": "2026-06-24T00:01:21Z",
+        "timestamp": 1782259281000
+      },
+      "volume": "191",
+      "issue": null,
+      "article-number": "105818"
+    }
+  },
+  {
+    "record_id": "M025",
+    "url": "https://federico-bianchi.github.io/publications/23_sn_abm.pdf",
+    "source": "Previously acquired CF PDFreused;not fresh fulltext acquisition",
+    "sha256": "2c56879e0666b743d8d61cab65803043b4d09a91870cce239de4fdf0b68d70fb",
+    "bytes": 1963367,
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\M025_CF.pdf",
+    "scope": "First-page identity/version/license/date absence rechecked/rendered;prior scoped method reading retained;not fresh full reread"
+  }
+]

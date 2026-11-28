@@ -1,0 +1,37 @@
+{
+  "batch": "FB",
+  "checks": "passed",
+  "base": "06f907c",
+  "changed_master": [
+    "R005",
+    "M025",
+    "M031"
+  ],
+  "date_pending": 21,
+  "included": 69,
+  "method_grades": "unchanged",
+  "cards": "two qualified notes;85others normalizedtext unchanged;oldtwo Gitbytesarchived",
+  "matrix252": "unchanged",
+  "formal_bib": 69,
+  "current_journal_sources": {
+    "records": 50,
+    "venues": 30,
+    "conferences_excluded": 19
+  },
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    253,
+    56,
+    1848,
+    12,
+    42,
+    31
+  ],
+  "cover_B7": 69,
+  "visual": "Current cover69/candidate159 rendered andinspected;source row/count cellchecks",
+  "protection": "57ID/18hash/231prefix/77legacychanges verified",
+  "limits": "No new fulltext/card/methodgrade/experiment;M031 versiondifference retained"
+}

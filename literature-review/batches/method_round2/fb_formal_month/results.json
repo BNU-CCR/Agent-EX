@@ -1,0 +1,42 @@
+{
+  "batch_id": "FB",
+  "date": "2026-11-28",
+  "expected_master_sha256": "ccf8922242d64ed58453f979a86244b1af5f57130cc3ba80601ca37f6f5d2bae",
+  "updates": [
+    {
+      "record_id": "R005",
+      "online_first_date": "2026-07",
+      "date_eligibility": "confirmed",
+      "date_basis": "FBpublisher-depositedCrossref published/published-print=2026-07;title/authors/venue matched;approvedTask3.2formalpublicationmonthfallback,notexactfirstonlineday;created/DOIsuffix/copyrightnotused",
+      "search_id": "S-X-VERIFY-R005;FB-02;FB-05",
+      "method_coding_source": "reports/ipm_scope_and_access_boundaries.md;data/ipm_access_audit_BK.json;reports/formal_month_qualification_FB.md",
+      "method_last_checked": "2026-11-28",
+      "notes": "BKofficialIPMscopechecked;directarticle403;OpenAlexdateequalsCrossrefcreated_notpublicationproof;noPDF;authorsiteDOIonly | FBformalpublicationmonth2026-07qualified perapproved3.2;preciseonlineunknownnotinvented;candidate retained for incomplete fulltext or known versiondifference,not exactdaygate"
+    },
+    {
+      "record_id": "M025",
+      "online_first_date": "2024-01",
+      "date_eligibility": "confirmed",
+      "date_basis": "FBpublisher-depositedCrossref published/published-print=2024-01;title/authors/venue matched;approvedTask3.2formalpublicationmonthfallback,notexactfirstonlineday;created/DOIsuffix/copyrightnotused",
+      "search_id": "S-M2-O-SOCNET-PDF;FB-03;FB-05",
+      "method_coding_source": "reading-cards/M025.md;reports/component_network_cards_CF.md;primaryPDF_targeted_reread_CF;reports/formal_month_qualification_FB.md",
+      "method_last_checked": "2026-11-28",
+      "notes": "P:focusedauthorhostedpublisherlayoutPDFmethods/results/discussion/AppendixA read;formalfirstdaystillpending;nocodererun or externalSupplementB. Olddataset is not separatelyincludedpre2022work. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | FBformalpublicationmonth2024-01qualified perapproved3.2;preciseonlineunknownnotinvented;existingauthorhostedpublisherlayout/scopedreading qualifiesincluded;methodgrades/limitationsretained",
+      "screening_status": "included",
+      "reason": "传统组织网络ABM的经验拟合与替代规则先例；已读方法/结果/讨论，首次在线日期仍待核。 FB核正式2024-01出版月并结合既有正式版式全文，按3.2回退纳入；横截面拟合非独立纵向或机制识别。",
+      "method_pending_fields": "precise_first_online_date_optional_metadata;externalSupplementB;code_reexecution;independent_longitudinal_validation;type_specific_guide_and_length;full_parameter_budget_seed"
+    },
+    {
+      "record_id": "M031",
+      "online_first_date": "2026-10",
+      "date_eligibility": "confirmed",
+      "date_basis": "FBpublisher-depositedCrossref published/published-print=2026-10;title/authors/venue matched;approvedTask3.2formalpublicationmonthfallback,notexactfirstonlineday;created/DOIsuffix/copyrightnotused",
+      "search_id": "S-M2-AA-XML;S-M2-AA-PDF;S-M2-AA-ABS;FB-04;FB-05",
+      "method_coding_source": "reading-cards/M031.md;reports/formal_month_qualification_FB.md",
+      "method_last_checked": "2026-11-28",
+      "notes": "XML200 is metadata only, FULL401; journal403; authorPDF32p verified. No proven leakage: test-period update/freeze unresolved. No exact API seed/version claim. | FBformalpublicationmonth2026-10qualified perapproved3.2;preciseonlineunknownnotinvented;candidate retained for incomplete fulltext or known versiondifference,not exactdaygate",
+      "method_pending_fields": "precise_first_online_date_optional_metadata;formal_vs_author_version;ML_baselines;test_period_update_freeze;code_model_seed;cross_cohort_transfer"
+    }
+  ],
+  "new_records": []
+}
