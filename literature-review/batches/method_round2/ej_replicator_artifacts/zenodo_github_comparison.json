@@ -1,0 +1,218 @@
+[
+  {
+    "zenodo_file": "agent.py",
+    "git_candidates": [
+      "replicatorbench/interpreter/agent.py"
+    ],
+    "zenodo_git_blob": "2aefcdd0fccb5b552af5694b9fccd0b93fc0a268",
+    "matching_paths": [
+      "replicatorbench/interpreter/agent.py"
+    ]
+  },
+  {
+    "zenodo_file": "constants.py",
+    "git_candidates": [
+      "replicatorbench/core/constants.py"
+    ],
+    "zenodo_git_blob": "c93d0272e15c8167b47ead20243e6695ba1f5e58",
+    "matching_paths": []
+  },
+  {
+    "zenodo_file": "design_agent.py",
+    "git_candidates": [
+      "replicatorbench/generator/design_agent.py"
+    ],
+    "zenodo_git_blob": "74eda32a7e31a78671f653d4257d50b7732a0bbe",
+    "matching_paths": [
+      "replicatorbench/generator/design_agent.py"
+    ]
+  },
+  {
+    "zenodo_file": "evaluate_execute.py",
+    "git_candidates": [
+      "replicatorbench/validator/evaluate_execute.py"
+    ],
+    "zenodo_git_blob": "74d817bfb6f9d1a92ffb37695970e3ddaca5397f",
+    "matching_paths": [
+      "replicatorbench/validator/evaluate_execute.py"
+    ]
+  },
+  {
+    "zenodo_file": "evaluate_execute_schema.json",
+    "git_candidates": [
+      "replicatorbench/templates/evaluate_execute_schema.json"
+    ],
+    "zenodo_git_blob": "2c8b518d7309755b79bda46a0b21500a65cfd2c5",
+    "matching_paths": [
+      "replicatorbench/templates/evaluate_execute_schema.json"
+    ]
+  },
+  {
+    "zenodo_file": "execute_agent.py",
+    "git_candidates": [
+      "replicatorbench/generator/execute_agent.py"
+    ],
+    "zenodo_git_blob": "c21bf2e68e1228f270942d00f9f62e6e8189d4d6",
+    "matching_paths": [
+      "replicatorbench/generator/execute_agent.py"
+    ]
+  },
+  {
+    "zenodo_file": "execute_eval.txt",
+    "git_candidates": [
+      "replicatorbench/templates/prompts/execute_eval.txt"
+    ],
+    "zenodo_git_blob": "3ee3a8e21350122540dace116dd2fb30149f1cff",
+    "matching_paths": [
+      "replicatorbench/templates/prompts/execute_eval.txt"
+    ]
+  },
+  {
+    "zenodo_file": "execute_eval_old.txt",
+    "git_candidates": [
+      "replicatorbench/templates/prompts/execute_eval_old.txt"
+    ],
+    "zenodo_git_blob": "c142694c1529ff5afce42f6e518d41f15266b7ad",
+    "matching_paths": [
+      "replicatorbench/templates/prompts/execute_eval_old.txt"
+    ]
+  },
+  {
+    "zenodo_file": "execute_schema.json",
+    "git_candidates": [
+      "replicatorbench/templates/execute_schema.json"
+    ],
+    "zenodo_git_blob": "4ddbf9aeead24ca97dd91d5288c4f716d076995d",
+    "matching_paths": [
+      "replicatorbench/templates/execute_schema.json"
+    ]
+  },
+  {
+    "zenodo_file": "extractor.py",
+    "git_candidates": [
+      "replicatorbench/info_extractor/extractor.py"
+    ],
+    "zenodo_git_blob": "ed89efd22e26cf32167b941da4121854a34f41f8",
+    "matching_paths": [
+      "replicatorbench/info_extractor/extractor.py"
+    ]
+  },
+  {
+    "zenodo_file": "extract_eval.txt",
+    "git_candidates": [
+      "replicatorbench/templates/prompts/extract_eval.txt"
+    ],
+    "zenodo_git_blob": "9e75af437742712bf306e510e81ca37a4294d5c5",
+    "matching_paths": [
+      "replicatorbench/templates/prompts/extract_eval.txt"
+    ]
+  },
+  {
+    "zenodo_file": "generate_design_eval.txt",
+    "git_candidates": [
+      "replicatorbench/templates/prompts/generate_design_eval.txt"
+    ],
+    "zenodo_git_blob": "3ade3421f299fcb2e08a07b0c1a9fec222743e95",
+    "matching_paths": [
+      "replicatorbench/templates/prompts/generate_design_eval.txt"
+    ]
+  },
+  {
+    "zenodo_file": "info_extractor_instructions.json",
+    "git_candidates": [
+      "replicatorbench/templates/info_extractor_instructions.json"
+    ],
+    "zenodo_git_blob": "0b458481fce4fcde63935e4056a4cce1c2e6e0d4",
+    "matching_paths": [
+      "replicatorbench/templates/info_extractor_instructions.json"
+    ]
+  },
+  {
+    "zenodo_file": "interpret.txt",
+    "git_candidates": [
+      "replicatorbench/templates/prompts/interpret.txt"
+    ],
+    "zenodo_git_blob": "522c519755e902e573d16deb7f1ebff3c05b89ba",
+    "matching_paths": [
+      "replicatorbench/templates/prompts/interpret.txt"
+    ]
+  },
+  {
+    "zenodo_file": "interpret_eval.txt",
+    "git_candidates": [
+      "replicatorbench/templates/prompts/interpret_eval.txt"
+    ],
+    "zenodo_git_blob": "0809c349ca32f2b3de84d2575446a64ca85d99d5",
+    "matching_paths": [
+      "replicatorbench/templates/prompts/interpret_eval.txt"
+    ]
+  },
+  {
+    "zenodo_file": "interpret_schema.json",
+    "git_candidates": [
+      "replicatorbench/templates/interpret_schema.json"
+    ],
+    "zenodo_git_blob": "ef83c763b07d07aeafbc5e4a584d10b48c3bfaaa",
+    "matching_paths": [
+      "replicatorbench/templates/interpret_schema.json"
+    ]
+  },
+  {
+    "zenodo_file": "post_registration_schema.json",
+    "git_candidates": [
+      "replicatorbench/templates/post_registration_schema.json"
+    ],
+    "zenodo_git_blob": "880066fd1185510fcf60eb6c0dd435e3cdf0e659",
+    "matching_paths": [
+      "replicatorbench/templates/post_registration_schema.json"
+    ]
+  },
+  {
+    "zenodo_file": "pre_registration_schema_native.json",
+    "git_candidates": [
+      "replicatorbench/templates/pre_registration_schema_native.json"
+    ],
+    "zenodo_git_blob": "e6d30146ba7d923ca4e930d516c571a2b36b2b51",
+    "matching_paths": [
+      "replicatorbench/templates/pre_registration_schema_native.json"
+    ]
+  },
+  {
+    "zenodo_file": "pre_registration_schema_python.json",
+    "git_candidates": [
+      "replicatorbench/templates/pre_registration_schema_python.json"
+    ],
+    "zenodo_git_blob": "a6c4d8caeb552a829141e2e2d12156279d2ef2ed",
+    "matching_paths": [
+      "replicatorbench/templates/pre_registration_schema_python.json"
+    ]
+  },
+  {
+    "zenodo_file": "prompts.py",
+    "git_candidates": [
+      "replicatorbench/core/prompts.py"
+    ],
+    "zenodo_git_blob": "84159355eae7a22d0abe52801fadf85edfd0904b",
+    "matching_paths": []
+  },
+  {
+    "zenodo_file": "prompt_builder.py",
+    "git_candidates": [
+      "replicatorbench/info_extractor/prompt_builder.py"
+    ],
+    "zenodo_git_blob": "ff647018f988804717f9221a5f1dc952045baac0",
+    "matching_paths": [
+      "replicatorbench/info_extractor/prompt_builder.py"
+    ]
+  },
+  {
+    "zenodo_file": "replication_info_schema.json",
+    "git_candidates": [
+      "replicatorbench/templates/replication_info_schema.json"
+    ],
+    "zenodo_git_blob": "0270fa9239c32f5cecb49cbdd6e31aea3f6f6ec6",
+    "matching_paths": [
+      "replicatorbench/templates/replication_info_schema.json"
+    ]
+  }
+]

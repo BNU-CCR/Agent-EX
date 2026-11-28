@@ -24238,5 +24238,35 @@
     "batch": "EI-ReplicatorBench-workflow-reference-evaluation",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ei_replicatorbench/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_pending_fields",
+    "old": "fixed_artifact_schema_code;model_snapshot_seed_repeats_cost_budget_run_mapping;19vs20_observational;6vs7_domains;table5_211_vs124_193;comparison_subsets;judge_rawlabels_protocol;officialPDF_bytecomparison",
+    "new": "paper_run_version_model_snapshot_seed_repeats_cost_budget;19vs20_observational;6vs7_domains;table5_211_vs124_193;comparison_subsets;judge_rawlabels_protocol;alias_binary_table_aggregation;constants_prompts_semanticdiff;LFS_dataobjects;officialPDF_bytecomparison",
+    "date": "2026-11-28",
+    "batch": "EJ-ReplicatorBench-fixed-release-static-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ej_replicator_artifacts/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_coding_source",
+    "old": "reading-cards/M177.md;reports/replicatorbench_EI.md;batches/method_round2/ei_replicatorbench/reading_checks.json",
+    "new": "reading-cards/M177.md;reports/replicatorbench_EI.md;batches/method_round2/ei_replicatorbench/reading_checks.json;reports/replicator_artifacts_EJ.md;data/replicator_artifact_crosswalk_EJ.csv",
+    "date": "2026-11-28",
+    "batch": "EJ-ReplicatorBench-fixed-release-static-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ej_replicator_artifacts/results.json"
+  },
+  {
+    "record_id": "M177",
+    "field": "method_evidence_location",
+    "old": "§3–7;Table2/3/5/6/7/8;AppA.2/B.1/C",
+    "new": "§3–7;Table2/3/5/6/7/8;AppA.2/B.1/C;fixedZenodo22/Gitfb6a804selectedcode",
+    "date": "2026-11-28",
+    "batch": "EJ-ReplicatorBench-fixed-release-static-audit",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ej_replicator_artifacts/results.json"
   }
 ]

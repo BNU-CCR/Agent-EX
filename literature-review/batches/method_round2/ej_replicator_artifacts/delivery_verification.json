@@ -1,0 +1,28 @@
+{
+  "base": "c4aaa91",
+  "master_changed": [
+    "M177"
+  ],
+  "matrix_changed": [
+    "VC237"
+  ],
+  "no_new_record_card_unit_grade": true,
+  "zenodo_files_verified": 22,
+  "github_files_verified": 9,
+  "zenodo_matching_git_blobs": 20,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    238,
+    1728,
+    11,
+    42
+  ],
+  "cards": 84,
+  "formal_bib_entries": 60,
+  "archive_git_bytes_verified": true,
+  "checks": "passed",
+  "visual": "Cover layout/counts unchanged since EI inspected current export;no new sheet structure",
+  "limits": "Static source read,not thirdparty execution/independent reproduction;officialpaperbytesunavailable;LFSobjectnotacquired"
+}

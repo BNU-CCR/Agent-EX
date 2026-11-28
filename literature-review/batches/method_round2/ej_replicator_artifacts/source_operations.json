@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "EJ-01",
+    "platform": "official_artifact_metadata",
+    "search_date": "2026-11-28",
+    "query_exact": "Zenodo20506946recordversiondate/filelist",
+    "source_url": "https://zenodo.org/records/20506946",
+    "status": "200_record",
+    "notes": "Grouped source operations,not query or independentexperiment counts;no thirdpartycode/modelexecution"
+  },
+  {
+    "search_id": "EJ-02",
+    "platform": "artifact_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "22filesMD5/size/SHA256verified_notalllinesread",
+    "source_url": "https://zenodo.org/records/20506946",
+    "status": "22_verified",
+    "notes": "Grouped source operations,not query or independentexperiment counts;no thirdpartycode/modelexecution"
+  },
+  {
+    "search_id": "EJ-03",
+    "platform": "github_fixed_tree",
+    "search_date": "2026-11-28",
+    "query_exact": "repo/main/fixedrecursive11087entriesnottruncated",
+    "source_url": "https://github.com/CenterForOpenScience/llm-benchmarking/tree/fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+    "status": "fixed_tree",
+    "notes": "Grouped source operations,not query or independentexperiment counts;no thirdpartycode/modelexecution"
+  },
+  {
+    "search_id": "EJ-04",
+    "platform": "github_selected_files",
+    "search_date": "2026-11-28",
+    "query_exact": "9filesblobverified;onecoretransientthenfullretryverified",
+    "source_url": "https://github.com/CenterForOpenScience/llm-benchmarking/tree/fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+    "status": "9_verified",
+    "notes": "Grouped source operations,not query or independentexperiment counts;no thirdpartycode/modelexecution"
+  },
+  {
+    "search_id": "EJ-05",
+    "platform": "static_read",
+    "search_date": "2026-11-28",
+    "query_exact": "aspectaggregation/pipeline/humangate/log/helpermodel/LFSonefile",
+    "source_url": "https://github.com/CenterForOpenScience/llm-benchmarking/tree/fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+    "status": "bounded_static_read",
+    "notes": "Grouped source operations,not query or independentexperiment counts;no thirdpartycode/modelexecution"
+  },
+  {
+    "search_id": "EJ-06",
+    "platform": "version_crosswalk",
+    "search_date": "2026-11-28",
+    "query_exact": "22Zenodofiles20sameGitblobs/2different",
+    "source_url": "https://github.com/CenterForOpenScience/llm-benchmarking/tree/fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+    "status": "fixed_version_comparison",
+    "notes": "Grouped source operations,not query or independentexperiment counts;no thirdpartycode/modelexecution"
+  },
+  {
+    "search_id": "EJ-07",
+    "platform": "evidence_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "M177/VC237updated_no_newunit_or_grade",
+    "source_url": "https://github.com/CenterForOpenScience/llm-benchmarking/tree/fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+    "status": "local_update",
+    "notes": "Grouped source operations,not query or independentexperiment counts;no thirdpartycode/modelexecution"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "checked": "2026-11-28",
+  "paper_read_commit": "c4aaa91",
+  "zenodo": {
+    "record_id": 20506946,
+    "doi": "10.5281/zenodo.20506946",
+    "parent": "https://doi.org/10.5281/zenodo.20506945",
+    "artifact_publication_date": "2026-02-11",
+    "note": "Artifact date not formal paper first online",
+    "file_count": 22,
+    "response_sha256": "ff2ef955935141372bfb6cbc00bf2e8461eab519d9db356555f8c6d36556da18",
+    "bytes": 9094,
+    "license": {
+      "id": "cc-by-4.0"
+    }
+  },
+  "github": {
+    "repository": "CenterForOpenScience/llm-benchmarking",
+    "commit": "fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+    "tree_sha": "fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+    "tree_entries": 11087,
+    "truncated": false
+  },
+  "scope": "22Zenodofilesacquired/hashverified;selectedschemas/prompts/execution/interpreterread;9GitHubfilesacquired/blobverified;rawcodeandresponseoutsideGit;noexecution",
+  "retrieval_limit": "OnefullcoreagentfetchRemoteProtocolError;bounded100linesucceededthenfullretry200verified;notrepositoryabsence"
+}

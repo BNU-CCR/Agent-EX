@@ -1,0 +1,74 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3115,
+    "sha256": "1830296e6545e8f2431ff8d7d2386da7d5903b037fda9c170c687a460ea32de1",
+    "git_blob": "8a9ba7ed1495711d30d545a3aa39e355fd932009",
+    "expected": "8a9ba7ed1495711d30d545a3aa39e355fd932009",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/Makefile",
+    "bytes": 3819,
+    "sha256": "4d36537c7795e73c801430b2787ccc1fe7de5e5f41b2d7e2d59d93f3f8d04212",
+    "git_blob": "f018351ee0afb9bf31bb8bc98ed9ca0838f7683e",
+    "expected": "f018351ee0afb9bf31bb8bc98ed9ca0838f7683e",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/README.md",
+    "bytes": 5812,
+    "sha256": "c3138359e36a62610d42b787b006b005fa06b683ba228a3a75600936079f186a",
+    "git_blob": "1cf2ced043e8be1d035d0da4f7cd187ece0be74f",
+    "expected": "1cf2ced043e8be1d035d0da4f7cd187ece0be74f",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/core/agent.py",
+    "bytes": 19227,
+    "sha256": "0effce329d074d683cb3a6bf668cb8872c8e9c85fafe0f52831693067d317017",
+    "git_blob": "9a67f2f0bc69ebbae54b17c0c12f41eea40a1a91",
+    "expected": "9a67f2f0bc69ebbae54b17c0c12f41eea40a1a91",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/generator/execute_tools.py",
+    "bytes": 3982,
+    "sha256": "af0bf164f8c017acc76c20c592d015d0b11ad430ff818cc66e5b32ae3202014c",
+    "git_blob": "98ed614c504560d0e10111236e22280cd4796d18",
+    "expected": "98ed614c504560d0e10111236e22280cd4796d18",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/info_extractor/extractor.py",
+    "bytes": 6303,
+    "sha256": "26ca9fe1f428e66fd6a830426117a3929661eaeeace299a58b7e31fd808923fa",
+    "git_blob": "ed89efd22e26cf32167b941da4121854a34f41f8",
+    "expected": "ed89efd22e26cf32167b941da4121854a34f41f8",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/validator/aggregate_eval_scores.py",
+    "bytes": 4355,
+    "sha256": "1337623cc538f14d17afb7f772aaa9c732570da5d8aab77243d021dae915fdfb",
+    "git_blob": "25fb70063e911364b1bcf3a278a0560394626f64",
+    "expected": "25fb70063e911364b1bcf3a278a0560394626f64",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/validator/evaluate_interpret.py",
+    "bytes": 3426,
+    "sha256": "122ccfd4c38034603a3a9a4e7a4d3d657fcecbb57f508e59dc933bccea21a47d",
+    "git_blob": "fe3517afcf85049be9387bd94f3713817476970a",
+    "expected": "fe3517afcf85049be9387bd94f3713817476970a",
+    "verified": true
+  },
+  {
+    "path": "replicatorbench/data/original/1/input/replication_data/transportation.csv",
+    "bytes": 134,
+    "sha256": "e551bd89792dd931de9195f0493a680f03986808a87854615f5b476f696c20ae",
+    "git_blob": "857579ccc55fad993d7b18250ca0f14e63c381f0",
+    "expected": "857579ccc55fad993d7b18250ca0f14e63c381f0",
+    "verified": true
+  }
+]

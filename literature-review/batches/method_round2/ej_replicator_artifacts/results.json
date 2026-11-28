@@ -1,0 +1,17 @@
+{
+  "batch_id": "EJ-ReplicatorBench-fixed-release-static-audit",
+  "date": "2026-11-28",
+  "expected_master_sha256": "c5856c5c6ec78738bae57d08a528803519be0e67132a4bc2493d58f053949c9a",
+  "updates": [
+    {
+      "record_id": "M177",
+      "supplement_status": "EJZenodo22filesMD5sizeSHA256verified;20exactGitblobs/2different;Gitfixedtree9selectedfilesverified;LFSactualdata/notfullrunmappingpending",
+      "notes": "EI lawfulauthorhostedformalformattedfulltext;officialPDF403HTML;no byte-equivalence assertion or extra publisher-download gate. Referencesnotrescreened;no code/modelexecution;comparison denominators unresolved. EJ fixedZenodo20506946/Gitfb6a804:20of22blobmatch;aspectweighting/defaultpipeline/helperGPT4o/logprojection/LFSboundaries;no independentreplication.",
+      "method_pending_fields": "paper_run_version_model_snapshot_seed_repeats_cost_budget;19vs20_observational;6vs7_domains;table5_211_vs124_193;comparison_subsets;judge_rawlabels_protocol;alias_binary_table_aggregation;constants_prompts_semanticdiff;LFS_dataobjects;officialPDF_bytecomparison",
+      "method_coding_source": "reading-cards/M177.md;reports/replicatorbench_EI.md;batches/method_round2/ei_replicatorbench/reading_checks.json;reports/replicator_artifacts_EJ.md;data/replicator_artifact_crosswalk_EJ.csv",
+      "method_evidence_location": "§3–7;Table2/3/5/6/7/8;AppA.2/B.1/C;fixedZenodo22/Gitfb6a804selectedcode",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

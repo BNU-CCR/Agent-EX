@@ -1,0 +1,222 @@
+[
+  {
+    "path": "post_registration_schema.json",
+    "url": "https://zenodo.org/api/records/20506946/files/post_registration_schema.json/content",
+    "status": 200,
+    "bytes": 3217,
+    "sha256": "7dbcc119361847d9ad5b3a9310db85a53ad59679074ab3585d8e5a5a1cd5faf9",
+    "md5": "a0602b6102b7f8c9a64faa1549691769",
+    "expected": "md5:a0602b6102b7f8c9a64faa1549691769",
+    "verified": true
+  },
+  {
+    "path": "prompt_builder.py",
+    "url": "https://zenodo.org/api/records/20506946/files/prompt_builder.py/content",
+    "status": 200,
+    "bytes": 1679,
+    "sha256": "8c3ed182a03bf35c609d20c4139350a637ebd4f7a7cd844ab3c2fd907d21559b",
+    "md5": "d18bcf89b5ccf41bb9962dfcc07ac842",
+    "expected": "md5:d18bcf89b5ccf41bb9962dfcc07ac842",
+    "verified": true
+  },
+  {
+    "path": "prompts.py",
+    "url": "https://zenodo.org/api/records/20506946/files/prompts.py/content",
+    "status": 200,
+    "bytes": 7569,
+    "sha256": "1a453519b70a469f481170575dab42b352d008b99228d0695bcdbfd1329adec2",
+    "md5": "b7d68931a6affe0fd6076d2c37af26a5",
+    "expected": "md5:b7d68931a6affe0fd6076d2c37af26a5",
+    "verified": true
+  },
+  {
+    "path": "constants.py",
+    "url": "https://zenodo.org/api/records/20506946/files/constants.py/content",
+    "status": 200,
+    "bytes": 6856,
+    "sha256": "ecc70340bb6d1f7f798b85057431c34a97685a5c6ac1a7306f9b434bf038e4b1",
+    "md5": "22b6349b0345f85efa628ee7154bb360",
+    "expected": "md5:22b6349b0345f85efa628ee7154bb360",
+    "verified": true
+  },
+  {
+    "path": "design_agent.py",
+    "url": "https://zenodo.org/api/records/20506946/files/design_agent.py/content",
+    "status": 200,
+    "bytes": 3882,
+    "sha256": "e1fc00bae0f460599836a9dad18f355392fc0bac9c261e4bdfbbcce522c8ae3c",
+    "md5": "8e81d7c1a2ee1b6a4b5182c6f1f385ef",
+    "expected": "md5:8e81d7c1a2ee1b6a4b5182c6f1f385ef",
+    "verified": true
+  },
+  {
+    "path": "execute_agent.py",
+    "url": "https://zenodo.org/api/records/20506946/files/execute_agent.py/content",
+    "status": 200,
+    "bytes": 8070,
+    "sha256": "ad8d68814066911e16bef491e95e66dcf4bbd727de7ba4b4c301bb6d5855ec0c",
+    "md5": "129acaa0430f8f001fc90d3a4b0ff95f",
+    "expected": "md5:129acaa0430f8f001fc90d3a4b0ff95f",
+    "verified": true
+  },
+  {
+    "path": "agent.py",
+    "url": "https://zenodo.org/api/records/20506946/files/agent.py/content",
+    "status": 200,
+    "bytes": 7184,
+    "sha256": "3b351d6125b483a0460ec107dc7ae69714e3d22e2119351af0221998d0d14aad",
+    "md5": "76058b6fb0ba91f0eacfd131f6d76a5c",
+    "expected": "md5:76058b6fb0ba91f0eacfd131f6d76a5c",
+    "verified": true
+  },
+  {
+    "path": "info_extractor_instructions.json",
+    "url": "https://zenodo.org/api/records/20506946/files/info_extractor_instructions.json/content",
+    "status": 200,
+    "bytes": 3138,
+    "sha256": "7236585aa52d265207e6ccf9e59890d61151d20d5c519a7ba177f788ac32a734",
+    "md5": "d03c3ee5cf23a324a9f0508cabb325bd",
+    "expected": "md5:d03c3ee5cf23a324a9f0508cabb325bd",
+    "verified": true
+  },
+  {
+    "path": "extractor.py",
+    "url": "https://zenodo.org/api/records/20506946/files/extractor.py/content",
+    "status": 200,
+    "bytes": 6303,
+    "sha256": "26ca9fe1f428e66fd6a830426117a3929661eaeeace299a58b7e31fd808923fa",
+    "md5": "b8b5043fd66a140fad0321edf7e13222",
+    "expected": "md5:b8b5043fd66a140fad0321edf7e13222",
+    "verified": true
+  },
+  {
+    "path": "evaluate_execute_schema.json",
+    "url": "https://zenodo.org/api/records/20506946/files/evaluate_execute_schema.json/content",
+    "status": 200,
+    "bytes": 2152,
+    "sha256": "2389b140fecf203878004dbbee56ffc52f246a17cbed1975a4af8b2b8a987e42",
+    "md5": "b310a2fa2f279e9ba13c4b1c79a5e6af",
+    "expected": "md5:b310a2fa2f279e9ba13c4b1c79a5e6af",
+    "verified": true
+  },
+  {
+    "path": "pre_registration_schema_native.json",
+    "url": "https://zenodo.org/api/records/20506946/files/pre_registration_schema_native.json/content",
+    "status": 200,
+    "bytes": 4838,
+    "sha256": "92c5226aed92b1dd6013c5d69d43f4eb4d85375809b70633bed0f58ce471fd77",
+    "md5": "8ca254720e46e2e53ee6fff01faddd35",
+    "expected": "md5:8ca254720e46e2e53ee6fff01faddd35",
+    "verified": true
+  },
+  {
+    "path": "execute_schema.json",
+    "url": "https://zenodo.org/api/records/20506946/files/execute_schema.json/content",
+    "status": 200,
+    "bytes": 3564,
+    "sha256": "325e3d525c398535b704e6e64391a4b17258c0484778a39a5785a15188ece7ea",
+    "md5": "f13f11cce2604b584deafd29238bc1cc",
+    "expected": "md5:f13f11cce2604b584deafd29238bc1cc",
+    "verified": true
+  },
+  {
+    "path": "interpret_schema.json",
+    "url": "https://zenodo.org/api/records/20506946/files/interpret_schema.json/content",
+    "status": 200,
+    "bytes": 2777,
+    "sha256": "a4061cdfc384128f5198fd291c585ab1cfc726f8a9d24f3a59744ffd9c3c1821",
+    "md5": "5709dd1f49b0eec0cc5cb02890ebba1f",
+    "expected": "md5:5709dd1f49b0eec0cc5cb02890ebba1f",
+    "verified": true
+  },
+  {
+    "path": "interpret.txt",
+    "url": "https://zenodo.org/api/records/20506946/files/interpret.txt/content",
+    "status": 200,
+    "bytes": 583,
+    "sha256": "f089e8ffb8cc9edbb965a1bda6462d02879b55442408b1bb2acbd330a036ca97",
+    "md5": "f23c934af92b8fb0045ef1e21e7a7a46",
+    "expected": "md5:f23c934af92b8fb0045ef1e21e7a7a46",
+    "verified": true
+  },
+  {
+    "path": "pre_registration_schema_python.json",
+    "url": "https://zenodo.org/api/records/20506946/files/pre_registration_schema_python.json/content",
+    "status": 200,
+    "bytes": 4824,
+    "sha256": "111c282d84849c6fd9a69eb32a504a7d22c6631d6f1454dc2f583599bd938ff5",
+    "md5": "b7dccaa48d4e3c2fe915efa6c5bfa13e",
+    "expected": "md5:b7dccaa48d4e3c2fe915efa6c5bfa13e",
+    "verified": true
+  },
+  {
+    "path": "replication_info_schema.json",
+    "url": "https://zenodo.org/api/records/20506946/files/replication_info_schema.json/content",
+    "status": 200,
+    "bytes": 4023,
+    "sha256": "f5dc12741c6f0275d6cb5b4e8b4e165d90d9b99dd8f28b925d9a4e67737d9f2d",
+    "md5": "82de01c80c81dcc0ff386d8b0036bfdc",
+    "expected": "md5:82de01c80c81dcc0ff386d8b0036bfdc",
+    "verified": true
+  },
+  {
+    "path": "interpret_eval.txt",
+    "url": "https://zenodo.org/api/records/20506946/files/interpret_eval.txt/content",
+    "status": 200,
+    "bytes": 3218,
+    "sha256": "1cd717fdab16d52b723fe9a694f31995eaf4d5272ca6cffc977a010479844b9b",
+    "md5": "2ccf2a97c4fa71a35614a73d1e86e123",
+    "expected": "md5:2ccf2a97c4fa71a35614a73d1e86e123",
+    "verified": true
+  },
+  {
+    "path": "execute_eval.txt",
+    "url": "https://zenodo.org/api/records/20506946/files/execute_eval.txt/content",
+    "status": 200,
+    "bytes": 1316,
+    "sha256": "12df24801dbcc6d642b321f7e521c7d340594bf8dda345ea3c528f22aa44192b",
+    "md5": "7d5f80de22b6ee6cadd7b6c6ec760388",
+    "expected": "md5:7d5f80de22b6ee6cadd7b6c6ec760388",
+    "verified": true
+  },
+  {
+    "path": "execute_eval_old.txt",
+    "url": "https://zenodo.org/api/records/20506946/files/execute_eval_old.txt/content",
+    "status": 200,
+    "bytes": 1457,
+    "sha256": "59658157d0446c26423cc44ce20743ac5ca826874332d832885493953835f979",
+    "md5": "6c2f809dc02f7d846737dba04fde48a4",
+    "expected": "md5:6c2f809dc02f7d846737dba04fde48a4",
+    "verified": true
+  },
+  {
+    "path": "extract_eval.txt",
+    "url": "https://zenodo.org/api/records/20506946/files/extract_eval.txt/content",
+    "status": 200,
+    "bytes": 11848,
+    "sha256": "8530a7f44dc02ad46a68b6069a755938e7ae334d41ac7832437fc995b5965d0a",
+    "md5": "2c7bf9c13b6397580aa638d7189e7f24",
+    "expected": "md5:2c7bf9c13b6397580aa638d7189e7f24",
+    "verified": true
+  },
+  {
+    "path": "generate_design_eval.txt",
+    "url": "https://zenodo.org/api/records/20506946/files/generate_design_eval.txt/content",
+    "status": 200,
+    "bytes": 2558,
+    "sha256": "06eed86ab2e520ad6a134c1cde094e5a71cd3ab9c43a8b678a74f6f54a12b3cf",
+    "md5": "c54766879d5b8e9302a0c5327af8c79e",
+    "expected": "md5:c54766879d5b8e9302a0c5327af8c79e",
+    "verified": true
+  },
+  {
+    "path": "evaluate_execute.py",
+    "url": "https://zenodo.org/api/records/20506946/files/evaluate_execute.py/content",
+    "status": 200,
+    "bytes": 25812,
+    "sha256": "cf1e7ef98a24cea98b0f826689a8baa208268bc3ed16126aa230b56a8b22f7af",
+    "md5": "6fcf9a8d2e3e51cb7b0fa0c1856c0a72",
+    "expected": "md5:6fcf9a8d2e3e51cb7b0fa0c1856c0a72",
+    "verified": true
+  }
+]

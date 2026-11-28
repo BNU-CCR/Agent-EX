@@ -1,0 +1,471 @@
+{
+  "checked": "2026-11-28",
+  "repository": "CenterForOpenScience/llm-benchmarking",
+  "commit": "fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+  "tree_sha": "fb6a804fd710764f3ad3c8b84e1323c2804c4776",
+  "truncated": false,
+  "tree_entries": 11087,
+  "selected_files": [
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8a9ba7ed1495711d30d545a3aa39e355fd932009",
+      "size": 3115,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/8a9ba7ed1495711d30d545a3aa39e355fd932009"
+    },
+    {
+      "path": "replicatorbench/Makefile",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "f018351ee0afb9bf31bb8bc98ed9ca0838f7683e",
+      "size": 3819,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/f018351ee0afb9bf31bb8bc98ed9ca0838f7683e"
+    },
+    {
+      "path": "replicatorbench/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1cf2ced043e8be1d035d0da4f7cd187ece0be74f",
+      "size": 5812,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/1cf2ced043e8be1d035d0da4f7cd187ece0be74f"
+    },
+    {
+      "path": "replicatorbench/core/agent.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a67f2f0bc69ebbae54b17c0c12f41eea40a1a91",
+      "size": 19227,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/9a67f2f0bc69ebbae54b17c0c12f41eea40a1a91"
+    },
+    {
+      "path": "replicatorbench/data/original/1/input/replication_data/transportation.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "857579ccc55fad993d7b18250ca0f14e63c381f0",
+      "size": 134,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/857579ccc55fad993d7b18250ca0f14e63c381f0"
+    },
+    {
+      "path": "replicatorbench/generator/execute_tools.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98ed614c504560d0e10111236e22280cd4796d18",
+      "size": 3982,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/98ed614c504560d0e10111236e22280cd4796d18"
+    },
+    {
+      "path": "replicatorbench/info_extractor/extractor.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ed89efd22e26cf32167b941da4121854a34f41f8",
+      "size": 6303,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/ed89efd22e26cf32167b941da4121854a34f41f8"
+    },
+    {
+      "path": "replicatorbench/validator/aggregate_eval_scores.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "25fb70063e911364b1bcf3a278a0560394626f64",
+      "size": 4355,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/25fb70063e911364b1bcf3a278a0560394626f64"
+    },
+    {
+      "path": "replicatorbench/validator/evaluate_interpret.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe3517afcf85049be9387bd94f3713817476970a",
+      "size": 3426,
+      "url": "https://api.github.com/repos/CenterForOpenScience/llm-benchmarking/git/blobs/fe3517afcf85049be9387bd94f3713817476970a"
+    }
+  ],
+  "scoped_nondata_paths": [
+    {
+      "path": "replicatorbench/Makefile",
+      "sha": "f018351ee0afb9bf31bb8bc98ed9ca0838f7683e",
+      "size": 3819
+    },
+    {
+      "path": "replicatorbench/README.md",
+      "sha": "1cf2ced043e8be1d035d0da4f7cd187ece0be74f",
+      "size": 5812
+    },
+    {
+      "path": "replicatorbench/core/actions.py",
+      "sha": "9c12f35f1bc0936badda9f6fffa12e598b8ad754",
+      "size": 18104
+    },
+    {
+      "path": "replicatorbench/core/agent.py",
+      "sha": "9a67f2f0bc69ebbae54b17c0c12f41eea40a1a91",
+      "size": 19227
+    },
+    {
+      "path": "replicatorbench/core/check_deps.py",
+      "sha": "013b48bed58999113594726e8b79eacd428be3e4",
+      "size": 483
+    },
+    {
+      "path": "replicatorbench/core/constants.py",
+      "sha": "93d79b3e7d6f04e07175fd27130395eb4dc92e35",
+      "size": 7386
+    },
+    {
+      "path": "replicatorbench/core/prompts.py",
+      "sha": "0889791b1dd90832895af02a8685ffc7ff804ebe",
+      "size": 9961
+    },
+    {
+      "path": "replicatorbench/core/tools.py",
+      "sha": "eb2c5ca29de87ac4050dc112c8d8681e8df6e0ab",
+      "size": 23805
+    },
+    {
+      "path": "replicatorbench/core/utils.py",
+      "sha": "cc1060b0bad294ee97803e589af2262d72274340",
+      "size": 2592
+    },
+    {
+      "path": "replicatorbench/generator/README.md",
+      "sha": "275303c0125f15c136bfdfffbcee480a4c53311a",
+      "size": 1725
+    },
+    {
+      "path": "replicatorbench/generator/__init__.py",
+      "sha": "139597f9cb07c5d48bed18984ec4747f4b4f3438",
+      "size": 2
+    },
+    {
+      "path": "replicatorbench/generator/__main__.py",
+      "sha": "1338dec78fd8341bb2379f85cddf6fc85f82c5b1",
+      "size": 1705
+    },
+    {
+      "path": "replicatorbench/generator/common/logging.py",
+      "sha": "cb0b99784f027883061e24b4f13dc90ccac39053",
+      "size": 503
+    },
+    {
+      "path": "replicatorbench/generator/design_agent.py",
+      "sha": "74eda32a7e31a78671f653d4257d50b7732a0bbe",
+      "size": 3882
+    },
+    {
+      "path": "replicatorbench/generator/execute_agent.py",
+      "sha": "c21bf2e68e1228f270942d00f9f62e6e8189d4d6",
+      "size": 8070
+    },
+    {
+      "path": "replicatorbench/generator/execute_tools.py",
+      "sha": "98ed614c504560d0e10111236e22280cd4796d18",
+      "size": 3982
+    },
+    {
+      "path": "replicatorbench/generator/orchestrator_tool.py",
+      "sha": "9a47532411041c44cb68e787d9dc9c36c45a376c",
+      "size": 16387
+    },
+    {
+      "path": "replicatorbench/info_extractor/README.md",
+      "sha": "dd6de720a8b29cfe5c35160d5a0e86a9e1b7cccd",
+      "size": 1200
+    },
+    {
+      "path": "replicatorbench/info_extractor/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "replicatorbench/info_extractor/__main__.py",
+      "sha": "7770537d11f8545fa8f17f25d97242df8e44728f",
+      "size": 1524
+    },
+    {
+      "path": "replicatorbench/info_extractor/extractor.py",
+      "sha": "ed89efd22e26cf32167b941da4121854a34f41f8",
+      "size": 6303
+    },
+    {
+      "path": "replicatorbench/info_extractor/file_utils.py",
+      "sha": "8ad19c00e277cd4ba5d51300a05eaad6adf50dde",
+      "size": 18696
+    },
+    {
+      "path": "replicatorbench/info_extractor/prompt_builder.py",
+      "sha": "ff647018f988804717f9221a5f1dc952045baac0",
+      "size": 1679
+    },
+    {
+      "path": "replicatorbench/interpreter/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "replicatorbench/interpreter/__main__.py",
+      "sha": "8dc3e5ccd2c3ac1d3bb4675c68d44951e4ee6aef",
+      "size": 848
+    },
+    {
+      "path": "replicatorbench/interpreter/agent.py",
+      "sha": "2aefcdd0fccb5b552af5694b9fccd0b93fc0a268",
+      "size": 7184
+    },
+    {
+      "path": "replicatorbench/pytest.ini",
+      "sha": "cfa921d37c0c340627d2b7eacd9ed2829c5d1730",
+      "size": 100
+    },
+    {
+      "path": "replicatorbench/requirements-dev.txt",
+      "sha": "6fff56b374b1c5ae7f4b521b85395ed7dac19f5e",
+      "size": 189
+    },
+    {
+      "path": "replicatorbench/samples/info_exractor_validation_results.json",
+      "sha": "b83b83650db034f53abc712d429a41f5d7d77207",
+      "size": 8444
+    },
+    {
+      "path": "replicatorbench/samples/initial_details_easy.txt",
+      "sha": "269ac864dacd25efaba038b5a2fa792c689eac5a",
+      "size": 356
+    },
+    {
+      "path": "replicatorbench/samples/initial_details_medium_hard.txt",
+      "sha": "54558bb5c300fb333c0f4b7af36837b7f054ab40",
+      "size": 158
+    },
+    {
+      "path": "replicatorbench/samples/replication_info.json",
+      "sha": "102562c6ece78aa93d5d864c9953b570e9e8bd6a",
+      "size": 6277
+    },
+    {
+      "path": "replicatorbench/samples/replication_info_expected.json",
+      "sha": "209390266f01b18d7ce3a8096b167413136a83c3",
+      "size": 2847
+    },
+    {
+      "path": "replicatorbench/templates/evaluate_execute_schema.json",
+      "sha": "2c8b518d7309755b79bda46a0b21500a65cfd2c5",
+      "size": 2152
+    },
+    {
+      "path": "replicatorbench/templates/execute_schema.json",
+      "sha": "4ddbf9aeead24ca97dd91d5288c4f716d076995d",
+      "size": 3564
+    },
+    {
+      "path": "replicatorbench/templates/info_extractor_instructions.json",
+      "sha": "0b458481fce4fcde63935e4056a4cce1c2e6e0d4",
+      "size": 3138
+    },
+    {
+      "path": "replicatorbench/templates/interpret_schema.json",
+      "sha": "ef83c763b07d07aeafbc5e4a584d10b48c3bfaaa",
+      "size": 2777
+    },
+    {
+      "path": "replicatorbench/templates/post_registration_schema.json",
+      "sha": "880066fd1185510fcf60eb6c0dd435e3cdf0e659",
+      "size": 3217
+    },
+    {
+      "path": "replicatorbench/templates/pre_registration_schema_native.json",
+      "sha": "e6d30146ba7d923ca4e930d516c571a2b36b2b51",
+      "size": 4838
+    },
+    {
+      "path": "replicatorbench/templates/pre_registration_schema_python.json",
+      "sha": "a6c4d8caeb552a829141e2e2d12156279d2ef2ed",
+      "size": 4824
+    },
+    {
+      "path": "replicatorbench/templates/prompts/execute_eval.txt",
+      "sha": "3ee3a8e21350122540dace116dd2fb30149f1cff",
+      "size": 1316
+    },
+    {
+      "path": "replicatorbench/templates/prompts/execute_eval_old.txt",
+      "sha": "c142694c1529ff5afce42f6e518d41f15266b7ad",
+      "size": 1457
+    },
+    {
+      "path": "replicatorbench/templates/prompts/extract_eval.txt",
+      "sha": "9e75af437742712bf306e510e81ca37a4294d5c5",
+      "size": 11848
+    },
+    {
+      "path": "replicatorbench/templates/prompts/generate_design_eval.txt",
+      "sha": "3ade3421f299fcb2e08a07b0c1a9fec222743e95",
+      "size": 2558
+    },
+    {
+      "path": "replicatorbench/templates/prompts/interpret.txt",
+      "sha": "522c519755e902e573d16deb7f1ebff3c05b89ba",
+      "size": 583
+    },
+    {
+      "path": "replicatorbench/templates/prompts/interpret_eval.txt",
+      "sha": "0809c349ca32f2b3de84d2575446a64ca85d99d5",
+      "size": 3218
+    },
+    {
+      "path": "replicatorbench/templates/replication_info_schema.json",
+      "sha": "0270fa9239c32f5cecb49cbdd6e31aea3f6f6ec6",
+      "size": 4023
+    },
+    {
+      "path": "replicatorbench/tests/conftest.py",
+      "sha": "3c984d37af90301994880177a89bcc14c5bef3f8",
+      "size": 304
+    },
+    {
+      "path": "replicatorbench/tests/integration.py",
+      "sha": "4a5a3c3cbcc8beb5171809224fa7bee30be522fa",
+      "size": 1025
+    },
+    {
+      "path": "replicatorbench/tests/test_extractor.py",
+      "sha": "348de3dafd57d0bfa982152d1f587dd4cc3f36ff",
+      "size": 8180
+    },
+    {
+      "path": "replicatorbench/tests/test_generator.py",
+      "sha": "ba37c5ee9b78df9de334e3b78652781ca89e470c",
+      "size": 11445
+    },
+    {
+      "path": "replicatorbench/tests/test_logger.py",
+      "sha": "c50b1f635fa31b3fdc2dfeef24ac14561aed9777",
+      "size": 834
+    },
+    {
+      "path": "replicatorbench/validator/README.md",
+      "sha": "994e9a762c2b0178488ba604b610d2cd5d05b530",
+      "size": 817
+    },
+    {
+      "path": "replicatorbench/validator/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "replicatorbench/validator/aggregate_eval_scores.py",
+      "sha": "25fb70063e911364b1bcf3a278a0560394626f64",
+      "size": 4355
+    },
+    {
+      "path": "replicatorbench/validator/cli/evaluate_design_cli.py",
+      "sha": "d92555fee6a27be48eb657b6e2ad75396d35e6d2",
+      "size": 1068
+    },
+    {
+      "path": "replicatorbench/validator/cli/evaluate_execute_cli.py",
+      "sha": "1fce83535b01a66096c1fe81ba0702f0001295ee",
+      "size": 690
+    },
+    {
+      "path": "replicatorbench/validator/cli/evaluate_extracted_info.py",
+      "sha": "0a91a144881c231ffea68e9acd80e6bcad06d478",
+      "size": 1082
+    },
+    {
+      "path": "replicatorbench/validator/cli/evaluate_interpret_cli.py",
+      "sha": "0514bf05aa8db666409fda8056378e2d824bdae3",
+      "size": 825
+    },
+    {
+      "path": "replicatorbench/validator/cli/evaluate_summary_cli.py",
+      "sha": "0f58cce9d753d4e626adc858f25eb4912f15763a",
+      "size": 581
+    },
+    {
+      "path": "replicatorbench/validator/cli/extract_human_replication_info.py",
+      "sha": "b2d6d557c0a42d078c6c566f16538f4e9d4c982e",
+      "size": 1089
+    },
+    {
+      "path": "replicatorbench/validator/cli/extract_replication_results.py",
+      "sha": "6ae6f6f4f80233faecfc9387cbc6cd4b5706d305",
+      "size": 710
+    },
+    {
+      "path": "replicatorbench/validator/cli/validate_info_extractor.py",
+      "sha": "2823e0abcab5a9b91cf84e94648b045fd0dfaed6",
+      "size": 1567
+    },
+    {
+      "path": "replicatorbench/validator/compare_outputs.py",
+      "sha": "e7c7bfd0d36883b30bff768b0e3fadbc236e0333",
+      "size": 1692
+    },
+    {
+      "path": "replicatorbench/validator/evaluate_execute.py",
+      "sha": "74d817bfb6f9d1a92ffb37695970e3ddaca5397f",
+      "size": 25812
+    },
+    {
+      "path": "replicatorbench/validator/evaluate_interpret.py",
+      "sha": "fe3517afcf85049be9387bd94f3713817476970a",
+      "size": 3426
+    },
+    {
+      "path": "replicatorbench/validator/evaluate_replication_preregistration.py",
+      "sha": "f3d7fa63416cebcf734214a10f5efd7b370afe0d",
+      "size": 3436
+    },
+    {
+      "path": "replicatorbench/validator/extract_and_evaluate_from_human_rep.py",
+      "sha": "f4ec616b6072dfd1b6c8a50bdbecaf4ebdd4143f",
+      "size": 3888
+    },
+    {
+      "path": "replicatorbench/validator/extract_from_human_replication_study.py",
+      "sha": "82855db466663975dba8f765184bdbef3d3f32ac",
+      "size": 4295
+    }
+  ],
+  "study_directory_ids": [
+    "1",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "2",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "3",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  ],
+  "raw_tree_not_committed": true
+}
