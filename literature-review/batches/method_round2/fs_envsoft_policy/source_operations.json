@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "FS-01",
+    "platform": "targeted_policy_search",
+    "search_date": "2026-11-28",
+    "query_exact": "Fiveexactqueriesinsearch_queries;primaryShopandthirdpartyleadsseparate",
+    "source_url": "https://shop.elsevier.com/journals/environmental-modelling-and-software/1364-8152",
+    "status": "official_scope_discovered",
+    "notes": "Grouped source operation not query count; no submission/messages/model execution"
+  },
+  {
+    "search_id": "FS-02",
+    "platform": "official_author_guide_access",
+    "search_date": "2026-11-28",
+    "query_exact": "Webfetch403/static403832982byteerrorHTML;643textcharsnotguide",
+    "source_url": "https://www.sciencedirect.com/journal/environmental-modelling-and-software/publish/guide-for-authors",
+    "status": "guide_blocked_not_read",
+    "notes": "Grouped source operation not query count; no submission/messages/model execution"
+  },
+  {
+    "search_id": "FS-03",
+    "platform": "browser_fallback",
+    "search_date": "2026-11-28",
+    "query_exact": "CUAcreateBrowserTabreportedlocalbrowserunavailable;noopenedtab/guidecontent",
+    "source_url": "https://www.sciencedirect.com/journal/environmental-modelling-and-software/publish/guide-for-authors",
+    "status": "browser_unavailable_not_manual_wait",
+    "notes": "Grouped source operation not query count; no submission/messages/model execution"
+  },
+  {
+    "search_id": "FS-04",
+    "platform": "official_shop_scope",
+    "search_date": "2026-11-28",
+    "query_exact": "200197231bytes;4namedtypes/environment/quantitativeVnV/license/testing/reviewcontact",
+    "source_url": "https://shop.elsevier.com/journals/environmental-modelling-and-software/1364-8152",
+    "status": "scope_and_specific_expectations_read",
+    "notes": "Grouped source operation not query count; no submission/messages/model execution"
+  },
+  {
+    "search_id": "FS-05",
+    "platform": "cross_table_policy_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "EMSonlymap/candidatetypeandprecedentupdated;notnewpriority/length/depositmandate",
+    "source_url": "reports/envsoft_policy_fields_FS.md",
+    "status": "scoped_policy_integration",
+    "notes": "Grouped source operation not query count; no submission/messages/model execution"
+  }
+]

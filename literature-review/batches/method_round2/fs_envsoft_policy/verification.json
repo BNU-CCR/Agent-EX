@@ -1,0 +1,28 @@
+{
+  "checked": "2026-11-28",
+  "master_matrix_unchanged": true,
+  "map_and_candidate_only_changed": [
+    "EMS"
+  ],
+  "recommendation_grades_unchanged": true,
+  "source_response_hashes_verified": 2,
+  "policy_field_rows": 12,
+  "workbook_rows": [
+    28,
+    241,
+    62,
+    32,
+    268,
+    56,
+    1941,
+    16,
+    42,
+    36
+  ],
+  "requirement_ids_classes_unchanged": 66,
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "not_verified": "fullguide_length/review/deposit/index;notfullgoalacceptance"
+}

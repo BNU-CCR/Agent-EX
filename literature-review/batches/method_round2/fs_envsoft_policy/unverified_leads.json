@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://journalcompass.com/en/journals/environmental-modelling-software-13648152.html",
+    "role": "thirdparty_discovery_not_policy_evidence",
+    "unverified": [
+      "11types",
+      "abstract150",
+      "keywords1-7",
+      "highlights",
+      "reviewtime",
+      "acceptancerate",
+      "indexranking"
+    ]
+  },
+  {
+    "url": "https://iemss.org/journal/list-of-ems-position-papers/",
+    "role": "2013societyhistorical_not2026guide",
+    "use": "notaddedpre2022paper/libraryorcurrentpolicy"
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "tag": "shop",
+    "url": "https://shop.elsevier.com/journals/environmental-modelling-and-software/1364-8152",
+    "status": 200,
+    "bytes": 197231,
+    "sha256": "be39927169af924de8e0492ce025ff8a23bafd4ca2bacc787acccb9b567e46bc",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FS_shop.response",
+    "final_url": "https://shop.elsevier.com/journals/environmental-modelling-and-software/1364-8152",
+    "text_file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FS_shop.txt",
+    "selected_links": [
+      {
+        "text": "Your legal guarantee rights (EU) ( opens in new tab/window )",
+        "url": "https://assets.ctfassets.net/ahaoy9whsr8a/361zzYWGjrkjcqmYw9qHxT/06f64ef91657ad5d8d704ce06659d7de/Legal_guarantee_notice_ENN.pdf"
+      }
+    ]
+  },
+  {
+    "tag": "guide",
+    "url": "https://www.sciencedirect.com/journal/environmental-modelling-and-software/publish/guide-for-authors",
+    "status": 403,
+    "bytes": 832982,
+    "sha256": "7cae24b0e66fe701a9d2fdc6ec38d649c531b7811cb2e450d7b10953840faf58",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FS_guide.response",
+    "final_url": "https://www.sciencedirect.com/journal/environmental-modelling-and-software/publish/guide-for-authors",
+    "text_file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FS_guide.txt",
+    "selected_links": []
+  }
+]
