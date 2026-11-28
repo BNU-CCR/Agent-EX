@@ -23948,5 +23948,95 @@
     "batch": "EC-SimBench-fixed-release-static-audit",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ec_simbench_code/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "three_layer_two_level_reliability_analysis;conditional_discrete_response_simulation",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "empirical_validation",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Layered target/metric/denominator distinction transferable;results limited to filtered analytical groups and observational conditional-response tasks",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_relevance_rationale",
+    "old": "个体与人口可靠性可能方向相反；需核三层定义、四任务/十一模型参照及抽样/留出。",
+    "new": "Direct empirical response-reference analysis of individual/population metric decoupling;measurement/population/selection limits explicit",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_pending_fields",
+    "old": "fulltext;reference_independence;target_metrics;model_data_version;exact_formal_first_online;method_maturity;method_evidence_level",
+    "new": "exact_formal_first_online;Religion76vs80attributes;rawlabels_annotation_protocol;completecase_population_mapping;ASPG_outofsample_selection;model_snapshot_think_and_decoding_identity;parsing_failure_cost;dynamic_process_validation",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_evidence_location",
+    "old": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "new": "Formalmain§2–3/Limitations;AppB–I;Table4/5/7/10/12;Figures5/10",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M176",
+    "field": "method_coding_source",
+    "old": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "new": "reading-cards/M176.md;reports/relimap_ED.md;batches/method_round2/ed_relimap/reading_checks.json",
+    "date": "2026-11-28",
+    "batch": "ED-ReliMap-formal-targets-and-reliability",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ed_relimap/results.json"
   }
 ]

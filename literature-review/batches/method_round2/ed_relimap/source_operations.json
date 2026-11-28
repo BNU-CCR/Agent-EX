@@ -1,0 +1,47 @@
+[
+  {
+    "search_id": "ED-01",
+    "platform": "official_PDF_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "Officialformal18ppPDF/hash;coverconferencedatesnotfirstonline",
+    "source_url": "https://aclanthology.org/2026.emnlp-main.1269.pdf",
+    "status": "200_formal_pdf",
+    "notes": "Grouped operations;not independentstudies/querycount. No code/modelrun/rawlabelvalidation;monthnotexactfirstonline."
+  },
+  {
+    "search_id": "ED-02",
+    "platform": "formal_method_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Main1\u201310/AppAend11/B\u2013J12\u201318;notrescreenrefs",
+    "source_url": "https://aclanthology.org/2026.emnlp-main.1269.pdf",
+    "status": "scoped_fulltext",
+    "notes": "Grouped operations;not independentstudies/querycount. No code/modelrun/rawlabelvalidation;monthnotexactfirstonline."
+  },
+  {
+    "search_id": "ED-03",
+    "platform": "numeric_and_theory_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Table4all69deltaACC/TVDpairs18same-sign;relativepercent;population/seedcounts/upperbound checked",
+    "source_url": "literature-review/batches/method_round2/ed_relimap/reading_checks.json",
+    "status": "local_source_arithmetic",
+    "notes": "Grouped operations;not independentstudies/querycount. No code/modelrun/rawlabelvalidation;monthnotexactfirstonline."
+  },
+  {
+    "search_id": "ED-04",
+    "platform": "visual_source_check",
+    "search_date": "2026-11-28",
+    "query_exact": "Inspectformalpages7/8/17;table4/5/12andSDscope",
+    "source_url": "literature-review/batches/method_round2/ed_relimap/reading_checks.json",
+    "status": "three_pages_inspected",
+    "notes": "Grouped operations;not independentstudies/querycount. No code/modelrun/rawlabelvalidation;monthnotexactfirstonline."
+  },
+  {
+    "search_id": "ED-05",
+    "platform": "coding_and_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "Candidate/datependingretained;addcard/fiveunits;filteredtarget/Mediaannotation/seeds separated",
+    "source_url": "literature-review/reports/relimap_ED.md",
+    "status": "local_integration",
+    "notes": "Grouped operations;not independentstudies/querycount. No code/modelrun/rawlabelvalidation;monthnotexactfirstonline."
+  }
+]

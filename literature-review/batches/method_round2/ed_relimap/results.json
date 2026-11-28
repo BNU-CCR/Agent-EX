@@ -1,0 +1,32 @@
+{
+  "batch_id": "ED-ReliMap-formal-targets-and-reliability",
+  "date": "2026-11-28",
+  "expected_master_sha256": "328ded6992fdd8ada6b3d38ea4080d34c596cde38b823ce51bad62397f0d81e5",
+  "updates": [
+    {
+      "record_id": "M176",
+      "reason": "正式正文支持个体ACC/群体TVD分层方法评价；精确首次在线日期仍待核，candidate保留。",
+      "research_question": "模型/资料完整度/人口抽样如何分别影响个体标签准确与群体分布一致性？",
+      "method_type": "three_layer_two_level_reliability_analysis;conditional_discrete_response_simulation",
+      "mechanisms": "base_response_bias;profile_conditioning;population_aggregation;attribute_information_vs_count",
+      "reading_status": "fulltext_checked",
+      "related_versions": "Official18ppEMNLPformalPDFread;onlypublicationmonthknown;conferenceOct24–29notfirstonlinedate",
+      "supplement_status": "formalAppendicesB–Jandendp11Aread;projectlinkonly;code/rawlabelsnotacquired",
+      "findings": "三调查完整case/无权重、MediaGPT4o标签仅20例人工抽查；表4中18/69比较R1/R2反向，非通用26%失效率。5seed为属性/人口抽样，SD非模型生成CI；ASPG标签依赖/76vs80属性/局部跨指标反向保留；非动态社会效度。",
+      "evidence_location": "Formal18ppPDFmain1–10;AppAend11/B–J12–18;Tables1–12;Eq1–15;pages7/8/17visual",
+      "relation_to_agent_ex": "Separate individual correctness/group distribution/dynamic mechanism validity and target-population scope;thinkmode differs from frozennonthinking;no protocol/model/N/seedchanges",
+      "card_path": "reading-cards/M176.md",
+      "notes": "ED scopedformalreading;candidate/datependingretained,PDFcoverdatedconferencenotfirstonline. 18/69sourcecomparisonschecked,notindependentexperiments. Filteredanalyticaltarget/no surveyweights;Mediaannotatedlabelsnotallhumanverified;no code/modelrun.",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "empirical_validation",
+      "method_transferability": "Layered target/metric/denominator distinction transferable;results limited to filtered analytical groups and observational conditional-response tasks",
+      "method_relevance_rationale": "Direct empirical response-reference analysis of individual/population metric decoupling;measurement/population/selection limits explicit",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "exact_formal_first_online;Religion76vs80attributes;rawlabels_annotation_protocol;completecase_population_mapping;ASPG_outofsample_selection;model_snapshot_think_and_decoding_identity;parsing_failure_cost;dynamic_process_validation",
+      "method_evidence_location": "Formalmain§2–3/Limitations;AppB–I;Table4/5/7/10/12;Figures5/10",
+      "method_coding_source": "reading-cards/M176.md;reports/relimap_ED.md;batches/method_round2/ed_relimap/reading_checks.json",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}

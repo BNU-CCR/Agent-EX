@@ -1,0 +1,27 @@
+{
+  "base": "f614f54",
+  "only_record_changed": "M176",
+  "candidate_date_pending_retained": true,
+  "formal_pdf_hash": true,
+  "visual_page_hashes": 3,
+  "table4_comparisons": 69,
+  "opposite_directions": 18,
+  "zero_ACC_cases": 1,
+  "cards11": 82,
+  "matrix_oldprefix": 222,
+  "new_units": 5,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    228,
+    1699,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "formal_bib": 59,
+  "frontier_bib": 8,
+  "EC_archive_committed_bytes_verified": true,
+  "limits": "Source table/arithmetic checks only;no raw labels/model rerun/causal identification;formal firstonline not invented"
+}

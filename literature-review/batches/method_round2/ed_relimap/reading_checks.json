@@ -1,0 +1,59 @@
+{
+  "pdf_pages": 18,
+  "read_scope": "mainpp1–10;appendicesB–Jpp12–18;AppAendp11;referencesnotrescreened",
+  "population_sizes": [
+    1000,
+    9994,
+    500,
+    150
+  ],
+  "full_profile_sizes_table7": [
+    100,
+    200,
+    80,
+    30
+  ],
+  "religion_table2_attributes": 76,
+  "table4_comparisons": 69,
+  "table4_opposite_directions": 18,
+  "derived_fraction": 0.2608695652173913,
+  "relative_not_percentage_point": true,
+  "seeds": [
+    2025,
+    2026,
+    2027,
+    2028,
+    2029
+  ],
+  "manual_label_check": {
+    "task": "Media",
+    "reported_checked": 20,
+    "reported_accuracy": "100% on checked subset only;notall150"
+  },
+  "theory_boundary": "Eq14upperbound/15sufficientconvergence notnecessary/converse;no independence proof",
+  "remaining": [
+    "exactfirstonline",
+    "code/run/modelrevision",
+    "completecase/generalpopulationmapping",
+    "rawlabels/annotatorprotocol",
+    "ASPGselection_outofsample",
+    "Religion76vs80"
+  ],
+  "visuals": [
+    {
+      "page": 7,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ED_ReliMap_p7.png",
+      "sha256": "ea45a8e707a9a74126c0ddf48f506937c2b14318eec822eb8d84a8a45542fa0a"
+    },
+    {
+      "page": 8,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ED_ReliMap_p8.png",
+      "sha256": "1450c9f5476067447e80ca86bf6871407a8e70f3b0e5b0a50879ae2b9f563758"
+    },
+    {
+      "page": 17,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ED_ReliMap_p17.png",
+      "sha256": "a6abee11a31f5b2b138f845015fcc7b0bb693fc93280af1dca8b332ed74b938f"
+    }
+  ]
+}
