@@ -1,0 +1,32 @@
+{
+  "batch_id": "FW",
+  "date": "2026-11-28",
+  "expected_master_sha256": "094ba237b3d08ed1d7b5b1b26d14aab76ab59acaf7bd02aad8907211d977813a",
+  "updates": [
+    {
+      "record_id": "M184",
+      "screening_status": "included",
+      "reason": "正式身份/2025分阶段出版资格已核；作者托管正式PDF方法/评价定向精读，提供受控形式模型生成比较，非真实社会效度或独立复现成功。",
+      "research_question": "合成训练、few-shot、LoRA及语法约束如何影响自然语言到反应网络DSL的特定匹配判据和用户任务？",
+      "mechanisms": "rule_based_synthetic_CRN_generator;few_shot;LoRA;grammar_constrained_decoding;reaction_matching;five_scientist_diagnostic_tasks",
+      "reading_status": "fulltext_checked",
+      "supplement_status": "formalPDFmethods/evaluationfocusedread;authorZenodo15198397/Gitlinksidentifiednotacquired/executed;userdetailedsupplementnotread",
+      "findings": "200合成样本、训练配置/提示择优后LoRA最高84.5%；匹配规则非完整动态等价，测试复用限制无偏外推；误差条为解码种子SD。五人诊断研究含复杂任务/交互修正失败，不当社会效度成功。",
+      "evidence_location": "formalPDF2.1/4/5/6;PDFpp4,7-20;Table1PDF17/Table2PDF24/Figs3-4PDF16",
+      "relation_to_agent_ex": "分开语法、形式结构匹配、动态/机制与用户评价；区分训练种子、解码种子、样本和用户；不把LoRA加入冻结主模型或以反应网络结果认证社会效度。",
+      "card_path": "reading-cards/M184.md",
+      "notes": "FVfirst2PDFpagesidentity/abstractonly;1281993bytes28p;CCBY4.0PDFnotwebsiteCCBY-NCSA;authorStartedJan1year0001template/Nov1pagepublication/Jul5update_notpaperdates;AMvsVoRdistinct;no code/model execution | FW:formalmethods/evaluationread;800train/200test/3manualvalidation;testusedforselection;54LoRAtrains/selectedbestrep;84.5nominal169of200notrawhitsverified;no authorcode/model run",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "controlled_comparison",
+      "method_coding_status": "fulltext_supported",
+      "method_transferability": "评价链从语法到反应匹配/动态再到用户任务分层；测试复用、选种子与不同随机单位需报告；合成模板泛化不等经验社会机制识别。",
+      "method_relevance_rationale": "有实际合成真值、方法组合/基线和小规模用户诊断，支持有条件受控方法比较；不代表全面语义恢复、生产就绪或人类外部效度。",
+      "method_pending_fields": "fixed_evaluator_extra_reaction_and_symbolic_rate_semantics;test_reuse_optimism/independent_holdout;85_vs84.5_artifact_mapping;full_user_supplement;raw_run_identity;AM_VoR_collation;current_journal_scope/guide",
+      "method_evidence_location": "4.1-4.5formalgrammar/generator;5.2split;5.4matching/repeats;5.5-5.8selection/Table1;5.9subset62;5.10n5;6dynamicmetricfuture",
+      "method_coding_source": "reading-cards/M184.md;reports/formal_dsl_evaluation_FW.md;batches/method_round2/fw_formal_dsl_reading/reading_scope.json",
+      "method_last_checked": "2026-11-28",
+      "search_id": "FV-01;FV-02;FV-03;FV-04;FV-05;FW-01;FW-02;FW-03;FW-04;FW-05;FW-06"
+    }
+  ],
+  "new_records": []
+}

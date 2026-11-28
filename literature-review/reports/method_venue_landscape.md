@@ -1,4 +1,4 @@
-> 当前入口（2026-11-28，FV）：78正式纳入/91卡/267证据单元，62载体/31条件项，13日期待核。[九问题综合](methods_review_current_synthesis.md)与[形式DSL候选](formal_dsl_identity_FV.md)。旧批数量保留历史身份。
+> 当前入口（2026-11-28，FW）：79正式纳入/92卡/272证据单元，62载体/31条件项，13日期待核。[九问题综合](methods_review_current_synthesis.md)与[形式恢复评价](formal_dsl_evaluation_FW.md)。旧批数量保留历史身份。
 
 > FA：六个地图刊（其中四个为当时条件投稿项）的官方日期APC已核，Social Networks官方范围现可读；是可选混合OA标价，不升推荐、不代表指南/索引已核。见[费用与范围](elsevier_fee_fields_FA.md)。
 

@@ -1,0 +1,32 @@
+{
+  "checked": "2026-11-28",
+  "only_master_changed": "M184",
+  "old_matrix267_preserved": true,
+  "new_matrix": [
+    "VC268",
+    "VC269",
+    "VC270",
+    "VC271",
+    "VC272"
+  ],
+  "formal_Bib79_match": true,
+  "workbook_rows": [
+    28,
+    242,
+    63,
+    32,
+    273,
+    56,
+    1961,
+    16,
+    42,
+    37
+  ],
+  "card_formats": "86headings/6protectedinline",
+  "requirements_ids_classes_unchanged": 66,
+  "original_ids": 57,
+  "protected_hashes": 18,
+  "protected_search_prefix": 231,
+  "legacy_changes": 112,
+  "limitations": "No fixedcode/rawhits/user supplement/reexecution;notfullgoalacceptance"
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "FW-01",
+    "platform": "formal_pdf_identity",
+    "search_date": "2026-11-28",
+    "query_exact": "Reuse28p1281993byteshash;AM/VoRdatesunchanged",
+    "source_url": "https://justinnk.net/research/kreikemeyer2025using/kreikemeyer2025using.pdf",
+    "status": "identity_rechecked",
+    "notes": "Grouped source operation not querycount;no author code/model execution"
+  },
+  {
+    "search_id": "FW-02",
+    "platform": "focused_formal_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "2.1selected/4-6PDF7-20;notallbackground/references/appendices",
+    "source_url": "reading-cards/M184.md",
+    "status": "formal_method_evaluation_read",
+    "notes": "Grouped source operation not querycount;no author code/model execution"
+  },
+  {
+    "search_id": "FW-03",
+    "platform": "denominator_selection_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "800/200/3validation;18x3LoRAs/bestrep;84.5nominal169/200;40.6percentagepointsnotrelative41",
+    "source_url": "reports/formal_dsl_evaluation_FW.md",
+    "status": "scope_and_arithmetic_checked_not_raw_recount",
+    "notes": "Grouped source operation not querycount;no author code/model execution"
+  },
+  {
+    "search_id": "FW-04",
+    "platform": "visual_check",
+    "search_date": "2026-11-28",
+    "query_exact": "Figs3-4PDF16/Table1PDF17/Table2PDF24;trainingvsdecodingSD",
+    "source_url": "batches/method_round2/fw_formal_dsl_reading/reading_scope.json",
+    "status": "selected_figures_tables_visually_checked",
+    "notes": "Grouped source operation not querycount;no author code/model execution"
+  },
+  {
+    "search_id": "FW-05",
+    "platform": "reference_and_usability_limits",
+    "search_date": "2026-11-28",
+    "query_exact": "Matchingnotdynamic equivalence;62subsettoolcomparison;5scientists10tasksnot10independentusers;failures",
+    "source_url": "reading-cards/M184.md",
+    "status": "evidence_units_separated",
+    "notes": "Grouped source operation not querycount;no author code/model execution"
+  },
+  {
+    "search_id": "FW-06",
+    "platform": "method_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "5units/syntheticcomparator/selection/randomness/taskalignment/userdiagnostics;notnewtraining",
+    "source_url": "reports/formal_dsl_evaluation_FW.md",
+    "status": "scoped_synthesis",
+    "notes": "Grouped source operation not querycount;no author code/model execution"
+  }
+]

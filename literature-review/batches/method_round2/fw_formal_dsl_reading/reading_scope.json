@@ -1,0 +1,47 @@
+{
+  "version": "authorhostedACMformal-layoutPDF;AMnotcollated",
+  "sha256": "c66ba818fa0203d42bda4b2677aa821d09b9ed0937e59b99e9f862841763f901",
+  "pdf_pages": 28,
+  "printed_article_pages": 27,
+  "focused_sections": [
+    "2.1selected",
+    "4",
+    "5",
+    "6"
+  ],
+  "pdf_pages_read": [
+    4,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "appendix_B_table2_read": true,
+  "visuals": [
+    "Figs3-4PDF16",
+    "Table1PDF17",
+    "Table2PDF24"
+  ],
+  "not_claimed": [
+    "all background/reference/appendix studies read",
+    "user detailed supplement read",
+    "raw hit list recounted",
+    "independent training/reexecution",
+    "formal dynamic equivalence/realworldvalidity"
+  ],
+  "pending_static_check": [
+    "extraoutputreactiontreatment",
+    "symbolicrateexactcriterion",
+    "85vs84.5mapping"
+  ]
+}
