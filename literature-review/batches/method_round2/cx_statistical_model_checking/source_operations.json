@@ -1,0 +1,38 @@
+[
+  {
+    "search_id": "CX-01",
+    "platform": "local_primary_fulltext_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read formalM054§§2–5/Appendix:independentreplications,transient/steady,warmup,calibrationguarantees,softwarelicense",
+    "source_url": "https://www.jasss.org/29/4/5.html",
+    "status": "formal_html_targeted_read_reused_CU",
+    "notes": "Frequentist expectedloss uncertainty not posterior/humanvalidity;binarysource boundary from authors not repositoryaudit"
+  },
+  {
+    "search_id": "CX-02",
+    "platform": "static_http_get_and_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read Figure2",
+    "source_url": "https://www.jasss.org/29/4/5/Figure2.png",
+    "status": "200_png_visually_read",
+    "notes": "hash saved;no curve digitisation/retest"
+  },
+  {
+    "search_id": "CX-03",
+    "platform": "static_http_get_and_visual_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Read Figure8",
+    "source_url": "https://www.jasss.org/29/4/5/Figure8.png",
+    "status": "200_png_visually_read",
+    "notes": "hash saved;no curve digitisation/retest"
+  },
+  {
+    "search_id": "CX-04",
+    "platform": "local_table_and_grid_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Transcribe14candidateparameterrows and verify2560raw/1600feasiblegrid arithmetic",
+    "source_url": "batches/method_round2/cx_statistical_model_checking/table2_transcription.csv",
+    "status": "reported_values_and_arithmetic_verified_not_executed",
+    "notes": "Tablep>=.1/width<=1000 checked;not equivalence/global optimum/familywiseconfidence"
+  }
+]

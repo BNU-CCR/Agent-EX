@@ -1,0 +1,10 @@
+{
+  "raw_cartesian_grid": 2560,
+  "feasible_grid": 1600,
+  "feasibility": "fertility_end_age<=death_age",
+  "reported_table2_rows": 14,
+  "max_reported_ci_width": 983.16,
+  "min_reported_loss": 17889,
+  "all_reported_p_at_least_point1": true,
+  "boundary": "Arithmetic and reported table checks only; not1600 model reruns, Welch recomputation, simultaneous coverage or global optimum proof"
+}

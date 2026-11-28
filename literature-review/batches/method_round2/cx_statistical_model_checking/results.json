@@ -1,0 +1,29 @@
+{
+  "batch_id": "CX-statistical-checks-and-guarantee-scope",
+  "date": "2026-11-28",
+  "expected_master_sha256": "7f5a7d7de987e4e1b6668e88d901e77b6ec2210bc6c7fd0397e4a525931016ad",
+  "updates": [
+    {
+      "record_id": "M054",
+      "screening_status": "included",
+      "reading_status": "fulltext_checked",
+      "card_path": "reading-cards/M054.md",
+      "research_question": "怎样按观测和精度决定独立重复/预热/稳态长度，并避免把随机校准损失的最小样本值当唯一最优？",
+      "method_type": "traditional_rule_abm;statistical_model_checking;adaptive_replication;transient_loss_calibration;warmup_steady_state_analysis",
+      "method_maturity": "empirical_method_test",
+      "method_evidence_level": "controlled_comparison",
+      "method_transferability": "replicationunit/precision/queryseparation transferable;stationarityanderrorcontrolconditionsrequired;binaryinternalsnotaudited;notautomaticLLMhumanvalidity",
+      "method_coding_status": "fulltext_supported",
+      "method_pending_fields": "underlying2022algorithm_guarantees;multiplequery/selectioncoverage;replicationpackage_version;binary/source_license_verification;run_correspondence",
+      "method_evidence_location": "Formal §§2–5/Table1-2/Appendix;Figure2/8 visual",
+      "method_coding_source": "reading-cards/M054.md;reports/statistical_checks_CX.md;batches/method_round2/cx_statistical_model_checking/source_reuse.json",
+      "method_last_checked": "2026-11-28",
+      "reason": "正式全文/日期门通过；独立重复/暂态校准/稳态检查的方法验证，模型结构与外部预测效度仍分别评估。",
+      "findings": "1600feasiblegrid/14nonsignificantlyworseconfigs;expectedlossprecisionnotparameter_equivalence;warmupdependsobservables/stationaryregime;analyserbinaryonly",
+      "notes": "摘要提出NetLogo–MultiVeStA集成及重复数/warmup/稳态/校准检查；数值保证条件须读全文，不等于人类外部效度。 | Publication date is official; content/validation scope pending fulltext. No card or evidence unit added. | CX:formalHTMLread;14Table2rows;gridarithmetic;Figure2/8visual;noglobaloptimum/equivalence/humanvalidationclaim;nocodeexecution",
+      "search_id": "CU-30;CX-01;CX-02;CX-03;CX-04",
+      "supplement_status": "paper_describes_Zenodo_replication_binary_and_license;package_not_acquired_or_executed"
+    }
+  ],
+  "new_records": []
+}

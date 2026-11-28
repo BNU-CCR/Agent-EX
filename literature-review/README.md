@@ -191,3 +191,5 @@
 - [GPLab评价证据分层](reports/gplab_evaluation_CV.md)：正式全文/新卡，初始化、LLMjudge、提示配置与SD边界。
 
 - [参数可识别性与校准](reports/identifiability_CW.md)：M053合成真值/SBC/回拟合、观测与架构共同变化。
+
+- [统计检查与保证范围](reports/statistical_checks_CX.md)：M054重复/预热、14参数候选及闭源分析器的可审计边界。
