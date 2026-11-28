@@ -1,0 +1,106 @@
+{
+  "DOI": "10.1145/3860291",
+  "title": [
+    "Computational Multi-Agent Society Experiments: Social Modeling Framework Based on Generative Agents"
+  ],
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0001-9495-4996",
+      "authenticated-orcid": false,
+      "given": "Hanzhong",
+      "family": "Zhang",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "University of Exeter",
+          "place": [
+            "Exeter, United Kingdom of Great Britain and Northern Ireland"
+          ]
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0009-0006-9897-4509",
+      "authenticated-orcid": false,
+      "given": "Muhua",
+      "family": "Huang",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Stanford University",
+          "place": [
+            "Stanford, United States"
+          ]
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-4833-0880",
+      "authenticated-orcid": false,
+      "given": "Jindong",
+      "family": "Wang",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "William & Mary",
+          "place": [
+            "Williamsburg, United States"
+          ]
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    }
+  ],
+  "container-title": [
+    "ACM Transactions on Social Computing"
+  ],
+  "type": "journal-article",
+  "published-online": {
+    "date-parts": [
+      [
+        2026,
+        11,
+        5
+      ]
+    ]
+  },
+  "published": {
+    "date-parts": [
+      [
+        2026,
+        11,
+        5
+      ]
+    ]
+  },
+  "resource": {
+    "primary": {
+      "URL": "https://dl.acm.org/doi/10.1145/3860291"
+    }
+  },
+  "link": [
+    {
+      "URL": "https://dl.acm.org/doi/pdf/10.1145/3860291",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ]
+}

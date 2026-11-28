@@ -25278,5 +25278,25 @@
     "batch": "FE",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fe_m021_artifacts/results.json"
+  },
+  {
+    "record_id": "M022",
+    "field": "method_pending_fields",
+    "old": "formal_version;formal_DOI;first_online_date;code_reexecution;independent_prediction",
+    "new": "formal_fulltext_or_accepted_version_collation;paper_generating_code_and_run_mapping;exact_model_repeat_configuration;independent_prediction",
+    "date": "2026-11-28",
+    "batch": "FG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fg_formal_status/results.json"
+  },
+  {
+    "record_id": "M022",
+    "field": "method_coding_source",
+    "old": "reading-cards/M022.md;reports/intervention_heterogeneity_cards_CE.md;existing_L_evidence_reconciliation",
+    "new": "reading-cards/M022.md;reports/intervention_heterogeneity_cards_CE.md;existing_L_evidence_reconciliation;reports/formal_status_FG.md;batches/method_round2/fg_formal_status/formal_identity.json",
+    "date": "2026-11-28",
+    "batch": "FG",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fg_formal_status/results.json"
   }
 ]

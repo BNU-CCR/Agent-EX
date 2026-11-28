@@ -1,0 +1,35 @@
+{
+  "batch_id": "FG",
+  "date": "2026-11-28",
+  "expected_master_sha256": "89324d654a09825f071365f7c795eae5c13202157f83f4de3ded82bfdd74fd7c",
+  "updates": [
+    {
+      "record_id": "M022",
+      "title": "Computational Multi-Agent Society Experiments: Social Modeling Framework Based on Generative Agents",
+      "doi": "10.1145/3860291",
+      "document_type": "journal_article",
+      "venue_id": "V-TSC",
+      "venue": "ACM Transactions on Social Computing",
+      "official_url": "https://dl.acm.org/doi/10.1145/3860291",
+      "metadata_evidence_url": "https://arxiv.org/abs/2508.17366 | https://api.crossref.org/works/10.1145/3860291 | https://jd92.wang/publications/",
+      "online_first_date": "2026-11-05",
+      "volume_year": "2026",
+      "date_basis": "FG ACM publisher-deposited Crossref DOI10.1145/3860291 published-online2026-11-05;authors/title/TSCmatch;notarXivDOIoracceptancedate",
+      "date_eligibility": "confirmed",
+      "screening_status": "included",
+      "reason": "ACM正式身份和2026-11-05在线日期已核，作者v3既有全文方法阅读和接收声明可定位，按原全文/日期规则纳入；读本不是VoR，正式正文403及未逐字校勘限制保留，不另设必须VoR全文门。",
+      "related_versions": "v1 Aug24,2025;v3 Oct15,2026;authorcommentacceptedTSC;placeholderDOI in HTML | FG:ACMformal title Multi-Agent(singular) DOI10.1145/3860291 publishedNov5;arXiv2508.17366v3Oct15 remainsactualread;formalabstractconsistentinbroadobjectnotfulltextidentity",
+      "search_id": "S-M2-L-M022;FG-01;FG-02;FG-03;FG-06;FG-07;FG-08",
+      "method_pending_fields": "formal_fulltext_or_accepted_version_collation;paper_generating_code_and_run_mapping;exact_model_repeat_configuration;independent_prediction",
+      "method_coding_source": "reading-cards/M022.md;reports/intervention_heterogeneity_cards_CE.md;existing_L_evidence_reconciliation;reports/formal_status_FG.md;batches/method_round2/fg_formal_status/formal_identity.json",
+      "notes": "Focusedmethods/controlledcomparison/boundaryreading; some long toolreturns truncated, not claiming allappendix or all platform claims verified. Author-reported acceptance notpublisherconfirmation;template2024/placeholderDOI notpublicationdate. No code run. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | FG:formalACMmetadata/dateconfirmed;frontier->includedandpreprint->journal_article;actualauthorv3readpreserved;publisherpage/PDF403notfulltext;methodgradesunchanged."
+    },
+    {
+      "record_id": "M045",
+      "metadata_evidence_url": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0;https://github.com/wang-boyu/csssa2026-abm-replication;https://computationalsocialscience.org/css2026program/;https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/README.md",
+      "search_id": "BH-01;BH-05;BH-06;BH-09;BH-10;FG-01;FG-04;FG-05;FG-06",
+      "notes": "BHauthor17ppread;BI12fixedfilesandbaselinearithmetic;oldPaper100runstatdefinitionpending;NetLogobaselineperrunseedsnotretained;historicalskillnotexecutionlog | FG:authorblogOct26reportingconferencepresentationandfixed1e9be149READMEunderreviewreconfirmed;Crossrefquerytop5noexactmatchisnotabsenceproof;formalproceedings/datependingretained."
+    }
+  ],
+  "new_records": []
+}

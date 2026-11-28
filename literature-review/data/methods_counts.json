@@ -1,9 +1,9 @@
 {
   "records": 238,
   "status": {
-    "included": 73,
+    "included": 74,
     "candidate": 155,
-    "frontier": 8,
+    "frontier": 7,
     "excluded": 2
   },
   "method_tiers": {
@@ -14,7 +14,7 @@
     "application": 15
   },
   "fulltext_methods": {
-    "core_method": 23,
+    "core_method": 24,
     "method_validation": 41,
     "application": 2,
     "direct_comparator": 7,
@@ -23,5 +23,5 @@
   "search_coverage_start": "2022-01-01",
   "search_coverage_end": "2026-11-28",
   "coded_work_id_groups": 238,
-  "included_work_id_groups": 73
+  "included_work_id_groups": 74
 }

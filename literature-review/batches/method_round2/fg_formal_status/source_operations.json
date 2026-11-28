@@ -1,0 +1,83 @@
+[
+  {
+    "search_id": "FG-01",
+    "platform": "public_web_search",
+    "search_date": "2026-11-28",
+    "query_exact": "[\"\\\"Computational Multi-Agents Society Experiments\\\" \\\"10.1109\\\"\", \"\\\"Large Language Model-Assisted Workflows for Replicating Agent-Based Models\\\"\", \"\\\"Computational Multi-Agents Society Experiments\\\" site:ieeexplore.ieee.org\", \"\\\"Computational Multi-Agents Society Experiments\\\" CMASE\", \"\\\"Computational Multi-Agents Society Experiments\\\" site:dl.acm.org\", \"\\\"Computational Multi-Agents Society Experiments\\\" \\\"doi\\\"\", \"\\\"Large Language Model-Assisted Workflows\\\" site:link.springer.com\"]",
+    "source_url": "public title/site query probes",
+    "status": "discovery_only_noabsenceproof",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-02",
+    "platform": "arxiv",
+    "search_date": "2026-11-28",
+    "query_exact": "2508.17366v3 acceptance/version/DOIroles",
+    "source_url": "https://arxiv.org/abs/2508.17366",
+    "status": "primary_read",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-03",
+    "platform": "author_publications",
+    "search_date": "2026-11-28",
+    "query_exact": "M022TSC2026arXiv/codeonly",
+    "source_url": "https://jd92.wang/publications/",
+    "status": "author_claim_notpublisherdate",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-04",
+    "platform": "author_and_conference",
+    "search_date": "2026-11-28",
+    "query_exact": "M045Oct26presentation/program shell;notarchivalproof",
+    "source_url": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0 | https://computationalsocialscience.org/css2026program/",
+    "status": "primary_read_withlimits",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-05",
+    "platform": "github_fixed_readme",
+    "search_date": "2026-11-28",
+    "query_exact": "M045fixed1e9be149READMEunderreview",
+    "source_url": "https://github.com/wang-boyu/csssa2026-abm-replication/tree/1e9be1490bcbd5fa23632aeff9cbf872bd18957f",
+    "status": "static_read",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-06",
+    "platform": "crossref_title_queries",
+    "search_date": "2026-11-28",
+    "query_exact": "Twoexacttitles query.title rows5;M022match/M045noexacttop5",
+    "source_url": "https://api.crossref.org/works",
+    "status": "metadata_discovery",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-07",
+    "platform": "crossref_doi",
+    "search_date": "2026-11-28",
+    "query_exact": "M022DOI/authors/TSC/Nov5/abstractrelationship",
+    "source_url": "https://api.crossref.org/works/10.1145/3860291",
+    "status": "formal_metadata_confirmed",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-08",
+    "platform": "publisher_access",
+    "search_date": "2026-11-28",
+    "query_exact": "M022ACMpage/PDF403;noPDFmagic",
+    "source_url": "https://dl.acm.org/doi/10.1145/3860291 | https://dl.acm.org/doi/pdf/10.1145/3860291",
+    "status": "blocked_notacquired",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  },
+  {
+    "search_id": "FG-09",
+    "platform": "local_qualification",
+    "search_date": "2026-11-28",
+    "query_exact": "Formalmetadata/readingscope/eligibility/classification separate",
+    "source_url": "reports/formal_status_FG.md",
+    "status": "audited_notnewfullread",
+    "notes": "Groupedoperation notquerycount;boundedtitlequeriesnotdatabasecoverage"
+  }
+]

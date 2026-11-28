@@ -1,0 +1,32 @@
+{
+  "batch": "FG",
+  "date": "2026-11-28",
+  "records": 238,
+  "master_changed": [
+    "M022",
+    "M045"
+  ],
+  "formal_bib": 74,
+  "frontier_bib": 7,
+  "date_pending": 16,
+  "cards": 87,
+  "units": 255,
+  "venue_rows": 56,
+  "submission_candidates": 30,
+  "source_operations": 1876,
+  "workbook_rows": [
+    28,
+    239,
+    57,
+    31,
+    256,
+    56,
+    1877,
+    16,
+    42,
+    32
+  ],
+  "method_grades_unchanged": true,
+  "other_236_master_rows_unchanged": true,
+  "scope": "Source/date/structure verified; authorv3 reading retained; not formal fulltext collation or whole-goal acceptance"
+}

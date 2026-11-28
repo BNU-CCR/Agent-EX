@@ -5,12 +5,12 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 77,
-  "search_rows": 1867,
+  "search_rows": 1876,
   "original_search_prefix_preserved": 231,
   "status": {
-    "included": 73,
+    "included": 74,
     "candidate": 155,
-    "frontier": 8,
+    "frontier": 7,
     "excluded": 2
   },
   "method_tiers": {
@@ -21,12 +21,12 @@
     "application": 15
   },
   "fulltext_cards": 87,
-  "date_pending": 17,
+  "date_pending": 16,
   "checks": "passed",
   "limitations": "No experiment rerun; workbook visual verification separate; not database coverage certification",
   "validation_matrix_units": 255,
   "venue_types": {
-    "journal": 34,
+    "journal": 35,
     "conference": 20,
     "repository": 1
   },

@@ -1,0 +1,275 @@
+{
+  "date": "2026-11-28",
+  "sources": [
+    {
+      "key": "arxiv",
+      "url": "https://arxiv.org/abs/2508.17366",
+      "status": 200,
+      "bytes": 44280,
+      "sha256": "7f64ae671be10e836c44f882e8d04974fbc960ef6049666d45416d5ce1a4fe36"
+    },
+    {
+      "key": "authorpub",
+      "url": "https://jd92.wang/publications/",
+      "status": 200,
+      "bytes": 215609,
+      "sha256": "6a96a3f3afdc037c64681991275e93e27ba03739b8d0ef26494ffdfeac75ceb0"
+    },
+    {
+      "key": "authorblog",
+      "url": "https://www.gisagents.org/2026/10/llm-assisted-workflows-for-replicating.html?m=0",
+      "status": 200,
+      "bytes": 167674,
+      "sha256": "3ec683a62f32d466f53227168b6830a4681457d4d8691802393f79e4d601ffbc"
+    },
+    {
+      "key": "program",
+      "url": "https://computationalsocialscience.org/css2026program/",
+      "status": 200,
+      "bytes": 151216,
+      "sha256": "9f1f525c9e6b1032e7403e41f4bb0c0cbffdeda91b38ccff05dcc1798e2d8a2d"
+    },
+    {
+      "key": "M022_crossref",
+      "url": "https://api.crossref.org/works?query.title=Computational+Multi-Agents+Society+Experiments%3A+Social+Modeling+Framework+Based+on+Generative+Agents&rows=5",
+      "status": 200,
+      "bytes": 51892,
+      "sha256": "f15b1aa01026df4c4924ef82d54bc8ddddf318898f51758757c4627f831106b1",
+      "returned_top5": [
+        {
+          "title": [
+            "Computational Multi-Agent Society Experiments: Social Modeling Framework Based on Generative Agents"
+          ],
+          "DOI": "10.1145/3860291",
+          "publisher": "Association for Computing Machinery (ACM)",
+          "published-online": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                5
+              ]
+            ]
+          },
+          "published-print": null
+        },
+        {
+          "title": [
+            "Can Agents Spontaneously Form a Society? Introducing a Novel Architecture for Generative Multi-Agents to Elicit Social Emergence"
+          ],
+          "DOI": "10.1145/3746058.3758414",
+          "publisher": "ACM",
+          "published-online": {
+            "date-parts": [
+              [
+                2025,
+                9,
+                27
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2025,
+                9,
+                28
+              ]
+            ]
+          }
+        },
+        {
+          "title": [
+            "Social mechanisms and generative explanations: computational models with double agents"
+          ],
+          "DOI": "10.1017/cbo9780511921315.013",
+          "publisher": "Cambridge University Press",
+          "published-online": null,
+          "published-print": {
+            "date-parts": [
+              [
+                2011,
+                3,
+                24
+              ]
+            ]
+          }
+        },
+        {
+          "title": [
+            "Agents and generative social mechanisms"
+          ],
+          "DOI": "10.1017/cbo9780511607035.005",
+          "publisher": "Cambridge University Press",
+          "published-online": null,
+          "published-print": {
+            "date-parts": [
+              [
+                2006,
+                6,
+                15
+              ]
+            ]
+          }
+        },
+        {
+          "title": [
+            "Agents Shaping Networks Shaping Agents: Integrating Social Network Analysis and Agent-Based Modeling in Computational Crime Research"
+          ],
+          "DOI": "10.1007/978-3-319-65340-2_2",
+          "publisher": "Springer International Publishing",
+          "published-online": {
+            "date-parts": [
+              [
+                2017,
+                8,
+                9
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2017
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "M045_crossref",
+      "url": "https://api.crossref.org/works?query.title=Large+Language+Model-Assisted+Workflows+for+Replicating+Agent-Based+Models&rows=5",
+      "status": 200,
+      "bytes": 59982,
+      "sha256": "926b3003ae7cd59cc9eae3649fcb562b6cd1c3c960f92240ec6cbeb4da61b458",
+      "returned_top5": [
+        {
+          "title": [
+            "Agent-SiMT: Agent-Assisted Simultaneous Translation With Large Language Models"
+          ],
+          "DOI": "10.1109/taslpro.2025.3566220",
+          "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+          "published-online": null,
+          "published-print": {
+            "date-parts": [
+              [
+                2025
+              ]
+            ]
+          }
+        },
+        {
+          "title": [
+            "Foam-Agent: A large language model-based multi-agent framework for automating computational fluid dynamics workflows"
+          ],
+          "DOI": "10.1016/j.cma.2026.119271",
+          "publisher": "Elsevier BV",
+          "published-online": null,
+          "published-print": {
+            "date-parts": [
+              [
+                2026,
+                11
+              ]
+            ]
+          }
+        },
+        {
+          "title": [
+            "Do Large Language Models Speak Scientific Workflows?"
+          ],
+          "DOI": "10.1145/3731599.3767578",
+          "publisher": "ACM",
+          "published-online": {
+            "date-parts": [
+              [
+                2025,
+                11,
+                15
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2025,
+                11,
+                16
+              ]
+            ]
+          }
+        },
+        {
+          "title": [
+            "Can Large Language Models Engineer Parallel Workflows?"
+          ],
+          "DOI": "10.5753/sscad.2026.34933",
+          "publisher": "Sociedade Brasileira de Computação",
+          "published-online": {
+            "date-parts": [
+              [
+                2026,
+                11,
+                3
+              ]
+            ]
+          },
+          "published-print": null
+        },
+        {
+          "title": [
+            "Foundations and Workflows of Large Language Models"
+          ],
+          "DOI": "10.1007/978-3-032-24982-1_15",
+          "publisher": "Springer Nature Switzerland",
+          "published-online": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                2
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2026
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "formalpage",
+      "url": "https://dl.acm.org/doi/10.1145/3860291",
+      "status": 403,
+      "bytes": 5489,
+      "sha256": "f3571136a31acc360664367eb7fbcfd17b2a917d97273f77b86acc5a326ef353",
+      "pdf_magic": false
+    },
+    {
+      "name": "formalpdf",
+      "url": "https://dl.acm.org/doi/pdf/10.1145/3860291",
+      "status": 403,
+      "bytes": 5501,
+      "sha256": "0da1f3481e027430e75d073c70a3f3c1b58e4c121cd4c3bdc1ee1a919511290a",
+      "pdf_magic": false
+    },
+    {
+      "file": "FG_M022_formal_crossref.json",
+      "url": "https://api.crossref.org/works/10.1145/3860291",
+      "bytes": 17933,
+      "sha256": "898474898636298aa7446a22aed2be66ba9f60e29c8b8a2a460fee1189bb1ec9"
+    },
+    {
+      "file": "FG_README_fixed.md",
+      "url": "https://raw.githubusercontent.com/wang-boyu/csssa2026-abm-replication/1e9be1490bcbd5fa23632aeff9cbf872bd18957f/README.md",
+      "bytes": 4085,
+      "sha256": "28c2aff81f6e06a517a7eadee9b2ac89d696230c8c03511451cb09f8e0033fbf"
+    }
+  ],
+  "scope": "Identity/date/abstract only; existing author reading remains actual reading; no publisher full text obtained and no model execution"
+}
