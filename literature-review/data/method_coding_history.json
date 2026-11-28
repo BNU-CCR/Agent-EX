@@ -25208,5 +25208,35 @@
     "batch": "FC",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/fc_conference_qualification/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_pending_fields",
+    "old": "formal_version_text_comparison;heldout_validation;full_prompt_text;code_reexecution",
+    "new": "independent_heldout_empirical_validation;exact_model_digest/seeds/failure_and_run_provenance;correlation_pooling_vs_perrun_mapping;instantiated_bias_instructions_memory_Decision;stance_label_shift_numeric_mapping;FJ_weights_susceptibility_update_details;fixed_author_code_data_release_mapping;cross_context_validation",
+    "date": "2026-11-28",
+    "batch": "FD",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fd_m021_formal/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_evidence_location",
+    "old": "Authorv2 ExperimentalDesign;Interactions;Toxicity;OpinionDynamics;Discussion;Appendix",
+    "new": "FormalExperimentalDesign580–581;Interactions582–583;Toxicity584–585;OpinionDynamics584–586;Algorithm1/Prompts590–592;resources589",
+    "date": "2026-11-28",
+    "batch": "FD",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fd_m021_formal/results.json"
+  },
+  {
+    "record_id": "M021",
+    "field": "method_coding_source",
+    "old": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_qualification_FC.md",
+    "new": "reading-cards/M021.md;reports/control_empirical_cards_CD.md;existing_JK_evidence_reconciliation;reports/conference_qualification_FC.md;reports/m021_formal_reading_FD.md;batches/method_round2/fd_m021_formal/version_block_checks.json",
+    "date": "2026-11-28",
+    "batch": "FD",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/fd_m021_formal/results.json"
   }
 ]

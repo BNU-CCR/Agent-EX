@@ -1,0 +1,22 @@
+{
+  "formal": {
+    "name": "M021_pdf",
+    "url": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+    "final_url": "https://re.public.polimi.it/retrieve/1b344aad-8e1d-4f50-b85e-e9df7f8aac39/61296-CompostaE.pdf",
+    "status": 200,
+    "bytes": 322561,
+    "sha256": "7ed1e905e9d153231805c41e1498fdfef750eb7e47c3e95ac06c55a6dbed27df",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FC_M021_pdf.response"
+  },
+  "author_v2": {
+    "url": "https://arxiv.org/pdf/2509.18985v2",
+    "final_url": "https://arxiv.org/pdf/2509.18985v2",
+    "status": 200,
+    "bytes": 594430,
+    "sha256": "563fd67305f16620cbe9e86a86b3a5a036b4c8ef312dbebb1c41b4156719ba8d",
+    "is_pdf": true,
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\FD_M021_authorv2.pdf"
+  },
+  "reading_scope": "Formal17pPDF focused pp580-586 mainmethods/results/discussion;589-592checklist/resources/Algorithm1/prompts;593-594selectedcaptions;reference listnotindividuallyfollowed;Fig2/4andAlgorithm1visual;notallplottedrawvalues/code",
+  "not_executed": "No model/code rerun;no independent raw empirical reconstruction"
+}

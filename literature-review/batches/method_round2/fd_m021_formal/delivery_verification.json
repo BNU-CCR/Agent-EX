@@ -1,0 +1,43 @@
+{
+  "batch": "FD",
+  "checks": "passed",
+  "base": "4e2eb17",
+  "master_changed": [
+    "M021"
+  ],
+  "included": 73,
+  "candidate": 155,
+  "date_pending": 17,
+  "cards": "87;oneformalupdate/86others unchangednormalizedtext;oldGitbytesarchive",
+  "matrix": {
+    "updated": [
+      "VC23",
+      "VC24"
+    ],
+    "appended": [
+      "VC253",
+      "VC254",
+      "VC255"
+    ],
+    "other250unchanged": true,
+    "total": 255
+  },
+  "method_grades": "unchanged",
+  "formal_bib": 73,
+  "workbook_rows": [
+    28,
+    239,
+    56,
+    31,
+    256,
+    56,
+    1862,
+    16,
+    42,
+    31
+  ],
+  "cover_B7": 73,
+  "visual": "currentcover73 and priorformalFig2/4/Algorithm1 reviewed",
+  "protection": "57IDs/18hash/231logprefix/77legacychanges passed",
+  "limitations": "Formal focused reading and selectedversionblocks only;no fixedcode/modelrun or rawdatareconstruction"
+}

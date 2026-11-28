@@ -1,0 +1,25 @@
+[
+  {
+    "section": "Opinion Update",
+    "formal_chars": 1612,
+    "author_chars": 1612,
+    "normalized_equal": true,
+    "normalization": "NFKC/line-endhyphenjoin/whitespace only;notsemanticfullcollation"
+  },
+  {
+    "section": "Computational Resources",
+    "formal_chars": 319,
+    "author_chars": 319,
+    "normalized_equal": true,
+    "normalization": "NFKC/line-endhyphenjoin/whitespace only;notsemanticfullcollation"
+  },
+  {
+    "section": "Experimental Design",
+    "formal_chars": 4273,
+    "author_chars": 4269,
+    "normalized_equal": false,
+    "normalization": "NFKC/line-endhyphenjoin/whitespace only;notsemanticfullcollation",
+    "difference": "Only deleted printedpagefolio580 in formal extracted block",
+    "equal_after_removing_formal_folio580": true
+  }
+]

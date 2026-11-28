@@ -1,0 +1,56 @@
+[
+  {
+    "search_id": "FD-01",
+    "platform": "formal_source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "FCinstitution17pPDFhash/DOI/date;now targetedmainreading notnewdownload",
+    "source_url": "batches/method_round2/fc_conference_qualification/acquisition_manifest.json",
+    "status": "reused",
+    "notes": "Groupedsourceoperation;notquerytotal;no code/modelrun"
+  },
+  {
+    "search_id": "FD-02",
+    "platform": "formal_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "Methods/results/discussion/checklist/Algorithm1/prompts/resources selectedscope;notallrefs/panelvalues",
+    "source_url": "reading-cards/M021.md",
+    "status": "focused_fulltext_read",
+    "notes": "Groupedsourceoperation;notquerytotal;no code/modelrun"
+  },
+  {
+    "search_id": "FD-03",
+    "platform": "visual",
+    "search_date": "2026-11-28",
+    "query_exact": "FormalFig2/4p583/Algorithm1p590 inspected;measurement/activationsemantics",
+    "source_url": "reading-cards/M021.md",
+    "status": "visually_checked",
+    "notes": "Groupedsourceoperation;notquerytotal;no code/modelrun"
+  },
+  {
+    "search_id": "FD-04",
+    "platform": "author_version",
+    "search_date": "2026-11-28",
+    "query_exact": "arXivv2PDF200594430bytes17p;3selectedblockcomparison;HTMLmissingpromptnotknownversiondifference",
+    "source_url": "https://arxiv.org/pdf/2509.18985v2",
+    "status": "acquired_scoped_comparison",
+    "notes": "Groupedsourceoperation;notquerytotal;no code/modelrun"
+  },
+  {
+    "search_id": "FD-05",
+    "platform": "evidence_matrix",
+    "search_date": "2026-11-28",
+    "query_exact": "VC23/24 sourceupgradedtoformal;VC253-255 readout/exposure/reporting distinctevidenceunits",
+    "source_url": "data/method_validation_matrix.csv",
+    "status": "updated_notexperiments",
+    "notes": "Groupedsourceoperation;notquerytotal;no code/modelrun"
+  },
+  {
+    "search_id": "FD-06",
+    "platform": "coding_synthesis",
+    "search_date": "2026-11-28",
+    "query_exact": "M021includedwithsamegrade;formalnegativeevidence/conditionalreference/contextlimits",
+    "source_url": "reports/m021_formal_reading_FD.md",
+    "status": "included_with_limits",
+    "notes": "Groupedsourceoperation;notquerytotal;no code/modelrun"
+  }
+]
