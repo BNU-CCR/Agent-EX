@@ -1,0 +1,29 @@
+{
+  "base": "ed57e89",
+  "only_record_changed": "M175",
+  "candidate_date_pending_retained": true,
+  "acquisition_hashes": 3,
+  "visual_page_hashes": 5,
+  "table13_cells": 63,
+  "adjacent_direction_counts": [
+    39,
+    11,
+    4
+  ],
+  "verifier_table_numeric_cells": 15,
+  "ABS_comparison_rows": 6,
+  "cards11": 83,
+  "old_matrix_prefix": 227,
+  "new_units": 5,
+  "workbook_rows": [
+    237,
+    55,
+    31,
+    233,
+    1707,
+    11,
+    42
+  ],
+  "maxtext": 29215,
+  "limits": "Source/scopedreading and arithmetic;no actualrun/independentannotation/fullCLMguarantee or humanprocessvalidation certified;formaldatepending retained"
+}

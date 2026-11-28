@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "official_formal_PDF",
+    "url": "https://aclanthology.org/2026.acl-long.1247.pdf",
+    "status": 200,
+    "bytes": 5839808,
+    "sha256": "4e5d0a5cb35c7389dd022a9a57fbe74acaa6c7a039ff84d0afd520168890483c",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_LiveCultureBench_formal.pdf",
+    "content_type": "application/pdf"
+  },
+  {
+    "kind": "paper_cited_primary_demographic_source",
+    "url": "https://www.abs.gov.au/census/find-census-data/quickstats/2021/2GMEL",
+    "status": 200,
+    "bytes": 191152,
+    "sha256": "0afe52fdb4677b344ceeb5e7c921602bc3ee6774456f0fed49c2a85fa7e278ec",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_ABS_2GMEL.html",
+    "content_type": "text/html;charset=UTF-8"
+  },
+  {
+    "kind": "official_published_checklist",
+    "url": "https://aclanthology.org/attachments/2026.acl-long.1247.checklist.pdf",
+    "status": 200,
+    "bytes": 63956,
+    "sha256": "26b4bed9cadb1dc92e99d9f905b62a0da85aba77653174ea6246f2fca7735324",
+    "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_LiveCultureBench_checklist.pdf",
+    "content_type": "application/pdf"
+  }
+]

@@ -1,0 +1,6 @@
+task,F1_percent,precision_percent,recall_percent
+Goal Completion,92.41,93.78,91.07
+Norm Violation,89.36,87.92,90.86
+Profile Faithfulness,90.88,92.14,89.65
+Contextual Awareness,95.27,96.11,94.45
+Coherence,96.08,97.34,94.97

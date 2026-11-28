@@ -24038,5 +24038,95 @@
     "batch": "ED-ReliMap-formal-targets-and-reliability",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/ed_relimap/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_type",
+    "old": "abstract_provisional_fulltext_pending",
+    "new": "dynamic_agent_capability_benchmark;task_norm_metrics;human_labeled_verifier_holdout;conformal_candidate_sets",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_maturity",
+    "old": "unclear",
+    "new": "empirical_method_test",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_evidence_level",
+    "old": "unclear",
+    "new": "controlled_comparison",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_transferability",
+    "old": "pending_fulltext",
+    "new": "Dynamic pressure tests/task-norm and human-label verifier evaluation transferable;demographic marginal proxies/CLM candidate scope nothuman-process validation",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_relevance_rationale",
+    "old": "仿真城镇中任务/文化规范与LLM评判器可靠性；需核独立人类参照，不把能力测试当人类社会效度。",
+    "new": "Dynamic AI evaluation framework with explicit verifier calibration/heldout evidence;construct/clock/population/runprovenance limits remain",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_coding_status",
+    "old": "abstract_provisional",
+    "new": "fulltext_supported",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_pending_fields",
+    "old": "fulltext;reference_independence;target_metrics;model_data_version;exact_formal_first_online;method_maturity;method_evidence_level",
+    "new": "exact_formal_first_online;actualrunmanifest/modelrevision/cost/failure;human_annotation_protocol_agreement;CLMthreshold_loss_exchangeability_and_finalselection;population_source_transform_joint_fit;culture11vs7All;profile_metric_mapping;clock_weighting_scheduling;Park_norm_count",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_evidence_location",
+    "old": "Metadata/full abstract only; no fulltext/empirical-effect confirmation",
+    "new": "Formal§2–3/ethics;AppA/B/CListings1–8;Table1/13/14/15;officialchecklistD1/D2;ABSage/sex/ancestry",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
+  },
+  {
+    "record_id": "M175",
+    "field": "method_coding_source",
+    "old": "reports/crossdisciplinary_validation_EA.md;batches/method_round2/ea_crossdisciplinary_validation/screening.csv",
+    "new": "reading-cards/M175.md;reports/liveculturebench_EF.md;batches/method_round2/ef_liveculturebench/reading_checks.json",
+    "date": "2026-11-28",
+    "batch": "EF-LiveCultureBench-dynamic-AI-verifier-validation",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/ef_liveculturebench/results.json"
   }
 ]

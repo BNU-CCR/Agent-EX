@@ -1,0 +1,65 @@
+[
+  {
+    "search_id": "EF-01",
+    "platform": "official_PDF_acquisition",
+    "search_date": "2026-11-28",
+    "query_exact": "OfficialACL30ppPDF/hash;notallcatalogueread",
+    "source_url": "https://aclanthology.org/2026.acl-long.1247.pdf",
+    "status": "200_formal_pdf",
+    "notes": "Groupedoperations;notqueries/independentexperiments. Nominalconfig notactualrunmanifest;noexecution."
+  },
+  {
+    "search_id": "EF-02",
+    "platform": "scoped_method_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Readmain1\u20139/endethics10/configs12\u201315/prompts16\u201320",
+    "source_url": "https://aclanthology.org/2026.acl-long.1247.pdf",
+    "status": "scoped_fulltext",
+    "notes": "Groupedoperations;notqueries/independentexperiments. Nominalconfig notactualrunmanifest;noexecution."
+  },
+  {
+    "search_id": "EF-03",
+    "platform": "primary_demographic_crosscheck",
+    "search_date": "2026-11-28",
+    "query_exact": "CitedABS2GMELage/sex/ancestry;paperpopulationtablevalues/constructs differ",
+    "source_url": "https://www.abs.gov.au/census/find-census-data/quickstats/2021/2GMEL",
+    "status": "200_primary_source_checked",
+    "notes": "Groupedoperations;notqueries/independentexperiments. Nominalconfig notactualrunmanifest;noexecution."
+  },
+  {
+    "search_id": "EF-04",
+    "platform": "official_checklist_read",
+    "search_date": "2026-11-28",
+    "query_exact": "Two-pagechecklistD1/D2authorannotation/fullinstructionsnotreported",
+    "source_url": "https://aclanthology.org/attachments/2026.acl-long.1247.checklist.pdf",
+    "status": "200_checklist",
+    "notes": "Groupedoperations;notqueries/independentexperiments. Nominalconfig notactualrunmanifest;noexecution."
+  },
+  {
+    "search_id": "EF-05",
+    "platform": "numeric_scope_audit",
+    "search_date": "2026-11-28",
+    "query_exact": "Table1fiveverifiertasks;Table1363cells/54adjacencies39down11up4equal;populationweights",
+    "source_url": "literature-review/batches/method_round2/ef_liveculturebench/reading_checks.json",
+    "status": "local_numeric_source_check",
+    "notes": "Groupedoperations;notqueries/independentexperiments. Nominalconfig notactualrunmanifest;noexecution."
+  },
+  {
+    "search_id": "EF-06",
+    "platform": "visual_reading",
+    "search_date": "2026-11-28",
+    "query_exact": "Inspectp7/8/12/14/20;metrics/CLMplots/population/parkcount/table13",
+    "source_url": "literature-review/batches/method_round2/ef_liveculturebench/reading_checks.json",
+    "status": "five_pages_inspected",
+    "notes": "Groupedoperations;notqueries/independentexperiments. Nominalconfig notactualrunmanifest;noexecution."
+  },
+  {
+    "search_id": "EF-07",
+    "platform": "coding_integration",
+    "search_date": "2026-11-28",
+    "query_exact": "Candidate/datependingretained;cardfiveunits;dynamicAI/verifier/humanprocessseparate",
+    "source_url": "literature-review/reports/liveculturebench_EF.md",
+    "status": "local_evidence_update",
+    "notes": "Groupedoperations;notqueries/independentexperiments. Nominalconfig notactualrunmanifest;noexecution."
+  }
+]

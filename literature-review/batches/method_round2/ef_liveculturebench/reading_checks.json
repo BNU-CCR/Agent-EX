@@ -1,0 +1,69 @@
+{
+  "pdf_pages": 30,
+  "read_scope": "main1–9andethicsend10;configs12–15;prompts16–20;catalogue21–30notfullyread;referencesnotrescreened",
+  "nominal_profile_pool": 1000,
+  "targets_per_backbone": 1000,
+  "target_models": 9,
+  "days_nominal": "07:00–22:00;30stepscap/earlystop;30minnormal/5mintalk",
+  "human_judge_task_samples": 400,
+  "calibration_per_task": 200,
+  "heldout_per_task": 200,
+  "tasks": 5,
+  "task_label_assignments_nominal": 2000,
+  "not_proven_unique_contexts": true,
+  "table13_cells": 63,
+  "adjacent_comparisons": 54,
+  "increases": 11,
+  "equalities": 4,
+  "decreases": 39,
+  "all9_first_to_last_lower": true,
+  "printed_age_weight_sum": 92.4,
+  "printed_nationality_weight_sum": 89.9,
+  "park_norm_count_printed": "4,08;notcorrectedto408/4080",
+  "construct_caveats": [
+    "ABSancestrymultiresponse not mutuallyexclusive nationality",
+    "independentmarginals+heuristicrelationships notjointdemographicvalidation",
+    "humanmatchingCLMsetcoverage notsinglejudgment/allculturetrajectorytruth",
+    "faithfulness proseattribute-specific vsListing7naturalnesssinglelabel"
+  ],
+  "remaining": [
+    "annotator_protocol_and_agreement",
+    "CLMthresholds/risk_loss_definition/runsandcoverage",
+    "culture11vs7Allrelation",
+    "actualrunmanifest/modelrevision/cost/failure",
+    "clock_weighting_and_scheduling"
+  ],
+  "visuals": [
+    {
+      "page": 7,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_LiveCultureBench_p7.png",
+      "sha256": "a5ea60ba194d459ba620f9be2af31931c65b198f244437a3452cb9dc49284638"
+    },
+    {
+      "page": 8,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_LiveCultureBench_p8.png",
+      "sha256": "dfb30a4755b486e03819626f0cb2269c4b3472a38c0468aca27468f8fbdec0b5"
+    },
+    {
+      "page": 12,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_LiveCultureBench_p12.png",
+      "sha256": "92a4bff1f7124e5525e05964e1a64c972d9668c679215c6cd7982d1b5e0fa260"
+    },
+    {
+      "page": 14,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_LiveCultureBench_p14.png",
+      "sha256": "b82ff37564765d41b615564408f3f55b9c36bcf17c031e8230103e77b01c4e51"
+    },
+    {
+      "page": 20,
+      "file": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\EF_LiveCultureBench_p20.png",
+      "sha256": "4a7b79882bd0608ffe8fee61d264bd7d0759d1080e44387d95c48bccdda0e94f"
+    }
+  ],
+  "checklist": {
+    "pages": 2,
+    "D1_D2": "No;Annotation done by authors",
+    "full_instructions_disclosed": false,
+    "independent_annotator_agreement_not_verified": true
+  }
+}

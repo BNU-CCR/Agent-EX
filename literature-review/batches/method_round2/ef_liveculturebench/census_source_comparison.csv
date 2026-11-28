@@ -1,0 +1,7 @@
+label,paper_percent,cited_ABS_2GMEL_percent,construct_and_source
+age20–24,16.8,6.7,paperTable2;ABSage-allpeople
+age25–29,19.8,7.8,paperTable2;ABSage-allpeople
+male,49.7,49.2,paperTable3gender;ABSsex
+female,50.3,50.8,paperTable3gender;ABSsex
+English,24.8,25.6,paperTable4nationality;ABSancestry-multiresponse
+Australian,22.5,23.4,paperTable4nationality;ABSancestry-multiresponse
