@@ -1,0 +1,83 @@
+[
+  {
+    "search_id": "ES-01",
+    "platform": "source_reuse",
+    "search_date": "2026-11-28",
+    "query_exact": "Local reuse CJ/CS/DV/EQ M012 evidence;no source failure treated as scientific negative",
+    "source_url": "reports/purpose_and_access_CJ.md;reports/odd_artifact_access_CS.md",
+    "status": "reviewed",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-02",
+    "platform": "primary_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Publisher abstract, Delft version record, KNAW metadata and author notice checked;no fullbody",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S1364815226003506",
+    "status": "abstract_metadata_only",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-03",
+    "platform": "official_file_web",
+    "search_date": "2026-11-28",
+    "query_exact": "Delft exact record-bound final-published-version PDF via web reader",
+    "source_url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "status": "unavailable",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-04",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Exact title site:literatur.thuenen.de",
+    "source_url": "https://literatur.thuenen.de",
+    "status": "zero_returned_not_coverage_certificate",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-05",
+    "platform": "search_discovery",
+    "search_date": "2026-11-28",
+    "query_exact": "Two grouped searches exacttitle pdf;107203 Grimm ODD;ASU new institutional entry found",
+    "source_url": "https://asu.elsevierpure.com",
+    "status": "discovery_not_fulltext",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-06",
+    "platform": "institutional_page",
+    "search_date": "2026-11-28",
+    "query_exact": "UFZ ODD page web and static HTML;bound target links to record only, PDFs2006/2010",
+    "source_url": "https://www.ufz.de/index.php?de=40429",
+    "status": "200_older_pdfs_not_target",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-07",
+    "platform": "institutional_page",
+    "search_date": "2026-11-28",
+    "query_exact": "ASU target DOI/title abstract and issue date;no target PDF link",
+    "source_url": "https://asu.elsevierpure.com/en/publications/twenty-years-of-the-odd-protocol-development-usage-extensions-and/",
+    "status": "200_abstract_only",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-08",
+    "platform": "official_file_static",
+    "search_date": "2026-11-28",
+    "query_exact": "Delft exact link GET;4035717bytesHTML,hash failure response not article",
+    "source_url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "status": "403_not_pdf",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  },
+  {
+    "search_id": "ES-09",
+    "platform": "coding",
+    "search_date": "2026-11-28",
+    "query_exact": "M012 three categorical purposes based on verified abstracts;no fulltext/date/grade upgrade",
+    "source_url": "batches/method_round2/es_odd_abstract_classification/coding_decisions.json",
+    "status": "abstract_provisional",
+    "notes": "Grouped source operation;not an independent query/publication/experiment"
+  }
+]

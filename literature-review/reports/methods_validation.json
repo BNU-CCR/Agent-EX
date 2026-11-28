@@ -5,7 +5,7 @@
   "original_ids_preserved": 57,
   "original_files_hashed": 18,
   "legacy_changes": 66,
-  "search_rows": 1771,
+  "search_rows": 1780,
   "original_search_prefix_preserved": 231,
   "status": {
     "included": 67,
@@ -38,19 +38,6 @@
     "simulation_purpose"
   ],
   "categorical_nonempty_outside_dictionary": 0,
-  "categorical_blank_fields": [
-    {
-      "record_id": "M012",
-      "field": "core_level"
-    },
-    {
-      "record_id": "M012",
-      "field": "primary_purpose"
-    },
-    {
-      "record_id": "M012",
-      "field": "simulation_purpose"
-    }
-  ],
+  "categorical_blank_fields": [],
   "categorical_boundary": "Vocabulary only; blanks unresolved/not applicable, not semantically complete coding certification"
 }

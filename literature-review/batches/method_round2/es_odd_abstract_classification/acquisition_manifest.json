@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Delft_pdf",
+    "url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "final_url": "https://research.tudelft.nl/files/316689002/1-s2.0-S1364815226003506-main.pdf",
+    "status": 403,
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 5717,
+    "sha256": "c10ec664112ac7326c31427948486c91a601d8e05c0376705b860705a5e61648",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ES_Delft_pdf.response",
+    "is_pdf": false
+  },
+  {
+    "name": "UFZ_ODD",
+    "url": "https://www.ufz.de/index.php?de=40429",
+    "final_url": "https://www.ufz.de/index.php?de=40429",
+    "status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 46533,
+    "sha256": "8874ae5ffdf2e4d6010b19421418bca304c7f7641d67580f88f013b7a2ea3c70",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ES_UFZ_ODD.response",
+    "is_pdf": false
+  },
+  {
+    "name": "ASU",
+    "url": "https://asu.elsevierpure.com/en/publications/twenty-years-of-the-odd-protocol-development-usage-extensions-and/",
+    "final_url": "https://asu.elsevierpure.com/en/publications/twenty-years-of-the-odd-protocol-development-usage-extensions-and/",
+    "status": 200,
+    "content_type": "text/html;charset=UTF-8",
+    "bytes": 64394,
+    "sha256": "d6af72922aa5b5f4e7a0e8e38015321d4c130e4c3bc098f93aa48054fc8407ef",
+    "cache": "C:\\Users\\Bai Yuexi\\AppData\\Local\\Temp\\agentex-literature-export\\ES_ASU.response",
+    "is_pdf": false
+  }
+]

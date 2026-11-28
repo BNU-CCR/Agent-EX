@@ -24758,5 +24758,45 @@
     "batch": "ER-official-conference-publication-month-qualification",
     "reason": "Audited new source/reading evidence; no experiment execution",
     "source": "batches/method_round2/er_conference_date_precision/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_coding_status",
+    "old": "pending",
+    "new": "abstract_provisional",
+    "date": "2026-11-28",
+    "batch": "ES",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/es_odd_abstract_classification/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_relevance_rationale",
+    "old": "Abstract establishes relevance to standard/reporting; method maturity and evidential basis cannot be coded from abstract.",
+    "new": "Verified publisher and coauthor-institution abstracts identify reflection on reporting-standard development, use and extensions;purpose/core classification provisional. No full-text maturity or validation judgment.",
+    "date": "2026-11-28",
+    "batch": "ES",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/es_odd_abstract_classification/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_coding_source",
+    "old": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md;reports/delivery_audit_DV.md",
+    "new": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md;reports/delivery_audit_DV.md;reports/odd_abstract_classification_ES.md;batches/method_round2/es_odd_abstract_classification/coding_decisions.json",
+    "date": "2026-11-28",
+    "batch": "ES",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/es_odd_abstract_classification/results.json"
+  },
+  {
+    "record_id": "M012",
+    "field": "method_evidence_location",
+    "old": "Publisher abstract/highlights; KNAW lines78–86 and bibliography",
+    "new": "Publisher abstract/highlights; KNAW lines78–86 and bibliography;ES publisher Abstract/Highlights and ASU Abstract paragraphs1-3;notbody",
+    "date": "2026-11-28",
+    "batch": "ES",
+    "reason": "Audited new source/reading evidence; no experiment execution",
+    "source": "batches/method_round2/es_odd_abstract_classification/results.json"
   }
 ]

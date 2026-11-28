@@ -1,0 +1,32 @@
+{
+  "record_id": "M012",
+  "read_scope": "publisher and ASU abstracts/highlights;institutionalmetadata;notbody",
+  "decisions": [
+    {
+      "field": "core_level",
+      "value": "method_validity",
+      "basis": "Reporting-standard development/use/extensions and model-review purpose explicitly established by abstract;no standalone simulation/empirical validation inferred"
+    },
+    {
+      "field": "primary_purpose",
+      "value": "method_evaluation",
+      "basis": "Reporting-standard development/use/extensions and model-review purpose explicitly established by abstract;no standalone simulation/empirical validation inferred"
+    },
+    {
+      "field": "simulation_purpose",
+      "value": "method_evaluation",
+      "basis": "Reporting-standard development/use/extensions and model-review purpose explicitly established by abstract;no standalone simulation/empirical validation inferred"
+    }
+  ],
+  "unchanged": [
+    "candidate",
+    "date_pending",
+    "abstract_checked",
+    "method_maturity=unclear",
+    "method_evidence_level=unclear",
+    "no card",
+    "no validation unit"
+  ],
+  "fulltext_acquired": false,
+  "date_conflict": "KNAW online2026-10-16;secondary10October notaccepted;ASU print2027-01-01 not online"
+}

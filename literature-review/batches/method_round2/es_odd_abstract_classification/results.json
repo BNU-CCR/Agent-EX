@@ -1,0 +1,21 @@
+{
+  "batch_id": "ES",
+  "date": "2026-11-28",
+  "expected_master_sha256": "a4b288e316d43c4e83ae9581fb701fdfabe19efa7d84665f440a0d437b8c1cdc",
+  "updates": [
+    {
+      "record_id": "M012",
+      "core_level": "method_validity",
+      "primary_purpose": "method_evaluation",
+      "simulation_purpose": "method_evaluation",
+      "method_coding_status": "abstract_provisional",
+      "method_relevance_rationale": "Verified publisher and coauthor-institution abstracts identify reflection on reporting-standard development, use and extensions;purpose/core classification provisional. No full-text maturity or validation judgment.",
+      "method_coding_source": "abstract_and_primary_institutional_metadata;reports/purpose_and_access_CJ.md;Delft_file403_reconfirmed;reports/odd_artifact_access_CS.md;reports/delivery_audit_DV.md;reports/odd_abstract_classification_ES.md;batches/method_round2/es_odd_abstract_classification/coding_decisions.json",
+      "method_evidence_location": "Publisher abstract/highlights; KNAW lines78–86 and bibliography;ES publisher Abstract/Highlights and ASU Abstract paragraphs1-3;notbody",
+      "notes": "; institutional online date not publisher-confirmed; preserve issue2027 separately | M:UFZ confirms207/art107203 issue2027;no preciseonline day. Footer2016 notpublicationdate. Supplement URLs verified butDOCX/ZIP retrieval403;mainpublisher403;nofulltextupgrade. | W:documented category aliases normalized;oldvalues/reasons in data/categorical_alias_migration_W.json;method tier/evidence/status unchanged. | AD:authornoticeNov4 confirms publicationnotfirstdate;DiVAcachedlisting unboundPDF/freshaccessdenied;ESSredirect/PDFinaccessible;no fulltextupgrade. | BS:TU_Delftfinalpublishedversionlisting13pagesCCBY;linkedPDFweb403/static403HTML5717bytes;notacquired;firstonlinedaystillunconfirmed. | CJ:DelftPDF4035717bytesHTML;hashinCJmanifest;noPDF/fulltext/dateupgrade;threeclassificationblanksretained | CS:newauthoruploadRG403;ESSredirectunavailable;DiVAAnubisdenial;UFZhistoricalpageonly;noPDF/date/classificationupgrade | DV:publisher-depositedCrossref200hasno published-online;print month/created not substituted for firstonline;date/status/grade unchanged | ES:verified abstract supports method_validity/method_evaluation purpose only;three blanks resolved as abstract_provisional. ASU issue2027-01-01 is not firstonline. Delft403HTML5717bytes;UFZ only older2006/2010 PDFs;no new fulltext/date/evidencegrade.",
+      "search_id": "S-M2-ODD-M012;S-M2-AD-Q5;S-M2-AD-NOTICE;S-M2-AD-UMU;CS-12;CS-15;CS-20;DV-01;DV-03;DV-04;ES-02;ES-05;ES-07;ES-09",
+      "method_last_checked": "2026-11-28"
+    }
+  ],
+  "new_records": []
+}
